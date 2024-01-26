@@ -1,4 +1,4 @@
-![Build, Test](https://github.com/C-enpy/ARTIST/actions/workflows/cmake-single-platform.yml/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=C-enpy_ARTIST&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=C-enpy_ARTIST) [![codecov](https://codecov.io/gh/C-enpy/ARTIST/graph/badge.svg?token=MAAKQX3H20)](https://codecov.io/gh/C-enpy/ARTIST)
+![Build, Test](https://github.com/C-enpy/ARTIST/actions/workflows/cmake-single-platform.yml/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=C-enpy_ARTIST&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=C-enpy_ARTIST) [![codecov](https://codecov.io/gh/Djoe-Denne/ARTIST/graph/badge.svg?token=MAAKQX3H20)](https://codecov.io/gh/Djoe-Denne/ARTIST)
 
 
 # Cen'py Game Engine
