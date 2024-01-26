@@ -1,4 +1,4 @@
-![Build, Test](https://github.com/Djoe-Denne/Cenpy/actions/workflows/cmake-single-platform.yml/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Djoe-Denne_Cenpy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Djoe-Denne_Cenpy) [![codecov](https://codecov.io/gh/Djoe-Denne/Cenpy/graph/badge.svg?token=MAAKQX3H20)](https://codecov.io/gh/Djoe-Denne/Cenpy)
+![Build, Test](https://github.com/C-enpy/ARTIST/actions/workflows/cmake-single-platform.yml/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=C-enpy_ARTIST&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=C-enpy_ARTIST) [![codecov](https://codecov.io/gh/C-enpy/ARTIST/graph/badge.svg?token=MAAKQX3H20)](https://codecov.io/gh/C-enpy/ARTIST)
 
 
 # Cen'py Game Engine
@@ -28,14 +28,14 @@ Follow these steps to get started with Cen'py:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/Djoe-Denne/Cenpy.git
-    cd Cenpy
+    git clone https://github.com/C-enpy/ARTIST.git
+    cd ARTIST
     ```
 
 
 ## Documentation
 
-For detailed documentation and usage guidelines, refer to the [Wiki](https://github.com/Djoe-Denne/Cenpy/wiki).
+For detailed documentation and usage guidelines, refer to the [Wiki](https://github.com/C-enpy/ARTIST/wiki).
 
 ## Contributing
 

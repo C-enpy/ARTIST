@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ./build/Cenpy/tests/CMakeFiles/cenpy-common_tests.dir/src
+cd ./build/ARTIST/tests/CMakeFiles/artist-common_tests.dir/src
 lcov --directory . --capture --output-file coverage.info
 lcov --remove coverage.info '/usr/*' --output-file coverage.info
 lcov --remove coverage.info '*conan*' --output-file coverage.info

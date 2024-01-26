@@ -8,7 +8,7 @@ option(COVERAGE "Enable coverage reporting" OFF)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
 include(CodeCoverage)
 
-project("cenpy")
+project("artist")
 
 set(ENV{LDFLAGS} "-m64")
 set(CMAKE_C_STANDARD 11)
@@ -22,10 +22,6 @@ if (COVERAGE)
     message("Building with coverage reporting.")
     append_coverage_compiler_flags()
 endif()
-
-add_compile_options(
-"$<$<COMPILE_LANGUAGE:CXX>:-lstdc++_libbacktrace>"
-)
 
 # Download automatically, you can also just copy the conan.cmake file
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -45,4 +41,4 @@ if(MSVC)
         set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif()
 
-add_subdirectory("Cenpy")
+add_subdirectory("ARTIST")

@@ -37,7 +37,7 @@
 - Provide a brief description of the namespace's purpose in comments.
 
 ```cpp
-namespace cenpy::common::persistence::preferences
+namespace artist::common::persistence::preferences
 {
     // ... (namespace content)
 }

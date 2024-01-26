@@ -4,7 +4,7 @@ Thank you for considering contributing to Cen'py! To ensure a smooth collaborati
 
 ## Before You Start
 
-1. **Check Open Issues:** Before starting work on a new feature or bug fix, check the [open issues](https://github.com/Djoe-Denne/Cenpy/issues) to make sure no one else is already working on the same task.
+1. **Check Open Issues:** Before starting work on a new feature or bug fix, check the [open issues](https://github.com/C-enpy/ARTIST/issues) to make sure no one else is already working on the same task.
 
 2. **Create an Issue:** If the issue doesn't exist, please create a new one. Provide a clear and concise title along with a detailed description of the problem or enhancement you are suggesting.
 
@@ -15,8 +15,8 @@ Thank you for considering contributing to Cen'py! To ensure a smooth collaborati
 2. **Clone your Fork:** Clone your forked repository to your local machine:
 
     ```bash
-    git clone https://github.com/[your-username]/Cenpy.git
-    cd Cenpy
+    git clone https://github.com/[your-username]/ARTIST.git
+    cd ARTIST
     ```
 
 3. **Create a Branch:** Create a new branch for your changes:
@@ -46,7 +46,7 @@ Thank you for considering contributing to Cen'py! To ensure a smooth collaborati
     git push origin feature/your-feature
     ```
 
-3. **Create a Pull Request:** Go to the [Cen'py repository](https://github.com/Djoe-Denne/Cenpy) on GitHub and create a pull request from your branch.
+3. **Create a Pull Request:** Go to the [Cen'py repository](https://github.com/C-enpy/ARTIST) on GitHub and create a pull request from your branch.
 
 4. **Describe Your Pull Request:** Provide a clear and detailed description of your changes in the pull request. Mention the issue number that your changes address.
 
