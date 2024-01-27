@@ -1,0 +1,7 @@
+organization=c-enpy
+projectKey=C-enpy_ARTIST
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.52135
+dashboardUrl=https://sonarcloud.io/dashboard?id=C-enpy_ARTIST
+ceTaskId=AY1KBk-WJi6dGdmnziTf
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AY1KBk-WJi6dGdmnziTf
