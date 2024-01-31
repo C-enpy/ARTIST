@@ -1,10 +1,14 @@
 /**
  * @file uniform.hpp
- * @brief Defines classes and templates for managing shader uniform variables across various graphics APIs.
+ * @brief Management of shader uniform variables across multiple graphics APIs in A.R.T.I.S.T.
  *
- * The uniform management system is designed to be flexible and extensible to support multiple graphics APIs
- * such as OpenGL, Vulkan, DirectX, and Metal. This file contains the Uniform class, which serves as an
- * abstract foundation, and various template specializations and type traits for handling different uniform types.
+ * Presents the `Uniform` class, serving as an abstract base for handling uniform variables in shaders.
+ * Designed for flexibility and extensibility across graphics APIs like OpenGL, Vulkan, DirectX, and Metal.
+ * The file encapsulates a uniform management system capable of handling various types, facilitated by API-specific
+ * implementations and type traits. It is an essential part of the shader system in A.R.T.I.S.T., ensuring unified
+ * and efficient handling of shader data.
+ *
+ * @tparam API The graphics API context.
  *
  * @author Djoé DENNE
  * @date 13/12/2023
@@ -12,18 +16,13 @@
 
 #pragma once
 
-#include <type_traits>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <string>
 #include <format>
-#include <any>
-#include <unordered_map>
-#include <glm/glm.hpp>
 #include <graphic/context/UniformContext.hpp>
 #include <graphic/validator/ComponentConcept.hpp>
 #include <common/exception/TraceableException.hpp>
 
+// TODO : remove both includes
 #include <graphic/opengl/pipeline/component/uniform/Setter.hpp>
 #include <graphic/opengl/validator/Validator.hpp>
 
@@ -31,12 +30,14 @@ namespace artist::graphic::pipeline
 {
     /**
      * @class Uniform
-     * @brief Abstract base class for representing uniform variables in shaders.
+     * @brief Template class for shader uniform management in various graphics APIs.
      *
-     * This class provides a foundational interface for handling uniform variables.
-     * It is designed to be extended by specific implementations for different graphics APIs
-     * such as OpenGL, Vulkan, DirectX, and Metal. The class includes template methods for
-     * setting and getting uniform values with type safety, enforced through specialized setters.
+     * Uniform serves as the foundational interface for managing uniform variables in shaders, tailored
+     * for different graphics APIs. It offers template methods for setting and getting uniform values, ensuring
+     * type safety and API-specific handling. The class is designed with extensibility in mind, allowing easy
+     * adaptation and integration of new APIs into the A.R.T.I.S.T. framework.
+     *
+     * @tparam API The graphics API context, influencing the implementation of uniform variable management.
      */
     template <typename API>
         requires(API::Validator::template validateUniform<API>())

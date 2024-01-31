@@ -1,23 +1,28 @@
 /**
  * @file IPass.hpp
- * @brief Defines the interface and OpenGL implementation for shader passes in a multi-pass rendering system.
+ * @brief Interface and specialization for shader passes in a multi-pass rendering system.
  *
- * This file introduces the concept of a 'IPass', representing a sequence of shader operations in a rendering pipeline.
- * It includes the abstract IPass class template and its OpenGL specialization. The design is flexible to support
- * other graphics APIs such as Vulkan, DirectX, and Metal under respective namespaces.
- * The 'IPass' is an integral part of the multipass shader system.
+ * The IPass interface represents a sequence of shader operations within a rendering pipeline,
+ * integral to the multi-pass shader system in A.R.T.I.S.T. This file includes the abstract class
+ * template IPass and its specializations, designed to support various graphics APIs like OpenGL,
+ * Vulkan, DirectX, and Metal. IPass orchestrates shader operations, managing contexts, and
+ * streamlining the rendering process.
  *
+ * The design ensures flexibility to accommodate different APIs under respective namespaces.
+ * The IPass class encapsulates shader operations, uniform, and attribute management, providing
+ * a foundation for complex rendering tasks. API-specific specializations are implemented to
+ * cater to the nuances of each graphics API.
+ *
+ * @tparam API The graphics API context.
  * @author Djoé DENNE
  * @date 13/12/2023
  */
 
 #pragma once
 
-#include <GL/glew.h>
 #include <vector>
 #include <string>
 #include <format>
-#include <type_traits>
 #include <unordered_map>
 #include <memory>
 #include <utils.hpp>
@@ -30,6 +35,16 @@
 
 namespace artist::graphic::pipeline
 {
+    /**
+     * @brief Template class for a rendering pass in the graphics pipeline.
+     *
+     * IPass acts as a container for shaders and manages their execution context.
+     * It abstracts the complexities of shader management, providing methods to load,
+     * use, and free resources. It's designed to be API-agnostic, allowing for
+     * flexible implementations for different graphics APIs.
+     *
+     * @tparam API Graphics API specialization, providing API-specific context and functionality.
+     */
     template <typename API>
     class IPass
     {
@@ -52,6 +67,12 @@ namespace artist::graphic::pipeline
         {
         }
 
+        /**
+         * @brief Loads the pass.
+         *
+         * This method is called to load the pass. It calls the load method of each shader in the pass,
+         * then calls the load method of the pass itself. It also calls the readUniforms and readAttributes
+         */
         virtual void load()
         {
             for (auto &shader : m_context->getShaders())
@@ -144,6 +165,16 @@ namespace artist::graphic::pipeline
         std::shared_ptr<typename API::PassContext> m_context; ///< The pass context.
     };
 
+    /**
+     * @brief Specialized Pass class template validating and utilizing API and PROFILE specific components.
+     *
+     * Extends IPass, incorporating compile-time validation of API and PROFILE-specific components
+     * using C++20 concepts and the 'requires' keyword. This ensures compatibility and availability
+     * of components for a given API and PROFILE, facilitating profile-specific behavior in the pipeline.
+     *
+     * @tparam API The graphics API context.
+     * @tparam PROFILE Profile indicating specialized implementation requirements.
+     */
     template <typename API, auto PROFILE>
         requires(API::Validator::template validatePass<API, PROFILE>())
     class Pass : public IPass<API>

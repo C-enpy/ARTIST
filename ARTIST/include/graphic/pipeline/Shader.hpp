@@ -1,10 +1,14 @@
 /**
  * @file Shader.hpp
- * @brief Defines the shader interface and OpenGL implementation for shader objects.
+ * @brief Interface for shader management in A.R.T.I.S.T. with an OpenGL specialization.
  *
- * This file contains the abstract definition of a shader object and its OpenGL-specific implementation.
- * The shader system is designed to be adaptable for multiple graphics APIs, including Vulkan, DirectX, and Metal.
- * The current implementation under the 'artist::graphic::pipeline::opengl' namespace is tailored for OpenGL.
+ * Introduces `IShader`, an abstract class for managing shaders' lifecycle, adaptable to multiple graphics APIs.
+ * It emphasizes a flexible design, supporting extensibility to Vulkan, DirectX, and Metal, alongside the current
+ * OpenGL specialization under 'artist::graphic::pipeline::opengl'. `IShader` abstracts shader operations, facilitating
+ * API-specific implementations through composition, focusing on lifecycle management (loading, operating, and cleanup)
+ * within a unified ShaderContext.
+ *
+ * @tparam API Graphics API context, dictating specific ShaderContext, Loader, and Freer implementations.
  *
  * @author Djoé DENNE
  * @date 13/12/2023
@@ -12,12 +16,9 @@
 
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <memory>
 #include <string>
 #include <format>
-#include <fstream>
 #include <common/exception/TraceableException.hpp>
 #include <graphic/context/ShaderContext.hpp>
 #include <graphic/validator/ComponentConcept.hpp>
@@ -25,19 +26,15 @@
 namespace artist::graphic::pipeline
 {
     /**
-     * @class Shader
-     * @brief Represents the base class for a shader, managing its lifecycle using composition.
+     * @class IShader
+     * @brief Base class for managing shader lifecycle across different graphics APIs.
      *
-     * The Shader class abstracts the shader object, managing its loading, operation, and cleanup.
-     * It delegates shader-specific operations to specialized components and maintains its own ShaderContext,
-     * which encapsulates all necessary state and API-specific details.
+     * Encapsulates the concept of a shader, providing mechanisms for loading, executing, and cleaning up shader resources.
+     * Designed to be API-agnostic, it allows for the creation of specialized shader implementations for different graphics APIs
+     * by defining API-specific ShaderContext, Loader, and Freer components. This approach ensures flexibility and extensibility,
+     * facilitating the integration of new graphics APIs into the A.R.T.I.S.T. framework.
      *
-     *
-     * @tparam API The graphics API context type to be used. This API class must define
-     *             ShaderContext, Loader, and Freer types within its scope. These types
-     *             correspond to the specific implementations for the chosen graphics API.
-     *             For example, if using OpenGL, the API class should define the respective
-     *             OpenGL context, loader, and freer.
+     * @tparam API The graphics API context. Specifies the requirements for ShaderContext, Loader, and Freer components.
      *
      * Design Considerations:
      * - Composition over Inheritance: The class uses separate components for loading and freeing shader resources.
@@ -131,6 +128,17 @@ namespace artist::graphic::pipeline
         std::shared_ptr<typename API::ShaderContext> m_context; // API-specific shader context
     };
 
+    /**
+     * @class Shader
+     * @brief Specialized shader class template, incorporating API and PROFILE-specific components validation.
+     *
+     * Extends `IShader` to include compile-time validation for API and PROFILE-specific components, leveraging
+     * C++20 concepts for ensuring compatibility and availability. This class facilitates the implementation of
+     * profile-specific shader behavior, optimizing shader operations for specific rendering techniques and hardware.
+     *
+     * @tparam API Graphics API context.
+     * @tparam PROFILE Rendering profile for specialized shader operations.
+     */
     template <typename API, auto PROFILE>
         requires(API::Validator::template validateShader<API, PROFILE>())
     class Shader : public IShader<API>

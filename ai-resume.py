@@ -6,7 +6,7 @@ def lister_fichiers_rpy(repertoire):
     for dossier_racine, dossiers, fichiers in os.walk(repertoire):
         for fichier in fichiers:
             # Check if the file has the .hpp or .cpp extension
-            if fichier.endswith(".hpp") or fichier.endswith(".cpp"):
+            if fichier.endswith(".hpp") or fichier.endswith(".cpp") or fichier.endswith(".txt"):
                 chemin_fichier = os.path.join(dossier_racine, fichier)
                 # Check if 'graphic' is part of the file path
                 if 'graphic' in chemin_fichier.split(os.sep):

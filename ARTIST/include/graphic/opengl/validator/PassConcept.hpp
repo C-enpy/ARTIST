@@ -1,3 +1,17 @@
+/**
+ * @file PassConcept.hpp
+ * @brief Defines the OpenGLPassFlow concept for validating OpenGL pass components.
+ *
+ * This concept checks for essential components within an OpenGL rendering pass for a specific PROFILE,
+ * ensuring each pass in the pipeline is correctly structured and functional. It validates the presence
+ * and proper implementation of key components such as `Loader`, `Freer`, `ShaderAttacher`, `AttributeReader`,
+ * and `User` within the `PassContext`. Additionally, it verifies that these components have the `on` method
+ * for operational use, aligning with the requirements for effective pass execution in the OpenGL context.
+ *
+ * @tparam API The graphics API context, tailored for OpenGL.
+ * @tparam PROFILE The rendering profile, specifying the behavior and requirements for the pass.
+ */
+
 #pragma once
 #include <memory>
 #include <type_traits>
