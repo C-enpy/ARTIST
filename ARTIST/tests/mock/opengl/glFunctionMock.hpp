@@ -165,9 +165,9 @@ namespace artist::mock::opengl
         MOCK_METHOD(void, glUniform1d_mock, (GLint, GLdouble));
         MOCK_METHOD(void, glUniform1i_mock, (GLint, GLint), ());
         MOCK_METHOD(void, glUniform1ui_mock, (GLint, GLuint), ());
-        MOCK_METHOD(void, glUniform2fv_mock, (GLint, GLfloat, const GLfloat *), ());
-        MOCK_METHOD(void, glUniform3fv_mock, (GLint, GLfloat, const GLfloat *), ());
-        MOCK_METHOD(void, glUniform4fv_mock, (GLint, GLfloat, const GLfloat *), ());
+        MOCK_METHOD(void, glUniform2fv_mock, (GLint, GLsizei, const GLfloat *), ());
+        MOCK_METHOD(void, glUniform3fv_mock, (GLint, GLsizei, const GLfloat *), ());
+        MOCK_METHOD(void, glUniform4fv_mock, (GLint, GLsizei, const GLfloat *), ());
         MOCK_METHOD(void, glUniformMatrix2fv_mock, (GLint, GLsizei, GLboolean, const GLfloat *), ());
         MOCK_METHOD(void, glUniformMatrix3fv_mock, (GLint, GLsizei, GLboolean, const GLfloat *), ());
         MOCK_METHOD(void, glUniformMatrix4fv_mock, (GLint, GLsizei, GLboolean, const GLfloat *), ());

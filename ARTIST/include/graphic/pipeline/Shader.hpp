@@ -45,6 +45,8 @@ namespace artist::graphic::pipeline
     class IShader
     {
     public:
+        virtual ~IShader() = default;
+
         /**
          * @brief Constructor for Shader.
          * @param shaderPath Path to the shader source file.

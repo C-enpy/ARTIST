@@ -35,6 +35,8 @@ namespace artist::graphic::pipeline
     class IAttribute
     {
     public:
+        virtual ~IAttribute() = default;
+
         // Constructor
         explicit IAttribute(std::shared_ptr<typename API::AttributeContext> context)
             : m_context(context) {}

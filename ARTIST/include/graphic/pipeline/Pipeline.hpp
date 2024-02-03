@@ -28,6 +28,8 @@ namespace artist::graphic::pipeline
     class IPipeline
     {
     public:
+        virtual ~IPipeline() = default;
+
         /**
          * Constructs a pipeline with a list of passes and an optional context.
          *

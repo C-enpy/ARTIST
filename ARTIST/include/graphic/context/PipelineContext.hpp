@@ -25,7 +25,7 @@ namespace artist::graphic::context
             return m_passes[index];
         }
 
-        [[nodiscard]] int getPassesCount() const
+        [[nodiscard]] unsigned int getPassesCount() const
         {
             return m_passes.size();
         }

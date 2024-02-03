@@ -49,7 +49,7 @@ namespace artist::graphic::pipeline
     class IPass
     {
     public:
-        // New or modified methods
+        virtual ~IPass() = default;
 
         // Constructor accepting components
         IPass(const std::initializer_list<std::shared_ptr<IShader<API>>> &shaders,
