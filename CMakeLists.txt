@@ -5,8 +5,23 @@ option(MOCK_APPDATA "Mock AppData" OFF)
 # Add an option for coverage
 option(COVERAGE "Enable coverage reporting" OFF)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
-include(CodeCoverage)
+
+# Download automatically, you can also just copy the conan.cmake file
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.9/conan.cmake"
+                "${CMAKE_BINARY_DIR}/conan.cmake")
+endif()
+
+# Download automatically, you can also just copy the CodeCoverage.cmake file
+if(COVERAGE AND NOT EXISTS "${CMAKE_BINARY_DIR}/CodeCoverage.cmake")
+message(STATUS "Downloading CodeCoverage.cmake from https://github.com/bilke/cmake-modules")
+    file(DOWNLOAD "https://raw.githubusercontent.com/bilke/cmake-modules/master/CodeCoverage.cmake"
+                "${CMAKE_BINARY_DIR}/CodeCoverage.cmake")
+endif()
+
+include(${CMAKE_BINARY_DIR}/CodeCoverage.cmake)
+include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 project("artist")
 
@@ -22,15 +37,6 @@ if (COVERAGE)
     message("Building with coverage reporting.")
     append_coverage_compiler_flags()
 endif()
-
-# Download automatically, you can also just copy the conan.cmake file
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.9/conan.cmake"
-                "${CMAKE_BINARY_DIR}/conan.cmake")
-endif()
-
-include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 conan_cmake_run(CONANFILE conanfile.txt
                 BUILD missing
