@@ -37,6 +37,7 @@ target_link_libraries(${PROJECT_NAME}_component_tests PRIVATE ${CONAN_LIBS} ${SY
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.2.0)
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lstdc++_libbacktrace")
         target_link_libraries(${PROJECT_NAME}_component_tests PRIVATE -lstdc++_libbacktrace)
     endif()
 endif()

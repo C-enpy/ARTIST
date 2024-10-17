@@ -1,0 +1,16 @@
+@startuml
+actor Pipeline
+
+Pipeline -> PipelineContext : Manage pipeline state
+Pipeline -> PipelineUser : Activate pass
+PipelineUser -> Pass : Activate shaders
+Pass -> UniformReader : Read uniforms
+Pass -> AttributeReader : Read attributes
+Pass -> Shader : Use shader for rendering
+
+PipelineResetter -> PipelineContext : Reset state
+
+Pipeline -> Freer : Free resources
+Freer -> Shader : Free shader
+Freer -> Pass : Free pass
+@enduml

@@ -36,7 +36,8 @@ add_executable(${PROJECT_NAME}_tests ${test_files})
 target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${SYSLIBS} GTest::gtest_main GTest::gmock_main)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.2.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.2.0)# In CMakeLists.txt
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lstdc++_libbacktrace")
         target_link_libraries(${PROJECT_NAME}_tests PRIVATE -lstdc++_libbacktrace)
     endif()
 endif()
