@@ -12,18 +12,20 @@ A.R.T.I.S.T. addresses the need for a modular, abstract, and efficient rendering
 ## Requirements
 - **Compiler**: GCC 13.2 or later
 - **Build System**: CMake 3.25 or later
-- **Package Manager**: Conan 1.62.0
+- **Package Manager**: Conan 1.64.0
 - **Dependencies**: All dependencies are listed in `conanfile.txt`. Ensure to visit each dependency's website or GitHub repository for more information.
 
 ## Installation and Build Instructions
 1. Update and install essential packages:
    ```sh
+   # Add the toolchain PPA for GCC 13
+   sudo add-apt-repository ppa:ubuntu-toolchain-r/test # not mendatory for every one
    sudo apt-get update
    sudo apt-get install pkg-config ninja-build tree -y
    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 60
    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 60
    sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-13 60
-   sudo pip install conan==1.62.0
+   sudo pip install conan==1.64.0
    ```
 2. Configure Conan:
    ```sh
