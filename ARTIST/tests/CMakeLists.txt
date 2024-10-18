@@ -26,14 +26,13 @@ enable_testing()
 
 # Add your test files
 file(GLOB_RECURSE test_files ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include
-${CMAKE_CURRENT_SOURCE_DIR}/../tests-common/include
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../tests-common/include
 ${CMAKE_CURRENT_SOURCE_DIR}/include
 ${CMAKE_CURRENT_SOURCE_DIR}/mock)
 
 add_executable(${PROJECT_NAME}_tests ${test_files})
 
-target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${SYSLIBS} GTest::gtest_main GTest::gmock_main)
+target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${SYSLIBS} GTest::gtest_main GTest::gmock_main ArtistLib)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.2.0)# In CMakeLists.txt

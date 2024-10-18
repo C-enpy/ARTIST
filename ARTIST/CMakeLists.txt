@@ -5,57 +5,40 @@ cmake_minimum_required (VERSION 3.16)
 include(FetchContent)
 include(GNUInstallDirs)
 
-project("artist" VERSION 0.0.1)
+project(ArtistLib VERSION 1.0 LANGUAGES CXX)
 
-#file(
-#        GLOB_RECURSE artist_src
-#        ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
-#        ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
-#
-#file(
-#        GLOB_RECURSE artist_headers
-#        ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
-#        ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
-#)
-#
-##add_library(        ${PROJECT_NAME}        STATIC        ${artist_src})
-#
-## Set the version property.
-#set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-## Set the shared object version property to the project's major version.
-#set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR})
-#
-#target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_23)
-#
-#target_include_directories(
-#        ${PROJECT_NAME}
-#        PUBLIC
-#        include
-#)
-#
-#target_include_directories(
-#        ${PROJECT_NAME}
-#        PRIVATE
-#        src
-#)
-#target_link_libraries(${PROJECT_NAME} PUBLIC ${CONAN_LIBS})
-## if gcc >= 13.2.0
-#if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-#    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 13.2.0)
-#        target_link_libraries(${PROJECT_NAME} PRIVATE -lstdc++_libbacktrace)
-#    endif()
-#endif()
-##add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-##    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${PROJECT_NAME}> "C:/Users/djden/source/repos/ARTIST/out/build/x86-debug/ARTIST/tests/${PROJECT_NAME}.dll"
-##        COMMENT "Copying ${PROJECT_NAME} to output directory" VERBATIM
-##)
-#
-#if(MOCK_GL)
-#        target_compile_definitions(${PROJECT_NAME} PRIVATE __mock_gl__)
-#endif()
-#if(MOCK_APPDATA)
-#        target_compile_definitions(${PROJECT_NAME} PRIVATE __mock_appdata__)
-#endif()
+# Create an interface library (header-only)
+add_library(ArtistLib INTERFACE)
+
+# Specify the include directories for the library
+target_include_directories(ArtistLib INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+# Optional: Add version information for packaging
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/ArtistLibConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+# Optional: Installation instructions
+install(DIRECTORY include/ DESTINATION include)
+install(TARGETS ArtistLib EXPORT ArtistLibTargets)
+
+# Generate config files for find_package() support
+install(EXPORT ArtistLibTargets
+        FILE ArtistLibTargets.cmake
+        NAMESPACE ArtistLib::
+        DESTINATION lib/cmake/ArtistLib)
+
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/ArtistLibConfigVersion.cmake"
+    DESTINATION lib/cmake/ArtistLib
+)
+
 
 add_subdirectory(tests)
 add_subdirectory(component-tests)
