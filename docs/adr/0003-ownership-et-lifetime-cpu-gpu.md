@@ -187,9 +187,11 @@ x64 Debug. HEAD principal `e589aee` + diff D `0bbca504` et H `a423fc25` intégr�
 Pass encore partagé et autres chemins/plateformes ne sont pas fermés par ces tests.
 Aucun autre ADR `Proposed` n'est adopté implicitement.
 
-**Sélection suivante, non implémentée** : [[architecture/next-mission|F5 — diagnostics GL vides et nettoyage sûr]],
-après avis PM/architecte. Cette sélection des chemins
-d'erreur ne modifie pas `implementation: partial` et ne démarre pas Pipeline.
+**F5 exécuté puis archivé** : [[architecture/missions/2026-10-15-f5-gl-diagnostics|diagnostics GL vides et nettoyage sûr]],
+sélection des chemins d'erreur après avis PM/architecte — RED causal, correction
+bornée des deux loaders et validation indépendante (143/143 distincts, 121 ASan
+distincts). Cette coupe ne modifie pas `implementation: partial` et ne démarre
+pas Pipeline.
 
 ## Références
 

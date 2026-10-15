@@ -2,7 +2,7 @@
 title: Build et tests actuels
 category: development
 tags: [artist, build, testing, guide]
-summary: Windows MSVC et Conan 2 vérifiés, 137 tests normaux et ASan opt-in séparé ; commandes, instrumentation et limites.
+summary: Windows MSVC et Conan 2 vérifiés, 143 tests normaux et ASan opt-in séparé ; commandes, instrumentation et limites.
 status: verified-windows-debug
 created: 2026-10-03
 updated: 2026-10-15
@@ -14,6 +14,31 @@ provenance:
 ---
 
 # Build et tests actuels
+
+## Diagnostics GL vides F5 — validation indépendante du 2026-10-15
+
+Diff intégré non commité au HEAD `3144beb` (auteur `5dfafd1` RED + `4154780`
+GREEN, 204+/7− sur quatre fichiers) : **143/143 distincts** (112 unit + 31
+OpenGL, dont 6 nouveaux diagnostics paramétrés zéro/un/normal sur les deux
+loaders), zéro échec/skip/disabled/timeout, GPU réel RTX 3090 / GL 3.3.0 /
+NVIDIA 617.42. Revue indépendante : PASS 7/7 critères. ASan séparé :
+préflight sain exit 0 et canari `heap-use-after-free` exit 86, options strictes
+`halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0` fixées dans chaque
+processus invoquant CTest ; **112/112 unit + 9/9 GL lifetime = 121 distincts**.
+Les 22 autres GL restent hors sélection ASan (mission), pas abandonnés. La
+longueur zéro est forcée par les mocks uniquement ; aucune image ni mesure de
+performance. Commandes réelles, artefacts, empreintes et limites :
+[[references/session-2026-10-15-f5-gl-diagnostics|synthèse de mission]],
+[[architecture/missions/2026-10-15-f5-gl-diagnostics|mission archivée]] et
+`_meta/session-2026-10-15-f5-gl-diagnostics-validation.json`. Preuves non
+versionnées : `out/logs/f5-gl-diagnostics/` (auteur), `out/logs/f5-qa-f5/`
+(QA), `out/reviews/f5-r-son.md` (revue).
+
+Incidents distingués des échecs moteur : C1083 de chemin trop long dans le
+worktree auteur (résolu par alias `subst Z:` autorisé par le lead, sans
+déplacement Git ni modification CMake) ; ENOENT sur un `cmake.exe` inexistant
+sous `out/tooling/build/Scripts` pendant la QA (erreur d'invocation corrigée avec
+accord du lead, aucun test rejoué).
 
 ## Loaded-owner move — validation indépendante du 2026-10-15
 
@@ -199,7 +224,8 @@ detach → deleteProgram → deleteShader. Points de fiabilité documentés :
   son destructeur ; la libération RAII se déclenche côté dérivé.
 
 Les comptes historiques de cette tranche : **95 unit + 27 OpenGL = 122** ;
-les comptes courants après loaded-owner move sont **106 + 31 = 137**. À chaque nouveau test,
+les comptes courants après loaded-owner move sont **106 + 31 = 137**, et
+après F5 **112 + 31 = 143**. À chaque nouveau test,
 vérifier l'unicité des noms de fixtures entre TU.
 
 ```powershell

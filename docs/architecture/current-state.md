@@ -20,6 +20,9 @@ updated: 2026-10-15
 > Voir [[references/session-2026-10-15-loaded-owner-move|la synthèse et les limites]]
 > et [[development/build-and-test|les commandes]].
 > Aucune performance ni équivalence d'image n'est mesurée.
+> État ultérieur vérifié : mission F5 au HEAD `3144beb` avec diff intégré non
+> commité — 143/143 distincts, ASan 121 distincts, voir
+> [[references/session-2026-10-15-f5-gl-diagnostics|la synthèse F5]].
 
 ## Ce qui est présent
 
@@ -118,9 +121,13 @@ exception de cleanup est de base, sans rollback des detach ; un cleanup qui jett
 en destructeur peut encore terminer le processus. Contexte/thread GL valide et
 sérialisation restent des préconditions du consommateur. Aucun Pipeline migré.
 
-La [[architecture/next-mission|prochaine mission sélectionnée]] est F5, diagnostics
-GL vides compilation/link. Risque de source confirmé, pas de RED ni correction
-exécutés pour cette sélection ; aucun résultat antérieur n'est étendu à F5.
+La [[architecture/missions/2026-10-15-f5-gl-diagnostics|mission F5]] est terminée
+dans son périmètre : diagnostics GL vides compilation/link bornés dans les deux
+loaders après un RED causal, **143/143 normaux distincts** (112 unit + 31
+OpenGL) et **121 cas ASan distincts** (112 + 9 GL lifetime) vérifiés
+indépendamment, revue et QA PASS. Q1 (exposition INT_max), F4, F8, le harness
+ASan et Pipeline restent ouverts ; aucun résultat antérieur n'est étendu
+au-delà de ce périmètre.
 
 [[engineering-principles|Le cap]] explique l'intention ;
 [[adr/README|les ADR]] proposent les contrats ;

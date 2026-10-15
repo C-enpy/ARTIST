@@ -14,15 +14,21 @@ Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier
 de livraison. Les durées et pourcentages des rapports ne sont pas des budgets ratifiés.
 
-## Prochaine mission sélectionnée — F5
+## Mission F5 du 2026-10-15 — terminée dans son périmètre
 
-[[architecture/next-mission|Diagnostics GL vides et nettoyage sûr]] : coupe bornée
-des chemins d'échec compilation/link, avant la migration Pipeline. Sélection
-documentaire validée après avis PM/architecte ; **aucun développement commencé**.
-Auteur futur `gpu-engineer`, PM/LLM C64 → 70/R74, RED causal requis. F4, F8, Q1 et
-Pipeline restent distincts ; aucune extension ASan GL complète implicite.
+[[architecture/missions/2026-10-15-f5-gl-diagnostics|Diagnostics GL vides et
+nettoyage sûr]] : RED causal (`0xc0000409`, précondition du vecteur vide sur log
+zéro), correction bornée des deux loaders et validation indépendante ;
+**143/143 normaux distincts** (112 unit dont 6 nouveaux diagnostics + 31
+OpenGL) et **121 ASan distincts** (112 + 9 GL lifetime), zéro échec/skip.
+Preuves sur le diff intégré au HEAD `3144beb`, non commité — empreintes
+`20139b4a…`, `9e26477a…`, `a91aa012…`, `daca4475…` :
+[[references/session-2026-10-15-f5-gl-diagnostics|synthèse de mission]]. ADR-0003
+reste Accepted/partial. Q1 (exposition INT_max), F4, F8, le harness ASan et
+Pipeline restent ouverts ; **aucune nouvelle sélection** (décision séparée, hors
+de cette clôture documentaire).
 
-## Mission précédente du 2026-10-15 — terminée dans son périmètre
+## Mission loaded-owner du 2026-10-15 — terminée dans son périmètre
 
 [[architecture/missions/2026-10-15-loaded-owner-move|Assignation move vers un Shader/Pass chargé, puis ASan]] :
 RED causal, correction et revue indépendante ; **137/137 normaux** (106 CPU,
@@ -30,7 +36,8 @@ RED causal, correction et revue indépendante ; **137/137 normaux** (106 CPU,
 [[references/session-2026-10-15-loaded-owner-move|Preuves et limites]] sur le diff
 D+H intégré au HEAD `e589aee` (pas un nouveau commit principal). ADR-0003 reste
 Accepted/partial. Baseline historique `4d29842` et 122/122 préservée.
-La sélection F5 ci-dessus est explicite et ultérieure ; Pipeline reste hors tranche.
+Les deux missions du 2026-10-15 sont archivées ; Pipeline reste hors tranche et
+aucune mission suivante n'est sélectionnée ici.
 
 ## 0 — Obtenir une baseline exécutable
 

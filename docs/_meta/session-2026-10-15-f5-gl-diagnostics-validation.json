@@ -1,0 +1,272 @@
+{
+  "generated_on": "2026-10-15T16:46:29Z",
+  "scope": "Documentation closure for mission F5 only; no build, no test, no code change; docs/** and docs/_meta/** only",
+  "mission": "F5: safe empty shader/program diagnostics and preserved failure cleanup",
+  "status": "completed-in-scope",
+  "implementation": "verified",
+  "principal_head": "3144bebd2e5f8d5ada64b676b4344fe115ec0b56",
+  "integration_state": {
+    "head": "3144bebd2e5f8d5ada64b676b4344fe115ec0b56",
+    "unstaged_files": 4,
+    "unstaged_paths": [
+      "ARTIST/include/graphic/opengl/pipeline/component/shader/Loader.hpp",
+      "ARTIST/include/graphic/opengl/pipeline/component/pass/Loader.hpp",
+      "ARTIST/tests/src/graphic/opengl/pipeline/component/shader/LoaderTests.cpp",
+      "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/LoaderTests.cpp"
+    ],
+    "untracked_files": 0,
+    "diff_stat": "204 insertions, 7 deletions",
+    "git_diff_check_exit": 0,
+    "note": "Author work remained unstaged in principal, per lead decision (out/ evidence unversioned; worktree transport not applicable). No commit of the code diff."
+  },
+  "author_commits": {
+    "red": "5dfafd177dd6e30baac415f52ddd46bf2e247536",
+    "green": "415478058b64bb47165cbbc7fdbe3c35677f1578"
+  },
+  "source_hashes": {
+    "ARTIST/include/graphic/opengl/pipeline/component/shader/Loader.hpp": "20139b4ae4aa95413191bb7d4c503aff38228eb06ed131986dc8625269614754",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/Loader.hpp": "9e26477a134e612f1dab5f24781ba9a3f87335684d051731cf2bd7ea2bca706f",
+    "ARTIST/tests/src/graphic/opengl/pipeline/component/shader/LoaderTests.cpp": "a91aa012556d6f9d6d38999e8d229ef312474282e6fd2cce92a192aa562b55fa",
+    "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/LoaderTests.cpp": "daca44758b93e8b58d0d3cf0e3ccae12d33b5ecef1aa66d4b83e2e27f5e2ad27",
+    "diff_fingerprint_final_diff": "c4f4d9fb5495d1d548ad8c7fe3ed1898ede96e7835eee38af2dd88b892491da2"
+  },
+  "counts": {
+    "normal": {
+      "baseline_before_mission": 137,
+      "added_diagnostics": 6,
+      "derived": "137 + 6 = 143",
+      "discovered_distinct": 143,
+      "unit": 112,
+      "opengl": 31,
+      "focused": 6,
+      "failures": 0,
+      "skipped": 0,
+      "disabled": 0,
+      "timeouts": 0
+    },
+    "asan": {
+      "derived": "112 unit (6 diagnostics included) + 9 opengl lifetime = 121 distinct",
+      "selected_distinct": 121,
+      "unit": 112,
+      "opengl_lifetime": 9,
+      "other_opengl_not_selected": 22,
+      "failures": 0,
+      "skipped": 0,
+      "timeouts": 0,
+      "note": "22 other GL were mission-unselected, not skipped after failure; no implicit extension"
+    }
+  },
+  "campaigns": {
+    "author_red": {
+      "tests": "shader Zero 1/1 fail, pass Zero 1/1 fail (CTest exit 8, native 0xc0000409, vector subscript out of range at include\\vector(1931), durations 0.100842 s / 0.0636528 s); LoaderDiagnosticsTests TerminatorOnly|Message 4/4 PASS already (no fabricated failure)",
+      "artifacts": [
+        "out/logs/f5-gl-diagnostics/red-shader-zero.xml",
+        "out/logs/f5-gl-diagnostics/red-pass-zero.xml",
+        "out/logs/f5-gl-diagnostics/red-nonzero.xml"
+      ],
+      "sha256": {
+        "red-shader-zero.xml": "c9134e762a0d5a622a1a79d42227e93cbbd0313fb2cd616e517945897b77fb0e",
+        "red-pass-zero.xml": "39a8f297bca6d59c14f01a99631b1be555602aac2edcc0f5307dfcea80dde82a",
+        "red-nonzero.xml": "13e0f765adf1bcf48c7de9f2abd4e06ee8ec7b39e7a03fdbbc8e6f251b669889"
+      }
+    },
+    "author_green_normal": {
+      "commands": [
+        "cmake --build --preset windows-msvc-debug --parallel 1",
+        "ctest --preset windows-msvc-debug -R LoaderDiagnosticsTests --timeout 30 --no-tests=error -V --output-junit Z:/out/logs/f5-gl-diagnostics/green-focused.xml",
+        "ctest --preset windows-msvc-debug -L unit --timeout 30 --no-tests=error -V --output-junit Z:/out/logs/f5-gl-diagnostics/green-unit.xml",
+        "ctest --preset windows-msvc-debug -L opengl --timeout 30 --no-tests=error -V --output-junit Z:/out/logs/f5-gl-diagnostics/green-opengl.xml"
+      ],
+      "counts": "focused 6/6, unit 112/112, opengl 31/31 = 143 distinct",
+      "artifacts": [
+        "out/logs/f5-gl-diagnostics/green-focused.xml",
+        "out/logs/f5-gl-diagnostics/green-unit.xml",
+        "out/logs/f5-gl-diagnostics/green-opengl.xml"
+      ],
+      "sha256": {
+        "green-focused.xml": "b3c8beca05a67f7c1674b88611852d579611c069211da5a3c1e8d5f83fac4a28",
+        "green-unit.xml": "29ad8b6bd560320b5d6a3a861cdf2d1584349a05aea1fd92163f8746308fd55f",
+        "green-opengl.xml": "c2dc5edbb153742370ab5bfbc5601a62259e87c70ab57cd89986a778feaa31e2"
+      }
+    },
+    "author_asan": {
+      "commands": [
+        "$env:ASAN_OPTIONS = 'halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0'",
+        "powershell -NoProfile -ExecutionPolicy Bypass -File Z:/scripts/build-windows.ps1 -AddressSanitizer -AsanPreflightOnly -Jobs 1",
+        "cmake --build --preset windows-msvc-debug-asan --parallel 1",
+        "ctest --preset windows-msvc-debug-asan -R LoaderDiagnosticsTests --timeout 30 --no-tests=error -V --output-junit Z:/out/logs/f5-gl-diagnostics/asan-focused.xml",
+        "ctest --preset windows-msvc-debug-asan -L unit --timeout 30 --no-tests=error -V --output-junit Z:/out/logs/f5-gl-diagnostics/asan-unit.xml",
+        "ctest --preset windows-msvc-debug-asan -L opengl -R ShaderLifetimeComponentTests --timeout 30 --no-tests=error -V --output-junit Z:/out/logs/f5-gl-diagnostics/asan-opengl-lifetime.xml"
+      ],
+      "strict_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+      "preflight": "healthy exit 0; intentional canary heap-use-after-free exit 86",
+      "counts": "focused 6/6, unit 112/112, opengl lifetime 9/9 = 121 distinct",
+      "artifacts": [
+        "out/logs/f5-gl-diagnostics/asan-focused.xml",
+        "out/logs/f5-gl-diagnostics/asan-unit.xml",
+        "out/logs/f5-gl-diagnostics/asan-opengl-lifetime.xml"
+      ],
+      "sha256": {
+        "asan-focused.xml": "d062140961790c73872b63c464d2f7ece32d566bbe081c57db8665f7443d7c20",
+        "asan-unit.xml": "3d01c7896424866a72ea886bfcc80e3caa24c2817651b9332515ebdba24efd68",
+        "asan-opengl-lifetime.xml": "c5b8922d5399ecf8ac9f57f02f76772b49fa5ac82e5a4c32696b6079fbe21f47",
+        "asan-control-summary.json": "f944528fb5e9ef037039ebfe2d40e41744b0bef52ae52a4a51634402c3442c42"
+      }
+    },
+    "qa_normal": {
+      "commands": [
+        "C:/Program Files/CMake/bin/cmake.exe --build --preset windows-msvc-debug --parallel 1",
+        "C:/Program Files/CMake/bin/ctest.exe --preset windows-msvc-debug --show-only=json-v1 --timeout 60 --no-tests=error --parallel 1",
+        "C:/Program Files/CMake/bin/ctest.exe --preset windows-msvc-debug -R LoaderDiagnosticsTests --parallel 1 --timeout 60 --no-tests=error --output-on-failure --output-junit C:/Users/djden/source/repos/ARTIST/out/logs/f5-qa-f5/qa-focused.xml",
+        "C:/Program Files/CMake/bin/ctest.exe --preset windows-msvc-debug -L unit --parallel 1 --timeout 60 --no-tests=error --output-on-failure --output-junit C:/Users/djden/source/repos/ARTIST/out/logs/f5-qa-f5/qa-unit.xml",
+        "C:/Program Files/CMake/bin/ctest.exe --preset windows-msvc-debug -L opengl --parallel 1 --timeout 60 --no-tests=error --output-on-failure --output-junit C:/Users/djden/source/repos/ARTIST/out/logs/f5-qa-f5/qa-opengl.xml"
+      ],
+      "counts": "discovery and execution 143 distinct (unit 112 + opengl 31), zero fail/skip/disabled/timeout; ASAN_OPTIONS explicitly removed for normal runs"
+    },
+    "qa_asan": {
+      "commands": [
+        "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -AddressSanitizer -AsanPreflightOnly -Jobs 1",
+        "C:/Program Files/CMake/bin/cmake.exe --build --preset windows-msvc-debug-asan --parallel 1",
+        "C:/Program Files/CMake/bin/ctest.exe --preset windows-msvc-debug-asan -R LoaderDiagnosticsTests --parallel 1 --timeout 60 --no-tests=error --output-on-failure --output-junit C:/Users/djden/source/repos/ARTIST/out/logs/f5-qa-f5/qa-asan-focused.xml",
+        "C:/Program Files/CMake/bin/ctest.exe --preset windows-msvc-debug-asan -L unit --parallel 1 --timeout 60 --no-tests=error --output-on-failure --output-junit C:/Users/djden/source/repos/ARTIST/out/logs/f5-qa-f5/qa-asan-unit.xml",
+        "C:/Program Files/CMake/bin/ctest.exe --preset windows-msvc-debug-asan -L opengl -R ShaderLifetimeComponentTests --parallel 1 --timeout 60 --no-tests=error --output-on-failure --output-junit C:/Users/djden/source/repos/ARTIST/out/logs/f5-qa-f5/qa-asan-lifetime-gl.xml"
+      ],
+      "strict_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0 (explicit literal per invoking process, never inherited)",
+      "preflight": "healthy exit 0; canary heap-use-after-free exit 86",
+      "counts": "6/6 focused, 112/112 unit, 9/9 lifetime GL = 121 distinct; 22 other GL unselected by mission contract"
+    }
+  },
+  "verdicts": {
+    "R_correctness_reviewer": {
+      "artifact": "out/reviews/f5-r-son.md",
+      "sha256": "507ad8c8a9d89ebaf3f058b484b5f10bd1c3fa7cf96de735d27db2aa9b7990d5",
+      "verdict": "PASS",
+      "criteria_passed": 7,
+      "criteria_total": 7,
+      "criteria": [
+        "bornage diagnostic",
+        "cleanup/handle without double delete",
+        "invariants",
+        "RED causal quality",
+        "scope",
+        "all four routes covered",
+        "proof traceability"
+      ],
+      "limitations": "Read-only: nothing compiled or executed; source-to-binary link proven by SHA-256 integrity and metadata, not rebuild; no UBSan/TSan; no exhaustive UB/leak absence claim"
+    },
+    "V_rendering_verifier": {
+      "artifact": "out/logs/f5-qa-f5/qa-report.json",
+      "sha256": "ad133b8972e47ae856af0d09b8bb10ce2cde25ca51df5d501186cd6671432638",
+      "verdict": "PASS",
+      "criteria_passed": 10,
+      "criteria_total": 10,
+      "criteria": [
+        "I0-source-integrity",
+        "build-normal",
+        "diagnostic-regression-normal",
+        "normal-143-distinct",
+        "asan-preflight",
+        "build-asan",
+        "asan-strict-options",
+        "asan-121-distinct",
+        "author-consistency",
+        "artifact-integrity"
+      ],
+      "scope": "Contractual behavior/API tests on Windows Debug only; visual and performance OUT_OF_SCOPE; no corrective action on parent"
+    }
+  },
+  "review_items": {
+    "Q1": "weak, pre-existing, out of diff: driver-reported INT_MAX INFO_LOG_LENGTH throws std::vector bad_alloc/length_error before the business exception and the native handle is not deleted; old code had same exposure; minimal mock experiment proposed, NOT executed; recorded in known-incidents",
+    "Q2": "weak, proof limit: driver reporting 0 with an existing log yields silent empty diagnostic (spec-conformant, no regression); not observed on RTX 3090 / 617.42",
+    "Q3": "info, out of diff: ShaderAttacher::on throwing after setPassID leaves program handle published without rollback; F1 known-incident limit; DEFER_TO engine-architect; remains open",
+    "Q4": "info: std::string_view now prints an eventual internal NUL of the log; old code stopped at first NUL; pathological driver case, untested",
+    "Q5": "info, provenance: GREEN build at head 5dfafd1 with uncommitted fix; final-validation.json (head 4154780, sourceHashesMatchGreen true) coherent; same bytes verified"
+  },
+  "incidents_resolved": {
+    "author_long_path_c1083": {
+      "classification": "environment incident, NOT a RED",
+      "detail": "Physical worktree path too long caused C1083 on ShaderLifetimeComponentTests.cpp (build exit 1); resolved with lead-authorized subst Z: alias to the worktree, no git move, no CMake change",
+      "artifact": "out/logs/f5-gl-diagnostics/short-path.json, report.md"
+    },
+    "qa_cmake_enoent": {
+      "classification": "QA invocation mistake, not engine failure",
+      "detail": "First normal build used nonexistent out/tooling/build/Scripts/cmake.exe (ENOENT); stopped, lead notified; explicit approval to correct executable resolver only to C:/Program Files/CMake/bin/cmake.exe and ctest.exe; native ASan reports retained; no engine test retried (none failed)",
+      "artifact": "out/logs/f5-qa-f5/qa-report.json commandIncident"
+    }
+  },
+  "environment": {
+    "host": "DESKTOP-S232DQI",
+    "os": "Windows 10.0.26300.9711 x64 / Windows 11 Pro 10.0.26300",
+    "configuration": "Debug",
+    "compiler": "MSVC 19.44.35221 / toolset 14.44.35207 (STL143)",
+    "sdk": "10.0.26100.0",
+    "cmake": "3.31.7",
+    "conan": "2.12.2",
+    "ninja": "1.13.0.git.kitware.jobserver-pipe-1",
+    "python": "3.10.11",
+    "cxxFlag": "-std:c++latest",
+    "gpu": "NVIDIA GeForce RTX 3090/PCIe/SSE2",
+    "opengl": "3.3.0 NVIDIA 617.42 (driver 32.0.16.1742)",
+    "asan_instrumented_tu": 36,
+    "loaders": "cmd.exe /d /c out/tooling/load-msvc.cmd; out/tooling/build/Scripts prefixed to PATH for direct builds"
+  },
+  "documentation_outputs": [
+    "docs/architecture/missions/2026-10-15-f5-gl-diagnostics.md",
+    "docs/references/session-2026-10-15-f5-gl-diagnostics.md",
+    "docs/development/known-incidents.md",
+    "docs/development/build-and-test.md",
+    "docs/architecture/next-mission.md",
+    "docs/architecture/correction-plan.md",
+    "docs/index.md",
+    "docs/architecture/current-state.md",
+    "docs/adr/0003-ownership-et-lifetime-cpu-gpu.md",
+    "docs/log.md",
+    "docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json"
+  ],
+  "historical_proof_preserved": {
+    "normal_unique": 137,
+    "normal_unit": 106,
+    "normal_gl": 31,
+    "asan_unique": 115,
+    "asan_unit": 106,
+    "asan_lifetime_gl": 9,
+    "note": "2026-10-15 loaded-owner move results neither refuted nor retroactively extended"
+  },
+  "not_claimed": [
+    "No performance measurement or image/visual proof",
+    "No exhaustive absence of UB, driver leak or RAII failure outside tested scope",
+    "22 other GL not executed under ASan (mission selection, not abandoned)",
+    "Q1 (INT_MAX exposure) and harness ASAN_OPTIONS intake remain open",
+    "Release, Linux, CI distante, UBSan/TSan, coverage not validated"
+  ],
+  "documentation_health": {
+    "notes": 29,
+    "wikilink_occurrences": 240,
+    "wikilink_occurrences_excluding_inline_code_nodiscard": 238,
+    "unique_targets": 30,
+    "broken_wikilinks": 0,
+    "orphan_notes": 0,
+    "json_metadata_parsed": 9,
+    "git_diff_check_exit": 0,
+    "wikilinks_redirected_to_archive": 5,
+    "note": "Two inline-code [[nodiscard]] attribute mentions (log.md, cpp-guidelines.md) excluded as wikilinks, per 2026-10-03 precedent"
+  },
+  "qmd": {
+    "collection": "artist-wiki",
+    "targeted_only": true,
+    "indexed": 2,
+    "updated": 8,
+    "unchanged": 19,
+    "embed_documents": 10,
+    "embed_chunks": 50,
+    "embed_seconds": 11,
+    "result": "PASS",
+    "commands": [
+      "node .opencode/scripts/update-wiki.mjs",
+      "qmd embed -c artist-wiki"
+    ],
+    "run_utc": "2026-10-15T16:46-16:50Z",
+    "logs_persisted": false,
+    "logs_note": "DOC scope restricted to docs/** and docs/_meta/**; no out/ logs written for this closure"
+  }
+}

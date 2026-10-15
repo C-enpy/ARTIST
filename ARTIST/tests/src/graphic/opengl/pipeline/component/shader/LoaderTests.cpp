@@ -3,6 +3,12 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <memory>
+#include <algorithm>
+#include <sstream>
+#include <string>
+#ifdef _MSC_VER
+#include <crtdbg.h>
+#endif
 #include <opengl/glFunctionMock.hpp>
 #include <graphic/MockApi.hpp>
 #include <graphic/opengl/profile/Shader.hpp>
@@ -121,5 +127,77 @@ TEST_F(ShaderLoaderTests, LoadShaderFailureTest)
                         { shader::OpenGLShaderLoader<Classic>::on(*shaderContext); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
 }
+
+class ShaderLoaderDiagnosticsTests : public ShaderLoaderTests, public ::testing::WithParamInterface<GLint>
+{
+protected:
+    void SetUp() override
+    {
+        previousBuffer = std::cerr.rdbuf(diagnostics.rdbuf());
+#ifdef _MSC_VER
+        // Keep a failing STL precondition visible to isolated CTest runs, not a CRT dialog.
+        previousReportMode = _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+        previousReportFile = _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
+#endif
+    }
+
+    void TearDown() override
+    {
+        std::cerr.rdbuf(previousBuffer);
+#ifdef _MSC_VER
+        _CrtSetReportMode(_CRT_ASSERT, previousReportMode);
+        _CrtSetReportFile(_CRT_ASSERT, previousReportFile);
+#endif
+        ShaderLoaderTests::TearDown();
+    }
+
+    std::ostringstream diagnostics;
+    std::streambuf *previousBuffer = nullptr;
+#ifdef _MSC_VER
+    int previousReportMode = 0;
+    _HFILE previousReportFile = nullptr;
+#endif
+};
+
+TEST_P(ShaderLoaderDiagnosticsTests, CompileFailurePreservesErrorAndCleansUp)
+{
+    context::OpenGLShaderContext shaderContext;
+    shaderContext.setShaderType(artist::graphic::context::ShaderType::VERTEX);
+    shaderContext.setShaderCode("invalid shader source");
+    const GLint logLength = GetParam();
+    const std::string message = logLength > 1 ? "driver compilation failure" : "";
+    auto gl = mock::opengl::glFunctionMock::instance();
+
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*gl, glCreateShader_mock(GL_VERTEX_SHADER)).WillOnce(::testing::Return(7));
+    EXPECT_CALL(*gl, glShaderSource_mock(7, 1, ::testing::_, nullptr)).Times(1);
+    EXPECT_CALL(*gl, glCompileShader_mock(7)).Times(1);
+    EXPECT_CALL(*gl, glGetShaderiv_mock(7, GL_COMPILE_STATUS, ::testing::_))
+        .WillOnce(::testing::SetArgPointee<2>(GL_FALSE));
+    EXPECT_CALL(*gl, glGetShaderiv_mock(7, GL_INFO_LOG_LENGTH, ::testing::_))
+        .WillOnce(::testing::SetArgPointee<2>(logLength));
+    EXPECT_CALL(*gl, glGetShaderInfoLog_mock(7, ::testing::_, ::testing::_, ::testing::_))
+        .WillOnce([&](GLuint, GLsizei capacity, GLsizei *written, GLchar *buffer)
+        {
+            ASSERT_EQ(capacity, (std::max)(logLength, GLint{1}));
+            ASSERT_NE(buffer, nullptr);
+            ASSERT_NE(written, nullptr);
+            ASSERT_LT(message.size(), static_cast<std::size_t>(capacity));
+            EXPECT_EQ(shaderContext.getShaderID(), 0);
+            std::copy(message.begin(), message.end(), buffer);
+            buffer[message.size()] = '\0';
+            *written = static_cast<GLsizei>(message.size());
+        });
+    EXPECT_CALL(*gl, glDeleteShader_mock(7)).Times(1);
+
+    expectSpecificError([&]() { shader::OpenGLShaderLoader<Classic>::on(shaderContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+    EXPECT_EQ(shaderContext.getShaderID(), 0);
+    EXPECT_EQ(diagnostics.str(), "Shader compilation error: " + message + "\n");
+}
+
+INSTANTIATE_TEST_SUITE_P(InfoLogLengths, ShaderLoaderDiagnosticsTests, ::testing::Values(0, 1, 64),
+    [](const ::testing::TestParamInfo<GLint> &info)
+    { return info.param == 0 ? "Zero" : info.param == 1 ? "TerminatorOnly" : "Message"; });
 
 #endif // __mock_gl__

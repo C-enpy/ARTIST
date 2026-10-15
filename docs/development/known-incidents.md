@@ -5,7 +5,7 @@ tags: [artist, cpp, ownership, testing, tooling]
 summary: Incidents corrigés, hypothèses rectifiées et expériences discriminantes pour les chemins encore non couverts de Shader→Pass.
 created: 2026-10-03
 updated: 2026-10-15
-sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json]
+sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json]
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -16,7 +16,7 @@ provenance:
 
 ## Règle de lecture
 
-Les **137/137** normaux de [[development/build-and-test|la suite courante]] sont une preuve
+Les **143/143** normaux de [[development/build-and-test|la suite courante]] sont une preuve
 de ces tests Windows Debug, pas une absence exhaustive d'UB ou de fuite. Le
 [[references/session-2026-10-03-shader-pass|journal de session]] attribue les avis
 aux sous-agents ; les expériences proposées ici ne sont pas des tests exécutés.
@@ -117,10 +117,56 @@ global de tous les `ctest`/`ArtistLib_tests` comme procédure normale.
   référence gardée. Ne pas décrire tous les accesseurs comme throwing.
 - **F4 ouvert** : `PassContext::getShader(index)` emploie `operator[]`, donc
   indice négatif/hors borne à qualifier ; test de rejet et contrat de bornes requis.
-- **F5 ouvert** : `&infoLog[0]` avec longueur de log zéro dans les loaders GL ;
-  expérience mockée `GL_INFO_LOG_LENGTH = 0`, sous sanitizer si disponible.
-  **[[architecture/next-mission|Sélectionné pour la prochaine mission]]**, avant
-  Pipeline ; source recoupé, aucun RED/fix exécuté à ce stade. F4/F8/Q1 hors coupe.
+- **F5 corrigé dans le périmètre 2026-10-15** : `&infoLog[0]` avec longueur de
+  log zéro dans les loaders GL. RED causal mocké (`GL_INFO_LOG_LENGTH = 0`)
+  avant fix : CTest exit 8, natif `0xc0000409`,
+  « vector subscript out of range » sur les deux loaders — la précondition du
+  vecteur vide était violée avant `glGet*InfoLog`, ce qui empêchait diagnostic,
+  delete unique et exception métier. GREEN minimal : capacité
+  `max(maxLength, 1)`, `written` initialisé, clamp `[0, capacity-1]`, terminaison
+  explicite, `string_view` borné ; exceptions publiques, préfixes stderr et corps
+  `on()` inchangés. Suites indépendantes : **143/143** distincts (137 + 6
+  nouveaux ; 112 unit + 31 OpenGL) et **121 distincts sous ASan** (112 + 9 GL
+  lifetime ; 22 autres GL hors sélection de mission, pas abandonnés). Revue
+  indépendante PASS 7/7 ; QA indépendante PASS 10/10 critères.
+  Contrat, empreintes, commandes et limites :
+  [[architecture/missions/2026-10-15-f5-gl-diagnostics|mission archivée]] et
+  [[references/session-2026-10-15-f5-gl-diagnostics|synthèse de session]].
+  F4/F8/Q1 et la migration Pipeline restent hors de cette coupe.
+
+### Suite de revue F5 — Q1, exposition INT_MAX préexistante (ouvert)
+
+Item **Q1** de la revue indépendante, faible, préexistant et hors du diff corrigé :
+la capacité du buffer vient du pilote ; une valeur aberrante
+(`GL_INFO_LOG_LENGTH` = INT_MAX) fait lever `std::vector`
+(`bad_alloc`/`length_error`) depuis `checkCompileErrors`/`checkLinkErrors`.
+L'exception n'est alors pas l'exception métier et le handle natif n'est pas
+supprimé (`shader Loader.hpp:74`, `pass Loader.hpp:73`). L'ancien code avait la
+même exposition (il allouait lui aussi `maxLength`). Vérification minimale
+proposée — mocker `INFO_LOG_LENGTH` = INT_MAX puis contrater le contrat attendu
+(exception métier ? fuite native ?) — **non exécutée** ; à traiter dans une
+coupe ultérieure avec un RED propre, pas rétro-ajoutée à F5.
+
+### Suite de revue F5 — Q2 à Q5 consignées
+
+- **Q2, faible, limite de preuve** : si un pilote renvoie
+  `GL_INFO_LOG_LENGTH = 0` alors qu'un log existe, le diagnostic est vide
+  silencieusement — conforme à la spec, pas une régression (l'ancien code
+  crashait). Non observé sur RTX 3090 / driver 617.42 ; pilote réel rapportant 0
+  indisponible sur cette machine.
+- **Q3, info, hors diff — reste ouvert** : si `ShaderAttacher::on` lève après
+  `setPassID(passID)` (`pass Loader.hpp:42-46`), le handle programme reste publié
+  sans rollback. C'est la limite **F1** déjà consignée ci-dessus ;
+  `DEFER_TO: engine-architect` (frontière ownership/rollback), non retenu comme
+  écart du diff F5. La limite de rollback de F1 est conservée telle quelle.
+- **Q4, info** : `std::string_view` imprime désormais un éventuel NUL interne du
+  log, l'ancien code s'arrêtait au premier NUL. Cas de pilote pathologique, non
+  testé.
+- **Q5, info, provenance** : le build GREEN a été réalisé à HEAD `5dfafd1` avec
+  le correctif non committé ; `final-validation.json` (HEAD `4154780`,
+  `sourceHashesMatchGreen: true`) est cohérent — même octets vérifiés. Le lien
+  source → binaire repose sur l'intégrité SHA-256 et les métadonnées, pas sur un
+  rebuild.
 - **F6 nommé, non migré** : `IPass` garde un contexte partagé et l'expose par copie ;
   lifetime extensible hors wrapper. Architecture propose de migrer d'abord le
   stockage/les consommateurs du pipeline ; aucune refonte faite aujourd'hui.
@@ -199,12 +245,16 @@ globale du checkout. ^[ambiguous]
 
 ## Expériences encore absentes
 
-ASan Windows Debug est exécuté séparément et instrumenté ; pas de résultat
-pour les 22 GL non sélectionnés sous ASan, UBSan/TSan ou les autres plateformes.
-Les 22 ne sont ni des tests échoués ni des tests abandonnés : la sélection ASan
-était ciblée dès le plan ; la suite normale couvre bien les 31 GL.
-Les dépendances Conan GLFW/GLEW et le driver restent non instrumentés. Release,
-Linux, CI distante, couverture, images et performance restent non validés.
+ASan Windows Debug est exécuté séparément et instrumenté ; après F5, la sélection
+ASan couvre **121 cas distincts** (112 unit — dont les 6 nouveaux diagnostics —
+plus 9 GL lifetime) contre 115 lors de la mission loaded-owner move, toujours
+sans résultat pour les 22 GL non sélectionnés, UBSan/TSan ou les autres
+plateformes. Les 22 ne sont ni des tests échoués ni des tests abandonnés : la
+sélection ASan était ciblée dès le plan ; la suite normale couvre bien les 31 GL.
+L'exposition INT_MAX (Q1 ci-dessus) et l'entrée d'environnement ASan héritée
+(Q1 du harness) restent ouvertes. Les dépendances Conan GLFW/GLEW et le driver
+restent non instrumentés. Release, Linux, CI distante, couverture, images et
+performance restent non validés.
 
 Navigation : [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003]] ·
 [[architecture/correction-plan|Plan de correction]] · [[index|Accueil]].

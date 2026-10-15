@@ -2,8 +2,11 @@
 
 #pragma once
 
+#include <algorithm>
 #include <string>
+#include <string_view>
 #include <format>
+#include <iostream>
 #include <memory>
 #include <vector>
 #include <graphic/Api.hpp>
@@ -63,13 +66,20 @@ namespace artist::graphic::opengl::pipeline::component::shader
             glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
             if (!success)
             {
-                GLint maxLength = 10000;
+                GLint maxLength = 0;
                 glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &maxLength);
 
-                std::vector<GLchar> infoLog(maxLength);
-                glGetShaderInfoLog(shaderID, maxLength, &maxLength, &infoLog[0]);
+                // An absent driver log may report zero; still provide room for a terminator.
+                const GLsizei capacity = (std::max)(maxLength, GLint{1});
+                std::vector<GLchar> infoLog(static_cast<std::size_t>(capacity));
+                GLsizei written = 0;
+                glGetShaderInfoLog(shaderID, capacity, &written, infoLog.data());
+                // OpenGL's written length excludes the terminator. Bound both accesses explicitly.
+                const auto logLength = (std::clamp)(written, GLsizei{0}, capacity - 1);
+                infoLog[logLength] = '\0';
 
-                std::cerr << "Shader compilation error: " << infoLog.data() << std::endl;
+                std::cerr << "Shader compilation error: "
+                          << std::string_view(infoLog.data(), static_cast<std::size_t>(logLength)) << std::endl;
                 return false;
             }
             return true;

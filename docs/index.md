@@ -34,7 +34,8 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 
 - [[adr/README|Registre des ADR]] — huit contrats avec statuts, périmètres et preuves.
 - [[architecture/correction-plan|Ordre de correction]] — build reproductible, ownership, exécution, bindings, mesures.
-- [[architecture/next-mission|Prochaine mission sélectionnée : F5]] — diagnostics GL vides compilation/link et nettoyage sûr, pas commencée.
+- [[architecture/missions/2026-10-15-f5-gl-diagnostics|Mission F5 archivée]] — diagnostics GL vides compilation/link bornés, RED causal et validation indépendante (143/143 distincts, 121 ASan distincts) dans le périmètre Windows Debug.
+- [[architecture/next-mission|Prochaine mission sélectionnée : AUCUNE]] — Pipeline recommandé mais non sélectionné ; ordre des travaux dans le plan de correction.
 - [[architecture/missions/2026-10-15-loaded-owner-move|Mission précédente archivée]] — loaded-owner move et ASan vérifiés dans leur périmètre, contrat préservé.
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
 
@@ -44,7 +45,10 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 > pour sa baseline Windows Debug. Le diff loaded-owner move intégré à `e589aee`
 > a passé **137/137 tests normaux** (106 unitaires + 31 OpenGL) et
 > **106 CPU + 9 lifetime GL sous ASan**, vérifiés indépendamment le 2026-10-15.
-> Les autres GL sous ASan, plateformes, images et performances restent non validés.
+> La mission F5 intégrée au HEAD `3144beb` (non commitée) porte la suite courante
+> à **143/143 distincts** (112 unit + 31 OpenGL) et **121 cas ASan distincts**
+> (112 + 9), revue et QA indépendantes PASS. Les autres GL sous ASan, plateformes,
+> images et performances restent non validés.
 
 ## Développer
 
