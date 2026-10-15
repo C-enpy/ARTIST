@@ -1,7 +1,11 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <algorithm>
+#include <iostream>
 #include <memory>
+#include <string_view>
+#include <vector>
 #include <graphic/Api.hpp>
 #include <graphic/opengl/context/ShaderContext.hpp>
 #include <graphic/opengl/context/PassContext.hpp>
@@ -64,10 +68,17 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 GLint maxLength = 0;
                 glGetProgramiv(passID, GL_INFO_LOG_LENGTH, &maxLength);
 
-                std::vector<GLchar> infoLog(maxLength);
-                glGetProgramInfoLog(passID, maxLength, &maxLength, &infoLog[0]);
+                // An absent driver log may report zero; still provide room for a terminator.
+                const GLsizei capacity = (std::max)(maxLength, GLint{1});
+                std::vector<GLchar> infoLog(static_cast<std::size_t>(capacity));
+                GLsizei written = 0;
+                glGetProgramInfoLog(passID, capacity, &written, infoLog.data());
+                // OpenGL's written length excludes the terminator. Bound both accesses explicitly.
+                const auto logLength = (std::clamp)(written, GLsizei{0}, capacity - 1);
+                infoLog[logLength] = '\0';
 
-                std::cerr << "Pipeline link error: " << infoLog.data() << std::endl;
+                std::cerr << "Pipeline link error: "
+                          << std::string_view(infoLog.data(), static_cast<std::size_t>(logLength)) << std::endl;
                 return false;
             }
             return true;
