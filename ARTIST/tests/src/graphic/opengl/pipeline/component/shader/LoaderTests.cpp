@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <sstream>
 #include <string>
+#include <limits>
 #ifdef _MSC_VER
 #include <crtdbg.h>
 #endif
@@ -22,6 +23,16 @@ namespace context = artist::graphic::opengl::context;
 namespace shader = artist::graphic::opengl::pipeline::component::shader;
 using artist::graphic::opengl::profile::Shader::Classic;
 using artist::test::utils::expectSpecificError;
+
+namespace
+{
+    // Q1 (mission C): upper bound the loader must locally clamp the driver
+    // reported GL_INFO_LOG_LENGTH to, so an aberrant value (e.g. INT_MAX)
+    // cannot drive an unbounded allocation whose failure would surface as a
+    // non-business exception without native cleanup. The clamp bounds THIS
+    // allocation, not the process-wide memory shortage (documented limit).
+    constexpr GLint kMaxBoundedInfoLogCapacity = 4096;
+}
 
 class ShaderLoaderTests : public ::testing::Test
 {
@@ -179,7 +190,12 @@ TEST_P(ShaderLoaderDiagnosticsTests, CompileFailurePreservesErrorAndCleansUp)
     EXPECT_CALL(*gl, glGetShaderInfoLog_mock(7, ::testing::_, ::testing::_, ::testing::_))
         .WillOnce([&](GLuint, GLsizei capacity, GLsizei *written, GLchar *buffer)
         {
-            ASSERT_EQ(capacity, (std::max)(logLength, GLint{1}));
+            // Q1 (mission C): capacity contract — the loader clamps the
+            // driver-reported length locally (<=0 -> 1; normal length
+            // unchanged; INT_MAX clamped to the bounded diagnostic capacity)
+            // instead of allocating an unbounded buffer.
+            const GLint expectedCapacity = (std::clamp)((std::max)(logLength, GLint{1}), GLint{1}, kMaxBoundedInfoLogCapacity);
+            ASSERT_EQ(capacity, expectedCapacity);
             ASSERT_NE(buffer, nullptr);
             ASSERT_NE(written, nullptr);
             ASSERT_LT(message.size(), static_cast<std::size_t>(capacity));
@@ -196,8 +212,13 @@ TEST_P(ShaderLoaderDiagnosticsTests, CompileFailurePreservesErrorAndCleansUp)
     EXPECT_EQ(diagnostics.str(), "Shader compilation error: " + message + "\n");
 }
 
-INSTANTIATE_TEST_SUITE_P(InfoLogLengths, ShaderLoaderDiagnosticsTests, ::testing::Values(0, 1, 64),
+INSTANTIATE_TEST_SUITE_P(InfoLogLengths, ShaderLoaderDiagnosticsTests,
+    ::testing::Values(0, 1, 64, (std::numeric_limits<GLint>::max)(), -5),
     [](const ::testing::TestParamInfo<GLint> &info)
-    { return info.param == 0 ? "Zero" : info.param == 1 ? "TerminatorOnly" : "Message"; });
+    { return info.param == 0 ? "Zero"
+          : info.param == 1 ? "TerminatorOnly"
+          : info.param < 0 ? "Negative"
+          : info.param == (std::numeric_limits<GLint>::max)() ? "AberrantLength"
+          : "Message"; });
 
 #endif // __mock_gl__
