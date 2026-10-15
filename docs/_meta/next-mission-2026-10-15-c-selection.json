@@ -1,0 +1,98 @@
+{
+  "selected_on": "2026-10-15T08:10:00+02:00",
+  "scope": "Selection only, explicitly requested by user; no implementation publication, build or test",
+  "mission": "C only: bounded failure-path contracts (aberrant info-log length Q1, attacher deferred publication Q3, accessor bounds F4, file-read failure semantics F8, glUseProgram(0) contract F10), before Pipeline ownership tranche",
+  "status": "selected",
+  "implementation": "not-started",
+  "principal_head_at_selection": "b80c353da97fe155e1c8dd8b96286b8224209340",
+  "base_state": "F5 diff committed with provenance in b80c353 (author commits tagged f5-red 5dfafd1, f5-green 4154780); no unstaged transport needed for a fresh worktree",
+  "copied_target_hash_group_f5": ["20139b4a", "9e26477a", "a91aa012", "daca4475"],
+  "baseline_counts": {
+    "normal_unique": 143,
+    "normal_unit": 112,
+    "normal_gl": 31,
+    "asan_distinct": 121,
+    "asan_unit": 112,
+    "asan_lifetime_gl": 9,
+    "other_gl_asan_not_selected": 22
+  },
+  "user_decisions": {
+    "mission_choice": "C bornage contrats d'échec (over A1 Pipeline tranche and plan-only)",
+    "commit_before_next": "F5 integrated diff committed as b80c353 with provenance (4 code + 8 docs + 3 new docs + 3 memories; out/ evidence stays unversioned)"
+  },
+  "advisor_sessions": {
+    "project_manager": {
+      "session": "ses_ebf7537c9ffeSOEvuktTMwtxAr",
+      "mode": "fresh consultation, read-only",
+      "substitution": "historical session ses_ec0352fbcffeI9COZTIb08MXH7 not a child of this session",
+      "ranking": "A1 (74/76) > C (44->70/58) > B (80/82) > D (folded into C family)",
+      "graph": "B0(committed) -> TA0/TA1-style for A; noted C1||C2 with disjoint files and F4 graft option"
+    },
+    "engine_architect": {
+      "session": "ses_ebf7537c8ffeN6p5LxRoe4z0H7",
+      "mode": "fresh consultation, read-only",
+      "substitution": "historical session ses_ec0352fa0ffej7OEkfSQ7dBmQ5 not a child of this session",
+      "facts_verified": "Q3 latent-only (attacher can only throw on moved-from guard between publication and link); Q1 real: shader path created handle neither stored nor deleted; pass path handle already published and link-fail cleanup contract bypassed",
+      "ruling_Q3": "preferred: deferred publication (single setPassID after verified link, attacher in borrowed form); fallback: documented+tested non-rollback with idempotent free(); both variants closed by RED tests; probe at LoaderTests.cpp:184 encoding current order becomes explicit review point"
+    }
+  },
+  "coordinator_decision": {
+    "order": "architect ordering adopted over PM raw ranking: C (freeze failure-path contracts, real Q1 defect) before A (Pipeline ownership tranche), then B (ADR-0004 requires explicit adoption)",
+    "dev_slices": "sequential D-C1 then D-C2 with coordinator integration barrier between (single host build lease); architect C1||C2 parallelism admissible only with a second independent build tree",
+    "objective_cycle": "PM/LLM default; JEV not used (0 calls)"
+  },
+  "evaluation": {
+    "method": "PM/LLM",
+    "jev_calls": 0,
+    "development_floor": 70,
+    "tasks_provisional_not_published": {
+      "D-C1": {
+        "type": "development TDD",
+        "agent": "gpu-engineer",
+        "complexity_raw": 64,
+        "complexity": 70,
+        "risk": 66,
+        "context": "fresh",
+        "worktree": true
+      },
+      "D-C2": {
+        "type": "development TDD",
+        "agent": "cpp-engineer or gpu-engineer",
+        "complexity_raw": 44,
+        "complexity": 70,
+        "risk": 58,
+        "context": "fresh",
+        "worktree": true,
+        "dep": "after I-C1 integration"
+      },
+      "R": { "agent": "correctness-reviewer", "complexity": 50, "risk": 66, "context": "fresh", "worktree": false },
+      "V": { "agent": "rendering-verifier", "complexity": 45, "risk": 62, "context": "fresh", "worktree": false },
+      "DOC": { "agent": "build-engineer (bounded docs)", "complexity": 30, "risk": 33, "context": "fresh", "worktree": true }
+    }
+  },
+  "graph": "B0(done: committed b80c353) -> D-C1 -> I-C1 -> D-C2 -> I0 -> (R parallel V) -> DOC -> I1",
+  "barriers": {
+    "B0": "done: F5 provenance commit b80c353; fresh worktree transports full base",
+    "I-C1": "integrate C1, verify files/hashes before D-C2 publication",
+    "I0": "integrate full dev output, fingerprint, then publish R/V with real producer IDs",
+    "I1": "integrate DOC then targeted principal QMD refresh (single indexer)"
+  },
+  "published_execution_tasks": 0,
+  "builds_executed": 0,
+  "engine_tests_executed": 0,
+  "runtime_verdict": "INCONCLUSIVE / not run for C; prior results remain scoped historical evidence",
+  "excluded": [
+    "Q2/Q4/Q5 information items",
+    "22 other GL under ASan",
+    "Q1 inherited ASAN_OPTIONS script hardening",
+    "Pipeline ownership tranche A1a/A1b/A1c and A2 (F6)",
+    "ADR-0004 uniform tranche B (incl. F7 UniformReader negative concept test)",
+    "workload/visual equivalence ADR-0006",
+    "Release/CI/coverage/UBSan/TSan"
+  ],
+  "documentation": {
+    "fiche": "docs/architecture/next-mission.md",
+    "known_incidents_updates": "Q1 planned in C1 (with verified per-loader mechanism), Q3 ruling received recorded",
+    "correction_plan_updates": "next selected mission = C; F5 evidence sentence updated to committed b80c353"
+  }
+}

@@ -142,10 +142,15 @@ la capacité du buffer vient du pilote ; une valeur aberrante
 (`bad_alloc`/`length_error`) depuis `checkCompileErrors`/`checkLinkErrors`.
 L'exception n'est alors pas l'exception métier et le handle natif n'est pas
 supprimé (`shader Loader.hpp:74`, `pass Loader.hpp:73`). L'ancien code avait la
-même exposition (il allouait lui aussi `maxLength`). Vérification minimale
+même exposition (il allait aussi allouer `maxLength`). Vérification minimale
 proposée — mocker `INFO_LOG_LENGTH` = INT_MAX puis contrater le contrat attendu
-(exception métier ? fuite native ?) — **non exécutée** ; à traiter dans une
-coupe ultérieure avec un RED propre, pas rétro-ajoutée à F5.
+(exception métier ? fuite native ?) — **planifiée dans la mission C
+([[architecture/next-mission|bornage contrats d'échec]], sélectionnée le
+2026-10-15)** : RED propre d'abord, capacité bornée, exception métier et cleanup
+une fois attendus en séquence ; pas rétro-ajoutée à F5. Précision vérifiée
+contre le code : chemin shader, le handle créé n'est ni stocké ni supprimé ;
+chemin pass, le handle est déjà publié dans le contexte et le contrat
+`glDeleteProgram + setPassID(0)` du link-fail testé n'est pas exécuté.
 
 ### Suite de revue F5 — Q2 à Q5 consignées
 
@@ -154,11 +159,18 @@ coupe ultérieure avec un RED propre, pas rétro-ajoutée à F5.
   silencieusement — conforme à la spec, pas une régression (l'ancien code
   crashait). Non observé sur RTX 3090 / driver 617.42 ; pilote réel rapportant 0
   indisponible sur cette machine.
-- **Q3, info, hors diff — reste ouvert** : si `ShaderAttacher::on` lève après
+- **Q3, info, hors diff — ruling reçu** : si `ShaderAttacher::on` lève après
   `setPassID(passID)` (`pass Loader.hpp:42-46`), le handle programme reste publié
-  sans rollback. C'est la limite **F1** déjà consignée ci-dessus ;
-  `DEFER_TO: engine-architect` (frontière ownership/rollback), non retenu comme
-  écart du diff F5. La limite de rollback de F1 est conservée telle quelle.
+  sans rollback. C'est la limite **F1** déjà consignée ci-dessus. L'architecte a
+  livré le ruling le 2026-10-15 : variante préférée = **publication différée**
+  (un seul `setPassID` après lien vérifié ; création → attach en forme empruntée
+  → link → check ; échec pré-publication = `glDeleteProgram` + throw, contexte
+  tel quel) ; variante de repli = non-rollback **documenté et testé** (handle
+  conservé + `free()` idempotent + B intact). Les deux variantes sont fermées
+  par des tests RED, la preuve décide — aucune des deux reste en doc seule.
+  À exécuter dans [[architecture/next-mission|la mission C]] (C1), avec la sonde
+  encodeant l'ordre actuel (`LoaderTests.cpp` : `passID==7` pendant le
+  rappel de information-log) conformée comme point de revue explicite.
 - **Q4, info** : `std::string_view` imprime désormais un éventuel NUL interne du
   log, l'ancien code s'arrêtait au premier NUL. Cas de pilote pathologique, non
   testé.

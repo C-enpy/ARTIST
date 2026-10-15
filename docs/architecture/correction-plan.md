@@ -21,12 +21,27 @@ nettoyage sûr]] : RED causal (`0xc0000409`, précondition du vecteur vide sur l
 zéro), correction bornée des deux loaders et validation indépendante ;
 **143/143 normaux distincts** (112 unit dont 6 nouveaux diagnostics + 31
 OpenGL) et **121 ASan distincts** (112 + 9 GL lifetime), zéro échec/skip.
-Preuves sur le diff intégré au HEAD `3144beb`, non commité — empreintes
+Preuves sur le diff intégrée au HEAD `3144beb`, committé avec provenance et
+empreintes dans `b80c353` (commits auteur RED/GREEN étiquetés `f5-red`/
+`f5-green`) — empreintes
 `20139b4a…`, `9e26477a…`, `a91aa012…`, `daca4475…` :
 [[references/session-2026-10-15-f5-gl-diagnostics|synthèse de mission]]. ADR-0003
-reste Accepted/partial. Q1 (exposition INT_max), F4, F8, le harness ASan et
-Pipeline restent ouverts ; **aucune nouvelle sélection** (décision séparée, hors
-de cette clôture documentaire).
+reste Accepted/partial et Q2/Q4/Q5 restent info ; la passage de suite ouverte
+(Q1, Q3, F4, F8, F10) est traitée par la sélection ci-dessous.
+
+## Prochaine mission sélectionnée — C « bornage contrats d'échec »
+
+[[architecture/next-mission|Bornage des contrats d'échec des loaders et
+accesseurs]] : Q1 (longueur de log aberrante, contrat + cleanup), Q3 (ruling
+publication différée de l'attacher), F4 (bornes des accesseurs), F8 (erreur de
+lecture fichier distincte de l'erreur de compilation) et F10 (contrat
+`glUseProgram(0)`). Sélectionnée le 2026-10-15 à la demande de l'utilisateur
+après PM/architect fresh ; **aucun développement lancé**. L'ordre architecte :
+C avant la tranche Pipeline A (figer les contrats d'échec avant le churn), puis
+B (ADR-0004, Adoption explicite requise). Author C64→70/R66 et C44→70/R58 en
+PM/LLM, RED causal requis, empreintes des fichiers cibles relevées et invariants
+préservés. Fiche complète : [[architecture/next-mission|next-mission]] ;
+manifeste machine : `docs/_meta/next-mission-2026-10-15-c-selection.json`.
 
 ## Mission loaded-owner du 2026-10-15 — terminée dans son périmètre
 
