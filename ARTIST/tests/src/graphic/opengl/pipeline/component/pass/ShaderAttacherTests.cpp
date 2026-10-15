@@ -37,9 +37,9 @@ protected:
 
 TEST_F(ShaderAttacherTests, AttachShaders_ValidContext)
 {
-    // Arrange
+    // Arrange: the loader owns the handle and passes it by value; the context
+    // need not be published (here it stays 0) for the borrowed attach to work.
     auto shader = std::make_unique<MockShader>();
-    openglContext->setPassID(1); // Set a valid pipeline ID
     shader->getContext().setShaderID(42); // Set a mock shader ID in the shader's own context
     openglContext->addShader(std::move(shader));
 
@@ -47,26 +47,27 @@ TEST_F(ShaderAttacherTests, AttachShaders_ValidContext)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glAttachShader_mock(1, 42)).Times(1);
 
     // Act & Assert
-    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(*openglContext));
+    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(*openglContext, 1));
 }
 
 TEST_F(ShaderAttacherTests, AttachShaders_InvalidPassID)
 {
-    // Arrange: no pipeline ID set
+    // Arrange: a zero program handle is still rejected with the public error;
+    // nothing is attached.
+    EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glAttachShader_mock(::testing::_, ::testing::_)).Times(0);
 
     // Act & Assert
     expectSpecificError([&openglContext = openglContext]()
-                        { pass::OpenGLShaderAttacher<Classic>::on(*openglContext); },
+                        { pass::OpenGLShaderAttacher<Classic>::on(*openglContext, 0); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::INVALID_PROGRAM_ID"));
 }
 
 TEST_F(ShaderAttacherTests, AttachShaders_NoShaders)
 {
-    // Arrange
-    openglContext->setPassID(1); // Set a valid pipeline ID
+    // Arrange: valid handle, no shader registered — a no-op attach.
 
     // Act & Assert
-    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(*openglContext));
+    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(*openglContext, 1));
 }
 
 #endif // __mock_gl__

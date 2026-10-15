@@ -13,6 +13,8 @@
  */
 
 #pragma once
+#include <GL/glew.h>
+#include <concepts>
 #include <memory>
 #include <type_traits>
 #include <graphic/validator/ComponentConcept.hpp>
@@ -22,6 +24,18 @@ namespace artist::graphic::opengl::validator
 
     using artist::graphic::validator::HasComponent;
     using artist::graphic::validator::HasBorrowedOnMethod;
+
+    // Borrowed attacher form (mission C / Q3, deferred publication): the
+    // component borrows its context and receives the program handle by value.
+    // The loader owns the handle until publication, so the attacher must not
+    // read it from the context nor extend any lifetime.
+    template <typename T, typename C>
+    concept HasBorrowedOnMethodWithHandle = requires(C &context, GLuint handle)
+    {
+        {
+            T::on(context, handle)
+        } -> std::same_as<void>;
+    };
 
     template <typename API, auto PROFILE>
     concept OpenGLPassFlow = requires {
@@ -33,7 +47,7 @@ namespace artist::graphic::opengl::validator
 
         requires HasBorrowedOnMethod<typename API::PassContext::template Loader<PROFILE>, typename API::PassContext>;
         requires HasBorrowedOnMethod<typename API::PassContext::template Freer<PROFILE>, typename API::PassContext>;
-        requires HasBorrowedOnMethod<typename API::PassContext::template ShaderAttacher<PROFILE>, typename API::PassContext>;
+        requires HasBorrowedOnMethodWithHandle<typename API::PassContext::template ShaderAttacher<PROFILE>, typename API::PassContext>;
         requires HasBorrowedOnMethod<typename API::PassContext::template AttributeReader<PROFILE>, typename API::PassContext>;
         requires HasBorrowedOnMethod<typename API::PassContext::template User<PROFILE>, typename API::PassContext>;
     };

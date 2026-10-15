@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <sstream>
 #include <string>
+#include <limits>
 #ifdef _MSC_VER
 #include <crtdbg.h>
 #endif
@@ -27,6 +28,16 @@ namespace pass = artist::graphic::opengl::pipeline::component::pass;
 
 using artist::graphic::opengl::profile::Pass::Classic;
 using artist::test::utils::expectSpecificError;
+
+namespace
+{
+    // Q1 (mission C): upper bound the loader must locally clamp the driver
+    // reported GL_INFO_LOG_LENGTH to, so an aberrant value (e.g. INT_MAX)
+    // cannot drive an unbounded allocation whose failure would surface as a
+    // non-business exception without native cleanup. The clamp bounds THIS
+    // allocation, not the process-wide memory shortage (documented limit).
+    constexpr GLint kMaxBoundedInfoLogCapacity = 4096;
+}
 
 class LoaderTests : public ::testing::Test
 {
@@ -120,6 +131,84 @@ TEST_F(LoaderTests, LoadPassTest_linkSuccess)
     ASSERT_EQ(openglContext->getPassID(), 1);
 }
 
+/// Strict B (ADR-0003): a live handle rejects reload BEFORE any native
+/// call — zero glCreate/attach/link, no deletion, context untouched.
+TEST_F(LoaderTests, LoadPassTest_reloadRejectedBeforeAnyNativeCall)
+{
+    openglContext->setPassID(7);
+    auto gl = mock::opengl::glFunctionMock::instance();
+    EXPECT_CALL(*gl, glCreateProgram_mock()).Times(0);
+    EXPECT_CALL(*gl, glAttachShader_mock(::testing::_, ::testing::_)).Times(0);
+    EXPECT_CALL(*gl, glLinkProgram_mock(::testing::_)).Times(0);
+    EXPECT_CALL(*gl, glDeleteProgram_mock(::testing::_)).Times(0);
+
+    expectSpecificError([&openglContext = openglContext]()
+                        { pass::OpenGLLoader<Classic>::on(*openglContext); },
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::RELOAD_WITHOUT_FREE\nFree the pass before linking again."));
+    ASSERT_EQ(openglContext->getPassID(), 7);
+}
+
+/// Q3 (mission C): deferred publication — nothing is published in the
+/// context before the link check succeeds; publication happens exactly
+/// once, after glLinkProgram and its check (anti-publication probe).
+TEST_F(LoaderTests, LoadPassTest_passIDPublishedOnlyAfterLinkSuccess)
+{
+    auto gl = mock::opengl::glFunctionMock::instance();
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*gl, glCreateProgram_mock()).WillOnce(::testing::Return(7));
+    EXPECT_CALL(*gl, glAttachShader_mock(::testing::_, ::testing::_)).Times(0); // no shader registered
+    EXPECT_CALL(*gl, glLinkProgram_mock(7)).WillOnce([&](GLuint) { EXPECT_EQ(openglContext->getPassID(), 0u); });
+    EXPECT_CALL(*gl, glGetProgramiv_mock(7, GL_LINK_STATUS, ::testing::_))
+        .WillOnce(::testing::SetArgPointee<2>(GL_TRUE));
+    EXPECT_CALL(*gl, glDeleteProgram_mock(7)).Times(0);
+
+    ASSERT_NO_THROW(pass::OpenGLLoader<Classic>::on(*openglContext));
+    ASSERT_EQ(openglContext->getPassID(), 7);
+}
+
+/// Q3 (mission C): the loader owns the program handle until publication.
+/// A failure after creation must release the handle exactly once, keep the
+/// context untouched (passID stays 0 — never published) and rethrow the
+/// attacher error unchanged.
+TEST_F(LoaderTests, LoadPassTest_attacherFailureReleasesProgramOnce)
+{
+    using OwnedShader = artist::graphic::pipeline::Shader<artist::graphic::api::OpenGL,
+        artist::graphic::opengl::profile::Shader::Classic>;
+    auto ownedShader = std::make_unique<OwnedShader>("", artist::graphic::context::ShaderType::VERTEX);
+    ownedShader->getContext().setShaderID(9);
+    auto *borrowedShader = ownedShader.get();
+    openglContext->addShader(std::move(ownedShader));
+    auto gl = mock::opengl::glFunctionMock::instance();
+
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*gl, glCreateProgram_mock()).WillOnce(::testing::Return(7));
+    EXPECT_CALL(*gl, glAttachShader_mock(7, 9)).Times(1).WillOnce([&](GLuint program, GLuint)
+    {
+        // The borrowed attacher receives the handle by value; the context is
+        // not yet the owner, so the handle must not be visible through it.
+        EXPECT_EQ(program, 7u);
+        EXPECT_EQ(openglContext->getPassID(), 0u);
+        throw artist::common::exception::TraceableException<std::runtime_error>("simulated attacher attach failure (mission C/Q3)");
+    });
+    EXPECT_CALL(*gl, glLinkProgram_mock(::testing::_)).Times(0);
+    EXPECT_CALL(*gl, glDeleteProgram_mock(7)).Times(1);
+    EXPECT_CALL(*gl, glDeleteShader_mock(9)).Times(0);
+
+    expectSpecificError([&openglContext = openglContext]()
+                        { pass::OpenGLLoader<Classic>::on(*openglContext); },
+                        artist::common::exception::TraceableException<std::runtime_error>("simulated attacher attach failure (mission C/Q3)"));
+    EXPECT_EQ(openglContext->getPassID(), 0u);
+    ASSERT_EQ(openglContext->getShadersCount(), 1);
+    EXPECT_EQ(&openglContext->getShader(0), borrowedShader);
+    EXPECT_EQ(borrowedShader->getContext().getShaderID(), 9);
+
+    ::testing::Mock::VerifyAndClearExpectations(gl.get());
+    // Only destruction of the owning context may release the retained shader.
+    EXPECT_CALL(*gl, glDeleteProgram_mock(::testing::_)).Times(0);
+    EXPECT_CALL(*gl, glDeleteShader_mock(9)).Times(1);
+    openglContext.reset();
+}
+
 class PassLoaderDiagnosticsTests : public LoaderTests, public ::testing::WithParamInterface<GLint>
 {
 protected:
@@ -177,11 +266,21 @@ TEST_P(PassLoaderDiagnosticsTests, LinkFailurePreservesErrorAndCleansUp)
         EXPECT_CALL(*gl, glGetProgramInfoLog_mock(7, ::testing::_, ::testing::_, ::testing::_))
             .WillOnce([&](GLuint, GLsizei capacity, GLsizei *written, GLchar *buffer)
             {
-                ASSERT_EQ(capacity, (std::max)(logLength, GLint{1}));
+                // Q1 (mission C): capacity contract — the loader clamps the
+                // driver-reported length locally (<=0 -> 1; normal length
+                // unchanged; INT_MAX clamped to the bounded diagnostic
+                // capacity) instead of allocating an unbounded buffer.
+                const GLint expectedCapacity = (std::clamp)((std::max)(logLength, GLint{1}), GLint{1}, kMaxBoundedInfoLogCapacity);
+                ASSERT_EQ(capacity, expectedCapacity);
                 ASSERT_NE(buffer, nullptr);
                 ASSERT_NE(written, nullptr);
                 ASSERT_LT(message.size(), static_cast<std::size_t>(capacity));
-                EXPECT_EQ(openglContext->getPassID(), 7);
+                // Q3 (mission C) — review point: probe semantics inverted with
+                // deferred publication. The handle must NOT be visible in the
+                // context while the diagnostic is recalled; the former
+                // expectation (== 7) encoded the rejected publish-then-link
+                // order and died with it.
+                EXPECT_EQ(openglContext->getPassID(), 0u);
                 std::copy(message.begin(), message.end(), buffer);
                 buffer[message.size()] = '\0';
                 *written = static_cast<GLsizei>(message.size());
@@ -204,8 +303,13 @@ TEST_P(PassLoaderDiagnosticsTests, LinkFailurePreservesErrorAndCleansUp)
     openglContext.reset();
 }
 
-INSTANTIATE_TEST_SUITE_P(InfoLogLengths, PassLoaderDiagnosticsTests, ::testing::Values(0, 1, 64),
+INSTANTIATE_TEST_SUITE_P(InfoLogLengths, PassLoaderDiagnosticsTests,
+    ::testing::Values(0, 1, 64, (std::numeric_limits<GLint>::max)(), -5),
     [](const ::testing::TestParamInfo<GLint> &info)
-    { return info.param == 0 ? "Zero" : info.param == 1 ? "TerminatorOnly" : "Message"; });
+    { return info.param == 0 ? "Zero"
+          : info.param == 1 ? "TerminatorOnly"
+          : info.param < 0 ? "Negative"
+          : info.param == (std::numeric_limits<GLint>::max)() ? "AberrantLength"
+          : "Message"; });
 
 #endif // __mock_gl__

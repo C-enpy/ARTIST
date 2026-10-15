@@ -22,12 +22,12 @@ namespace artist::mock::graphic::opengl::pipeline::component::pass
             ::testing::Mock::VerifyAndClearExpectations(&instance());
         }
 
-        static void on(typename graphic::api::MockOpenGL::PassContext &openglContext)
+        static void on(typename graphic::api::MockOpenGL::PassContext &openglContext, GLuint passID)
         {
-            instance().mockOn(openglContext);
+            instance().mockOn(openglContext, passID);
         }
 
-        MOCK_METHOD(void, mockOn, (typename graphic::api::MockOpenGL::PassContext & openglContext), ());
+        MOCK_METHOD(void, mockOn, (typename graphic::api::MockOpenGL::PassContext & openglContext, GLuint passID), ());
     };
 
 } // namespace artist::mock::graphic::opengl::pipeline::component::pass

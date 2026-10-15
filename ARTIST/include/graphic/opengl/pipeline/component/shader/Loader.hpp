@@ -69,8 +69,18 @@ namespace artist::graphic::opengl::pipeline::component::shader
                 GLint maxLength = 0;
                 glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &maxLength);
 
-                // An absent driver log may report zero; still provide room for a terminator.
-                const GLsizei capacity = (std::max)(maxLength, GLint{1});
+                // Q1 (mission C): the driver may report an aberrant
+                // GL_INFO_LOG_LENGTH (e.g. INT_MAX). A diagnostic failure must
+                // not lead to an unbounded allocation whose failure would
+                // surface here as a non-business exception (bad_alloc /
+                // length_error) and skip the native cleanup and the business
+                // error. Clamp the diagnostic capacity locally: <=0 means no
+                // room, keep one terminator; values beyond kMaxInfoLogCapacity
+                // are bounded. Limit documented in the mission report: this
+                // clamp bounds THIS allocation, not a process-wide memory
+                // shortage; an ordinary diagnostic remains full-fidelity.
+                static constexpr GLint kMaxInfoLogCapacity = 4096;
+                const GLsizei capacity = (std::clamp)((std::max)(maxLength, GLint{1}), GLint{1}, kMaxInfoLogCapacity);
                 std::vector<GLchar> infoLog(static_cast<std::size_t>(capacity));
                 GLsizei written = 0;
                 glGetShaderInfoLog(shaderID, capacity, &written, infoLog.data());
