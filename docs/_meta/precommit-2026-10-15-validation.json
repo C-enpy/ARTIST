@@ -1,0 +1,21 @@
+{
+  "validated_on": "2026-10-15",
+  "source_commit": "4d298425d7c0ecd87101409eb9ce78bac9b855de",
+  "scope": "Existing Windows x64 Debug MSVC build, before publication; no clean Conan reinstall or Release/remote CI validation",
+  "source_note": "Tests executed immediately before source commit; one trailing blank line in ShaderLifetimeTests.cpp was removed after the run. No semantic code change after tests.",
+  "commands": [
+    {"command": "C:/Python313/python.exe out/tooling/run-build.py precommit-20261015-build cmake --build out/build/windows-msvc-debug --parallel 1", "exit_code": 0},
+    {"command": "C:/Python313/python.exe out/tooling/run-build.py precommit-20261015-unit ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error --parallel 1 --timeout 60 --output-junit ctest-unit-precommit-20261015.xml", "exit_code": 0},
+    {"command": "C:/Python313/python.exe out/tooling/run-build.py precommit-20261015-opengl ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error --parallel 1 --timeout 120 --output-junit ctest-opengl-precommit-20261015.xml", "exit_code": 0}
+  ],
+  "tests": {"unit": 95, "opengl": 27, "total": 122, "failed": 0, "skipped": 0, "disabled": 0},
+  "evidence": [
+    {"path": "out/logs/precommit-20261015-build.log", "sha256": "c3b33a6f354871824d2d96ac5bf6f87da4d3fce5d84ee69c6ae830e7bd237f56"},
+    {"path": "out/logs/precommit-20261015-unit.log", "sha256": "438ecedec68522366c834ea99ececb2486d7ec5b72a58a5e68df3ba3e5db6ade"},
+    {"path": "out/logs/precommit-20261015-opengl.log", "sha256": "60cd3abe0366b9a5aa618e51f7e2f6ce50400f4b9e09648c70004fe06f459ec5"},
+    {"path": "out/build/windows-msvc-debug/ctest-unit-precommit-20261015.xml", "sha256": "a3e2a33bc4761574225b0329eefc5a95e80d10007b755338919d69d16f95ee39"},
+    {"path": "out/build/windows-msvc-debug/ctest-opengl-precommit-20261015.xml", "sha256": "8eeeb174d2e9e2296af471ca7485dc3123794eba86b78ae75f6364b3186ae113"}
+  ],
+  "limits": ["ASan/UBSan not executed", "loaded-owner move assignment not covered", "no image comparison", "no benchmark", "no new platform or remote CI result"],
+  "next_mission": "docs/architecture/next-mission.md"
+}

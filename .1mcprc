@@ -1,0 +1,10 @@
+{
+  "$schema": "https://docs.1mcp.app/schemas/v1.0.0/project-config.json",
+  "tags": ["serena"],
+  "context": {
+    "projectId": "ARTIST",
+    "environment": "development",
+    "includeGit": true,
+    "sanitizePaths": false
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-03",
+  "project": "ARTIST",
+  "head": "887548ba8a2839daf55ca5636f1519110b4624a7",
+  "state": "uncommitted working tree; HEAD alone does not contain the validated migration",
+  "scope": "Windows x64 Debug MSVC 19.44; Shader-Pass ownership migration and strict reload guards",
+  "provenance": "Conversation checkpoint and available worker reports; final JUnit and log contents re-read during documentation ingestion. No engine test re-run during ingestion.",
+  "session_ids": {
+    "coordinator": "ses_eff24f8afffduEJ6IX0G0OGO6n",
+    "cpp_engineer": "ses_efe12d4e3ffedzqoBp4s0XxXWJ",
+    "correctness_reviewer": "ses_efdc83c33ffektX1dnENb8c1Db",
+    "engine_architect": "ses_efdbcae34ffeXkOhCExMByCiIT"
+  },
+  "transcript": "Distilled available checkpoint and reports in references/session-2026-10-03-shader-pass.md; no complete verbatim transcript exported",
+  "tests": {
+    "unit": {"tests": 95, "failures": 0, "skipped": 0, "disabled": 0, "lifetime_tests": 14, "timestamp": "2026-10-03T17:05:15"},
+    "opengl": {"tests": 27, "failures": 0, "skipped": 0, "disabled": 0, "lifetime_tests": 5, "timestamp": "2026-10-03T17:05:18"},
+    "total": 122
+  },
+  "commands": [
+    {"command": "C:/Python313/python.exe out/tooling/run-build.py configure-b cmake -S . -B out/build/windows-msvc-debug", "exit_code_reported_in_history": 0},
+    {"command": "C:/Python313/python.exe out/tooling/run-build.py build-b2 cmake --build out/build/windows-msvc-debug --parallel 1", "exit_code_reported_in_history": 0},
+    {"command": "C:/Python313/python.exe out/tooling/run-build.py ctest-unit-b2 ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error --parallel 1 --timeout 60 --output-junit ctest-unit.xml", "exit_code_reported_in_history": 0},
+    {"command": "C:/Python313/python.exe out/tooling/run-build.py ctest-opengl-b2 ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error --parallel 1 --timeout 120 --output-junit ctest-opengl.xml", "exit_code_reported_in_history": 0}
+  ],
+  "evidence": [
+    {"path": "out/logs/build-b2.log", "bytes": 16559, "sha256": "95a3e897f3e362c10037e86acc930d5334b1673c1f8482abf79841aec4c53c80"},
+    {"path": "out/logs/ctest-unit-b2.log", "bytes": 17738, "sha256": "4354678f16298824e669fae13f26f4cdbc14d78e2accc4d7f6c4ac7252683865"},
+    {"path": "out/logs/ctest-opengl-b2.log", "bytes": 5073, "sha256": "46b986eeb6e5717b55183af9d34497b9276dc56911cbad1300f65693cc477e1a"},
+    {"path": "out/build/windows-msvc-debug/ctest-unit.xml", "bytes": 94340, "sha256": "918333d0e7204455a3ca84b400005ae329c5793962d23573c4064eb048b752f3"},
+    {"path": "out/build/windows-msvc-debug/ctest-opengl.xml", "bytes": 24481, "sha256": "e464fd2c56a5f5e4b63c84d6ca0363bf4820af25b0485103820d12437cac8c7d"},
+    {"path": "out/logs/qmd-adr3-embed.log", "bytes": 1116, "sha256": "3a2237d364a49139929e7235cd24aa83a2d6a7ace5b0c3d13d4387e82581f79b"}
+  ],
+  "evidence_retention": "Hashes and summary retained here. Raw files under out/ are local, ignored and mutable; hashes do not archive those files.",
+  "independent_review": "Read-only PASS before F1/F2/F3 corrections; tests not re-run by reviewer; not an exhaustive correctness certificate",
+  "remaining": ["ASan/UBSan not executed", "move-assignment over a loaded owner not tested", "Pass wrapper reload and error paths not globally transactional", "index bounds and zero-length GL info logs", "missing shader-file error", "shared Pass context", "UniformReader concept gap", "GL context/thread destruction precondition", "Release, other platforms, remote CI, images and benchmarks unverified"]
+}

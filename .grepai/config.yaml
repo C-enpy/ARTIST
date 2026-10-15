@@ -1,0 +1,68 @@
+version: 1
+embedder:
+    provider: ollama
+    model: nomic-embed-text
+    endpoint: http://localhost:11434
+    dimensions: 768
+    parallelism: 4
+store:
+    backend: gob
+chunking:
+    size: 512
+    overlap: 50
+watch:
+    discover_worktrees: false
+    debounce_ms: 500
+    last_index_time: 2026-10-05T17:57:11.1473138+02:00
+    rpg_persist_interval_ms: 1000
+    rpg_derived_debounce_ms: 300
+    rpg_full_reconcile_interval_sec: 300
+    rpg_max_dirty_files_per_batch: 128
+search:
+    boost:
+        enabled: true
+        penalties:
+            - pattern: /mock/
+              factor: 0.6
+            - pattern: /docs/
+              factor: 0.7
+        bonuses:
+            - pattern: /include/graphic/
+              factor: 1.15
+    hybrid:
+        enabled: false
+        k: 0
+trace:
+    mode: fast
+    enabled_languages:
+        - .cpp
+        - .hpp
+        - .c
+        - .h
+        - .cc
+        - .cxx
+    exclude_patterns: []
+rpg:
+    enabled: false
+    feature_mode: local
+    drift_threshold: 0.35
+    max_traversal_depth: 3
+    llm_provider: ollama
+    llm_endpoint: http://localhost:11434/v1
+    llm_timeout_ms: 8000
+    feature_group_strategy: sample
+update:
+    check_on_startup: false
+ignore:
+    - .git
+    - .grepai
+    - .serena
+    - .opencode
+    - out
+    - build
+    - _deps
+    - node_modules
+    - test-datas
+    - html
+    - graph_info.json
+    - compile_commands.json

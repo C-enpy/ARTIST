@@ -1,0 +1,35 @@
+{
+  "validated_on": "2026-10-03",
+  "scope": "Windows x64 Debug, working tree based on 887548ba8a2839daf55ca5636f1519110b4624a7 (baseline Conan 2 + tranche Shader→Pass ADR-0003)",
+  "command": "Final commands: CMake build + CTest unit/opengl through out/tooling/run-build.py; see _meta/session-2026-10-03-validation.json",
+  "baseline_script": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 (executed for the 109/109 baseline, not re-run end-to-end after migration)",
+  "exit_code": 0,
+  "tools": {
+    "cmake": "3.31.7",
+    "conan": "2.12.2",
+    "ninja": "1.13.0",
+    "python_tooling": "3.10.11",
+    "compiler": "MSVC 19.44.35221.0",
+    "msvc_toolset": "14.44.35207",
+    "windows_sdk": "10.0.26100.0",
+    "cpp_standard": 23
+  },
+  "build_targets": ["ArtistLib_tests", "ArtistLib_component_tests"],
+  "tests": {"total": 122, "passed": 122, "failed": 0, "skipped": 0, "unit": 95, "opengl": 27, "note": "inclut 14 lifetime unit + 5 lifetime opengl (ADR-0003 tranche Shader→Pass, variante B du re-load incluse)"},
+  "opengl": {"vendor": "NVIDIA Corporation", "renderer": "NVIDIA GeForce RTX 3090/PCIe/SSE2", "version": "3.3.0 NVIDIA 616.92"},
+  "evidence": [
+    "out/logs/reproduce-windows-debug.log",
+    "out/logs/build-b2.log",
+    "out/logs/ctest-unit-b2.log",
+    "out/logs/ctest-opengl-b2.log",
+    "out/build/windows-msvc-debug/ctest-unit.xml",
+    "out/build/windows-msvc-debug/ctest-opengl.xml",
+    "out/build/windows-msvc-debug/Testing/Temporary/LastTest.log",
+    "out/build/windows-msvc-debug/compile_commands.json",
+    "docs/_meta/session-2026-10-03-validation.json"
+  ],
+  "incident_fixed_on_record": "Divergent global fixtures violating ODR and pure-virtual dispatch from base destructors were found and corrected; final tests pass. Attribution of every hang to a CRT modal dialog is a reported diagnosis. MockShader getContext was removed, but GMock does not synthesize a dangling default reference.",
+  "review_scope": "Read-only review preceded final fixes; not an independent final execution or exhaustive lifetime audit",
+  "known_open_risks": ["move-assignment over loaded owner", "Pass wrapper reload is not globally transactional", "index bounds", "zero-length GL logs", "shader-file read errors", "shared Pass context", "UniformReader absent from flow concept"],
+  "not_executed": ["Release", "Linux/WSL build", "remote CI", "coverage", "sanitizers (ASan planifie, non valide)", "image comparisons", "benchmarks"]
+}

@@ -1,79 +1,12 @@
-# Contributing to Cen'py Game Engine
+# Contribuer à ARTIST
 
-Thank you for considering contributing to Cen'py! To ensure a smooth collaboration process, please follow the guidelines below.
+La procédure canonique est [Contribuer et vérifier](docs/development/contributing.md)
+dans le vault `docs/`.
 
-## Before You Start
+En bref : définir le contrat, vérifier l'état réel, limiter le diff, exécuter les
+contrôles adaptés et mettre à jour les notes/ADR affectés. Rapporter les commandes
+et les preuves réellement obtenues, y compris les prérequis manquants.
 
-1. **Check Open Issues:** Before starting work on a new feature or bug fix, check the [open issues](https://github.com/C-enpy/ARTIST/issues) to make sure no one else is already working on the same task.
-
-2. **Create an Issue:** If the issue doesn't exist, please create a new one. Provide a clear and concise title along with a detailed description of the problem or enhancement you are suggesting.
-
-## Making Changes
-
-1. **Fork the Repository:** Start by forking the Cen'py repository to your GitHub account.
-
-2. **Clone your Fork:** Clone your forked repository to your local machine:
-
-    ```bash
-    git clone https://github.com/[your-username]/ARTIST.git
-    cd ARTIST
-    ```
-
-3. **Create a Branch:** Create a new branch for your changes:
-
-    ```bash
-    git checkout -b feature/your-feature
-    ```
-
-4. **Make Changes:** Implement your changes, ensuring the code follows the project's [Coding Guidelines](GUIDELINE.md).
-
-5. **Test Your Changes:** Before creating a pull request, test your changes thoroughly to ensure they work as expected.
-
-6. **Update Documentation:** If your changes introduce new features or modify existing ones, update the documentation accordingly.
-
-## Submitting Changes
-
-1. **Commit Changes:** Commit your changes with a descriptive commit message:
-
-    ```bash
-    git add .
-    git commit -m "Add your commit message here"
-    ```
-
-2. **Push Changes:** Push your changes to your forked repository:
-
-    ```bash
-    git push origin feature/your-feature
-    ```
-
-3. **Create a Pull Request:** Go to the [Cen'py repository](https://github.com/C-enpy/ARTIST) on GitHub and create a pull request from your branch.
-
-4. **Describe Your Pull Request:** Provide a clear and detailed description of your changes in the pull request. Mention the issue number that your changes address.
-
-## Description Snippet for Pull Requests
-
-```markdown
-# Pull Request
-
-## Description
-
-This PR addresses #[Issue Number]. It introduces [brief description of changes].
-
-## Changes Made
-
-- [Change 1]
-- [Change 2]
-- ...
-
-## Testing
-
-I have tested these changes thoroughly and can confirm they work as expected.
-
-## Documentation
-
-I have updated the documentation to reflect the changes made.
-
-## Additional Notes
-
-[Include any additional information or notes for reviewers]
-```
+Une PR décrit le changement, les critères validés, les limites et les décisions
+documentaires. Une modification locale n'exige pas de publier automatiquement
+une issue, un commit ou une PR.

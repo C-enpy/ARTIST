@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "orchestrator",
+  // Agents, commandes et skills sont découverts dans .opencode/.
+  // Le modèle est hérité de la session, y compris pour les spécialistes.
+  // Context Mode et QMD sont déjà fournis par la configuration globale.
+  "mcp": {
+    "servers": {
+      "grepai": {
+        "type": "remote",
+        "url": "http://127.0.0.1:3061/mcp?tags=grepai",
+        "oauth": false
+      },
+      "serena": {
+        "type": "remote",
+        "url": "http://127.0.0.1:3061/mcp?tags=serena",
+        "oauth": false,
+        "timeout": {
+          "startup": 150000
+        }
+      },
+      "qmd": { "type": "remote", "url": "http://127.0.0.1:3061/mcp?tags=qmd", "oauth": false }
+    }
+  }
+}

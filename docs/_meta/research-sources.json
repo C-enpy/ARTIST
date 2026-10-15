@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "received_on": "2026-10-03",
+  "paths_relative_to": "repository-root",
+  "sources": [
+    {"id": "R1", "path": "research/deep-research-report.md", "bytes": 35290, "sha256": "e778e868ccf148e8a1069875584e0238ecd96fe8814b2d4af4b50cee12397686"},
+    {"id": "R2", "path": "research/deep-research-report(1).md", "bytes": 63607, "sha256": "76699313cd604d85738b9bed4e7b3474788060c6389d22b908aa686f1bb1e128"},
+    {"id": "R3", "path": "research/deep-research-report(2).md", "bytes": 59252, "sha256": "c209e1df40c39db9c877518404122af5a9bd8173015b2c550e7c7d935f3f13b1"},
+    {"id": "R4", "path": "research/deep-research-report(3).md", "bytes": 57785, "sha256": "895c98d1ec9820b1a6077c6771bd062f26e009586cede9169a6cfa30768a9f9f"}
+  ]
+}

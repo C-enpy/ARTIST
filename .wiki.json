@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "project": "ARTIST",
+  "vault_path": "docs",
+  "entrypoint": "docs/index.md",
+  "sources_path": "research",
+  "qmd_collection": "artist-wiki",
+  "qmd_index": "index",
+  "qmd_pattern": "**/*.md",
+  "maintenance": "docs/_meta/wiki-maintenance.md"
+}

@@ -1,0 +1,6 @@
+*
+!.gitignore
+!project.yml
+!memories/
+!memories/**/
+!memories/**/*.md
