@@ -45,14 +45,6 @@ namespace artist::graphic::pipeline
         IShader &operator=(const IShader &) = delete;
 
         IShader(IShader &&other) noexcept : m_context(std::move(other.m_context)) {}
-        IShader &operator=(IShader &&other) noexcept
-        {
-            if (this != &other)
-            {
-                m_context = std::move(other.m_context);
-            }
-            return *this;
-        }
 
         /**
          * @brief Creates a shader owning a fresh API-specific context.
@@ -126,6 +118,31 @@ namespace artist::graphic::pipeline
         }
 
     protected:
+        /**
+         * Only concrete owners expose assignment, between identical API/profile
+         * types. Release the destination while its concrete Freer is still alive.
+         * On failure, neither context pointer moves; cleanup may be partial
+         * (basic guarantee, no rollback). Self-move is a strict no-op.
+         *
+         * Successful replacement invalidates destination context borrows; source
+         * borrows keep their address under the new owner. Callers serialize access
+         * and, for OpenGL, keep the owning GL context current during cleanup.
+         * GL may defer native deletion while a shader is attached; no GPU wait is
+         * introduced here.
+         */
+        IShader &operator=(IShader &&other)
+        {
+            if (this != &other)
+            {
+                if (m_context)
+                {
+                    free(*m_context);
+                }
+                m_context = std::move(other.m_context);
+            }
+            return *this;
+        }
+
         virtual void load(typename API::ShaderContext &context) = 0;
         virtual void free(typename API::ShaderContext &context) = 0;
         virtual void read(typename API::ShaderContext &context) = 0;
@@ -143,7 +160,7 @@ namespace artist::graphic::pipeline
      */
     template <typename API, auto PROFILE>
         requires(API::Validator::template validateShader<API, PROFILE>())
-    class Shader : public IShader<API>
+    class Shader final : public IShader<API>
     {
     public:
         using IShader<API>::IShader;
@@ -152,13 +169,15 @@ namespace artist::graphic::pipeline
 
         ~Shader()
         {
+            // Cleanup must succeed here: a throwing Freer in this non-throwing
+            // destructor terminates. Move assignment instead propagates failures.
             free();
         }
 
         // A user-declared destructor suppresses the implicit move operations;
-        // define them so ownership transfers remain move-only and noexcept.
+        // construction only transfers a pointer, assignment can fail in cleanup.
         Shader(Shader &&) noexcept = default;
-        Shader &operator=(Shader &&) noexcept = default;
+        Shader &operator=(Shader &&) = default;
 
     protected:
         void free(typename API::ShaderContext &context) override
