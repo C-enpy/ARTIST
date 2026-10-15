@@ -1,0 +1,806 @@
+{
+  "validated_on": "2026-10-15",
+  "scope": "Integrated principal working diff, Windows x64 Debug CPU/OpenGL and separate MSVC ASan experiment; not global engine correctness/performance",
+  "principal_head": "e589aeece2c5abc46aedb089c6a88a6f7dbaa239",
+  "principal_commit_created": false,
+  "integrated_producer_commits": [
+    "a423fc250ff2040a47d52f2402019b5f35abee75",
+    "0bbca5042af3a52994c9540f6092a84d557f8db3"
+  ],
+  "source_diff_fingerprint_sha256": "a1e66dd728c8e6b0700cf7db694040c9592ce18acaf53145590ad0e85053c234",
+  "source_hashes": {
+    "ARTIST/component-tests/CMakeLists.txt": "02967208e3920e1e41aaf184b5e6d756174f3ce88c9408d0357713642ac02ba4",
+    "ARTIST/component-tests/src/graphic/shader/ShaderLifetimeComponentTests.cpp": "c3b4e27922f7e83874f86e32ea158cb58047c5879503f6b3dde2388902dee237",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/Freer.hpp": "362cec3d4b15e310af14703811ea16458030d226af5db8cfc9edc304123326f2",
+    "ARTIST/include/graphic/opengl/pipeline/component/shader/Freer.hpp": "1704448bc5fcd076488fbe7c4f967d67a888d0f965a1c43584be9f9ca2eefc37",
+    "ARTIST/include/graphic/pipeline/Pass.hpp": "c2bb65f795cddd3a514c6b3de79bd11b44bedf0558985d5b5ab37a9aa797ed20",
+    "ARTIST/include/graphic/pipeline/Shader.hpp": "79f892593b358b0efdbd9c123f284e1d532cf057d88b4e793e677b8e40aecef8",
+    "ARTIST/tests/CMakeLists.txt": "213b0662d6c6dd15190c1f20a0f5c9b378697a34b2871f6b063b3c50bcded574",
+    "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp": "1f69a630801faa5b3998d8f9c2cf1570e8db6d0f58a9730d0a9e83ba6d455bfc",
+    "cmake/AddressSanitizer.cmake": "ff8913d0365e472f1be820365c75ca1801764861546fa98f3846f0ba5ca30736",
+    "cmake/probes/AddressSanitizer.cpp": "e489fc37c871c2544acf4b790aa7cb45223968c3f51482a5628ad4d1b39306ef",
+    "CMakeLists.txt": "59c42aa1dbc411f7f03adaf18562d82c52bc4a3a4c874a37286da19a97a10899",
+    "CMakePresets.json": "5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e",
+    "scripts/build-windows.ps1": "6aeeeb2c6b2e13e434fe51d128b4534b0f170f191cea231e8b123fd6aad3735b",
+    "scripts/tests/test_verify_asan.py": "d7dd7b77d2dfe24bcc2a6cfcc99c5473258ae1b8d87d9e0db6a3c1b32214d045",
+    "scripts/verify_asan.py": "6fc5e03e6a47fbda01955682d282f37706b0a90318b86a6f885afafe65ec0d3f"
+  },
+  "source_identity_note": "15 source/build files identical before/after independent R/V/S and after documentation edits; HEAD alone is not the validated state",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "os_release": "10.0.26300",
+    "os_version": "Windows 11 Pro",
+    "python": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "--version"
+      ],
+      "exit_code": 0,
+      "version": "Python 3.10.11"
+    },
+    "ninja": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/ninja.exe",
+        "--version"
+      ],
+      "exit_code": 0,
+      "version": "1.13.0.git.kitware.jobserver-pipe-1"
+    },
+    "conan": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/conan.exe",
+        "--version"
+      ],
+      "exit_code": 0,
+      "version": "Conan version 2.12.2"
+    },
+    "compiler": "MSVC 19.44.35221 / toolset14.44.35207 / x64",
+    "stl": "_MSVC_STL_VERSION=143, _MSVC_LANG=202400",
+    "sdk": "10.0.26100.0",
+    "cmake": "3.31.7",
+    "build_type": "Debug",
+    "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "gpu": [
+      "[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42"
+    ],
+    "driver_scope": "Observed on this host, no substitution by baseline driver or software renderer."
+  },
+  "evaluation": {
+    "method": "PM/LLM",
+    "jev_calls": 0,
+    "provider_order": [
+      "opencode-go",
+      "openai"
+    ],
+    "explicit_spawn_model": false,
+    "scores": {
+      "A": {
+        "complexity_raw": 78,
+        "complexity": 78,
+        "risk": 84
+      },
+      "H": {
+        "complexity_raw": 67,
+        "complexity": 70,
+        "risk": 63
+      },
+      "D": {
+        "complexity_raw": 86,
+        "complexity": 86,
+        "risk": 91
+      },
+      "R": {
+        "complexity": 77,
+        "risk": 87
+      },
+      "V": {
+        "complexity": 57,
+        "risk": 74
+      },
+      "S": {
+        "complexity": 64,
+        "risk": 73
+      },
+      "W_local_docs": {
+        "complexity": 44,
+        "risk": 48
+      }
+    }
+  },
+  "tdd": {
+    "engine_red": {
+      "targeted": {
+        "tests": 5,
+        "failed": 5
+      },
+      "lifetime": {
+        "tests": 31,
+        "passed": 21,
+        "failed": 10
+      },
+      "cleanup": {
+        "tests": 3,
+        "failed": 3
+      },
+      "reason": "destination native handles survive, cleanup hooks absent; baseline headers verified against H0 blobs"
+    },
+    "engine_green_lifetime": 34,
+    "author_final": 137,
+    "author_compile_contract_probes": 7,
+    "harness_red": {
+      "tests": 8,
+      "failed": 4
+    },
+    "harness_green": 8,
+    "skipped": 0
+  },
+  "independent_review": {
+    "verdict": "PASS scoped reading, no blocker demonstrated; not an engine re-test",
+    "python_tests": 8,
+    "report": {
+      "path": "out/validation/loaded-owner-move-2026-10-15/R/review.md",
+      "sha256": "b5a9659b029280a65f6f323ab89c696572bd8afc60b100221837af9dfb5e44a9"
+    },
+    "known_reservation": "Q1: helper normalizes canary ASAN_OPTIONS only. S05/S06/S10 already explicitly used the same fail-closed options, no log_path; arbitrary-parent script robustness remains unimplemented."
+  },
+  "normal": {
+    "verdict": "PASS scoped CPU/API/lifetime",
+    "discovered_unique": 137,
+    "executed_unique": 137,
+    "unit": 106,
+    "opengl": 31,
+    "lifetime_unit": 25,
+    "lifetime_opengl": 9,
+    "invocations_including_targeted": 171,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "disabled": 0,
+    "timeouts": 0,
+    "compile_database_tus": 35,
+    "asan_flags": 0
+  },
+  "asan": {
+    "verdict": "PASS scoped instrumented CPU and lifetime OpenGL, not 137/137 ASan",
+    "discovered": 137,
+    "unique_executed": 115,
+    "unit": 106,
+    "lifetime_unit": 25,
+    "lifetime_opengl": 9,
+    "invocations_including_targeted": 140,
+    "other_gl_not_selected": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "unexpected_engine_diagnostics": 0,
+    "healthy_exit": 0,
+    "fault_exit": 86,
+    "fault_diagnostic": "ERROR: AddressSanitizer: heap-use-after-free",
+    "effective_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "translation_units_and_objects": {
+      "total": 36,
+      "built_and_asan_referenced": 36,
+      "unit": 23,
+      "opengl": 5,
+      "gtest_gmock": 7,
+      "probe": 1
+    },
+    "all_flags": [
+      "fsanitize=address",
+      "RTC1",
+      "MDd",
+      "std:c++latest"
+    ],
+    "ndebug": 0,
+    "link": "INCREMENTAL:NO",
+    "probe_fault_is_not_an_ordinary_ctest": true
+  },
+  "commands": {
+    "normal": [
+      {
+        "label": "v-01-configure",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-01-configure",
+          "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "scripts/build-windows.ps1",
+          "-ConfigureOnly",
+          "-Jobs",
+          "1"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T09:59:00.951Z",
+        "end_utc": "2026-10-15T09:59:21.024Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-01-configure.log"
+      },
+      {
+        "label": "v-02-build",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-02-build",
+          "cmake",
+          "--build",
+          "out/build/windows-msvc-debug",
+          "--parallel",
+          "1"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T09:59:38.998Z",
+        "end_utc": "2026-10-15T10:00:47.647Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-02-build.log"
+      },
+      {
+        "label": "v-03-discovery",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-03-discovery",
+          "ctest",
+          "--test-dir",
+          "out/build/windows-msvc-debug",
+          "-N"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:01:20.542Z",
+        "end_utc": "2026-10-15T10:01:23.680Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-03-discovery.log"
+      },
+      {
+        "label": "v-04-lifetime",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime",
+          "ctest",
+          "--test-dir",
+          "out/build/windows-msvc-debug",
+          "-R",
+          "ShaderLifetime",
+          "--parallel",
+          "1",
+          "--no-tests=error",
+          "--output-on-failure",
+          "--timeout",
+          "120",
+          "--output-junit",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.xml"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:02:06.134Z",
+        "end_utc": "2026-10-15T10:02:13.554Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.log",
+        "junit": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.xml"
+      },
+      {
+        "label": "v-05-unit",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit",
+          "ctest",
+          "--test-dir",
+          "out/build/windows-msvc-debug",
+          "-L",
+          "unit",
+          "--parallel",
+          "1",
+          "--no-tests=error",
+          "--output-on-failure",
+          "--timeout",
+          "120",
+          "--output-junit",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.xml"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:02:38.544Z",
+        "end_utc": "2026-10-15T10:02:42.755Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.log",
+        "junit": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.xml"
+      },
+      {
+        "label": "v-06-opengl",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl",
+          "ctest",
+          "--test-dir",
+          "out/build/windows-msvc-debug",
+          "-L",
+          "opengl",
+          "--parallel",
+          "1",
+          "--no-tests=error",
+          "--output-on-failure",
+          "--timeout",
+          "120",
+          "--output-junit",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.xml"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:02:42.759Z",
+        "end_utc": "2026-10-15T10:02:54.534Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.log",
+        "junit": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.xml"
+      },
+      {
+        "label": "v-07-unit-pe",
+        "kind": "read-only PE dependency inspection, no build/test/GPU",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-07-unit-pe",
+          "dumpbin",
+          "/dependents",
+          "out/build/windows-msvc-debug/ARTIST/tests/ArtistLib_tests.exe"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:07:38.009Z",
+        "end_utc": "2026-10-15T10:07:40.860Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-07-unit-pe.log"
+      },
+      {
+        "label": "v-08-opengl-pe",
+        "kind": "read-only PE dependency inspection, no build/test/GPU",
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-08-opengl-pe",
+          "dumpbin",
+          "/dependents",
+          "out/build/windows-msvc-debug/ARTIST/component-tests/ArtistLib_component_tests.exe"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:07:40.861Z",
+        "end_utc": "2026-10-15T10:07:43.972Z",
+        "exit_code": 0,
+        "signal": null,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-08-opengl-pe.log"
+      }
+    ],
+    "asan": [
+      {
+        "command": [
+          "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "C:/Users/djden/source/repos/ARTIST/scripts/build-windows.ps1",
+          "-AddressSanitizer",
+          "-AsanPreflightOnly",
+          "-Jobs",
+          "1"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:02:02.991Z",
+        "end_utc": "2026-10-15T10:02:22.224Z",
+        "exit_code": 0,
+        "record": "out/validation/loaded-owner-move-2026-10-15/S/S01-preflight-2026-10-15T10-02-02-991Z.json"
+      },
+      {
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S02-build-2026-10-15T10-02-43-912Z",
+          "cmake",
+          "--build",
+          "--preset",
+          "windows-msvc-debug-asan",
+          "--parallel",
+          "1"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:02:43.912Z",
+        "end_utc": "2026-10-15T10:04:52.326Z",
+        "exit_code": 0,
+        "record": "out/validation/loaded-owner-move-2026-10-15/S/S02-build-2026-10-15T10-02-43-912Z.json"
+      },
+      {
+        "command": [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S04-discovery-2026-10-15T10-05-54-646Z",
+          "ctest",
+          "--preset",
+          "windows-msvc-debug-asan",
+          "--show-only=json-v1"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:05:54.646Z",
+        "end_utc": "2026-10-15T10:05:57.660Z",
+        "exit_code": 0,
+        "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+        "record": "out/validation/loaded-owner-move-2026-10-15/S/S04-discovery-2026-10-15T10-05-54-646Z.json"
+      },
+      {
+        "command": [
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\build\\Scripts\\python.exe",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\run-build.py",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00",
+          "ctest",
+          "--preset",
+          "windows-msvc-debug-asan",
+          "-R",
+          "ShaderLifetime",
+          "-L",
+          "unit",
+          "--parallel",
+          "1",
+          "--no-tests=error",
+          "--output-on-failure",
+          "--timeout",
+          "120",
+          "--output-junit",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.xml"
+        ],
+        "cwd": "C:\\Users\\djden\\source\\repos\\ARTIST",
+        "start_utc": "2026-10-15T10:06:41.662242+00:00",
+        "end_utc": "2026-10-15T10:06:46.256806+00:00",
+        "exit_code": 0,
+        "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+        "record": "out/validation/loaded-owner-move-2026-10-15/S/S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.json"
+      },
+      {
+        "command": [
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\build\\Scripts\\python.exe",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\run-build.py",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S06-fullCPU-2026-10-15T10-06-46-257856+00-00",
+          "ctest",
+          "--preset",
+          "windows-msvc-debug-asan",
+          "-L",
+          "unit",
+          "--parallel",
+          "1",
+          "--no-tests=error",
+          "--output-on-failure",
+          "--timeout",
+          "120",
+          "--output-junit",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S06-fullCPU-2026-10-15T10-06-46-257856+00-00.xml"
+        ],
+        "cwd": "C:\\Users\\djden\\source\\repos\\ARTIST",
+        "start_utc": "2026-10-15T10:06:46.257913+00:00",
+        "end_utc": "2026-10-15T10:06:55.791364+00:00",
+        "exit_code": 0,
+        "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+        "record": "out/validation/loaded-owner-move-2026-10-15/S/S06-fullCPU-2026-10-15T10-06-46-257856+00-00.json"
+      },
+      {
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/conan2/p/b/glfw5cb417c5ba313/p/lib/glfw3.lib"
+        ],
+        "exit_code": 0,
+        "record": "out/validation/loaded-owner-move-2026-10-15/S/S09-glfw-instrumentation.json"
+      },
+      {
+        "command": [
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\build\\Scripts\\python.exe",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\run-build.py",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00",
+          "ctest",
+          "--preset",
+          "windows-msvc-debug-asan",
+          "-R",
+          "ShaderLifetime",
+          "-L",
+          "opengl",
+          "--parallel",
+          "1",
+          "--no-tests=error",
+          "--output-on-failure",
+          "--timeout",
+          "120",
+          "--output-junit",
+          "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.xml"
+        ],
+        "cwd": "C:\\Users\\djden\\source\\repos\\ARTIST",
+        "start_utc": "2026-10-15T10:10:45.690112+00:00",
+        "end_utc": "2026-10-15T10:10:55.305027+00:00",
+        "exit_code": 0,
+        "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+        "record": "out/validation/loaded-owner-move-2026-10-15/S/S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.json"
+      }
+    ],
+    "independent_harness": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-p",
+        "test_verify_asan.py",
+        "-v"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "exit": 0,
+      "utc": "2026-10-15T10:04:37.916Z",
+      "scope": "Python verifier only; no compilation, engine executable or GPU"
+    }
+  },
+  "recouped_artifact_hashes": {
+    "H": 92,
+    "D": 58,
+    "V": 40,
+    "S": 48,
+    "mismatched": 0
+  },
+  "evidence": [
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/integrated-inputs.json",
+      "sha256": "6c21a87a7e8668482be76933adc824a8499255aa4f8b5f1f3d45fb5bdff6c229"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/approved-contract.md",
+      "sha256": "2c147008b49c4fdf04ced56fb44b765b81f7fcbe1cdb73affea49a5a7df32538"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/H/manifest.json",
+      "sha256": "b20efe7e044e5c64933549236693ecd10254eb5f7e78e432b8554fc354df2978"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/D/d-manifest-final.json",
+      "sha256": "37455edda0255153bec97d0e947d83ad91f7536a9a296fb74bc42089d0f2bb8b"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/R/review.md",
+      "sha256": "b5a9659b029280a65f6f323ab89c696572bd8afc60b100221837af9dfb5e44a9"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/R/python-verifier-tests.json",
+      "sha256": "206a89f719c60f74daf3ea4170787cb719e57ec21d628132a4cfc3f11f408de4"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/V/v-manifest-final.json",
+      "sha256": "0b71c7f7d5341c0a9ebd30f78e8263e5655042318a69d0e78b046530ea7292ec"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/S/S-final-manifest.json",
+      "sha256": "3768bbc3d580aa3069b4ba3a076f81426315831d0ce80303075d09e53668db2e"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.xml",
+      "sha256": "540e9e8e9e3ab9a8e723688218dbadeb1e04bb74f1de2e470796286e90fcb40b"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.xml",
+      "sha256": "bc1d5bcb79523513597de96a41361d6453abefe2a60a81ecd319328c3c730651"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.xml",
+      "sha256": "c905584012088f68a283c19c38e0cc3185e90c1ed2c49588c40e7754bcc88857"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/S/S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.xml",
+      "sha256": "7bcf027a1be0274b9ed31281f59ff6c2d91928bb9d81c87daec8934c8ceba8ed"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/S/S06-fullCPU-2026-10-15T10-06-46-257856+00-00.xml",
+      "sha256": "7369f3bfb877363b8aea56704d3f44a9f00be94405498342e81e810aacd138a9"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/S/S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.xml",
+      "sha256": "7fe1d5cb98e2932792cc272013e147c5410639ee2fccb2d5ccab95bc104a3899"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/D/d-red-tests-01.xml",
+      "sha256": "9dcbd0e07133dea454b4d05363e112480997b3a3e0674a6b033467b7b7d1a9dc"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/D/d-red-lifetime-02.xml",
+      "sha256": "b0628354bed189d83c5a92b1515d176edbf61783d507c4bf8eeba57037acbdea"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/D/d-red-failures-03.xml",
+      "sha256": "acebda9b5313a18d105a673b2e78b2822cec8a50c952a529fa7092bc30d05854"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/D/d-green-lifetime-01.xml",
+      "sha256": "6d33ec0c063339f8dedc7f093c1dbb46c42325e7514b8c6d5c019c0f7f7d00fe"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/D/d-final-all-02.xml",
+      "sha256": "86bc3f44fe54e60ea7e0fa06e836036132fbeadca85900009e8667234b9c9cbc"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-doc-check.json",
+      "sha256": "d85497ca28f0ae90792e72b1374ae2291ef0f4c1e681dc7dcce2449e79083b94"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-update-01.json",
+      "sha256": "1c122c1efbac60b65dd593e94e17e05d98edef006bf59219f9d3dab8decd2e29"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-update-01.log",
+      "sha256": "3405be37944179ef5baf1962212f1ba9e009637e24ae0dee2df55f92ddb07c13"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-embed-01.json",
+      "sha256": "02bac388299412dc909b4773dc394421c0137e9a32fb9b09c985d572933d7de2"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-embed-01.log",
+      "sha256": "20de33f93e315120c01c68207510b18e28f8b8ab86b5a534ecba7c78059c5235"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-update-02.json",
+      "sha256": "51770689eca79cf6a3ac8b3406f7e9bbd16dff14c18e0330aea821d390492f78"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-update-02.log",
+      "sha256": "56045828e4a3d533ef23f61aa68b351e7c5d71b78358b75290a0398afad80bb7"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-embed-02.json",
+      "sha256": "ca080d8f34993b4cdeca31d7595d08acfd06e189a30ee8979a48dfe75280d090"
+    },
+    {
+      "path": "out/validation/loaded-owner-move-2026-10-15/W-qmd-embed-02.log",
+      "sha256": "16e7ed9129b31c3499f76400a5786a76372c70416f0d453784e5f1bef2638b9a"
+    }
+  ],
+  "preservation": {
+    "user_diff_not_committed": true,
+    "docs_log": "append-only after initial user content",
+    "grepai": "only watch.last_index_time changed, other content verified equal to initial user snapshot; attribution inconclusive, no rollback",
+    "global_checkout_immutability_claimed": false
+  },
+  "limits": [
+    "ADR-0003 remains Accepted/partial; no implicit adoption of Proposed ADRs",
+    "22 non-lifetime GL cases not executed under ASan",
+    "Conan GLFW/GLEW binaries, system/driver and CRT not wholly instrumented; GLM/magic_enum via consuming TUs",
+    "ASan is not a driver-object leak proof, LSan proof or exhaustive UB/RAII guarantee",
+    "Cleanup failure has basic guarantee only; no detach rollback and throwing destructor cleanup can terminate",
+    "Pass context still shared; valid compatible GL context/thread and serialized mutation are caller preconditions",
+    "ASan helper does not normalize arbitrary parent CTest options; current campaign explicitly fail-closed",
+    "No image/readback, benchmark, Release, other platforms, coverage, UBSan/TSan or remote CI validation",
+    "Local out evidence is mutable; recorded hashes do not archive it"
+  ],
+  "docker_resources_created": [],
+  "next_mission_selected": false,
+  "documentation_validation": {
+    "date": "2026-10-15",
+    "scope": "Documentation and evidence integrity after independent R/V/S acceptance; no code or build input changed",
+    "method": "Ad hoc Context Mode derivation via Python 3.13, PyYAML 6.0.2, pathlib/json/regex; fenced and inline code excluded from wikilink checks",
+    "yaml_frontmatter_tags": {
+      "notes": 26,
+      "errors": 0
+    },
+    "wikilinks": {
+      "count": 199,
+      "broken": 0,
+      "orphans_except_index": 0
+    },
+    "json_metadata_documents": {
+      "count": 5,
+      "errors": 0
+    },
+    "git_diff_check_exit_code": 0,
+    "integrated_source_hashes_matched": 15,
+    "versioned_manifest_selected_evidence_hashes_matched": 19,
+    "serena_memories_persisted": 3,
+    "initial_user_files": "Eight unchanged, docs/log.md append-only, .grepai/config.yaml identical except watch.last_index_time; no rollback or user commit",
+    "limits": [
+      "Link targets checked, not every heading anchor nor Obsidian GUI rendering",
+      "No engine rebuild after documentation-only edits; 15 validated source/build inputs remain byte-identical",
+      "Initial validator invocation had a JavaScript quoting error before data processing; corrected invocation exited 0"
+    ]
+  },
+  "qmd": {
+    "collection": "artist-wiki",
+    "notes": 26,
+    "only_target_collection_updated": true,
+    "standard_configuration_no_cpu_forcing": true,
+    "first_update": {
+      "indexed": 1,
+      "updated": 8,
+      "unchanged": 17
+    },
+    "first_embed": {
+      "chunks": 41,
+      "documents": 9
+    },
+    "journal_consolidation_update": {
+      "indexed": 0,
+      "updated": 1,
+      "unchanged": 25
+    },
+    "journal_consolidation_embed": {
+      "chunks": 7,
+      "documents": 1
+    },
+    "lexical_query": "137 ASan",
+    "lexical_result": "mission, new reference, index and build guide retrieved",
+    "vector_query": "verified loaded owner move assignment Shader Pass cleanup ASan 106 CPU 9 OpenGL fail closed options",
+    "vector_result": "mission, ADR-0003 and new reference retrieved",
+    "get_result": "mission frontmatter status completed, implementation verified, source fingerprint and scoped normal/ASan counts retrieved",
+    "initial_quoted_hyphen_phrase": "empty result; revised vocabulary found indexed sources, no infrastructure failure inferred",
+    "commands": [
+      {
+        "command": [
+          "C:/Program Files/nodejs/node.exe",
+          ".opencode/scripts/update-wiki.mjs"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:32:53.954Z",
+        "end_utc": "2026-10-15T10:32:55.554Z",
+        "exit_code": 0,
+        "error": null
+      },
+      {
+        "command": [
+          "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "C:/Users/djden/AppData/Roaming/npm/qmd.ps1",
+          "embed",
+          "-c",
+          "artist-wiki"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:33:04.432Z",
+        "end_utc": "2026-10-15T10:33:16.081Z",
+        "exit_code": 0,
+        "error": null
+      },
+      {
+        "command": [
+          "C:/Program Files/nodejs/node.exe",
+          ".opencode/scripts/update-wiki.mjs"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:35:04.145Z",
+        "end_utc": "2026-10-15T10:35:04.333Z",
+        "exit_code": 0,
+        "error": null
+      },
+      {
+        "command": [
+          "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "C:/Users/djden/AppData/Roaming/npm/qmd.ps1",
+          "embed",
+          "-c",
+          "artist-wiki"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T10:35:04.333Z",
+        "end_utc": "2026-10-15T10:35:08.845Z",
+        "exit_code": 0,
+        "error": null
+      }
+    ]
+  }
+}

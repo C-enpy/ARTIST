@@ -10,14 +10,27 @@ store:
 chunking:
     size: 512
     overlap: 50
+framework_processing:
+    enabled: true
+    mode: auto
+    node_path: node
+    frameworks:
+        vue:
+            enabled: true
+        svelte:
+            enabled: false
+        astro:
+            enabled: false
+        solid:
+            enabled: false
 watch:
-    discover_worktrees: false
     debounce_ms: 500
-    last_index_time: 2026-10-05T17:57:11.1473138+02:00
+    last_index_time: 2026-10-15T15:41:18.7044701+02:00
     rpg_persist_interval_ms: 1000
     rpg_derived_debounce_ms: 300
     rpg_full_reconcile_interval_sec: 300
     rpg_max_dirty_files_per_batch: 128
+    discover_worktrees: false
 search:
     boost:
         enabled: true
@@ -32,6 +45,8 @@ search:
     hybrid:
         enabled: false
         k: 0
+    dedup:
+        enabled: false
 trace:
     mode: fast
     enabled_languages:

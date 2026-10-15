@@ -2,9 +2,9 @@
 title: Harness OpenCode d'ARTIST
 category: tooling
 tags: [artist, tooling, guide]
-summary: Utilisation des agents, skills, commandes et MCP OpenCode avec le vault documentaire et la collection QMD artist-wiki.
+summary: Missions ARTIST planifiées par PM, évaluées par LLM ou JEV, routées et parallélisées avec Ensemble, TDD et QA indépendante.
 created: 2026-10-03
-updated: 2026-10-10
+updated: 2026-10-15
 qmd_collection: artist-wiki
 ---
 
@@ -16,25 +16,32 @@ Navigation : [[index|Accueil]] · [[engineering-principles|Principes]] ·
 ## Utilisation
 
 Ouvrir OpenCode à la **racine ARTIST**. L'agent par défaut est `orchestrator`.
-Les spécialistes héritent du modèle sélectionné dans la session ; aucun routage
-vers un modèle coûteux ou indisponible n'est imposé par ces fichiers.
+Les profils natifs ne fixent aucun modèle. Le PM et le travail hors routage
+héritent de la sélection de session ; les tâches Ensemble sont routées selon
+leur complexité/risque et les modèles/efforts autorisés par l'opérateur.
 
+- `/engine-mission <objectif> [evaluation=llm|jev]` : plan PM, évaluation, exécution
+  parallèle des tâches prêtes, intégration et QA.
+- `/engine-tdd <comportement> [evaluation=llm|jev]` : même circuit, centré sur les
+  preuves RED/GREEN/REFACTOR d'une fonctionnalité ou correction.
 - `/static-audit [périmètre]` : staticité réelle, frontières et contrat proposé.
 - `/engine-review [périmètre]` : revue coordonnée et ciblée, sans modifier les sources.
 - `/engine-verify [critères]` : validation indépendante et verdicts gradués.
 - `/gpu-diagnose <symptôme>` : enquête GPU et correction proposée, sans patch.
 
 Une demande normale de développement est prise en charge par l'orchestrateur,
-avec délégation utile et contrats bornés. Pas de cascade de superviseurs ; les
-petites tâches n'ont pas besoin de mobiliser toute l'équipe.
+avec planification PM et contrats bornés. Pour une petite tâche indivisible,
+l'orchestrateur applique directement ce contrat. Les branches indépendantes sont
+recherchées systématiquement, y compris pour les missions de harness, tests et QA.
 
 ## Organisation
 
 - `AGENTS.md` : cap, style de travail, routage, outils et exigences de preuve.
 - `opencode.jsonc` : agent par défaut et MCP propres à ce projet.
-- `.opencode/agents/` : un coordinateur et neuf spécialistes.
+- `.opencode/ensemble.json` : auto-dispatch et auto-scaling des tâches admissibles.
+- `.opencode/agents/` : un coordinateur, un PM et neuf spécialistes.
 - `.opencode/skills/` : six procédures activées selon le travail.
-- `.opencode/commands/` : quatre points d'entrée explicites.
+- `.opencode/commands/` : six points d'entrée explicites.
 - `.opencode/evidence/` : preuves locales ignorées, transmission des enquêtes.
 - `docs/engineering-principles.md` : synthèse de la philosophie et écarts observés.
 - `docs/adr/` : décisions durables lorsque nécessaires.
@@ -43,11 +50,68 @@ Les neuf spécialistes sont `engine-architect`, `cpp-engineer`, `gpu-engineer`,
 `asset-engineer`, `build-engineer`, `correctness-reviewer`, `shader-reviewer`,
 `performance-reviewer` et `rendering-verifier`. Les descriptions précisent quand
 les appeler. Les reviewers ne corrigent pas les sources qu'ils évaluent.
+`project-manager` prépare le graphe et les évaluations en lecture seule ;
+`orchestrator` valide, publie, coordonne et intègre.
 
 Les skills `artist-static-boundary`, `artist-cpp-contracts`, `artist-gpu-debug`,
 `artist-performance`, `artist-build-validation` et `artist-asset-cooking` contiennent
 les procédures détaillées. Les triggers évitent de charger tout le corpus à chaque
 requête. Les invariants indispensables restent dans `AGENTS.md`.
+
+## Missions, évaluation et TDD
+
+1. **Planifier** : le PM transforme l'objectif en fiches concises et exécutables,
+   avec livrable, entrées, ownership, profil, critères/tests, dépendances, ressources
+   exclusives et contexte motivé. Les phases TDD d'une même tranche restent ordonnées.
+2. **Évaluer** : PM/LLM par défaut, JEV direct sur demande explicite. Conserver les
+   scores bruts et la justification, puis appliquer `complexity = max(70, estimation)`
+   à tout développement, y compris code de test, shader, script et harness exécutable.
+   Le risque est distinct. Pour JEV, convertir une fois les scores natifs [0,1] en
+   entiers 0–100 (`ceil(100 * score)`) avant le plancher ; la confiance n'est pas le
+   risque. Une évaluation indisponible bloque, sans changement silencieux de méthode.
+3. **Publier et router** : l'orchestrateur valide et transmet les deux scores à
+   `team_tasks_add`. Cette évaluation préalable contourne volontairement le
+   classificateur automatique à barème fixe : l'état devient `not_required` sans
+   appel helper ni notification de fin de classification. Ensemble choisit ensuite
+   le modèle et l'effort dans le catalogue autorisé. Les profils n'imposent pas de
+   modèle ; les préférences opérateur et demandes explicites restent prioritaires.
+4. **Paralléliser** : `.opencode/ensemble.json` active `autoDispatch` et `autoScale`.
+   Seules les tâches évaluées, aux dépendances satisfaites et au contexte décidé,
+   sont publiées pour exécution. Exiger les contextes avant publication avec
+   `team_tasks_add({tasks: [], require_context: true})`. Utiliser `fresh` par défaut,
+   notamment pour la QA indépendante, et respecter la capacité configurée.
+   Séparer les worktrees des auteurs ; sérialiser les mutations, builds/indexeurs
+   du même arbre et tests partageant le GPU ou des fixtures.
+5. **Intégrer et vérifier** : le coordinateur organise une barrière d'intégration
+   avant les consommateurs d'un worktree. Une fin de tâche auteur ne rend pas son
+   diff disponible ailleurs : garder ces consommateurs dans le plan, non publiés,
+   jusqu'à l'intégration vérifiée, puis les publier avec les IDs des producteurs
+   et l'état intégré. Cela évite une course avec l'auto-scaling.
+   Les changements sensibles reçoivent une revue ou vérification indépendante.
+
+Le contrat détaillé et le barème sont dans `.opencode/agents/project-manager.md` ;
+la politique durable est dans `AGENTS.md`. Les tâches portent les IDs de dépendance
+réellement retournés par Ensemble, pas les références locales du plan PM.
+Le contexte `pending` est réservé à une décision de contexte encore ouverte.
+Aucune tâche de développement n'échappe au plancher en
+changeant son intitulé en « QA » ou « outillage ».
+
+Le développement suit **RED → GREEN → REFACTOR** : constater le test qui échoue
+pour la bonne raison, implémenter le contrat, puis restructurer avec non-régression.
+Un manque de toolchain ou de contexte GPU est INCONCLUSIVE. Refactorings purs et
+changements documentaires utilisent leurs contrôles adaptés. Les preuves gardent
+commandes, environnement, attendu/observé et nombres de tests ; les exigences GPU,
+image et performance restent celles de [[development/build-and-test|la validation]].
+
+Exemples : `/engine-mission sécuriser l'assignation move Shader/Pass`,
+`/engine-mission plan seul pour la prochaine tranche Pipeline evaluation=jev`,
+`/engine-tdd rejeter un re-load sans mutation de l'état OpenGL`.
+Pour une coordination explicite : `@opencode-ensemble <mission>`.
+
+Ensemble et son skill opérationnel sont fournis par l'installation globale
+existante. La configuration projet hérite du catalogue de modèles, de sa politique
+d'autorisation et du budget de workers ; elle ne les remplace pas.
+La présence des outils et fichiers ne prouve pas l'exécution complète d'une mission.
 
 ## Adaptation d'AIForAll
 

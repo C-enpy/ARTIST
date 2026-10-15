@@ -36,6 +36,30 @@ compactes ; dispatch dynamique amorti à la frontière des lots.
 - Un travail local simple reste local. Une décision transversale mérite un contrat
   et, si elle doit durer, une note dans `docs/adr/`.
 
+## Développement piloté par les tests (TDD)
+
+- Fonctionnalités et corrections suivent **RED → GREEN → REFACTOR**, par petite
+  tranche observable. Définir le contrat et les critères avant de modifier le code.
+- **RED** : écrire le test de régression ou de contrat, puis constater son échec
+  pour la raison attendue avant l'implémentation. Une toolchain absente, un contexte
+  GPU indisponible ou zéro test découvert ne constituent pas cette preuve.
+- **GREEN** : implémenter le minimum correct pour satisfaire le contrat. Ne pas
+  affaiblir les assertions, tolérances ou références pour faire passer le test.
+- **REFACTOR** : améliorer la structure lorsque nécessaire, puis relancer les tests
+  concernés et les contrôles d'intégration pertinents sur le diff final.
+- Choisir la preuve à la frontière testée : contrats de compilation positifs et
+  négatifs pour concepts/types ; tests CPU pour le comportement ; contexte OpenGL
+  réel pour le backend ; image ou mesure lorsqu'elles font partie du critère.
+  Un test de compilation négatif doit rejeter le cas pour le motif attendu, avec
+  une toolchain fonctionnelle ; les mocks ne remplacent pas une preuve GPU.
+- Conserver les commandes, environnement, attendu/observé, nombres de tests et
+  extraits utiles des phases RED/GREEN. Une phase non exécutée reste INCONCLUSIVE.
+- Un refactoring pur s'appuie sur les tests existants ou de caractérisation avant
+  restructuration. Documentation et configuration utilisent les contrôles adaptés
+  (syntaxe, cohérence, découverte) sans fabriquer un échec comportemental.
+- Le TDD ne démontre pas une performance ni un coût nul : ces critères exigent
+  leurs expériences reproductibles.
+
 ## Documentation Obsidian et QMD
 
 - **Collection QMD : `artist-wiki`** ; vault versionné : `docs/` ; accueil :
@@ -56,6 +80,8 @@ compactes ; dispatch dynamique amorti à la frontière des lots.
 La délégation est autorisée lorsqu'elle apporte une spécialisation ou une revue
 indépendante. Les autres agents sont des feuilles, sans sous-délégation.
 
+- `project-manager` : découpage exécutable, dépendances, parallélisme, estimation
+  de complexité/risque ; planificateur en lecture seule.
 - `engine-architect` : frontière statique/cook/runtime, API, render graph, ownership.
 - `cpp-engineer` : implémentation C++23, concepts, templates, mémoire, concurrence.
 - `gpu-engineer` : backend, passes, shaders, états et synchronisation GPU.
@@ -66,12 +92,51 @@ indépendante. Les autres agents sont des feuilles, sans sous-délégation.
 - `performance-reviewer` : coût CPU/GPU, allocations, cache, spécialisation et mesures.
 - `rendering-verifier` : vérification indépendante avec PASS / FAIL / INCONCLUSIVE.
 
+Pour une mission Ensemble, charger `opencode-ensemble` avant la coordination.
+Faire préparer le plan par `project-manager` ; pour une petite intervention
+indivisible, l'orchestrateur peut appliquer directement son contrat de planification.
+Rechercher systématiquement les branches indépendantes, y compris pour le harness,
+les tests et la QA. Exécuter en parallèle les tâches prêtes sans conflit d'ownership
+ni ressource partagée ; justifier les dépendances qui imposent une séquence.
+La composition et la taille de l'équipe dépendent de la mission.
+
+L'évaluation **PM/LLM** est le défaut ; **JEV direct** est un choix explicite par
+mission. Le PM évalue avant publication et conserve méthode, estimation brute,
+justification, incertitudes et scores retenus. Pour toute tâche de développement
+(implémentation, correction, refactoring, code de test, shader, script ou harness
+exécutable), appliquer **`complexity = max(70, estimation)`**, sur 100. Le risque
+reste une estimation distincte ; ces scores ne sont pas des probabilités de succès.
+Ne pas abaisser le plancher en rebaptisant une tâche « tests », « QA » ou « outillage ».
+
+L'orchestrateur valide les fiches puis publie **les deux entiers `complexity` et
+`risk` (0–100)** dans `team_tasks_add`. Ils évitent la classification automatique ;
+ne pas attendre une notification JEV pour une tâche marquée `not_required`.
+Fournir une affinité `agent`, les vrais IDs des dépendances déjà créées et une
+décision `context` explicite. Le routage Ensemble choisit le modèle/effort autorisé
+dans le catalogue opérateur ; ne pas le court-circuiter par un `model` explicite
+sans demande utilisateur, ni modifier les scores du catalogue. Le PM et le travail
+hors routage Ensemble conservent la sélection native de la session.
+
+`autoDispatch` et `autoScale` sont activés dans `.opencode/ensemble.json` ; les
+tâches publiées peuvent donc démarrer immédiatement. Publier seulement des tâches
+exécutables et évaluées, avec un contexte décidé (`fresh` par défaut, requis pour
+une revue indépendante). Réserver `pending` aux décisions de contexte ouvertes.
+Les tâches dépendantes attendent les livrables réellement intégrés : le coordinateur
+doit organiser cette barrière, pas seulement la fin du travail d'un auteur.
+
 Un brief contient : objectif, fichiers/symboles, état du diff, invariants, liberté
-locale, critères de réussite, commandes possibles et tentatives déjà faites.
+locale, critères de réussite, commandes possibles, tentatives déjà faites, preuves
+RED/GREEN attendues et ressources exclusives. Une tranche TDD garde un propriétaire
+pour son cycle ; ses phases ne sont pas des tâches indépendantes à lancer en parallèle.
 Des lectures indépendantes peuvent être parallèles. Un seul écrivain par fichier
 et un seul build/indexeur par répertoire de sortie ; sérialiser les tests qui
 partagent un contexte GPU ou des fixtures. Le coordinateur vérifie l'intégration.
-Les agents héritent du modèle choisi dans la session.
+Vérifier ce que reçoit chaque worktree : un diff non commité n'y est pas transmis
+automatiquement. Les tests sont écrits par les implémenteurs ; les reviewers et
+`rendering-verifier` conservent leurs restrictions de modification.
+Un changement sensible (ownership/lifetime, concurrence, backend ou shader) exige
+une revue ou vérification indépendante, avec contrat, diff et critères observables.
+Si elle est indisponible, signaler la limite sans qualifier une auto-revue d'indépendante.
 
 ## Navigation et MCP
 

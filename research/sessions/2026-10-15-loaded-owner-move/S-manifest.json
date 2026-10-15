@@ -1,0 +1,1632 @@
+{
+  "task": "task_mv9d5o3b_000v_iwa7w1",
+  "verifier": "pool-6",
+  "campaign": "S independent ASan on integrated D/H",
+  "created_utc": "2026-10-15T10:17:18.991407+00:00",
+  "scope_verdict": "PASS for required S behavior/instrumentation criteria; separate no-claim limits for visual/performance and shared metadata drift.",
+  "source_root": "C:\\Users\\djden\\source\\repos\\ARTIST",
+  "head": "e589aeece2c5abc46aedb089c6a88a6f7dbaa239",
+  "integrated_fingerprint_id": "a1e66dd728c8e6b0700cf7db694040c9592ce18acaf53145590ad0e85053c234",
+  "source_hashes": {
+    "ARTIST/component-tests/CMakeLists.txt": "02967208e3920e1e41aaf184b5e6d756174f3ce88c9408d0357713642ac02ba4",
+    "ARTIST/component-tests/src/graphic/shader/ShaderLifetimeComponentTests.cpp": "c3b4e27922f7e83874f86e32ea158cb58047c5879503f6b3dde2388902dee237",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/Freer.hpp": "362cec3d4b15e310af14703811ea16458030d226af5db8cfc9edc304123326f2",
+    "ARTIST/include/graphic/opengl/pipeline/component/shader/Freer.hpp": "1704448bc5fcd076488fbe7c4f967d67a888d0f965a1c43584be9f9ca2eefc37",
+    "ARTIST/include/graphic/pipeline/Pass.hpp": "c2bb65f795cddd3a514c6b3de79bd11b44bedf0558985d5b5ab37a9aa797ed20",
+    "ARTIST/include/graphic/pipeline/Shader.hpp": "79f892593b358b0efdbd9c123f284e1d532cf057d88b4e793e677b8e40aecef8",
+    "ARTIST/tests/CMakeLists.txt": "213b0662d6c6dd15190c1f20a0f5c9b378697a34b2871f6b063b3c50bcded574",
+    "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp": "1f69a630801faa5b3998d8f9c2cf1570e8db6d0f58a9730d0a9e83ba6d455bfc",
+    "cmake/AddressSanitizer.cmake": "ff8913d0365e472f1be820365c75ca1801764861546fa98f3846f0ba5ca30736",
+    "cmake/probes/AddressSanitizer.cpp": "e489fc37c871c2544acf4b790aa7cb45223968c3f51482a5628ad4d1b39306ef",
+    "CMakeLists.txt": "59c42aa1dbc411f7f03adaf18562d82c52bc4a3a4c874a37286da19a97a10899",
+    "CMakePresets.json": "5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e",
+    "scripts/build-windows.ps1": "6aeeeb2c6b2e13e434fe51d128b4534b0f170f191cea231e8b123fd6aad3735b",
+    "scripts/tests/test_verify_asan.py": "d7dd7b77d2dfe24bcc2a6cfcc99c5473258ae1b8d87d9e0db6a3c1b32214d045",
+    "scripts/verify_asan.py": "6fc5e03e6a47fbda01955682d282f37706b0a90318b86a6f885afafe65ec0d3f"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "os_release": "10.0.26300",
+    "os_version": "Windows 11 Pro",
+    "python": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "--version"
+      ],
+      "exit_code": 0,
+      "version": "Python 3.10.11"
+    },
+    "ninja": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/ninja.exe",
+        "--version"
+      ],
+      "exit_code": 0,
+      "version": "1.13.0.git.kitware.jobserver-pipe-1"
+    },
+    "conan": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/conan.exe",
+        "--version"
+      ],
+      "exit_code": 0,
+      "version": "Conan version 2.12.2"
+    },
+    "compiler": "MSVC 19.44.35221 / toolset14.44.35207 / x64",
+    "stl": "_MSVC_STL_VERSION=143, _MSVC_LANG=202400",
+    "sdk": "10.0.26100.0",
+    "cmake": "3.31.7",
+    "build_type": "Debug",
+    "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "gpu": [
+      "[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42"
+    ],
+    "driver_scope": "Observed on this host, no substitution by baseline driver or software renderer."
+  },
+  "criteria": [
+    {
+      "id": "integrated-inputs",
+      "expected": "HEAD expected and all15 integrated source hashes unchanged before/after; no QA changes to sources, harness, tests or golden files.",
+      "command": [
+        "git rev-parse HEAD",
+        "git diff --binary",
+        "git status --porcelain=v1 --untracked-files=all",
+        "SHA256 of each15 path from integrated-inputs.json before/after"
+      ],
+      "environment": "Principal working tree, unstaged integration D/H retained; not a copied author worktree/cache.",
+      "evidence": "HEAD e589aeece2c5abc46aedb089c6a88a6f7dbaa239; 15/15 match before and after. integrated-inputs.json byte hash unchanged; .grepai watcher timestamp reservation separately recorded.",
+      "verdict": "PASS",
+      "artifacts": [
+        "inputs-before.json",
+        "inputs-after.json",
+        "diff-before.patch",
+        "diff-after.patch"
+      ]
+    },
+    {
+      "id": "toolchain-preflight",
+      "expected": "Real ASan runtime; healthy control0, intentional identifiable heap-use-after-free86, functional C++23 format/stacktrace.",
+      "command": [
+        "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:/Users/djden/source/repos/ARTIST/scripts/build-windows.ps1",
+        "-AddressSanitizer",
+        "-AsanPreflightOnly",
+        "-Jobs",
+        "1"
+      ],
+      "environment": "Windows11 x64 Debug MSVC19.44, fresh distinct ASan tree.",
+      "evidence": "Script exit0; ARTIST_ASAN_COMPILES/CXX23_NATIVE success; healthy value42 trace7 MSVC194435221 STL143 CXX202400; runtime path printed; fault READ size4 main AddressSanitizer.cpp:47, expected diagnostic and86.",
+      "verdict": "PASS",
+      "artifacts": [
+        "S01-preflight-2026-10-15T10-02-02-991Z.log",
+        "preflight-native-20261015-120221966\\healthy.log",
+        "preflight-native-20261015-120221966\\summary.json",
+        "preflight-native-20261015-120221966\\use-after-free.log"
+      ]
+    },
+    {
+      "id": "real-build-instrumentation",
+      "expected": "Build both actual engine test executables, instrument local consumer TUs and GTest/GMock; retain RTC1, DebugCRT/assertions, no incremental link.",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S02-build-2026-10-15T10-02-43-912Z",
+        "cmake",
+        "--build",
+        "--preset",
+        "windows-msvc-debug-asan",
+        "--parallel",
+        "1",
+        "; dumpbin /headers /imports <probe/unit/opengl PE>",
+        "; dumpbin /symbols <36 objects and GTest/GMock/Conan libs>"
+      ],
+      "environment": "Distinct out/build/windows-msvc-debug-asan; parallel1; no author cache reuse.",
+      "evidence": "Build0, 41 steps; 36/36 TU builds (probe1,GTest/GMock7,unit23,GL5) carry ASan/RTC1/MDd/C++latest and no NDEBUG, all36 objects have UNDEF __asan. Four GTest/GMock libs do too. All3 PE x64 import clang_rt.asan_dynamic-x86_64.dll, six adjacent DLL copies match toolset hashes; /INCREMENTAL:NO.",
+      "verdict": "PASS",
+      "artifacts": [
+        "S02-build-2026-10-15T10-02-43-912Z.log",
+        "S07-compile-instrumentation-corrected.json",
+        "S08-binary-instrumentation.json",
+        "S09-all-object-instrumentation.json",
+        "S09-glfw-instrumentation.json"
+      ]
+    },
+    {
+      "id": "real-discovery",
+      "expected": "Nonzero real discovered executable tests; no NOT_BUILT placeholders or implicit skips.",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S04-discovery-2026-10-15T10-05-54-646Z",
+        "ctest",
+        "--preset",
+        "windows-msvc-debug-asan",
+        "--show-only=json-v1"
+      ],
+      "environment": "CTest3.31.7, fresh built ASan binaries, project-root fixture working directory.",
+      "evidence": "137 real tests =106unit+31OpenGL, 25CPU+9GL lifetime;0disabled,0placeholders.",
+      "verdict": "PASS",
+      "artifacts": [
+        "S04-discovery-2026-10-15T10-05-54-646Z.log",
+        "S04-discovery-2026-10-15T10-05-54-646Z.json"
+      ]
+    },
+    {
+      "id": "lifetime-cpu",
+      "expected": "All25 selected CPU lifetime cases pass under ASan with no skip/error/timeout/report.",
+      "command": [
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\build\\Scripts\\python.exe",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\run-build.py",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00",
+        "ctest",
+        "--preset",
+        "windows-msvc-debug-asan",
+        "-R",
+        "ShaderLifetime",
+        "-L",
+        "unit",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.xml"
+      ],
+      "environment": "Instrumented mock CPU suite; ASAN_OPTIONS recorded; parallel1,timeout120.",
+      "evidence": "25 discovered/25executed/25PASS;0failed,0errors,0skipped. JUnit names exactly match selection.",
+      "verdict": "PASS",
+      "artifacts": [
+        "S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.log",
+        "S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.xml"
+      ]
+    },
+    {
+      "id": "complete-cpu",
+      "expected": "Entire applicable CPU label, with no exclusion of any of106cases.",
+      "command": [
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\build\\Scripts\\python.exe",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\run-build.py",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S06-fullCPU-2026-10-15T10-06-46-257856+00-00",
+        "ctest",
+        "--preset",
+        "windows-msvc-debug-asan",
+        "-L",
+        "unit",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S06-fullCPU-2026-10-15T10-06-46-257856+00-00.xml"
+      ],
+      "environment": "Same ASan build/runtime; no exclusion flag; parallel1,timeout120.",
+      "evidence": "106 discovered/106executed/106PASS;0failed/errors/skips/timeouts. No missing/unexpected JUnit case.",
+      "verdict": "PASS",
+      "artifacts": [
+        "S06-fullCPU-2026-10-15T10-06-46-257856+00-00.log",
+        "S06-fullCPU-2026-10-15T10-06-46-257856+00-00.xml"
+      ]
+    },
+    {
+      "id": "lifetime-opengl",
+      "expected": "All9 lifetime real-driver tests including loaded destination release, aliases and deferred native deletion pass under ASan.",
+      "command": [
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\build\\Scripts\\python.exe",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\tooling\\run-build.py",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00",
+        "ctest",
+        "--preset",
+        "windows-msvc-debug-asan",
+        "-R",
+        "ShaderLifetime",
+        "-L",
+        "opengl",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.xml"
+      ],
+      "environment": "GPU lease explicitly granted; GLFW hidden640x480 3.3core current on fixture thread; NVIDIA RTX3090 / OpenGL3.3.0 driver617.42;5GL TUs no __mock_gl__.",
+      "evidence": "9 discovered/9executed/9PASS;0failed/errors/skips/timeouts; each system-out identifies real NVIDIA context. Shader/program validity and delete-status queries match contract; current program release checked after unbind, no global GPU wait.",
+      "verdict": "PASS",
+      "artifacts": [
+        "S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.log",
+        "S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.xml",
+        "S14-gl-scope.json"
+      ]
+    },
+    {
+      "id": "visual",
+      "expected": "No visual criterion in S; a draw/readback/golden comparison would be required for a visual claim.",
+      "command": null,
+      "environment": "No draw/readback/image experiment requested or executed.",
+      "evidence": "No capture or golden modification; lifetime GL does not perform draw or glReadPixels.",
+      "verdict": "INCONCLUSIVE",
+      "reason": "Out of S acceptance scope; no image instrumentation or comparison used."
+    },
+    {
+      "id": "performance",
+      "expected": "No performance criterion in S; target Release measurements would be required for a performance claim.",
+      "command": null,
+      "environment": "Debug ASan only, not a Release benchmark.",
+      "evidence": "No performance/zero-cost/latency claim; timings of tests are operational only.",
+      "verdict": "INCONCLUSIVE",
+      "reason": "Out of S acceptance scope, no Release measurement."
+    }
+  ],
+  "counts": {
+    "discovered": 137,
+    "unique_executed": 115,
+    "executions_including_lifetime_cpu_overlap": 140,
+    "not_selected": 22,
+    "junit_roots_reconciled": true,
+    "runs": [
+      {
+        "phase": "lifetime_cpu",
+        "junit": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.xml",
+        "sha256": "7bcf027a1be0274b9ed31281f59ff6c2d91928bb9d81c87daec8934c8ceba8ed",
+        "expected": 25,
+        "actual": 25,
+        "unique_cases": 25,
+        "missing": [],
+        "unexpected": [],
+        "root": {
+          "name": "Win32-ninja",
+          "tests": "25",
+          "failures": "0",
+          "disabled": "0",
+          "skipped": "0",
+          "hostname": "DESKTOP-S232DQI",
+          "time": "1",
+          "timestamp": "2026-10-15T12:06:44"
+        },
+        "passed": 25,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "asan_diagnostics": [],
+        "testcases": [
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderIsNotCopyable",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MoveAssignmentTypeContract",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.FreeIsIdempotent",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MovedFromShaderRejectsBorrow",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MovedFromShaderBorrowThrows",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MovedFromPassAccessThrows",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderReloadWithoutFreeRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassReloadWithoutFreeRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassAccessorsOnLiveObject",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.NullContextRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassContextOwnsShadersUniquely",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassContextRejectsNullShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.NullPassContextRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassFreeDetachesOnlyLiveShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MoveAssignLoadedShaderReleasesDestination",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MoveAssignLoadedPassReleasesDestinationBeforeShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderMoveAssignmentStateMatrix",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveAssignmentStateMatrix",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderSelfMoveIsStrictNoOpInEveryState",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassSelfMoveIsStrictNoOpInEveryState",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveAssignmentPreservesContextAliasesNotOldProgram",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderMoveCleanupFailureDoesNotConsumeSource",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveCleanupFailureAfterDetachDoesNotConsumeSource",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveCleanupFailureFromMovedShaderPreservesOwners",
+            "status": "run"
+          }
+        ]
+      },
+      {
+        "phase": "full_cpu",
+        "junit": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S06-fullCPU-2026-10-15T10-06-46-257856+00-00.xml",
+        "sha256": "7369f3bfb877363b8aea56704d3f44a9f00be94405498342e81e810aacd138a9",
+        "expected": 106,
+        "actual": 106,
+        "unique_cases": 106,
+        "missing": [],
+        "unexpected": [],
+        "root": {
+          "name": "Win32-ninja",
+          "tests": "106",
+          "failures": "0",
+          "disabled": "0",
+          "skipped": "0",
+          "hostname": "DESKTOP-S232DQI",
+          "time": "6",
+          "timestamp": "2026-10-15T12:06:49"
+        },
+        "passed": 106,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "asan_diagnostics": [],
+        "testcases": [
+          {
+            "name": "unit.ShaderContextTests.SetAndGetShaderTypeforVertexShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderContextTests.SetAndGetShaderTypeforFragmentShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderContextTests.SetAndGetShaderTypeforGeometryShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderContextTests.SetAndGetShaderTypeforTessellationControlShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderContextTests.SetAndGetShaderTypeforTessellationEvaluationShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderContextTests.SetAndGetShaderTypeforComputeShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeBinderTests.BindAttributeTest_createBuffer",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeBinderTests.BindAttributeTest_bindBuffer",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeBinderTests.BindAttributeTest_invalidContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeSetterTests.SetAttributeTest_CallBufferData",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeUnbinderTests.BindAttributeTest_nullContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeReaderTests.ReadAttributes_InvalidPassID",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassFreerTests.FreePassTest_validContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassFreerTests.FreePassTest_noPassID",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassFreerTests.FreePassTest_deletePipeline",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassFreerTests.FreePassTest_noShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassFreerTests.FreePassTest_isIdempotent",
+            "status": "run"
+          },
+          {
+            "name": "unit.LoaderTests.LoadPassTest_validContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.LoaderTests.LoadPassTest_createPipeline",
+            "status": "run"
+          },
+          {
+            "name": "unit.LoaderTests.LoadPassTest_linkPipeline",
+            "status": "run"
+          },
+          {
+            "name": "unit.LoaderTests.LoadPassTest_pipelineCreationFailed",
+            "status": "run"
+          },
+          {
+            "name": "unit.LoaderTests.LoadPassTest_linkFailed",
+            "status": "run"
+          },
+          {
+            "name": "unit.LoaderTests.LoadPassTest_linkSuccess",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderAttacherTests.AttachShaders_ValidContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderAttacherTests.AttachShaders_InvalidPassID",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderAttacherTests.AttachShaders_NoShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformReaderTests.ReadUniforms_ValidContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.UserTests.UsePass_ValidContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.UserTests.UsePass_ZeroPassIDStillCallsGL",
+            "status": "run"
+          },
+          {
+            "name": "unit.ResetterTests.resetProgram_ValidContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.ResetterTests.resetProgram_NullContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.PipelineUserTests.useProgram_ValidContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.PipelineUserTests.useProgram_NullContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.FreerTests.FreeShader_freeOnGPU",
+            "status": "run"
+          },
+          {
+            "name": "unit.FreerTests.FreeShader_setShaderIDToZero",
+            "status": "run"
+          },
+          {
+            "name": "unit.FreerTests.FreeShader_doNothing_whenShaderIDIsZero",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLoaderTests.LoadShaderTest_callCreate",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLoaderTests.LoadShaderTest_callShaderSource",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLoaderTests.LoadShaderTest_callCompile",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLoaderTests.LoadShaderTest_callGetIv",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLoaderTests.LoadShaderTest_setContextShaderId",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLoaderTests.LoadShaderFailureTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.ReaderTests.ReadShaderTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeTest.BindTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeTest.UnbindTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeTest.SetTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.AttributeTest.GetContextTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.LoadPass",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.WithUniforms",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.WithUniforms_NoUniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.UsePass",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.FreePass",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.GetUniforms",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.GetAttributes",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.GetShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.PassTest.GetContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.PipelineTest.UseTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.PipelineTest.IteratePassesTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.PipelineTest.ResetPipelineTest",
+            "status": "run"
+          },
+          {
+            "name": "unit.PipelineTest.GetContext",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderIsNotCopyable",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MoveAssignmentTypeContract",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.FreeIsIdempotent",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MovedFromShaderRejectsBorrow",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MovedFromShaderBorrowThrows",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MovedFromPassAccessThrows",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderReloadWithoutFreeRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassReloadWithoutFreeRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassAccessorsOnLiveObject",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.NullContextRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassContextOwnsShadersUniquely",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassContextRejectsNullShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.NullPassContextRejected",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassFreeDetachesOnlyLiveShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MoveAssignLoadedShaderReleasesDestination",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.MoveAssignLoadedPassReleasesDestinationBeforeShaders",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderMoveAssignmentStateMatrix",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveAssignmentStateMatrix",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderSelfMoveIsStrictNoOpInEveryState",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassSelfMoveIsStrictNoOpInEveryState",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveAssignmentPreservesContextAliasesNotOldProgram",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.ShaderMoveCleanupFailureDoesNotConsumeSource",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveCleanupFailureAfterDetachDoesNotConsumeSource",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderLifetimeTests.PassMoveCleanupFailureFromMovedShaderPreservesOwners",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderTest.CreateShader",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderTest.CreateShader_codeAlreadyRead",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderTest.Free",
+            "status": "run"
+          },
+          {
+            "name": "unit.ShaderTest.DeleteMustFree",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetFloatUniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetDoubleUniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetIntUniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetUIntUniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetVec2Uniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetVec3Uniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetVec4Uniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetMat2Uniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetMat3Uniform",
+            "status": "run"
+          },
+          {
+            "name": "unit.UniformTest.SetMat4Uniform",
+            "status": "run"
+          }
+        ]
+      },
+      {
+        "phase": "lifetime_gl",
+        "junit": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\S\\S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.xml",
+        "sha256": "7fe1d5cb98e2932792cc272013e147c5410639ee2fccb2d5ccab95bc104a3899",
+        "expected": 9,
+        "actual": 9,
+        "unique_cases": 9,
+        "missing": [],
+        "unexpected": [],
+        "root": {
+          "name": "Win32-ninja",
+          "tests": "9",
+          "failures": "0",
+          "disabled": "0",
+          "skipped": "0",
+          "hostname": "DESKTOP-S232DQI",
+          "time": "6",
+          "timestamp": "2026-10-15T12:10:48"
+        },
+        "passed": 9,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "asan_diagnostics": [],
+        "testcases": [
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.MoveTransfersHandle",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.PassMoveAssignmentRetiresProgramButKeepsAliasedShaders",
+            "status": "run"
+          },
+          {
+            "name": "opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound",
+            "status": "run"
+          }
+        ]
+      }
+    ],
+    "not_executed": [
+      {
+        "test": "opengl.PassTest.PassCreationTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PassTest.UniformManagementTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PassTest.InvalidUniformTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PassTest.ShaderAttachmentTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PassTest.UniformReadingTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PassTest.AttributeReadingTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PassTest.FreeResourcesTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PipelineTest.PipelineCreationTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PipelineTest.UsePassTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PipelineTest.UseNextPassTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PipelineTest.ResetPipelineTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.PipelineTest.PassesCountTest",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderVert",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderBadVert",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderFrag",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderBadFrag",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderGeom",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderBadGeom",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderTesselaionControl",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderBadTesselaionControl",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderCompute",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      },
+      {
+        "test": "opengl.ShaderTest.CreateShaderBadCompute",
+        "labels": [
+          "opengl"
+        ],
+        "reason": "S scope is lifetime OpenGL only (9 cases), not full OpenGL ASan. This non-lifetime OpenGL case is intentionally not selected; no ASan validation claimed. Normal full OpenGL validation belongs to V."
+      }
+    ]
+  },
+  "binary_instrumentation": {
+    "created_utc": "2026-10-15T10:08:14.666Z",
+    "outputs": [
+      {
+        "name": "probe",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/imports",
+          "/headers",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/artist_asan_probe.exe"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-probe.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/artist_asan_probe.exe",
+        "binary_sha256": "443993a7a2d50bab4fb5acd890386a662e84c486b66677345eaee9ec4ce0af45",
+        "log_sha256": "048e5e42ecbf25c06472b714726ec1ff4f5e61f5d4d83bbf9156d71b05b31612",
+        "asan_symbols": 39,
+        "undefined_asan_symbols": 0,
+        "examples": [],
+        "x64": true,
+        "imports": [
+          "KERNEL32.dll",
+          "MSVCP140D.dll",
+          "clang_rt.asan_dynamic-x86_64.dll",
+          "VCRUNTIME140D.dll",
+          "VCRUNTIME140_1D.dll",
+          "ucrtbased.dll"
+        ]
+      },
+      {
+        "name": "unit",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/imports",
+          "/headers",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/tests/ArtistLib_tests.exe"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-unit.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/tests/ArtistLib_tests.exe",
+        "binary_sha256": "169bf182aa4381c896a5a4d2fe79f34bc63d53c8ca0f9a77efe3f97ee6206cc5",
+        "log_sha256": "0152970435d9a9ec5b18522483d985d5eafbda8ccb6e9480947edd9dcd6713df",
+        "asan_symbols": 44,
+        "undefined_asan_symbols": 0,
+        "examples": [],
+        "x64": true,
+        "imports": [
+          "KERNEL32.dll",
+          "MSVCP140D.dll",
+          "clang_rt.asan_dynamic-x86_64.dll",
+          "VCRUNTIME140D.dll",
+          "VCRUNTIME140_1D.dll",
+          "ucrtbased.dll"
+        ]
+      },
+      {
+        "name": "opengl",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/imports",
+          "/headers",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/component-tests/ArtistLib_component_tests.exe"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-opengl.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/component-tests/ArtistLib_component_tests.exe",
+        "binary_sha256": "311fee49d6033bbd116da24c0ac477675c5769b8218c10fa7126810d4425cee2",
+        "log_sha256": "1ab5b2a14440aa9b90056a5d2a5dc8e4f93bbd5ff4ab3d9ae43e1a5a2f8e0586",
+        "asan_symbols": 44,
+        "undefined_asan_symbols": 0,
+        "examples": [],
+        "x64": true,
+        "imports": [
+          "GDI32.dll",
+          "OPENGL32.dll",
+          "KERNEL32.dll",
+          "USER32.dll",
+          "SHELL32.dll",
+          "MSVCP140D.dll",
+          "clang_rt.asan_dynamic-x86_64.dll",
+          "VCRUNTIME140D.dll",
+          "VCRUNTIME140_1D.dll",
+          "ucrtbased.dll"
+        ]
+      },
+      {
+        "name": "unit_lifetime",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/tests/CMakeFiles/ArtistLib_tests.dir/src/graphic/pipeline/ShaderLifetimeTests.cpp.obj"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-unit_lifetime.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/tests/CMakeFiles/ArtistLib_tests.dir/src/graphic/pipeline/ShaderLifetimeTests.cpp.obj",
+        "binary_sha256": "313813e29a7de429793f78c702f390797a2d7988046bc3eb6de8a4cf3d8ee2d4",
+        "log_sha256": "8e0c52afef4c3ea4468ae5422d2c757adbfe49e86f517744464a811be74ef4f4",
+        "asan_symbols": 5020,
+        "undefined_asan_symbols": 27,
+        "examples": [
+          "96B3 00000000 UNDEF  notype ()    External     | __asan_load1\r",
+          "96B4 00000000 UNDEF  notype ()    External     | __asan_load16\r",
+          "96B5 00000000 UNDEF  notype ()    External     | __asan_load2\r",
+          "96B6 00000000 UNDEF  notype ()    External     | __asan_load4\r",
+          "96B7 00000000 UNDEF  notype ()    External     | __asan_load8\r"
+        ],
+        "x64": false,
+        "imports": []
+      },
+      {
+        "name": "gl_lifetime",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/component-tests/CMakeFiles/ArtistLib_component_tests.dir/src/graphic/shader/ShaderLifetimeComponentTests.cpp.obj"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-gl_lifetime.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/component-tests/CMakeFiles/ArtistLib_component_tests.dir/src/graphic/shader/ShaderLifetimeComponentTests.cpp.obj",
+        "binary_sha256": "78be31c2fc2720c323d0f09cc4c8a051c401e7a1c6f74751006983310fa392e3",
+        "log_sha256": "346d6cc9c184c85d730367b08883c500cd2e375c22f6febe53684d14ee18541f",
+        "asan_symbols": 2278,
+        "undefined_asan_symbols": 26,
+        "examples": [
+          "3033 00000000 UNDEF  notype ()    External     | __asan_load1\r",
+          "3034 00000000 UNDEF  notype ()    External     | __asan_load16\r",
+          "3035 00000000 UNDEF  notype ()    External     | __asan_load2\r",
+          "3036 00000000 UNDEF  notype ()    External     | __asan_load4\r",
+          "3037 00000000 UNDEF  notype ()    External     | __asan_load8\r"
+        ],
+        "x64": false,
+        "imports": []
+      },
+      {
+        "name": "gtest",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gtest.lib"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-gtest.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gtest.lib",
+        "binary_sha256": "340d8dd51da8ca957a4cc0da0fffe016cc6248b8bbe1690963eea330ce613b7d",
+        "log_sha256": "f2c573552c61995721b0e861f5808d07c78997fb43c8d317976e176eda742a42",
+        "asan_symbols": 5007,
+        "undefined_asan_symbols": 29,
+        "examples": [
+          "5F9A 00000000 UNDEF  notype ()    External     | __asan_load1\r",
+          "5F9B 00000000 UNDEF  notype ()    External     | __asan_load16\r",
+          "5F9C 00000000 UNDEF  notype ()    External     | __asan_load2\r",
+          "5F9D 00000000 UNDEF  notype ()    External     | __asan_load4\r",
+          "5F9E 00000000 UNDEF  notype ()    External     | __asan_load8\r"
+        ],
+        "x64": false,
+        "imports": []
+      },
+      {
+        "name": "gtest_main",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gtest_main.lib"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-gtest_main.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gtest_main.lib",
+        "binary_sha256": "0ba1ca839fcb841ed210483fdcb7f8e7314de26b37b2439125654db3ab183010",
+        "log_sha256": "35c17bb41c55f3abe62dc6006a1b825917259869da891db1cbe0b529a2702eba",
+        "asan_symbols": 223,
+        "undefined_asan_symbols": 7,
+        "examples": [
+          "175 00000000 UNDEF  notype ()    External     | __asan_loadN\r",
+          "176 00000000 UNDEF  notype ()    External     | __asan_report_load8\r",
+          "177 00000000 UNDEF  notype ()    External     | __asan_report_store8\r",
+          "178 00000000 UNDEF  notype ()    External     | __asan_set_shadow_00\r",
+          "179 00000000 UNDEF  notype ()    External     | __asan_set_shadow_f8\r"
+        ],
+        "x64": false,
+        "imports": []
+      },
+      {
+        "name": "gmock",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gmock.lib"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-gmock.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gmock.lib",
+        "binary_sha256": "5a6e4b4c5483c935893012ca9ae2ff050c27e8708de2ff5522d8647e84df2d25",
+        "log_sha256": "25d06a08bbf2d70a65560e7d23b7b876646089189306f9bee5f937d236c30656",
+        "asan_symbols": 6137,
+        "undefined_asan_symbols": 51,
+        "examples": [
+          "1CAF 00000000 UNDEF  notype ()    External     | __asan_load1\r",
+          "1CB0 00000000 UNDEF  notype ()    External     | __asan_load4\r",
+          "1CB1 00000000 UNDEF  notype ()    External     | __asan_load8\r",
+          "1CB2 00000000 UNDEF  notype ()    External     | __asan_loadN\r",
+          "1CB3 00000000 UNDEF  notype ()    External     | __asan_memcpy\r"
+        ],
+        "x64": false,
+        "imports": []
+      },
+      {
+        "name": "gmock_main",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gmock_main.lib"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-gmock_main.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/lib/gmock_main.lib",
+        "binary_sha256": "4aa7912aa6c5cd13d1f33f7b04cf3d8d10600956e8083df184ab20a0d57c99cc",
+        "log_sha256": "39e76b7ed2477d7ee8f3daae77275faf3c59189b04abdbdc680f4f70e345faa5",
+        "asan_symbols": 6360,
+        "undefined_asan_symbols": 64,
+        "examples": [
+          "1A9 00000000 UNDEF  notype ()    External     | __asan_load4\r",
+          "1AA 00000000 UNDEF  notype ()    External     | __asan_load8\r",
+          "1AB 00000000 UNDEF  notype ()    External     | __asan_loadN\r",
+          "1AC 00000000 UNDEF  notype ()    External     | __asan_report_load1\r",
+          "1AD 00000000 UNDEF  notype ()    External     | __asan_report_load4\r"
+        ],
+        "x64": false,
+        "imports": []
+      },
+      {
+        "name": "glew",
+        "command": [
+          "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/dumpbin.exe",
+          "/symbols",
+          "C:/Users/djden/source/repos/ARTIST/out/conan2/p/b/glew15bda264c9bea/p/lib/libglew32d.lib"
+        ],
+        "exit_code": 0,
+        "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/S/S08-dumpbin-glew.log",
+        "binary": "C:/Users/djden/source/repos/ARTIST/out/conan2/p/b/glew15bda264c9bea/p/lib/libglew32d.lib",
+        "binary_sha256": "2d6d17349f2db422366ee6b3bb6d76c1d5079b04324a4affb02bfaa41f2bdb7a",
+        "log_sha256": "68fb0a086f4638ddd97fd9c549c035a05e5900169764477295caf190cb538673",
+        "asan_symbols": 0,
+        "undefined_asan_symbols": 0,
+        "examples": [],
+        "x64": false,
+        "imports": []
+      }
+    ],
+    "runtime": [
+      {
+        "path": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/clang_rt.asan_dynamic-x86_64.dll",
+        "exists": true,
+        "sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5",
+        "compiler_runtime_sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5"
+      },
+      {
+        "path": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/clang_rt.asan_dbg_dynamic-x86_64.dll",
+        "exists": true,
+        "sha256": "308c1f0b94d9a5f16b5401e5c4196997fa44a4ec298493df4313bcd2774d9d57",
+        "compiler_runtime_sha256": "308c1f0b94d9a5f16b5401e5c4196997fa44a4ec298493df4313bcd2774d9d57"
+      },
+      {
+        "path": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/tests/clang_rt.asan_dynamic-x86_64.dll",
+        "exists": true,
+        "sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5",
+        "compiler_runtime_sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5"
+      },
+      {
+        "path": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/tests/clang_rt.asan_dbg_dynamic-x86_64.dll",
+        "exists": true,
+        "sha256": "308c1f0b94d9a5f16b5401e5c4196997fa44a4ec298493df4313bcd2774d9d57",
+        "compiler_runtime_sha256": "308c1f0b94d9a5f16b5401e5c4196997fa44a4ec298493df4313bcd2774d9d57"
+      },
+      {
+        "path": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/component-tests/clang_rt.asan_dynamic-x86_64.dll",
+        "exists": true,
+        "sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5",
+        "compiler_runtime_sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5"
+      },
+      {
+        "path": "C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug-asan/ARTIST/component-tests/clang_rt.asan_dbg_dynamic-x86_64.dll",
+        "exists": true,
+        "sha256": "308c1f0b94d9a5f16b5401e5c4196997fa44a4ec298493df4313bcd2774d9d57",
+        "compiler_runtime_sha256": "308c1f0b94d9a5f16b5401e5c4196997fa44a4ec298493df4313bcd2774d9d57"
+      }
+    ]
+  },
+  "object_instrumentation_summary": {
+    "created_utc": "2026-10-15T10:09:26.813Z",
+    "total": 36,
+    "built": 36,
+    "with_asan": 36,
+    "without_asan": [],
+    "unbuilt": []
+  },
+  "vertical_scope": {
+    "fixtures": [
+      {
+        "path": "test-datas/shaders/vertex/good/minimal.vert",
+        "exists": true,
+        "sha256": "7ae2a3ff1c2de7cf0e8e2c2718bd200070a6fcb02f3222b0fc139e89e905ed47",
+        "git_diff_empty": true
+      },
+      {
+        "path": "test-datas/shaders/fragment/good/minimal.frag",
+        "exists": true,
+        "sha256": "d7f1a8dc44c051cf0e209ecd0160c7f88c0ab590fc2a48f74696ec4421301bd4",
+        "git_diff_empty": true
+      },
+      {
+        "path": "test-datas/shaders/vertex/bad/minimal.vert",
+        "exists": true,
+        "sha256": "0a2f118c6b8b324c8db3826948e0091a17cdc7005ee1b97769b44f2fc3acaf66",
+        "git_diff_empty": true
+      }
+    ],
+    "opengl_tus": 5,
+    "opengl_mock_define_count": 0,
+    "opengl_runtime_evidence": "S10-lifetimeGL JUnit system-out per each of 9 tests",
+    "fixture_setup": "ARTIST/component-tests/include/OpenGLComponentTests.hpp:13-54; glfwInit, hidden window640x480, requested 3.3 core, makeContextCurrent, glewInit; failures throw, not skip",
+    "gl_test_source": "ARTIST/component-tests/src/graphic/shader/ShaderLifetimeComponentTests.cpp",
+    "draw_calls_in_lifetime_source": 0,
+    "pixel_readback_calls_in_lifetime_source": 0,
+    "scope": "Shader fixture load/compile, pass creation/link/use, native validity/deletion queries and owner/alias destruction. No draw or image claim."
+  },
+  "shared_metadata_reservation": {
+    "file": ".grepai/config.yaml",
+    "equality_observation": "Whole user-file byte equality not observed (10/11 match); 15engine/harness inputs unchanged.",
+    "delta": "Only watch.last_index_time changed from2026-10-15T10:46:27.471674+02:00 to2026-10-15T11:58:41.4197703+02:00.",
+    "attribution": "Not established by S. No GrepAI call or explicit QA write to this path. Lead notified; no rollback or reconstruction.",
+    "provenance_verdict": "INCONCLUSIVE",
+    "evidence": [
+      "S12-user-drift.json",
+      "inputs-after.json",
+      "diff-before.patch",
+      "diff-after.patch"
+    ],
+    "effect_on_engine_evidence": "None observed; preserved15 source hash equality and unchanged manifest. Whole-tree hash equality is not claimed."
+  },
+  "limits": [
+    "No ASan fault was reported in the140 executed test invocations; this is not proof of absence of all memory defects or UB.",
+    "106CPU +9GL are115unique testcases; the25 targeted CPU cases repeat within the completeCPU run.",
+    "22other OpenGL cases were deliberately not selected in S. Each is listed with reason in S13-test-reconciliation.json. V owns normal fullGL; no fullGL-ASan claim.",
+    "Conan GLFW3.3.8 and GLEW2.2.0 binaries contain0 __asan symbol lines and are not instrumented. GLM/magic_enum header instantiations instrumented only through consumers.",
+    "OpenGL/GLU, Windows, MSVC/UCRT and NVIDIA driver are vendor libraries, no full instrumentation or native driver-object leak detection claim. detect_leaks=0 is explicit.",
+    "ASan supports the measured Windows x64 MSVC Debug configuration only. Release/IPO/coverage and /ZI not exercised by S; H reported explicit guards. RTC1 was preserved and observed to work, not stripped.",
+    "No new compile-fail concept experiment was added or rerun in S; existing test-TU compile-time assertions built successfully.",
+    "No RED engine regression rerun in S; this is independent final GREEN validation of integrated D/H. Author RED provenance remains distinct.",
+    "No fix applied to code/harness/docs; no Docker resources or subagents.",
+    "S03 initial MDd/C++latest counts used a slash-only parser; actual flags use dash spelling. S07 corrects the extraction, preserves initial artifact, and S09 independently proves all object instrumentation."
+  ],
+  "resources": {
+    "compilation_released_utc": "2026-10-15T10:04:52Z",
+    "gpu_released_utc": "2026-10-15T10:10:55Z",
+    "docker_created": []
+  },
+  "possible_corrections_for_parent": [
+    "No engine/harness correction indicated by executed S criteria. Preserve distinctions between140invocations,115unique cases and137discovered.",
+    "Record measured driver617.42 rather than historic616.92.",
+    "Attribute shared GrepAI timestamp metadata separately; do not revert user/source files to force a clean tree."
+  ],
+  "report": "S-final-report.md",
+  "evidence_hashes": {
+    "diff-after.patch": {
+      "sha256": "eec28d7e1dd823fb94176aa9f50d5f5b465d96ae903252de7410feb0f2e95f28",
+      "bytes": 62563
+    },
+    "diff-before.patch": {
+      "sha256": "a5bee2a322331c7d2d36f916b282944921d713afc02c1d4d0c80c9a89dcb1fa4",
+      "bytes": 62562
+    },
+    "inputs-after.json": {
+      "sha256": "a6d21f537ecd34b237dfd0a53dec741e658d7c9a3709c727762c3556ccf921a1",
+      "bytes": 4153
+    },
+    "inputs-before.json": {
+      "sha256": "a462930f358f45f54c72f88049f65c7d429b26387c83b361528ff0c9d4012ec0",
+      "bytes": 4093
+    },
+    "S-final-report.md": {
+      "sha256": "7bc10d818719b889d65335c14bd8778abf4eed89ff5c053689f183667d4fea29",
+      "bytes": 11996
+    },
+    "S01-preflight-2026-10-15T10-02-02-991Z.json": {
+      "sha256": "b9ff9e837b0b399621339a1c96c2e5c5a98a410dfff3258e52a4e52fa504a712",
+      "bytes": 711
+    },
+    "S01-preflight-2026-10-15T10-02-02-991Z.log": {
+      "sha256": "445b727f177ab47262f4e34c6ac36b3cbc5d72ad43762f8c530cbd3f2e8e9b84",
+      "bytes": 11020
+    },
+    "S02-build-2026-10-15T10-02-43-912Z-runner.log": {
+      "sha256": "28ab785871b2cabb3fe240b56d13dc7f3c5f0ccd1af155a13cb3501a88435c6b",
+      "bytes": 4673
+    },
+    "S02-build-2026-10-15T10-02-43-912Z.json": {
+      "sha256": "7abf425b34d1829340be9119b1ecc9ac165fdf89245819172f7f75a8699c8c09",
+      "bytes": 728
+    },
+    "S02-build-2026-10-15T10-02-43-912Z.log": {
+      "sha256": "cb63c2e7a62de340418178f768fc70688a9aa3291e8afb9948fd3fae4ec0e3a5",
+      "bytes": 271688
+    },
+    "S03-compile-instrumentation.json": {
+      "sha256": "668c8d0019b18d1b033926976a30406784cefcb487fc73ebfc9adb8c5784d440",
+      "bytes": 6444
+    },
+    "S04-discovery-2026-10-15T10-05-54-646Z-runner.log": {
+      "sha256": "59e5b56ac53d9ff0ef0ea96ed7d266b62794c10bfd982fdc0dd97ed83aaf6147",
+      "bytes": 2265
+    },
+    "S04-discovery-2026-10-15T10-05-54-646Z.json": {
+      "sha256": "af1508aed0755458f30f5896e6f7f13044c5ad4617c230c460f051405cdaac9a",
+      "bytes": 64632
+    },
+    "S04-discovery-2026-10-15T10-05-54-646Z.log": {
+      "sha256": "ccd647daf38e4a034ffefcb97ea68a292426c06674e325d4ef5407adfd467a24",
+      "bytes": 107662
+    },
+    "S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00-runner.log": {
+      "sha256": "f561505a0b895e64cc152c1a4d938a447227e8e5f3c34292e468e789a89cd998",
+      "bytes": 3625
+    },
+    "S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.json": {
+      "sha256": "9419ea145cdb02adff5b96358f85d8df0d6423c0c97fe0c2a2b72fb725f5e8d3",
+      "bytes": 3406
+    },
+    "S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.log": {
+      "sha256": "f2310c12d6e20797eebbc253561aefd97ebcbec780e9195fd39d84bf1d53c042",
+      "bytes": 5124
+    },
+    "S05-lifetimeCPU-2026-10-15T10-06-41-662160+00-00.xml": {
+      "sha256": "7bcf027a1be0274b9ed31281f59ff6c2d91928bb9d81c87daec8934c8ceba8ed",
+      "bytes": 23487
+    },
+    "S06-fullCPU-2026-10-15T10-06-46-257856+00-00-runner.log": {
+      "sha256": "27212a4f5d2227bda5941e251071d2db366876b9d1a87c7b63a124fb1b46e169",
+      "bytes": 4150
+    },
+    "S06-fullCPU-2026-10-15T10-06-46-257856+00-00.json": {
+      "sha256": "a42e108eadc487dceab7e4c88278fb6bf68573bcdcc2beb0b997c441b66da540",
+      "bytes": 7579
+    },
+    "S06-fullCPU-2026-10-15T10-06-46-257856+00-00.log": {
+      "sha256": "ed29c9408974e5ab8b2ae7eb2c0330a677545c79835b28ac22a686847512acf1",
+      "bytes": 20537
+    },
+    "S06-fullCPU-2026-10-15T10-06-46-257856+00-00.xml": {
+      "sha256": "7369f3bfb877363b8aea56704d3f44a9f00be94405498342e81e810aacd138a9",
+      "bytes": 104238
+    },
+    "S07-compile-instrumentation-corrected.json": {
+      "sha256": "2ef83ec7e5dc47b9c5b7c18863c191da4c00b8ace27c533303182e11cabd4faf",
+      "bytes": 6620
+    },
+    "S08-binary-instrumentation.json": {
+      "sha256": "15ce62b36872cb84e4ba009f49fa2131ebc871fe7dea98a7446b414a8bdc8f5b",
+      "bytes": 14226
+    },
+    "S08-dumpbin-glew.log": {
+      "sha256": "68fb0a086f4638ddd97fd9c549c035a05e5900169764477295caf190cb538673",
+      "bytes": 706405
+    },
+    "S08-dumpbin-gl_lifetime.log": {
+      "sha256": "346d6cc9c184c85d730367b08883c500cd2e375c22f6febe53684d14ee18541f",
+      "bytes": 4688201
+    },
+    "S08-dumpbin-gmock.log": {
+      "sha256": "25d06a08bbf2d70a65560e7d23b7b876646089189306f9bee5f937d236c30656",
+      "bytes": 11574432
+    },
+    "S08-dumpbin-gmock_main.log": {
+      "sha256": "39e76b7ed2477d7ee8f3daae77275faf3c59189b04abdbdc680f4f70e345faa5",
+      "bytes": 11631653
+    },
+    "S08-dumpbin-gtest.log": {
+      "sha256": "f2c573552c61995721b0e861f5808d07c78997fb43c8d317976e176eda742a42",
+      "bytes": 9070084
+    },
+    "S08-dumpbin-gtest_main.log": {
+      "sha256": "35c17bb41c55f3abe62dc6006a1b825917259869da891db1cbe0b529a2702eba",
+      "bytes": 39555
+    },
+    "S08-dumpbin-opengl.log": {
+      "sha256": "1ab5b2a14440aa9b90056a5d2a5dc8e4f93bbd5ff4ab3d9ae43e1a5a2f8e0586",
+      "bytes": 41833
+    },
+    "S08-dumpbin-probe.log": {
+      "sha256": "048e5e42ecbf25c06472b714726ec1ff4f5e61f5d4d83bbf9156d71b05b31612",
+      "bytes": 23574
+    },
+    "S08-dumpbin-unit.log": {
+      "sha256": "0152970435d9a9ec5b18522483d985d5eafbda8ccb6e9480947edd9dcd6713df",
+      "bytes": 35356
+    },
+    "S08-dumpbin-unit_lifetime.log": {
+      "sha256": "8e0c52afef4c3ea4468ae5422d2c757adbfe49e86f517744464a811be74ef4f4",
+      "bytes": 14882683
+    },
+    "S09-all-object-instrumentation.json": {
+      "sha256": "0991d352f485994f0a46e5f66ded9a19bc61643b8d4b7c9745611462519774ca",
+      "bytes": 45390
+    },
+    "S09-dumpbin-glfw.log": {
+      "sha256": "fef94fa4583775bd64e45aa99a7999f5c993598ad1af982be3a64b71113a0dfd",
+      "bytes": 284395
+    },
+    "S09-glfw-instrumentation.json": {
+      "sha256": "a79ac21f700ffdc68afa267f59f8d896d3dcd86f25461a16b900e3f315d2527c",
+      "bytes": 466
+    },
+    "S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00-runner.log": {
+      "sha256": "efa1680c44425e86372524cb20b2dcd90932aeaafa15ed9d560b9a324a84cea9",
+      "bytes": 2800
+    },
+    "S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.json": {
+      "sha256": "0d9389077601defa906f30178acabc37c8776fdff30a3503b58c1aad4372ed73",
+      "bytes": 2689
+    },
+    "S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.log": {
+      "sha256": "c849ccdaf3be0276a8b98873971540ca6aad512522c67676f4f0c75e8f79a524",
+      "bytes": 2201
+    },
+    "S10-lifetimeGL-2026-10-15T10-10-45-690007+00-00.xml": {
+      "sha256": "7fe1d5cb98e2932792cc272013e147c5410639ee2fccb2d5ccab95bc104a3899",
+      "bytes": 9638
+    },
+    "S11-environment.json": {
+      "sha256": "0d0a3d04b9a0697f3e7e11ba5aa7cf491ad669a9cf74cf98ba9f03f22596eafd",
+      "bytes": 711
+    },
+    "S12-user-drift.json": {
+      "sha256": "51588d19bca5aa5d08ae8e71b73b4e7f90f5d8b171aca3bf98ad4b5b9f582daf",
+      "bytes": 2432
+    },
+    "S13-test-reconciliation.json": {
+      "sha256": "7313165e0941e7a72f5948ce1748a5730b0c6850abdaef524e4c8414eefaead4",
+      "bytes": 27297
+    },
+    "S14-gl-scope.json": {
+      "sha256": "c083b236a31fec367d857face6aaa0a4df9e5cb33fbe16aa9a4d07bf7f5ae88d",
+      "bytes": 1315
+    },
+    "preflight-native-20261015-120221966\\healthy.log": {
+      "sha256": "539259ff9c0c5a7b041e2f700084314c680a6a34c17b40864bd69ffdf6ffc60d",
+      "bytes": 195
+    },
+    "preflight-native-20261015-120221966\\summary.json": {
+      "sha256": "8597cc3d2697d46e8c11a33a2cc92498ef0f79472e84363efc695d03f2460598",
+      "bytes": 530
+    },
+    "preflight-native-20261015-120221966\\use-after-free.log": {
+      "sha256": "c7d866f8b00c8fe40156d02ac390b793c62b93851bda8d4e2723e76b1ed8d14d",
+      "bytes": 4926
+    }
+  }
+}

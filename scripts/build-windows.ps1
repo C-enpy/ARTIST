@@ -3,14 +3,24 @@ param(
     [ValidateRange(1, 64)][int]$Jobs = 1,
     [string]$VisualStudioPath,
     [string]$Python = 'python',
-    [ValidateSet('all', 'unit', 'opengl')][string]$TestLabel = 'all'
+    [ValidateSet('all', 'unit', 'opengl')][string]$TestLabel = 'all',
+    [switch]$AddressSanitizer,
+    [switch]$ConfigureOnly,
+    [switch]$AsanPreflightOnly
 )
 
 $ErrorActionPreference = 'Stop'
+if ($AddressSanitizer -and $Configuration -ne 'Debug') {
+    throw 'AddressSanitizer currently supports Debug only; use its separate build tree.'
+}
+if ($AsanPreflightOnly -and (-not $AddressSanitizer -or $ConfigureOnly)) {
+    throw 'AsanPreflightOnly requires AddressSanitizer and cannot be combined with ConfigureOnly.'
+}
 $root = Split-Path $PSScriptRoot -Parent
 $tooling = Join-Path $root 'out/tooling'
 $venvPython = Join-Path $tooling 'build/Scripts/python.exe'
 $preset = 'windows-msvc-' + $Configuration.ToLowerInvariant()
+if ($AddressSanitizer) { $preset += '-asan' }
 $buildDir = Join-Path $root "out/build/$preset"
 $savedEnvironment = @{}
 
@@ -74,8 +84,19 @@ try {
         '-s:h', "build_type=$Configuration", '-s:b', "build_type=$Configuration",
         '-c:h', "tools.microsoft.msbuild:installation_path=$VisualStudioPath",
         '-c:b', "tools.microsoft.msbuild:installation_path=$VisualStudioPath",
+        # Versioned project presets already select each toolchain. Conan's auto-
+        # include would introduce duplicate conan-debug presets for OFF/ON trees.
+        '-c:h', 'tools.cmake.cmaketoolchain:user_presets=',
         '-c:h', "tools.build:jobs=$Jobs", '-of', $buildDir, '--build=missing')
     Invoke-Checked 'cmake' @('--fresh', '--preset', $preset)
+    if ($ConfigureOnly) { return }
+    if ($AddressSanitizer) {
+        Invoke-Checked 'cmake' @('--build', '--preset', $preset, '--target', 'artist_asan_probe', '--parallel', "$Jobs")
+        $preflightLogDir = Join-Path $buildDir ('asan-preflight/' + (Get-Date -Format 'yyyyMMdd-HHmmssfff'))
+        Invoke-Checked $venvPython @('scripts/verify_asan.py', (Join-Path $buildDir 'artist_asan_probe.exe'),
+            '--log-dir', $preflightLogDir)
+        if ($AsanPreflightOnly) { return }
+    }
     Invoke-Checked 'cmake' @('--build', '--preset', $preset, '--parallel', "$Jobs")
     $testArguments = @('--preset', $preset, '--output-junit', (Join-Path $buildDir 'ctest.xml'))
     if ($TestLabel -ne 'all') { $testArguments += @('-L', $TestLabel) }

@@ -1,0 +1,42 @@
+{
+    "scope":  "Integrated D+H principal working diff, reviewed before consumers; no user files committed",
+    "source_root":  "C:\\Users\\djden\\source\\repos\\ARTIST",
+    "principal_head":  "e589aeece2c5abc46aedb089c6a88a6f7dbaa239",
+    "producer_tasks":  [
+                           "task_mv9b17uo_0002_140zct",
+                           "task_mv9bjax3_000a_twfkse"
+                       ],
+    "integrated_commits":  [
+                               "a423fc250ff2040a47d52f2402019b5f35abee75",
+                               "0bbca5042af3a52994c9540f6092a84d557f8db3"
+                           ],
+    "source_hashes":  {
+                          "ARTIST/component-tests/CMakeLists.txt":  "02967208e3920e1e41aaf184b5e6d756174f3ce88c9408d0357713642ac02ba4",
+                          "ARTIST/component-tests/src/graphic/shader/ShaderLifetimeComponentTests.cpp":  "c3b4e27922f7e83874f86e32ea158cb58047c5879503f6b3dde2388902dee237",
+                          "ARTIST/include/graphic/opengl/pipeline/component/pass/Freer.hpp":  "362cec3d4b15e310af14703811ea16458030d226af5db8cfc9edc304123326f2",
+                          "ARTIST/include/graphic/opengl/pipeline/component/shader/Freer.hpp":  "1704448bc5fcd076488fbe7c4f967d67a888d0f965a1c43584be9f9ca2eefc37",
+                          "ARTIST/include/graphic/pipeline/Pass.hpp":  "c2bb65f795cddd3a514c6b3de79bd11b44bedf0558985d5b5ab37a9aa797ed20",
+                          "ARTIST/include/graphic/pipeline/Shader.hpp":  "79f892593b358b0efdbd9c123f284e1d532cf057d88b4e793e677b8e40aecef8",
+                          "ARTIST/tests/CMakeLists.txt":  "213b0662d6c6dd15190c1f20a0f5c9b378697a34b2871f6b063b3c50bcded574",
+                          "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp":  "1f69a630801faa5b3998d8f9c2cf1570e8db6d0f58a9730d0a9e83ba6d455bfc",
+                          "cmake/AddressSanitizer.cmake":  "ff8913d0365e472f1be820365c75ca1801764861546fa98f3846f0ba5ca30736",
+                          "cmake/probes/AddressSanitizer.cpp":  "e489fc37c871c2544acf4b790aa7cb45223968c3f51482a5628ad4d1b39306ef",
+                          "CMakeLists.txt":  "59c42aa1dbc411f7f03adaf18562d82c52bc4a3a4c874a37286da19a97a10899",
+                          "CMakePresets.json":  "5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e",
+                          "scripts/build-windows.ps1":  "6aeeeb2c6b2e13e434fe51d128b4534b0f170f191cea231e8b123fd6aad3735b",
+                          "scripts/tests/test_verify_asan.py":  "d7dd7b77d2dfe24bcc2a6cfcc99c5473258ae1b8d87d9e0db6a3c1b32214d045",
+                          "scripts/verify_asan.py":  "6fc5e03e6a47fbda01955682d282f37706b0a90318b86a6f885afafe65ec0d3f"
+                      },
+    "source_fingerprint_sha256":  "a1e66dd728c8e6b0700cf7db694040c9592ce18acaf53145590ad0e85053c234",
+    "expected_normal_tests":  {
+                                  "opengl":  31,
+                                  "total":  137,
+                                  "unit":  106
+                              },
+    "red_headers_verified_against_H0":  true,
+    "delivered_evidence_hashes_verified":  {
+                                               "H":  92,
+                                               "D":  58
+                                           },
+    "created_utc":  "2026-10-15T09:54:39.9709917Z"
+}

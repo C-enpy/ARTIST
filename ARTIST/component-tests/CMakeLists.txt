@@ -13,6 +13,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mock)
 add_executable(${PROJECT_NAME}_component_tests ${test_files})
 
 target_link_libraries(${PROJECT_NAME}_component_tests PRIVATE GTest::gmock_main ArtistLib)
+artist_copy_asan_runtime(${PROJECT_NAME}_component_tests)
 
 gtest_discover_tests(${PROJECT_NAME}_component_tests
     TEST_PREFIX "opengl."

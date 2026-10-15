@@ -2,14 +2,71 @@
 title: Build et tests actuels
 category: development
 tags: [artist, build, testing, guide]
-summary: Baseline Windows MSVC et Conan 2 vérifiée, procédure reproductible et limites des autres toolchains.
+summary: Windows MSVC et Conan 2 vérifiés, 137 tests normaux et ASan opt-in séparé ; commandes, instrumentation et limites.
 status: verified-windows-debug
 created: 2026-10-03
 updated: 2026-10-15
-sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc]
+sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # Build et tests actuels
+
+## Loaded-owner move — validation indépendante du 2026-10-15
+
+Diff D+H intégré au HEAD `e589aee` : **137/137** normaux (106 unit + 31 OpenGL),
+dont 34 lifetime (25 + 9), zéro échec/erreur/skip/timeout. Revue indépendante :
+PASS de lecture. ASan : **106/106 CPU + 9/9 lifetime OpenGL**, 115 cas uniques,
+pas 137/137 ; les 22 autres GL sont hors sélection ASan. Ce ciblage était prévu
+par le contrat et le plan PM avant exécution, pas décidé après un échec : les
+31 GL ont tous été exécutés dans la suite normale. Les 22 sous ASan constitueraient
+une extension de validation, non un travail abandonné.
+Commandes réellement exécutées, logs/JUnit et empreintes :
+[[references/session-2026-10-15-loaded-owner-move|synthèse de mission]] et
+`_meta/session-2026-10-15-loaded-owner-move-validation.json`.
+
+MSVC 19.44.35221/toolset 14.44.35207, SDK 10.0.26100.0, CMake 3.31.7,
+Conan 2.12.2, Ninja 1.13.0. Driver réellement observé : RTX 3090,
+OpenGL 3.3.0 NVIDIA **617.42** ; 616.92 ci-dessous reste la baseline historique.
+
+### ASan opt-in et preuve de son instrumentation
+
+`ARTIST_ENABLE_ASAN` est OFF par défaut. Le preset `windows-msvc-debug-asan`
+utilise son arbre distinct ; support borné Windows x64 MSVC >= 19.44/Ninja/Debug.
+Le script reste fixé au toolset 14.44. Release, coverage, IPO/LTCG et Edit and
+Continue sont refusés par cette voie, pas silencieusement désinstrumentés.
+L'API moteur reste portable ; seul ce harness sanitizer est spécifique MSVC.
+
+Dans un processus de validation aux options contrôlées :
+
+```powershell
+$env:ASAN_OPTIONS = 'halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0'
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -AddressSanitizer -AsanPreflightOnly -Jobs 1
+cmake --build --preset windows-msvc-debug-asan --parallel 1
+```
+
+Puis utiliser CTest sous le même environnement MSVC/options, avec les sélecteurs
+et nouveaux noms JUnit de la synthèse. La campagne a utilisé le runner existant
+`out/tooling/run-build.py` pour charger MSVC. Le script complet avec
+`-AddressSanitizer -TestLabel unit -Jobs 1` fournit aussi le flux CPU, mais ce n'est
+pas la commande complète employée pour les JUnit nommés de cette campagne.
+
+Le préflight sain doit réussir, la faute volontaire doit sortir **86** avec
+`heap-use-after-free` ; elle n'est jamais un test CTest ordinaire. La campagne
+prouve les flags, les objets et le runtime : **36/36 TU/objets** (23 unit, 5 GL,
+7 GTest/GMock, 1 probe), CRT Debug et assertions conservés. `/RTC1` est maintenu
+après expérimentation réelle ; `/ZI` est rejeté, `/INCREMENTAL:NO` explicite.
+GLFW/GLEW Conan et système/driver ne sont pas reconstruits/instrumentés.
+
+**Réserve Q1 de revue** : le vérificateur fixe les options des enfants du canari,
+pas celles de CTest dans un environnement parent arbitraire. Consigner/fixer les
+options des tests moteur comme ci-dessus ; un `exitcode=0` ou `log_path` hérité
+ne doit pas être accepté comme preuve. La campagne S avait déjà ces options
+strictes dans chacune de ses commandes CPU/GL. Aucun durcissement supplémentaire
+du script n'est revendiqué ici. ASan ne remplace pas les vérifications GL natives.
 
 ## Revérification avant publication — 2026-10-15
 
@@ -17,7 +74,7 @@ Build existant Windows Debug puis CTest sérialisé : **122/122 PASS** (95 unit,
 27 OpenGL, aucun skip/échec). Source committée en `4d29842` ; commandes complètes,
 portée et SHA-256 dans `_meta/precommit-2026-10-15-validation.json`.
 Ce n'est ni une réinstallation propre Conan, ni une preuve ASan/Release/CI distante.
-La [[architecture/next-mission|prochaine mission]] vise l'assignation move non couverte.
+Cette baseline précède la [[architecture/missions/2026-10-15-loaded-owner-move|mission move désormais terminée]].
 
 ## Résultat vérifié — 2026-10-03
 
@@ -141,7 +198,8 @@ detach → deleteProgram → deleteShader. Points de fiabilité documentés :
 - Anti-mode : `_purecall` quand une base virtuelle appelle un override pur dans
   son destructeur ; la libération RAII se déclenche côté dérivé.
 
-Les comptes actuels : **95 unit + 27 OpenGL = 122**. À chaque nouveau test,
+Les comptes historiques de cette tranche : **95 unit + 27 OpenGL = 122** ;
+les comptes courants après loaded-owner move sont **106 + 31 = 137**. À chaque nouveau test,
 vérifier l'unicité des noms de fixtures entre TU.
 
 ```powershell
@@ -160,14 +218,14 @@ ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no
 - Quelques avertissements existants subsistent, notamment dans les mocks GL et
   l'usage de `any_cast` ; le succès du build ne constitue pas un audit global du C++.
 - WSL2 ne contient sur cet hôte que `docker-desktop`. Aucun build Linux/WSL,
-  Clang, macOS, coverage ou sanitizers n'est déclaré validé ici.
+  Clang, macOS, coverage, UBSan ou TSan n'est déclaré validé ici.
 - La CI Linux a été adaptée à Conan 2/GCC 14 et aux nouveaux chemins CTest ;
   **elle n'a pas été exécutée à distance** dans cette session.
-- ASan est demandé comme expérience séparée, avec instrumentation vérifiée ;
-  aucun résultat ASan/UBSan n'existe encore. ASan n'est pas un choix réservé à
-  Windows, même si le premier essai envisagé utilise `/fsanitize=address` MSVC.
-- Les tests de move-construction ne couvrent pas l'assignation vers un owner déjà
-  chargé. Les autres limites et expériences discriminantes sont dans
+- ASan est maintenant qualifié uniquement dans le périmètre Windows Debug
+  détaillé plus haut ; cela ne valide ni UBSan ni les autres toolchains/configurations.
+  ASan n'est pas intrinsèquement réservé à Windows.
+- Les tests de move-construction seuls ne couvrent pas l'assignation vers un owner
+  chargé ; les nouveaux tests CPU/GL traitent ce risque borné. Les autres limites sont dans
   [[development/known-incidents|Incidents et suivi]].
 
 Suite : [[adr/0005-build-reproductible-et-validation|ADR-0005]],

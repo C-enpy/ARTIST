@@ -14,12 +14,23 @@ Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier
 de livraison. Les durées et pourcentages des rapports ne sont pas des budgets ratifiés.
 
-## Mission sélectionnée — 2026-10-15
+## Prochaine mission sélectionnée — F5
 
-[[architecture/next-mission|Assignation move vers un Shader/Pass chargé, puis ASan]].
-Fermer ce risque avant la migration Pipeline. Contrat, périmètre autorisé et
-critères de preuve définis ; **implémentation non commencée**. Baseline rejouée :
-122/122 sous Windows Debug, code committé en `4d29842`.
+[[architecture/next-mission|Diagnostics GL vides et nettoyage sûr]] : coupe bornée
+des chemins d'échec compilation/link, avant la migration Pipeline. Sélection
+documentaire validée après avis PM/architecte ; **aucun développement commencé**.
+Auteur futur `gpu-engineer`, PM/LLM C64 → 70/R74, RED causal requis. F4, F8, Q1 et
+Pipeline restent distincts ; aucune extension ASan GL complète implicite.
+
+## Mission précédente du 2026-10-15 — terminée dans son périmètre
+
+[[architecture/missions/2026-10-15-loaded-owner-move|Assignation move vers un Shader/Pass chargé, puis ASan]] :
+RED causal, correction et revue indépendante ; **137/137 normaux** (106 CPU,
+31 OpenGL) et **106 CPU + 9 lifetime GL sous ASan**, sans échec ni skip.
+[[references/session-2026-10-15-loaded-owner-move|Preuves et limites]] sur le diff
+D+H intégré au HEAD `e589aee` (pas un nouveau commit principal). ADR-0003 reste
+Accepted/partial. Baseline historique `4d29842` et 122/122 préservée.
+La sélection F5 ci-dessus est explicite et ultérieure ; Pipeline reste hors tranche.
 
 ## 0 — Obtenir une baseline exécutable
 
@@ -53,7 +64,9 @@ re-loads sur handles vivants. Voir [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-
 et [[development/build-and-test|les preuves]]. Restent dans la tranche : le contrat
 visuel/équivalence (ADR-0006, images figées) et le relevé workload — la tranche
 couvre les cas d'ownership et d'erreurs testés, pas tous les chemins de lifetime.
-ASan et l'assignation par déplacement vers un owner chargé restent à qualifier.
+L'assignation vers un owner chargé et ASan sont désormais qualifiés dans le
+[[references/session-2026-10-15-loaded-owner-move|périmètre Windows Debug du 2026-10-15]],
+pas sur toutes les plateformes ni tous les chemins de lifetime.
 Les [[development/known-incidents|findings non traités]] ne sont pas annulés par
 ces suites vertes. L'avis d'architecture propose ensuite `PipelineContext::m_passes`
 en ownership unique et `forPass` par emprunt, puis le contexte de `IPass` ; ce

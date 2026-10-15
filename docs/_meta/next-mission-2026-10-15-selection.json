@@ -1,0 +1,194 @@
+{
+  "selected_on": "2026-10-15T14:03:53.062111+00:00",
+  "scope": "Selection and documentation only, explicitly requested by user; no implementation publication/build/test",
+  "mission": "F5 only: safe empty shader/program diagnostics and preserved failure cleanup",
+  "status": "selected",
+  "implementation": "not-started",
+  "principal_head": "e589aeece2c5abc46aedb089c6a88a6f7dbaa239",
+  "validated_base_source_fingerprint": "a1e66dd728c8e6b0700cf7db694040c9592ce18acaf53145590ad0e85053c234",
+  "validated_base_inputs_unchanged": 15,
+  "base_note": "HEAD plus uncommitted integrated D0bbca504/H a423fc25 and user edits; not HEAD alone",
+  "observed_target_hashes": {
+    "ARTIST/include/graphic/opengl/pipeline/component/shader/Loader.hpp": "12220abe767375bd46ec31ca3d19d01b0b2e4e4e34a5f8fd4512e08c2039735d",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/Loader.hpp": "04e1716027ad30feed73a4f2354c5075941b0d425339b75d6996827e48861ee7",
+    "ARTIST/tests/src/graphic/opengl/pipeline/component/shader/LoaderTests.cpp": "e696f8a5cbf4adb4c37257860aa5cd588af67bb3a5d2113c7ee8e05fc0df1de1",
+    "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/LoaderTests.cpp": "5c8fabcd02d6793a1a5a5f56b290179f916527449e40fd35917afeeb985e140f"
+  },
+  "target_diff_against_head_exit": 0,
+  "observation": "Source precondition violation for vector[0] at size zero and C-string output; no executed RED for F5",
+  "advisors": {
+    "project_manager": {
+      "session": "ses_ec0352fbcffeI9COZTIb08MXH7",
+      "mode": "read-only",
+      "conclusion": "F5 alone after architectural feedback; F8 excluded"
+    },
+    "engine_architect": {
+      "session": "ses_ec0352fa0ffej7oEkfSQ7dBmQ5",
+      "mode": "read-only",
+      "conclusion": "Prioritize F5; Pipeline unique wrappers require coherent context/copy/move/borrow/fixture contract, not container-only replacement"
+    }
+  },
+  "ranking": [
+    "F5: concrete bounded failure-path safety",
+    "Pipeline ownership: valuable wider structural next slice, not selected",
+    "Q1 or all-GL ASan: distinct possible validation/tooling extension"
+  ],
+  "excluded": [
+    "F4 bounds",
+    "F8 file reader",
+    "Q1 arbitrary inherited ASAN_OPTIONS",
+    "Pipeline migration",
+    "bindings/reload transaction",
+    "implicit ASan expansion to 22 other GL cases"
+  ],
+  "evaluation": {
+    "method": "PM/LLM",
+    "jev_calls": 0,
+    "development_floor": 70,
+    "tasks": {
+      "D-F5": {
+        "type": "development",
+        "agent": "gpu-engineer",
+        "complexity_raw": 64,
+        "complexity": 70,
+        "risk": 74,
+        "ownership": [
+          "ARTIST/include/graphic/opengl/pipeline/component/shader/Loader.hpp",
+          "ARTIST/include/graphic/opengl/pipeline/component/pass/Loader.hpp",
+          "ARTIST/tests/src/graphic/opengl/pipeline/component/shader/LoaderTests.cpp",
+          "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/LoaderTests.cpp"
+        ],
+        "context": "fresh",
+        "worktree": true
+      },
+      "R": {
+        "type": "independent read-only review",
+        "agent": "correctness-reviewer",
+        "complexity_raw": 49,
+        "complexity": 49,
+        "risk": 66,
+        "context": "fresh",
+        "worktree": false
+      },
+      "V": {
+        "type": "independent execution QA, no new code",
+        "agent": "rendering-verifier",
+        "complexity_raw": 58,
+        "complexity": 58,
+        "risk": 65,
+        "context": "fresh",
+        "worktree": false
+      },
+      "DOC": {
+        "type": "documentation, no executable script",
+        "agent": "build-engineer, bounded documentation scope",
+        "complexity_raw": 27,
+        "complexity": 27,
+        "risk": 32,
+        "context": "fresh",
+        "worktree": true
+      }
+    },
+    "selection_documentation_local": {
+      "complexity": 40,
+      "risk": 42,
+      "reason": "Archive preservation, navigation, explicit scope/status and evidence, no development"
+    }
+  },
+  "graph": "B0 -> D-F5 -> I0 -> (R parallel V) -> DOC -> I1",
+  "barriers": {
+    "B0": "Verify/transport actual integrated uncommitted base to isolated writer before admission, reserve resources",
+    "I0": "Integrate author output, inspect/fingerprint before publishing consumers with real producer IDs",
+    "I1": "Integrate documentation then targeted principal QMD refresh; no fake worker barrier"
+  },
+  "published_execution_tasks": 0,
+  "builds_executed": 0,
+  "engine_tests_executed": 0,
+  "runtime_verdict": "INCONCLUSIVE / not run for F5; prior results remain scoped historical evidence",
+  "completed_mission_archive": {
+    "path": "docs/architecture/missions/2026-10-15-loaded-owner-move.md",
+    "sha256": "063521ac7df08349db0d0052511884319668dfd45493768ccaee0000cd635440",
+    "creation": "Byte-identical copy of completed next-mission before replacement; historical links redirected"
+  },
+  "historical_proof_preserved": {
+    "normal_unique": 137,
+    "normal_unit": 106,
+    "normal_gl": 31,
+    "asan_unique": 115,
+    "asan_unit": 106,
+    "asan_lifetime_gl": 9,
+    "other_gl_asan_not_executed": 22,
+    "note": "Planned targeted selection, not abandoned after failure"
+  },
+  "remaining_execution_preconditions": [
+    "Resolve real uncommitted-base transport before task publication",
+    "Fresh RED with working toolchain and causal diagnostic, not environment failure",
+    "GPU/compilation leases and fresh independent R/V",
+    "Strict effective ASAN_OPTIONS for engine tests as for canary"
+  ],
+  "documentation_checks": {
+    "notes": 27,
+    "wikilinks_outside_code": 212,
+    "broken_links": 0,
+    "orphans": 0,
+    "yaml_tags_valid": true,
+    "json_metadata": 7,
+    "git_diff_check_exit": 0,
+    "validated_base_inputs_unchanged": 15,
+    "observed_target_inputs_unchanged": 4,
+    "archive_hash_matches": true,
+    "memories_updated": 3
+  },
+  "qmd": {
+    "collection": "artist-wiki",
+    "targeted_only": true,
+    "indexed": 1,
+    "updated": 9,
+    "unchanged": 17,
+    "embed_documents": 9,
+    "embed_chunks": 48,
+    "lexical_query": "F5 diagnostics vides",
+    "get_verified": "architecture/next-mission.md status selected / implementation not-started",
+    "commands": [
+      {
+        "command": [
+          "C:/Program Files/nodejs/node.exe",
+          ".opencode/scripts/update-wiki.mjs"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T14:06:35.051Z",
+        "end_utc": "2026-10-15T14:06:35.298Z",
+        "exit_code": 0,
+        "error": null
+      },
+      {
+        "command": [
+          "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "C:/Users/djden/AppData/Roaming/npm/qmd.ps1",
+          "embed",
+          "-c",
+          "artist-wiki"
+        ],
+        "cwd": "C:/Users/djden/source/repos/ARTIST",
+        "start_utc": "2026-10-15T14:06:35.298Z",
+        "end_utc": "2026-10-15T14:06:41.791Z",
+        "exit_code": 0,
+        "error": null
+      }
+    ],
+    "logs": [
+      {
+        "path": "out/validation/next-mission-2026-10-15-selection/qmd-0.log",
+        "sha256": "b430b31cb3abd6977f94b34f477af688bc546084110b41ace608d33282112ecb"
+      },
+      {
+        "path": "out/validation/next-mission-2026-10-15-selection/qmd-1.log",
+        "sha256": "7dc7b946acd52a7dfaeb9f7038c63cbf2bef2282900764fb9708e792a37fec20"
+      }
+    ]
+  }
+}

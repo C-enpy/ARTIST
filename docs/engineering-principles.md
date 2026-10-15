@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, performance]
 summary: Philosophie multi-étapes, séparation préparation/exécution, choix de langage et limites des promesses de staticité.
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-15
 ---
 
 # Cap technique d'ARTIST
@@ -82,9 +82,14 @@ Voir [[adr/0007-cpp23-et-cooker-independant|ADR-0007]].
 6. **Évaluer le travail total.** Latence et débit CPU/GPU, qualité visuelle,
    mémoire/cache, synchronisation et soumission comptent davantage que le nombre
    de fonctions. Comparer à une baseline runtime optimisée, à qualité équivalente.
-7. **Progresser par tranches verticales.** Contrat → implémentation → tests CPU →
-   contexte GPU → image → mesure selon le besoin. Intégrer une bibliothèque mature
-   peut servir l'excellence ; la réécriture exhaustive n'est pas une preuve.
+7. **Progresser par tranches verticales en TDD.** Pour une fonctionnalité ou une
+   correction : contrat → test en échec observé (RED) → implémentation minimale
+   (GREEN) → refactoring et non-régression. Choisir dès le contrat la preuve utile :
+   compilation positive/négative, CPU, contexte GPU, image ou mesure. Un refactoring
+   pur s'appuie sur les tests existants ou de caractérisation. Voir le
+   [[opencode-harness#Missions, évaluation et TDD|workflow du harness]]. Intégrer une
+   bibliothèque mature peut servir l'excellence ; la réécriture exhaustive n'est
+   pas une preuve.
 
 ## Photographie du code au bootstrap du harness
 

@@ -1,0 +1,217 @@
+{
+  "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+  "mode": "append",
+  "scope": "ARTIST full-session distillation including available worker reports and post-closure 22-GL clarification",
+  "source_type_limit": "Structured session capture and nine available report/manifest snapshots, not a verbatim native session export or all raw logs",
+  "sources": [
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/approved-contract.md",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 4028,
+      "modified_at": "2026-10-15T09:11:13.717525+00:00",
+      "content_hash": "sha256:2c147008b49c4fdf04ced56fb44b765b81f7fcbe1cdb73affea49a5a7df32538",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/D-manifest.json",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 38290,
+      "modified_at": "2026-10-15T09:51:17.494065+00:00",
+      "content_hash": "sha256:37455edda0255153bec97d0e947d83ad91f7536a9a296fb74bc42089d0f2bb8b",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/H-manifest.json",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 48844,
+      "modified_at": "2026-10-15T09:26:14.234557+00:00",
+      "content_hash": "sha256:b20efe7e044e5c64933549236693ecd10254eb5f7e78e432b8554fc354df2978",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/integrated-inputs.json",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 3374,
+      "modified_at": "2026-10-15T09:54:39.996212+00:00",
+      "content_hash": "sha256:6c21a87a7e8668482be76933adc824a8499255aa4f8b5f1f3d45fb5bdff6c229",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/R-review.md",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 10049,
+      "modified_at": "2026-10-15T10:09:48.286458+00:00",
+      "content_hash": "sha256:b5a9659b029280a65f6f323ab89c696572bd8afc60b100221837af9dfb5e44a9",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/S-manifest.json",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 69866,
+      "modified_at": "2026-10-15T10:17:19.177065+00:00",
+      "content_hash": "sha256:3768bbc3d580aa3069b4ba3a076f81426315831d0ce80303075d09e53668db2e",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/S-report.md",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 11996,
+      "modified_at": "2026-10-15T10:17:18.991560+00:00",
+      "content_hash": "sha256:7bc10d818719b889d65335c14bd8778abf4eed89ff5c053689f183667d4fea29",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/session-capture.md",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 6253,
+      "modified_at": "2026-10-15T13:34:31.327791+00:00",
+      "content_hash": "sha256:765a8f0f60c066ca0055da75ae34808926a7736f4bf50188d186bc240c5535b4",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/V-manifest.json",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 25672,
+      "modified_at": "2026-10-15T10:10:55.805629+00:00",
+      "content_hash": "sha256:0b71c7f7d5341c0a9ebd30f78e8263e5655042318a69d0e78b046530ea7292ec",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    },
+    {
+      "path": "research/sessions/2026-10-15-loaded-owner-move/V-report.txt",
+      "ingested_at": "2026-10-15T13:35:07.159053+00:00",
+      "size_bytes": 3927,
+      "modified_at": "2026-10-15T10:10:55.621674+00:00",
+      "content_hash": "sha256:f0d8193d8d6f7360bcaf2f30b180d9c73d62f1f8d4de20a1bf2619443e021449",
+      "source_type": "document",
+      "project": "ARTIST",
+      "pages_created": [],
+      "pages_updated": [
+        "references/session-2026-10-15-loaded-owner-move.md",
+        "development/build-and-test.md",
+        "development/known-incidents.md",
+        "index.md"
+      ]
+    }
+  ],
+  "sources_new": 10,
+  "sources_modified": 0,
+  "sources_skipped_unchanged": 0,
+  "pages_created": [],
+  "pages_updated": [
+    "references/session-2026-10-15-loaded-owner-move.md",
+    "development/build-and-test.md",
+    "development/known-incidents.md",
+    "index.md"
+  ],
+  "engine_tests_rerun": false,
+  "native_pm_session": "ses_ec1424e6cffe36qPb8XXwRebOx",
+  "native_worker_session_ids": "Not reconstructed; six task IDs and pool identities retained in reference/capture",
+  "archive_originals_unmodified": true,
+  "validation": {
+    "notes_yaml": 26,
+    "json_metadata": 6,
+    "wikilinks_outside_code": 200,
+    "broken_links": 0,
+    "source_hashes_matched": 10,
+    "engine_build_input_hashes_unchanged": 15,
+    "git_diff_check": 0,
+    "engine_tests_rerun": false
+  },
+  "qmd": {
+    "collection": "artist-wiki",
+    "update_exit": 0,
+    "indexed": 0,
+    "updated": 5,
+    "unchanged": 21,
+    "embed_exit": 0,
+    "chunks": 29,
+    "documents": 5,
+    "retrieval": "lexical 22 abandonn?s and get reference clarification PASS",
+    "commands": [
+      "node .opencode/scripts/update-wiki.mjs",
+      "qmd embed -c artist-wiki"
+    ],
+    "logs": [
+      {
+        "path": "out/validation/loaded-owner-move-2026-10-15/ingest-qmd-0.log",
+        "sha256": "2014602270d6285cd53dd6aa5a0a254e9f41a6df4dfb35b30052b7f6be12ad51"
+      },
+      {
+        "path": "out/validation/loaded-owner-move-2026-10-15/ingest-qmd-1.log",
+        "sha256": "8fbe13b29a478a6b0087b15ddeec9028607b6a7a9246f2a7b85848a0b10496af"
+      }
+    ]
+  }
+}

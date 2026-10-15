@@ -1,0 +1,653 @@
+{
+  "created_utc": "2026-10-15T10:10:55.805Z",
+  "verifier": "pool-5 / rendering-verifier",
+  "task": "task_mv9d5o3a_000u_0heb5g",
+  "verdict": "PASS",
+  "scope": "Independent normal Windows Debug ASAN OFF existing compile traits, CPU/real OpenGL tests only",
+  "head": "e589aeece2c5abc46aedb089c6a88a6f7dbaa239",
+  "source_fingerprint_declared": "a1e66dd728c8e6b0700cf7db694040c9592ce18acaf53145590ad0e85053c234",
+  "source_hashes": {
+    "ARTIST/component-tests/CMakeLists.txt": "02967208e3920e1e41aaf184b5e6d756174f3ce88c9408d0357713642ac02ba4",
+    "ARTIST/component-tests/src/graphic/shader/ShaderLifetimeComponentTests.cpp": "c3b4e27922f7e83874f86e32ea158cb58047c5879503f6b3dde2388902dee237",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/Freer.hpp": "362cec3d4b15e310af14703811ea16458030d226af5db8cfc9edc304123326f2",
+    "ARTIST/include/graphic/opengl/pipeline/component/shader/Freer.hpp": "1704448bc5fcd076488fbe7c4f967d67a888d0f965a1c43584be9f9ca2eefc37",
+    "ARTIST/include/graphic/pipeline/Pass.hpp": "c2bb65f795cddd3a514c6b3de79bd11b44bedf0558985d5b5ab37a9aa797ed20",
+    "ARTIST/include/graphic/pipeline/Shader.hpp": "79f892593b358b0efdbd9c123f284e1d532cf057d88b4e793e677b8e40aecef8",
+    "ARTIST/tests/CMakeLists.txt": "213b0662d6c6dd15190c1f20a0f5c9b378697a34b2871f6b063b3c50bcded574",
+    "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp": "1f69a630801faa5b3998d8f9c2cf1570e8db6d0f58a9730d0a9e83ba6d455bfc",
+    "cmake/AddressSanitizer.cmake": "ff8913d0365e472f1be820365c75ca1801764861546fa98f3846f0ba5ca30736",
+    "cmake/probes/AddressSanitizer.cpp": "e489fc37c871c2544acf4b790aa7cb45223968c3f51482a5628ad4d1b39306ef",
+    "CMakeLists.txt": "59c42aa1dbc411f7f03adaf18562d82c52bc4a3a4c874a37286da19a97a10899",
+    "CMakePresets.json": "5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e",
+    "scripts/build-windows.ps1": "6aeeeb2c6b2e13e434fe51d128b4534b0f170f191cea231e8b123fd6aad3735b",
+    "scripts/tests/test_verify_asan.py": "d7dd7b77d2dfe24bcc2a6cfcc99c5473258ae1b8d87d9e0db6a3c1b32214d045",
+    "scripts/verify_asan.py": "6fc5e03e6a47fbda01955682d282f37706b0a90318b86a6f885afafe65ec0d3f"
+  },
+  "source_hashes_match_before_and_approved": true,
+  "source_manifest_sha256": "6c21a87a7e8668482be76933adc824a8499255aa4f8b5f1f3d45fb5bdff6c229",
+  "fixture_hashes": {
+    "test-datas/shaders/vertex/good/minimal.vert": {
+      "sha256": "7ae2a3ff1c2de7cf0e8e2c2718bd200070a6fcb02f3222b0fc139e89e905ed47",
+      "unchanged": true
+    },
+    "test-datas/shaders/fragment/good/minimal.frag": {
+      "sha256": "d7f1a8dc44c051cf0e209ecd0160c7f88c0ab590fc2a48f74696ec4421301bd4",
+      "unchanged": true
+    },
+    "test-datas/shaders/vertex/bad/minimal.vert": {
+      "sha256": "0a2f118c6b8b324c8db3826948e0091a17cdc7005ee1b97769b44f2fc3acaf66",
+      "unchanged": true
+    }
+  },
+  "preservation": {
+    "files_checked": 213,
+    "unchanged": 212,
+    "changed": [
+      ".grepai/config.yaml"
+    ],
+    "external_change_note": "Only .grepai/config.yaml last_index_time changed; no V write/revert; see delta artifact"
+  },
+  "binary_hashes": {
+    "ARTIST/tests/ArtistLib_tests.exe": "0067da713c67f835b8022698f42ff6f813c7f6754fb62030147d3e0832a6b8a1",
+    "ARTIST/component-tests/ArtistLib_component_tests.exe": "d68a1bfc13b7a1d2c2927b238cddd346dbb4b34607a8c0d9a90613c335db6f81"
+  },
+  "binaries_stable_since_test_run": true,
+  "environment": {
+    "utc": "2026-10-15T10:04:25.154Z",
+    "platform": "win32",
+    "release": "10.0.26300",
+    "arch": "x64",
+    "hostname": "DESKTOP-S232DQI",
+    "cpu": "AMD Ryzen 7 5800X 8-Core Processor             ",
+    "node": "v26.3.0",
+    "msvc": "19.44.35221",
+    "toolset": "14.44.35207",
+    "sdk": "10.0.26100.0",
+    "cmake": "3.31.7",
+    "conan": "2.12.2",
+    "ninja": "1.13.0.git.kitware.jobserver-pipe-1",
+    "gpu": "NVIDIA GeForce RTX3090/PCIe/SSE2",
+    "gl": "3.3.0 NVIDIA617.42",
+    "requested_profile": "3.3 core"
+  },
+  "criteria": [
+    {
+      "id": "inputs",
+      "expected": "HEAD e589aee and exact 15 integrated D/H inputs unchanged",
+      "command": "git rev-parse HEAD; git diff --binary; SHA256 each source against integrated-inputs.json before/after",
+      "environment": "principal ARTIST working diff; no commit; canonical source root",
+      "evidence": "15/15, HEAD e589aeece2c5abc46aedb089c6a88a6f7dbaa239; binaries stable true",
+      "verdict": "PASS"
+    },
+    {
+      "id": "normal-build",
+      "expected": "Working C++23 Windows Debug x64 configuration/build, ASAN OFF, jobs1",
+      "command": [
+        [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-01-configure",
+          "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "scripts/build-windows.ps1",
+          "-ConfigureOnly",
+          "-Jobs",
+          "1"
+        ],
+        [
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+          "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+          "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-02-build",
+          "cmake",
+          "--build",
+          "out/build/windows-msvc-debug",
+          "--parallel",
+          "1"
+        ]
+      ],
+      "environment": "MSVC19.44.35221 toolset14.44.35207 SDK10.0.26100.0; CMake3.31.7 Conan2.12.2 Ninja1.13.0; Debug",
+      "evidence": "config/build exit0/0; ARTIST_CXX23_NATIVE=1; ARTIST_ENABLE_ASAN=OFF; compile DB no ASan flag; PE imports no ASan runtime; 18 Ninja steps",
+      "verdict": "PASS"
+    },
+    {
+      "id": "compile-contract-traits",
+      "expected": "Concrete movable/noncopyable/final; noexcept move constructor, potentially throwing assignment; protected base assignment and cross-profile assignments rejected by traits using two valid fixture profiles",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-02-build",
+        "cmake",
+        "--build",
+        "out/build/windows-msvc-debug",
+        "--parallel",
+        "1"
+      ],
+      "environment": "same native MSVC Debug compile",
+      "evidence": {
+        "static_assert_statements": 28,
+        "lifetime_compile_steps": [
+          "[11/18] Building CXX object ARTIST\\tests\\CMakeFiles\\ArtistLib_tests.dir\\src\\graphic\\pipeline\\ShaderLifetimeTests.cpp.obj\r",
+          "[15/18] Building CXX object ARTIST\\component-tests\\CMakeFiles\\ArtistLib_component_tests.dir\\src\\graphic\\shader\\ShaderLifetimeComponentTests.cpp.obj\r"
+        ],
+        "negative_translation_units_rerun": false
+      },
+      "verdict": "PASS",
+      "scope": "Assertions in existing TUs; does not claim a fresh standalone expected-compilation-failure campaign"
+    },
+    {
+      "id": "discovery",
+      "expected": "Nonzero complete discovery, 106 unit and31 OpenGL",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-03-discovery",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-N"
+      ],
+      "environment": "normal build CTest3.31.7",
+      "evidence": {
+        "discovered": 137,
+        "unit": 106,
+        "opengl": 31,
+        "lifetime": 34,
+        "disabled": 0,
+        "not_built": 0
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "lifetime",
+      "expected": "Existing 25 CPU +9 GL lifetime cases pass including loaded-to-loaded, C/E/M/self, aliases, cleanup failures, deferred current-program deletion",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-R",
+        "ShaderLifetime",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.xml"
+      ],
+      "environment": "normal Debug; CPU mocks for CPU tests; NVIDIA real context for GL",
+      "evidence": {
+        "discovered": 34,
+        "executed": 34,
+        "pass": 34,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "disabled": 0,
+        "timeouts": 0,
+        "junit": "v-04-lifetime.xml",
+        "lasttest": "v-04-lifetime-LastTest.log"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "complete-unit",
+      "expected": "All discovered unit tests execute without skips/errors/failures",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-L",
+        "unit",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.xml"
+      ],
+      "environment": "normal Debug; __mock_gl__ defined for unit TU",
+      "evidence": {
+        "discovered": 106,
+        "executed": 106,
+        "pass": 106,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "disabled": 0,
+        "timeouts": 0,
+        "junit": "v-05-unit.xml",
+        "lasttest": "v-05-unit-LastTest.log"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "complete-opengl",
+      "expected": "All discovered OpenGL tests execute serially on real context, no skips/errors/failures",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-L",
+        "opengl",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.xml"
+      ],
+      "environment": "GLFW hidden640x480 context requests3.3 core; NVIDIA RTX3090, OpenGL3.3.0 NVIDIA617.42 observed; no __mock_gl__ in GL TU",
+      "evidence": {
+        "discovered": 31,
+        "executed": 31,
+        "pass": 31,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "disabled": 0,
+        "timeouts": 0,
+        "context_identity_messages": 31,
+        "junit": "v-06-opengl.xml",
+        "lasttest": "v-06-opengl-LastTest.log"
+      },
+      "verdict": "PASS"
+    }
+  ],
+  "counts": {
+    "discovered_unique": 137,
+    "executed_unique": 137,
+    "invocations_including_targeted": 171,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "disabled": 0,
+    "timeouts": 0,
+    "unit": 106,
+    "opengl": 31,
+    "targeted_unit": 25,
+    "targeted_opengl": 9
+  },
+  "warnings": {
+    "line_count": 477,
+    "codes": {
+      "C4005": 459,
+      "C4834": 18
+    },
+    "regression_classification": "not established"
+  },
+  "leases": {
+    "compilation_released": "2026-10-15T10:00:47Z",
+    "gpu_released": "2026-10-15T10:02:54Z",
+    "further_builds_or_tests": false
+  },
+  "separate_claims": {
+    "behavior": "PASS scoped above",
+    "visual": "INCONCLUSIVE not requested/not measured",
+    "performance": "INCONCLUSIVE not requested/not measured",
+    "asan": "outside V; independent S task",
+    "negative_compile_probes": "not rerun by V",
+    "red_author_history": "not rerun by V"
+  },
+  "docker_resources_created": 0,
+  "commands": [
+    {
+      "label": "v-01-configure",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-01-configure",
+        "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/build-windows.ps1",
+        "-ConfigureOnly",
+        "-Jobs",
+        "1"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T09:59:00.951Z",
+      "end_utc": "2026-10-15T09:59:21.024Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-01-configure.log"
+    },
+    {
+      "label": "v-02-build",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-02-build",
+        "cmake",
+        "--build",
+        "out/build/windows-msvc-debug",
+        "--parallel",
+        "1"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T09:59:38.998Z",
+      "end_utc": "2026-10-15T10:00:47.647Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-02-build.log"
+    },
+    {
+      "label": "v-03-discovery",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-03-discovery",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-N"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T10:01:20.542Z",
+      "end_utc": "2026-10-15T10:01:23.680Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-03-discovery.log"
+    },
+    {
+      "label": "v-04-lifetime",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-R",
+        "ShaderLifetime",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.xml"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T10:02:06.134Z",
+      "end_utc": "2026-10-15T10:02:13.554Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.log",
+      "junit": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-04-lifetime.xml"
+    },
+    {
+      "label": "v-05-unit",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-L",
+        "unit",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.xml"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T10:02:38.544Z",
+      "end_utc": "2026-10-15T10:02:42.755Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.log",
+      "junit": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-05-unit.xml"
+    },
+    {
+      "label": "v-06-opengl",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl",
+        "ctest",
+        "--test-dir",
+        "out/build/windows-msvc-debug",
+        "-L",
+        "opengl",
+        "--parallel",
+        "1",
+        "--no-tests=error",
+        "--output-on-failure",
+        "--timeout",
+        "120",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.xml"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T10:02:42.759Z",
+      "end_utc": "2026-10-15T10:02:54.534Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.log",
+      "junit": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-06-opengl.xml"
+    },
+    {
+      "label": "v-07-unit-pe",
+      "kind": "read-only PE dependency inspection, no build/test/GPU",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-07-unit-pe",
+        "dumpbin",
+        "/dependents",
+        "out/build/windows-msvc-debug/ARTIST/tests/ArtistLib_tests.exe"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T10:07:38.009Z",
+      "end_utc": "2026-10-15T10:07:40.860Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-07-unit-pe.log"
+    },
+    {
+      "label": "v-08-opengl-pe",
+      "kind": "read-only PE dependency inspection, no build/test/GPU",
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/run-build.py",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-08-opengl-pe",
+        "dumpbin",
+        "/dependents",
+        "out/build/windows-msvc-debug/ARTIST/component-tests/ArtistLib_component_tests.exe"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "start_utc": "2026-10-15T10:07:40.861Z",
+      "end_utc": "2026-10-15T10:07:43.972Z",
+      "exit_code": 0,
+      "signal": null,
+      "log": "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/V/v-08-opengl-pe.log"
+    }
+  ],
+  "artifact_hashes": {
+    "v-01-configure-runner.log": {
+      "sha256": "1f4d31d040c88086794f144054f3d09f138d13f1797164fdcd0bd010cebbffed",
+      "size": 2690
+    },
+    "v-01-configure.log": {
+      "sha256": "654ef30c8f9dff44151614fcf0bf3bec28d7101d002740339c5cabfa670dadff",
+      "size": 9719
+    },
+    "v-02-build-runner.log": {
+      "sha256": "2e78a6e66730b7adf472e715d2a163c8eb5888b44b94ebbd9f1bf1495b78bfb6",
+      "size": 4948
+    },
+    "v-02-build.log": {
+      "sha256": "91289d796c05c9d2ca97e1b342c91ede02e9f93e4b26741c919fb1a397ac21c5",
+      "size": 157771
+    },
+    "v-03-discovery-runner.log": {
+      "sha256": "af04fca2986369735d2f6c69dfe6e090022494ed3678cabd7b74e911571db56d",
+      "size": 2978
+    },
+    "v-03-discovery.log": {
+      "sha256": "f911bfc2263790e77e8ff76cb2d9326839194fbe2c1caba9079c4b276fffaf0d",
+      "size": 8523
+    },
+    "v-04-lifetime-CTestCostData.txt": {
+      "sha256": "7df3dbdfed91ff4927ee5d7b0fe11eb6d17a71ea2b5db27ffafdd71f16041448",
+      "size": 14403
+    },
+    "v-04-lifetime-LastTest.log": {
+      "sha256": "60b2f68a3b1dda982b1e6ee25e972e0d26481d4405ddc4a3ee7a75c35a2afbf7",
+      "size": 65250
+    },
+    "v-04-lifetime-LastTestsFailed.log": {
+      "sha256": "d201d388c8a1c1bf07c4f6fe72e561af13d271c3e6754fc81e65769354e1327d",
+      "size": 70
+    },
+    "v-04-lifetime-runner.log": {
+      "sha256": "cc170862717c4b2fbaaf76af388957f9107ba48c34715bf83d8996a0ac7f3f4c",
+      "size": 3674
+    },
+    "v-04-lifetime.log": {
+      "sha256": "07d81ea98f64dffa335b9a9b8c188fe79f35eed59b807e1b5e6243f19cfe7603",
+      "size": 7603
+    },
+    "v-04-lifetime.xml": {
+      "sha256": "540e9e8e9e3ab9a8e723688218dbadeb1e04bb74f1de2e470796286e90fcb40b",
+      "size": 32908
+    },
+    "v-05-unit-CTestCostData.txt": {
+      "sha256": "969709f8c4323f33c203c8121f55ffec360f6d13dfc95e96a51e176d011cd6e1",
+      "size": 14415
+    },
+    "v-05-unit-LastTest.log": {
+      "sha256": "7619dd944fbedca18924aaf3fc6c2e2911cc68fc8e378123e59652b079247940",
+      "size": 208684
+    },
+    "v-05-unit-LastTestsFailed.log": {
+      "sha256": "d201d388c8a1c1bf07c4f6fe72e561af13d271c3e6754fc81e65769354e1327d",
+      "size": 70
+    },
+    "v-05-unit-runner.log": {
+      "sha256": "a13fdf239e85c1266893dd9eae9858751a0e3e06e53c12b613164fb687eaf6e7",
+      "size": 4061
+    },
+    "v-05-unit.log": {
+      "sha256": "a4f5b98a6c25fc206d9ec0055d777bb560f9604b8e403f0fcbfd9d56ac8defbc",
+      "size": 20636
+    },
+    "v-05-unit.xml": {
+      "sha256": "bc1d5bcb79523513597de96a41361d6453abefe2a60a81ecd319328c3c730651",
+      "size": 104241
+    },
+    "v-06-opengl-CTestCostData.txt": {
+      "sha256": "4e61158493222894274128ebee5f87742021e84e2cd37b4f2460ea4fae42342b",
+      "size": 14416
+    },
+    "v-06-opengl-LastTest.log": {
+      "sha256": "9d60475a5e76683603177c81d39c3a817aecf95791e2a2b88b90cde7870f2b71",
+      "size": 48651
+    },
+    "v-06-opengl-LastTestsFailed.log": {
+      "sha256": "d201d388c8a1c1bf07c4f6fe72e561af13d271c3e6754fc81e65769354e1327d",
+      "size": 70
+    },
+    "v-06-opengl-runner.log": {
+      "sha256": "1bd62f75e3c0efb4c0be4c3381cecbf7d07f4520623f34b0e7e502da1caf2737",
+      "size": 4081
+    },
+    "v-06-opengl.log": {
+      "sha256": "9fb3061108071c6b9d3317eb376b8acde6a867070ce001ff7d23fe0b0a930c53",
+      "size": 6467
+    },
+    "v-06-opengl.xml": {
+      "sha256": "c905584012088f68a283c19c38e0cc3185e90c1ed2c49588c40e7754bcc88857",
+      "size": 28834
+    },
+    "v-07-unit-pe-runner.log": {
+      "sha256": "2f35ed3c290b6106dcfeec6fe67d46ecdc04912878ba6bd0f4fae6904f9a4eea",
+      "size": 985
+    },
+    "v-07-unit-pe.log": {
+      "sha256": "243adcfa86994a43804c340fad61138d6b601ee49cf853cf6c9d5ed59a06fa33",
+      "size": 571
+    },
+    "v-08-opengl-pe-runner.log": {
+      "sha256": "9fd854254483952c3880171cd4096f7d80e901c1a5393761d336aefd1d770167",
+      "size": 1109
+    },
+    "v-08-opengl-pe.log": {
+      "sha256": "16d16d7d4a4584a9e81334370df55ac7b807a9c3dee74d05ab9de6094af13284",
+      "size": 657
+    },
+    "v-after-build-and-tests.json": {
+      "sha256": "7159db0542fad636d720751350af3e12eb7054b9b33d32cf9af5f5f7a4a6bcc5",
+      "size": 6701
+    },
+    "v-before.diff": {
+      "sha256": "a5bee2a322331c7d2d36f916b282944921d713afc02c1d4d0c80c9a89dcb1fa4",
+      "size": 62562
+    },
+    "v-before.json": {
+      "sha256": "fa9308ed6b893068c5743ed19f80a69f91f72541859d4a25b3ad1a50638e625e",
+      "size": 28822
+    },
+    "v-CMakeCache.txt": {
+      "sha256": "77fa7994ba8e0cead749407c8894348578b30c65c73efb0ec5490f3e8024077e",
+      "size": 25798
+    },
+    "v-commands.jsonl": {
+      "sha256": "3cad10fa1131703bb078b27e27fc40c36995891ee949524037e7fa80853c53c1",
+      "size": 5891
+    },
+    "v-compile_commands.json": {
+      "sha256": "55588205208d2536768e4dc97d9a366377327aae1b011b8d545353082aebeb10",
+      "size": 65999
+    },
+    "v-discovery.json": {
+      "sha256": "c685ba41e4b043cf3baefe6fa838a050105fceef37799d7c156660b1ee572678",
+      "size": 7750
+    },
+    "v-external-grepai-delta.json": {
+      "sha256": "838c73a4d10307ba598840a0d65a692fdff78a01c15ae3d2d6089fd092bdcc37",
+      "size": 2374
+    },
+    "v-host.json": {
+      "sha256": "bdddf6df5a611bd4a62ca2626975372bcbacf5e2ba6e71b984668867a4531850",
+      "size": 220
+    },
+    "v-junit-reconciliation.json": {
+      "sha256": "9451bc54176508b3453079a56fc2ade8d1aed095c32e46b5027fe5a97f55b9f3",
+      "size": 13220
+    },
+    "v-output-reconciliation.json": {
+      "sha256": "17e363d5a9910fe7c98a299f26a90b36d1d76902804fc10703d4d1d4cadf2567",
+      "size": 1785
+    },
+    "v-report.txt": {
+      "sha256": "f0d8193d8d6f7360bcaf2f30b180d9c73d62f1f8d4de20a1bf2619443e021449",
+      "size": 3927
+    }
+  }
+}

@@ -13,6 +13,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/mock)
 add_executable(${PROJECT_NAME}_tests ${test_files})
 
 target_link_libraries(${PROJECT_NAME}_tests PRIVATE GTest::gmock_main ArtistLib)
+artist_copy_asan_runtime(${PROJECT_NAME}_tests)
 
 if(MOCK_GL)
         target_compile_definitions(${PROJECT_NAME}_tests PRIVATE __mock_gl__)

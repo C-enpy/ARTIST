@@ -54,14 +54,6 @@ namespace artist::graphic::pipeline
         IPass &operator=(const IPass &) = delete;
 
         IPass(IPass &&other) noexcept : m_context(std::move(other.m_context)) {}
-        IPass &operator=(IPass &&other) noexcept
-        {
-            if (this != &other)
-            {
-                m_context = std::move(other.m_context);
-            }
-            return *this;
-        }
 
         /**
          * @brief Creates a pass owning an existing context.
@@ -195,6 +187,35 @@ namespace artist::graphic::pipeline
         }
 
     protected:
+        /**
+         * Only identical concrete API/profile owners expose assignment. Release
+         * the old program before replacing its context, even if aliases keep that
+         * context alive. Such aliases retain CPU storage/shaders, not the program
+         * (handle zero); they do not follow the new owner and must not reload the
+         * orphaned context. Old uniform/attribute bindings must not be used with
+         * the new program. Source aliases still refer to the transferred context;
+         * the source becomes moved-from.
+         *
+         * If cleanup throws, both context pointers remain in place, but detach
+         * effects may already have occurred (basic guarantee, not rollback).
+         * Self-move does nothing. Callers serialize mutations and keep a valid
+         * current GL context for cleanup, including release of the last context
+         * alias. OpenGL may defer native deletion while a program is current;
+         * this operation does not wait for GPU completion or unbind it.
+         */
+        IPass &operator=(IPass &&other)
+        {
+            if (this != &other)
+            {
+                if (m_context)
+                {
+                    free(*m_context);
+                }
+                m_context = std::move(other.m_context);
+            }
+            return *this;
+        }
+
         virtual void load(typename API::PassContext &context) = 0;
         virtual void readUniforms(typename API::PassContext &context) = 0;
         virtual void readAttributes(typename API::PassContext &context) = 0;
@@ -230,7 +251,7 @@ namespace artist::graphic::pipeline
      */
     template <typename API, auto PROFILE>
         requires(API::Validator::template validatePass<API, PROFILE>())
-    class Pass : public IPass<API>
+    class Pass final : public IPass<API>
     {
     public:
         using IPass<API>::IPass;
@@ -241,15 +262,16 @@ namespace artist::graphic::pipeline
         ~Pass()
         {
             // Profile-specific release of the native program while the dynamic
-            // type is still Pass; the context and its shaders are then destroyed
-            // by ~IPass, which owns them through m_context.
+            // type is still Pass; context/shaders survive until their last alias.
+            // Cleanup must succeed: a throwing Freer here terminates, unlike in
+            // move assignment, which propagates cleanup failures.
             free();
         }
 
         // A user-declared destructor suppresses the implicit move operations;
-        // define them so ownership transfers remain move-only and noexcept.
+        // construction only transfers a pointer, assignment can fail in cleanup.
         Pass(Pass &&) noexcept = default;
-        Pass &operator=(Pass &&) noexcept = default;
+        Pass &operator=(Pass &&) = default;
 
     protected:
         void load(typename API::PassContext &context) override

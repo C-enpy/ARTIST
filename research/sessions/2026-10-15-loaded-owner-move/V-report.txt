@@ -1,0 +1,26 @@
+V — Vérification indépendante Windows Debug normale (ASan OFF)
+Verdict borné : PASS pour configuration/build, assertions compilées et comportement des tests existants.
+
+Entrées : HEAD e589aeece2c5abc46aedb089c6a88a6f7dbaa239, diff D/H intégré non commité. 15/15 SHA256 conformes avant/après au manifeste approuvé; fingerprint déclaré a1e66dd728c8e6b0700cf7db694040c9592ce18acaf53145590ad0e85053c234.
+Environnement : Windows x64 10.0.26300; MSVC19.44.35221 / toolset14.44.35207 / SDK10.0.26100.0; CMake3.31.7, Conan2.12.2, Ninja1.13.0.git.kitware.jobserver-pipe-1.
+GPU réel : NVIDIA GeForce RTX3090/PCIe/SSE2, GL3.3.0 NVIDIA617.42; GLFW demande3.3 core caché640x480. Identité émise9 fois au ciblé,31 fois dans suiteGL.
+
+Commandes exactes horodatées/codes/logs : v-commands.jsonl. Toutes passent par le runner existant out/tooling/run-build.py avec préfixe de log absolu V; aucune nouvelle source/script exécutable.
+1. scripts/build-windows.ps1 -ConfigureOnly -Jobs 1 : exit0, C++23 compile/link format+stacktrace réussi.
+2. cmake --build out/build/windows-msvc-debug --parallel 1 : exit0;18 étapes; ASan OFF/no sanitizer flags/no ASan PE imports.28 static_assert compilées, incluant profils valides et assignabilité négative. Pas de relance des TU négatives de l'auteur.
+3. ctest --test-dir out/build/windows-msvc-debug -N :137 découverts=106unit+31GL;0 placeholder/disabled.
+4. Même base CTest -R ShaderLifetime :34/34=25CPU+9GL.
+5. Même base CTest -L unit :106/106.
+6. Même base CTest -L opengl :31/31.
+Pour4–6 : --parallel 1 --no-tests=error --output-on-failure --timeout 120 --output-junit <V/v-04-lifetime.xml|v-05-unit.xml|v-06-opengl.xml>.
+
+Recoupement :137 cas uniques découverts et exécutés;171 invocations incluant34 ciblés rejoués.0 fail/error/skip/disabled/timeout. Noms JUnit concordent exactement avec découverte, ciblés inclus dans suites complètes. LastTest logs archivés confirment171 RUN/171 OK/171 PASSED,0 SKIPPED/FAILED. CTest tronque certains system-out JUnit à1024octets (1 ciblé,25unit); logs LastTest complets conservés et recoupés, ce n'est pas une omission de tests.
+
+Tranche lifetime réellement exercée : fixtures GLSL minimal.vert/minimal.frag (dont mauvais vertex attendu) → load/compilation shaders et linkage pass → move/retrait/activation-unbind du programme courant → assertions glIsShader/glIsProgram → libération/destruction/dernier alias sous contexte valide. Source shader envoyée au driver; aucun upload géométrie/texture revendiqué. Pas de draw ni readback/image dans cette tranche; pas de capture GPU.
+Comportement/API/lifetime : PASS dans cette expérience. Visuel : INCONCLUSIVE/non demandé (aucune image ou comparaison). Performance : INCONCLUSIVE/non demandée (Debug, aucune mesure Release). ASan : hors V, réservé à S. RED historique auteur : non réexécuté par V; aucun témoignage converti en preuve QA.
+
+Préservation : aucun source/test/harness/doc/golden modifié par V. 212/213 fichiers versionnés ou non ignorés gardent leurs octets; seule variation externe observée : .grepai/config.yaml last_index_time 10:46:27.471674+02:00→11:58:41.4197703+02:00 (détail v-external-grepai-delta.json); aucune réversion effectuée.15 inputs intégrés et3 fixtures lifetime sont inchangés.
+Build réussi avec477 lignes warning; répartition codes dans manifeste, aucune qualification de régression sans baseline. Aucun défaut reproduit dans le périmètre V, donc aucune correction moteur à appliquer. Conserver les limites et le timestamp externe dans le rapport parent.
+Baux : compilation libérée/notifiée10:00:47Z; GPU libéré/notifié10:02:54Z. Après libération : seulement lectures, recoupements, hashes, dumpbin /dependents; aucun rebuild/test additionnel. Docker : aucune ressource créée.
+
+Chaque critère attendu/commande/environnement/preuve/verdict est conservé dans v-manifest-final.json.

@@ -11,7 +11,8 @@
             "cacheVariables": {
                 "BUILD_TESTING": "ON",
                 "MOCK_GL": "ON",
-                "COVERAGE": "OFF"
+                "COVERAGE": "OFF",
+                "ARTIST_ENABLE_ASAN": "OFF"
             }
         },
         {
@@ -22,6 +23,12 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "windows-msvc-debug-asan",
+            "displayName": "Windows x64 MSVC Debug + ASan (separate tree)",
+            "inherits": "windows-msvc-debug",
+            "cacheVariables": { "ARTIST_ENABLE_ASAN": "ON" }
         },
         {
             "name": "windows-msvc-release",
@@ -46,12 +53,19 @@
     ],
     "buildPresets": [
         { "name": "windows-msvc-debug", "configurePreset": "windows-msvc-debug" },
+        { "name": "windows-msvc-debug-asan", "configurePreset": "windows-msvc-debug-asan" },
         { "name": "windows-msvc-release", "configurePreset": "windows-msvc-release" }
     ],
     "testPresets": [
         {
             "name": "windows-msvc-debug",
             "configurePreset": "windows-msvc-debug",
+            "output": { "outputOnFailure": true },
+            "execution": { "noTestsAction": "error", "jobs": 1 }
+        },
+        {
+            "name": "windows-msvc-debug-asan",
+            "configurePreset": "windows-msvc-debug-asan",
             "output": { "outputOnFailure": true },
             "execution": { "noTestsAction": "error", "jobs": 1 }
         },

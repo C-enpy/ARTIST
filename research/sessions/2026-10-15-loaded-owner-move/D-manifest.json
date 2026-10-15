@@ -1,0 +1,396 @@
+{
+  "status": "PASS author scope; pending independent integration/review",
+  "commit": "0bbca5042af3a52994c9540f6092a84d557f8db3",
+  "base_commit": "e589aeece2c5abc46aedb089c6a88a6f7dbaa239",
+  "branch": "ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+  "worktree": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+  "build": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\d",
+  "working_tree_clean": true,
+  "source_hashes": {
+    "ARTIST/include/graphic/pipeline/Shader.hpp": "79f892593b358b0efdbd9c123f284e1d532cf057d88b4e793e677b8e40aecef8",
+    "ARTIST/include/graphic/pipeline/Pass.hpp": "c2bb65f795cddd3a514c6b3de79bd11b44bedf0558985d5b5ab37a9aa797ed20",
+    "ARTIST/include/graphic/opengl/pipeline/component/shader/Freer.hpp": "1704448bc5fcd076488fbe7c4f967d67a888d0f965a1c43584be9f9ca2eefc37",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/Freer.hpp": "362cec3d4b15e310af14703811ea16458030d226af5db8cfc9edc304123326f2",
+    "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp": "1f69a630801faa5b3998d8f9c2cf1570e8db6d0f58a9730d0a9e83ba6d455bfc",
+    "ARTIST/component-tests/src/graphic/shader/ShaderLifetimeComponentTests.cpp": "c3b4e27922f7e83874f86e32ea158cb58047c5879503f6b3dde2388902dee237"
+  },
+  "red_headers_match_baseline": {
+    "ARTIST/include/graphic/pipeline/Shader.hpp": true,
+    "ARTIST/include/graphic/pipeline/Pass.hpp": true
+  },
+  "junit": {
+    "d-final-all-02.xml": {
+      "tests": 137,
+      "failed": 0,
+      "skipped": 0,
+      "unit": 106,
+      "opengl": 31
+    },
+    "d-green-lifetime-01.xml": {
+      "tests": 34,
+      "failed": 0,
+      "skipped": 0,
+      "unit": 25,
+      "opengl": 9
+    },
+    "d-red-failures-03.xml": {
+      "tests": 3,
+      "failed": 3,
+      "skipped": 0,
+      "unit": 3,
+      "opengl": 0
+    },
+    "d-red-lifetime-02.xml": {
+      "tests": 31,
+      "failed": 10,
+      "skipped": 0,
+      "unit": 22,
+      "opengl": 9
+    },
+    "d-red-tests-01.xml": {
+      "tests": 5,
+      "failed": 5,
+      "skipped": 0,
+      "unit": 3,
+      "opengl": 2
+    }
+  },
+  "gpu": [
+    "[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42"
+  ],
+  "commands": {
+    "d-compile-contracts-02.json": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d-probes.py",
+        "d-compile-contracts-02"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-compile-contracts-03.json": {
+      "command": [
+        "C:/Users/djden/source/repos/ARTIST/out/tooling/build/Scripts/python.exe",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d-probes.py",
+        "d-compile-contracts-03"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-configure-01.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+        "-S",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "-B",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/build/windows-msvc-debug",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DBUILD_TESTING=ON",
+        "-DMOCK_GL=ON",
+        "-DCOVERAGE=OFF",
+        "-DCMAKE_TOOLCHAIN_FILE=C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug/conan_toolchain.cmake",
+        "-DFETCHCONTENT_SOURCE_DIR_GOOGLETEST=C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug/_deps/googletest-src"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-configure-short-02.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+        "-S",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "-B",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DBUILD_TESTING=ON",
+        "-DMOCK_GL=ON",
+        "-DCOVERAGE=OFF",
+        "-DCMAKE_TOOLCHAIN_FILE=C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug/conan_toolchain.cmake",
+        "-DFETCHCONTENT_SOURCE_DIR_GOOGLETEST=C:/Users/djden/source/repos/ARTIST/out/build/windows-msvc-debug/_deps/googletest-src"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-final-all-02.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\ctest.EXE",
+        "--test-dir",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "-j1",
+        "--output-on-failure",
+        "--no-tests=error",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/D/d-final-all-02.xml"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-final-build-02.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+        "--build",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "--parallel",
+        "1"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-green-build-01.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+        "--build",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "--parallel",
+        "1"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-green-lifetime-01.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\ctest.EXE",
+        "--test-dir",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "-R",
+        "ShaderLifetime",
+        "-j1",
+        "--output-on-failure",
+        "--no-tests=error",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/D/d-green-lifetime-01.xml"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-red-build-01.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+        "--build",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "--parallel",
+        "1"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-red-build-02.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+        "--build",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "--parallel",
+        "1"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 0
+    },
+    "d-red-failures-03.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\ctest.EXE",
+        "--test-dir",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "-R",
+        "ShaderLifetimeTests.*CleanupFailure",
+        "-j1",
+        "--output-on-failure",
+        "--no-tests=error",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/D/d-red-failures-03.xml"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 8
+    },
+    "d-red-lifetime-02.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\ctest.EXE",
+        "--test-dir",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "-R",
+        "ShaderLifetime",
+        "-j1",
+        "--output-on-failure",
+        "--no-tests=error",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/D/d-red-lifetime-02.xml"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 8
+    },
+    "d-red-tests-01.json": {
+      "command": [
+        "C:\\Program Files\\CMake\\bin\\ctest.EXE",
+        "--test-dir",
+        "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3/out/d",
+        "-R",
+        "ShaderLifetime.*(MoveAssignLoaded|MoveAssignmentTypeContract)",
+        "-j1",
+        "--output-on-failure",
+        "--no-tests=error",
+        "--output-junit",
+        "C:/Users/djden/source/repos/ARTIST/out/validation/loaded-owner-move-2026-10-15/D/d-red-tests-01.xml"
+      ],
+      "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+      "exit_code": 8
+    }
+  },
+  "compile_contracts": {
+    "results": [
+      {
+        "name": "positive",
+        "command": "C:\\PROGRA~1\\MICROS~1\\18\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\..\\tests-common\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\mock\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\include\" -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\glmdf97922a12435\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glfw5cb417c5ba313\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glew15bda264c9bea\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\magiceb5d784f7e41c\\p\\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /Fo\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\positive.obj\" /Fd\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\positive.pdb\" /FS -c \"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\move-contract-probe.cpp\" -DARTIST_MOVE_PROBE=0",
+        "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "exit_code": 0,
+        "expected_diagnostic": null,
+        "passed": true,
+        "log": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\D\\d-compile-contracts-03-positive.log"
+      },
+      {
+        "name": "base-shader",
+        "command": "C:\\PROGRA~1\\MICROS~1\\18\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\..\\tests-common\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\mock\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\include\" -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\glmdf97922a12435\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glfw5cb417c5ba313\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glew15bda264c9bea\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\magiceb5d784f7e41c\\p\\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /Fo\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\base-shader.obj\" /Fd\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\base-shader.pdb\" /FS -c \"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\move-contract-probe.cpp\" -DARTIST_MOVE_PROBE=1",
+        "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "exit_code": 2,
+        "expected_diagnostic": "C2248",
+        "passed": true,
+        "log": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\D\\d-compile-contracts-03-base-shader.log"
+      },
+      {
+        "name": "base-pass",
+        "command": "C:\\PROGRA~1\\MICROS~1\\18\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\..\\tests-common\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\mock\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\include\" -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\glmdf97922a12435\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glfw5cb417c5ba313\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glew15bda264c9bea\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\magiceb5d784f7e41c\\p\\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /Fo\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\base-pass.obj\" /Fd\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\base-pass.pdb\" /FS -c \"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\move-contract-probe.cpp\" -DARTIST_MOVE_PROBE=2",
+        "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "exit_code": 2,
+        "expected_diagnostic": "C2248",
+        "passed": true,
+        "log": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\D\\d-compile-contracts-03-base-pass.log"
+      },
+      {
+        "name": "final-shader",
+        "command": "C:\\PROGRA~1\\MICROS~1\\18\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\..\\tests-common\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\mock\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\include\" -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\glmdf97922a12435\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glfw5cb417c5ba313\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glew15bda264c9bea\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\magiceb5d784f7e41c\\p\\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /Fo\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\final-shader.obj\" /Fd\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\final-shader.pdb\" /FS -c \"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\move-contract-probe.cpp\" -DARTIST_MOVE_PROBE=3",
+        "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "exit_code": 2,
+        "expected_diagnostic": "C3246",
+        "passed": true,
+        "log": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\D\\d-compile-contracts-03-final-shader.log"
+      },
+      {
+        "name": "final-pass",
+        "command": "C:\\PROGRA~1\\MICROS~1\\18\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\..\\tests-common\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\mock\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\include\" -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\glmdf97922a12435\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glfw5cb417c5ba313\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glew15bda264c9bea\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\magiceb5d784f7e41c\\p\\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /Fo\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\final-pass.obj\" /Fd\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\final-pass.pdb\" /FS -c \"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\move-contract-probe.cpp\" -DARTIST_MOVE_PROBE=4",
+        "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "exit_code": 2,
+        "expected_diagnostic": "C3246",
+        "passed": true,
+        "log": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\D\\d-compile-contracts-03-final-pass.log"
+      },
+      {
+        "name": "cross-shader",
+        "command": "C:\\PROGRA~1\\MICROS~1\\18\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\..\\tests-common\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\mock\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\include\" -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\glmdf97922a12435\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glfw5cb417c5ba313\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glew15bda264c9bea\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\magiceb5d784f7e41c\\p\\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /Fo\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\cross-shader.obj\" /Fd\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\cross-shader.pdb\" /FS -c \"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\move-contract-probe.cpp\" -DARTIST_MOVE_PROBE=5",
+        "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "exit_code": 2,
+        "expected_diagnostic": "C2679",
+        "passed": true,
+        "log": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\D\\d-compile-contracts-03-cross-shader.log"
+      },
+      {
+        "name": "cross-pass",
+        "command": "C:\\PROGRA~1\\MICROS~1\\18\\COMMUN~1\\VC\\Tools\\MSVC\\1444~1.352\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\..\\tests-common\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\include\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\tests\\mock\" -I\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\ARTIST\\include\" -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googlemock -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\build\\windows-msvc-debug\\_deps\\googletest-src\\googletest -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\glmdf97922a12435\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glfw5cb417c5ba313\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\b\\glew15bda264c9bea\\p\\include -external:IC:\\Users\\djden\\source\\repos\\ARTIST\\out\\conan2\\p\\magiceb5d784f7e41c\\p\\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /Fo\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\cross-pass.obj\" /Fd\"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\probes\\cross-pass.pdb\" /FS -c \"C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3\\out\\move-contract-probe.cpp\" -DARTIST_MOVE_PROBE=6",
+        "cwd": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-3",
+        "exit_code": 2,
+        "expected_diagnostic": "C2679",
+        "passed": true,
+        "log": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\D\\d-compile-contracts-03-cross-pass.log"
+      }
+    ],
+    "probe_sha256": "33a67f043f37e81a14e41472cc996fbeda7b3cfe2d4f972ea15ac982d30b6854"
+  },
+  "versions": {
+    "cmake": "cmake version 3.31.7",
+    "ninja": "1.13.0.git.kitware.jobserver-pipe-1",
+    "msvc": "19.44.35221.0 (configured)",
+    "conan": "preinstalled Conan 2 CMakeDeps/CMakeToolchain reused read-only; install not rerun"
+  },
+  "artifacts_sha256": {
+    "d-compile-base-pass-01.log": "826243e21b4175d9db233f00c9aa5810e230a98e574ae11a87d92b25a9ab49fa",
+    "d-compile-base-shader-01.log": "7b523640b944a4e4ebe2de3fa806b92ebc59faf21ae92020dfcc2d46c1b953b5",
+    "d-compile-contracts-01.json": "5bf2c4616e3983f62cbd61f801d69b0894e911869f4e1d6dc0967bd0e807fc77",
+    "d-compile-contracts-01.log": "f098104c281a91a5773803348534993f2a2673a625747f837e8db19fc86a31b7",
+    "d-compile-contracts-02-base-pass.log": "826243e21b4175d9db233f00c9aa5810e230a98e574ae11a87d92b25a9ab49fa",
+    "d-compile-contracts-02-base-shader.log": "7b523640b944a4e4ebe2de3fa806b92ebc59faf21ae92020dfcc2d46c1b953b5",
+    "d-compile-contracts-02-cross-pass.log": "71827a71d25dbc7cfa6ba9f1c583333787cae7e741590d0c29b90a7fd7cd4c83",
+    "d-compile-contracts-02-cross-shader.log": "14ec5cdcff3e909e64d944eb4af84ccfc082680bfa24633a32b61d4f1450b438",
+    "d-compile-contracts-02-final-pass.log": "603e9c02b3fcd3df902938a6c736c0edf07a397cd29bbee77d86fe2f065247e3",
+    "d-compile-contracts-02-final-shader.log": "6a5d7f48c85a2121d6faefc390606205b909cb62d95d9b75d3d92dc207f1ab77",
+    "d-compile-contracts-02-positive.log": "827637921c1e0305f63318d27c926a74d10d88f6b44096b4f99cecaae8988f7f",
+    "d-compile-contracts-02.json": "376143295c1ebd7fb4201dbaaa670eeb3f93e7538f9c345cacdafbe8eb863e28",
+    "d-compile-contracts-02.log": "f098104c281a91a5773803348534993f2a2673a625747f837e8db19fc86a31b7",
+    "d-compile-contracts-02.results.json": "f792183237227d81d9152d36478d640b92725f187a533f4de64cf11d990ce139",
+    "d-compile-contracts-03-base-pass.log": "8ab362a1a012c367b2e340469e5b770d255067a6cd437df94f73a3abd974fc5a",
+    "d-compile-contracts-03-base-shader.log": "7b523640b944a4e4ebe2de3fa806b92ebc59faf21ae92020dfcc2d46c1b953b5",
+    "d-compile-contracts-03-cross-pass.log": "0c43cc56de771ccdbd75e2c23e21b2e0cf110288391c84f26651a9fdf81fd332",
+    "d-compile-contracts-03-cross-shader.log": "14ec5cdcff3e909e64d944eb4af84ccfc082680bfa24633a32b61d4f1450b438",
+    "d-compile-contracts-03-final-pass.log": "14fc679ad86e9ed3a11d5d64d04be31cce29dbf0495a8633cfa698ff46da2c36",
+    "d-compile-contracts-03-final-shader.log": "6a5d7f48c85a2121d6faefc390606205b909cb62d95d9b75d3d92dc207f1ab77",
+    "d-compile-contracts-03-positive.log": "827637921c1e0305f63318d27c926a74d10d88f6b44096b4f99cecaae8988f7f",
+    "d-compile-contracts-03.json": "b62504fb2c4cf1f10cef2d2fa9c87e43f6ee55b525602eb7fb1c74d54ee7193d",
+    "d-compile-contracts-03.log": "f098104c281a91a5773803348534993f2a2673a625747f837e8db19fc86a31b7",
+    "d-compile-contracts-03.results.json": "c98880587c04e7f0868853a4350053be30ea7765317005536e0b413c6fc77c19",
+    "d-compile-cross-pass-01.log": "71827a71d25dbc7cfa6ba9f1c583333787cae7e741590d0c29b90a7fd7cd4c83",
+    "d-compile-cross-shader-01.log": "14ec5cdcff3e909e64d944eb4af84ccfc082680bfa24633a32b61d4f1450b438",
+    "d-compile-final-pass-01.log": "603e9c02b3fcd3df902938a6c736c0edf07a397cd29bbee77d86fe2f065247e3",
+    "d-compile-final-shader-01.log": "6a5d7f48c85a2121d6faefc390606205b909cb62d95d9b75d3d92dc207f1ab77",
+    "d-compile-positive-01.log": "827637921c1e0305f63318d27c926a74d10d88f6b44096b4f99cecaae8988f7f",
+    "d-configure-01.json": "ba33d7f7bf1a7cd4545db2fb40de9487f8f132f7639a59d6c935fae8ab07bcac",
+    "d-configure-01.log": "954fc6b0a9a83fe4afdea73322431c6162db71759c8dc7b5aa6a7ea113f14664",
+    "d-configure-short-02.json": "e3c888f88702f269aa243a79eaba8a8bb7871de65b2b9ed750857922621a476c",
+    "d-configure-short-02.log": "05be999390b65289c4a79429539a65db4665247ea70a2a16698ddd925731d589",
+    "d-final-all-02.json": "c17683bd058f4e4c8b7c08fef2d813c516c8c6fe41d56ab98e1b87846814c8e6",
+    "d-final-all-02.log": "fca88f6a0d84acfe1dbb280eaac53b0fa6564b3781d2e7dbe5363db04aa2d8f7",
+    "d-final-all-02.xml": "86bc3f44fe54e60ea7e0fa06e836036132fbeadca85900009e8667234b9c9cbc",
+    "d-final-build-02.json": "8900ad43252bf78986e99f0a52f018021b03142b796811f60713f849b720d611",
+    "d-final-build-02.log": "8ad08b3394f24ec23af51a4dc1ed850c98cfc51245b1856512e4862a4cfbb6ee",
+    "d-green-build-01.json": "6e3b6b908e06227b3ee7b43c0d0e64fc835cdfc1e1562cf49fd8811975e7add7",
+    "d-green-build-01.log": "30df639c9d328154f01070ce1e6bc95a5bf148379eb4ef692fcac8ac1504ae03",
+    "d-green-lifetime-01.json": "112704656af04167a0f7d2e15da5237366a90907badd730b30101372d7fc1913",
+    "d-green-lifetime-01.log": "12c2ad95795ada8aabb1ee6ab11fbca436186d73ac4ff74e832270c0fea24d86",
+    "d-green-lifetime-01.xml": "6d33ec0c063339f8dedc7f093c1dbb46c42325e7514b8c6d5c019c0f7f7d00fe",
+    "d-red-build-01.json": "a7a4d7ce9163d189edd2b8e3f62cb93a9d238e29822090a8044a9a81f791cf77",
+    "d-red-build-01.log": "2cf0268a290db62d2ba66fe509a0b756682135987766370535073163a1b0aee9",
+    "d-red-build-02.json": "7d77f79ca8a88c0a94e6040ffde60ceeb5a29d04f278e521ee878f0ad9a77dcf",
+    "d-red-build-02.log": "c72ac811ea46e958a8124a33b25ce11383b411e72b82a5c0b4211b1a499fa724",
+    "d-red-failures-03.json": "d5fb0cc103c41d137146f4833bc92827f67f6774910e74fc8c3333689a7c4e0a",
+    "d-red-failures-03.log": "875aeda2e509e9b2c1396ea6a79986fa5bc3e26a576dd636c1e384e528f5fbc5",
+    "d-red-failures-03.xml": "acebda9b5313a18d105a673b2e78b2822cec8a50c952a529fa7092bc30d05854",
+    "d-red-lifetime-02.json": "95d7bbcc7e1f70ca1de84d7148c04cb41f05acdb56042df7fac0114af1d681bb",
+    "d-red-lifetime-02.log": "006c00433dee14eea6e1b609e8a7e5ebc7f047abf8aea7e75b758da02ff4bc9c",
+    "d-red-lifetime-02.xml": "b0628354bed189d83c5a92b1515d176edbf61783d507c4bf8eeba57037acbdea",
+    "d-red-tests-01.json": "c90b048ddfae3a0d89f5c1317e31e6dcf36c47c452a98a9e8c42c08ce6fa8143",
+    "d-red-tests-01.log": "29ba2f83261e908c237be549279442cf20263399003dc81d7ebcf7f7ca4a1d53",
+    "d-red-tests-01.patch": "a0859c978ad42b4f940312dbb3669bd512604ffabfc1bd175732df81fe764581",
+    "d-red-tests-01.xml": "9dcbd0e07133dea454b4d05363e112480997b3a3e0674a6b033467b7b7d1a9dc",
+    "d-red-tests-02.patch": "d13e687d66e236fcb4eb3f33c3bdf32a44224af70a0aa90f7b14de60301c6ea2"
+  },
+  "build_inputs_sha256": {
+    "out/d/compile_commands.json": "b2322fa2a9381d7e4d57b7f2874dc2850e0d954d0aba701208502a87d2d7ccb9",
+    "out/d/CMakeCache.txt": "0ae2f4329c364b5ae2e90e33367cb513affe64ef93db6045ab42d0e5d0b7436a",
+    "test-datas/shaders/vertex/good/minimal.vert": "7ae2a3ff1c2de7cf0e8e2c2718bd200070a6fcb02f3222b0fc139e89e905ed47",
+    "test-datas/shaders/fragment/good/minimal.frag": "d7f1a8dc44c051cf0e209ecd0160c7f88c0ab590fc2a48f74696ec4421301bd4",
+    "out/d/ARTIST/tests/ArtistLib_tests.exe": "68d63b91e4d1faaa2cfe9e87d39d2f865f5579cbc247bafde10586a9b0eb168b",
+    "out/d/ARTIST/component-tests/ArtistLib_component_tests.exe": "d8a3fd25e9dfd81e90a624f8c3c38df1da1af551b613fc77f3edfabf91d5a613"
+  },
+  "incidents": [
+    "First configure at out/build/windows-msvc-debug warned object paths >250; switched to out/d before any compilation, no source configuration change.",
+    "First compile-probe campaign itself passed 7/7; outer runner metadata name collided with its child report (FileExistsError). Existing evidence retained; corrected naming, campaigns 02 and 03 completed with exit0."
+  ],
+  "limitations": [
+    "Windows x64 Debug MSVC only.",
+    "No ASan experiment in D; H harness integration and sanitizer campaign remain coordinator-owned.",
+    "No independent review in D; review/integration pending.",
+    "No image/performance or absence-of-UB claim.",
+    "Throwing cleanup inside a non-throwing destructor still terminates, including shader destruction when the last pass context alias is released.",
+    "No internal synchronization; callers serialize mutation and keep the owning GL context current."
+  ],
+  "docker_created": false
+}

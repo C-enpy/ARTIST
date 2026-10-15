@@ -9,6 +9,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(CTest)
 option(MOCK_GL "Mock OpenGL in unit tests" ON)
 option(COVERAGE "Enable GCC coverage instrumentation" OFF)
+option(ARTIST_ENABLE_ASAN "Enable AddressSanitizer in a separate supported build tree" OFF)
+
+include(cmake/AddressSanitizer.cmake)
 
 include(cmake/CheckCxx23.cmake)
 artist_check_cxx23(ARTIST_STACKTRACE_LIBRARY)

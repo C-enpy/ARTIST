@@ -3,7 +3,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <concepts>
+#include <initializer_list>
 #include <memory>
+#include <type_traits>
 #include <utility>
 #include <vector>
 #include <opengl/glFunctionMock.hpp>
@@ -28,6 +30,8 @@
 #include <graphic/opengl/pipeline/component/attribute/Unbinder.hpp>
 #include <graphic/opengl/pipeline/component/uniform/Setter.hpp>
 #include <graphic/opengl/validator/Validator.hpp>
+#include <graphic/opengl/context/MockShaderContext.hpp>
+#include <graphic/opengl/context/MockPassContext.hpp>
 #include <TestUtils.hpp>
 
 namespace api = artist::graphic::api;
@@ -45,6 +49,44 @@ namespace
     auto makeShader()
     {
         return std::make_unique<ClassicShader>("", ShaderType::VERTEX);
+    }
+
+    auto makePass(GLuint program, std::initializer_list<GLuint> shaderIDs = {})
+    {
+        auto passContext = std::make_unique<context::OpenGLPassContext>();
+        passContext->setPassID(program);
+        for (const auto id : shaderIDs)
+        {
+            auto shader = makeShader();
+            shader->getContext().setShaderID(id);
+            passContext->addShader(std::move(shader));
+        }
+        return std::make_unique<ClassicPass>(std::move(passContext));
+    }
+
+    enum class OwnerState { Loaded, Empty, MovedFrom };
+    constexpr OwnerState ownerStates[] = {OwnerState::Loaded, OwnerState::Empty, OwnerState::MovedFrom};
+
+    auto makeShader(OwnerState state, GLuint handle)
+    {
+        auto shader = makeShader();
+        if (state == OwnerState::Loaded)
+            shader->getContext().setShaderID(handle);
+        else if (state == OwnerState::MovedFrom)
+        {
+            ClassicShader previousOwner(std::move(*shader));
+        }
+        return shader;
+    }
+
+    auto makePass(OwnerState state, GLuint handle)
+    {
+        auto pass = makePass(state == OwnerState::Loaded ? handle : 0);
+        if (state == OwnerState::MovedFrom)
+        {
+            ClassicPass previousOwner(std::move(*pass));
+        }
+        return pass;
     }
 }
 
@@ -64,6 +106,42 @@ TEST_F(ShaderLifetimeTests, ShaderIsNotCopyable)
     static_assert(!std::copyable<ClassicPass>);
     static_assert(std::movable<ClassicShader>);
     static_assert(std::movable<ClassicPass>);
+}
+
+TEST_F(ShaderLifetimeTests, MoveAssignmentTypeContract)
+{
+    // Both profiles are supported by the fixture's complete generic components.
+    // A nonexistent OpenGL profile would fail validation, not test assignability.
+    enum class FixtureProfile { First, Second };
+    using FixtureAPI = mock::graphic::api::MockOpenGL;
+    using ShaderFirst = pipeline::Shader<FixtureAPI, FixtureProfile::First>;
+    using ShaderSecond = pipeline::Shader<FixtureAPI, FixtureProfile::Second>;
+    using PassFirst = pipeline::Pass<FixtureAPI, FixtureProfile::First>;
+    using PassSecond = pipeline::Pass<FixtureAPI, FixtureProfile::Second>;
+    static_assert(FixtureAPI::Validator::validateShader<FixtureAPI, FixtureProfile::First>());
+    static_assert(FixtureAPI::Validator::validateShader<FixtureAPI, FixtureProfile::Second>());
+    static_assert(FixtureAPI::Validator::validatePass<FixtureAPI, FixtureProfile::First>());
+    static_assert(FixtureAPI::Validator::validatePass<FixtureAPI, FixtureProfile::Second>());
+    static_assert(std::movable<ShaderFirst> && std::movable<ShaderSecond>);
+    static_assert(std::movable<PassFirst> && std::movable<PassSecond>);
+    static_assert(!std::is_assignable_v<ShaderFirst &, ShaderSecond &&>);
+    static_assert(!std::is_assignable_v<ShaderSecond &, ShaderFirst &&>);
+    static_assert(!std::is_assignable_v<PassFirst &, PassSecond &&>);
+    static_assert(!std::is_assignable_v<PassSecond &, PassFirst &&>);
+    static_assert(!std::is_copy_constructible_v<ClassicShader> && !std::is_copy_assignable_v<ClassicShader>);
+    static_assert(!std::is_copy_constructible_v<ClassicPass> && !std::is_copy_assignable_v<ClassicPass>);
+    static_assert(std::is_nothrow_move_constructible_v<ClassicShader>);
+    static_assert(std::is_nothrow_move_constructible_v<ClassicPass>);
+    static_assert(!std::is_nothrow_move_assignable_v<ClassicShader>);
+    static_assert(!std::is_nothrow_move_assignable_v<ClassicPass>);
+    static_assert(!std::is_move_assignable_v<pipeline::IShader<api::OpenGL>>);
+    static_assert(!std::is_move_assignable_v<pipeline::IPass<api::OpenGL>>);
+    static_assert(!std::is_assignable_v<pipeline::IShader<FixtureAPI> &, ShaderFirst &&>);
+    static_assert(!std::is_assignable_v<pipeline::IPass<FixtureAPI> &, PassFirst &&>);
+    static_assert(std::is_final_v<ClassicShader>);
+    static_assert(std::is_final_v<ClassicPass>);
+    static_assert(std::is_nothrow_destructible_v<ClassicShader>);
+    static_assert(std::is_nothrow_destructible_v<ClassicPass>);
 }
 
 /// Invalidation: free() releases the handle; a second free() is a no-op.
@@ -262,6 +340,302 @@ TEST_F(ShaderLifetimeTests, PassDestructorReleasesProgramThenShaders)
         ASSERT_EQ(pass.getContext()->getPassID(), 5u);
         ASSERT_EQ(pass.getShader(0).getContext().getShaderID(), 8u);
     }
+}
+
+TEST_F(ShaderLifetimeTests, MoveAssignLoadedShaderReleasesDestination)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    {
+        testing::InSequence sequence;
+        EXPECT_CALL(gl, glDeleteShader_mock(41)).Times(1);
+        EXPECT_CALL(gl, glDeleteShader_mock(42)).Times(1);
+    }
+    auto destination = makeShader();
+    destination->getContext().setShaderID(41);
+    auto source = makeShader();
+    source->getContext().setShaderID(42);
+    const auto *sourceContext = &source->getContext();
+
+    *destination = std::move(*source);
+
+    EXPECT_EQ(&destination->getContext(), sourceContext);
+    EXPECT_EQ(destination->getContext().getShaderID(), 42u);
+    EXPECT_THROW((void)source->getContext(), std::runtime_error);
+    EXPECT_NO_THROW(source->free());
+    destination.reset();
+    source.reset(); // must not delete the transferred shader again
+}
+
+TEST_F(ShaderLifetimeTests, MoveAssignLoadedPassReleasesDestinationBeforeShaders)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    {
+        testing::InSequence sequence;
+        EXPECT_CALL(gl, glDetachShader_mock(51, 61)).Times(1);
+        EXPECT_CALL(gl, glDeleteProgram_mock(51)).Times(1);
+        EXPECT_CALL(gl, glDeleteShader_mock(61)).Times(1);
+        EXPECT_CALL(gl, glDetachShader_mock(52, 62)).Times(1);
+        EXPECT_CALL(gl, glDeleteProgram_mock(52)).Times(1);
+        EXPECT_CALL(gl, glDeleteShader_mock(62)).Times(1);
+    }
+    auto destination = makePass(51, {61});
+    auto source = makePass(52, {62});
+    const auto *sourceContext = source->getContext().get();
+
+    *destination = std::move(*source);
+
+    EXPECT_EQ(destination->getContext().get(), sourceContext);
+    EXPECT_EQ(destination->getContext()->getPassID(), 52u);
+    EXPECT_EQ(source->getContext(), nullptr);
+    EXPECT_NO_THROW(source->free());
+    destination.reset();
+    source.reset();
+}
+
+TEST_F(ShaderLifetimeTests, ShaderMoveAssignmentStateMatrix)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    for (const auto destinationState : ownerStates)
+        for (const auto sourceState : ownerStates)
+        {
+            SCOPED_TRACE(testing::Message() << "destination=" << static_cast<int>(destinationState)
+                                          << ", source=" << static_cast<int>(sourceState));
+            EXPECT_CALL(gl, glDeleteShader_mock(41)).Times(destinationState == OwnerState::Loaded ? 1 : 0);
+            EXPECT_CALL(gl, glDeleteShader_mock(42)).Times(sourceState == OwnerState::Loaded ? 1 : 0);
+            auto destination = makeShader(destinationState, 41);
+            auto source = makeShader(sourceState, 42);
+            const auto *sourceContext = sourceState == OwnerState::MovedFrom ? nullptr : &source->getContext();
+
+            *destination = std::move(*source);
+
+            if (sourceState == OwnerState::MovedFrom)
+                EXPECT_THROW((void)destination->getContext(), std::runtime_error);
+            else
+            {
+                EXPECT_EQ(&destination->getContext(), sourceContext);
+                EXPECT_EQ(destination->getContext().getShaderID(), sourceState == OwnerState::Loaded ? 42u : 0u);
+            }
+            EXPECT_THROW((void)source->getContext(), std::runtime_error);
+            EXPECT_NO_THROW(source->free());
+            destination.reset();
+            source.reset();
+            testing::Mock::VerifyAndClearExpectations(&gl);
+        }
+}
+
+TEST_F(ShaderLifetimeTests, PassMoveAssignmentStateMatrix)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    for (const auto destinationState : ownerStates)
+        for (const auto sourceState : ownerStates)
+        {
+            SCOPED_TRACE(testing::Message() << "destination=" << static_cast<int>(destinationState)
+                                          << ", source=" << static_cast<int>(sourceState));
+            EXPECT_CALL(gl, glDeleteProgram_mock(51)).Times(destinationState == OwnerState::Loaded ? 1 : 0);
+            EXPECT_CALL(gl, glDeleteProgram_mock(52)).Times(sourceState == OwnerState::Loaded ? 1 : 0);
+            auto destination = makePass(destinationState, 51);
+            auto source = makePass(sourceState, 52);
+            const auto *sourceContext = source->getContext().get();
+
+            *destination = std::move(*source);
+
+            EXPECT_EQ(destination->getContext().get(), sourceContext);
+            if (sourceState == OwnerState::MovedFrom)
+                EXPECT_THROW((void)destination->getShadersCount(), std::runtime_error);
+            else
+            {
+                EXPECT_EQ(destination->getContext()->getPassID(), sourceState == OwnerState::Loaded ? 52u : 0u);
+                EXPECT_EQ(destination->getShadersCount(), 0);
+            }
+            EXPECT_EQ(source->getContext(), nullptr);
+            EXPECT_NO_THROW(source->free());
+            destination.reset();
+            source.reset();
+            testing::Mock::VerifyAndClearExpectations(&gl);
+        }
+}
+
+TEST_F(ShaderLifetimeTests, ShaderSelfMoveIsStrictNoOpInEveryState)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    for (const auto state : ownerStates)
+    {
+        SCOPED_TRACE(static_cast<int>(state));
+        auto shader = makeShader(state, 41);
+        const auto *before = state == OwnerState::MovedFrom ? nullptr : &shader->getContext();
+        EXPECT_CALL(gl, glDeleteShader_mock(testing::_)).Times(0);
+
+        *shader = std::move(*shader);
+
+        if (state == OwnerState::MovedFrom)
+            EXPECT_THROW((void)shader->getContext(), std::runtime_error);
+        else
+        {
+            EXPECT_EQ(&shader->getContext(), before);
+            EXPECT_EQ(shader->getContext().getShaderID(), state == OwnerState::Loaded ? 41u : 0u);
+        }
+        testing::Mock::VerifyAndClearExpectations(&gl);
+        EXPECT_CALL(gl, glDeleteShader_mock(41)).Times(state == OwnerState::Loaded ? 1 : 0);
+        shader.reset();
+        testing::Mock::VerifyAndClearExpectations(&gl);
+    }
+}
+
+TEST_F(ShaderLifetimeTests, PassSelfMoveIsStrictNoOpInEveryState)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    for (const auto state : ownerStates)
+    {
+        SCOPED_TRACE(static_cast<int>(state));
+        auto pass = makePass(state, 51);
+        auto before = pass->getContext();
+        EXPECT_CALL(gl, glDeleteProgram_mock(testing::_)).Times(0);
+        EXPECT_CALL(gl, glDetachShader_mock(testing::_, testing::_)).Times(0);
+
+        *pass = std::move(*pass);
+
+        EXPECT_EQ(pass->getContext(), before);
+        if (before)
+            EXPECT_EQ(before->getPassID(), state == OwnerState::Loaded ? 51u : 0u);
+        else
+            EXPECT_THROW((void)pass->getShadersCount(), std::runtime_error);
+        testing::Mock::VerifyAndClearExpectations(&gl);
+        EXPECT_CALL(gl, glDeleteProgram_mock(51)).Times(state == OwnerState::Loaded ? 1 : 0);
+        pass.reset();
+        testing::Mock::VerifyAndClearExpectations(&gl);
+    }
+}
+
+TEST_F(ShaderLifetimeTests, PassMoveAssignmentPreservesContextAliasesNotOldProgram)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    auto destination = makePass(51, {61});
+    auto source = makePass(52, {62});
+    auto oldAlias = destination->getContext();
+    auto transferredAlias = source->getContext();
+    {
+        testing::InSequence sequence;
+        EXPECT_CALL(gl, glDetachShader_mock(51, 61)).Times(1);
+        EXPECT_CALL(gl, glDeleteProgram_mock(51)).Times(1);
+    }
+    EXPECT_CALL(gl, glDeleteShader_mock(testing::_)).Times(0);
+
+    *destination = std::move(*source);
+
+    EXPECT_EQ(oldAlias->getPassID(), 0u);
+    EXPECT_EQ(oldAlias->getShader(0).getContext().getShaderID(), 61u);
+    EXPECT_EQ(destination->getContext(), transferredAlias);
+    EXPECT_NE(destination->getContext(), oldAlias);
+    EXPECT_EQ(source->getContext(), nullptr);
+    source.reset();
+    testing::Mock::VerifyAndClearExpectations(&gl);
+
+    EXPECT_CALL(gl, glDeleteShader_mock(61)).Times(1);
+    oldAlias.reset(); // last old alias, not the destination, owns these shaders
+    testing::Mock::VerifyAndClearExpectations(&gl);
+    {
+        testing::InSequence sequence;
+        EXPECT_CALL(gl, glDetachShader_mock(52, 62)).Times(1);
+        EXPECT_CALL(gl, glDeleteProgram_mock(52)).Times(1);
+    }
+    EXPECT_CALL(gl, glDeleteShader_mock(testing::_)).Times(0);
+    destination.reset();
+    EXPECT_EQ(transferredAlias->getPassID(), 0u);
+    EXPECT_EQ(transferredAlias->getShader(0).getContext().getShaderID(), 62u);
+    testing::Mock::VerifyAndClearExpectations(&gl);
+    EXPECT_CALL(gl, glDeleteShader_mock(62)).Times(1);
+    transferredAlias.reset();
+}
+
+TEST_F(ShaderLifetimeTests, ShaderMoveCleanupFailureDoesNotConsumeSource)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    auto destination = makeShader(OwnerState::Loaded, 41);
+    auto source = makeShader(OwnerState::Loaded, 42);
+    const auto *destinationContext = &destination->getContext();
+    const auto *sourceContext = &source->getContext();
+    // This injected failure happens before native deletion. The one-shot action
+    // is consumed before any destructor runs; throwing destructors are not supported.
+    EXPECT_CALL(gl, glDeleteShader_mock(41)).WillOnce(testing::Throw(std::runtime_error("cleanup failed")));
+    EXPECT_CALL(gl, glDeleteShader_mock(42)).Times(0);
+
+    EXPECT_THROW(*destination = std::move(*source), std::runtime_error);
+
+    EXPECT_EQ(&destination->getContext(), destinationContext);
+    EXPECT_EQ(destination->getContext().getShaderID(), 41u);
+    EXPECT_NO_THROW({
+        EXPECT_EQ(&source->getContext(), sourceContext);
+        EXPECT_EQ(source->getContext().getShaderID(), 42u);
+    });
+    testing::Mock::VerifyAndClearExpectations(&gl); // also disarms the injection on failure
+    EXPECT_CALL(gl, glDeleteShader_mock(41)).Times(1);
+    EXPECT_CALL(gl, glDeleteShader_mock(42)).Times(1);
+}
+
+TEST_F(ShaderLifetimeTests, PassMoveCleanupFailureAfterDetachDoesNotConsumeSource)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    auto destination = makePass(51, {61});
+    auto source = makePass(52, {62});
+    auto destinationContext = destination->getContext();
+    auto sourceContext = source->getContext();
+    {
+        testing::InSequence sequence;
+        EXPECT_CALL(gl, glDetachShader_mock(51, 61)).Times(1);
+        EXPECT_CALL(gl, glDeleteProgram_mock(51)).WillOnce(testing::Throw(std::runtime_error("cleanup failed")));
+    }
+    EXPECT_CALL(gl, glDeleteProgram_mock(52)).Times(0);
+    EXPECT_CALL(gl, glDeleteShader_mock(testing::_)).Times(0);
+
+    EXPECT_THROW(*destination = std::move(*source), std::runtime_error);
+
+    // Basic guarantee, not rollback: the first shader was already detached.
+    EXPECT_EQ(destination->getContext(), destinationContext);
+    EXPECT_EQ(source->getContext(), sourceContext);
+    EXPECT_EQ(destinationContext->getPassID(), 51u);
+    EXPECT_EQ(sourceContext->getPassID(), 52u);
+    testing::Mock::VerifyAndClearExpectations(&gl);
+    EXPECT_CALL(gl, glDetachShader_mock(51, 61)).Times(1);
+    EXPECT_CALL(gl, glDeleteProgram_mock(51)).Times(1);
+    EXPECT_CALL(gl, glDeleteShader_mock(61)).Times(1);
+    EXPECT_CALL(gl, glDetachShader_mock(52, 62)).Times(1);
+    EXPECT_CALL(gl, glDeleteProgram_mock(52)).Times(1);
+    EXPECT_CALL(gl, glDeleteShader_mock(62)).Times(1);
+}
+
+TEST_F(ShaderLifetimeTests, PassMoveCleanupFailureFromMovedShaderPreservesOwners)
+{
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    auto destination = makePass(51, {61});
+    auto source = makePass(52);
+    auto displaced = makeShader(OwnerState::Loaded, 62);
+    auto *secondShader = displaced.get();
+    destination->getContext()->addShader(std::move(displaced));
+    auto destinationContext = destination->getContext();
+    auto sourceContext = source->getContext();
+    ClassicShader parked(std::move(*secondShader));
+    EXPECT_CALL(gl, glDetachShader_mock(51, 61)).Times(1);
+    EXPECT_CALL(gl, glDeleteProgram_mock(testing::_)).Times(0);
+
+    // The real Freer obtains the first shader, detaches it, then encounters an
+    // invalid borrow on the second shader. No mock throws in this scenario.
+    EXPECT_THROW(*destination = std::move(*source), std::runtime_error);
+    *secondShader = std::move(parked); // repair before assertions/destruction
+
+    EXPECT_EQ(destination->getContext(), destinationContext);
+    EXPECT_EQ(source->getContext(), sourceContext);
+    EXPECT_EQ(destinationContext->getPassID(), 51u);
+    EXPECT_EQ(sourceContext->getPassID(), 52u);
+    testing::Mock::VerifyAndClearExpectations(&gl);
+    {
+        testing::InSequence sequence;
+        EXPECT_CALL(gl, glDetachShader_mock(51, 61)).Times(1);
+        EXPECT_CALL(gl, glDetachShader_mock(51, 62)).Times(1);
+        EXPECT_CALL(gl, glDeleteProgram_mock(51)).Times(1);
+    }
+    EXPECT_CALL(gl, glDeleteShader_mock(61)).Times(1);
+    EXPECT_CALL(gl, glDeleteShader_mock(62)).Times(1);
+    EXPECT_CALL(gl, glDeleteProgram_mock(52)).Times(1);
 }
 
 #endif // __mock_gl__

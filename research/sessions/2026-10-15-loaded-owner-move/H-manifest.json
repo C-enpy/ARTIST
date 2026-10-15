@@ -1,0 +1,842 @@
+{
+  "scope": "H harness/preflight ONLY; no engine test executable built or run; no GPU test",
+  "base": "e589aeece2c5abc46aedb089c6a88a6f7dbaa239",
+  "head": "a423fc250ff2040a47d52f2402019b5f35abee75",
+  "branch": "",
+  "worktree": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2",
+  "created_utc": "2026-10-15T09:26:12.547103+00:00",
+  "git_status": "",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.10.11",
+  "compiler": "MSVC 19.44.35221 / toolset 14.44.35207 / x64",
+  "stl": "MSVC STL 143, _MSVC_LANG=202400; format and stacktrace compiled, linked AND executed in healthy probe",
+  "sdk": "10.0.26100.0",
+  "cmake": "3.31.7",
+  "ninja": "1.13.0",
+  "conan": "2.12.2",
+  "build_jobs": 1,
+  "docker_resources_created": [],
+  "builds": {
+    "windows-msvc-debug": {
+      "compile_database": {
+        "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug\\compile_commands.json",
+        "bytes": 108846,
+        "sha256": "cbb2af30fac0f109171c38d496c067888e543f5df1d850f3269c937f7327fc2e"
+      },
+      "groups": {
+        "GTest_GMock": {
+          "translation_units": 7,
+          "asan_flags": 0,
+          "rtc1_flags": 7,
+          "dynamic_debug_crt": 7,
+          "cxx23_msvc_latest": 7,
+          "ndebug_definitions": 0,
+          "w4_wx": 7,
+          "built_in_H": false
+        },
+        "unit_ArtistLib_consumers": {
+          "translation_units": 23,
+          "asan_flags": 0,
+          "rtc1_flags": 23,
+          "dynamic_debug_crt": 23,
+          "cxx23_msvc_latest": 23,
+          "ndebug_definitions": 0,
+          "w4_wx": 0,
+          "built_in_H": false
+        },
+        "opengl_ArtistLib_consumers": {
+          "translation_units": 5,
+          "asan_flags": 0,
+          "rtc1_flags": 5,
+          "dynamic_debug_crt": 5,
+          "cxx23_msvc_latest": 5,
+          "ndebug_definitions": 0,
+          "w4_wx": 0,
+          "built_in_H": false
+        }
+      },
+      "link_flags": [
+        "LINK_FLAGS = /machine:x64",
+        "LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console"
+      ],
+      "ctest_discovery": "2 *_NOT_BUILT placeholders, NOT 2 valid tests; engine discovery INCONCLUSIVE"
+    },
+    "windows-msvc-debug-asan": {
+      "compile_database": {
+        "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\compile_commands.json",
+        "bytes": 111390,
+        "sha256": "45d4152e119dc04bf7e09b86bbf8b895ef287167a5a7e47f12ffe0f2d77c119f"
+      },
+      "groups": {
+        "standalone_probe": {
+          "translation_units": 1,
+          "asan_flags": 1,
+          "rtc1_flags": 1,
+          "dynamic_debug_crt": 1,
+          "cxx23_msvc_latest": 1,
+          "ndebug_definitions": 0,
+          "w4_wx": 0,
+          "built_in_H": true
+        },
+        "GTest_GMock": {
+          "translation_units": 7,
+          "asan_flags": 7,
+          "rtc1_flags": 7,
+          "dynamic_debug_crt": 7,
+          "cxx23_msvc_latest": 7,
+          "ndebug_definitions": 0,
+          "w4_wx": 7,
+          "built_in_H": true
+        },
+        "unit_ArtistLib_consumers": {
+          "translation_units": 23,
+          "asan_flags": 23,
+          "rtc1_flags": 23,
+          "dynamic_debug_crt": 23,
+          "cxx23_msvc_latest": 23,
+          "ndebug_definitions": 0,
+          "w4_wx": 0,
+          "built_in_H": false
+        },
+        "opengl_ArtistLib_consumers": {
+          "translation_units": 5,
+          "asan_flags": 5,
+          "rtc1_flags": 5,
+          "dynamic_debug_crt": 5,
+          "cxx23_msvc_latest": 5,
+          "ndebug_definitions": 0,
+          "w4_wx": 0,
+          "built_in_H": false
+        }
+      },
+      "link_flags": [
+        "LINK_FLAGS = /machine:x64",
+        "LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /debug  /subsystem:console"
+      ],
+      "ctest_discovery": "2 *_NOT_BUILT placeholders, NOT 2 valid tests; engine discovery INCONCLUSIVE"
+    }
+  },
+  "source_files": {
+    "ARTIST/component-tests/CMakeLists.txt": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\ARTIST\\component-tests\\CMakeLists.txt",
+      "bytes": 839,
+      "sha256": "02967208e3920e1e41aaf184b5e6d756174f3ce88c9408d0357713642ac02ba4"
+    },
+    "ARTIST/tests/CMakeLists.txt": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\ARTIST\\tests\\CMakeLists.txt",
+      "bytes": 866,
+      "sha256": "213b0662d6c6dd15190c1f20a0f5c9b378697a34b2871f6b063b3c50bcded574"
+    },
+    "CMakeLists.txt": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\CMakeLists.txt",
+      "bytes": 1072,
+      "sha256": "59c42aa1dbc411f7f03adaf18562d82c52bc4a3a4c874a37286da19a97a10899"
+    },
+    "CMakePresets.json": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\CMakePresets.json",
+      "bytes": 3100,
+      "sha256": "5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e"
+    },
+    "cmake/AddressSanitizer.cmake": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\cmake\\AddressSanitizer.cmake",
+      "bytes": 4416,
+      "sha256": "ff8913d0365e472f1be820365c75ca1801764861546fa98f3846f0ba5ca30736"
+    },
+    "cmake/probes/AddressSanitizer.cpp": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\cmake\\probes\\AddressSanitizer.cpp",
+      "bytes": 1715,
+      "sha256": "e489fc37c871c2544acf4b790aa7cb45223968c3f51482a5628ad4d1b39306ef"
+    },
+    "scripts/build-windows.ps1": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\scripts\\build-windows.ps1",
+      "bytes": 5456,
+      "sha256": "6aeeeb2c6b2e13e434fe51d128b4534b0f170f191cea231e8b123fd6aad3735b"
+    },
+    "scripts/tests/test_verify_asan.py": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\scripts\\tests\\test_verify_asan.py",
+      "bytes": 2133,
+      "sha256": "d7dd7b77d2dfe24bcc2a6cfcc99c5473258ae1b8d87d9e0db6a3c1b32214d045"
+    },
+    "scripts/verify_asan.py": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\scripts\\verify_asan.py",
+      "bytes": 2251,
+      "sha256": "6fc5e03e6a47fbda01955682d282f37706b0a90318b86a6f885afafe65ec0d3f"
+    }
+  },
+  "unchanged_contracts": {
+    "conanfile.txt": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\conanfile.txt",
+      "bytes": 129,
+      "sha256": "1cbf0536bee3f7e18381170308499d307d36346c041d262e8c8aba087d25fadf"
+    },
+    "conan/profiles/windows-msvc": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\conan\\profiles\\windows-msvc",
+      "bytes": 211,
+      "sha256": "bba034e6b0e81d8cfd5015955bdace72c306b3b800fbd0043fd35bb557486839"
+    },
+    "cmake/CheckCxx23.cmake": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\cmake\\CheckCxx23.cmake",
+      "bytes": 1496,
+      "sha256": "f12eb7191e6a9e7c19a93d36f490d97ed9d439941d844f87be6bffa575a89af2"
+    },
+    "scripts/build-requirements.txt": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\scripts\\build-requirements.txt",
+      "bytes": 28,
+      "sha256": "f58d6e6a458c24349fc309134d9d455622f120609fad3360bf2ce39b33a972e6"
+    },
+    ".github/workflows/cmake-single-platform.yml": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\.github\\workflows\\cmake-single-platform.yml",
+      "bytes": 4118,
+      "sha256": "dea171e954483c4d0f6352c4e4f553bc8cd99177e92b9b5e1215aca315301c73"
+    }
+  },
+  "preflight": {
+    "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "runs": [
+      {
+        "command": [
+          "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\artist_asan_probe.exe",
+          "healthy"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\artist_asan_probe.exe",
+          "use-after-free"
+        ],
+        "exit_code": 86
+      }
+    ],
+    "status": "PASS",
+    "healthy_output": "ARTIST_ASAN_HEALTHY value=42 trace=7 MSVC=194435221 STL=143 CXX=202400\nARTIST_ASAN_RUNTIME C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\clang_rt.asan_dynamic-x86_64.dll\n",
+    "fault_excerpt": [
+      "=================================================================",
+      "==39320==ERROR: AddressSanitizer: heap-use-after-free on address 0x1203eb9a0030 at pc 0x7ff74cbb219d bp 0x002c3715f0d0 sp 0x002c3715f0d8",
+      "READ of size 4 at 0x1203eb9a0030 thread T0",
+      "    #0 0x7ff74cbb219c in main C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\cmake\\probes\\AddressSanitizer.cpp:47",
+      "    #1 0x7ff74cc775d8 in invoke_main D:\\a\\_work\\1\\s\\src\\vctools\\crt\\vcstartup\\src\\startup\\exe_common.inl:78",
+      "    #2 0x7ff74cc77521 in __scrt_common_main_seh D:\\a\\_work\\1\\s\\src\\vctools\\crt\\vcstartup\\src\\startup\\exe_common.inl:288",
+      "    #3 0x7ff74cc773dd in __scrt_common_main D:\\a\\_work\\1\\s\\src\\vctools\\crt\\vcstartup\\src\\startup\\exe_common.inl:330",
+      "    #4 0x7ff74cc7764d in mainCRTStartup D:\\a\\_work\\1\\s\\src\\vctools\\crt\\vcstartup\\src\\startup\\exe_main.cpp:16",
+      "    #5 0x7ff8058fdda6  (C:\\WINDOWS\\System32\\KERNEL32.DLL+0x18002dda6)",
+      "    #6 0x7ff80703ee4b  (C:\\WINDOWS\\SYSTEM32\\ntdll.dll+0x18007ee4b)",
+      "",
+      "0x1203eb9a0030 is located 0 bytes inside of 4-byte region [0x1203eb9a0030,0x1203eb9a0034)",
+      "freed by thread T0 here:",
+      "    #0 0x7ff74cc76693 in operator delete(void *, unsigned __int64) D:\\a\\_work\\1\\s\\src\\vctools\\asan\\llvm\\compiler-rt\\lib\\asan\\asan_win_delete_scalar_size_thunk.cpp:41",
+      "    #1 0x7ff74cc0ae06 in std::default_delete<int>::operator()(int *) const C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.44.35207\\include\\memory:3309",
+      "    #2 0x7ff74cc217fd in std::unique_ptr<int, struct std::default_delete<int>>::reset(int *) C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.44.35207\\include\\memory:3471",
+      "    #3 0x7ff74cbb2130 in main C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\cmake\\probes\\AddressSanitizer.cpp:45",
+      "    #4 0x7ff74cc775d8 in invoke_main D:\\a\\_work\\1\\s\\src\\vctools\\crt\\vcstartup\\src\\startup\\exe_common.inl:78"
+    ],
+    "binary": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\artist_asan_probe.exe",
+      "bytes": 1138688,
+      "sha256": "710d50d031fd4a0688f8f4b33f35be5ba4c80e76c2e259ea851834d4d0b09c39"
+    }
+  },
+  "runtime": {
+    "clang_rt.asan_dynamic-x86_64.dll": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\clang_rt.asan_dynamic-x86_64.dll",
+      "bytes": 1190432,
+      "sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5"
+    },
+    "clang_rt.asan_dbg_dynamic-x86_64.dll": {
+      "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\clang_rt.asan_dbg_dynamic-x86_64.dll",
+      "bytes": 1264160,
+      "sha256": "308c1f0b94d9a5f16b5401e5c4196997fa44a4ec298493df4313bcd2774d9d57"
+    }
+  },
+  "runtime_source": {
+    "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\clang_rt.asan_dynamic-x86_64.dll",
+    "bytes": 1190432,
+    "sha256": "1f906a6ffcbb00dc7dbf49502ca2f796c449968536f27f6f006b0b7e7b36e2a5"
+  },
+  "probe_pe_x64": true,
+  "probe_imports": [
+    "KERNEL32.dll",
+    "MSVCP140D.dll",
+    "clang_rt.asan_dynamic-x86_64.dll",
+    "VCRUNTIME140D.dll",
+    "VCRUNTIME140_1D.dll",
+    "ucrtbased.dll"
+  ],
+  "googletest": {
+    "version": "v1.14.0",
+    "revision": "f8d7d77c06936315286eb55f8de22cd23c188571",
+    "libraries": {
+      "gtest": {
+        "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\lib\\gtest.lib",
+        "bytes": 10950912,
+        "sha256": "ea9e399adc0915436680e01da092150ce26ecb4f0dff2132d0a402d434757f84",
+        "asan_symbol_lines": 5007,
+        "asan_undefined_references": [
+          "5F9A 00000000 UNDEF  notype ()    External     | __asan_load1",
+          "5F9B 00000000 UNDEF  notype ()    External     | __asan_load16",
+          "5F9C 00000000 UNDEF  notype ()    External     | __asan_load2",
+          "5F9D 00000000 UNDEF  notype ()    External     | __asan_load4",
+          "5F9E 00000000 UNDEF  notype ()    External     | __asan_load8",
+          "5F9F 00000000 UNDEF  notype ()    External     | __asan_loadN",
+          "5FA0 00000000 UNDEF  notype ()    External     | __asan_memcpy",
+          "5FA1 00000000 UNDEF  notype ()    External     | __asan_memset"
+        ]
+      },
+      "gtest_main": {
+        "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\lib\\gtest_main.lib",
+        "bytes": 166770,
+        "sha256": "4ac65fc1577ac0d1156d155bf6e7f6b07e7ebd13b0185ecfba584735974dda26",
+        "asan_symbol_lines": 223,
+        "asan_undefined_references": [
+          "175 00000000 UNDEF  notype ()    External     | __asan_loadN",
+          "176 00000000 UNDEF  notype ()    External     | __asan_report_load8",
+          "177 00000000 UNDEF  notype ()    External     | __asan_report_store8",
+          "178 00000000 UNDEF  notype ()    External     | __asan_set_shadow_00",
+          "179 00000000 UNDEF  notype ()    External     | __asan_set_shadow_f8",
+          "17A 00000000 UNDEF  notype ()    External     | __asan_storeN",
+          "1D0 00000000 UNDEF  notype       External     | __asan_shadow_memory_dynamic_address"
+        ]
+      },
+      "gmock": {
+        "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\lib\\gmock.lib",
+        "bytes": 13986670,
+        "sha256": "f10e4102a4ec6224accedb8f3c4febcb9aa69cfc0d7e190fbaf94e205bfec292",
+        "asan_symbol_lines": 6137,
+        "asan_undefined_references": [
+          "1CAF 00000000 UNDEF  notype ()    External     | __asan_load1",
+          "1CB0 00000000 UNDEF  notype ()    External     | __asan_load4",
+          "1CB1 00000000 UNDEF  notype ()    External     | __asan_load8",
+          "1CB2 00000000 UNDEF  notype ()    External     | __asan_loadN",
+          "1CB3 00000000 UNDEF  notype ()    External     | __asan_memcpy",
+          "1CB4 00000000 UNDEF  notype ()    External     | __asan_memset",
+          "1CB5 00000000 UNDEF  notype ()    External     | __asan_report_load1",
+          "1CB6 00000000 UNDEF  notype ()    External     | __asan_report_load16"
+        ]
+      },
+      "gmock_main": {
+        "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\build\\windows-msvc-debug-asan\\lib\\gmock_main.lib",
+        "bytes": 14190246,
+        "sha256": "3c0e66d434371f49262684abdded482e2edfa64a5b9558db4e184c4a8c2adbca",
+        "asan_symbol_lines": 6360,
+        "asan_undefined_references": [
+          "1A9 00000000 UNDEF  notype ()    External     | __asan_load4",
+          "1AA 00000000 UNDEF  notype ()    External     | __asan_load8",
+          "1AB 00000000 UNDEF  notype ()    External     | __asan_loadN",
+          "1AC 00000000 UNDEF  notype ()    External     | __asan_report_load1",
+          "1AD 00000000 UNDEF  notype ()    External     | __asan_report_load4",
+          "1AE 00000000 UNDEF  notype ()    External     | __asan_report_load8",
+          "1AF 00000000 UNDEF  notype ()    External     | __asan_report_store1",
+          "1B0 00000000 UNDEF  notype ()    External     | __asan_report_store8"
+        ]
+      }
+    }
+  },
+  "conan_packages": [
+    {
+      "folder": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\conan2\\p\\b\\glewbff29e618516c\\p",
+      "conaninfo": "[settings]\narch=x86_64\nbuild_type=Debug\ncompiler=msvc\ncompiler.runtime=dynamic\ncompiler.runtime_type=Debug\ncompiler.version=194\nos=Windows\n[options]\nshared=False\nwith_glu=system\n[requires]\nglu/system\nopengl/system\n",
+      "libraries": [
+        {
+          "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\conan2\\p\\b\\glewbff29e618516c\\p\\lib\\libglew32d.lib",
+          "bytes": 1855572,
+          "sha256": "51e0e05bb6cf1b3d246bc228b880e585e8bec7064c404c5810cd9fb62f188bdb",
+          "asan_symbol_lines": 0
+        }
+      ]
+    },
+    {
+      "folder": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\conan2\\p\\b\\glfw10a61e2a40cb3\\p",
+      "conaninfo": "[settings]\narch=x86_64\nbuild_type=Debug\ncompiler=msvc\ncompiler.runtime=dynamic\ncompiler.runtime_type=Debug\ncompiler.version=194\nos=Windows\n[options]\nshared=False\nvulkan_static=False\n[requires]\nopengl/system\n",
+      "libraries": [
+        {
+          "path": "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-artist-loaded-owner-move#5qrg7c-pool-2\\out\\conan2\\p\\b\\glfw10a61e2a40cb3\\p\\lib\\glfw3.lib",
+          "bytes": 1246956,
+          "sha256": "dab13c996f37c7cf37327e759473cfde2a4ecc2d1c31848a677f40701ffe8615",
+          "asan_symbol_lines": 0
+        }
+      ]
+    }
+  ],
+  "dependency_scope": {
+    "glm/cci.20230113": "header-only; instantiated code instrumented only in ASan consumer TUs",
+    "magic_enum/0.9.5": "header-only; instantiated code instrumented only in ASan consumer TUs",
+    "glfw/3.3.8": "Conan static binary, NOT instrumented",
+    "glew/2.2.0": "Conan static binary, NOT instrumented",
+    "opengl/system + glu/system": "Windows system libraries/driver, NOT instrumented",
+    "MSVC/UCRT/Windows libraries": "vendor binaries; no claim of full instrumentation or leak detection"
+  },
+  "interpretation": {
+    "harness_tdd": "RED 8 tests/4 assertion failures; GREEN/final 8/8, 0 skips",
+    "first_causal_failure": "OFF/ON Conan auto-includes produced duplicate conan-debug presets; script disables auto-include with tools.cmake.cmaketoolchain:user_presets= (existing Conan 2 integration retained)",
+    "rtc1": "Accepted by compiler AND actual healthy/fault runtime; final config retains /RTC1. Initial belief of incompatibility was disproved.",
+    "ZI": "Compiler D8016 reproduced; unsupported in this ASan configuration.",
+    "incremental": "LINK LNK4075 ignores /INCREMENTAL with /INFERASANLIBS; final /INCREMENTAL:NO explicit.",
+    "GL": "Compiler-only acceptance observed; IPO/LTCG intentionally outside validated matrix, explicit CMake rejection, NOT a claim of compiler incompatibility.",
+    "rejections": "Release and COVERAGE+ASan explicitly rejected. First coverage attempt failed earlier C1083 due long output path; distinct shorter tree reached intended rejection.",
+    "limits": "No engine runtime or GPU test in H; no Release/Linux/macOS/CI validation; CTest placeholders not a pass. Final engine campaigns require merged D+H.",
+    "clangd_serena": "Use real compile DB in worktree for worktree code; canonical pooled Serena untouched. Regenerate canonical DB after integration; do not reuse worktree cache or invent MSVC includes.",
+    "evidence_runner": "Earlier run-h metadata conan_home described parent launcher only; build-windows.ps1 isolated its effective CONAN_HOME into worktree/out/conan2. Final runner metadata uses worktree."
+  },
+  "evidence_files": {
+    "actual-targets.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\actual-targets.json",
+      "bytes": 815,
+      "sha256": "8adae49da39c4580a4e5e1f57bba86c07656aa0cde0200d28bd12a82516c13cc"
+    },
+    "actual-targets.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\actual-targets.log",
+      "bytes": 33135,
+      "sha256": "4cfa7633f8ca8190a2fe908d21c70e4b3566d445f00e1366f6c28919526e512f"
+    },
+    "asan-preserve-rtc-final.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\asan-preserve-rtc-final.json",
+      "bytes": 809,
+      "sha256": "705af506a635d5eacc83379599b668d3f4dce27f07881c486d8d719d3903c435"
+    },
+    "asan-preserve-rtc-final.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\asan-preserve-rtc-final.log",
+      "bytes": 16122,
+      "sha256": "4c91f9f92e23d1c5aa67793daa63079ee02e701a76dbc73cb07260b34ae58aab"
+    },
+    "collect-h.py": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\collect-h.py",
+      "bytes": 9999,
+      "sha256": "fce4f9f4ec3f93d869b8da983f23acc11c1277bb40783512b88ef91950c586dd"
+    },
+    "conan-glfw3-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\conan-glfw3-symbols.log",
+      "bytes": 284482,
+      "sha256": "92c83733df04783ce29fc38bd216411b9e8453b4bd60a35ad401495694409a5e"
+    },
+    "conan-libglew32d-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\conan-libglew32d-symbols.log",
+      "bytes": 706492,
+      "sha256": "79e9fef6d7ca2a0b3a7876dfb762b0e5f7b456e824d6675d79c0eca7fa4fbe1c"
+    },
+    "configure-off-final.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\configure-off-final.json",
+      "bytes": 775,
+      "sha256": "85d88ebf48089ae4a930ee691e6138afb0b84b898145a557d95c8cd0e01030aa"
+    },
+    "configure-off-final.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\configure-off-final.log",
+      "bytes": 12423,
+      "sha256": "fe6b1c9422f4bad5337b5e1979d68c7a55451d20a91b5c52790af7ce17430e6c"
+    },
+    "configure-off.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\configure-off.json",
+      "bytes": 775,
+      "sha256": "31b36671f558b4b895692f4af3c247856cae109e8d3fa803995cd7037a27d530"
+    },
+    "configure-off.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\configure-off.log",
+      "bytes": 37764,
+      "sha256": "43d97b012068fdd50f36d1eeff37b3e419ee93673ecfc22e3112c2594fed5a23"
+    },
+    "ctest-asan-discovery.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\ctest-asan-discovery.json",
+      "bytes": 671,
+      "sha256": "b51f33966179f837786d7a058b04fbbdd02c4e901bd788cb270b114600bfe948"
+    },
+    "ctest-asan-discovery.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\ctest-asan-discovery.log",
+      "bytes": 1819,
+      "sha256": "ec53822b19480050528a4ec002d822ab923016bfc4c5f3323b13a89bc1ce4523"
+    },
+    "ctest-off-discovery.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\ctest-off-discovery.json",
+      "bytes": 665,
+      "sha256": "bfc4cbfed6547a9fdbd1c4a9f4046494d1e176cac5baf8ac3ae129f9c81e0052"
+    },
+    "ctest-off-discovery.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\ctest-off-discovery.log",
+      "bytes": 1809,
+      "sha256": "872fb439fe27e4cbea2eed0985045fe3cb3de286454a8728c2cd686d187ce147"
+    },
+    "final-gmock-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-gmock-symbols.log",
+      "bytes": 11574531,
+      "sha256": "9fad810b27f64f000a23a4c3b98cbe846086a6c28484c3f0926a00b1d772a291"
+    },
+    "final-gmock_main-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-gmock_main-symbols.log",
+      "bytes": 11631752,
+      "sha256": "7bc2e9751c97631074041f07ffde04f0ec03ca6cf2447f053230bcb66197e780"
+    },
+    "final-gtest-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-gtest-symbols.log",
+      "bytes": 9070179,
+      "sha256": "11c0aa65dd3baa1b836c37a648ebec7b7f1775a7e9a1940decc7b84bdc2109be"
+    },
+    "final-gtest_main-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-gtest_main-symbols.log",
+      "bytes": 39642,
+      "sha256": "17db733ea3e827f626e7e62d94f4b4b5d6e0f4bd0a7b77d60a0b776b016590c2"
+    },
+    "final-probe-headers.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-probe-headers.log",
+      "bytes": 7082,
+      "sha256": "c3f712c2f8bce9db977211e6e7c51d67265d4b1647e68b201094e4586b1b426c"
+    },
+    "final-probe-imports.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-probe-imports.log",
+      "bytes": 704,
+      "sha256": "95cca2ff14497cbda24c339fbc3636e928954842e46ae4fa267d89c5a42e0107"
+    },
+    "flags-probe.cpp": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\flags-probe.cpp",
+      "bytes": 100,
+      "sha256": "e6d0cbe2f7d37089b8f33b0f822a35556805586d9075b13e9a247b7cf0dd4504"
+    },
+    "gmock-symbols.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\gmock-symbols.json",
+      "bytes": 744,
+      "sha256": "31ba64f5daba2c1482005424fe2e9f0f1f979a1f785d666d1bfb464bc138b982"
+    },
+    "gmock-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\gmock-symbols.log",
+      "bytes": 11573179,
+      "sha256": "b6a5d3027eb1f697ec8dedc50f31d5942a2a9e8486e546bade9c3fb6f35bfc24"
+    },
+    "gtest-gmock-asan.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\gtest-gmock-asan.json",
+      "bytes": 790,
+      "sha256": "d5200d657e7385e8b99d988fa4359fbcb522966962dcbf0ee08966e63fc183b7"
+    },
+    "gtest-gmock-asan.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\gtest-gmock-asan.log",
+      "bytes": 11378,
+      "sha256": "00f81e7808987d79aa3fceffe02e7ad3327b0b445a21e5bebcc4abcb5195027c"
+    },
+    "gtest-gmock-rtc-final.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\gtest-gmock-rtc-final.json",
+      "bytes": 795,
+      "sha256": "8a3e0e527c9c682fb89d51a0db77ce51a574ee28be855c534e2fefb05dfe8a40"
+    },
+    "gtest-gmock-rtc-final.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\gtest-gmock-rtc-final.log",
+      "bytes": 11413,
+      "sha256": "cdf6a22f0762a7edd888eab9c6e670e0459efe87975e45d4c0cdc867e2d438be"
+    },
+    "harness-final.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\harness-final.json",
+      "bytes": 812,
+      "sha256": "0c5e28a549c04283689ba85fe1629a9170c53dc8f053a7f60a3bef8664620368"
+    },
+    "harness-final.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\harness-final.log",
+      "bytes": 789,
+      "sha256": "098eaa72e49b0f8b66f955ecf313496d7f72f96d10b54879881444b5b3ee5aed"
+    },
+    "harness-green.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\harness-green.json",
+      "bytes": 632,
+      "sha256": "31e30fea0b64f58dcf5b1d99ae977bf5c9ca3872b0b406b94fa0ac831986a4eb"
+    },
+    "harness-green.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\harness-green.log",
+      "bytes": 789,
+      "sha256": "098eaa72e49b0f8b66f955ecf313496d7f72f96d10b54879881444b5b3ee5aed"
+    },
+    "harness-red.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\harness-red.json",
+      "bytes": 630,
+      "sha256": "fcc9be9acb0260535161526e684835ae464be7edcc6262174a045d4804104a40"
+    },
+    "harness-red.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\harness-red.log",
+      "bytes": 3210,
+      "sha256": "74ad1479e41bfcd4bc4f87fccc50827360de6ddf6e1c23348390c7b03c16d556"
+    },
+    "incremental-observed.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\incremental-observed.json",
+      "bytes": 964,
+      "sha256": "0e7f92f618470ff2c7ffe9ede5760e0b9f728b48b23d080c323b8eadba4209a7"
+    },
+    "incremental-observed.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\incremental-observed.log",
+      "bytes": 104,
+      "sha256": "cd7cb38516f7f58d1d288fb12b9e5d0b53583a0deafc29a3af9f53a232d8803e"
+    },
+    "negative-config-gl.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-config-gl.json",
+      "bytes": 786,
+      "sha256": "2a0027e042d6dca04a32e4d254a5405269e908159f9875a411dc20c768a3b18c"
+    },
+    "negative-config-gl.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-config-gl.log",
+      "bytes": 951,
+      "sha256": "94f909474114ef37cd85fad3d88cc6489bff823f1802d4d7ebcd07e63d8be240"
+    },
+    "negative-coverage-short.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-coverage-short.json",
+      "bytes": 784,
+      "sha256": "e2406bad31fb62496fabd0b3b5abeaab4da41593a0d60862dfdc0a32d57718ad"
+    },
+    "negative-coverage-short.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-coverage-short.log",
+      "bytes": 937,
+      "sha256": "b8fc7a7f79a07bd7e0933fbae1d4748ff8028c4d316d998ecb32cef849ddfb41"
+    },
+    "negative-coverage.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-coverage.json",
+      "bytes": 800,
+      "sha256": "71aa82a1fb7774b00360a4a4c3be5124f5f1abd9a0f996f12826867fb1f0f9e9"
+    },
+    "negative-coverage.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-coverage.log",
+      "bytes": 4362,
+      "sha256": "7d3a2af679f43974c56e0b77125cc6fdc5d74c0a2d508173222de9a9af431af0"
+    },
+    "negative-gl.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-gl.json",
+      "bytes": 892,
+      "sha256": "fce6b2e917d02453c91e952065e46f9ec5f0ca360e722e89704006d39a543c68"
+    },
+    "negative-gl.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-gl.log",
+      "bytes": 11,
+      "sha256": "25d4f66c7c01d5b35c220cb97ffdd1608405f4ab45160497e6cc7ea3079676cf"
+    },
+    "negative-release.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-release.json",
+      "bytes": 772,
+      "sha256": "e8403c3599d23db1975537395234e1cfbd39079da232d719df8de40230837c2d"
+    },
+    "negative-release.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-release.log",
+      "bytes": 3504,
+      "sha256": "f794bf0771d213f9a8752ba6b1bb4323ec752af4abc650628c359ac24e420922"
+    },
+    "negative-rtc.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-rtc.json",
+      "bytes": 897,
+      "sha256": "659570e77d2ad67e37185401c74ff696102b4d120201bb1fd10ee0cd8eb37af9"
+    },
+    "negative-rtc.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-rtc.log",
+      "bytes": 11,
+      "sha256": "25d4f66c7c01d5b35c220cb97ffdd1608405f4ab45160497e6cc7ea3079676cf"
+    },
+    "negative-script-release.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-script-release.json",
+      "bytes": 796,
+      "sha256": "88b21d1e579651ed16be52d2ed35aef76526081d2533213056d5542b670108b1"
+    },
+    "negative-script-release.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-script-release.log",
+      "bytes": 623,
+      "sha256": "eea33df7f3792d37cc2b6f39c35bf9c3258b12b2bbe171c8072fe6cdc093887a"
+    },
+    "negative-zi.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-zi.json",
+      "bytes": 880,
+      "sha256": "1756fb814487611605a1c08d95a7295d52cf2c6796aa07461238ed238b015c7a"
+    },
+    "negative-zi.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\negative-zi.log",
+      "bytes": 113,
+      "sha256": "d85722f788f02bcb4f548406988cb1c50194a21c1d1a044873058481b06b42cf"
+    },
+    "preflight-on-final.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\preflight-on-final.json",
+      "bytes": 804,
+      "sha256": "57a0a459111cd6d5904b77588838c302b6436d41f10579c508ac3870e3762fbb"
+    },
+    "preflight-on-final.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\preflight-on-final.log",
+      "bytes": 16123,
+      "sha256": "703e4a426525ca0b44626e3f3a0d9ca15b19e02d2c4462c70e42b8e03eee0e9f"
+    },
+    "preflight-on-no-preset-collision.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\preflight-on-no-preset-collision.json",
+      "bytes": 728,
+      "sha256": "9d3a8ca4bcf2c42f73c3f83fc576e9627cf8666c6fe52dbfd34af507b563713a"
+    },
+    "preflight-on-no-preset-collision.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\preflight-on-no-preset-collision.log",
+      "bytes": 16104,
+      "sha256": "8246a3e3003f52bfdb46451ead2ca2fc63b3fc2970e3f1ebe9b8b2ceecdb8bb2"
+    },
+    "preflight-on.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\preflight-on.json",
+      "bytes": 707,
+      "sha256": "f394e15efc0df9e4a3a7476edf0e50ce0f072e46acaf78356e361910ba4c680a"
+    },
+    "preflight-on.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\preflight-on.log",
+      "bytes": 9583,
+      "sha256": "a1d3d4ab0b6925d282f4e3fa14fa0d5542cf8b6ac67e68d23b0634f711c6c48e"
+    },
+    "probe-imports.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\probe-imports.json",
+      "bytes": 755,
+      "sha256": "7946952a25acddbb449bd18d667081b30af30b025788baa60a9ec315572f653d"
+    },
+    "probe-imports.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\probe-imports.log",
+      "bytes": 582,
+      "sha256": "5597329ed5bcb3a0e6b073f3193a161a03a05d0f085540f8a2861aec8187b7a0"
+    },
+    "rtc-and-asan-link.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-and-asan-link.json",
+      "bytes": 1001,
+      "sha256": "c3e149216882953df6a1747b198ef9e1c9e61e5fa463d9ae10dff6641f31f7f1"
+    },
+    "rtc-and-asan-link.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-and-asan-link.log",
+      "bytes": 22,
+      "sha256": "717442b644754475634e6d4b2e542cee0ed31812796e1e0ce4bbac6f0234044c"
+    },
+    "rtc-and-asan-runtime.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-and-asan-runtime.json",
+      "bytes": 928,
+      "sha256": "ddcb9a077bbef807bc3fbeae0ecf749537357f27386f2f74be830931685f0018"
+    },
+    "rtc-and-asan-runtime.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-and-asan-runtime.log",
+      "bytes": 654,
+      "sha256": "94e7ff47f605dc472726c6fddc6a8b52cadc37413b66301ce26f3e8b252e7ab3"
+    },
+    "rtc-object-symbols.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-object-symbols.json",
+      "bytes": 730,
+      "sha256": "256cfb84571a816ed3e2d991c782bbe05ffc793270d12817f3b0a540c634852a"
+    },
+    "rtc-object-symbols.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-object-symbols.log",
+      "bytes": 1740588,
+      "sha256": "3ed003ac67447cb3a55b880a253bf9bb350f136c2bdc11aac8739d7aa37ba741"
+    },
+    "run-h-first.py": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\run-h-first.py",
+      "bytes": 2277,
+      "sha256": "1af0bd2d20e351a6be439945651170a35ec60a42c59bde8abefe2fcfba7a6014"
+    },
+    "run-h.py": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\run-h.py",
+      "bytes": 2277,
+      "sha256": "0e4562ca4a035be7f1d4a9f05acfde8b9ad624d7c12c3d2c794e878cae0d952a"
+    },
+    "source.patch": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\source.patch",
+      "bytes": 17443,
+      "sha256": "6e6fbc90aef02f9a8a9c4077cfebab72f9f4a29f940ce491b42fb7cf4fcf7f04"
+    },
+    "artifacts\\windows-msvc-debug\\build.ninja": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug\\build.ninja",
+      "bytes": 187171,
+      "sha256": "71e71225c5e9d242bc2899096418bb5fa6d9aa997243bd8fc82e3ec9c865fdb1"
+    },
+    "artifacts\\windows-msvc-debug\\CMakeCache.txt": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug\\CMakeCache.txt",
+      "bytes": 27973,
+      "sha256": "4da9e92e5f8d8b3dc045bcaf574bb9d4746d69b1e2cd546dd0fb3bc73b56069a"
+    },
+    "artifacts\\windows-msvc-debug\\compile_commands.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug\\compile_commands.json",
+      "bytes": 108846,
+      "sha256": "cbb2af30fac0f109171c38d496c067888e543f5df1d850f3269c937f7327fc2e"
+    },
+    "artifacts\\windows-msvc-debug\\conan_toolchain.cmake": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug\\conan_toolchain.cmake",
+      "bytes": 7541,
+      "sha256": "6723b007480231c69865bcfe5a9caccdda26afb9c3bfd966849a6f15d1148a08"
+    },
+    "artifacts\\windows-msvc-debug\\CTestTestfile.cmake": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug\\CTestTestfile.cmake",
+      "bytes": 509,
+      "sha256": "cc26d5531fc4f808bc19342c96baf25d174b46d42f87034ce5cca96dca1de464"
+    },
+    "artifacts\\windows-msvc-debug\\CMakeFiles\\CMakeConfigureLog.yaml": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug\\CMakeFiles\\CMakeConfigureLog.yaml",
+      "bytes": 30768,
+      "sha256": "a85fa3ddd9f914be5bad340d3e1483f5b5502e41380b73350ffb7cf44c26c18f"
+    },
+    "artifacts\\windows-msvc-debug\\CMakeFiles\\rules.ninja": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug\\CMakeFiles\\rules.ninja",
+      "bytes": 15257,
+      "sha256": "b58fdbb102c50ddc50cf50f27bbc48d0336fc282199614a666bf6bf03f71b845"
+    },
+    "artifacts\\windows-msvc-debug-asan\\build.ninja": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug-asan\\build.ninja",
+      "bytes": 194408,
+      "sha256": "62c6fc06732c09a2e4d4041f3d56b1196a2ad910199c365ce3a9d84df9e21a14"
+    },
+    "artifacts\\windows-msvc-debug-asan\\CMakeCache.txt": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug-asan\\CMakeCache.txt",
+      "bytes": 28139,
+      "sha256": "26893abf8bf889a3f917eae3353e74649cf63e33e02ae0b03b065f3ff724045c"
+    },
+    "artifacts\\windows-msvc-debug-asan\\compile_commands.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug-asan\\compile_commands.json",
+      "bytes": 111390,
+      "sha256": "45d4152e119dc04bf7e09b86bbf8b895ef287167a5a7e47f12ffe0f2d77c119f"
+    },
+    "artifacts\\windows-msvc-debug-asan\\conan_toolchain.cmake": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug-asan\\conan_toolchain.cmake",
+      "bytes": 7541,
+      "sha256": "6723b007480231c69865bcfe5a9caccdda26afb9c3bfd966849a6f15d1148a08"
+    },
+    "artifacts\\windows-msvc-debug-asan\\CTestTestfile.cmake": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug-asan\\CTestTestfile.cmake",
+      "bytes": 514,
+      "sha256": "516d414548abd97783df069266e7429a84475c5d4a9bcee10f2196783b11f225"
+    },
+    "artifacts\\windows-msvc-debug-asan\\CMakeFiles\\CMakeConfigureLog.yaml": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug-asan\\CMakeFiles\\CMakeConfigureLog.yaml",
+      "bytes": 34508,
+      "sha256": "8c89581d2b31c8eb703ddb116b5d8b0001476a3ccd466d5fd2b98d4a92602cfd"
+    },
+    "artifacts\\windows-msvc-debug-asan\\CMakeFiles\\rules.ninja": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\artifacts\\windows-msvc-debug-asan\\CMakeFiles\\rules.ninja",
+      "bytes": 17667,
+      "sha256": "539fa841886015f418ef1ba873796c94953b96ccd2bc456a109ff8dd24e2cf82"
+    },
+    "final-preflight\\healthy.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-preflight\\healthy.log",
+      "bytes": 282,
+      "sha256": "5e17f8dd52ff5cbf1e52a525446a1eb2e631b85383cc863db9d44a1fdde0466e"
+    },
+    "final-preflight\\summary.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-preflight\\summary.json",
+      "bytes": 710,
+      "sha256": "a5169a62e8b20f6e09ab4f2a341230761602d9c6783d243d6e1127902d8c01e4"
+    },
+    "final-preflight\\use-after-free.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\final-preflight\\use-after-free.log",
+      "bytes": 5274,
+      "sha256": "4128f31c949ca082bce494b6094902d319f824243cc60f5dc2a9a040bf6eb9b2"
+    },
+    "first-preflight\\healthy.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\first-preflight\\healthy.log",
+      "bytes": 72,
+      "sha256": "8dccbaddf6b40720a8108b445ec2c31fb40617e75277b9713a60a2c97646dc7a"
+    },
+    "first-preflight\\summary.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\first-preflight\\summary.json",
+      "bytes": 710,
+      "sha256": "a5169a62e8b20f6e09ab4f2a341230761602d9c6783d243d6e1127902d8c01e4"
+    },
+    "first-preflight\\use-after-free.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\first-preflight\\use-after-free.log",
+      "bytes": 5274,
+      "sha256": "d61bd2f4874ac0217a7d12a3e01fd9bfb05c32e9f8bd4a882bcb128deeaabfae"
+    },
+    "rtc-and-asan\\healthy.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-and-asan\\healthy.log",
+      "bytes": 222,
+      "sha256": "7efed79d3a1b0893f7f7b9e7a96a2f9d3b29db7d131abcf0835f69ce13e470dc"
+    },
+    "rtc-and-asan\\summary.json": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-and-asan\\summary.json",
+      "bytes": 654,
+      "sha256": "94e7ff47f605dc472726c6fddc6a8b52cadc37413b66301ce26f3e8b252e7ab3"
+    },
+    "rtc-and-asan\\use-after-free.log": {
+      "path": "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\validation\\loaded-owner-move-2026-10-15\\H\\rtc-and-asan\\use-after-free.log",
+      "bytes": 5274,
+      "sha256": "5aff01a58606b5a0ca04b82cdae7a98c305f7e7c022287aa8acffd2d2bfd522f"
+    }
+  }
+}

@@ -151,9 +151,45 @@ Empreintes des JUnit et logs finaux : `_meta/session-2026-10-03-validation.json`
 
 **Revérification du 2026-10-15** : code committé en `4d29842`, build existant et
 122/122 tests PASS ; voir `_meta/precommit-2026-10-15-validation.json`.
-[[architecture/next-mission|Mission sélectionnée]] : assignation move vers owner
-chargé puis ASan séparé. Pas encore implémentée ; `implementation: partial`
-reste inchangé et aucun autre ADR proposé n'est adopté implicitement.
+
+### Assignation move vers owner chargé — vérifiée le 2026-10-15
+
+La [[architecture/missions/2026-10-15-loaded-owner-move|mission loaded-owner move]] est terminée dans son périmètre Windows
+x64 Debug. HEAD principal `e589aee` + diff D `0bbca504` et H `a423fc25` intégrés,
+15 fichiers empreintés ; voir la
+[[references/session-2026-10-15-loaded-owner-move|synthèse et les commandes]] et
+`_meta/session-2026-10-15-loaded-owner-move-validation.json`.
+
+- Contrat approuvé après avis `engine-architect` : assignation publique seulement
+  entre owners concrets identiques ; bases `protected`, `Shader`/`Pass` `final`.
+  Cette restriction d'API est volontaire, sans shim ni héritier concret trouvé.
+- Self-move strictement sans effet ; cleanup de l'ancienne destination par son
+  hook concret avant transfert. Source vidée, pas de double libération ni de
+  redescente virtuelle depuis une base détruite. Constructeurs move `noexcept`,
+  assignations potentiellement levantes : les composants n'imposent pas `noexcept`.
+- Échec cleanup : source non consommée, pointeurs conservés, garantie de base
+  seulement ; un detach déjà effectué n'est pas annulé. Les destructeurs restent
+  non-throwing et un cleanup qui y jette peut toujours terminer le processus.
+- `IPass::m_context` reste partagé : un alias de l'ancien contexte conserve
+  stockage/shaders avec `passID=0`, pas l'ancien programme vivant ni le nouveau
+  contexte. Dernier alias et cleanup exigent un contexte GL compatible courant.
+  La suppression d'un programme courant peut être différée jusqu'à l'unbind.
+- RED causal CPU et driver avant fix ; 7 probes de compilation positives/négatives.
+  Revue finale indépendante : PASS de lecture. Validation indépendante intégrée :
+  **106 unit + 31 OpenGL = 137/137**, zéro skip/échec ; lifetime **25 + 9**.
+- ASan séparé : probe sain 0/faute 86 identifiée, **36/36 TU instrumentées**,
+  **106/106 CPU + 9/9 lifetime GL**, 115 cas uniques. Les 22 autres GL ne sont pas
+  qualifiés sous ASan. Conan GLFW/GLEW, système et driver non instrumentés ; pas
+  de preuve de fuite driver, d'image ou de performance. Options moteur fail-closed
+  consignées ; le script ne normalise pas un environnement ASan parent arbitraire.
+
+`implementation: partial` reste inchangé : Pipeline, Uniform/Attribute, contexte
+Pass encore partagé et autres chemins/plateformes ne sont pas fermés par ces tests.
+Aucun autre ADR `Proposed` n'est adopté implicitement.
+
+**Sélection suivante, non implémentée** : [[architecture/next-mission|F5 — diagnostics GL vides et nettoyage sûr]],
+après avis PM/architecte. Cette sélection des chemins
+d'erreur ne modifie pas `implementation: partial` et ne démarre pas Pipeline.
 
 ## Références
 
