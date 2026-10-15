@@ -51,6 +51,14 @@ namespace
         return std::make_unique<ClassicShader>("", ShaderType::VERTEX);
     }
 
+    /// A real readable source keeps a load() cycle viable under the F8
+    /// contract (mission C): the reader now rejects an impossible opening
+    /// instead of handing an empty source to the loader.
+    auto makeShader(const std::string &path)
+    {
+        return std::make_unique<ClassicShader>(path, ShaderType::VERTEX);
+    }
+
     auto makePass(GLuint program, std::initializer_list<GLuint> shaderIDs = {})
     {
         auto passContext = std::make_unique<context::OpenGLPassContext>();
@@ -208,7 +216,10 @@ TEST_F(ShaderLifetimeTests, MovedFromPassAccessThrows)
 /// glCreate call and the context is left untouched.
 TEST_F(ShaderLifetimeTests, ShaderReloadWithoutFreeRejected)
 {
-    auto shader = makeShader();
+    // F8 (mission C): the reload contract is reached after a successful read,
+    // so the shader owns a real readable source instead of the silent empty
+    // read an absent file used to produce.
+    auto shader = makeShader("test-datas/shaders/vertex/good/minimal.vert");
     shader->getContext().setShaderID(42);
 
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glCreateShader_mock(::testing::_)).Times(0);
@@ -316,8 +327,10 @@ TEST_F(ShaderLifetimeTests, PassFreeDetachesOnlyLiveShaders)
 /// path; variant B rejects any pre-seeded handle (RELOAD_WITHOUT_FREE).
 TEST_F(ShaderLifetimeTests, PassDestructorReleasesProgramThenShaders)
 {
+    // F8 (mission C): the mocked-GL load cycle starts from a successful read,
+    // so the shader owns a real readable source.
     std::vector<std::unique_ptr<pipeline::IShader<api::OpenGL>>> shaders;
-    shaders.push_back(makeShader());
+    shaders.push_back(makeShader("test-datas/shaders/vertex/good/minimal.vert"));
     auto passContext = std::make_unique<context::OpenGLPassContext>();
     passContext->addShader(std::move(shaders.back()));
 

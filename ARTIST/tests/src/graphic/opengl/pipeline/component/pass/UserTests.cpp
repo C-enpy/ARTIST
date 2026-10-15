@@ -48,7 +48,14 @@ TEST_F(UserTests, UsePass_ValidContext)
 
 TEST_F(UserTests, UsePass_ZeroPassIDStillCallsGL)
 {
-    // Arrange: no pipeline ID set; the GL contract decides the outcome
+    // Arrange: no pipeline ID set; the GL contract decides the outcome.
+    // F10 (mission C, ruling G-C2, preserved as-is): a documented explicit
+    // unbind, not a business rejection. By contract the pass handle stays 0
+    // when nothing was published (no load yet) or after a moved-from context
+    // guarded by ctx(), so 0 reaches glUseProgram unchanged: glUseProgram(0)
+    // is valid OpenGL and disarms the current program instead of reporting an
+    // unloaded pass. No consumer migration happens in this cut; richer
+    // cursor semantics are the Pipeline tranche A1 scope, not this one.
 
     // Expect the driver call to happen with the raw handle (0)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glUseProgram_mock(0)).Times(1);

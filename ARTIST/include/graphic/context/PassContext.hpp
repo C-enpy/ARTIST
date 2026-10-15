@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
+#include <format>
 #include <utils.hpp>
 #include <graphic/Api.hpp>
 #include <graphic/pipeline/Shader.hpp>
@@ -66,10 +67,22 @@ namespace artist::graphic::context
          * @brief Borrow the shader at the given index.
          * @param index Index of the shader to get.
          * @return Borrowed shader at the given index.
+         *
+         * F4 (mission C): out-of-range and negative accesses are rejected
+         * with the business exception ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE
+         * before any indexing; the negative check happens before the
+         * size_type conversion so -1 cannot wrap into a huge offset, and the
+         * range comparison itself is done in vector::size_type. vector::at
+         * is intentionally not used. In-range borrows keep returning the
+         * registered object; a rejection leaves the context untouched.
          */
         [[nodiscard]] pipeline::IShader<API> &getShader(const int &index) const
         {
-            return *m_shaders[index];
+            if (index < 0 || static_cast<decltype(m_shaders)::size_type>(index) >= m_shaders.size())
+            {
+                throw common::exception::TraceableException<std::out_of_range>(std::format("ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE\nShader index {} out of range (size {})", index, m_shaders.size()));
+            }
+            return *m_shaders[static_cast<decltype(m_shaders)::size_type>(index)];
         }
 
         /**
