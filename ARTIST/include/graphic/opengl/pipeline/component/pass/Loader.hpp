@@ -38,19 +38,35 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::PROGRAM_CREATION_FAILED\nFailed to create shader pipeline."));
             }
 
-            // Save the created pipeline ID in the context
-            openglContext.setPassID(passID);
-            artist::graphic::api::OpenGL::PassContext::ShaderAttacher<graphic::opengl::profile::Pass::Classic>::on(openglContext);
+            // Q3 (mission C): deferred publication. This loader owns passID
+            // until the link check succeeds; the attacher borrows the context
+            // and receives the handle by value, so the context is not the
+            // owner and must not be published before that point. Any failure
+            // before publication releases the owned handle exactly once and
+            // rethrows, leaving the context as it was (passID untouched, here
+            // still 0). This is single-owner cleanup at the creation site, not
+            // a transactional rollback.
+            try
+            {
+                artist::graphic::api::OpenGL::PassContext::ShaderAttacher<graphic::opengl::profile::Pass::Classic>::on(openglContext, passID);
 
-            // Link the pipeline
-            glLinkProgram(passID);
+                // Link the pipeline
+                glLinkProgram(passID);
 
-            if (!checkLinkErrors(passID))
+                if (!checkLinkErrors(passID))
+                {
+                    throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::PROGRAM::LINK_FAILED"));
+                }
+            }
+            catch (...)
             {
                 glDeleteProgram(passID);
-                openglContext.setPassID(0); // Do not leave a handle to a freed program.
-                throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::PROGRAM::LINK_FAILED"));
+                throw;
             }
+
+            // Publish exactly once, after a verified link: the context becomes
+            // the owner and no handle to a freed program is ever exposed.
+            openglContext.setPassID(passID);
         }
 
         /**
@@ -68,8 +84,18 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 GLint maxLength = 0;
                 glGetProgramiv(passID, GL_INFO_LOG_LENGTH, &maxLength);
 
-                // An absent driver log may report zero; still provide room for a terminator.
-                const GLsizei capacity = (std::max)(maxLength, GLint{1});
+                // Q1 (mission C): the driver may report an aberrant
+                // GL_INFO_LOG_LENGTH (e.g. INT_MAX). A diagnostic failure must
+                // not lead to an unbounded allocation whose failure would
+                // surface here as a non-business exception (bad_alloc /
+                // length_error) and skip the native cleanup and the business
+                // error. Clamp the diagnostic capacity locally: <=0 means no
+                // room, keep one terminator; values beyond kMaxInfoLogCapacity
+                // are bounded. Limit documented in the mission report: this
+                // clamp bounds THIS allocation, not a process-wide memory
+                // shortage; an ordinary diagnostic remains full-fidelity.
+                static constexpr GLint kMaxInfoLogCapacity = 4096;
+                const GLsizei capacity = (std::clamp)((std::max)(maxLength, GLint{1}), GLint{1}, kMaxInfoLogCapacity);
                 std::vector<GLchar> infoLog(static_cast<std::size_t>(capacity));
                 GLsizei written = 0;
                 glGetProgramInfoLog(passID, capacity, &written, infoLog.data());
