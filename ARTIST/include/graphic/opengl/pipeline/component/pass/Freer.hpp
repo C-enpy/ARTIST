@@ -27,29 +27,24 @@ namespace artist::graphic::opengl::pipeline::component::pass
     class OpenGLPassFreer<graphic::opengl::profile::Pass::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::PassContext> openglContext)
+        static void on(typename graphic::api::OpenGL::PassContext &openglContext)
         {
-
-            if (!openglContext)
-            {
-                throw common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::NON_OPENGL_CONTEXT");
-            }
-
-            GLuint passID = openglContext->getPassID();
+            GLuint passID = openglContext.getPassID();
             if (passID != 0)
             {
                 // Optionally detach shaders before deleting the pipeline
-                for (const auto &shader : openglContext->getShaders())
+                for (const auto &shader : openglContext.getShaders())
                 {
-                    if (auto oglShaderContext = shader->getContext())
+                    auto &oglShaderContext = shader->getContext();
+                    if (oglShaderContext.getShaderID() != 0)
                     {
-                        glDetachShader(passID, oglShaderContext->getShaderID());
+                        glDetachShader(passID, oglShaderContext.getShaderID());
                     }
                 }
 
                 // Delete the OpenGL pipeline
                 glDeleteProgram(passID);
-                openglContext->setPassID(0); // Reset the pipeline ID in the context
+                openglContext.setPassID(0); // Reset the pipeline ID in the context
             }
         }
     };

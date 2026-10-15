@@ -24,16 +24,22 @@ using artist::test::utils::expectSpecificError;
 class AttributeReaderTests : public ::testing::Test
 {
 protected:
+    void SetUp() override
+    {
+        openglContext = std::make_shared<context::OpenGLPassContext>();
+    }
+
     void TearDown() override
     {
         mock::opengl::glFunctionMock::reset();
     }
+
+    std::shared_ptr<context::OpenGLPassContext> openglContext;
 };
 
 TEST_F(AttributeReaderTests, ReadAttributes_CallGetProgramiv)
 {
     // Arrange
-    auto openglContext = std::make_shared<context::OpenGLPassContext>();
     openglContext->setPassID(1); // Set a valid pipeline ID
 
     // Mock the OpenGL calls to simulate attributes
@@ -42,13 +48,12 @@ TEST_F(AttributeReaderTests, ReadAttributes_CallGetProgramiv)
         .WillOnce(::testing::SetArgPointee<2>(numAttributes));
 
     // Act
-    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(openglContext));
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
 }
 
 TEST_F(AttributeReaderTests, ReadAttributes_CallGetActiveAttribAndGetAttribLocation)
 {
     // Arrange
-    auto openglContext = std::make_shared<context::OpenGLPassContext>();
     openglContext->setPassID(1); // Set a valid pipeline ID
 
     // Mock the OpenGL calls to simulate attributes
@@ -63,7 +68,7 @@ TEST_F(AttributeReaderTests, ReadAttributes_CallGetActiveAttribAndGetAttribLocat
         .Times(1);
 
     // Act
-    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(openglContext));
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
 
     // Assert
     // Optionally check if the attributes are correctly added to the context
@@ -71,24 +76,13 @@ TEST_F(AttributeReaderTests, ReadAttributes_CallGetActiveAttribAndGetAttribLocat
     ASSERT_TRUE(openglContext->getAttributes().contains(mock::opengl::glFunctionMock::ATTRIBUTE_NAME));
 }
 
-TEST_F(AttributeReaderTests, ReadAttributes_NullContext)
-{
-    // Arrange
-
-    // Act & Assert
-    expectSpecificError([]()
-                        { pass::OpenGLPassAttributeReader<Classic>::on(nullptr); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::NON_OPENGL_CONTEXT"));
-}
-
 TEST_F(AttributeReaderTests, ReadAttributes_InvalidPassID)
 {
-    // Arrange
-    auto openglContext = std::make_shared<context::OpenGLPassContext>(); // No pipeline ID set
+    // Arrange: no pipeline ID set
 
     // Act & Assert
-    expectSpecificError([&openglContext]()
-                        { pass::OpenGLPassAttributeReader<Classic>::on(openglContext); },
+    expectSpecificError([&openglContext = openglContext]()
+                        { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::INVALID_PROGRAM_ID"));
 }
 

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <format>
 #include <string>
 #include <memory>
 #include <any>

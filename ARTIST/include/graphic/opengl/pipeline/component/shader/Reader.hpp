@@ -22,9 +22,9 @@ namespace artist::graphic::opengl::pipeline::component::shader
     class OpenGLShaderReader<graphic::opengl::profile::Shader::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::ShaderContext> context)
+        static void on(typename graphic::api::OpenGL::ShaderContext &context)
         {
-            context->setShaderCode("");
+            context.setShaderCode("");
             std::ifstream shaderFile;
 
             // ensure ifstream objects can throw exceptions
@@ -32,13 +32,13 @@ namespace artist::graphic::opengl::pipeline::component::shader
 
             try
             {
-                shaderFile.open(context->getShaderPath());
+                shaderFile.open(context.getShaderPath());
                 std::stringstream shaderStream;
 
                 shaderStream << shaderFile.rdbuf(); // read file's buffer contents into streams
                 shaderFile.close();
 
-                context->setShaderCode(shaderStream.str());
+                context.setShaderCode(shaderStream.str());
             }
             catch (std::ifstream::failure &e)
             {

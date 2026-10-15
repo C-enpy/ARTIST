@@ -24,12 +24,12 @@ namespace artist::graphic::opengl::validator
 
     template <typename API, auto PROFILE>
     concept OpenGLAttributeFlow = requires {
-        requires HasComponent<typename API::AttributeContext::Binder<PROFILE>>;
-        requires HasComponent<typename API::AttributeContext::Unbinder<PROFILE>>;
+        requires HasComponent<typename API::AttributeContext::template Binder<PROFILE>>;
+        requires HasComponent<typename API::AttributeContext::template Unbinder<PROFILE>>;
         requires HasComponent<typename API::AttributeContext::template Setter<int>>;
 
-        requires HasOnMethod<typename API::AttributeContext::Binder<PROFILE>, typename API::AttributeContext>;
-        requires HasOnMethod<typename API::AttributeContext::Unbinder<PROFILE>, typename API::AttributeContext>;
+        requires HasOnMethod<typename API::AttributeContext::template Binder<PROFILE>, typename API::AttributeContext>;
+        requires HasOnMethod<typename API::AttributeContext::template Unbinder<PROFILE>, typename API::AttributeContext>;
         requires HasOnMethod<typename API::AttributeContext::template Setter<int>, typename API::AttributeContext>;
     };
 }

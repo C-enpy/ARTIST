@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <graphic/Api.hpp>
 #include <graphic/context/PassContext.hpp>
+#include <graphic/opengl/context/ShaderContext.hpp>
 
 namespace artist::graphic
 {
@@ -61,7 +62,7 @@ namespace artist::graphic
             }
 
         private:
-            GLuint m_passID; // OpenGL pipeline ID
+            GLuint m_passID = 0; // OpenGL pipeline ID — 0 means "no program"
         };
     }
 }

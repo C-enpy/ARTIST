@@ -27,16 +27,10 @@ namespace artist::graphic::opengl::pipeline::component::pass
     class OpenGLPassUser<graphic::opengl::profile::Pass::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::PassContext> openglContext)
+        static void on(typename graphic::api::OpenGL::PassContext &openglContext)
         {
-            if (!openglContext)
-            {
-                // Throw an exception if the context is not valid for OpenGL
-                throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::NON_OPENGL_CONTEXT"));
-            }
-
             // Set the OpenGL pipeline for this pass as the current active pipeline
-            glUseProgram(openglContext->getPassID());
+            glUseProgram(openglContext.getPassID());
         }
     };
 }

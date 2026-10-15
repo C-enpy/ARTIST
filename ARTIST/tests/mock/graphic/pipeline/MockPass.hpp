@@ -19,23 +19,23 @@ namespace artist::mock::graphic::pipeline::opengl
     class MockPass : public pipeline::IPass<API>
     {
     public:
-        MockPass() : pipeline::IPass<API>({})
+        MockPass() : pipeline::IPass<API>(std::vector<std::unique_ptr<pipeline::IShader<API>>>())
         {
         }
 
         MOCK_METHOD(void, use, (), (override));
         MOCK_METHOD(void, load, (), (override));
+        MOCK_METHOD(void, free, (), (override));
 
         MOCK_METHOD((const std::unordered_map<std::string, std::shared_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> &), getUniforms, (), (const, override));
-        MOCK_METHOD((const std::vector<std::shared_ptr<pipeline::IShader<API>>> &), getShaders, (), (const, override));
+        MOCK_METHOD(pipeline::IShader<API> &, getShader, (const int &), (const, override));
+        MOCK_METHOD(int, getShadersCount, (), (const, override));
 
     protected:
-        MOCK_METHOD(void, readUniforms, (std::shared_ptr<typename API::PassContext> context), (override));
-        MOCK_METHOD(void, readAttributes, (std::shared_ptr<typename API::PassContext> context), (override));
-        MOCK_METHOD(void, free, (std::shared_ptr<typename API::PassContext> context), (override));
-        MOCK_METHOD(void, use, (std::shared_ptr<typename API::PassContext> context), (override));
-        MOCK_METHOD(void, load, (std::shared_ptr<typename API::PassContext> context), (override));
-
-        MOCK_METHOD((std::shared_ptr<pipeline::IPass<API>>), shared, (), (const, override));
+        MOCK_METHOD(void, readUniforms, (typename API::PassContext &), (override));
+        MOCK_METHOD(void, readAttributes, (typename API::PassContext &), (override));
+        MOCK_METHOD(void, free, (typename API::PassContext &), (override));
+        MOCK_METHOD(void, use, (typename API::PassContext &), (override));
+        MOCK_METHOD(void, load, (typename API::PassContext &), (override));
     };
-}
+} // namespace artist::mock::graphic::pipeline::opengl

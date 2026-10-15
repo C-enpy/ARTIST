@@ -36,8 +36,8 @@ TEST_F(ShaderTest, CreateShaderVert)
     ASSERT_NO_THROW(shader.load());
 
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderID(), 1);
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::VERTEX);
+    EXPECT_EQ(shader.getContext().getShaderID(), 1);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::VERTEX);
 
     shader.free();
 }
@@ -52,7 +52,7 @@ TEST_F(ShaderTest, CreateShaderBadVert)
                         { shader.load(); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::VERTEX);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::VERTEX);
 
     shader.free();
 }
@@ -66,8 +66,8 @@ TEST_F(ShaderTest, CreateShaderFrag)
     ASSERT_NO_THROW(shader.load());
 
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderID(), 1);
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::FRAGMENT);
+    EXPECT_EQ(shader.getContext().getShaderID(), 1);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::FRAGMENT);
 
     shader.free();
 }
@@ -82,7 +82,7 @@ TEST_F(ShaderTest, CreateShaderBadFrag)
                         { shader.load(); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::FRAGMENT);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::FRAGMENT);
 
     shader.free();
 }
@@ -96,8 +96,8 @@ TEST_F(ShaderTest, CreateShaderGeom)
     ASSERT_NO_THROW(shader.load());
 
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderID(), 1);
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::GEOMETRY);
+    EXPECT_EQ(shader.getContext().getShaderID(), 1);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::GEOMETRY);
 
     shader.free();
 }
@@ -112,7 +112,7 @@ TEST_F(ShaderTest, CreateShaderBadGeom)
                         { shader.load(); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::GEOMETRY);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::GEOMETRY);
 
     shader.free();
 }
@@ -126,8 +126,8 @@ TEST_F(ShaderTest, CreateShaderTesselaionControl)
     ASSERT_NO_THROW(shader.load());
 
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderID(), 1);
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::TESS_CONTROL);
+    EXPECT_EQ(shader.getContext().getShaderID(), 1);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::TESS_CONTROL);
 
     shader.free();
 }
@@ -142,7 +142,7 @@ TEST_F(ShaderTest, CreateShaderBadTesselaionControl)
                         { shader.load(); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::TESS_CONTROL);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::TESS_CONTROL);
 
     shader.free();
 }
@@ -156,8 +156,8 @@ TEST_F(ShaderTest, CreateShaderCompute)
     ASSERT_NO_THROW(shader.load());
 
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderID(), 1);
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::COMPUTE);
+    EXPECT_EQ(shader.getContext().getShaderID(), 1);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::COMPUTE);
 
     shader.free();
 }
@@ -172,7 +172,7 @@ TEST_F(ShaderTest, CreateShaderBadCompute)
                         { shader.load(); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
     // Assert
-    EXPECT_EQ(shader.getContext()->getShaderType(), context::ShaderType::COMPUTE);
+    EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::COMPUTE);
 
     shader.free();
 }

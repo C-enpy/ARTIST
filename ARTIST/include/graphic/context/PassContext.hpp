@@ -28,12 +28,16 @@ namespace artist::graphic::context
         virtual ~PassContext() = default;
 
         /**
-         * @brief Add a shader to the pass.
-         * @param shader Shader to add.
+         * @brief Take unique ownership of a shader in the pass.
+         * @param shader Shader to own.
          */
-        void addShader(std::shared_ptr<pipeline::IShader<API>> shader)
+        void addShader(std::unique_ptr<pipeline::IShader<API>> shader)
         {
-            m_shaders.push_back(shader);
+            if (!shader)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::PASS::NULL_SHADER");
+            }
+            m_shaders.push_back(std::move(shader));
         }
 
         /*
@@ -59,13 +63,13 @@ namespace artist::graphic::context
         }
 
         /**
-         * @brief Get the shader at the given index.
+         * @brief Borrow the shader at the given index.
          * @param index Index of the shader to get.
-         * @return Shader at the given index.
+         * @return Borrowed shader at the given index.
          */
-        [[nodiscard]] std::shared_ptr<pipeline::IShader<API>> getShader(const int &index) const
+        [[nodiscard]] pipeline::IShader<API> &getShader(const int &index) const
         {
-            return m_shaders[index];
+            return *m_shaders[index];
         }
 
         /**
@@ -106,10 +110,10 @@ namespace artist::graphic::context
         }
 
         /**
-         * @brief Get the shaders in the pass.
-         * @return Shaders in the pass.
+         * @brief Borrow the shaders in the pass.
+         * @return Shaders in the pass, in registration order.
          */
-        [[nodiscard]] const std::vector<std::shared_ptr<pipeline::IShader<API>>> &getShaders() const
+        [[nodiscard]] const std::vector<std::unique_ptr<pipeline::IShader<API>>> &getShaders() const
         {
             return m_shaders;
         }
@@ -133,7 +137,7 @@ namespace artist::graphic::context
         }
 
     private:
-        std::vector<std::shared_ptr<pipeline::IShader<API>>> m_shaders;
+        std::vector<std::unique_ptr<pipeline::IShader<API>>> m_shaders;
         std::unordered_map<std::string, std::shared_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_uniforms;
         std::unordered_map<std::string, std::shared_ptr<pipeline::IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_attributes;
     };

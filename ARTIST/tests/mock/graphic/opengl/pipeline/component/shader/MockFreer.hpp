@@ -1,3 +1,5 @@
+// file: Freer.hpp
+
 #pragma once
 
 #include <memory>
@@ -11,22 +13,22 @@ namespace artist::mock::graphic::opengl::pipeline::component::shader
     class MockFreer
     {
     public:
-        static std::shared_ptr<MockFreer<PROFILE>> instance()
+        static MockFreer<PROFILE> &instance()
         {
-            static auto instance = std::make_shared<MockFreer<PROFILE>>();
+            static MockFreer<PROFILE> instance;
             return instance;
         }
 
         static void reset()
         {
-            ::testing::Mock::VerifyAndClearExpectations(instance().get());
+            ::testing::Mock::VerifyAndClearExpectations(&instance());
         }
 
-        static void on(std::shared_ptr<graphic::api::MockOpenGL::ShaderContext> openglContext)
+        static void on(typename graphic::api::MockOpenGL::ShaderContext &openglContext)
         {
-            instance()->mockOn(openglContext);
+            instance().mockOn(openglContext);
         }
 
-        MOCK_METHOD(void, mockOn, (std::shared_ptr<graphic::api::MockOpenGL::ShaderContext> context), ());
+        MOCK_METHOD(void, mockOn, (typename graphic::api::MockOpenGL::ShaderContext & context), ());
     };
-}
+} // namespace artist::mock::graphic::opengl::pipeline::component::shader

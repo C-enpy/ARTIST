@@ -1,4 +1,7 @@
 #include <gtest/gtest.h>
+#include <memory>
+#include <utility>
+#include <vector>
 #include <graphic/pipeline/Pass.hpp>
 
 #include <graphic/opengl/profile/Pass.hpp>
@@ -29,30 +32,43 @@ namespace context = artist::graphic::context;
 namespace pipeline = artist::graphic::pipeline;
 namespace profile = artist::graphic::opengl::profile;
 
+namespace
+{
+    /// Builds a pass taking unique ownership of freshly created shaders.
+    auto makeClassicPass(std::unique_ptr<pipeline::IShader<api::OpenGL>> vertexShader,
+                         std::unique_ptr<pipeline::IShader<api::OpenGL>> fragmentShader)
+    {
+        std::vector<std::unique_ptr<pipeline::IShader<api::OpenGL>>> shaders;
+        shaders.push_back(std::move(vertexShader));
+        shaders.push_back(std::move(fragmentShader));
+        return pipeline::Pass<api::OpenGL, profile::Pass::Classic>(std::move(shaders));
+    }
+}
+
 class PassTest : public OpenGLComponentTest
 {
 protected:
-    std::shared_ptr<pipeline::IShader<api::OpenGL>> vertexShader;
-    std::shared_ptr<pipeline::IShader<api::OpenGL>> fragmentShader;
+    std::unique_ptr<pipeline::IShader<api::OpenGL>> vertexShader;
+    std::unique_ptr<pipeline::IShader<api::OpenGL>> fragmentShader;
 
     void SetUp() override
     {
         // print current working directory
         std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
         OpenGLComponentTest::SetUp();
-        vertexShader = std::make_shared<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/vertex/good/minimal.vert", context::ShaderType::VERTEX);
-        fragmentShader = std::make_shared<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/fragment/good/minimal.frag", context::ShaderType::FRAGMENT);
+        vertexShader = std::make_unique<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/vertex/good/minimal.vert", context::ShaderType::VERTEX);
+        fragmentShader = std::make_unique<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/fragment/good/minimal.frag", context::ShaderType::FRAGMENT);
     }
 };
 
 TEST_F(PassTest, PassCreationTest)
 {
-    ASSERT_NO_THROW((pipeline::Pass<api::OpenGL, profile::Pass::Classic>({vertexShader, fragmentShader})));
+    ASSERT_NO_THROW(makeClassicPass(std::move(vertexShader), std::move(fragmentShader)));
 }
 
 TEST_F(PassTest, UniformManagementTest)
 {
-    pipeline::Pass<api::OpenGL, profile::Pass::Classic> pass({vertexShader, fragmentShader});
+    auto pass = makeClassicPass(std::move(vertexShader), std::move(fragmentShader));
     pass.load();
 
     float testValue = 5.0f;
@@ -68,28 +84,24 @@ TEST_F(PassTest, UniformManagementTest)
 
 TEST_F(PassTest, InvalidUniformTest)
 {
-    pipeline::Pass<api::OpenGL, profile::Pass::Classic> pass({vertexShader, fragmentShader});
+    auto pass = makeClassicPass(std::move(vertexShader), std::move(fragmentShader));
 
     EXPECT_THROW(pass.withUniform("nonExistentUniform", 5), artist::common::exception::TraceableException<std::runtime_error>);
 }
 
 TEST_F(PassTest, ShaderAttachmentTest)
 {
-    pipeline::Pass<api::OpenGL, profile::Pass::Classic> pass({vertexShader, fragmentShader});
-
     // Since on is protected, we assume its correctness through the absence of exceptions during Pass creation
-    ASSERT_NO_THROW((pipeline::Pass<api::OpenGL, profile::Pass::Classic>({vertexShader, fragmentShader})));
+    ASSERT_NO_THROW(makeClassicPass(std::move(vertexShader), std::move(fragmentShader)));
 }
 
 TEST_F(PassTest, UniformReadingTest)
 {
-    pipeline::Pass<api::OpenGL, profile::Pass::Classic> pass({vertexShader, fragmentShader});
+    auto pass = makeClassicPass(std::move(vertexShader), std::move(fragmentShader));
     pass.load();
     const auto &uniforms = pass.getUniforms();
     // Assuming the shaders have at least one uniform
     ASSERT_FALSE(uniforms.empty());
-    // Further checks can be added here based on specific uniforms expected in the shaders
-    // For example, we could check if the uniform is a int named "testUniform"
     ASSERT_TRUE(uniforms.contains("testUniform"));
     auto uniform = uniforms.at("testUniform");
     ASSERT_NE(uniform, nullptr);
@@ -99,13 +111,11 @@ TEST_F(PassTest, UniformReadingTest)
 
 TEST_F(PassTest, AttributeReadingTest)
 {
-    pipeline::Pass<api::OpenGL, profile::Pass::Classic> pass({vertexShader, fragmentShader});
+    auto pass = makeClassicPass(std::move(vertexShader), std::move(fragmentShader));
     pass.load();
     const auto &attributes = pass.getAttributes();
     // Assuming the shaders have at least one attribute
     ASSERT_FALSE(attributes.empty());
-    // Further checks can be added here based on specific attributes expected in the shaders
-    // For example, we could check if the attribute is a vec3 named "aPos"
     ASSERT_TRUE(attributes.contains("aPos"));
     auto attribute = attributes.at("aPos");
     ASSERT_NE(attribute, nullptr);
@@ -117,7 +127,7 @@ TEST_F(PassTest, FreeResourcesTest)
 {
     // This test assumes that freeing resources does not cause any observable side effects that can be checked.
     // As such, we are limited to testing for the absence of exceptions.
-    auto pass = new pipeline::Pass<api::OpenGL, profile::Pass::Classic>({vertexShader, fragmentShader});
+    auto pass = std::make_unique<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(makeClassicPass(std::move(vertexShader), std::move(fragmentShader)));
 
-    ASSERT_NO_THROW(delete pass);
+    ASSERT_NO_THROW(pass.reset());
 }

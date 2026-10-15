@@ -12,3 +12,20 @@ html/
 *.gcno
 
 code.txt
+
+# Local build databases and OpenCode working evidence
+build/
+compile_commands.json
+CMakeUserPresets.json
+.opencode/evidence/*
+!.opencode/evidence/README.md
+
+# Local wiki paths, ingestion ledger and Obsidian workspace state
+.env
+docs/.manifest.json
+docs/.obsidian/*
+!docs/.obsidian/app.json
+!docs/.obsidian/core-plugins.json
+
+# Local Electron/Obsidian launcher diagnostics
+/debug.log

@@ -21,20 +21,20 @@ namespace artist::graphic::opengl::validator
 {
 
     using artist::graphic::validator::HasComponent;
-    using artist::graphic::validator::HasOnMethod;
+    using artist::graphic::validator::HasBorrowedOnMethod;
 
     template <typename API, auto PROFILE>
     concept OpenGLPassFlow = requires {
-        requires HasComponent<typename API::PassContext::Loader<PROFILE>>;
-        requires HasComponent<typename API::PassContext::Freer<PROFILE>>;
-        requires HasComponent<typename API::PassContext::ShaderAttacher<PROFILE>>;
-        requires HasComponent<typename API::PassContext::AttributeReader<PROFILE>>;
-        requires HasComponent<typename API::PassContext::User<PROFILE>>;
+        requires HasComponent<typename API::PassContext::template Loader<PROFILE>>;
+        requires HasComponent<typename API::PassContext::template Freer<PROFILE>>;
+        requires HasComponent<typename API::PassContext::template ShaderAttacher<PROFILE>>;
+        requires HasComponent<typename API::PassContext::template AttributeReader<PROFILE>>;
+        requires HasComponent<typename API::PassContext::template User<PROFILE>>;
 
-        requires HasOnMethod<typename API::PassContext::Loader<PROFILE>, typename API::PassContext>;
-        requires HasOnMethod<typename API::PassContext::Freer<PROFILE>, typename API::PassContext>;
-        requires HasOnMethod<typename API::PassContext::ShaderAttacher<PROFILE>, typename API::PassContext>;
-        requires HasOnMethod<typename API::PassContext::AttributeReader<PROFILE>, typename API::PassContext>;
-        requires HasOnMethod<typename API::PassContext::User<PROFILE>, typename API::PassContext>;
+        requires HasBorrowedOnMethod<typename API::PassContext::template Loader<PROFILE>, typename API::PassContext>;
+        requires HasBorrowedOnMethod<typename API::PassContext::template Freer<PROFILE>, typename API::PassContext>;
+        requires HasBorrowedOnMethod<typename API::PassContext::template ShaderAttacher<PROFILE>, typename API::PassContext>;
+        requires HasBorrowedOnMethod<typename API::PassContext::template AttributeReader<PROFILE>, typename API::PassContext>;
+        requires HasBorrowedOnMethod<typename API::PassContext::template User<PROFILE>, typename API::PassContext>;
     };
 }

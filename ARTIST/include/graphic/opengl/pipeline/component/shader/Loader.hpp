@@ -28,11 +28,20 @@ namespace artist::graphic::opengl::pipeline::component::shader
     class OpenGLShaderLoader<graphic::opengl::profile::Shader::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::ShaderContext> openglContext)
+        static void on(typename graphic::api::OpenGL::ShaderContext &openglContext)
         {
+            // Ownership contract (ADR-0003, reload variant B): after a
+            // successful load the handle belongs to the context until an
+            // explicit free(). Reject reload without free before any
+            // creation so the context stays untouched on rejection.
+            if (openglContext.getShaderID() != 0)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::RELOAD_WITHOUT_FREE\nFree the shader before compiling again.");
+            }
+
             // Create a shader object
-            GLuint shaderID = glCreateShader(openglContext->getGLShaderType());
-            const char *shaderCodeCStr = openglContext->getShaderCode().c_str();
+            GLuint shaderID = glCreateShader(openglContext.getGLShaderType());
+            const char *shaderCodeCStr = openglContext.getShaderCode().c_str();
             glShaderSource(shaderID, 1, &shaderCodeCStr, nullptr);
             glCompileShader(shaderID);
 
@@ -44,7 +53,7 @@ namespace artist::graphic::opengl::pipeline::component::shader
             }
 
             // Store the shader ID in the OpenGL context
-            openglContext->setShaderID(shaderID);
+            openglContext.setShaderID(shaderID);
         }
 
     private:

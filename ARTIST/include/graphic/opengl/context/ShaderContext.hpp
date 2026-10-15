@@ -77,7 +77,7 @@ namespace artist::graphic
             }
 
         private:
-            GLuint m_shaderID; ///< OpenGL shader ID
+            GLuint m_shaderID = 0; ///< OpenGL shader ID — 0 means "no handle"
         };
     }
 }

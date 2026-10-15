@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace artist::graphic::context
 {
     enum class ShaderType

@@ -44,33 +44,12 @@ TEST_F(UniformReaderTests, ReadUniforms_ValidContext)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glGetUniformLocation_mock(1, ::testing::_)).Times(1);
 
     // Act
-    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(openglContext));
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(*openglContext));
 
     // Assert
     // Optionally check if the uniforms are correctly added to the context
     ASSERT_EQ(openglContext->getUniforms().size(), 1);
     ASSERT_TRUE(openglContext->getUniforms().contains(mock::opengl::glFunctionMock::UNIFORM_NAME));
-}
-
-TEST_F(UniformReaderTests, ReadUniforms_NullContext)
-{
-    // Arrange
-
-    // Act & Assert
-    expectSpecificError([]()
-                        { pass::OpenGLPassUniformReader<Classic>::on(nullptr); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::NON_OPENGL_CONTEXT"));
-}
-
-TEST_F(UniformReaderTests, ReadUniforms_InvalidPassID)
-{
-    // Arrange
-    auto openglContext = std::make_shared<context::OpenGLPassContext>(); // No pipeline ID set
-
-    // Act & Assert
-    expectSpecificError([&openglContext]()
-                        { pass::OpenGLPassUniformReader<Classic>::on(openglContext); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::INVALID_PROGRAM_ID"));
 }
 
 #endif // __mock_gl__

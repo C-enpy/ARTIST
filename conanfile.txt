@@ -6,5 +6,6 @@ opengl/system
 magic_enum/0.9.5
 
 [generators]
-cmake
+CMakeDeps
+CMakeToolchain
 

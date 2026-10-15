@@ -41,7 +41,7 @@ void main()
 )";
 
     // Act
-    shader::OpenGLShaderReader<Classic>::on(context);
+    shader::OpenGLShaderReader<Classic>::on(*context);
 
     // Assert
     ASSERT_EQ(context->getShaderCode(), code);

@@ -32,6 +32,18 @@ namespace context = artist::graphic::context;
 namespace pipeline = artist::graphic::pipeline;
 namespace profile = artist::graphic::opengl::profile;
 
+namespace
+{
+    /// Builds a classic pass owning its freshly created shaders.
+    auto makeClassicPass()
+    {
+        std::vector<std::unique_ptr<pipeline::IShader<api::OpenGL>>> shaders;
+        shaders.push_back(std::make_unique<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/vertex/good/minimal.vert", context::ShaderType::VERTEX));
+        shaders.push_back(std::make_unique<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/fragment/good/minimal.frag", context::ShaderType::FRAGMENT));
+        return pipeline::Pass<api::OpenGL, profile::Pass::Classic>(std::move(shaders));
+    }
+}
+
 class PipelineTest : public OpenGLComponentTest
 {
 protected:
@@ -42,10 +54,8 @@ protected:
     {
         OpenGLComponentTest::SetUp();
         // Initialize Passes with valid shaders
-        auto vertexShader = std::make_shared<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/vertex/good/minimal.vert", context::ShaderType::VERTEX);
-        auto fragmentShader = std::make_shared<pipeline::Shader<api::OpenGL, profile::Shader::Classic>>("test-datas/shaders/fragment/good/minimal.frag", context::ShaderType::FRAGMENT);
-        pass1 = std::shared_ptr<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(new pipeline::Pass<api::OpenGL, profile::Pass::Classic>({vertexShader, fragmentShader}));
-        pass2 = std::shared_ptr<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(new pipeline::Pass<api::OpenGL, profile::Pass::Classic>({vertexShader, fragmentShader}));
+        pass1 = std::make_shared<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(makeClassicPass());
+        pass2 = std::make_shared<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(makeClassicPass());
     }
 };
 

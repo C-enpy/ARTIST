@@ -85,7 +85,7 @@ namespace artist::graphic::pipeline
         {
             m_context->template setValue<T>(value);
 
-            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::Setter<std::shared_ptr<int>>>)
+            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Setter<std::shared_ptr<int>>>)
             {
                 API::AttributeContext::template Setter<std::shared_ptr<int>>::on(m_context);
             }
@@ -149,7 +149,7 @@ namespace artist::graphic::pipeline
     protected:
         void bind(std::shared_ptr<typename API::AttributeContext> context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::Binder<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Binder<PROFILE>>)
             {
                 API::AttributeContext::template Binder<PROFILE>::on(context);
             }
@@ -157,7 +157,7 @@ namespace artist::graphic::pipeline
 
         void unbind(std::shared_ptr<typename API::AttributeContext> context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::Unbinder<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Unbinder<PROFILE>>)
             {
                 API::AttributeContext::template Unbinder<PROFILE>::on(context);
             }

@@ -1,9 +1,8 @@
 #!/bin/bash
 
-cd ./build/ARTIST/tests/CMakeFiles/artist_tests.dir/src
-lcov --directory . --capture --output-file coverage.info
-lcov --remove coverage.info '/usr/*' --output-file coverage.info
-lcov --remove coverage.info '*conan*' --output-file coverage.info
-lcov --remove coverage.info '*test*' --output-file coverage.info
-lcov --list coverage.info 
-#genhtml coverage.info --output-directory out
+set -euo pipefail
+build_dir="${1:-build}"
+lcov --directory "$build_dir" --capture --output-file "$build_dir/coverage.info"
+lcov --remove "$build_dir/coverage.info" '/usr/*' '*conan*' '*/_deps/*' '*test*' \
+    --output-file "$build_dir/coverage.info"
+lcov --list "$build_dir/coverage.info"

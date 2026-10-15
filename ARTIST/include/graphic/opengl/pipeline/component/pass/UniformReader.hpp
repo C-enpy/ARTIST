@@ -6,6 +6,10 @@
 #include <graphic/opengl/context/PassContext.hpp>
 #include <common/exception/TraceableException.hpp>
 #include <graphic/opengl/profile/Pass.hpp>
+// The reader instantiates `Uniform<API>` whose requires-clauses validate the
+// uniform setter; keep the reader self-contained.
+#include <graphic/pipeline/Uniform.hpp>
+#include <graphic/opengl/pipeline/component/uniform/Setter.hpp>
 
 namespace artist::graphic::opengl::pipeline::component::pass
 {
@@ -25,14 +29,9 @@ namespace artist::graphic::opengl::pipeline::component::pass
     class OpenGLPassUniformReader<graphic::opengl::profile::Pass::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::PassContext> openglContext)
+        static void on(typename graphic::api::OpenGL::PassContext &openglContext)
         {
-            if (!openglContext)
-            {
-                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::NON_OPENGL_CONTEXT");
-            }
-
-            GLuint passID = openglContext->getPassID();
+            GLuint passID = openglContext.getPassID();
             if (passID == 0)
             {
                 throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::INVALID_PROGRAM_ID");
@@ -57,7 +56,7 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 uniformContext->setGLType(type);
                 // Known limitation of OpenGL: Uniforms profile are driven by Pass profile
                 auto uniform = std::make_shared<graphic::pipeline::Uniform<graphic::api::OpenGL>>(uniformContext);
-                openglContext->addUniform(std::string(uniformName), uniform);
+                openglContext.addUniform(std::string(uniformName), uniform);
             }
         }
     };

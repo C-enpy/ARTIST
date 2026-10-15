@@ -15,7 +15,6 @@
 namespace context = artist::graphic::opengl::context;
 namespace pass = artist::graphic::opengl::pipeline::component::pass;
 namespace mock = artist::mock;
-namespace shader = mock::graphic::pipeline;
 using MockShader = artist::mock::graphic::pipeline::MockShader<artist::graphic::api::OpenGL>;
 using artist::graphic::opengl::profile::Pass::Classic;
 using artist::test::utils::expectSpecificError;
@@ -23,59 +22,51 @@ using artist::test::utils::expectSpecificError;
 class ShaderAttacherTests : public ::testing::Test
 {
 protected:
+    void SetUp() override
+    {
+        openglContext = std::make_shared<context::OpenGLPassContext>();
+    }
+
     void TearDown() override
     {
         mock::opengl::glFunctionMock::reset();
     }
+
+    std::shared_ptr<context::OpenGLPassContext> openglContext;
 };
 
 TEST_F(ShaderAttacherTests, AttachShaders_ValidContext)
 {
     // Arrange
-    auto openglContext = std::make_shared<context::OpenGLPassContext>();
-    auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
-    auto shader = std::make_shared<MockShader>();
-    openglContext->setPassID(1);      // Set a valid pipeline ID
-    openglContext->addShader(shader); // Add a mock shader
-    shaderContext->setShaderID(42);   // Set a mock shader ID
+    auto shader = std::make_unique<MockShader>();
+    openglContext->setPassID(1); // Set a valid pipeline ID
+    shader->getContext().setShaderID(42); // Set a mock shader ID in the shader's own context
+    openglContext->addShader(std::move(shader));
 
     // Expect calls for valid context
-    EXPECT_CALL(*shader, getContext()).WillRepeatedly(::testing::ReturnRef(shaderContext));
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glAttachShader_mock(1, 42)).Times(1);
 
     // Act & Assert
-    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(openglContext));
-}
-
-TEST_F(ShaderAttacherTests, AttachShaders_NullContext)
-{
-    // Arrange
-
-    // Act & Assert
-    expectSpecificError([]()
-                        { pass::OpenGLShaderAttacher<Classic>::on(nullptr); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::NON_OPENGL_CONTEXT"));
+    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(*openglContext));
 }
 
 TEST_F(ShaderAttacherTests, AttachShaders_InvalidPassID)
 {
-    // Arrange
-    auto openglContext = std::make_shared<context::OpenGLPassContext>(); // No pipeline ID set
+    // Arrange: no pipeline ID set
 
     // Act & Assert
-    expectSpecificError([&openglContext]()
-                        { pass::OpenGLShaderAttacher<Classic>::on(openglContext); },
+    expectSpecificError([&openglContext = openglContext]()
+                        { pass::OpenGLShaderAttacher<Classic>::on(*openglContext); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::INVALID_PROGRAM_ID"));
 }
 
 TEST_F(ShaderAttacherTests, AttachShaders_NoShaders)
 {
     // Arrange
-    auto openglContext = std::make_shared<context::OpenGLPassContext>();
     openglContext->setPassID(1); // Set a valid pipeline ID
 
     // Act & Assert
-    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(openglContext));
+    ASSERT_NO_THROW(pass::OpenGLShaderAttacher<Classic>::on(*openglContext));
 }
 
 #endif // __mock_gl__

@@ -20,16 +20,16 @@
 namespace artist::graphic::opengl::validator
 {
     using artist::graphic::validator::HasComponent;
-    using artist::graphic::validator::HasOnMethod;
+    using artist::graphic::validator::HasBorrowedOnMethod;
 
     template <typename API, auto PROFILE>
     concept OpenGLShaderFlow = requires {
-        requires HasComponent<typename API::ShaderContext::Loader<PROFILE>>;
-        requires HasComponent<typename API::ShaderContext::Freer<PROFILE>>;
-        requires HasComponent<typename API::ShaderContext::Reader<PROFILE>>;
+        requires HasComponent<typename API::ShaderContext::template Loader<PROFILE>>;
+        requires HasComponent<typename API::ShaderContext::template Freer<PROFILE>>;
+        requires HasComponent<typename API::ShaderContext::template Reader<PROFILE>>;
 
-        requires HasOnMethod<typename API::ShaderContext::Loader<PROFILE>, typename API::ShaderContext>;
-        requires HasOnMethod<typename API::ShaderContext::Freer<PROFILE>, typename API::ShaderContext>;
-        requires HasOnMethod<typename API::ShaderContext::Reader<PROFILE>, typename API::ShaderContext>;
+        requires HasBorrowedOnMethod<typename API::ShaderContext::template Loader<PROFILE>, typename API::ShaderContext>;
+        requires HasBorrowedOnMethod<typename API::ShaderContext::template Freer<PROFILE>, typename API::ShaderContext>;
+        requires HasBorrowedOnMethod<typename API::ShaderContext::template Reader<PROFILE>, typename API::ShaderContext>;
     };
 }

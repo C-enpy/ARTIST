@@ -18,11 +18,11 @@ using artist::graphic::opengl::profile::Pipeline::Classic;
 using artist::mock::graphic::pipeline::opengl::MockPass;
 using artist::test::utils::expectSpecificError;
 
-class UserTests : public ::testing::Test
+class PipelineUserTests : public ::testing::Test
 {
 };
 
-TEST_F(UserTests, useProgram_ValidContext)
+TEST_F(PipelineUserTests, useProgram_ValidContext)
 {
     // Arrange
     auto context = std::make_shared<context::OpenGLPipelineContext>();
@@ -37,7 +37,7 @@ TEST_F(UserTests, useProgram_ValidContext)
     OpenGLPipelineUser<Classic>::on(context);
 }
 
-TEST_F(UserTests, useProgram_NullContext)
+TEST_F(PipelineUserTests, useProgram_NullContext)
 {
     // Arrange
     // Act & Assert

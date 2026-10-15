@@ -28,6 +28,11 @@
 
 namespace artist::graphic::pipeline
 {
+    // Naming this constraint also supports dependent base-class specializations
+    // on MSVC without changing the validator's boolean contract.
+    template <typename API>
+    concept ValidUniformApi = API::Validator::template validateUniform<API>();
+
     /**
      * @class Uniform
      * @brief Template class for shader uniform management in various graphics APIs.
@@ -40,7 +45,7 @@ namespace artist::graphic::pipeline
      * @tparam API The graphics API context, influencing the implementation of uniform variable management.
      */
     template <typename API>
-        requires(API::Validator::template validateUniform<API>())
+        requires ValidUniformApi<API>
     class Uniform
     {
     public:

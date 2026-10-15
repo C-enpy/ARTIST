@@ -21,12 +21,11 @@ namespace artist::mock::graphic::pipeline
 
         MOCK_METHOD(void, free, (), (override));
         MOCK_METHOD(void, load, (), (override));
-        MOCK_METHOD(const std::shared_ptr<typename API::ShaderContext> &, getContext, (), (const, override));
 
     protected:
-        MOCK_METHOD(void, load, (std::shared_ptr<typename API::ShaderContext>), (override));
-        MOCK_METHOD(void, free, (std::shared_ptr<typename API::ShaderContext>), (override));
-        MOCK_METHOD(void, read, (std::shared_ptr<typename API::ShaderContext>), (override));
+        MOCK_METHOD(void, load, (typename API::ShaderContext &), (override));
+        MOCK_METHOD(void, free, (typename API::ShaderContext &), (override));
+        MOCK_METHOD(void, read, (typename API::ShaderContext &), (override));
     };
 
-}
+} // namespace artist::mock::graphic::pipeline

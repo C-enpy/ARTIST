@@ -33,22 +33,17 @@ namespace artist::graphic::opengl::pipeline::component::pass
          * and attaches each shader to the OpenGL pipeline. If the context casting fails
          * or if any shader context is invalid, an exception is thrown.
          */
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::PassContext> openglContext)
+        static void on(typename graphic::api::OpenGL::PassContext &openglContext)
         {
-            if (!openglContext)
-            {
-                throw common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::NON_OPENGL_CONTEXT");
-            }
-
-            GLuint passID = openglContext->getPassID();
+            GLuint passID = openglContext.getPassID();
             if (passID == 0)
             {
                 throw common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::INVALID_PROGRAM_ID");
             }
 
-            for (const auto &shader : openglContext->getShaders())
+            for (const auto &shader : openglContext.getShaders())
             {
-                glAttachShader(passID, shader->getContext()->getShaderID());
+                glAttachShader(passID, shader->getContext().getShaderID());
             }
         }
     };

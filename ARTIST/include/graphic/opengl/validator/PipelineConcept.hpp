@@ -24,10 +24,10 @@ namespace artist::graphic::opengl::validator
 
     template <typename API, auto PROFILE>
     concept OpenGLPipelineFlow = requires {
-        requires HasComponent<typename API::PipelineContext::Resetter<PROFILE>>;
-        requires HasComponent<typename API::PipelineContext::User<PROFILE>>;
+        requires HasComponent<typename API::PipelineContext::template Resetter<PROFILE>>;
+        requires HasComponent<typename API::PipelineContext::template User<PROFILE>>;
 
-        requires HasOnMethod<typename API::PipelineContext::Resetter<PROFILE>, typename API::PipelineContext>;
-        requires HasOnMethod<typename API::PipelineContext::User<PROFILE>, typename API::PipelineContext>;
+        requires HasOnMethod<typename API::PipelineContext::template Resetter<PROFILE>, typename API::PipelineContext>;
+        requires HasOnMethod<typename API::PipelineContext::template User<PROFILE>, typename API::PipelineContext>;
     };
 }

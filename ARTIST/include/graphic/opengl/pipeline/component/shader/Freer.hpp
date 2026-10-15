@@ -26,14 +26,13 @@ namespace artist::graphic::opengl::pipeline::component::shader
     class OpenGLShaderFreer<graphic::opengl::profile::Shader::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::ShaderContext> openglContext)
+        static void on(typename graphic::api::OpenGL::ShaderContext &openglContext)
         {
-            GLuint shaderID = openglContext->getShaderID();
-
+            GLuint shaderID = openglContext.getShaderID();
             if (shaderID != 0)
             {
                 glDeleteShader(shaderID);
-                openglContext->setShaderID(0); // Reset the shader ID in the context
+                openglContext.setShaderID(0); // Reset the shader ID in the context
             }
         }
     };

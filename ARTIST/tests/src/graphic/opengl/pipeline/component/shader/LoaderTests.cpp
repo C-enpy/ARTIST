@@ -17,7 +17,7 @@ namespace shader = artist::graphic::opengl::pipeline::component::shader;
 using artist::graphic::opengl::profile::Shader::Classic;
 using artist::test::utils::expectSpecificError;
 
-class LoaderTests : public ::testing::Test
+class ShaderLoaderTests : public ::testing::Test
 {
 public:
     void TearDown() override
@@ -26,7 +26,7 @@ public:
     }
 };
 
-TEST_F(LoaderTests, LoadShaderTest_callCreate)
+TEST_F(ShaderLoaderTests, LoadShaderTest_callCreate)
 {
     // Arrange
     auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
@@ -36,12 +36,12 @@ TEST_F(LoaderTests, LoadShaderTest_callCreate)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glCreateShader_mock(GL_VERTEX_SHADER)).Times(1);
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(*shaderContext));
 
     // Assert
 }
 
-TEST_F(LoaderTests, LoadShaderTest_callShaderSource)
+TEST_F(ShaderLoaderTests, LoadShaderTest_callShaderSource)
 {
     // Arrange
     auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
@@ -51,12 +51,12 @@ TEST_F(LoaderTests, LoadShaderTest_callShaderSource)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glShaderSource_mock(1, 1, ::testing::_, ::testing::_)).Times(1);
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(*shaderContext));
 
     // Assert
 }
 
-TEST_F(LoaderTests, LoadShaderTest_callCompile)
+TEST_F(ShaderLoaderTests, LoadShaderTest_callCompile)
 {
     // Arrange
     auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
@@ -66,12 +66,12 @@ TEST_F(LoaderTests, LoadShaderTest_callCompile)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glCompileShader_mock(1)).Times(1);
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(*shaderContext));
 
     // Assert
 }
 
-TEST_F(LoaderTests, LoadShaderTest_callGetIv)
+TEST_F(ShaderLoaderTests, LoadShaderTest_callGetIv)
 {
     // Arrange
     auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
@@ -81,12 +81,12 @@ TEST_F(LoaderTests, LoadShaderTest_callGetIv)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glGetShaderiv_mock(1, ::testing::_, ::testing::_)).Times(1);
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(*shaderContext));
 
     // Assert
 }
 
-TEST_F(LoaderTests, LoadShaderTest_setContextShaderId)
+TEST_F(ShaderLoaderTests, LoadShaderTest_setContextShaderId)
 {
     // Arrange
     auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
@@ -95,13 +95,13 @@ TEST_F(LoaderTests, LoadShaderTest_setContextShaderId)
     // Except calls
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderLoader<Classic>::on(*shaderContext));
 
     // Assert
     ASSERT_EQ(shaderContext->getShaderID(), 1);
 }
 
-TEST_F(LoaderTests, LoadShaderFailureTest)
+TEST_F(ShaderLoaderTests, LoadShaderFailureTest)
 {
     // Arrange
     auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
@@ -118,7 +118,7 @@ TEST_F(LoaderTests, LoadShaderFailureTest)
 
     // Act & Assert
     expectSpecificError([&shaderContext]()
-                        { shader::OpenGLShaderLoader<Classic>::on(shaderContext); },
+                        { shader::OpenGLShaderLoader<Classic>::on(*shaderContext); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
 }
 

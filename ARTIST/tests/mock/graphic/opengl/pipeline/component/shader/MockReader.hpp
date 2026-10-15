@@ -13,22 +13,22 @@ namespace artist::mock::graphic::opengl::pipeline::component::shader
     class MockReader
     {
     public:
-        static std::shared_ptr<MockReader<PROFILE>> instance()
+        static MockReader<PROFILE> &instance()
         {
-            static auto instance = std::make_shared<MockReader<PROFILE>>();
+            static MockReader<PROFILE> instance;
             return instance;
         }
 
         static void reset()
         {
-            ::testing::Mock::VerifyAndClearExpectations(instance().get());
+            ::testing::Mock::VerifyAndClearExpectations(&instance());
         }
 
-        static void on(std::shared_ptr<graphic::api::MockOpenGL::ShaderContext> openglContext)
+        static void on(typename graphic::api::MockOpenGL::ShaderContext &openglContext)
         {
-            instance()->mockOn(openglContext);
+            instance().mockOn(openglContext);
         }
 
-        MOCK_METHOD(void, mockOn, (std::shared_ptr<graphic::api::MockOpenGL::ShaderContext>), ());
+        MOCK_METHOD(void, mockOn, (typename graphic::api::MockOpenGL::ShaderContext &), ());
     };
-}
+} // namespace artist::mock::graphic::opengl::pipeline::component::shader

@@ -11,22 +11,22 @@ namespace artist::mock::graphic::opengl::pipeline::component::pass
     class MockUser
     {
     public:
-        static std::shared_ptr<MockUser<PROFILE>> instance()
+        static MockUser<PROFILE> &instance()
         {
-            static auto instance = std::make_shared<MockUser<PROFILE>>();
+            static MockUser<PROFILE> instance;
             return instance;
         }
 
         static void reset()
         {
-            ::testing::Mock::VerifyAndClearExpectations(instance().get());
+            ::testing::Mock::VerifyAndClearExpectations(&instance());
         }
 
-        static void on(std::shared_ptr<graphic::api::MockOpenGL::PassContext> openglContext)
+        static void on(typename graphic::api::MockOpenGL::PassContext &openglContext)
         {
-            instance()->mockOn(openglContext);
+            instance().mockOn(openglContext);
         }
 
-        MOCK_METHOD(void, mockOn, (std::shared_ptr<graphic::api::MockOpenGL::PassContext>), ());
+        MOCK_METHOD(void, mockOn, (typename graphic::api::MockOpenGL::PassContext &), ());
     };
-}
+} // namespace artist::mock::graphic::opengl::pipeline::component::pass

@@ -93,8 +93,8 @@ namespace artist::mock::opengl
     class glFunctionMock
     {
     public:
-        static constexpr std::string UNIFORM_NAME = "uniform_test";
-        static constexpr std::string ATTRIBUTE_NAME = "attribute_test";
+        static constexpr char UNIFORM_NAME[] = "uniform_test";
+        static constexpr char ATTRIBUTE_NAME[] = "attribute_test";
         static std::shared_ptr<glFunctionMock> instance()
         {
             static std::shared_ptr<glFunctionMock> instance = std::make_shared<glFunctionMock>();
@@ -117,7 +117,7 @@ namespace artist::mock::opengl
             ON_CALL(*this, glGetActiveAttrib_mock).WillByDefault([this](GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)
                                                                  {
                 // Example mock name
-                const char* mockAttribName = ATTRIBUTE_NAME.c_str();
+                const char* mockAttribName = ATTRIBUTE_NAME;
 
                 // Copy the mock name to the provided 'name' buffer
                 strncpy(name, mockAttribName, bufSize);
@@ -136,7 +136,7 @@ namespace artist::mock::opengl
                 .WillByDefault([this](GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name)
                                {
                 // Example mock name
-                const char* mockUniformName = UNIFORM_NAME.c_str();
+                const char* mockUniformName = UNIFORM_NAME;
 
                 // Copy the mock name to the provided 'name' buffer
                 strncpy(name, mockUniformName, bufSize);

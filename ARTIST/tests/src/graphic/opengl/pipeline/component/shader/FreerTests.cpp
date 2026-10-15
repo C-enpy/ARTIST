@@ -34,7 +34,7 @@ TEST_F(FreerTests, FreeShader_freeOnGPU)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glDeleteShader_mock(666)).Times(1);
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderFreer<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderFreer<Classic>::on(*shaderContext));
 
     // Assert
 }
@@ -46,7 +46,7 @@ TEST_F(FreerTests, FreeShader_setShaderIDToZero)
     shaderContext->setShaderID(666);
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderFreer<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderFreer<Classic>::on(*shaderContext));
 
     // Assert
     ASSERT_EQ(shaderContext->getShaderID(), 0);
@@ -62,7 +62,7 @@ TEST_F(FreerTests, FreeShader_doNothing_whenShaderIDIsZero)
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glDeleteShader_mock(::testing::_)).Times(0);
 
     // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderFreer<Classic>::on(shaderContext));
+    ASSERT_NO_THROW(shader::OpenGLShaderFreer<Classic>::on(*shaderContext));
 
     // Assert
     ASSERT_EQ(shaderContext->getShaderID(), 0);

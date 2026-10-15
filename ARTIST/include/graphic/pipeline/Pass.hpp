@@ -1,21 +1,14 @@
 /**
- * @file IPass.hpp
- * @brief Interface and specialization for shader passes in a multi-pass rendering system.
+ * @file Pass.hpp
+ * @brief Pass interfaces and profile specializations with borrowed shader access.
  *
- * The IPass interface represents a sequence of shader operations within a rendering pipeline,
- * integral to the multi-pass shader system in A.R.T.I.S.T. This file includes the abstract class
- * template IPass and its specializations, designed to support various graphics APIs like OpenGL,
- * Vulkan, DirectX, and Metal. IPass orchestrates shader operations, managing contexts, and
- * streamlining the rendering process.
- *
- * The design ensures flexibility to accommodate different APIs under respective namespaces.
- * The IPass class encapsulates shader operations, uniform, and attribute management, providing
- * a foundation for complex rendering tasks. API-specific specializations are implemented to
- * cater to the nuances of each graphics API.
+ * An `IPass` owns its `PassContext` (native program handle included) and owns
+ * the shaders registered in it. Everything else is a borrow: components and
+ * callers receive `PassContext&`, fixed-size shader access is returned by
+ * reference, and no API clones a pass implicitly.
  *
  * @tparam API The graphics API context.
  * @author Djoé DENNE
- * @date 13/12/2023
  */
 
 #pragma once
@@ -25,6 +18,8 @@
 #include <format>
 #include <unordered_map>
 #include <memory>
+#include <utility>
+#include <iostream>
 #include <utils.hpp>
 #include <common/exception/TraceableException.hpp>
 #include <graphic/pipeline/Shader.hpp>
@@ -36,62 +31,106 @@
 namespace artist::graphic::pipeline
 {
     /**
-     * @brief Template class for a rendering pass in the graphics pipeline.
+     * @brief Owning Pass: owns its context (native program handle) and its shaders.
      *
-     * IPass acts as a container for shaders and manages their execution context.
-     * It abstracts the complexities of shader management, providing methods to load,
-     * use, and free resources. It's designed to be API-agnostic, allowing for
-     * flexible implementations for different graphics APIs.
-     *
-     * @tparam API Graphics API specialization, providing API-specific context and functionality.
+     * The context stores the native program handle (for OpenGL:
+     * `PassContext::setPassID`). Shaders registered through `addShader` are owned
+     * by the context; borrow them through `getShader`/`getShaders`.
      */
     template <typename API>
     class IPass
     {
     public:
-        virtual ~IPass() = default;
-
-        // Constructor accepting components
-        IPass(const std::initializer_list<std::shared_ptr<IShader<API>>> &shaders,
-              std::shared_ptr<typename API::PassContext> context) : m_context(context)
+        virtual ~IPass()
         {
-            for (auto &shader : shaders)
-            {
-                m_context->addShader(shader);
-            }
+            // Destruction must not dispatch `free()`: here the dynamic type is
+            // the abstract base, so the profile-specific overload is pure and
+            // would abort. The concrete holder (Pass<API, PROFILE>) releases
+            // the native program through its own destructor, via the profile
+            // Freer component. Mocks deliberately keep their handles untouched.
         }
 
-        explicit IPass(const std::initializer_list<std::shared_ptr<IShader<API>>> shaders)
-            : IPass(shaders,
-                    std::make_shared<typename API::PassContext>())
+        IPass(const IPass &) = delete;
+        IPass &operator=(const IPass &) = delete;
+
+        IPass(IPass &&other) noexcept : m_context(std::move(other.m_context)) {}
+        IPass &operator=(IPass &&other) noexcept
         {
+            if (this != &other)
+            {
+                m_context = std::move(other.m_context);
+            }
+            return *this;
         }
 
         /**
-         * @brief Loads the pass.
+         * @brief Creates a pass owning an existing context.
          *
-         * This method is called to load the pass. It calls the load method of each shader in the pass,
-         * then calls the load method of the pass itself. It also calls the readUniforms and readAttributes
+         * Unique ownership: the caller yields its context and any handle inside.
+         */
+        IPass(std::unique_ptr<typename API::PassContext> context) : m_context(std::move(context))
+        {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::PASS::NULL_CONTEXT");
+            }
+        }
+
+        /**
+         * @brief Creates a pass owning a fresh context and registers shader pointers.
+         *
+         * Each pointer must be unique: use `make_unique` and move it in. Do NOT
+         * pass a braced initializer list directly (`{a, b}`): it would copy
+         * unique_ptrs. Wrap: `Pass(std::vector<std::unique_ptr<IShader>>{a, b})`.
+         */
+        IPass(std::vector<std::unique_ptr<IShader<API>>> shaders)
+            : IPass(std::make_unique<typename API::PassContext>())
+        {
+            for (auto &shader : shaders)
+            {
+                m_context->addShader(std::move(shader));
+            }
+        }
+
+        /**
+         * @brief Loads the pass: compile each shader, then create and link the
+         * program, then read uniforms and attributes.
+         *
+         * After a successful `load()`, any further `load()` is rejected with
+         * `ERROR::PASS::RELOAD_WITHOUT_FREE` until an explicit `free()`.
+         * Reloading a full pass also requires freeing its shaders:
+         * `shader.free()` ×N + `pass.free()` + `pass.load()`. The context
+         * stays untouched when the reload is rejected.
          */
         virtual void load()
         {
-            for (auto &shader : m_context->getShaders())
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::FREED_CONTEXT");
+            }
+            for (const auto &shader : m_context->getShaders())
             {
                 shader->load();
             }
-            load(m_context);
-            readUniforms(m_context);
-            readAttributes(m_context);
+            load(*m_context);
+            readUniforms(*m_context);
+            readAttributes(*m_context);
         }
 
         virtual void use()
         {
-            use(m_context);
+            use(ctx());
         }
 
+        /**
+         * @brief Frees the native program. Idempotent; shaders are untouched.
+         */
         virtual void free()
         {
-            free(m_context);
+            if (m_context)
+            {
+                free(*m_context);
+            }
         }
 
         /**
@@ -100,53 +139,55 @@ namespace artist::graphic::pipeline
          * @tparam T The type of the uniform value.
          * @param name The name of the uniform.
          * @param value The value of the uniform.
-         * @return A reference to the IPass object.
+         * @return A reference to this pass for chaining.
          * @throws std::runtime_error if the uniform is not found.
          */
         template <typename T>
-        std::shared_ptr<IPass<API>> withUniform(const std::string &name, const T &value)
+        IPass<API> &withUniform(const std::string &name, const T &value)
         {
-            if (auto uniform = m_context->getUniform(name))
+            if (auto uniform = ctx().getUniform(name))
             {
                 uniform->template set<T>(value);
-                return shared();
+                return *this;
             }
             throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::UNIFORM_NOT_FOUND\nUniform {} not found", name));
         }
 
         /**
          * @brief Returns a const reference to the map of uniforms in the pass.
-         *
-         * @return A const reference to the map of uniforms.
          */
         [[nodiscard]] virtual const std::unordered_map<std::string, std::shared_ptr<Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getUniforms() const
         {
-            return m_context->getUniforms();
+            return ctx().getUniforms();
         }
 
         /**
          * @brief Returns a const reference to the map of attributes in the pass.
-         *
-         * @return A const reference to the map of attributes.
          */
         [[nodiscard]] virtual const std::unordered_map<std::string, std::shared_ptr<IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getAttributes() const
         {
-            return m_context->getAttributes();
+            return ctx().getAttributes();
         }
 
         /**
-         * @brief Returns a const reference to the vector of shaders in the pass.
-         *
-         * @return A const reference to the vector of shaders.
+         * @brief Borrows the shader at the given index.
          */
-        [[nodiscard]] virtual const std::vector<std::shared_ptr<IShader<API>>> &getShaders() const
+        [[nodiscard]] virtual IShader<API> &getShader(const int &index) const
         {
-            return m_context->getShaders();
+            return ctx().getShader(index);
         }
 
         /**
-         * @brief Returns the pass context.
-         * @return The pass context.
+         * @brief Returns the number of shaders owned by the pass.
+         */
+        [[nodiscard]] virtual int getShadersCount() const
+        {
+            return ctx().getShadersCount();
+        }
+
+        /**
+         * @brief Returns the pass context (shared ownership remains available
+         * for Uniform/Attribute, outside this tranche's scope).
          */
         [[nodiscard]] virtual std::shared_ptr<typename API::PassContext> getContext() const
         {
@@ -154,26 +195,38 @@ namespace artist::graphic::pipeline
         }
 
     protected:
-        virtual void load(std::shared_ptr<typename API::PassContext> context) = 0;
-        virtual void readUniforms(std::shared_ptr<typename API::PassContext> context) = 0;
-        virtual void readAttributes(std::shared_ptr<typename API::PassContext> context) = 0;
-        virtual void free(std::shared_ptr<typename API::PassContext> context) = 0;
-        virtual void use(std::shared_ptr<typename API::PassContext> context) = 0;
-        virtual std::shared_ptr<IPass<API>> shared() const = 0;
+        virtual void load(typename API::PassContext &context) = 0;
+        virtual void readUniforms(typename API::PassContext &context) = 0;
+        virtual void readAttributes(typename API::PassContext &context) = 0;
+        virtual void free(typename API::PassContext &context) = 0;
+        virtual void use(typename API::PassContext &context) = 0;
+
+        /// Ownership of the context (and transitively of the program handle).
+        std::shared_ptr<typename API::PassContext> m_context;
 
     private:
-        std::shared_ptr<typename API::PassContext> m_context; ///< The pass context.
+        /**
+         * @brief Borrowed access with moved-from protection.
+         *
+         * Symmetric with `IShader::getContext()`: accessing an instance whose
+         * ownership was moved away throws instead of dereferencing a null
+         * shared_ptr (undefined behaviour otherwise).
+         */
+        [[nodiscard]] typename API::PassContext &ctx() const
+        {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::FREED_CONTEXT");
+            }
+            return *m_context;
+        }
     };
 
     /**
-     * @brief Specialized Pass class template validating and utilizing API and PROFILE specific components.
-     *
-     * Extends IPass, incorporating compile-time validation of API and PROFILE-specific components
-     * using C++20 concepts and the 'requires' keyword. This ensures compatibility and availability
-     * of components for a given API and PROFILE, facilitating profile-specific behavior in the pipeline.
+     * @brief Specialized Pass validating and dispatching API/PROFILE components.
      *
      * @tparam API The graphics API context.
-     * @tparam PROFILE Profile indicating specialized implementation requirements.
+     * @tparam PROFILE Profile indicating specialized component implementations.
      */
     template <typename API, auto PROFILE>
         requires(API::Validator::template validatePass<API, PROFILE>())
@@ -185,62 +238,58 @@ namespace artist::graphic::pipeline
         using IPass<API>::free;
         using IPass<API>::use;
 
-        virtual ~Pass()
+        ~Pass()
         {
-            try
-            {
-                free();
-            }
-            catch (const std::exception &e)
-            {
-                std::cerr << e.what() << std::endl;
-            }
+            // Profile-specific release of the native program while the dynamic
+            // type is still Pass; the context and its shaders are then destroyed
+            // by ~IPass, which owns them through m_context.
+            free();
         }
 
+        // A user-declared destructor suppresses the implicit move operations;
+        // define them so ownership transfers remain move-only and noexcept.
+        Pass(Pass &&) noexcept = default;
+        Pass &operator=(Pass &&) noexcept = default;
+
     protected:
-        void load(std::shared_ptr<typename API::PassContext> context) override
+        void load(typename API::PassContext &context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::PassContext::Loader<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::PassContext::template Loader<PROFILE>>)
             {
                 API::PassContext::template Loader<PROFILE>::on(context);
             }
         }
 
-        void readUniforms(std::shared_ptr<typename API::PassContext> context) override
+        void readUniforms(typename API::PassContext &context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::PassContext::UniformReader<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::PassContext::template UniformReader<PROFILE>>)
             {
                 API::PassContext::template UniformReader<PROFILE>::on(context);
             }
         }
 
-        void readAttributes(std::shared_ptr<typename API::PassContext> context) override
+        void readAttributes(typename API::PassContext &context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::PassContext::AttributeReader<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::PassContext::template AttributeReader<PROFILE>>)
             {
                 API::PassContext::template AttributeReader<PROFILE>::on(context);
             }
         }
 
-        void free(std::shared_ptr<typename API::PassContext> context) override
+        void free(typename API::PassContext &context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::PassContext::Freer<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::PassContext::template Freer<PROFILE>>)
             {
                 API::PassContext::template Freer<PROFILE>::on(context);
             }
         }
 
-        void use(std::shared_ptr<typename API::PassContext> context) override
+        void use(typename API::PassContext &context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::PassContext::User<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::PassContext::template User<PROFILE>>)
             {
                 API::PassContext::template User<PROFILE>::on(context);
             }
-        }
-
-        std::shared_ptr<IPass<API>> shared() const override
-        {
-            return std::make_shared<Pass<API, PROFILE>>(*this);
         }
     };
 } // namespace artist::graphic::pipeline

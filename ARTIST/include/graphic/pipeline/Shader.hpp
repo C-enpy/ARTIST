@@ -1,17 +1,12 @@
 /**
  * @file Shader.hpp
- * @brief Interface for shader management in A.R.T.I.S.T. with an OpenGL specialization.
+ * @brief Shader interfaces and profile specializations with explicit CPU/GPU ownership.
  *
- * Introduces `IShader`, an abstract class for managing shaders' lifecycle, adaptable to multiple graphics APIs.
- * It emphasizes a flexible design, supporting extensibility to Vulkan, DirectX, and Metal, alongside the current
- * OpenGL specialization under 'artist::graphic::pipeline::opengl'. `IShader` abstracts shader operations, facilitating
- * API-specific implementations through composition, focusing on lifecycle management (loading, operating, and cleanup)
- * within a unified ShaderContext.
+ * An `IShader` owns at most one native shader object through its context
+ * (`setShaderID`). Moving transfers that ownership; copying is forbidden.
+ * Callers that do not extend the lifetime borrow through `getContext()`.
  *
- * @tparam API Graphics API context, dictating specific ShaderContext, Loader, and Freer implementations.
- *
- * @author Djoé DENNE
- * @date 13/12/2023
+ * @tparam API The graphics API context.
  */
 
 #pragma once
@@ -19,6 +14,7 @@
 #include <memory>
 #include <string>
 #include <format>
+#include <utility>
 #include <common/exception/TraceableException.hpp>
 #include <graphic/context/ShaderContext.hpp>
 #include <graphic/validator/ComponentConcept.hpp>
@@ -27,119 +23,123 @@ namespace artist::graphic::pipeline
 {
     /**
      * @class IShader
-     * @brief Base class for managing shader lifecycle across different graphics APIs.
+     * @brief Owns one native shader object and borrows operations on it.
      *
-     * Encapsulates the concept of a shader, providing mechanisms for loading, executing, and cleaning up shader resources.
-     * Designed to be API-agnostic, it allows for the creation of specialized shader implementations for different graphics APIs
-     * by defining API-specific ShaderContext, Loader, and Freer components. This approach ensures flexibility and extensibility,
-     * facilitating the integration of new graphics APIs into the A.R.T.I.S.T. framework.
-     *
-     * @tparam API The graphics API context. Specifies the requirements for ShaderContext, Loader, and Freer components.
-     *
-     * Design Considerations:
-     * - Composition over Inheritance: The class uses separate components for loading and freeing shader resources.
-     * - Encapsulation: It encapsulates shader operations and context, providing a clear and unified interface.
-     * - Resource Management: Utilizes smart pointers for automatic resource management and safer code.
+     * The context stores the native handle (for OpenGL: `ShaderContext::setShaderID`).
+     * `load()` and `free()` are idempotent around an absent or released handle.
      */
     template <typename API>
     class IShader
     {
     public:
-        virtual ~IShader() = default;
-
-        /**
-         * @brief Constructor for Shader.
-         * @param shaderPath Path to the shader source file.
-         * @param shaderType Type of the shader (e.g., vertex, fragment).
-         * @param loader Unique pointer to the shader loader component.
-         * @param freer Unique pointer to the shader freer component.
-         * @param context Unique pointer to the ShaderContext, managing API-specific shader details.
-         */
-        IShader(const std::string &shaderPath, context::ShaderType shaderType,
-                std::shared_ptr<typename API::ShaderContext> context) : m_context(context)
+        virtual ~IShader()
         {
-            m_context->setShaderType(shaderType);
-            m_context->setShaderPath(shaderPath);
-            // Implementation to read shader code from file can be added here
+            // Destruction must not dispatch `free()`: here the dynamic type is
+            // the abstract base, so the profile-specific overload is pure and
+            // would abort. The concrete holder (Shader<API, PROFILE>) releases
+            // the native handle through its own destructor, via the profile
+            // Freer component. Mocks deliberately keep their handles untouched.
+        }
+
+        IShader(const IShader &) = delete;
+        IShader &operator=(const IShader &) = delete;
+
+        IShader(IShader &&other) noexcept : m_context(std::move(other.m_context)) {}
+        IShader &operator=(IShader &&other) noexcept
+        {
+            if (this != &other)
+            {
+                m_context = std::move(other.m_context);
+            }
+            return *this;
         }
 
         /**
-         * @brief Templated constructor for creating a shader with an API-specific context.
-         *
-         * This constructor template allows for the automatic creation and setup of an API-specific
-         * shader context, loader, and freer. It's designed to simplify the instantiation process
-         * by inferring the required components based on the provided API template parameter.
-         *
-         * @param shaderPath Path to the shader source file. This path is used to read the shader
-         *                   code from the file system.
-         * @param shaderType The type of the shader (e.g., vertex, fragment). This information is
-         *                   used by the shader context and loader for appropriate handling.
-         *
-         * Example Usage:
-         *   Shader<OpenGL> myShader("vertex_shader.glsl", ShaderType::VERTEX);
-         * This line creates a shader object for OpenGL, automatically setting up the OpenGL
-         * shader context, loader, and freer.
+         * @brief Creates a shader owning a fresh API-specific context.
+         * @param shaderPath Path to the shader source file.
+         * @param shaderType Type of the shader (e.g. vertex, fragment).
          */
         IShader(const std::string &shaderPath, context::ShaderType shaderType)
             : IShader(shaderPath, shaderType,
-                      std::make_shared<typename API::ShaderContext>())
+                      std::make_unique<typename API::ShaderContext>())
         {
         }
 
         /**
-         * @brief Get the shader Context.
-         * @return The shader Context.
+         * @brief Creates a shader owning an existing context.
+         *
+         * Unique ownership: the caller yields any handle stored in `context`.
          */
-        [[nodiscard]] virtual const std::shared_ptr<typename API::ShaderContext> &getContext() const
+        IShader(const std::string &shaderPath, context::ShaderType shaderType,
+                std::unique_ptr<typename API::ShaderContext> context) : m_context(std::move(context))
         {
-            return m_context;
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::SHADER::NULL_CONTEXT");
+            }
+            m_context->setShaderType(shaderType);
+            m_context->setShaderPath(shaderPath);
         }
 
         /**
-         * @brief Loads the shader into the rendering system.
+         * @brief Borrows the owned context for the duration of the call.
+         */
+        [[nodiscard]] virtual typename API::ShaderContext &getContext() const
+        {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::FREED_CONTEXT");
+            }
+            return *m_context;
+        }
+
+        /**
+         * @brief Loads (compiles) the shader. Success stores the handle in the context.
+         *
+         * After a successful `load()`, any further `load()` is rejected with
+         * `ERROR::SHADER::RELOAD_WITHOUT_FREE` until an explicit `free()`.
+         * Recompile = `free(); load();` — a single destruction path (free),
+         * the context stays untouched when `load()` rejects.
          */
         virtual void load()
         {
-            if (m_context)
+            if (!m_context)
             {
-                if (m_context->getShaderCode().empty())
-                {
-                    read(m_context);
-                }
-                load(m_context);
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::FREED_CONTEXT");
             }
+            if (m_context->getShaderCode().empty())
+            {
+                read(*m_context);
+            }
+            load(*m_context);
         }
 
         /**
-         * @brief Frees the shader resources.
+         * @brief Frees the native shader object. Idempotent: no handle means no-op.
          */
         virtual void free()
         {
             if (m_context)
             {
-                free(m_context);
+                free(*m_context);
             }
         }
 
     protected:
-        virtual void load(std::shared_ptr<typename API::ShaderContext> context) = 0;
-        virtual void free(std::shared_ptr<typename API::ShaderContext> context) = 0;
-        virtual void read(std::shared_ptr<typename API::ShaderContext> context) = 0;
+        virtual void load(typename API::ShaderContext &context) = 0;
+        virtual void free(typename API::ShaderContext &context) = 0;
+        virtual void read(typename API::ShaderContext &context) = 0;
 
-    private:
-        std::shared_ptr<typename API::ShaderContext> m_context; // API-specific shader context
+        /// Ownership of the context (and transitively of the native handle it stores).
+        std::unique_ptr<typename API::ShaderContext> m_context;
     };
 
     /**
      * @class Shader
-     * @brief Specialized shader class template, incorporating API and PROFILE-specific components validation.
-     *
-     * Extends `IShader` to include compile-time validation for API and PROFILE-specific components, leveraging
-     * C++20 concepts for ensuring compatibility and availability. This class facilitates the implementation of
-     * profile-specific shader behavior, optimizing shader operations for specific rendering techniques and hardware.
+     * @brief Profile-specialized shader dispatching to validated API components.
      *
      * @tparam API Graphics API context.
-     * @tparam PROFILE Rendering profile for specialized shader operations.
+     * @tparam PROFILE Rendering profile for specialized component selection.
      */
     template <typename API, auto PROFILE>
         requires(API::Validator::template validateShader<API, PROFILE>())
@@ -155,8 +155,13 @@ namespace artist::graphic::pipeline
             free();
         }
 
+        // A user-declared destructor suppresses the implicit move operations;
+        // define them so ownership transfers remain move-only and noexcept.
+        Shader(Shader &&) noexcept = default;
+        Shader &operator=(Shader &&) noexcept = default;
+
     protected:
-        void free(std::shared_ptr<typename API::ShaderContext> context) override
+        void free(typename API::ShaderContext &context) override
         {
             if constexpr (graphic::validator::HasComponent<typename API::ShaderContext::template Freer<PROFILE>>)
             {
@@ -164,7 +169,7 @@ namespace artist::graphic::pipeline
             }
         }
 
-        void load(std::shared_ptr<typename API::ShaderContext> context) override
+        void load(typename API::ShaderContext &context) override
         {
             if constexpr (graphic::validator::HasComponent<typename API::ShaderContext::template Loader<PROFILE>>)
             {
@@ -172,7 +177,7 @@ namespace artist::graphic::pipeline
             }
         }
 
-        void read(std::shared_ptr<typename API::ShaderContext> context) override
+        void read(typename API::ShaderContext &context) override
         {
             if constexpr (graphic::validator::HasComponent<typename API::ShaderContext::template Reader<PROFILE>>)
             {

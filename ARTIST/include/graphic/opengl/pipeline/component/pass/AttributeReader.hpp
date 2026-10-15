@@ -9,6 +9,12 @@
 #include <graphic/opengl/profile/Pass.hpp>
 #include <graphic/opengl/profile/Attribute.hpp>
 #include <graphic/opengl/context/AttributeContext.hpp>
+// The reader instantiates `Attribute<API, Classic>` whose requires-clauses
+// validate the attribute components; keep the reader self-contained so the
+// component order cannot break the concept evaluation.
+#include <graphic/opengl/pipeline/component/attribute/Binder.hpp>
+#include <graphic/opengl/pipeline/component/attribute/Setter.hpp>
+#include <graphic/opengl/pipeline/component/attribute/Unbinder.hpp>
 
 namespace artist::graphic::opengl::pipeline::component::pass
 {
@@ -27,14 +33,9 @@ namespace artist::graphic::opengl::pipeline::component::pass
     class OpenGLPassAttributeReader<graphic::opengl::profile::Pass::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::PassContext> openglContext)
+        static void on(typename graphic::api::OpenGL::PassContext &openglContext)
         {
-            if (!openglContext)
-            {
-                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::NON_OPENGL_CONTEXT");
-            }
-
-            GLuint passID = openglContext->getPassID();
+            GLuint passID = openglContext.getPassID();
             if (passID == 0)
             {
                 throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::INVALID_PROGRAM_ID");
@@ -61,7 +62,7 @@ namespace artist::graphic::opengl::pipeline::component::pass
 
                 // Known limitation of OpenGL: Attributes profile are driven by Pass profile
                 auto attribute = std::make_shared<graphic::pipeline::Attribute<graphic::api::OpenGL, graphic::opengl::profile::Attribute::Classic>>(attributeContext);
-                openglContext->addAttribute(std::string(attributeName), attribute);
+                openglContext.addAttribute(std::string(attributeName), attribute);
             }
         }
     };

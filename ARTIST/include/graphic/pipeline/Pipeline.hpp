@@ -162,7 +162,7 @@ namespace artist::graphic::pipeline
          */
         void use(std::shared_ptr<typename API::PipelineContext> context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::PipelineContext::User<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::PipelineContext::template User<PROFILE>>)
             {
                 API::PipelineContext::template User<PROFILE>::on(context);
             }
@@ -178,7 +178,7 @@ namespace artist::graphic::pipeline
          */
         void reset(std::shared_ptr<typename API::PipelineContext> context) override
         {
-            if constexpr (graphic::validator::HasComponent<typename API::PipelineContext::Resetter<PROFILE>>)
+            if constexpr (graphic::validator::HasComponent<typename API::PipelineContext::template Resetter<PROFILE>>)
             {
                 API::PipelineContext::template Resetter<PROFILE>::on(context);
             }

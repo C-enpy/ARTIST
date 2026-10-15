@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <memory>
 #include <graphic/Api.hpp>
+#include <graphic/opengl/context/ShaderContext.hpp>
 #include <graphic/opengl/context/PassContext.hpp>
 #include <graphic/opengl/pipeline/component/pass/ShaderAttacher.hpp>
 #include <graphic/opengl/profile/Pass.hpp>
@@ -18,11 +19,13 @@ namespace artist::graphic::opengl::pipeline::component::pass
     class OpenGLLoader<graphic::opengl::profile::Pass::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::PassContext> openglContext)
+        static void on(typename graphic::api::OpenGL::PassContext &openglContext)
         {
-            if (!openglContext)
+            // Ownership contract (ADR-0003, reload variant B): reject reload
+            // without free before any creation so the context stays untouched.
+            if (openglContext.getPassID() != 0)
             {
-                throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::PROGRAM::NON_OPENGL_CONTEXT"));
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::RELOAD_WITHOUT_FREE\nFree the pass before linking again.");
             }
 
             GLuint passID = glCreateProgram();
@@ -32,7 +35,7 @@ namespace artist::graphic::opengl::pipeline::component::pass
             }
 
             // Save the created pipeline ID in the context
-            openglContext->setPassID(passID);
+            openglContext.setPassID(passID);
             artist::graphic::api::OpenGL::PassContext::ShaderAttacher<graphic::opengl::profile::Pass::Classic>::on(openglContext);
 
             // Link the pipeline
@@ -41,6 +44,7 @@ namespace artist::graphic::opengl::pipeline::component::pass
             if (!checkLinkErrors(passID))
             {
                 glDeleteProgram(passID);
+                openglContext.setPassID(0); // Do not leave a handle to a freed program.
                 throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::PROGRAM::LINK_FAILED"));
             }
         }
