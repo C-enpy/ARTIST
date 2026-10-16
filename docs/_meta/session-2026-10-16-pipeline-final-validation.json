@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-16",
+  "status": "Integrated candidate; independent final review and execution pending",
+  "candidate": "f914d77b17b1c3013bf06679c0f94537ee7ba24a",
+  "composition": "A2/F6 plus H-RESTORE 1a75c75, following integrated I0 18edc72",
+  "source_manifest": "out/mission-a1a2/final-source-manifest.json",
+  "tracked_inputs": 129,
+  "changed_inputs_before_final_review": 0,
+  "a2_producer": {
+    "head": "1dfff229045dcdbe0241663aad503005261b2341",
+    "authorized_files": 6,
+    "source_hashes_matched_before_after_integration": "6/6",
+    "backup": "out/mission-a1a2/a2-author-final-1dfff22/",
+    "coordinator_manifest": "out/mission-a1a2/a2-delivery-coordinator-manifest.json",
+    "frozen_artifact_files": 53,
+    "red": "MovedFromPassContextGetterThrows fails before implementation: expected exception absent; no null dereference",
+    "normal": {"unit": 176, "gl": 39, "failures": 0, "skipped": 0},
+    "asan": {"unit": 176, "gl": 22, "total": 198, "failures": 0, "skipped": 0},
+    "junit_hidden_mock_diagnostics": 0,
+    "getter_owner_compile_probe": {
+      "kind": "Post-implementation contract check, not historical RED",
+      "old_header_exit": 0,
+      "new_header_exit": 2,
+      "new_header_diagnostic": "C2440 converting context reference to shared_ptr",
+      "reference_control_exit": 0,
+      "numeric_exitcodes_checked": true,
+      "old_header": "Byte-exact I0 Pass.hpp overlay, no checkout or final source modification",
+      "proof": "getter-owner-summary.json",
+      "invalid_original_summary": "a2-probe-summary-original-invalid.json preserved; string exitcodes not accepted as numeric proof",
+      "shared_owner_pass_constructor": "Already rejected before A2; invariant only, not getter migration proof"
+    },
+    "inventory_change": "One moved-from getter test added; unit/GL alias retention cases archived then replaced 1:1 by destination context/shader destruction contract"
+  },
+  "h_restore": "Integrated 1a75c75; see session-2026-10-16-asan-caller-restoration.json; independent combined verification pending",
+  "final_selection_declared_before_run": {
+    "manifest": "out/mission-a1a2/final-asan-selection.json",
+    "normal": 215,
+    "asan": 198,
+    "other_gl_not_selected_under_asan": 17,
+    "wrapper_regression_cases_separate": 5
+  },
+  "independent_tasks": {
+    "correctness": "task_mvbguqgw_005u_sqbmz7",
+    "verification": "task_mvbguqgx_005v_xl1gnj",
+    "context": "fresh, actual combined integrated candidate; review read-only, QA exclusive build/GPU"
+  },
+  "retained_limits": [
+    "Historical A1c RED cleanup after GL teardown remains protocol FAIL; unsafe probe must not be replayed",
+    "Direct all-suite baseline and A2 binaries emit a preexisting post-suite GMock AttributeTests.cpp:65 diagnostic despite exit0; CTest per-test JUnit have no corresponding hidden diagnostic",
+    "Reader removeError/dangling-entry scenario, close failure and real filesystem extraction fault remain unproven",
+    "No image, performance, Release, other-platform, GPU-in-flight or exhaustive RAII claim",
+    "No global final PASS before independent review, QA and documentary reconciliation"
+  ],
+  "aliases": "All owned SUBST aliases retired; final empty output checked; none recreated; no files deleted"
+}

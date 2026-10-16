@@ -30,8 +30,8 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > producteur ASan 13/13 (pas les 9 GL historiques). Réserve conservée : la
 > sonde RED historique de bail appelait le cleanup GL après teardown,
 > contrairement au protocole ; elle n'existe plus dans le GREEN. Manifeste
-> `_meta/session-2026-10-16-pipeline-a1c-validation.json`. A2 non migrée ; R/V
-> et clôture documentaire restent à réaliser, aucun PASS global de mission.
+> `_meta/session-2026-10-16-pipeline-a1c-validation.json`. État historique A1 ;
+> pour A2 et les barrières finales, voir le candidat intégré ci-dessous.
 
 > [!info] Candidat I0 intégré après F8
 > `18edc72` inclut la seam et l'isolation hors parent TEMP hérité, corrigée en
@@ -42,6 +42,16 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > reproduit et confié à H-RESTORE, FAIL historique RED A1c conservé. A2 et le
 > correctif du harnais sont admis en branches isolées, pas encore validés.
 > Manifeste : `_meta/session-2026-10-16-pipeline-i0-validation.json`.
+
+> [!info] Candidat combiné A2/F6 + H-RESTORE intégré
+> `f914d77` intègre les six fichiers A2, octets conformes au GREEN producteur,
+> avec le correctif de restauration du harnais `1a75c75`. Producteur A2 :
+> **176 CPU + 39 GL = 215** et sélection **198 ASan**, sans échec/skip ;
+> sonde getter-owner ancien/final/contrôle recoupée **0/2/0**. Ces résultats
+> ne remplacent pas une campagne du candidat combiné : R-A2 et V-A2 fresh
+> admis après shutdown/merge, sources 129/129 conformes. Clôture documentaire
+> encore retenue jusqu'à leurs verdicts ; aucun PASS global annoncé.
+> Manifeste : `_meta/session-2026-10-16-pipeline-final-validation.json`.
 
 ## Pourquoi cette mission
 
