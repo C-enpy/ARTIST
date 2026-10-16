@@ -430,6 +430,30 @@ TDD historique globale. Preuves et empreintes :
 
 ## Expériences encore absentes
 
+### Revue I0 — réserves mineures distinctes des verdicts exécutés
+
+Revue fresh de `18edc72`, 24 fichiers du diff et 129/129 empreintes recoupées :
+aucun défaut bloquant du code A1 final identifié, pas une preuve exhaustive ni
+une nouvelle exécution de tests par le reviewer. QA d'exécution encore attendue.
+
+- **P3 H-ASan, constat de contrôle de flux, reproduction demandée** :
+  `build-windows.ps1:86-90,115-118` et `asan-env.ps1:31-32` : une variable
+  ASAN_OPTIONS initialement absente est créée par le normaliseur sans entrée
+  dans `savedEnvironment`. Elle peut rester définie au retour dans le même
+  PowerShell appelant. Ce point concerne la restauration après campagne, pas
+  la normalisation stricte/fail-close de la campagne courante. Pas de mutation
+  du candidat pendant la QA ; réserve non bloquante A1 à ce stade.
+- **P3 fixture TEMP, question non reproduite** :
+  `ReaderTests.cpp:136-150` calcule `removeError` sans la consulter, et `exists`
+  suit les liens. Le cas suppression en erreur puis absence, ou lien pendant,
+  n'est pas qualifié par le test de répertoire résiduel. Le contrat littéral
+  exige le rejet de l'erreur ; ne pas prétendre une couverture acquise de ce
+  cas, ni affaiblir le contrat pour obtenir un PASS. Aucun défaut d'extraction
+  moteur exécuté n'est démontré par cette question.
+
+Le **FAIL du protocole RED historique A1c** est confirmé séparément et demeure
+consigné. Ces réserves sont transmises à V-I0 sans réexécuter la sonde interdite.
+
 État I0 de la mission Pipeline (`18edc72`) : F8 a reçu une seam interne testant
 l'extracteur réel sous badbit (4096 octets consommés, deuxième demande levant
 une exception sentinel, traduction exacte et contexte non publié), plus une

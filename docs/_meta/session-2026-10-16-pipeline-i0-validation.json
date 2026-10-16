@@ -1,6 +1,6 @@
 {
   "date": "2026-10-16",
-  "scope": "Integrated I0 before A2; independent review and QA still pending",
+  "scope": "Integrated I0 before A2; static independent review completed, execution QA pending",
   "source_head": "18edc729326a8d07b46bd235035747c173c42d1c",
   "source_manifest": "out/mission-a1a2/i0-source-manifest.json",
   "source_manifest_sha256": "1852916180bb8b9338dae661f919976739734a1c4cbed4571382b7e34fe40855",
@@ -46,6 +46,35 @@
     "verification": "task_mvbcv58j_004f_8z2wcx",
     "context": "fresh; actual integrated producer inputs; no source mutation"
   },
+  "independent_review": {
+    "task": "task_mvbcv58i_004e_twggrf",
+    "reviewer": "pool-9 / correctness-reviewer, fresh",
+    "status": "Static review completed: no blocking final-source defect identified; not exhaustive correctness proof",
+    "source_hashes_checked": "129/129",
+    "reviewed_diff_files": 24,
+    "new_runtime_commands": 0,
+    "findings": [
+      {
+        "severity": "P3",
+        "scope": "scripts/build-windows.ps1:86-90,115-118; scripts/asan-env.ps1:31-32",
+        "finding": "Initially absent ASAN_OPTIONS is assigned canonical value without a savedEnvironment entry; caller process may keep it after script returns",
+        "evidenceKind": "inference",
+        "basis": "Independent static control-flow inspection; runtime reproduction requested from QA",
+        "impact": "Caller environment restoration, not current campaign fail-close",
+        "arbitration": "Non-blocking for A1 at this stage; retained pending QA qualification, no concurrent source change"
+      },
+      {
+        "severity": "P3 question",
+        "scope": "ReaderTests.cpp:136-150 tryGuaranteeAbsentPath",
+        "finding": "removeError is computed but ignored; exists follows symlinks and does not prove absence of every entry",
+        "evidenceKind": "inference",
+        "runtime_scenario": "remove error then absent observation or dangling symlink not reproduced on Windows",
+        "arbitration": "Literal fixture contract gap to qualify; not a reproduced Reader engine defect; original criteria not weakened"
+      }
+    ],
+    "historical_A1c_red_protocol": "FAIL retained, absent from GREEN; never rerun unsafe probe",
+    "limits": "No build/CTest/GL executed by reviewer; prior JUnit are third-party evidence, execution QA remains separate"
+  },
   "alias_retirement": {
     "operator_authorized": true,
     "removed": ["U:", "Y:", "Z:"],
@@ -57,6 +86,7 @@
   "retained_reserves": [
     "A1c historical RED protocol violation retained; see pipeline-a1c-validation.json",
     "A2/F6 not implemented; no global mission PASS",
-    "Independent QA and ASan integrated results pending"
+    "Independent execution QA and ASan integrated results pending",
+    "Review P3 environment-restoration finding and TEMP helper question retained"
   ]
 }
