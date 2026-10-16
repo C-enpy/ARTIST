@@ -386,6 +386,25 @@ pas des preuves et ne sont pas comptées dans les totaux.
 - Chemins longs (C1083) : `subst Z:` (C1) et `subst Y:` (C2) autorisés, sans modification Git ni
   CMake. Ce ne sont pas des RED.
 
+## Intégration Pipeline A1 — archive GoogleTest préexistante incompatible
+
+À `d319096`, le premier build de l'union D-A1 + S-GSS + H-ASan compile les
+sources puis échoue au lien : `LNK2019 __std_rotate` dans `gmock_main.lib`.
+Cette archive est construite localement sous `out/build/windows-msvc-debug/_deps`,
+pas fournie par Conan. L'archive précédente est conservée ; `dumpbin /symbols`
+y trouve une référence `UNDEF __std_rotate`. Reconstruction ciblée de
+`gmock_main` dans l'environnement courant, sans changement de source moteur :
+la référence disparaît, le lien réussit et les **167/167 unitaires distincts**
+de l'union passent (134 baseline + 31 D-A1 + 2 S-GSS), sans skip/disabled.
+
+La substitution de l'archive préexistante suffit à résoudre cet incident ;
+son historique de compilation exact reste inconnu. Le répertoire du toolset
+`14.44.35207` et la version binaire `19.44.35221` ne démontrent pas, à eux seuls,
+une installation Visual Studio incohérente. Premier FAIL conservé, non classé
+RED moteur ; aucune preuve GL ou ASan de l'union n'est tirée de cette expérience.
+Commandes, empreintes et JUnit :
+`docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json`.
+
 ## Expériences encore absentes
 
 ASan Windows Debug est exécuté séparément et instrumenté ; après F5, la sélection

@@ -1,0 +1,58 @@
+{
+  "scope": "Pipeline A1a+A1b integration barrier I-A1; not global mission validation",
+  "date": "2026-10-16",
+  "source_head": "d319096",
+  "baseline": "a50f466",
+  "status": "PASS for integrated CPU build/discovery/tests and source identity only",
+  "source_identity": {
+    "manifest": "out/mission-a1a2/pool-1/a1-source-manifest.json",
+    "matched_files": 15,
+    "mismatched_files": 0,
+    "producer_head": "fc0254adb6bdf7f65b830ef19aa50667850fcadf"
+  },
+  "first_attempt": {
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1",
+    "exit_code": 1,
+    "result": "LNK2019 __std_rotate referenced by locally built gmock_main.lib; no CTest execution",
+    "log": "out/mission-a1a2/i-a1-first-link-fail.log",
+    "classification": "integration/build artifact incident, not a causal engine RED"
+  },
+  "discriminating_experiment": {
+    "command": "cmd.exe /d /c out/mission-a1a2/i-a1-recover.cmd",
+    "steps": [
+      "Load vcvarsall x64 -vcvars_ver=14.44 in the same process",
+      "Preserve prior gmock_main.lib and dump its symbols",
+      "ninja -C out/build/windows-msvc-debug -t clean gmock_main",
+      "cmake --build --preset windows-msvc-debug --target gmock_main --parallel 1",
+      "Dump rebuilt archive symbols",
+      "cmake --build --preset windows-msvc-debug --target ArtistLib_tests --parallel 1",
+      "ctest --test-dir out/build/windows-msvc-debug -L unit --show-only=json-v1",
+      "ctest --test-dir out/build/windows-msvc-debug -L unit --parallel 1 --output-on-failure --no-tests=error --output-junit i-a1-union-unit.xml"
+    ],
+    "exit_code": 0,
+    "prior_archive_sha256": "d24dbf3a4ed48fc095100b02edc33214d8f3c7c2cc2890d8e33403cbd41b85b3",
+    "rebuilt_archive_sha256": "0cd5fc45732916b701cb349eceee6a8f21c9126aff1fd2f20b7fdc68bd877c61",
+    "prior_undefined_std_rotate_references": 1,
+    "rebuilt_std_rotate_references": 0,
+    "log": "out/mission-a1a2/i-a1-recover.log",
+    "conclusion": "Replacing the pre-existing local gmock archive by a current rebuild resolves link and CPU tests without any engine source change. Original archive/toolchain history remains unknown."
+  },
+  "cpu_union": {
+    "discovered_distinct": 167,
+    "tests": 167,
+    "failures": 0,
+    "skipped": 0,
+    "disabled": 0,
+    "composition": "134 baseline + 31 D-A1 + 2 S-GSS",
+    "junit": "out/mission-a1a2/i-a1-union-unit.xml",
+    "junit_sha256": "45f133dd66ee528262ad9eab6fdd171d909e5c24a3d062b943d2bab7c508ff42",
+    "discovery": "out/mission-a1a2/i-a1-unit-discovery.json"
+  },
+  "limitations": [
+    "No GL test or ASan campaign executed by this integration experiment",
+    "A1c was published before the CPU barrier completed; coordinator held the consumer, then explicitly released it after these checks",
+    "Independent review and rendering verification remain gated on integrated I0",
+    "Loaded Pipeline lifetime A1c and Pass context ownership A2 are not proven here",
+    "out/ evidence is local and not versioned; preserve worktrees and artifacts until final archival"
+  ]
+}
