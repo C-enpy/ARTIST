@@ -178,30 +178,36 @@ namespace artist::graphic::pipeline
         }
 
         /**
-         * @brief Returns the pass context (shared ownership remains available
-         * for Uniform/Attribute, outside this tranche's scope).
+         * @brief Borrows the owned pass context.
+         *
+         * The pass owns this context uniquely: callers borrow it by reference
+         * and must not extend its lifetime beyond the pass. A moved-from pass
+         * rejects this borrowing accessor with ERROR::PASS::FREED_CONTEXT,
+         * exactly like `ctx()`. Uniform/Attribute maps and the contexts of
+         * their wrappers remain shared, outside this tranche's scope.
          */
-        [[nodiscard]] virtual std::shared_ptr<typename API::PassContext> getContext() const
+        [[nodiscard]] virtual typename API::PassContext &getContext() const
         {
-            return m_context;
+            return ctx();
         }
 
     protected:
         /**
-         * Only identical concrete API/profile owners expose assignment. Release
-         * the old program before replacing its context, even if aliases keep that
-         * context alive. Such aliases retain CPU storage/shaders, not the program
-         * (handle zero); they do not follow the new owner and must not reload the
-         * orphaned context. Old uniform/attribute bindings must not be used with
-         * the new program. Source aliases still refer to the transferred context;
-         * the source becomes moved-from.
+         * Only identical concrete API/profile owners expose assignment.
+         * Release the old program before replacing the destination context;
+         * because every pass owns its context uniquely, the replaced context
+         * and the shaders it holds are destroyed with it at the transfer — no
+         * alias can prolong them. Old uniform/attribute bindings must not be
+         * used with the new program. Source borrows still refer to the
+         * transferred context; the source becomes moved-from and rejects
+         * further access.
          *
          * If cleanup throws, both context pointers remain in place, but detach
          * effects may already have occurred (basic guarantee, not rollback).
          * Self-move does nothing. Callers serialize mutations and keep a valid
-         * current GL context for cleanup, including release of the last context
-         * alias. OpenGL may defer native deletion while a program is current;
-         * this operation does not wait for GPU completion or unbind it.
+         * current GL context for cleanup. OpenGL may defer native deletion
+         * while a program is current; this operation does not wait for GPU
+         * completion or unbind it.
          */
         IPass &operator=(IPass &&other)
         {
@@ -222,8 +228,10 @@ namespace artist::graphic::pipeline
         virtual void free(typename API::PassContext &context) = 0;
         virtual void use(typename API::PassContext &context) = 0;
 
-        /// Ownership of the context (and transitively of the program handle).
-        std::shared_ptr<typename API::PassContext> m_context;
+        /// Unique ownership of the context (and transitively of the program
+        /// handle). A moved-from pass stores a null pointer; `ctx()` rejects
+        /// every access on it with ERROR::PASS::FREED_CONTEXT.
+        std::unique_ptr<typename API::PassContext> m_context;
 
     private:
         /**
@@ -231,7 +239,7 @@ namespace artist::graphic::pipeline
          *
          * Symmetric with `IShader::getContext()`: accessing an instance whose
          * ownership was moved away throws instead of dereferencing a null
-         * shared_ptr (undefined behaviour otherwise).
+         * stored pointer (undefined behaviour otherwise).
          */
         [[nodiscard]] typename API::PassContext &ctx() const
         {

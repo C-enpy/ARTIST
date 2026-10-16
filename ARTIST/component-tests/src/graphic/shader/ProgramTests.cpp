@@ -115,8 +115,8 @@ protected:
         ClassicPass second = makeClassicPass();
         EXPECT_NO_THROW(first.load());
         EXPECT_NO_THROW(second.load());
-        const GLuint program0 = first.getContext()->getPassID();
-        const GLuint program1 = second.getContext()->getPassID();
+        const GLuint program0 = first.getContext().getPassID();
+        const GLuint program1 = second.getContext().getPassID();
         return LoadedPipeline{ClassicPipeline(makePassVector(std::move(first), std::move(second))), program0, program1};
     }
 

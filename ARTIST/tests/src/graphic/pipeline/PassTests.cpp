@@ -191,8 +191,8 @@ TEST_F(PassTest, GetContext)
     shaders.push_back(std::move(mockShader));
     pipeline::Pass<api::MockOpenGL, Classic> pass(std::move(shaders));
 
-    // Act
-    ASSERT_NE(pass.getContext(), nullptr);
+    // Act: the getter borrows the owned context by reference.
+    ASSERT_EQ(pass.getContext().getShadersCount(), 1);
 }
 
 #endif //__mock_gl__
