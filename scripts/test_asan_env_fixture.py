@@ -130,11 +130,15 @@ def _patch_path_rename(raise_on) -> mock.patch:
 
 def _no_powershell_patches():
     """The staging fault happens before any arm; prove the runner never starts
-    a wrapper arm and never spawns any process at all (no PowerShell)."""
-    return (
-        mock.patch.object(_runner, "subprocess"),
-        mock.patch.object(_runner, "run_wrapper_restoration_arm"),
+    a wrapper arm and never spawns any process at all (no PowerShell).
+    Returns (patches to enter around the call, subprocess mock, arm mock)."""
+    subprocess_mock = mock.MagicMock(name="subprocess_replacement")
+    arm_mock = mock.MagicMock(name="run_wrapper_restoration_arm_replacement")
+    patches = (
+        mock.patch.object(_runner, "subprocess", new=subprocess_mock),
+        mock.patch.object(_runner, "run_wrapper_restoration_arm", new=arm_mock),
     )
+    return patches, subprocess_mock, arm_mock
 
 
 def _raise_blank_renamed_without_file(original, path: pathlib.Path, data: bytes) -> None:
@@ -157,8 +161,8 @@ class WriteErrorAfterRenameRestoreTests(unittest.TestCase):
     no PowerShell wrapper arm is ever started."""
 
     def _run_with_write_fault(self, fixture: BuildDirFixture, on_target, label: str):
-        subprocess_mock, arm_mock = _no_powershell_patches()
-        with _patch_path_write_bytes(fixture.build_dir, on_target), subprocess_mock, arm_mock, \
+        patches, subprocess_mock, arm_mock = _no_powershell_patches()
+        with _patch_path_write_bytes(fixture.build_dir, on_target), patches[0], patches[1], \
                 self.assertRaises(OSError) as raised:
             _runner.check_wrapper_restoration(fixture.scripts_dir, label)
         return raised.exception, subprocess_mock, arm_mock
@@ -227,9 +231,9 @@ class RollbackFailureReportingTests(unittest.TestCase):
                     return PermissionError(13, "injected restoration rename failure")
                 return None
 
-            subprocess_mock, arm_mock = _no_powershell_patches()
+            subprocess_patches, subprocess_mock, arm_mock = _no_powershell_patches()
             with _patch_path_write_bytes(fixture.build_dir, _raise_blank_renamed_without_file), \
-                    _patch_path_rename(refuse_rollback_rename), subprocess_mock, arm_mock, \
+                    _patch_path_rename(refuse_rollback_rename), subprocess_patches[0], subprocess_patches[1], \
                     self.assertRaises(RuntimeError) as raised:
                 _runner.check_wrapper_restoration(fixture.scripts_dir, "etape-restoration-rename-failure")
 
@@ -259,9 +263,9 @@ class RollbackFailureReportingTests(unittest.TestCase):
             fixture = BuildDirFixture(pathlib.Path(tmp), "real-dir")
             witness_before = fixture.witness_hash()
 
-            subprocess_mock, arm_mock = _no_powershell_patches()
+            subprocess_patches, subprocess_mock, arm_mock = _no_powershell_patches()
             with _patch_path_write_bytes(fixture.build_dir, _raise_after_foreign_partial_file), \
-                    subprocess_mock, arm_mock, \
+                    subprocess_patches[0], subprocess_patches[1], \
                     self.assertRaises(RuntimeError) as raised:
                 _runner.check_wrapper_restoration(fixture.scripts_dir, "etape-foreign-partial-file")
 
