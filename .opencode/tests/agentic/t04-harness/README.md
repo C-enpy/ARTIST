@@ -57,7 +57,9 @@ Aucun parseur déclaré dans le projet (pas de package.json à la racine ou dans
 - UTF-8 valide, LF/CRLF, BOM initial facultatif ; délimiteurs `---` seuls sur leur
   ligne ; mapping racine ; indentation exactement par pas de deux espaces ;
 - clés simples alphanumériques/underscore, `-`, `.`, `/`, ou clés quotées ;
-- chaînes simples, simples quotes avec `''`, doubles quotes/échappements JSON ;
+- texte plain commençant par une lettre Unicode ou `_`, sans caractères de
+  contrôle, `:` suivi d'espace/final ou amorce d'alias/anchor après un espace ;
+  simples quotes avec `''`, doubles quotes/échappements JSON ;
 - scalaires YAML core `true/True/TRUE`, `false/False/FALSE`, `null/Null/NULL`, `~`,
   nombres décimaux sans exposant ; les variantes reconnues ne deviennent pas du texte ;
 - mapping imbriqué et séquence de scalaires ou mappings (forme permissions V2) ;
@@ -69,9 +71,13 @@ Les clés dupliquées, tabulations, flow YAML non vide, tags, ancres/alias/merge
 directives, nombres hexadécimaux/dates non quotées et formes hors sous-ensemble
 sont rejetés explicitement, jamais ignorés pour obtenir PASS. Un bloc avec lignes
 vides est volontairement non supporté ; utiliser une description simple/quotée.
-Les indicateurs de séquence/mapping (`- item`, `? key`, `:` seul, etc.) et le
-`:` final d'un scalaire plain sont rejetés (`YAML_UNSUPPORTED`). Les contreparties
-quotées restent des strings. Il ne s'agit toujours pas d'un parseur YAML universel.
+Les autres amorces plain sont refusées par une grammaire positive, pas une liste
+noire partielle : `,item`, `-.5`, `+.5`, nombres avec exposant, dates, indicateurs
+de séquence/mapping, etc. produisent `YAML_UNSUPPORTED`. Même un texte YAML valide
+comme `-word`, `/path` ou `.text` exige des quotes dans ce sous-ensemble conservateur.
+Les types core/décimaux explicitement supportés restent typés ; les contreparties
+quotées restent des strings. Aucun fallback numérique ambigu vers du texte.
+Ce n'est pas un parseur YAML universel ; le corpus réel intégré est vérifié.
 Profondeur YAML limitée à 16, JSON à 64 ; chaque fichier à 4 Mio ; découverte
 limitée à 20 niveaux et 1000 entrées de profils/skills.
 
@@ -125,20 +131,50 @@ réouverture après ce deny. Coordinateur `orchestrator/primary` : la dernière
 règle applicable à `subagent/orchestrator` doit être deny ; les autres spécialistes
 restent délégables. Le mode primary reste interdit aux vraies feuilles.
 
-QA : deny-all initial ; `read/glob/grep` seulement sur un **fichier régulier
+QA **forme A**, conservatrice : deny-all initial ; `read/glob/grep` seulement sur un **fichier régulier
 existant exact**, relatif à root, sans évasion par junction/symlink. Chemins
 composés de lettres ASCII, chiffres, `_`, `.`, `-` et `/` ; backslashes normalisés,
 pas d'absolu/traversal/ADS. Tous les globs sont conservativement rejetés, y compris
 `**`, `**/*` et **`docs/**`**, qui peuvent rouvrir des secrets dans un sous-répertoire.
 `skill` accepte seulement un ID kebab-case exact ≤64 caractères. Les noms secrets
 conventionnels `.env*`, `.git`, `.ssh`, `.aws`, `.azure`, `.gnupg`, `.npmrc`, `.pypirc`,
-`secret(s)`, `credential(s)`, clés `id_rsa/dsa/ecdsa/ed25519`, extensions
+suffixes `.env`/`.env.*` (par exemple `production.ENV.local`), `secret(s)`,
+`credential(s)`, clés `id_rsa/dsa/ecdsa/ed25519`, extensions
 `key/pem/p12/pfx/kdbx` sont exclus sans sensibilité à la casse, même sous Windows.
 Les effets allow **et ask** demandent ces bornes ; les autres actions non deny sont
 refusées. Cette politique locale peut donc refuser des règles natives légitimes.
 Elle ne certifie pas le contenu non secret d'un fichier à nom quelconque : revue
-humaine des exceptions et protections héritées toujours requises. Aucun grant
-edit/shell/execute/MCP/subagent, aucun enforcement natif ou résolution de D-PERM.
+humaine des exceptions et protections héritées toujours requises.
+
+QA **forme B**, `qa-readonly-declared-v1` : reconnaissance du template déclaré
+adopté dans [le contrat F6](../../../evidence/mission-gpu-qa/qa-policy-boundary.md).
+Seuls `qa-planner`, `test-engineer`, `test-reviewer`, avec chemin littéral
+`.opencode/agents/<id>.md` et mode `subagent`, y sont éligibles. Les 27 triplets
+ordonnés sont une constante du **code de confiance**, jamais une policy chargée
+depuis un manifest, profil ou `expectations.json` candidat. L'oracle T05 reste
+indépendant. Une copie exacte sous un rôle étranger n'obtient pas l'exemption.
+
+Ordre exact : deny-all ; read:* ; glob:* ; skill:artist-build-validation ; 16 gardes
+read `*.env`/`*.env.*` dans les huit casses du contrat ; deux gardes récursifs
+`**/.env*`, `**/.ENV*` ; edit/shell/execute/subagent/external_directory deny sur `*`.
+Comparaison structurelle des valeurs littérales **sensible à la casse**, sans
+normalisation/glob simulation, ajout, suppression, permutation, doublon ni effet
+substitué. L'ordre des champs YAML dans un triplet est indifférent, pas celui des
+règles. Les FAIL schéma, identité, collisions et PERMISSION_SUBAGENT restent actifs.
+Échouer B ne permet jamais à A de reconnaître un wildcard comme fichier exact.
+
+`PERMISSION_QA.observed` donne agent/path, `form` A/B/null, `template`,
+`templateVersion`, `firstMismatch` et message. Premier écart : `field` pour
+id/path/mode, sinon `rule` **1-based**, avec expected/observed (null si absent).
+`firstMismatch:null` et « template déclaré reconnu » signifient B exact, sous
+`evidenceKind:static-presence`. `unsafe` désigne les exceptions hors forme A
+lorsque B n'est pas reconnu ; aucun de ces champs n'atteste la sécurité native.
+
+**D-PERM : mode décidé, enforcement non prouvé**. Aucun grant edit/shell/execute/
+MCP/subagent, aucun runner autonome ni sandbox créé. Les 27 règles n'attestent pas
+la confidentialité de tous les secrets, jonctions, règles héritées/session ou
+variantes de casse effectives. missionVerdict reste INCONCLUSIVE ; native-evidence
+reste exit2 faute d'authentification, ou exit1 en présence d'un FAIL prioritaire.
 
 Le manifest de **ce lot T04** ne déclare aucun profil/skill, car il possède un
 script et ses tests uniquement. L'utiliser seul rend donc exit 2 (`ZERO_SUBJECTS`),

@@ -63,7 +63,7 @@ function fixture(t, { git = false } = {}) {
 }
 
 function run(f, mode = 'offline', extra = [], env = process.env) {
-  const args = [script, '--mode', mode, '--root', f.root, '--manifest', 'manifest.json', ...extra];
+  const args = [script, '--mode', mode, '--root', f.root, '--manifest', f.manifestPath ?? 'manifest.json', ...extra];
   const result = spawnSync(process.execPath, args, { encoding: 'utf8', timeout: 20000, env });
   assert.equal(result.error, undefined, 'le processus de validation doit démarrer');
   assert.equal(result.signal, null, 'pas de terminaison par timeout/signal');
@@ -466,3 +466,204 @@ test('F5: worktree Git légitime (gitfile) préservé sans mutation', t => {
   assert.equal(result.json.candidate.head, f.gitRun(['rev-parse', 'HEAD']));
   assert.equal(result.status, 0); assert.deepEqual(snapshot(owned), before); assert.deepEqual(snapshot(f.root), beforeMain);
 });
+
+// T04-R2 : oracle T05 indépendant et inchangé, jamais chargé par le validateur.
+// Contrat adopté : evidence/mission-gpu-qa/qa-policy-boundary.md (27 triplets).
+const qaOracle = JSON.parse(fs.readFileSync(path.join(directory, '../t05-qa/fixtures/expectations.json'), 'utf8'));
+const qaIDs = ['qa-planner', 'test-engineer', 'test-reviewer'];
+const qaRules = qaOracle.permissions;
+const qaText = (rules = qaRules) => agentText(rules.map(r => rule(r.action, r.resource, r.effect)).join('\n'));
+const qaCheck = result => result.json.checks.find(c => c.code === 'PERMISSION_QA');
+const firstRuleDifference = rules => {
+  for (let i = 0; i < Math.max(rules.length, qaRules.length); i++) {
+    if (!rules[i] || !qaRules[i] || ['action', 'resource', 'effect'].some(k => rules[i][k] !== qaRules[i][k]))
+      return { rule: i + 1, expected: qaRules[i] ?? null, observed: rules[i] ?? null };
+  }
+  return null;
+};
+
+function assertDeclaredTemplate(result, id) {
+  const check = result.json.checks.find(c => c.code === 'PERMISSION_QA' && c.observed.agent === id);
+  assert.ok(check, `sujet QA réellement contrôlé : ${id}`);
+  assert.equal(check.verdict, 'PASS');
+  assert.equal(check.evidenceKind, 'static-presence');
+  assert.equal(check.observed.path, `.opencode/agents/${id}.md`);
+  assert.equal(check.observed.form, 'B');
+  assert.equal(check.observed.template, 'qa-readonly-declared-v1');
+  assert.equal(check.observed.templateVersion, 1);
+  assert.equal(check.observed.firstMismatch, null);
+  assert.equal(check.observed.message, 'template déclaré reconnu');
+  assert.match(check.expected, /mode décidé, enforcement non prouvé/);
+  assert.doesNotMatch(JSON.stringify(check), /D-PERM non résolu|enforcement vérifié|isolation vérifiée/);
+  assert.equal(result.json.missionVerdict, 'INCONCLUSIVE');
+}
+
+test('F6: les trois consommateurs T05 réels inchangés reconnaissent B, pas une preuve native', () => {
+  assert.equal(qaRules.length, 27);
+  assert.deepEqual(qaOracle.agents, qaIDs);
+  const root = path.resolve(directory, '../../../..');
+  const inputs = ['.opencode/tests/agentic/t05-qa/manifest.json',
+    '.opencode/tests/agentic/t05-qa/fixtures/expectations.json', ...qaIDs.map(id => `.opencode/agents/${id}.md`)];
+  const before = inputs.map(p => sha(fs.readFileSync(path.join(root, p))));
+  const result = run({ root, manifestPath: '.opencode/tests/agentic/t05-qa/manifest.json' });
+  assert.deepEqual(inputs.map(p => sha(fs.readFileSync(path.join(root, p)))), before);
+  assert.equal(result.status, 0, JSON.stringify(result.json.checks.filter(c => c.verdict === 'FAIL')));
+  assert.equal(result.json.checks.filter(c => c.code === 'PERMISSION_QA').length, 3);
+  for (const id of qaIDs) assertDeclaredTemplate(result, id);
+});
+
+for (const id of qaIDs) test(`F6: template B nominal et syntaxe équivalente pour ${id}`, t => {
+  const f = fixture(t);
+  for (const text of [qaText(), '\uFEFF' + agentText(qaRules.map(r =>
+    `  - effect: '${r.effect}' # commentaire\n    resource: '${r.resource}'\n    action: '${r.action}'`).join('\n')).replaceAll('\n', '\r\n')]) {
+    namedAgent(f, id, text);
+    const result = run(f);
+    assert.equal(result.status, 0); assertDeclaredTemplate(result, id);
+    has(result, 'PERMISSION_SUBAGENT', 'PASS');
+  }
+});
+
+// Chaque règle, pas un échantillon de gardes. Mutations de schéma VALIDE.
+for (let index = 0; index < qaRules.length; index++) {
+  const original = qaRules[index];
+  const changes = [
+    ['retirée', rules => rules.splice(index, 1)],
+    ['dupliquée', rules => rules.splice(index, 0, { ...rules[index] })],
+    ...['deny', 'ask', 'allow'].filter(effect => effect !== original.effect)
+      .map(effect => [`effet ${effect}`, rules => { rules[index].effect = effect; }]),
+  ];
+  if (index > 1 && original.effect === 'deny') changes.push(['avant read:*', rules => rules.splice(1, 0, ...rules.splice(index, 1))]);
+  for (const [mutation, change] of changes) test(`F6: règle ${index + 1} ${mutation} refusée causalement`, t => {
+    const f = fixture(t), rules = structuredClone(qaRules);
+    change(rules); namedAgent(f, 'test-reviewer', qaText(rules));
+    const result = run(f), expected = firstRuleDifference(rules);
+    assert.ok(result.json.checks.every(c => !['syntax', 'schema'].includes(c.level) || c.verdict === 'PASS'), 'mutant bien parsé/typé');
+    assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
+    assert.equal(qaCheck(result).observed.template, 'qa-readonly-declared-v1');
+    assert.equal(qaCheck(result).evidenceKind, 'static-presence');
+    assert.deepEqual(qaCheck(result).observed.firstMismatch, expected);
+  });
+}
+
+const lateOpenings = [
+  ['read', '*'], ['read', '**'], ['read', 'docs/.ENV'], ['read', 'docs/.eNv.local'],
+  ['read', 'docs/production.ENV.local'], ['external_directory', 'docs/guide.md'],
+  ['edit', '*'], ['shell', '*'], ['execute', '*'], ['subagent', '*'],
+  ['mcp__serena__replace_symbol_body', '*'], ['context-mode_ctx_execute', '*'],
+  ['team_*', '*'], ['team_message', 'lead'], ['skill', '*'], ['skill', 'example'], ['grep', '*'],
+];
+for (const [action, resource] of lateOpenings) for (const effect of ['allow', 'ask'])
+  test(`F6: ajout tardif ${action}/${resource}/${effect} interdit`, t => {
+    const f = fixture(t), rules = [...qaRules, { action, resource, effect }];
+    for (const name of ['.ENV', '.eNv.local', 'production.ENV.local', 'guide.md']) f.put(`docs/${name}`, 'inert fixture');
+    namedAgent(f, 'test-reviewer', qaText(rules));
+    const result = run(f); assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
+    assert.ok(result.json.checks.every(c => !['syntax', 'schema'].includes(c.level) || c.verdict === 'PASS'));
+    assert.deepEqual(qaCheck(result).observed.firstMismatch, firstRuleDifference(rules));
+    if (action === 'subagent') has(result, 'PERMISSION_SUBAGENT', 'FAIL');
+  });
+
+for (const [name, change] of [
+  ['permutation read/glob', r => { [r[1], r[2]] = [r[2], r[1]]; }],
+  ['casse action', r => { r[1].action = 'Read'; }],
+  ['casse garde', r => { r[4].resource = '*.ENV'; }],
+  ['wildcard substitué', r => { r[1].resource = '**'; }],
+  ['external_directory assoupli', r => { r[26].resource = 'elsewhere'; }],
+]) test(`F6: comparaison littérale sans normalisation : ${name}`, t => {
+  const f = fixture(t), rules = structuredClone(qaRules); change(rules);
+  namedAgent(f, 'test-reviewer', qaText(rules));
+  const result = run(f); assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
+  assert.deepEqual(qaCheck(result).observed.firstMismatch, firstRuleDifference(rules));
+});
+
+for (const mode of ['primary', 'all']) test(`F6: B ne dispense pas du mode subagent (${mode})`, t => {
+  const f = fixture(t); namedAgent(f, 'test-reviewer', qaText().replace('mode: subagent', `mode: ${mode}`));
+  const result = run(f); assert.equal(result.status, 1); has(result, 'LOCAL_MODE', 'FAIL'); has(result, 'PERMISSION_QA', 'FAIL');
+  assert.deepEqual(qaCheck(result).observed.firstMismatch, { field: 'mode', expected: 'subagent', observed: mode });
+});
+
+for (const [id, agentPath, field] of [
+  ['test-reviewer', '.opencode/agents/alias.md', 'path'],
+  ['test-reviewer', '.opencode/agents\\test-reviewer.md', 'path'],
+  ['rogue', '.opencode/agents/rogue.md', 'id'],
+  ['Test-reviewer', '.opencode/agents/Test-reviewer.md', 'id'],
+  ['rogue', '.opencode/agents/test-reviewer.md', 'id'],
+]) test(`F6: identité non éligible ${id}/${agentPath}`, t => {
+  const f = fixture(t);
+  f.manifest.agents = [{ id, path: agentPath, skills: ['example'] }];
+  f.manifest.allowedPaths.push(agentPath); f.manifest.requiredLinks = []; f.save(); f.put(agentPath.replaceAll('\\', '/'), qaText());
+  const result = run(f); assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
+  assert.equal(qaCheck(result).observed.firstMismatch.field, field);
+  assert.notEqual(qaCheck(result).observed.form, 'B');
+});
+
+test('F6: le template ne vient pas du manifest ni du fichier expectations candidat', t => {
+  const f = fixture(t), rules = [...qaRules, { action: 'shell', resource: '*', effect: 'allow' }];
+  f.put('.opencode/tests/agentic/t05-qa/fixtures/expectations.json', { agents: qaIDs, permissions: rules });
+  namedAgent(f, 'test-reviewer', qaText(rules));
+  const result = run(f); has(result, 'PERMISSION_QA', 'FAIL'); assert.equal(result.status, 1);
+  assert.deepEqual(qaCheck(result).observed.firstMismatch, firstRuleDifference(rules));
+  f.manifest.template = { name: 'qa-readonly-declared-v1', permissions: rules }; f.save();
+  const supplied = run(f); has(supplied, 'MANIFEST_SCHEMA', 'FAIL'); assert.equal(supplied.status, 1);
+});
+
+test('F6: template valide ne masque ni collision, ni schéma, ni FAIL prioritaire natif', t => {
+  const f = fixture(t); namedAgent(f, 'test-reviewer', qaText());
+  f.manifest.agents.push({ ...f.manifest.agents[0] }); f.save();
+  const collision = run(f); assert.equal(collision.status, 1); has(collision, 'ID_COLLISION', 'FAIL');
+  f.manifest.agents.pop(); f.save();
+  f.put('.opencode/agents/test-reviewer.md', qaText().replace('description:', 'unexpected: value\ndescription:'));
+  const schema = run(f); assert.equal(schema.status, 1); has(schema, 'SCHEMA_FIELD', 'FAIL');
+  f.put('.opencode/agents/test-reviewer.md', qaText()); f.put('evidence.json', { schemaVersion: 1 });
+  const native = run(f, 'native-evidence', ['--evidence', 'evidence.json']);
+  assert.equal(native.status, 2); assertDeclaredTemplate(native, 'test-reviewer');
+  has(native, 'NATIVE_AUTHENTICITY', 'INCONCLUSIVE'); has(native, 'CANARY_COVERAGE', 'INCONCLUSIVE');
+  f.put('.opencode/agents/test-reviewer.md', qaText([...qaRules, { action: 'execute', resource: '*', effect: 'allow' }]));
+  const failed = run(f, 'native-evidence', ['--evidence', 'evidence.json']);
+  assert.equal(failed.status, 1); has(failed, 'PERMISSION_QA', 'FAIL'); has(failed, 'NATIVE_AUTHENTICITY', 'INCONCLUSIVE');
+});
+
+for (const env of ['env', 'ENV', 'Env', 'eNv', 'enV', 'ENv', 'EnV', 'eNV'])
+  for (const suffix of ['', '.local', '.staging.backup']) test(`F1-R: suffixe production.${env}${suffix} reste secret`, t => {
+    const f = fixture(t), resource = `docs/production.${env}${suffix}`;
+    f.put(resource, 'inert secret sentinel');
+    namedAgent(f, 'test-reviewer', agentText(`${denyAll}\n${rule('read', `*.${env}*`, 'deny')}\n${rule('read', resource)}`));
+    const result = run(f); assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
+    assert.deepEqual(qaCheck(result).observed.unsafe, [{ action: 'read', resource, effect: 'allow' }]);
+  });
+
+test('F1-R: forme A nominale docs/guide.md et suffixe non env préservés', t => {
+  const f = fixture(t);
+  for (const resource of ['docs/guide.md', 'docs/environment.md', 'docs/production.environment.md']) {
+    f.put(resource, 'inert guide'); namedAgent(f, 'test-reviewer', agentText(`${denyAll}\n${rule('read', resource)}`));
+    const result = run(f); assert.equal(result.status, 0); has(result, 'PERMISSION_QA', 'PASS');
+  }
+});
+
+// Grammaire plain conservatrice : texte commence par lettre Unicode ou '_'.
+// Décimaux/types core sont traités à part ; toute autre amorce exige des quotes.
+for (const value of [',item', ',', '-.5', '+.5', '-.25e2', '+.25E-2', '.5', '+42', '01', '0x20', '1e3',
+  '.Inf', '-.inf', '.NaN', '2026-10-16', '@name', '%name', '`name', '!tag', '&ref', '*ref',
+  '[item]', '{item}', '|text', '>text', '-word', '?word', ':word', '/path', '.text'])
+  test(`F2-R: classe plain/core bornée rejette ${value}, quotes préservées`, t => {
+    const f = fixture(t);
+    const put = text => f.put('.opencode/skills/example/SKILL.md', skillText('example').replace('Contrat de fixture inerte.', text));
+    put(value); const result = run(f, 'syntax');
+    assert.equal(result.status, 1); has(result, 'YAML_UNSUPPORTED', 'FAIL');
+    for (const quoted of [JSON.stringify(value), `'${value}'`]) { put(quoted); assert.equal(run(f, 'schema').status, 0); }
+  });
+
+for (const value of ['0', '-42', '12.5', 'true', 'TRUE', 'False', 'null', 'NULL', '~'])
+  test(`F2-R: scalaire typé supporté ${value}, jamais description texte`, t => {
+    const f = fixture(t);
+    f.put('.opencode/skills/example/SKILL.md', skillText('example').replace('Contrat de fixture inerte.', value));
+    assert.equal(run(f, 'syntax').status, 0);
+    const result = run(f, 'schema'); assert.equal(result.status, 1); has(result, 'SCHEMA_TYPE', 'FAIL');
+  });
+
+for (const value of ['Texte simple', 'État _initial avec 23 éléments.', '_identifier', 'alpha-beta/path', 'Texte, virgule interne.'])
+  test(`F2-R: texte plain nominal ${value}`, t => {
+    const f = fixture(t);
+    f.put('.opencode/skills/example/SKILL.md', skillText('example').replace('Contrat de fixture inerte.', value));
+    assert.equal(run(f, 'schema').status, 0);
+  });
