@@ -125,12 +125,12 @@ TEST_F(ShaderLifetimeComponentTests, PassLifecycleOnRealDriver)
 
     pipeline::Pass<api::OpenGL, profile::Pass::Classic> pass(std::move(shaders));
     ASSERT_NO_THROW(pass.load());
-    const auto programID = pass.getContext()->getPassID();
+    const auto programID = pass.getContext().getPassID();
     ASSERT_NE(programID, 0);
 
     ASSERT_NO_THROW(pass.use());
     ASSERT_NO_THROW(pass.free());
-    ASSERT_EQ(pass.getContext()->getPassID(), 0);
+    ASSERT_EQ(pass.getContext().getPassID(), 0);
     ASSERT_NO_THROW(pass.free()); // idempotent on the driver path
 }
 
@@ -164,26 +164,34 @@ TEST_F(ShaderLifetimeComponentTests, MoveAssignLoadedPassReleasesDestination)
 {
     auto destination = makePass();
     auto source = makePass();
+    const auto *sourceContext = &source->getContext();
     destination->load();
     source->load();
-    const auto oldProgram = destination->getContext()->getPassID();
+    const auto oldProgram = destination->getContext().getPassID();
     const auto oldVertex = destination->getShader(0).getContext().getShaderID();
     const auto oldFragment = destination->getShader(1).getContext().getShaderID();
-    const auto transferredProgram = source->getContext()->getPassID();
+    const auto transferredProgram = source->getContext().getPassID();
     const auto transferredVertex = source->getShader(0).getContext().getShaderID();
     const auto transferredFragment = source->getShader(1).getContext().getShaderID();
     ASSERT_EQ(glIsProgram(oldProgram), GL_TRUE);
     ASSERT_EQ(glIsProgram(transferredProgram), GL_TRUE);
     ASSERT_NE(oldProgram, transferredProgram);
     glUseProgram(0); // neither program is current: deletion must be immediate
+    ASSERT_EQ(glIsShader(oldVertex), GL_TRUE);
+    ASSERT_EQ(glIsShader(oldFragment), GL_TRUE);
 
     *destination = std::move(*source);
 
+    // D-A2: the pass owns its context uniquely — releasing the program retires
+    // the destination shaders too (they died with the replaced context): no
+    // alias can prolong them.
     EXPECT_EQ(glIsProgram(oldProgram), GL_FALSE);
     EXPECT_EQ(glIsShader(oldVertex), GL_FALSE);
     EXPECT_EQ(glIsShader(oldFragment), GL_FALSE);
     EXPECT_EQ(glIsProgram(transferredProgram), GL_TRUE);
-    EXPECT_EQ(source->getContext(), nullptr);
+    EXPECT_EQ(&destination->getContext(), sourceContext);
+    EXPECT_EQ(destination->getContext().getPassID(), transferredProgram);
+    EXPECT_THROW((void)source->getContext(), std::runtime_error);
     source.reset();
     EXPECT_EQ(glIsProgram(transferredProgram), GL_TRUE);
     destination.reset();
@@ -192,20 +200,25 @@ TEST_F(ShaderLifetimeComponentTests, MoveAssignLoadedPassReleasesDestination)
     EXPECT_EQ(glIsShader(transferredFragment), GL_FALSE);
 }
 
-TEST_F(ShaderLifetimeComponentTests, PassMoveAssignmentRetiresProgramButKeepsAliasedShaders)
+/// D-A2 replacement of the archived characterization
+/// PassMoveAssignmentRetiresProgramButKeepsAliasedShaders (executed PASS in the
+/// I0 verification, normal + ASan): the pass owns its context uniquely, so the
+/// assignment releases the destination program and destroys the replaced
+/// context together with its shaders — no alias can prolong them. The
+/// transferred program and its shaders die with the destination owner.
+TEST_F(ShaderLifetimeComponentTests, PassMoveAssignmentDestroysDestinationContextAndShaders)
 {
     auto destination = makePass();
     auto source = makePass();
     destination->load();
     source->load();
-    auto oldAlias = destination->getContext();
-    auto transferredAlias = source->getContext();
-    const auto oldProgram = oldAlias->getPassID();
-    const auto oldVertex = oldAlias->getShader(0).getContext().getShaderID();
-    const auto oldFragment = oldAlias->getShader(1).getContext().getShaderID();
-    const auto transferredProgram = transferredAlias->getPassID();
-    const auto transferredVertex = transferredAlias->getShader(0).getContext().getShaderID();
-    const auto transferredFragment = transferredAlias->getShader(1).getContext().getShaderID();
+    const auto *sourceContext = &source->getContext();
+    const auto oldProgram = destination->getContext().getPassID();
+    const auto oldVertex = destination->getShader(0).getContext().getShaderID();
+    const auto oldFragment = destination->getShader(1).getContext().getShaderID();
+    const auto transferredProgram = source->getContext().getPassID();
+    const auto transferredVertex = source->getShader(0).getContext().getShaderID();
+    const auto transferredFragment = source->getShader(1).getContext().getShaderID();
     ASSERT_EQ(glIsProgram(oldProgram), GL_TRUE);
     ASSERT_EQ(glIsProgram(transferredProgram), GL_TRUE);
     ASSERT_EQ(glIsShader(oldVertex), GL_TRUE);
@@ -214,25 +227,24 @@ TEST_F(ShaderLifetimeComponentTests, PassMoveAssignmentRetiresProgramButKeepsAli
 
     *destination = std::move(*source);
 
-    EXPECT_EQ(oldAlias->getPassID(), 0u);
     EXPECT_EQ(glIsProgram(oldProgram), GL_FALSE);
-    EXPECT_EQ(glIsShader(oldVertex), GL_TRUE);
-    EXPECT_EQ(glIsShader(oldFragment), GL_TRUE);
-    EXPECT_EQ(destination->getContext(), transferredAlias);
-    EXPECT_NE(destination->getContext(), oldAlias);
-    EXPECT_EQ(source->getContext(), nullptr);
-    source.reset();
-    EXPECT_EQ(glIsProgram(transferredProgram), GL_TRUE);
-    oldAlias.reset();
+    // Replaced context destroyed at the transfer, with its shaders — the
+    // historic alias could keep these alive; unique ownership cannot.
     EXPECT_EQ(glIsShader(oldVertex), GL_FALSE);
     EXPECT_EQ(glIsShader(oldFragment), GL_FALSE);
-
-    destination.reset();
-    EXPECT_EQ(transferredAlias->getPassID(), 0u);
-    EXPECT_EQ(glIsProgram(transferredProgram), GL_FALSE);
+    EXPECT_EQ(glIsProgram(transferredProgram), GL_TRUE);
     EXPECT_EQ(glIsShader(transferredVertex), GL_TRUE);
     EXPECT_EQ(glIsShader(transferredFragment), GL_TRUE);
-    transferredAlias.reset(); // all aliases die while this GL context is current
+    EXPECT_EQ(&destination->getContext(), sourceContext);
+    EXPECT_EQ(destination->getContext().getPassID(), transferredProgram);
+    EXPECT_THROW((void)source->getContext(), std::runtime_error);
+    source.reset();
+    EXPECT_EQ(glIsProgram(transferredProgram), GL_TRUE);
+    EXPECT_EQ(glIsShader(transferredVertex), GL_TRUE);
+    EXPECT_EQ(glIsShader(transferredFragment), GL_TRUE);
+
+    destination.reset();
+    EXPECT_EQ(glIsProgram(transferredProgram), GL_FALSE);
     EXPECT_EQ(glIsShader(transferredVertex), GL_FALSE);
     EXPECT_EQ(glIsShader(transferredFragment), GL_FALSE);
 }
@@ -243,15 +255,15 @@ TEST_F(ShaderLifetimeComponentTests, MoveAssignCurrentPassDefersNativeDeletionUn
     auto source = makePass();
     destination->load();
     source->load();
-    const auto oldProgram = destination->getContext()->getPassID();
-    const auto transferredProgram = source->getContext()->getPassID();
+    const auto oldProgram = destination->getContext().getPassID();
+    const auto transferredProgram = source->getContext().getPassID();
     ASSERT_EQ(glIsProgram(oldProgram), GL_TRUE);
     ASSERT_EQ(glIsProgram(transferredProgram), GL_TRUE);
     destination->use();
 
     *destination = std::move(*source);
 
-    EXPECT_EQ(destination->getContext()->getPassID(), transferredProgram);
+    EXPECT_EQ(destination->getContext().getPassID(), transferredProgram);
     EXPECT_EQ(glIsProgram(oldProgram), GL_TRUE); // GL, not the wrapper, retains it
     GLint deleted = GL_FALSE;
     glGetProgramiv(oldProgram, GL_DELETE_STATUS, &deleted);
