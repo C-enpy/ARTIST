@@ -8,6 +8,7 @@
   "allowedPaths": [
     ".opencode/scripts/validate-agentic.mjs",
     ".opencode/tests/agentic/t04-harness/**",
-    ".opencode/evidence/mission-gpu-qa/t04-result.md"
+    ".opencode/evidence/mission-gpu-qa/t04-result.md",
+    ".opencode/evidence/mission-gpu-qa/t04-fix-result.md"
   ]
 }

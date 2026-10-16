@@ -15,7 +15,7 @@ node .opencode/scripts/validate-agentic.mjs --mode syntax --root . --manifest <m
 node .opencode/scripts/validate-agentic.mjs --mode schema --root . --manifest <manifest.json>
 node .opencode/scripts/validate-agentic.mjs --mode offline --root . --manifest <manifest.json>
 node .opencode/scripts/validate-agentic.mjs --mode native-evidence --root . --manifest <manifest.json> --evidence <native-observations.json>
-node --test .opencode/tests/agentic/t04-harness/contract.test.mjs
+node .opencode/tests/agentic/t04-harness/run-tests.mjs all
 ```
 
 Les chevrons sont des paramètres à remplacer, pas des commandes exécutées.
@@ -58,7 +58,8 @@ Aucun parseur déclaré dans le projet (pas de package.json à la racine ou dans
   ligne ; mapping racine ; indentation exactement par pas de deux espaces ;
 - clés simples alphanumériques/underscore, `-`, `.`, `/`, ou clés quotées ;
 - chaînes simples, simples quotes avec `''`, doubles quotes/échappements JSON ;
-- scalaires `true`, `false`, `null`, `~`, nombres décimaux sans exposant ;
+- scalaires YAML core `true/True/TRUE`, `false/False/FALSE`, `null/Null/NULL`, `~`,
+  nombres décimaux sans exposant ; les variantes reconnues ne deviennent pas du texte ;
 - mapping imbriqué et séquence de scalaires ou mappings (forme permissions V2) ;
 - conteneurs vides `[]` et `{}` ; commentaires hors quotes ;
 - blocs `>`, `>-`, `|`, `|-` **un seul paragraphe**, indentation uniforme de deux
@@ -68,6 +69,9 @@ Les clés dupliquées, tabulations, flow YAML non vide, tags, ancres/alias/merge
 directives, nombres hexadécimaux/dates non quotées et formes hors sous-ensemble
 sont rejetés explicitement, jamais ignorés pour obtenir PASS. Un bloc avec lignes
 vides est volontairement non supporté ; utiliser une description simple/quotée.
+Les indicateurs de séquence/mapping (`- item`, `? key`, `:` seul, etc.) et le
+`:` final d'un scalaire plain sont rejetés (`YAML_UNSUPPORTED`). Les contreparties
+quotées restent des strings. Il ne s'agit toujours pas d'un parseur YAML universel.
 Profondeur YAML limitée à 16, JSON à 64 ; chaque fichier à 4 Mio ; découverte
 limitée à 20 niveaux et 1000 entrées de profils/skills.
 
@@ -116,11 +120,25 @@ Les six IDs historiques doivent exister ; cela ne certifie pas la préservation
 octet à octet de leurs contenus. Une base Git exacte indisponible n'empêche pas
 les contrôles statiques, mais laisse l'identité native INCONCLUSIVE.
 
-Permissions : ordre conservé, deny universel `subagent` sans réouverture après
-ce deny. QA : deny-all initial, seuls read/glob/grep/skill bornés sont analysables ;
-aucun grant edit/shell/execute/MCP/subagent. Lecture générale annulant les
-protections secrets rejetée. Cette analyse conservatrice n'émule pas les règles
-héritées du runtime, ne prouve pas leur enforcement et ne résout pas D-PERM.
+Permissions : ordre conservé. Feuilles : deny universel `subagent` sans
+réouverture après ce deny. Coordinateur `orchestrator/primary` : la dernière
+règle applicable à `subagent/orchestrator` doit être deny ; les autres spécialistes
+restent délégables. Le mode primary reste interdit aux vraies feuilles.
+
+QA : deny-all initial ; `read/glob/grep` seulement sur un **fichier régulier
+existant exact**, relatif à root, sans évasion par junction/symlink. Chemins
+composés de lettres ASCII, chiffres, `_`, `.`, `-` et `/` ; backslashes normalisés,
+pas d'absolu/traversal/ADS. Tous les globs sont conservativement rejetés, y compris
+`**`, `**/*` et **`docs/**`**, qui peuvent rouvrir des secrets dans un sous-répertoire.
+`skill` accepte seulement un ID kebab-case exact ≤64 caractères. Les noms secrets
+conventionnels `.env*`, `.git`, `.ssh`, `.aws`, `.azure`, `.gnupg`, `.npmrc`, `.pypirc`,
+`secret(s)`, `credential(s)`, clés `id_rsa/dsa/ecdsa/ed25519`, extensions
+`key/pem/p12/pfx/kdbx` sont exclus sans sensibilité à la casse, même sous Windows.
+Les effets allow **et ask** demandent ces bornes ; les autres actions non deny sont
+refusées. Cette politique locale peut donc refuser des règles natives légitimes.
+Elle ne certifie pas le contenu non secret d'un fichier à nom quelconque : revue
+humaine des exceptions et protections héritées toujours requises. Aucun grant
+edit/shell/execute/MCP/subagent, aucun enforcement natif ou résolution de D-PERM.
 
 Le manifest de **ce lot T04** ne déclare aucun profil/skill, car il possède un
 script et ses tests uniquement. L'utiliser seul rend donc exit 2 (`ZERO_SUBJECTS`),
@@ -134,6 +152,10 @@ effectivement lues. HEAD via `git rev-parse` et blobs via `git ls-tree` en lectu
 seule (`--no-optional-locks`, fsmonitor désactivé). Aucun `git diff` susceptible
 d'invoquer un clean filter, aucun hook, import/évaluation de fixture ou commande
 tirée des données. Les octets courants sont comparés aux blobs HEAD **sans filtre**.
+Toutes les variables `GIT_*` héritées sont retirées (casse comprise), puis les
+configs globale/système sont neutralisées sans écrire de fichier ; les gitfiles
+des worktrees légitimes restent reconnus. Cela évite un HEAD étranger via
+`GIT_DIR` + `GIT_WORK_TREE` même quand `--show-toplevel` ressemble à root.
 
 `candidate.delta.sha256` = SHA-256 de la liste JSON ordonnée des différences
 `[{path,headBlob,sha256}]`, ou SHA-256 de la chaîne vide si aucune différence.
@@ -202,11 +224,22 @@ unitaire. Pas de catalogue/canari/GPU déclenché par ce lot.
 Le test Node invoque le CLI en subprocess, sans importer son implémentation.
 Les oracles et les douze scénarios viennent explicitement du plan/T03. Fixtures
 créées sous `.run-*` dans **ce répertoire seulement**, supprimées après chaque
-test ; les fixtures Git ont leur identité de commit locale, sans configuration
-globale. Le test symlink/junction signale un skip INCONCLUSIVE uniquement si sa
+test. `run-tests.mjs [all|isolation|contract] [test-name-pattern]` lance seulement
+ces suites relues, jamais un chemin/une commande de manifest ; limite 180 s,
+une suite à la fois. Runner et `git-fixture.mjs` neutralisent l'environnement Git,
+HOME/USERPROFILE/XDG_CONFIG_HOME et les configs globale/système/paramétrées ;
+hooks/templates vides possédés, timeout Git 10 s. Le helper vérifie racine et
+git-dir **réels** avant add/commit et refuse un `.git` sortant. Le runner ne
+nettoie que son mkdtemp, jamais un chemin hérité ; chaque test nettoie ses propres
+mkdtemp. `isolation.test.mjs` utilise deux dépôts jetables possédés, sentinelles
+refs/index/hooks/config/templates et un hook inerte relu (marqueur stderr + exit 73).
+Aucune configuration Git globale de l'utilisateur n'est modifiée.
+Le test symlink/junction signale un skip INCONCLUSIVE uniquement si sa
 création est réellement indisponible. Les autres tests ne sont pas skippés.
 
 La réexécution compare stdout octet à octet et snapshot des fichiers, y compris
 `.git`. Aucun témoin moteur/GPU n'est remplacé par une fixture : cette suite
 valide exclusivement le contrat du harness. Preuves RED/GREEN et limites dans
 [t04-result](../../../evidence/mission-gpu-qa/t04-result.md).
+Correctif de revue, RED/GREEN et nouvelles empreintes :
+[t04-fix-result](../../../evidence/mission-gpu-qa/t04-fix-result.md).

@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
+import { fixtureGit } from './git-fixture.mjs';
 
 // Oracle indépendant : T03 §6–7, plan QA G-03/06/07/08 et T-06/07.
 // Aucun import du validateur, aucune fixture exécutée, aucun appel OpenCode.
@@ -51,11 +52,7 @@ function fixture(t, { git = false } = {}) {
   };
   const save = () => put('manifest.json', manifest);
   save();
-  const gitRun = args => {
-    const run = spawnSync('git', ['--no-optional-locks', '-C', root, ...args], { encoding: 'utf8' });
-    assert.equal(run.status, 0, `précondition Git fixture : ${run.stderr}`);
-    return run.stdout.trim();
-  };
+  const gitRun = fixtureGit(root);
   if (git) {
     gitRun(['init', '--quiet']);
     gitRun(['add', '.']);
@@ -65,9 +62,9 @@ function fixture(t, { git = false } = {}) {
   return { root, put, manifest, save, gitRun };
 }
 
-function run(f, mode = 'offline', extra = []) {
+function run(f, mode = 'offline', extra = [], env = process.env) {
   const args = [script, '--mode', mode, '--root', f.root, '--manifest', 'manifest.json', ...extra];
-  const result = spawnSync(process.execPath, args, { encoding: 'utf8', timeout: 20000 });
+  const result = spawnSync(process.execPath, args, { encoding: 'utf8', timeout: 20000, env });
   assert.equal(result.error, undefined, 'le processus de validation doit démarrer');
   assert.equal(result.signal, null, 'pas de terminaison par timeout/signal');
   assert.equal(result.stderr, '', 'diagnostics structurés exclusivement sur stdout');
@@ -376,4 +373,96 @@ test('catalogue externe : objet vide non qualifié de règles effectives', t => 
   const f = nativeFixture(t); f.evidence.catalogue.effectiveRules = [{}];
   const result = f.execute(); assert.equal(result.status, 1); has(result, 'EVIDENCE_SCHEMA', 'FAIL');
   has(result, 'NATIVE_CATALOGUE', 'INCONCLUSIVE');
+});
+
+function namedAgent(f, id, body) {
+  f.manifest.agents[0] = { id, path: `.opencode/agents/${id}.md`, skills: ['example'] };
+  f.manifest.allowedPaths.push(`.opencode/agents/${id}.md`);
+  f.manifest.requiredLinks = []; f.save(); f.put(`.opencode/agents/${id}.md`, body);
+}
+const denyAll = '  - action: "*"\n    resource: "*"\n    effect: deny';
+const rule = (action, resource, effect = 'allow') =>
+  `  - action: ${JSON.stringify(action)}\n    resource: ${JSON.stringify(resource)}\n    effect: ${effect}`;
+
+for (const resource of ['**', '***', '**/*', '*/*', './**', '/**', 'C:/**', 'docs/**',
+  'docs/.ENV', 'docs/.Env.local', 'docs\\.ENV.secret', 'docs/credentials.json', '.git/config'])
+  test(`F1: exception QA non bornée/secrète refusée : ${resource}`, t => {
+    const f = fixture(t);
+    for (const name of ['.ENV', '.Env.local', '.ENV.secret', 'credentials.json']) f.put(`docs/${name}`, 'inert secret sentinel');
+    namedAgent(f, 'test-reviewer', agentText(`${denyAll}\n${rule('read', resource)}`));
+    const result = run(f); has(result, 'PERMISSION_QA', 'FAIL'); assert.equal(result.status, 1);
+  });
+
+for (const [action, resource] of [['read', '.opencode/skills/example/SKILL.md'],
+  ['glob', '.opencode/skills/example/SKILL.md'], ['grep', '.opencode/skills/example/SKILL.md'], ['skill', 'example']])
+  test(`F1: exception QA exacte bornée acceptée : ${action}`, t => {
+    const f = fixture(t);
+    namedAgent(f, 'test-reviewer', agentText(`${denyAll}\n${rule(action, resource)}`));
+    const result = run(f); has(result, 'PERMISSION_QA', 'PASS'); assert.equal(result.status, 0);
+  });
+
+for (const [action, effect] of [['glob', 'allow'], ['grep', 'allow'], ['skill', 'allow'], ['read', 'ask']])
+  test(`F1: glob global ${action}/${effect} non qualifié de borné`, t => {
+    const f = fixture(t);
+    namedAgent(f, 'test-reviewer', agentText(`${denyAll}\n${rule(action, '**', effect)}`));
+    const result = run(f); has(result, 'PERMISSION_QA', 'FAIL'); assert.equal(result.status, 1);
+  });
+
+for (const value of ['- item', '? key', ': item', '-', '?', ':', 'texte:'])
+  test(`F2: scalaire ambigu non quoté refusé : ${value}`, t => {
+    const f = fixture(t);
+    f.put('.opencode/skills/example/SKILL.md', skillText('example').replace('Contrat de fixture inerte.', value));
+    const result = run(f, 'syntax'); has(result, 'YAML_UNSUPPORTED', 'FAIL'); assert.equal(result.status, 1);
+    f.put('.opencode/skills/example/SKILL.md', skillText('example').replace('Contrat de fixture inerte.', JSON.stringify(value)));
+    assert.equal(run(f, 'schema').status, 0, 'texte explicitement quoté conservé');
+  });
+
+for (const value of ['True', 'TRUE', 'False', 'FALSE', 'Null', 'NULL'])
+  test(`F2: type YAML core reconnu, pas description string : ${value}`, t => {
+    const f = fixture(t);
+    f.put('.opencode/skills/example/SKILL.md', skillText('example').replace('Contrat de fixture inerte.', value));
+    assert.equal(run(f, 'syntax').status, 0);
+    const result = run(f, 'schema'); has(result, 'SCHEMA_TYPE', 'FAIL'); assert.equal(result.status, 1);
+    f.put('.opencode/skills/example/SKILL.md', skillText('example').replace('Contrat de fixture inerte.', `'${value}'`));
+    assert.equal(run(f, 'schema').status, 0, 'contrepartie quotée est une string');
+  });
+
+test('F3: orchestrator primary peut déléguer sauf à lui-même, dernière règle gagnante', t => {
+  const f = fixture(t);
+  const set = rules => namedAgent(f, 'orchestrator', agentText(rules).replace('mode: subagent', 'mode: primary'));
+  const selfDeny = rule('subagent', 'orchestrator', 'deny'), allow = rule('subagent', '*');
+  for (const rules of [selfDeny, `${allow}\n${selfDeny}`, `${denyAll}\n${rule('subagent', 'helper')}`]) {
+    set(rules); const result = run(f); has(result, 'PERMISSION_SUBAGENT', 'PASS'); assert.equal(result.status, 0);
+  }
+  for (const rules of [allow, `${selfDeny}\n${allow}`, rule('subagent', 'helper', 'deny')]) {
+    set(rules); const result = run(f); has(result, 'PERMISSION_SUBAGENT', 'FAIL'); assert.equal(result.status, 1);
+  }
+});
+
+test('F5: candidate.head provient de root et non du GIT_DIR de la seconde fixture', t => {
+  const f = fixture(t, { git: true }), victim = fixture(t, { git: true });
+  victim.put('victim-sentinel', 'distinct HEAD'); victim.gitRun(['add', '.']);
+  victim.gitRun(['-c', 'user.name=T04 fixture', '-c', 'user.email=t04@example.invalid',
+    '-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'victim distinct']);
+  const head = f.gitRun(['rev-parse', 'HEAD']), victimHead = victim.gitRun(['rev-parse', 'HEAD']);
+  assert.notEqual(head, victimHead, 'expérience discriminante : deux HEAD distincts');
+  const before = snapshot(victim.root), sourceBefore = snapshot(f.root);
+  const result = run(f, 'offline', [], { ...process.env, GIT_DIR: path.join(victim.root, '.git'),
+    GIT_WORK_TREE: f.root, GIT_INDEX_FILE: path.join(victim.root, '.git/index') });
+  t.diagnostic(JSON.stringify({ root: f.root, victim: victim.root, head, victimHead,
+    observed: result.json.candidate.head, victimSentinels: before }));
+  assert.deepEqual(snapshot(victim.root), before); assert.deepEqual(snapshot(f.root), sourceBefore);
+  assert.equal(result.json.candidate.head, head, 'GIT_WORK_TREE ne suffit pas à authentifier GIT_DIR');
+  assert.equal(result.status, 0); assert.equal(result.json.candidate.scope, 'validated-inputs');
+});
+
+test('F5: worktree Git légitime (gitfile) préservé sans mutation', t => {
+  const f = fixture(t, { git: true });
+  const owned = fs.mkdtempSync(path.join(directory, '.run-worktree-'));
+  t.after(() => fs.rmSync(owned, { recursive: true, force: true }));
+  const checkout = path.join(owned, 'checkout');
+  f.gitRun(['worktree', 'add', '--quiet', '--detach', checkout, 'HEAD']);
+  const before = snapshot(owned), beforeMain = snapshot(f.root), result = run({ root: checkout });
+  assert.equal(result.json.candidate.head, f.gitRun(['rev-parse', 'HEAD']));
+  assert.equal(result.status, 0); assert.deepEqual(snapshot(owned), before); assert.deepEqual(snapshot(f.root), beforeMain);
 });
