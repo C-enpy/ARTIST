@@ -2,11 +2,11 @@
 title: Build et tests actuels
 category: development
 tags: [artist, build, testing, guide]
-summary: Windows MSVC et Conan 2 vérifiés, 143 tests normaux et ASan opt-in séparé ; commandes, instrumentation et limites.
+summary: Windows MSVC et Conan 2 vérifiés, 165 tests normaux et ASan opt-in séparé (143 cas sélectionnés) ; commandes, instrumentation et limites.
 status: verified-windows-debug
 created: 2026-10-03
-updated: 2026-10-15
-sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md]
+updated: 2026-10-16
+sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -15,7 +15,80 @@ provenance:
 
 # Build et tests actuels
 
+## Mission C — contrats d'échec bornés — validation indépendante du 2026-10-15
+
+Intégrée au HEAD `e736bba` (C1 `b00f484` puis C2, base `30a46b5` contenant F5 ;
+diff `30a46b5..e736bba` = 16 fichiers, +692/−54, SHA-256 des 16 fichiers
+identiques entre worktree DOC, dépôt principal et `sourceDiff` de
+`qa-report.json`). Campagne finale propre : **165/165 distincts** —
+`normal-clean-unit.xml` 134/134 et `normal-clean-opengl.xml` 31/31 (21:07),
+première campagne identique (20:58) — zéro échec, skip, disabled ou timeout.
+ASan séparé clean-first : `asan-clean-unit.xml` 134/134 et
+`asan-clean-opengl-lifetime.xml` 9/9, soit **143 cas distincts**, options
+strictes `halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0` fixées
+dans chaque processus invoquant CTest, sans `log_path` ; les 22 autres GL ne
+sont pas sélectionnés (`asanNotSelected = 22`), ce n'est pas un abandon. GPU
+réel RTX 3090 / OpenGL 3.3.0 / driver 617.42.
+
+RED causaux conservés : C1 `c1-red-focused.xml` (19:55), 8 échecs sur 25 — 2
+tests de publication Q3, 5 diagnostics pass, 1 `AberrantLength` (INT_MAX) ;
+C2 `mission-c2-red-exact.xml` (20:38), 11 échecs sur 16 — 10 cas F4 par
+plantage CRT `0xc0000409` (STL debug) et `ReadShaderTest_AbsentFileRejected`.
+GREEN : `c1-green-focused.xml` 66/66, `mission-c2-green-focused.xml` 94/94,
+`mission-c2-green-ctest.xml` 165/165.
+
+Comportements vérifiés dans le code à ce HEAD : capacité d'info-log clampée à
+`[1, 4096]` avec `written` et l'accès terminal bornés
+(`shader/Loader.hpp:82-83`, `pass/Loader.hpp:97-98`) ; publication différée du
+handle programme — un seul `setPassID` (`pass/Loader.hpp:69`) après un lien
+vérifié, `glDeleteProgram` une fois puis relance en échec pré-publication
+(`pass/Loader.hpp:35-69`) ; gardes d'accès `getShader`/`getPass` avant
+indexation (`PassContext.hpp:79-86`, `PipelineContext.hpp:38-45`, exceptions
+métier `ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE` et
+`ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE`) ; `Reader.hpp` ne garde que
+`badbit` dans le masque, extrait par `read()`/`gcount()`, rejette
+`ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ` hors EOF et vérifie la fermeture
+avant publication. `use()` sur programme zéro appelle toujours `glUseProgram(0)`
+: conservation documentée (F10), caractérisée par `UsePass_ZeroPassIDStillCallsGL`
+(`UserTests.cpp:49`), pas une correction.
+
+Revue indépendante (correctness-reviewer) : PASS de lecture avec réserves α–δ
+(RED F4 = plantage STL debug ; branches F8 non exercées ; concept contrôlé pour
+l'appelabilité seule ; `getStackTraceString` dormant). QA indépendante
+(rendering-verifier) : `missionc-qa/qa-report.json` — **12 PASS et 2
+INCONCLUSIVE** sur 14 critères (« F8 actual extraction failure », « Independent
+negative concept compilation ») ; visuel et performance hors périmètre.
+Anomalies consignées, non comptées comme preuves : la baseline C2 de 20:35
+(165 cas, 13 échecs, cause non établie) n'est pas un RED ; la première campagne
+ASan sur arbre incrémental (21:00) échoue 1/134 puis 134/134 après rebuild
+propre (21:07-21:08), cause non démontrée. D'où la règle : **ASan clean-first
+systématique**, sonde `artist_asan_probe` reconstruite après clean, canari
+vérifié 0 puis 86, premier FAIL conservé.
+
+Procédures réellement employées : `VsDevCmd.bat -arch=x64` chargé dans le même
+processus que `cmake`/`ctest` (sinon C1083 `cstddef` / LNK1104 `gdi32.lib`) ;
+`subst Z:` (C1) et `subst Y:` (C2) après C1083 de chemin long, déclarées ;
+**re-glob CMake obligatoire après chaque ajout de fichier et à chaque
+intégration** — le premier run C2 à 153/153 était pré-glob et invalide,
+remplacé par 165/165 (`GLOB_RECURSE` dans `ARTIST/tests/CMakeLists.txt` et
+`ARTIST/component-tests/CMakeLists.txt`).
+
+Commandes, empreintes et limites :
+[[architecture/missions/2026-10-15-failure-contracts|mission C archivée]],
+[[development/known-incidents|registre d'incidents]] et
+`_meta/session-2026-10-15-failure-contracts-validation.json`. Preuves non
+versionnées : `out/logs/missionc-qa/` (dépôt principal), `c1-*` et
+`mission-c2-*` dans les worktrees des auteurs. `getStackTraceString` n'est pas
+corrigé dans cette mission (incident OPEN, dormant, zéro appelant) ; aucune
+mesure de performance, aucune image, aucun test Release, Linux, CI distante,
+UBSan, TSan ou couverture.
+
 ## Diagnostics GL vides F5 — validation indépendante du 2026-10-15
+
+> [!note] Figures historiques depuis la mission C
+> Les 143/143 normaux et 121 cas ASan de cette section sont les résultats de la
+> mission F5. La suite courante vérifiée est de 165/165 normaux et 143 cas ASan
+> distincts : voir la section précédente et [[development/known-incidents]].
 
 Diff intégré non commité au HEAD `3144beb` (auteur `5dfafd1` RED + `4154780`
 GREEN, 204+/7− sur quatre fichiers) : **143/143 distincts** (112 unit + 31
@@ -92,6 +165,10 @@ options des tests moteur comme ci-dessus ; un `exitcode=0` ou `log_path` hérit�
 ne doit pas être accepté comme preuve. La campagne S avait déjà ces options
 strictes dans chacune de ses commandes CPU/GL. Aucun durcissement supplémentaire
 du script n'est revendiqué ici. ASan ne remplace pas les vérifications GL natives.
+La mission C a consolidé la règle clean-first (sonde reconstruite après clean,
+canari 0 puis 86, premier FAIL conservé) après l'anomalie incrémentale 133/134
+consignée dans [[development/known-incidents|le registre]] ; la réserve Q1
+elle-même reste ouverte à ce HEAD.
 
 ## Revérification avant publication — 2026-10-15
 
@@ -224,9 +301,11 @@ detach → deleteProgram → deleteShader. Points de fiabilité documentés :
   son destructeur ; la libération RAII se déclenche côté dérivé.
 
 Les comptes historiques de cette tranche : **95 unit + 27 OpenGL = 122** ;
-les comptes courants après loaded-owner move sont **106 + 31 = 137**, et
-après F5 **112 + 31 = 143**. À chaque nouveau test,
-vérifier l'unicité des noms de fixtures entre TU.
+après loaded-owner move **106 + 31 = 137**, après F5 **112 + 31 = 143**, et
+après la mission C **134 + 31 = 165** (côté unitaire : 124 macros
+TEST/TEST_F directes plus 10 cas paramétrés `InfoLogLengths`, 2 suites ×
+5 valeurs). À chaque nouveau test, vérifier l'unicité des noms de fixtures
+entre TU et re-globber CMake (`GLOB_RECURSE`).
 
 ```powershell
 ctest --test-dir out/build/windows-msvc-debug -N

@@ -3,26 +3,26 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: Photographie source de la bibliothèque OpenGL et des mécanismes dynamiques qui coexistent avec ses composants statiques.
+summary: Photographie source de la bibliothèque OpenGL et des mécanismes dynamiques qui coexistent avec ses composants statiques, à l'état vérifié de la mission C.
 status: observed
-source_revision: e589aeece2c5abc46aedb089c6a88a6f7dbaa239
-source_diff_fingerprint: a1e66dd728c8e6b0700cf7db694040c9592ce18acaf53145590ad0e85053c234
+source_revision: a50f4661fcbd740cd9614931cbe80e949fae9e57
 created: 2026-10-03
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # État réel d'ARTIST
 
 > [!info] Portée de cette photographie
-> HEAD `e589aee` et diff intégré D `0bbca504` + H `a423fc25`, vérifiés le
-> 2026-10-15. Pas de nouveau commit principal ; 15 fichiers source/build empreintés.
-> Suites normales 137/137, ASan 106 CPU + 9 lifetime GL.
-> Voir [[references/session-2026-10-15-loaded-owner-move|la synthèse et les limites]]
-> et [[development/build-and-test|les commandes]].
-> Aucune performance ni équivalence d'image n'est mesurée.
-> État ultérieur vérifié : mission F5 au HEAD `3144beb` avec diff intégré non
-> commité — 143/143 distincts, ASan 121 distincts, voir
-> [[references/session-2026-10-15-f5-gl-diagnostics|la synthèse F5]].
+> HEAD `a50f466`, vérifié le 2026-10-16. Le code est identique à `e736bba`
+> (intégration de la mission C) ; seuls des documents ont changé depuis.
+> Suites normales **165/165 distinctes** (134 unitaires + 31 OpenGL) et **143
+> cas ASan distincts** (134 + 9 GL lifetime ; 22 autres GL non sélectionnés),
+> revue et QA indépendantes PASS avec réserves consignées. ADR-0003 reste
+> Accepted/partial. La mission Pipeline A1+A2 est sélectionnée
+> ([[architecture/next-mission|fiche]]), pas commencée. Voir
+> [[architecture/missions/2026-10-15-failure-contracts|la mission C archivée]]
+> et [[development/build-and-test|les commandes]]. Aucune performance ni
+> équivalence d'image n'est mesurée.
 
 ## Ce qui est présent
 
@@ -61,9 +61,16 @@ Les concepts ne prouvent ni l'existence d'un contexte graphique, ni l'image prod
   virtuelles dans leurs headers de `graphic/pipeline/`.
 - `graphic/context/PipelineContext.hpp` stocke un
   `std::vector<std::shared_ptr<IPass<API>>>` et un indice de passe courant.
+  Depuis la mission C, `getPass(index)` rejette un index négatif ou hors bornes
+  avec `ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE` (`out_of_range`) avant toute
+  indexation ; `addPass()` accepte encore un pass nul, `setCurrentPass` reste
+  sans garde et `hasNext()` additionne un au curseur — pré-état de la tranche
+  Pipeline sélectionnée, non migrée.
 - `graphic/context/PassContext.hpp` possède les shaders dans un
   `vector<unique_ptr<IShader<API>>>`. Les uniforms/attributes restent partagés
-  dans des maps indexées par `std::string`.
+  dans des maps indexées par `std::string`. `getShader(index)` est gardé comme
+  `getPass` (`ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE`) ; `vector::at` est
+  écarté volontairement.
 - `graphic/context/AttributeContext.hpp` stocke un `std::any` et récupère une
   valeur par `std::any_cast<std::shared_ptr<T>>`.
 - `graphic/pipeline/Shader.hpp` possède un `unique_ptr<ShaderContext>` et expose
@@ -73,11 +80,27 @@ Les concepts ne prouvent ni l'existence d'un contexte graphique, ni l'image prod
   `shared_ptr` ; `getContext()` retourne une copie qui peut étendre sa durée de
   vie. Ce partage transitoire n'est pas une ownership entièrement unique.
   `Pass` libère son programme avant la destruction des shaders de son contexte.
+  Le handle programme est publié une seule fois après un lien vérifié ; un échec
+  pré-publication appelle `glDeleteProgram` une fois puis relance (publication
+  différée, mission C). `load()` charge d'abord les shaders : pas de rollback
+  global. La capacité d'info-log des deux loaders est bornée à `[1, 4096]`,
+  écriture et accès terminal compris ; cette borne limite l'allocation, pas la
+  pénurie mémoire du processus.
+- La lecture de fichier shader n'active que `badbit`, extrait par
+  `read()`/`gcount()` et rejette `ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ`
+  avant EOF ; un fichier vide lisible produit une chaîne vide. Les branches
+  fermeture échouée et `ifstream::failure` réel ne sont pas exercées.
+- `use()` sur un programme zéro appelle `glUseProgram(0)` : unbind explicite
+  valide en OpenGL, conservation documentée (F10), pas une correction.
 - `Shader` et `Pass` sont `final`. Leurs assignations move libèrent l'ancienne
   destination avant transfert et peuvent propager une exception de cleanup ;
   les opérateurs de base sont `protected`, les constructeurs move restent
   `noexcept`. Le self-move ne change rien. Un alias de l'ancien contexte Pass
   voit `passID=0` et peut encore retenir ses shaders ; il ne suit pas le nouvel owner.
+- `common/exception/TraceableException.hpp` porte un incident ouvert dormant :
+  la branche `#else` (active sous MSVC) retourne `"Stacktrace not available"`
+  par référence vers un temporaire ; zéro appelant dans `ARTIST/`. Coupe
+  séparée avant toute exposition.
 
 Ces mécanismes sont **observés dans le source**. Leur coût machine et leur
 fréquence dans un workload ne sont pas mesurés ici. LTO/dévirtualisation peuvent
@@ -107,12 +130,11 @@ d'ownership de la tranche Shader→Pass ([[adr/0003-ownership-et-lifetime-cpu-gp
 `on(Context&)`, `Pass::shared()` supprimé. `Uniform`, `Attribute` et `Pipeline`
 conservent leurs `shared_ptr` actuels — tranches suivantes. Les corrections de
 portabilité antérieures (noms de templates dépendants, contrainte `Uniform`,
-fixtures) restent en place. Le graphe d'ownership des tranches non migrées et le
-modèle d'exécution restent ceux décrits ci-dessus. Les loaders rejettent un
+fixtures) restent en place. Les loaders rejettent un
 handle déjà vivant (`RELOAD_WITHOUT_FREE`) : la présence de la garde est statique,
 mais la valeur du handle est contrôlée au runtime pendant la préparation.
 
-La [[architecture/missions/2026-10-15-loaded-owner-move|mission loaded-owner move]] est maintenant terminée :
+La [[architecture/missions/2026-10-15-loaded-owner-move|mission loaded-owner move]] est terminée :
 **137/137** normaux (106 unit + 31 GL, dont 25 + 9 lifetime) vérifiés indépendamment,
 et **106 CPU + 9 lifetime GL sous ASan**, sans défaut observé dans ces exécutions.
 Les cas limites de rechargement complet et les autres
@@ -125,9 +147,33 @@ La [[architecture/missions/2026-10-15-f5-gl-diagnostics|mission F5]] est termin�
 dans son périmètre : diagnostics GL vides compilation/link bornés dans les deux
 loaders après un RED causal, **143/143 normaux distincts** (112 unit + 31
 OpenGL) et **121 cas ASan distincts** (112 + 9 GL lifetime) vérifiés
-indépendamment, revue et QA PASS. Q1 (exposition INT_max), F4, F8, le harness
-ASan et Pipeline restent ouverts ; aucun résultat antérieur n'est étendu
-au-delà de ce périmètre.
+indépendamment, revue et QA PASS. Ces chiffres sont historiques depuis la
+mission C ; F4, F8 et Q1 (exposition INT_MAX) y ont avancé à leur tour, le
+harness ASan et Pipeline restaient hors de cette coupe.
+
+La [[architecture/missions/2026-10-15-failure-contracts|mission C]] est terminée
+à `e736bba` : capacité d'info-log bornée dans les deux loaders (10 cas
+paramétrés `InfoLogLengths`, dont INT_MAX et −5), publication différée du
+handle programme, gardes d'index sur les accesseurs des deux contexts, lecture
+fichier qui rejette un fichier absent ou illisible et accepte un fichier vide
+lisible (branches fermeture échouée et `ifstream::failure` réel non exercées),
+conservation documentée de `glUseProgram(0)` sur programme zéro. **165/165
+normaux distincts** (134 unitaires + 31 OpenGL) et **143 cas ASan distincts**
+(134 + 9 GL lifetime ; 22 autres GL non sélectionnés), revue PASS de lecture
+avec réserves α–δ et QA 12 PASS / 2 INCONCLUSIVE sur 14 critères. Les anomalies
+consignées — baseline RED 20:35 non causale, campagne ASan incrémentale 133/134
+non reproduite après rebuild propre, `getStackTraceString` dormant — ne sont
+pas des preuves et ne comptent pas dans les totaux
+([[development/known-incidents|le registre]]). Le RED F4 est un plantage STL
+debug, pas un rejet métier observé (réserve α) ; le curseur `use(index)` reste
+hors coupe.
+
+La mission Pipeline A1+A2 est [[architecture/next-mission|sélectionnée le
+2026-10-16]], pas commencée : `PipelineContext` stocke toujours un
+`vector<std::shared_ptr<IPass>>` et accepte un pass nul, le curseur reste sans
+garde et `IPipeline` partage encore son contexte par copie. Cette sélection ne
+produit aucun résultat de test ; l'état décrit ci-dessus est celui d'avant
+tranche.
 
 [[engineering-principles|Le cap]] explique l'intention ;
 [[adr/README|les ADR]] proposent les contrats ;
