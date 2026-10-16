@@ -79,9 +79,16 @@ pas de remplacement silencieux de l'oracle en cas d'absence.
   Pipeline layout et push-constant ranges compatibles.
 - Première utilisation, contenus jetés : UNDEFINED → COLOR_ATTACHMENT_OPTIMAL,
   destination COLOR_ATTACHMENT_OUTPUT/COLOR_ATTACHMENT_WRITE ; UNDEFINED →
-  DEPTH_ATTACHMENT_OPTIMAL, destination EARLY_FRAGMENT_TESTS|LATE_FRAGMENT_TESTS
+  DEPTH_STENCIL_ATTACHMENT_OPTIMAL, destination EARLY_FRAGMENT_TESTS|LATE_FRAGMENT_TESTS
   et DEPTH_STENCIL_ATTACHMENT_READ|DEPTH_STENCIL_ATTACHMENT_WRITE. Pour une
   ressource recyclée en vol, UNDEFINED n'efface PAS l'obligation de synchroniser.
+  La vue D32 et la barrière ne portent que l'aspect DEPTH ; le
+  `VkRenderingAttachmentInfo::imageLayout` de profondeur doit être le même
+  `VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL`. Ce choix de recette évite
+  de dépendre des layouts séparés sans ajouter `separateDepthStencilLayouts`
+  aux features minimales. Il ne prétend pas démontrer l'illégalité du layout
+  `DEPTH_ATTACHMENT_OPTIMAL` pour une image depth-only ; ce point n'a pas été
+  tranché par l'arbitrage documentaire, et aucun VUID ne doit être inventé.
 - Après fin du rendu, `VkImageMemoryBarrier2` couleur :
   `srcStageMask=VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT`,
   `srcAccessMask=VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT`,
