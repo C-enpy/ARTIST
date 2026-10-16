@@ -47,26 +47,34 @@ namespace
 class PipelineTest : public OpenGLComponentTest
 {
 protected:
-    std::shared_ptr<pipeline::IPass<api::OpenGL>> pass1;
-    std::shared_ptr<pipeline::IPass<api::OpenGL>> pass2;
+    std::unique_ptr<pipeline::IPass<api::OpenGL>> pass1;
+    std::unique_ptr<pipeline::IPass<api::OpenGL>> pass2;
+
+    auto takePasses()
+    {
+        std::vector<std::unique_ptr<pipeline::IPass<api::OpenGL>>> passes;
+        passes.push_back(std::move(pass1));
+        passes.push_back(std::move(pass2));
+        return passes;
+    }
 
     void SetUp() override
     {
         OpenGLComponentTest::SetUp();
         // Initialize Passes with valid shaders
-        pass1 = std::make_shared<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(makeClassicPass());
-        pass2 = std::make_shared<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(makeClassicPass());
+        pass1 = std::make_unique<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(makeClassicPass());
+        pass2 = std::make_unique<pipeline::Pass<api::OpenGL, profile::Pass::Classic>>(makeClassicPass());
     }
 };
 
 TEST_F(PipelineTest, PipelineCreationTest)
 {
-    ASSERT_NO_THROW((pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic>({pass1, pass2})));
+    ASSERT_NO_THROW((pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic>(takePasses())));
 }
 
 TEST_F(PipelineTest, UsePassTest)
 {
-    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline({pass1, pass2});
+    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline(takePasses());
 
     // Test using the first pass
     ASSERT_NO_THROW(pipeline.use(0));
@@ -79,7 +87,7 @@ TEST_F(PipelineTest, UsePassTest)
 
 TEST_F(PipelineTest, UseNextPassTest)
 {
-    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline({pass1, pass2});
+    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline(takePasses());
 
     // Use the first pass and then the next
     ASSERT_TRUE(pipeline.hasNext());
@@ -89,7 +97,7 @@ TEST_F(PipelineTest, UseNextPassTest)
 
 TEST_F(PipelineTest, ResetPipelineTest)
 {
-    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline({pass1, pass2});
+    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline(takePasses());
 
     pipeline.use(0);
     ASSERT_NO_THROW(pipeline.reset());
@@ -98,7 +106,7 @@ TEST_F(PipelineTest, ResetPipelineTest)
 
 TEST_F(PipelineTest, PassesCountTest)
 {
-    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline({pass1, pass2});
+    pipeline::Pipeline<api::OpenGL, profile::Pipeline::Classic> pipeline(takePasses());
 
     ASSERT_EQ(pipeline.getPassesCount(), 2);
 }

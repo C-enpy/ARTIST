@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <memory>
+#include <graphic/pipeline/MockPass.hpp>
 #include <graphic/opengl/context/PipelineContext.hpp>
 #include <graphic/opengl/profile/Pipeline.hpp>
 #include <graphic/opengl/pipeline/component/pipeline/Resetter.hpp>
@@ -19,7 +20,10 @@ TEST_F(ResetterTests, resetProgram_ValidContext)
 {
     // Arrange
     auto context = std::make_shared<OpenGLPipelineContext>();
-    context->setCurrentPass(42);
+    auto pass = std::make_unique<artist::mock::graphic::pipeline::opengl::MockPass<artist::graphic::api::OpenGL>>();
+    EXPECT_CALL(*pass, use()).Times(0);
+    context->addPass(std::move(pass));
+    context->setCurrentPass(0);
 
     // Act
     OpenGLPipelineResetter<Classic>::on(context);

@@ -39,12 +39,13 @@ namespace artist::graphic::pipeline
         IPipeline(IPipeline &&other) : m_context(std::move(other.m_context)) {}
 
         /**
-         * Constructs a pipeline with a list of passes and an optional context.
+         * Constructs a pipeline by consuming passes and a context.
          *
-         * @param passes A list of shared pointers to IPass objects to be added to the pipeline.
+         * @param passes Unique owners to register; initializer lists of shared
+         * pointers are deliberately unsupported.
          * @param context The API-specific context whose ownership is transferred.
          */
-        IPipeline(const std::initializer_list<std::shared_ptr<IPass<API>>> &passes,
+        IPipeline(std::vector<std::unique_ptr<IPass<API>>> passes,
                   std::unique_ptr<typename API::PipelineContext> context)
             : m_context(std::move(context))
         {
@@ -54,12 +55,12 @@ namespace artist::graphic::pipeline
             }
             for (auto &pass : passes)
             {
-                m_context->addPass(pass);
+                m_context->addPass(std::move(pass));
             }
         }
 
-        explicit IPipeline(const std::initializer_list<std::shared_ptr<IPass<API>>> &passes) : IPipeline(passes,
-                                                                                                         std::make_unique<typename API::PipelineContext>())
+        explicit IPipeline(std::vector<std::unique_ptr<IPass<API>>> passes)
+            : IPipeline(std::move(passes), std::make_unique<typename API::PipelineContext>())
         {
         }
 
@@ -67,9 +68,10 @@ namespace artist::graphic::pipeline
          * Retrieves a pass by its index.
          *
          * @param pass The index of the pass to retrieve.
-         * @return A shared pointer to the requested IPass instance.
+         * @return A borrow of the requested IPass, stable across registry growth
+         * and move, but invalidated by owner destruction or replacement.
          */
-        [[nodiscard]] std::shared_ptr<IPass<API>> forPass(const int &pass)
+        [[nodiscard]] IPass<API> &forPass(const int &pass)
         {
             return getContext().getPass(pass);
         }
@@ -79,7 +81,7 @@ namespace artist::graphic::pipeline
          */
         [[nodiscard]] virtual int getPassesCount() const
         {
-            return getContext().getPassesCount();
+            return static_cast<int>(getContext().getPassesCount());
         }
 
         /**
@@ -89,7 +91,9 @@ namespace artist::graphic::pipeline
          */
         [[nodiscard]] bool hasNext() const
         {
-            return getContext().getCurrentPass() + 1 < getPassesCount();
+            const auto &context = getContext();
+            // N <= INT_MAX and c in {-1} union [0,N): no unchecked c + 1.
+            return context.getCurrentPass() < static_cast<int>(context.getPassesCount()) - 1;
         }
 
         /**
@@ -116,8 +120,20 @@ namespace artist::graphic::pipeline
         virtual void use(const int &pass)
         {
             auto &context = getContext();
+            (void)context.getPass(pass); // use(-1) is invalid, unlike reset's -1.
+            const int previous = context.getCurrentPass();
             context.setCurrentPass(pass);
-            use(context);
+            try
+            {
+                use(context);
+            }
+            catch (...)
+            {
+                // CPU cursor transaction only. The backend may already have
+                // changed state; no rollback of GPU work is promised.
+                context.setCurrentPass(previous);
+                throw;
+            }
         }
 
         /**
@@ -194,7 +210,7 @@ namespace artist::graphic::pipeline
     protected:
         /**
          * Uses the specialized component for the current profile and API.
-         * This method dynamically checks for the existence of a component specific to the PROFILE
+         * This method checks at compile time for a component specific to the PROFILE
          * and invokes its 'on' method if available. This allows for profile-specific behavior
          * to be executed, adapting the pipeline to various rendering requirements.
          *

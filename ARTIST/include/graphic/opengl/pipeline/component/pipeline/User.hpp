@@ -19,7 +19,7 @@ namespace artist::graphic::opengl::pipeline::component::pipeline
     public:
         static void on(graphic::api::OpenGL::PipelineContext &context)
         {
-            context.getPass(context.getCurrentPass())->use();
+            context.getPass(context.getCurrentPass()).use();
         }
 
         // Compatibility facade only: do not retain a shared owner.
