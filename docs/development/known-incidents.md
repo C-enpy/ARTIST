@@ -430,6 +430,24 @@ TDD historique globale. Preuves et empreintes :
 
 ## Expériences encore absentes
 
+État I0 de la mission Pipeline (`18edc72`) : F8 a reçu une seam interne testant
+l'extracteur réel sous badbit (4096 octets consommés, deuxième demande levant
+une exception sentinel, traduction exacte et contexte non publié), plus une
+preuve de non-traduction de `bad_alloc` et de fermeture avant publication sur
+Windows. Le refactoring est caractérisé, pas présenté comme un RED moteur
+historique nouveau. Les fixtures ont des racines possédées hors du parent
+hérité : première version sous ce parent refusée à l'intégration, test RED
+d'ascendance causal puis correction `b44ba0b`.
+
+Les originaux et corrections sont conservés sous `out/mission-a1a2/pool-7-*`.
+Producteur F8 : 175 unitaires et 16 cas au filtre ASan Reader (12 dans la suite
+ReaderTests, 4 autres correspondances), canari 0/86 recoupé. Union normale
+intégrée : 175 CPU + 39 GL ; revue/QA fresh et ASan intégré encore attendus.
+F8 reste **partiel** : fermeture échouée et panne filesystem réelle pendant
+l'extraction non prouvées. Les comptages des campagnes historiques ci-dessous
+restent datés ; manifeste courant :
+`docs/_meta/session-2026-10-16-pipeline-i0-validation.json`.
+
 ASan Windows Debug est exécuté séparément et instrumenté ; après F5, la sélection
 ASan couvre **121 cas distincts** (112 unit — dont les 6 nouveaux diagnostics —
 plus 9 GL lifetime) contre 115 lors de la mission loaded-owner move, toujours

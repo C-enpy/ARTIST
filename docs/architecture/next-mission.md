@@ -33,6 +33,13 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > `_meta/session-2026-10-16-pipeline-a1c-validation.json`. A2 non migrée ; R/V
 > et clôture documentaire restent à réaliser, aucun PASS global de mission.
 
+> [!info] Candidat I0 intégré après F8
+> `18edc72` inclut la seam et l'isolation hors parent TEMP hérité, corrigée en
+> `b44ba0b` après RED causal. Union normale rejouée : **175 CPU + 39 GL = 214**,
+> zéro échec/skip, 129 empreintes d'entrée inchangées. R/V fresh admis sur ce
+> candidat ; ASan intégré déclaré **175 + 22 GL = 197**, résultat encore attendu.
+> Manifeste : `_meta/session-2026-10-16-pipeline-i0-validation.json`.
+
 ## Pourquoi cette mission
 
 L'ordre adopté le 2026-10-15 : figer les contrats d'échec (mission C, terminée à
@@ -365,9 +372,10 @@ réserves : elles entrent dans DOC-F sans être « corrigées » silencieusement
   Ne supprimer aucun fichier, cache ou worktree à cette occasion. Vérifier
   le mapping exact et l'absence de commande active avant chaque retrait ;
   préserver/copier les preuves avant retrait du dernier alias utilisé.
-  S: et T: ont déjà été retirés ; U: reste loué à F8 jusqu'à sa fin vérifiée,
-  Y:/Z: correspondent à des workers arrêtés. Aucune nouvelle lettre nécessaire
-  aux consultations en lecture seule ; contrôler la liste finale par `subst`.
+  S:/T: retirés précédemment ; **U:/Y:/Z: retirés après arrêt des workers et
+  copie des preuves**, sortie `subst` finale vide. Aucun fichier supprimé.
+  Les validations suivantes utilisent les chemins réels ; ne pas recréer
+  d'alias. Preuve locale : `out/mission-a1a2/alias-retirement.json`.
 - Pool cible : **8 agents concurrents maximum** (la capacité machine monte à ~30 ;
   au-delà de 8, GPU/build sérialisé et attribution des défauts ne gagnent plus
   de parallélisme réel). `max_running_members: 8`.

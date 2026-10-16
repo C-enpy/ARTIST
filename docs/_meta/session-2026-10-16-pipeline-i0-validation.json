@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-16",
+  "scope": "Integrated I0 before A2; independent review and QA still pending",
+  "source_head": "18edc729326a8d07b46bd235035747c173c42d1c",
+  "source_manifest": "out/mission-a1a2/i0-source-manifest.json",
+  "source_manifest_sha256": "1852916180bb8b9338dae661f919976739734a1c4cbed4571382b7e34fe40855",
+  "tracked_inputs_hashed": 129,
+  "changed_inputs_after_normal_run": 0,
+  "normal_integration": {
+    "command": "cmd.exe /d /c out/mission-a1a2/i0-normal.cmd",
+    "log": "out/mission-a1a2/i0-normal.log",
+    "discovery": "out/mission-a1a2/i0-normal-discovery.json",
+    "order": "configure, full build, fresh discovery, unit175 then GL39, serial",
+    "exit_code": 0,
+    "unit": {"tests": 175, "failures": 0, "skipped": 0, "disabled": 0},
+    "gl": {"tests": 39, "failures": 0, "skipped": 0, "disabled": 0},
+    "distinct_total": 214,
+    "unit_junit": "out/mission-a1a2/i0-unit.xml",
+    "unit_junit_sha256": "f4892fa66463e6c392b987580c669566877c4ef8cb8ba2eefca7175171ceaf3d",
+    "gl_junit": "out/mission-a1a2/i0-opengl.xml",
+    "gl_junit_sha256": "0570680c1e891bf1e12ba873a2033416d85fd7bae367e8a9f7ecacd20f26b523"
+  },
+  "f8_producer_evidence": {
+    "head": "b44ba0bf059f850f01a29bc3ac9c8ebf17ddd525",
+    "source_and_junit_hashes_verified": "4/4",
+    "backup": "out/mission-a1a2/pool-7-final-b44ba0b/",
+    "fixture_isolation": "outside legacy tree, sibling artist-reader-tests-owned; causal path-ancestry RED before fix",
+    "unit": 175,
+    "asan_filter_executed": 16,
+    "asan_focus_ReaderTests": 12,
+    "asan_additional_filter_matches": 4,
+    "canary_exit_codes": [0, 86],
+    "limits": "close-failure and real filesystem extraction fault unproven; no GL run by F8 producer"
+  },
+  "integrated_asan_selection": {
+    "status": "declared before QA execution, not yet PASS",
+    "manifest": "out/mission-a1a2/i0-asan-selection.json",
+    "unit": 175,
+    "gl": 22,
+    "distinct_total": 197,
+    "gl_composition": "9 historical ShaderLifetime + 5 loaded PipelineTest + 8 new PipelineLifetime",
+    "other_gl_not_selected": 17
+  },
+  "independent_tasks": {
+    "correctness": "task_mvbcv58i_004e_twggrf",
+    "verification": "task_mvbcv58j_004f_8z2wcx",
+    "context": "fresh; actual integrated producer inputs; no source mutation"
+  },
+  "alias_retirement": {
+    "operator_authorized": true,
+    "removed": ["U:", "Y:", "Z:"],
+    "S_and_T_already_removed": true,
+    "final_subst_output_empty": true,
+    "files_deleted": false,
+    "proof": "out/mission-a1a2/alias-retirement.json"
+  },
+  "retained_reserves": [
+    "A1c historical RED protocol violation retained; see pipeline-a1c-validation.json",
+    "A2/F6 not implemented; no global mission PASS",
+    "Independent QA and ASan integrated results pending"
+  ]
+}
