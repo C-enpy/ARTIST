@@ -1,6 +1,6 @@
 {
   "date": "2026-10-16",
-  "status": "A2/H-RESTORE independently reviewed and executed; no global PASS due to preexisting oracle FAIL and pending P2 fixture correction",
+  "status": "A2/H-RESTORE reviewed and executed; P2 fixture correction integrated and independently verified; documentary closure pending, no global PASS",
   "candidate": "f914d77b17b1c3013bf06679c0f94537ee7ba24a",
   "composition": "A2/F6 plus H-RESTORE 1a75c75, following integrated I0 18edc72",
   "source_manifest": "out/mission-a1a2/final-source-manifest.json",
@@ -68,7 +68,7 @@
     "fixture_state_after_wrapper": "Original ASan directory/probe/unit/component restored, no hold directory; no rerun staging after P2 warning",
     "binary_identity_limit": "Five binary hashes stable before/after direct and targeted witnesses; snapshot taken after main campaigns, no pre-build/pre-campaign binary hashes claimed",
     "resources": "Verifier shut down, build/GPU/cache leases released; no source edits, new runner, alias or Docker resources",
-    "global_verdict": "No global PASS; targeted A2 contracts conform in observed executions, preexisting oracle FAIL retained, Python fixture correction pending"
+    "global_verdict": "No global PASS; targeted A2 contracts conform in observed executions, preexisting oracle FAIL retained; fixture correction verified separately afterwards"
   },
   "independent_review": {
     "task": "task_mvbguqgw_005u_sqbmz7",
@@ -80,11 +80,11 @@
       "path": "scripts/test_asan_env.py:154-170,391,404-405",
       "finding": "rename to hold followed by write_bytes exception before helper return loses hold state; caller finally cannot restore original build path",
       "evidenceKind": "inference",
-      "runtime_fault_injection": "Not executed by reviewer; RED required from H-FIXTURE before fix",
+      "runtime_fault_injection": "Author causal RED before fix, then nine unit tests independently rerun GREEN after integration",
       "correction_task": "task_mvbh21bd_0067_sw6b3t",
       "scores": {"method": "PM/LLM", "complexity_raw": 65, "complexity_retained": 70, "risk": 64},
       "scope": "Python fixture rollback only, isolated worktree and private temporary fixtures, no GPU/build/cache shared with QA",
-      "final_gate": "Integrate and independently verify correction before closure; do not execute risky staging on real principal build meanwhile"
+      "final_gate": "Satisfied by integrated 95c2b9e plus independent V-FIXTURE; original finding and QA remain historical records"
     },
     "P2_preexisting_mock_oracle": {
       "path": "AttributeTests.cpp:65 / AttributeTest.SetTest",
@@ -94,12 +94,32 @@
       "arbitration": "Preexisting out-of-scope oracle defect retained, not A2 regression; QA must inspect final raw log and report separately"
     }
   },
+  "post_fixture_verification": {
+    "candidate": "95c2b9e3064a0af4bf1a50f78055ba2d5a78526a",
+    "producer": "4d1b6552b9ddc0c26ac7b68c8762de9875d46d98",
+    "task": "task_mvbhptmn_006j_pzsc0a",
+    "report": "out/mission-a1a2/post-fixture-verification/report.json",
+    "report_sha256": "cac855ff9ddff8a4dbdf202508f4ef8d88bbc148bd9e3b136d82d9dd20500e8a",
+    "artifact_manifest": "out/mission-a1a2/post-fixture-verification/outputs-sha256.json",
+    "artifact_manifest_sha256": "b0b7cd577fa6d1e89f1265f778793a7b6b95932a04f39df9886ca7bc34834638",
+    "artifact_hashes_rechecked_by_coordinator": "21/21",
+    "source_manifest": "out/mission-a1a2/post-fixture-source-manifest.json",
+    "source_hashes": "130/130 conform; only runner changed plus one fixture test added since f914d77",
+    "fixture_unit_tests": {"tests": 9, "failures": 0, "skipped": 0},
+    "real_wrapper_tests": {"tests": 5, "failures": 0},
+    "P2_result": "Corrected and independently verified; initial error observable, artifacts restored or rollback failure reported explicitly",
+    "binary_identity": "Five binaries unchanged before/after wrapper and match prior QA snapshot; no pre-build hashes claimed",
+    "build_state": "ASan directory/probe/unit/component restored, hold list empty",
+    "engine_rerun": "Not performed: C++ and engine configuration unchanged; previous 215/198 accounting kept with oracle FAIL, not recertified as a global PASS",
+    "limits": "Private TEMP fault injection proves Python error path, not actual OS fault; signal window between rename and state assignment and TOCTOU remain bounded by exclusive ownership, no abrupt-interruption atomicity promised",
+    "resources": "Verifier shut down; no new alias/Docker/cache/worktree; source edits none; author pycache preserved"
+  },
   "retained_limits": [
     "Historical A1c RED cleanup after GL teardown remains protocol FAIL; unsafe probe must not be replayed",
     "Preexisting GMock AttributeTests.cpp:65 post-summary diagnostic occurs both directly and in per-test CTest I0 LastTest.log despite exit0; scanned JUnit did not expose it, so raw logs are required",
     "Reader removeError/dangling-entry scenario, close failure and real filesystem extraction fault remain unproven",
     "No image, performance, Release, other-platform, GPU-in-flight or exhaustive RAII claim",
-    "No global final PASS before independent review, QA and documentary reconciliation"
+    "No global final PASS: preexisting Attribute oracle FAIL plus historical protocol failures retained even after documentary reconciliation"
   ],
   "aliases": "All owned SUBST aliases retired; final empty output checked; none recreated; no files deleted"
 }

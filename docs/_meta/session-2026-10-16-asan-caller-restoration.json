@@ -1,6 +1,6 @@
 {
   "date": "2026-10-16",
-  "scope": "H-RESTORE P3 fix integration; final independent verification pending",
+  "scope": "H-RESTORE P3 fix independently verified; subsequent fixture P2 corrected and independently verified separately",
   "producer": "pool-11 / build-engineer",
   "producer_commit": "14d5c15",
   "integrated_commit": "1a75c75",
@@ -38,7 +38,7 @@
   "limits": [
     "No new engine/GPU/ASan197 campaign run for this isolated script fix",
     "No principal wrapper test run while A2 owns principal Conan cache",
-    "Final R/QA must consume combined A2 + H-RESTORE integrated candidate",
+    "Final R/QA consumed combined f914d77; fixture correction 95c2b9e then passed independent 9+5 checks, see pipeline-final-validation.json",
     "Original I0 P3 FAIL remains historical evidence, not rewritten as a PASS",
     "No alias created or deleted for this tranche; source and evidence preserved"
   ]

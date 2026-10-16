@@ -74,6 +74,16 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > puis sa vérification indépendante, sans élargir tacitement la mission au
 > défaut Attribute préexistant. Rapport et limites dans le manifeste final.
 
+> [!info] H-FIXTURE intégré et vérifié après la QA moteur
+> `95c2b9e` : deux fichiers Python uniquement, neuf tests de fixture puis cinq
+> contrôles réels du wrapper **réexécutés indépendamment**, tous conformes.
+> 21/21 artefacts et 130/130 empreintes recoupés, cinq binaires et état du build
+> identiques avant/après, aucun hold résiduel. Les entrées moteur n'ont pas
+> changé : pas de relance GPU/215/198 sans nouvelle hypothèse. La clôture
+> documentaire peut consommer ces résultats ; oracle Attribute et historiques
+> restent des FAIL distincts, aucun PASS global. Les fenêtres signal/TOCTOU ne
+> sont pas une garantie d'atomicité filesystem ou d'interruption brutale.
+
 ## Pourquoi cette mission
 
 L'ordre adopté le 2026-10-15 : figer les contrats d'échec (mission C, terminée à
