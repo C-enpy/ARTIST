@@ -124,6 +124,14 @@ L'oracle vient des prescriptions et du canon, jamais d'une copie du code testé.
 - G-08 — Idempotence : répétition stable sans doublon ; interruption de découverte/publication sans état partiellement vert. Intent : un retry ne blanchit pas un échec.
 - T-07 — Identité du candidat : empreintes et plan concordent avec le worktree ; ancien HEAD ou modification après run invalident la preuve. Intent : éviter la preuve périmée.
 
+Décision du coordinateur après T03 : G-08 et T-07 sont retenues pour le harness
+de validation, sans changement de contrat moteur. La découverte initiale
+préexistante est observée dans `native-preflight.md` ; elle résout la seule
+précondition d'accès D2, pas les futurs profils/routages ni les permissions.
+D-PERM reste ouvert : T05/activation QA attend une décision explicite ; les
+branches GPU documentaires et T04 sont indépendantes et peuvent démarrer après
+intégration de `t03-contract.md`.
+
 ## Matrice QA — impact et probabilité 1–5
 
 Zones : 15–25 critique, 10–14 haut, 5–9 moyen, 1–4 bas. Churn, tests absents et
