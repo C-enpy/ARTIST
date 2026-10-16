@@ -434,15 +434,19 @@ TDD historique globale. Preuves et empreintes :
 
 Revue fresh de `18edc72`, 24 fichiers du diff et 129/129 empreintes recoupées :
 aucun défaut bloquant du code A1 final identifié, pas une preuve exhaustive ni
-une nouvelle exécution de tests par le reviewer. QA d'exécution encore attendue.
+une nouvelle exécution de tests par le reviewer. QA indépendante ensuite reçue :
+214/214 normaux et sélection ASan exacte 197/197, sans échec/skip dans ces suites.
 
-- **P3 H-ASan, constat de contrôle de flux, reproduction demandée** :
+- **P3 H-ASan, contrôle de flux confirmé par reproduction QA** :
   `build-windows.ps1:86-90,115-118` et `asan-env.ps1:31-32` : une variable
   ASAN_OPTIONS initialement absente est créée par le normaliseur sans entrée
   dans `savedEnvironment`. Elle peut rester définie au retour dans le même
-  PowerShell appelant. Ce point concerne la restauration après campagne, pas
-  la normalisation stricte/fail-close de la campagne courante. Pas de mutation
-  du candidat pendant la QA ; réserve non bloquante A1 à ce stade.
+  PowerShell appelant. V-I0 l'a reproduit par appel réel de
+  `build-windows.ps1 -AddressSanitizer -ConfigureOnly` dans le même processus :
+  variable absente avant, canonique encore présente après retour. FAIL exécuté,
+  non corrigé dans I0 ; correction H-RESTORE admise en branche isolée. Ce point
+  concerne la restauration après campagne, pas la normalisation stricte/fail-close
+  de la campagne courante, dont les 197 tests sélectionnés ont passé.
 - **P3 fixture TEMP, question non reproduite** :
   `ReaderTests.cpp:136-150` calcule `removeError` sans la consulter, et `exists`
   suit les liens. Le cas suppression en erreur puis absence, ou lien pendant,
@@ -466,7 +470,7 @@ d'ascendance causal puis correction `b44ba0b`.
 Les originaux et corrections sont conservés sous `out/mission-a1a2/pool-7-*`.
 Producteur F8 : 175 unitaires et 16 cas au filtre ASan Reader (12 dans la suite
 ReaderTests, 4 autres correspondances), canari 0/86 recoupé. Union normale
-intégrée : 175 CPU + 39 GL ; revue/QA fresh et ASan intégré encore attendus.
+intégrée : 175 CPU + 39 GL ; revue/QA fresh reçues et ASan intégré 197/197.
 F8 reste **partiel** : fermeture échouée et panne filesystem réelle pendant
 l'extraction non prouvées. Les comptages des campagnes historiques ci-dessous
 restent datés ; manifeste courant :

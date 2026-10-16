@@ -1,6 +1,6 @@
 {
   "date": "2026-10-16",
-  "scope": "Integrated I0 before A2; static independent review completed, execution QA pending",
+  "scope": "Integrated I0 before A2; independent review and execution QA completed, separate failures retained",
   "source_head": "18edc729326a8d07b46bd235035747c173c42d1c",
   "source_manifest": "out/mission-a1a2/i0-source-manifest.json",
   "source_manifest_sha256": "1852916180bb8b9338dae661f919976739734a1c4cbed4571382b7e34fe40855",
@@ -33,7 +33,7 @@
     "limits": "close-failure and real filesystem extraction fault unproven; no GL run by F8 producer"
   },
   "integrated_asan_selection": {
-    "status": "declared before QA execution, not yet PASS",
+    "status": "PASS independent execution: exact predeclared selection, no missing/unexpected case or skip",
     "manifest": "out/mission-a1a2/i0-asan-selection.json",
     "unit": 175,
     "gl": 22,
@@ -45,6 +45,37 @@
     "correctness": "task_mvbcv58i_004e_twggrf",
     "verification": "task_mvbcv58j_004f_8z2wcx",
     "context": "fresh; actual integrated producer inputs; no source mutation"
+  },
+  "independent_qa": {
+    "task": "task_mvbcv58j_004f_8z2wcx",
+    "verifier": "pool-10 / rendering-verifier, fresh",
+    "source_hashes_before_after": "129/129 identical",
+    "artifact_hashes_rechecked_by_coordinator": "43/43",
+    "report": "out/mission-a1a2/i0-verification/report.json",
+    "report_sha256": "14310521c9f82ef47f2bf066c4d104ba8277b4ff2fca3825f753c4cec48d56fd",
+    "artifact_manifest": "out/mission-a1a2/i0-verification/outputs-sha256.json",
+    "artifact_manifest_sha256": "f64908f65fe256b6628b07e87b51763d3b326170fde446bc80199831ee5f437d",
+    "criteria": {"PASS": 9, "FAIL": 2, "INCONCLUSIVE": 2},
+    "normal_unit": {"tests": 175, "failures": 0, "skipped": 0},
+    "normal_gl": {"tests": 39, "failures": 0, "skipped": 0},
+    "asan_selected": {"tests": 197, "failures": 0, "skipped": 0, "matches_declared_names": true},
+    "asan_clean_first": "43 build steps; all three test/probe targets rebuilt; 36 test/probe TUs instrumented",
+    "canary_exit_codes": [0, 86],
+    "gpu": "NVIDIA RTX 3090 / OpenGL 3.3.0 / driver 617.42",
+    "normal_unit_junit_sha256": "b931fa8447655a76de2766ce9b0d1787c2cc8097a1b2614a21240b0d8f4031e6",
+    "normal_gl_junit_sha256": "c2da10e7308cf0b1e81b2ed850e0aa13bb8e1cf17da1d8d1dd580bc16a2ec7f3",
+    "asan_junit_sha256": "2ca627367b5299035664c32ff000b77d155aa455f8d3f542c83012734a25d316",
+    "failures": [
+      "P3 caller ASAN_OPTIONS restoration reproduced in the same powershell.exe after real wrapper ConfigureOnly invocation",
+      "Historical A1c RED protocol violation retained; unsafe probe never replayed"
+    ],
+    "inconclusive": [
+      "F8 removeError/dangling-entry scenario not reproduced on Windows",
+      "Unproven image/performance/Release/other-platform criteria remain outside evidence"
+    ],
+    "concept_probes": "Historical negatives/controls hash-checked 6/6, not re-executed; positive contracts rebuilt/executed under ASan",
+    "sources_or_harness_modified": false,
+    "build_gpu_lease_released": true
   },
   "independent_review": {
     "task": "task_mvbcv58i_004e_twggrf",
@@ -59,9 +90,9 @@
         "scope": "scripts/build-windows.ps1:86-90,115-118; scripts/asan-env.ps1:31-32",
         "finding": "Initially absent ASAN_OPTIONS is assigned canonical value without a savedEnvironment entry; caller process may keep it after script returns",
         "evidenceKind": "inference",
-        "basis": "Independent static control-flow inspection; runtime reproduction requested from QA",
+        "basis": "Independent static inspection followed by successful QA reproduction of the restoration defect",
         "impact": "Caller environment restoration, not current campaign fail-close",
-        "arbitration": "Non-blocking for A1 at this stage; retained pending QA qualification, no concurrent source change"
+        "arbitration": "Non-blocking A1 runtime/fail-close; H-RESTORE admitted in isolated scripts branch before final integration QA"
       },
       {
         "severity": "P3 question",
@@ -86,7 +117,7 @@
   "retained_reserves": [
     "A1c historical RED protocol violation retained; see pipeline-a1c-validation.json",
     "A2/F6 not implemented; no global mission PASS",
-    "Independent execution QA and ASan integrated results pending",
-    "Review P3 environment-restoration finding and TEMP helper question retained"
+    "A2/H-RESTORE implementation, integration and independent final review/QA pending",
+    "P3 environment-restoration FAIL to correct; TEMP helper question and historical RED failure retained"
   ]
 }

@@ -36,8 +36,11 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > [!info] Candidat I0 intégré après F8
 > `18edc72` inclut la seam et l'isolation hors parent TEMP hérité, corrigée en
 > `b44ba0b` après RED causal. Union normale rejouée : **175 CPU + 39 GL = 214**,
-> zéro échec/skip, 129 empreintes d'entrée inchangées. R/V fresh admis sur ce
-> candidat ; ASan intégré déclaré **175 + 22 GL = 197**, résultat encore attendu.
+> zéro échec/skip, 129 empreintes d'entrée inchangées. R/V fresh terminés sur ce
+> candidat : QA normale **214/214**, ASan intégré **175 + 22 GL = 197/197**.
+> Pas de blocage A1 identifié ; FAIL distinct de restauration env appelant
+> reproduit et confié à H-RESTORE, FAIL historique RED A1c conservé. A2 et le
+> correctif du harnais sont admis en branches isolées, pas encore validés.
 > Manifeste : `_meta/session-2026-10-16-pipeline-i0-validation.json`.
 
 ## Pourquoi cette mission
@@ -404,6 +407,20 @@ filesystem réelle en cours de lecture restent non prouvées ; **F8 partiel**,
 aucune validation Release/autre plateforme/GPU/image/performance nouvelle.
 
 ## Découpage prévisionnel et scores (PM/LLM, heuristiques — pas des probabilités)
+
+Après I0 effectivement intégré/revu/vérifié, publication prête (pas admission
+anticipée) : D-A2 `task_mvbdn9zv_0050_uhkfan` et H-RESTORE
+`task_mvbdkwsd_004y_wiixu8`. H-RESTORE appartient à `build-engineer` :
+`scripts/build-windows.ps1`, `scripts/test_asan_env.py`, module `asan-env.ps1`
+seulement si nécessaire. Sauvegarder/restaurer ASAN_OPTIONS et
+ASAN_ACTIVATION_OPTIONS, absence/null compris, sur succès et exception après
+normalisation ; garder la politique stricte des enfants inchangée. RED du
+nouveau test avant correction, oracle dans le **même** PowerShell appelant,
+puis GREEN et non-régression normalisation/fail-close. PM/LLM : brute62 →
+retenue70 (plancher développement), risque54, contexte fresh/worktree.
+Cette branche scripts n'a aucun ownership des fichiers CPP A2 ni du GPU ;
+les caches/output A2 sont réservés au CPP. Intégrer les deux branches avant
+revue/QA finales ; aucun alias à recréer et aucun gain revendiqué.
 
 ```text
 B0 (af14c88)
