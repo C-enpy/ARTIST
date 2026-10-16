@@ -212,6 +212,23 @@ TEST_F(ShaderLifetimeTests, MovedFromPassAccessThrows)
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::FREED_CONTEXT"));
 }
 
+/// D-A2a contract: the moved-from pass getter is the borrowed accessor and
+/// throws instead of returning an empty shared_ptr (the historical accessor
+/// prolonged the ownership and silently defaulted to null). The returned
+/// value is discarded, never dereferenced: no null access beyond the call.
+TEST_F(ShaderLifetimeTests, MovedFromPassContextGetterThrows)
+{
+    std::vector<std::unique_ptr<pipeline::IShader<api::OpenGL>>> shaders;
+    shaders.push_back(makeShader());
+    ClassicPass pass(std::make_unique<context::OpenGLPassContext>());
+
+    ClassicPass movedTo = std::move(pass);
+
+    expectSpecificError([&pass]()
+                        { (void)pass.getContext(); },
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::FREED_CONTEXT"));
+}
+
 /// Reload contract (variant B): reload without free is rejected BEFORE any
 /// glCreate call and the context is left untouched.
 TEST_F(ShaderLifetimeTests, ShaderReloadWithoutFreeRejected)
