@@ -248,7 +248,7 @@ capable de récupérer d'un cleanup throwing. Le partage du contexte Pass est
 conservé et testé par aliases ; F6 n'est pas clos. Les autres findings ci-dessus
 restent à leur statut antérieur.
 
-### Réserve du harness ASan : environnement hérité (Q1)
+### Réserve du harness ASan : environnement hérité (Q1 — traité en mission A1+A2, H-ASan)
 
 `verify_asan.py` fixe `ASAN_OPTIONS` pour le canari seulement ; `build-windows.ps1`
 ne normalise pas l'environnement arbitraire de CTest. Un parent permissif
@@ -256,6 +256,22 @@ ne normalise pas l'environnement arbitraire de CTest. Un parent permissif
 PASS n'a été constaté ici : les métadonnées S05/S06/S10 consignent toutes
 `halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0`, identique au canari,
 sans `log_path`. Réserve non bloquante documentée, pas un durcissement implémenté.
+
+- Traitement (mission A1+A2, H-ASan, `eb8659e` intégré en `760f4f8`) : normalisation
+  par le harnais sous `-AddressSanitizer` AVANT tout enfant instrumenté (découverte
+  GoogleTest, préflight canari, ctest et ses processus) ; canonique
+  `halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0`, sans `log_path` ;
+  canari **fail-close** sur héritage hostile et `inherited_asan_options` consigné
+  dans `summary.json`. Nouveaux `scripts/asan-env.ps1` + `scripts/test_asan_env.py`
+  (contrat module), `verify_asan.py`/`build-windows.ps1` modifiés. Aucun comportement
+  hors ASan changé. PREUVE RED : shim observateur au point réel d'appel ctest — env
+  hostile VALIDE et permissif (`exitcode=0`, `log_path` redirigé) transmis tel quel,
+  campagne 134/134 « PASSED » et harnais exit 0, `artist_asan_probe` use-after-free →
+  exit 0 (masquage mécaniquement prouvé) ; un `log_path` malformé (deux-points non
+  échappés) est rejeté PAR LE PARSING du runtime (fail-close, pas un faux PASS). GREEN :
+  contrat module FAIL→PASS ; intégration complète avec env hostile au parent →
+  « reset to canonical », observateur canonique au point ctest, campagne 134/134
+  honnête. Empreintes sha256 (16 hex) : `out/logs/mission-hasan-pool2/validation-summary.json`.
 
 ### Incidents d'outillage de cette mission
 
@@ -331,7 +347,7 @@ pas des preuves et ne sont pas comptées dans les totaux.
 - Statut : la baseline 20:35 **n'est pas un RED causal** et n'est citée nulle part comme tel. Seul
   `red-exact` (20:38) sert de RED F8 causal.
 
-### Campagne ASan incrémentale — FAIL 133/134 (OPEN, outillage)
+### Campagne ASan incrémentale — FAIL 133/134 (mécanique expliquée en mission A1+A2, H-ASan)
 
 - `asan-unit.xml` (21:00) : 134 cas, 1 échec, `ReadShaderTest_AbsentFileRejected` (« Expected an
   exception to be thrown »). `asan-reader-reproduce.xml` (21:00) : 1/1 échec.
@@ -339,6 +355,25 @@ pas des preuves et ne sont pas comptées dans les totaux.
 - Recommandation du QA : clean-first pour toute campagne de candidat ; enquête séparée sur la
   fraîcheur des artefacts (objets obsolètes ou COMDAT, non démontré). Ne pas masquer le premier
   échec.
+- Enquête (mission A1+A2, H-ASan — hypothèse H-TEMP-LOCK + expérience discriminante) : la
+  « garantie d'absence » du test est silencieuse — `absentTempShaderPath()` appelle
+  `std::filesystem::remove(path, ec)` et **ignore `ec`** (`ReaderTests.cpp:48-54`) sur un chemin
+  `%TEMP%`, hors portée d'un clean rebuild. Un verrou externe transitoire (type Defender,
+  ouvert sans `FILE_SHARE_DELETE`) fait échouer le `remove` en silence, puis la lecture réussit →
+  aucune exception → exactement `TestUtils.hpp(16)`. Expérience sur le binaire post-clean 21:07
+  (aligné au code actuel, `git diff e736bba..a50f466 -- ARTIST/` vide) : E1 baseline PASS ;
+  E2 (fichier vide au lieu « absent » + verrou `ReadWrite/FileShare.Read` tenu pendant
+  l'exécution) → FAIL, lignes identiques au caractère près au XML 21:00 ; E3 (verrou levé,
+  résidu supprimé, MÊME binaire sans rebuild) → PASS. **Établi** : la mécanique état-fichier est
+  SUFFISANTE pour expliquer les observations ; la cause binaire (objets périmés/COMDAT) n'est
+  PAS nécessaire ; le rétablissement après rebuild n'implique pas la causalité du rebuild.
+  **Limite** : le déclencheur réel du 21:00 reste INCONCLUSIVE (verrou non observable a
+  posteriori, résidu nettoyé par le dernier TearDown). Le FAIL 21:00 n'a pas été masqué ;
+  clean-first systématique réaffirmé ; sonde reconstruite après clean (canari 0 puis 86).
+- Finding consigné pour coupe dédiée (renforcement de test, pas un défaut moteur) :
+  `ReaderTests.cpp` `absentTempShaderPath` devrait vérifier l'échec du `remove` ou utiliser un
+  nom unique par exécution. Lié au périmètre F8/Reader — à intégrer au ruling F8-SEAM ou à une
+  coupe test-hygiène séparée.
 
 ### Harnais et environnement (clos)
 
