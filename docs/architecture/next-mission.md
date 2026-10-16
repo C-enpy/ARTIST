@@ -360,6 +360,14 @@ réserves : elles entrent dans DOC-F sans être « corrigées » silencieusement
 
 ## Ressources et garde-fous de session
 
+- **Demande utilisateur de clôture (2026-10-16)** : terminer la mission et ses
+  validations, puis retirer les alias `subst` possédés, notamment U:/Y:/Z:.
+  Ne supprimer aucun fichier, cache ou worktree à cette occasion. Vérifier
+  le mapping exact et l'absence de commande active avant chaque retrait ;
+  préserver/copier les preuves avant retrait du dernier alias utilisé.
+  S: et T: ont déjà été retirés ; U: reste loué à F8 jusqu'à sa fin vérifiée,
+  Y:/Z: correspondent à des workers arrêtés. Aucune nouvelle lettre nécessaire
+  aux consultations en lecture seule ; contrôler la liste finale par `subst`.
 - Pool cible : **8 agents concurrents maximum** (la capacité machine monte à ~30 ;
   au-delà de 8, GPU/build sérialisé et attribution des défauts ne gagnent plus
   de parallélisme réel). `max_running_members: 8`.
