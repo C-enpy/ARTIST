@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, ownership, testing, pipeline]
 summary: "Mission P1 : tranche Pipeline A1 (A1a stockage/emprunts, A1b m_passes unique_ptr + bornes/curseur, A1c lifetime GL chargé) puis A2/F6 sous contrat complémentaire ; micro-incidents ouverts en branches latérales ; ADR-0004 reste hors mission."
 status: selected
-implementation: not-started
+implementation: partial
 source_revision: af14c88
 created: 2026-10-15
 updated: 2026-10-16
@@ -19,8 +19,15 @@ provenance:
 
 **Sélectionnée par l'utilisateur le 2026-10-16 après consultation ; périmètre défini avec la
 fiche de contrat préalable de l'architecte (G-A, 2026-10-16, ratifiée par le coordinateur).
-À exécuter dans une session neuve.** Cette fiche remplace celle de la mission C
+Exécution engagée dans la mission native approuvée.** Cette fiche remplace celle de la mission C
 ([[architecture/missions/2026-10-15-failure-contracts|archivée]]).
+
+> [!info] Avancement vérifié, non clôture globale
+> A1a+A1b intégrés en `d319096` ; I-A1 vérifiée sur l'union : 167/167 CPU,
+> 15/15 empreintes sources conformes, manifeste
+> `_meta/session-2026-10-16-pipeline-i-a1-validation.json`. A1c en cours, pas de
+> preuve lifetime Pipeline chargé ni de migration A2 acquise ici. R/V et
+> clôture documentaire restent à réaliser ; aucun PASS global de mission.
 
 ## Pourquoi cette mission
 
@@ -210,6 +217,100 @@ invalides sans anticiper ADR-0004 ; quels consommateurs migrer et quelles
 preuves loaded-owner conserver. Un handle générationnel ne résoudrait pas une
 destruction GPU en vol.
 
+## F8-SEAM — contrat complémentaire ratifié le 2026-10-16
+
+Ruling G-F8 reçu en lecture seule de l'architecte, puis ratifié par le
+coordinateur après lecture de `Reader::on` et du setter virtuel de
+`ShaderContext`. Ce contrat autorise uniquement les deux fichiers ci-dessous ;
+aucune preuve d'exécution F8 supplémentaire n'est acquise à la ratification.
+ADR-0003 reste `Accepted / partial`, ADR-0004 `Proposed / not-started` et hors
+mission. Le constat H-TEMP-LOCK reste un mécanisme suffisant, pas une cause
+historique établie.
+
+### Propriété, partition et évaluation
+
+- Un seul `cpp-engineer` :
+  `ARTIST/include/graphic/opengl/pipeline/component/shader/Reader.hpp` et
+  `ARTIST/tests/src/graphic/opengl/pipeline/component/shader/ReaderTests.cpp`.
+  Aucun changement Shader/Loader/contexte, profil, dépendance ou harness ;
+  aucun chevauchement des fichiers A1c. Documentation au coordinateur.
+- Deux cycles chez le même écrivain car ils partagent `ReaderTests.cpp` :
+  hygiène de fixture, puis extraction testable. Lecture/édition CPU parallèles
+  à A1c, mais les anciennes fixtures `%TEMP%/artist-reader-tests` demandent un
+  bail du coordinateur avant toute campagne les utilisant. GPU reste à A1c.
+- Évaluation PM/LLM locale : complexité brute **68**, retenue **70** (plancher
+  développement), risque **55**. La seam, l'unwind iostream et les préconditions
+  de fixture interagissent ; périmètre de préparation CPU borné à deux fichiers.
+  Incertitude : comportement exact de la STL lors d'une exception d'extraction,
+  à établir par compteurs/état du flux, pas par hypothèse. Scores heuristiques.
+
+### Cycle 1 — fixture TEMP, RED causal requis
+
+Répertoire possédé par chaque fixture, acquis par `create_directory` avec
+collisions traitées ; timestamp/random seuls ne prouvent pas l'exclusivité.
+Contrôler création/open/write/close et limiter le cleanup au répertoire possédé.
+Le helper de chemin absent doit rejeter une suppression échouée ou un résidu
+avant d'appeler le Reader. Aucun skip, aucune assertion métier englobant le
+setup. RED : placer un répertoire non vide au chemin demandé absent ; l'ancien
+helper ignore l'erreur et retourne le chemin. GREEN : diagnostic de setup
+précis, aucun appel Reader après cet échec ; deux fixtures isolées, cleanup
+préservant le voisin.
+
+### Cycle 2 — refactoring caractérisé et preuve d'extraction
+
+Conserver l'entrée `OpenGLShaderReader<Classic>::on(Context&)`. Dans un espace
+`detail` interne à `Reader.hpp`, fonctions `inline` header-only :
+
+```cpp
+std::string extractShaderSource(std::istream& source);
+using SourceExtractor = std::string(std::istream&);
+void readShaderFile(graphic::api::OpenGL::ShaderContext& context,
+                    SourceExtractor& extract);
+```
+
+`on` appelle `readShaderFile(context, extractShaderSource)`. L'extracteur possède
+l'unique boucle `read/gcount` actuelle et le rejet fail-sans-EOF, sans toucher
+au contexte ni au masque d'exceptions, sans fermer ni traduire l'erreur.
+Précondition : flux vivant, masque `badbit` actif. La transaction conserve
+vider contexte → fichier local propriétaire/open → extraction en string locale
+→ clear/close/vérification → publication ; seul `ifstream::failure` est traduit,
+messages publics inchangés. Le callback synchrone n'est ni retenu ni nul et ne
+ferme/remplace/conserve pas le fichier. Aucune nouvelle abstraction générale IO.
+Au plus un appel par fichier chargé, jamais par bloc/draw/frame ; pas de gain
+de performance ou de dévirtualisation revendiqué.
+
+Caractériser les chemins existants avant refactoring. Une seam absente qui ne
+compile pas n'est pas un RED comportemental ; le nouveau test peut être GREEN
+immédiatement si le catch existant est correct. Ne pas inventer de RED moteur.
+Un défaut réellement découvert reçoit son propre RED causal avant correction.
+
+L'adaptateur de test reçoit le fichier réel ouvert puis appelle **le même**
+extracteur avec un streambuf local défaillant et un istream sous masque badbit.
+Premier `xsgetn` : 4096 octets exactement ; deuxième : compteur puis exception
+`ios_base::failure` sentinel. Prouver le bloc consommé, la deuxième demande et
+badbit réellement posé. Un `xsgetn` court seul pose EOF/fail et ne simule pas
+cette erreur. Vérifier type final et message exact
+`"ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ\n" + sentinel.what()` calculé sur la
+STL courante ; contexte prérempli devenu vide, aucun bloc partiel publié.
+Une exception non-ios injectée (`bad_alloc`) doit rester non traduite, contexte
+vide. Interdit : callback levant directement l'erreur métier ou boucle mockée.
+
+Succès canonique : vide, moins de 4096, exactement 4096, plusieurs blocs avec
+dernier court, contenu identique ; conserver le cas absent et ses diagnostics.
+Un setter virtuel de test peut observer que le filebuf emprunté pendant
+l'extraction est fermé au moment de la publication finale, uniquement tant que
+la transaction vit. Aucun close-hook nouveau. Lifetimes streambuf/istream et
+fichier restent bornés à l'appel/unwind, aucune observation pendante.
+
+### Intégration et limites
+
+JUnit frais des ReaderTests puis CPU union ; sélection ASan CPU déclarée avant
+exécution, clean-first, sonde reconstruite, canari 0/86 et premier FAIL conservé.
+Pas de GL concurrent à A1c. La fin d'auteur ne vaut pas intégration : I0 attend
+le diff F8 intégré et ses preuves avant R/V. La fermeture échouée et une panne
+filesystem réelle en cours de lecture restent non prouvées ; **F8 partiel**,
+aucune validation Release/autre plateforme/GPU/image/performance nouvelle.
+
 ## Découpage prévisionnel et scores (PM/LLM, heuristiques — pas des probabilités)
 
 ```text
@@ -301,8 +402,9 @@ produite le 2026-10-16 par consultation fresh (`engine-architect`,
 (`project-manager`, `gpt-6.1-sol#high`). Une première amorce de l'équipe
 (`pipeline-a1`, 4 workers) a été **arrêtée avant toute intégration** — HEAD
 `af14c88` inchangé, WIP non conservé : cette fiche est l'état de référence.
-**P est sélectionnée, pas corrigée** ; aucun PASS global ne résulte de cette
-sélection.
+Ce dernier constat décrit l'amorce arrêtée, pas l'exécution native en cours.
+L'avancement effectivement vérifié est précisé en tête de cette fiche ;
+aucun PASS global ne résulte de la sélection ni des seules preuves A1a+A1b.
 
 Retour : [[architecture/correction-plan|Plan de correction]] ·
 [[development/known-incidents|Incidents]] ·
