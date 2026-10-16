@@ -430,6 +430,29 @@ TDD historique globale. Preuves et empreintes :
 
 ## Expériences encore absentes
 
+### Revue finale A2 — P2 fixture et oracle GMock préexistant
+
+R-A2 fresh (`f914d77`, huit fichiers, 129 empreintes conformes), lecture seule :
+aucun défaut nouveau identifié dans le C++ A2 ; aucune nouvelle exécution.
+Le nouveau runner Python H-RESTORE comporte en revanche un **P2** :
+`scripts/test_asan_env.py:154-170` déplace le build sous `.hold-hrestore`, puis
+crée un fichier vide. Si cette création lève avant le retour du helper,
+`check_wrapper_restoration` garde `held = None` et son finally ne remet pas le
+build original en place. Défaut de contrôle de flux établi ; injection causale
+à exécuter avant correction dans H-FIXTURE, branche isolée et temporaire privé.
+Il concerne la fixture du test, pas la restauration des variables PowerShell.
+La clôture attend intégration puis vérification indépendante du correctif.
+
+**Correction de qualification GMock** : le diagnostic `AttributeTests.cpp:65`
+(`AttributeTest.SetTest`, `mockOn` attendu une fois, observé zéro après résumé)
+n'apparaît pas seulement en exécution directe de toutes les suites. La revue
+l'a retrouvé dans `out/mission-a1a2/i0-verification/asan-last-test.log:2494-2501`
+avec filtre individuel et `Test Passed`. C'est un faux négatif d'oracle
+préexistant, pas une régression A2. Les JUnit scannés sans diagnostic ne
+suffisent pas à certifier stdout ; QA finale doit contrôler le LastTest.log.
+Conserver séparément les décomptes CTest, ce défaut d'oracle et le FAIL du
+protocole historique RED A1c. Ne pas transformer un exit0 en PASS sans réserve.
+
 ### Revue I0 — réserves mineures distinctes des verdicts exécutés
 
 Revue fresh de `18edc72`, 24 fichiers du diff et 129/129 empreintes recoupées :

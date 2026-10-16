@@ -1,6 +1,6 @@
 {
   "date": "2026-10-16",
-  "status": "Integrated candidate; independent final review and execution pending",
+  "status": "Integrated candidate; independent review found P2 harness fixture rollback; execution QA and isolated correction pending",
   "candidate": "f914d77b17b1c3013bf06679c0f94537ee7ba24a",
   "composition": "A2/F6 plus H-RESTORE 1a75c75, following integrated I0 18edc72",
   "source_manifest": "out/mission-a1a2/final-source-manifest.json",
@@ -44,9 +44,33 @@
     "verification": "task_mvbguqgx_005v_xl1gnj",
     "context": "fresh, actual combined integrated candidate; review read-only, QA exclusive build/GPU"
   },
+  "independent_review": {
+    "task": "task_mvbguqgw_005u_sqbmz7",
+    "source_identity": "129/129 matching",
+    "reviewed_files": 8,
+    "new_executions": 0,
+    "A2_cpp": "No new defect identified by static review; not exhaustive proof",
+    "P2_harness_fixture": {
+      "path": "scripts/test_asan_env.py:154-170,391,404-405",
+      "finding": "rename to hold followed by write_bytes exception before helper return loses hold state; caller finally cannot restore original build path",
+      "evidenceKind": "inference",
+      "runtime_fault_injection": "Not executed by reviewer; RED required from H-FIXTURE before fix",
+      "correction_task": "task_mvbh21bd_0067_sw6b3t",
+      "scores": {"method": "PM/LLM", "complexity_raw": 65, "complexity_retained": 70, "risk": 64},
+      "scope": "Python fixture rollback only, isolated worktree and private temporary fixtures, no GPU/build/cache shared with QA",
+      "final_gate": "Integrate and independently verify correction before closure; do not execute risky staging on real principal build meanwhile"
+    },
+    "P2_preexisting_mock_oracle": {
+      "path": "AttributeTests.cpp:65 / AttributeTest.SetTest",
+      "finding": "Unsatisfied mockOn expectation verified after summary; process exit and CTest still pass",
+      "proof": "out/mission-a1a2/i0-verification/asan-last-test.log:2494-2501 contains per-test diagnostic despite Test Passed",
+      "correction_to_prior_scope": "Not limited to direct all-suite invocation; absence from scanned JUnit does not establish absence in LastTest.log",
+      "arbitration": "Preexisting out-of-scope oracle defect retained, not A2 regression; QA must inspect final raw log and report separately"
+    }
+  },
   "retained_limits": [
     "Historical A1c RED cleanup after GL teardown remains protocol FAIL; unsafe probe must not be replayed",
-    "Direct all-suite baseline and A2 binaries emit a preexisting post-suite GMock AttributeTests.cpp:65 diagnostic despite exit0; CTest per-test JUnit have no corresponding hidden diagnostic",
+    "Preexisting GMock AttributeTests.cpp:65 post-summary diagnostic occurs both directly and in per-test CTest I0 LastTest.log despite exit0; scanned JUnit did not expose it, so raw logs are required",
     "Reader removeError/dangling-entry scenario, close failure and real filesystem extraction fault remain unproven",
     "No image, performance, Release, other-platform, GPU-in-flight or exhaustive RAII claim",
     "No global final PASS before independent review, QA and documentary reconciliation"

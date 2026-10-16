@@ -53,6 +53,17 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > encore retenue jusqu'à leurs verdicts ; aucun PASS global annoncé.
 > Manifeste : `_meta/session-2026-10-16-pipeline-final-validation.json`.
 
+> [!warning] Barrière finale R-A2
+> Revue fresh reçue : aucun défaut nouveau C++ A2 identifié, mais **P2 du
+> nouveau runner H-RESTORE** : si la création du fichier fixture échoue après
+> déplacement du build, celui-ci peut rester sous `.hold-hrestore`. H-FIXTURE
+> est admis en branche isolée (complexité brute65 → 70, risque64), sans GPU ni
+> cache partagé ; RED d'injection sur fixture temporaire avant correction.
+> Pas d'exécution du staging risqué sur le build réel avant intégration du fix.
+> Autre réserve : le diagnostic GMock préexistant est aussi dans un LastTest.log
+> CTest I0 malgré `Test Passed`, pas seulement en exécution directe. Absence
+> dans les JUnit scannés ne signifie pas absence de diagnostic dans les logs.
+
 ## Pourquoi cette mission
 
 L'ordre adopté le 2026-10-15 : figer les contrats d'échec (mission C, terminée à
