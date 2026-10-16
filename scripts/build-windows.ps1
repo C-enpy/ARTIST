@@ -27,6 +27,19 @@ $savedEnvironment = @{}
 # canary itself, CTest and its test processes) must not depend on the parent
 # session. The module lives next to this script.
 . (Join-Path $PSScriptRoot 'asan-env.ps1')
+# H-RESTORE (R-I0/V-I0, P3): with -AddressSanitizer, Set-AsanTestEnvironment
+# rewrites ASAN_OPTIONS and removes ASAN_ACTIVATION_OPTIONS in this caller
+# process. The vcvars dump only replays variables the caller already had, so
+# an initially absent ASAN_OPTIONS stayed canonical here after the wrapper
+# returned or threw in the same PowerShell (I0 evidence
+# asan-caller-restoration). Record the entry state, absence included, so the
+# finally restores both variables exactly on every return and exception.
+$savedAsanEnvironment = @{}
+if ($AddressSanitizer) {
+    foreach ($asanVariable in 'ASAN_OPTIONS', 'ASAN_ACTIVATION_OPTIONS') {
+        $savedAsanEnvironment[$asanVariable] = [Environment]::GetEnvironmentVariable($asanVariable, 'Process')
+    }
+}
 
 function Invoke-Checked([string]$Program, [string[]]$Arguments) {
     & $Program @Arguments
@@ -113,6 +126,9 @@ try {
     if ($TestLabel -ne 'all') { $testArguments += @('-L', $TestLabel) }
     Invoke-Checked 'ctest' $testArguments
 } finally {
+    foreach ($name in $savedAsanEnvironment.Keys) {
+        [Environment]::SetEnvironmentVariable($name, $savedAsanEnvironment[$name], 'Process')
+    }
     foreach ($name in $savedEnvironment.Keys) {
         [Environment]::SetEnvironmentVariable($name, $savedEnvironment[$name], 'Process')
     }
