@@ -98,10 +98,10 @@ function scalar(source) {
   }
   if (source === '[]') return [];
   if (source === '{}') return Object.create(null);
-  if (/^[!&*\[\]{}>|%@`]|^<<|:\s|\s[&*][^ ]/.test(source))
+  if (/^[!&*\[\]{}>|%@`]|^<<|^[-?:](?:\s|$)|:(?:\s|$)|\s[&*][^ ]/.test(source))
     reject('YAML_UNSUPPORTED', `Syntaxe hors sous-ensemble YAML : ${source}`);
-  if (source === 'true' || source === 'false') return source === 'true';
-  if (source === 'null' || source === '~') return null;
+  if (/^(true|True|TRUE|false|False|FALSE)$/.test(source)) return source.toLowerCase() === 'true';
+  if (/^(null|Null|NULL|~)$/.test(source)) return null;
   if (/^-?(0|[1-9]\d*)(\.\d+)?$/.test(source)) return Number(source);
   if (/^[+\-.]?\d|^[+-]?\.(inf|nan)$/i.test(source))
     reject('YAML_UNSUPPORTED', 'Scalaire numérique/date hors sous-ensemble décimal ; utiliser des quotes pour du texte.');
@@ -389,21 +389,43 @@ function validate(args) {
     // Preuve conservatrice sur TOUTES les ressources : deny universel et aucune
     // réouverture ultérieure. Ce n'est pas une simulation d'enforcement natif.
     const lastUniversalDeny = rules.findLastIndex(r => matches(r.action, 'subagent') && r.resource === '*' && r.effect === 'deny');
-    const subagentSafe = lastUniversalDeny >= 0 && !rules.slice(lastUniversalDeny + 1).some(r => matches(r.action, 'subagent') && r.effect !== 'deny');
-    check('PERMISSION_SUBAGENT', subagentSafe ? 'PASS' : 'FAIL', entity.id, { obligation: 'T-06', expected: 'Feuille : deny subagent universel, non rouvert.' });
+    const coordinator = entity.id === 'orchestrator';
+    const subagentSafe = coordinator
+      ? rules.findLast(r => matches(r.action, 'subagent') && matches(r.resource, 'orchestrator'))?.effect === 'deny'
+      : lastUniversalDeny >= 0 && !rules.slice(lastUniversalDeny + 1).some(r => matches(r.action, 'subagent') && r.effect !== 'deny');
+    check('PERMISSION_SUBAGENT', subagentSafe ? 'PASS' : 'FAIL', entity.id, { obligation: 'T-06',
+      expected: coordinator ? 'Coordinateur : dernière règle applicable interdit sa propre délégation.' : 'Feuille : deny subagent universel, non rouvert.' });
     if (!['qa-planner', 'test-engineer', 'test-reviewer'].includes(entity.id)) return;
     const denyAll = rules[0]?.action === '*' && rules[0]?.resource === '*' && rules[0]?.effect === 'deny';
-    const unsafe = rules.filter(r => r.effect !== 'deny').filter(r =>
-      !['read', 'glob', 'grep', 'skill'].includes(r.action) || r.resource === '*' || r.resource.includes('..') ||
-      /(^|[/\\])\.env/.test(r.resource));
+    const bounded = r => {
+      if (r.action === 'skill') return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(r.resource) && r.resource.length <= 64;
+      if (!['read', 'glob', 'grep'].includes(r.action)) return false;
+      try {
+        // Sous-ensemble volontairement exact : même docs/** peut ouvrir .env.
+        // Aucun glob/absolu/ADS/traversal ni fichier secret conventionnel.
+        const name = relativeName(r.resource);
+        if (!/^[a-zA-Z0-9_./-]+$/.test(name) || name.split('/').some(p =>
+          /^(\.env|\.git$|\.ssh$|\.aws$|\.azure$|\.gnupg$|\.npmrc$|\.pypirc$|\.?secrets?(\.|$)|credentials?(\.|$)|id_(rsa|dsa|ecdsa|ed25519)(\.|$))/i.test(p) ||
+          /\.(key|pem|p12|pfx|kdbx)$/i.test(p))) return false;
+        const { absolute } = safePath(name);
+        return fs.existsSync(absolute) && fs.statSync(absolute).isFile();
+      } catch { return false; }
+    };
+    const unsafe = rules.filter(r => r.effect !== 'deny' && !bounded(r));
     check('PERMISSION_QA', denyAll && !unsafe.length ? 'PASS' : 'FAIL', { agent: entity.id, unsafe },
-      { obligation: 'T-06', expected: 'QA fail-closed ; aucun grant edit/shell/execute/MCP/subagent ni lecture générale de secrets. D-PERM non résolu.' });
+      { obligation: 'T-06', expected: 'QA deny-all, exceptions fichiers exacts non secrets conventionnels ou IDs skill exacts ; globs non prouvés rejetés. D-PERM non résolu.' });
   }
   function candidate() {
     const hashes = sorted(Object.fromEntries([...inputBytes].map(([p, b]) => [p, hash(b)])));
+    // GIT_WORK_TREE peut falsifier show-toplevel tout en gardant le HEAD d'un
+    // autre GIT_DIR. Ignorer toute injection Git, pas les gitfiles des worktrees.
+    const gitEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) => !/^GIT_/i.test(key)));
+    Object.assign(gitEnv, { GIT_OPTIONAL_LOCKS: '0', GIT_CONFIG_NOSYSTEM: '1',
+      GIT_CONFIG_GLOBAL: process.platform === 'win32' ? 'NUL' : '/dev/null',
+      GIT_CONFIG_SYSTEM: process.platform === 'win32' ? 'NUL' : '/dev/null', GIT_CONFIG_COUNT: '0' });
     const runGit = argv => {
       const run = spawnSync('git', ['--no-optional-locks', '-c', 'core.fsmonitor=false', '-C', root, ...argv],
-        { encoding: 'utf8', timeout: 10000, maxBuffer: 8 * MAX_BYTES, env: { ...process.env, GIT_OPTIONAL_LOCKS: '0' } });
+        { encoding: 'utf8', timeout: 10000, maxBuffer: 8 * MAX_BYTES, env: gitEnv });
       return run.status === 0 ? run.stdout.trimEnd() : null;
     };
     const gitRoot = runGit(['rev-parse', '--show-toplevel']);
