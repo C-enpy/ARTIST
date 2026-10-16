@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-16",
+  "consent": "User selected Isoler l'intégration (Recommended)",
+  "integration_branch": "mission/gpu-qa-integration-e52f73a",
+  "saved_commit": "8f0a2ca6df6266ef8783dd8e9205a9e7f333cec6",
+  "canonical_cleanup": {
+    "scope": "Only the 44 previously team-merged files of T06/T07/T08/T09/T12",
+    "preconditions": "All canonical blobs equal producer blobs and committed integration copies; selected main HEAD blobs equal original author base; main index empty",
+    "tracked_owned_restored": 8,
+    "new_owned_files_deleted_individually": 36,
+    "recursive_delete": false,
+    "main_index_after": "empty",
+    "original_protected_input_hashes_unchanged": "8/8, excluding already-recorded volatile GrepAI timestamp",
+    "external_Reader_changes": "untouched",
+    "global_reset_or_main_commit": false
+  },
+  "admissions": {
+    "restriction_observed": "team_spawn rejects the integration worktree and requires the mission owning directory",
+    "procedure": "Move lead to owning directory only for admissions, no merge/index commit there; return to integration for changes",
+    "native_merge_destination": "Proved moved integration target by T04 script present there and absent canonical",
+    "reviewers": ["review-harness", "review-gpu-contracts"],
+    "review_context": "fresh",
+    "model_policy": "approved v1, no explicit overrides"
+  },
+  "operator_base_consent": "User selected Base séparée (Recommended): exact six pre-existing harness files only, separate attributed baseline commit; snapshots prepared, source import still pending reviewer completion",
+  "native_catalog_observation": {
+    "candidate": "8f0a2ca6df6266ef8783dd8e9205a9e7f333cec6",
+    "registered_local_agents": 20,
+    "registered_local_skills": 17,
+    "resolved_agents_including_builtin": 27,
+    "resolved_skills_including_global": 103,
+    "missing_local_ids": [],
+    "scope": "registered metadata only, NOT scenario selection, actual skill loading, permission enforcement, GPU or performance"
+  }
+}
