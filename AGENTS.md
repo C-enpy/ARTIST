@@ -92,6 +92,26 @@ indépendante. Les autres agents sont des feuilles, sans sous-délégation.
 - `performance-reviewer` : coût CPU/GPU, allocations, cache, spécialisation et mesures.
 - `rendering-verifier` : vérification indépendante avec PASS / FAIL / INCONCLUSIVE.
 
+Le catalogue GPU étendu (19 responsabilités, 23 profils locaux, 17 skills) est
+dans `.opencode/agents/orchestrator.md` et `docs/agentic/gpu-qa-harness.md`.
+Il raccorde les spécialistes API, pipelines/shaders/simulation, ressources/graphe/
+portabilité et les reviewers au coordinateur existant ; pas de second routeur.
+Progressive disclosure : description, puis skill utile, puis référence ciblée.
+OpenGL seul backend implémenté ; connaissances multi-API ≠ nouveaux backends.
+
+Boucle QA obligatoire pour un comportement sous contrat OU une suite d’intégration étendue
+OU un risque PM >= 50 : `qa-planner` avant les auteurs, plan persisté/commité
+par le lead avant leurs worktrees ; auteurs TDD ; producteurs réellement intégrés
+avant `test-engineer` (generator de gaps, pas substitut au RED) ; `test-reviewer`
+fresh hors board d'implémentation, puis correction/ré-audit. Contrat détaillé dans
+`.opencode/agents/orchestrator.md`. Risque PM 0–100 distinct de QA I×P 1–5 → 1–25 ;
+QA >= 10 exige déclencheur/blast radius/détection/mitigation/gap, sans changer la grille.
+Runner séparé : les trois QA proposent texte/patch ; le lead mandaté persiste,
+relit et exécute, attribution réelle et autonomie dégradée explicites. Pas de grant
+natif par lot démontré ; deny-all/read-glob-skill inchangés, edit/shell/execute/
+subagent fermés. MCP accessibles seulement par Code Mode donc indisponibles à ces
+QA : le lead digère les longues sorties. Présence statique ≠ routage/enforcement.
+
 Pour une mission Ensemble, charger `opencode-ensemble` avant la coordination.
 Faire préparer le plan par `project-manager` ; pour une petite intervention
 indivisible, l'orchestrateur peut appliquer directement son contrat de planification.

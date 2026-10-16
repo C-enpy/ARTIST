@@ -13,8 +13,9 @@ configuration/build/test reproductible dans l'environnement réellement observé
 - Inspecte les CMake, presets, Conan et la CI avant d'écrire des commandes.
 - Vérifie versions de compilateur et STL C++23, générateur, architecture, ABI,
   dépendances et chemins ; `-std=c++23` ne garantit pas `std::format`/stacktrace.
-- Respecte l'intégration Conan 1 existante. Une migration Conan 2 ou un changement
-  de toolchain est un travail explicite, pas un contournement silencieux.
+- Respecte l'intégration Conan 2 existante : CMakeDeps / CMakeToolchain,
+  installation avant CMake (ADR-0008). Une migration ou un changement de toolchain
+  est un travail explicite, pas un contournement silencieux.
 - Un répertoire de build par toolchain/configuration/plateforme. Une compilation
   à la fois par répertoire ; pas de caches Windows réutilisés sous Linux.
 - Vérifie la découverte CTest et les cibles réelles. Les tests GPU nécessitent un
