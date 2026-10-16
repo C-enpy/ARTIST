@@ -37,3 +37,23 @@ TEST_F(ResetterTests, resetProgram_NullContext)
                         { OpenGLPipelineResetter<Classic>::on(nullptr); },
                         artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::NON_VALID_CONTEXT")));
 }
+
+TEST_F(ResetterTests, BorrowedEntryPointResetsOnlyCursor)
+{
+    OpenGLPipelineContext context;
+    OpenGLPipelineResetter<Classic>::on(context);
+    EXPECT_EQ(context.getCurrentPass(), -1);
+    EXPECT_EQ(context.getPassesCount(), 0u);
+}
+
+TEST_F(ResetterTests, SharedFacadeDoesNotRetainContext)
+{
+    std::weak_ptr<OpenGLPipelineContext> borrowed;
+    {
+        auto context = std::make_shared<OpenGLPipelineContext>();
+        borrowed = context;
+        OpenGLPipelineResetter<Classic>::on(context);
+        EXPECT_EQ(context.use_count(), 1);
+    }
+    EXPECT_TRUE(borrowed.expired());
+}

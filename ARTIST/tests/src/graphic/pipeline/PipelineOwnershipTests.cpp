@@ -23,15 +23,20 @@ namespace
         int &destructions;
     };
 
-    // The RED also compiles against the former shared accessor, so the
-    // ownership failure is observable rather than a missing-API build error.
+    static_assert(!std::is_copy_constructible_v<Pipeline>);
+    static_assert(!std::is_copy_assignable_v<Pipeline>);
+    static_assert(std::is_move_constructible_v<Pipeline>);
+    static_assert(std::is_move_assignable_v<Pipeline>);
+    static_assert(!std::is_copy_constructible_v<Context>);
+    static_assert(!std::is_copy_assignable_v<Context>);
+    static_assert(!std::is_move_constructible_v<Context>);
+    static_assert(!std::is_move_assignable_v<Context>);
+    static_assert(std::is_same_v<decltype(std::declval<const Pipeline &>().getContext()), Context &>);
+
     template <typename T>
     auto *contextAddress(const T &pipeline)
     {
-        if constexpr (std::is_reference_v<decltype(pipeline.getContext())>)
-            return &pipeline.getContext();
-        else
-            return pipeline.getContext().get();
+        return &pipeline.getContext();
     }
 }
 
@@ -104,4 +109,20 @@ TEST(PipelineOwnershipTests, SelfMoveIsStrictlyNoOp)
         EXPECT_EQ(destructions, 0);
     }
     EXPECT_EQ(destructions, 1);
+}
+
+TEST(PipelineOwnershipTests, MovedFromPublicAccessIsRejected)
+{
+    using artist::common::exception::TraceableException;
+    using artist::test::utils::expectSpecificError;
+    Pipeline source({});
+    Pipeline destination(std::move(source));
+    const auto expected = TraceableException<std::runtime_error>("ERROR::PIPELINE::FREED_CONTEXT");
+    expectSpecificError([&] { (void)source.getContext(); }, expected);
+    expectSpecificError([&] { (void)source.getPassesCount(); }, expected);
+    expectSpecificError([&] { (void)source.forPass(0); }, expected);
+    expectSpecificError([&] { (void)source.hasNext(); }, expected);
+    expectSpecificError([&] { (void)source.useNext(); }, expected);
+    expectSpecificError([&] { source.use(-1); }, expected);
+    expectSpecificError([&] { source.reset(); }, expected);
 }

@@ -22,11 +22,11 @@ namespace artist::mock::graphic::opengl::pipeline::component::pipeline
             ::testing::Mock::VerifyAndClearExpectations(instance().get());
         }
 
-        static void on(std::shared_ptr<graphic::api::MockOpenGL::PipelineContext> openglContext)
+        static void on(graphic::api::MockOpenGL::PipelineContext &openglContext)
         {
             instance()->mockOn(openglContext);
         }
 
-        MOCK_METHOD(void, mockOn, (std::shared_ptr<graphic::api::MockOpenGL::PipelineContext> context), ());
+        MOCK_METHOD(void, mockOn, (graphic::api::MockOpenGL::PipelineContext &context), ());
     };
 }

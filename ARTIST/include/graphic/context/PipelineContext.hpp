@@ -15,7 +15,12 @@ namespace artist::graphic::context
     class PipelineContext
     {
     public:
+        PipelineContext() = default;
         virtual ~PipelineContext() = default;
+        PipelineContext(const PipelineContext &) = delete;
+        PipelineContext &operator=(const PipelineContext &) = delete;
+        PipelineContext(PipelineContext &&) = delete;
+        PipelineContext &operator=(PipelineContext &&) = delete;
 
         void addPass(std::shared_ptr<pipeline::IPass<API>> pass)
         {

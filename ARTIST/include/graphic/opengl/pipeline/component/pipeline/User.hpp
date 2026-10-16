@@ -17,13 +17,19 @@ namespace artist::graphic::opengl::pipeline::component::pipeline
     class OpenGLPipelineUser<graphic::opengl::profile::Pipeline::Classic>
     {
     public:
+        static void on(graphic::api::OpenGL::PipelineContext &context)
+        {
+            context.getPass(context.getCurrentPass())->use();
+        }
+
+        // Compatibility facade only: do not retain a shared owner.
         static void on(std::shared_ptr<typename graphic::api::OpenGL::PipelineContext> context)
         {
             if (!context)
             {
                 throw common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::NON_VALID_CONTEXT"));
             }
-            context->getPass(context->getCurrentPass())->use();
+            on(*context);
         }
     };
 }

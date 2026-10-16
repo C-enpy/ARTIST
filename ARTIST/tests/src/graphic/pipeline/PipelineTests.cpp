@@ -82,8 +82,9 @@ TEST_F(PipelineTest, GetContext)
     pipeline::Pipeline<api::MockOpenGL, Classic> pipeline({mockPass1, mockPass2});
 
     // Act
-    auto context = pipeline.getContext();
+    auto &context = pipeline.getContext();
 
     // Assert
-    ASSERT_NE(context, nullptr);
+    ASSERT_EQ(context.getPassesCount(), 2u);
+    EXPECT_EQ(&context, &pipeline.getContext());
 }

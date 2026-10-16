@@ -45,3 +45,29 @@ TEST_F(PipelineUserTests, useProgram_NullContext)
                         { OpenGLPipelineUser<Classic>::on(nullptr); },
                         artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::SHADER::NON_VALID_CONTEXT")));
 }
+
+TEST_F(PipelineUserTests, BorrowedEntryPointUsesRegisteredPass)
+{
+    context::OpenGLPipelineContext context;
+    auto pass = std::make_shared<MockPass<api::OpenGL>>();
+    context.addPass(pass);
+    context.setCurrentPass(0);
+    EXPECT_CALL(*pass, use()).Times(1);
+    OpenGLPipelineUser<Classic>::on(context);
+}
+
+TEST_F(PipelineUserTests, SharedFacadeDoesNotRetainContext)
+{
+    std::weak_ptr<context::OpenGLPipelineContext> borrowed;
+    {
+        auto context = std::make_shared<context::OpenGLPipelineContext>();
+        auto pass = std::make_shared<MockPass<api::OpenGL>>();
+        context->addPass(pass);
+        context->setCurrentPass(0);
+        borrowed = context;
+        EXPECT_CALL(*pass, use()).Times(1);
+        OpenGLPipelineUser<Classic>::on(context);
+        EXPECT_EQ(context.use_count(), 1);
+    }
+    EXPECT_TRUE(borrowed.expired());
+}

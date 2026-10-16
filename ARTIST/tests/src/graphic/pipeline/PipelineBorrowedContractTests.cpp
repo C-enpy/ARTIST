@@ -41,6 +41,10 @@ namespace
     using SharedResetterAPI = PipelineContractAPI<BorrowedPipelineComponent, SharedOnlyPipelineComponent>;
     using NonVoidAPI = PipelineContractAPI<NonVoidPipelineComponent, BorrowedPipelineComponent>;
     constexpr auto Classic = artist::graphic::opengl::profile::Pipeline::Classic;
+    static_assert(artist::graphic::opengl::validator::OpenGLPipelineFlow<BorrowedAPI, Classic>);
+    static_assert(!artist::graphic::opengl::validator::OpenGLPipelineFlow<SharedUserAPI, Classic>);
+    static_assert(!artist::graphic::opengl::validator::OpenGLPipelineFlow<SharedResetterAPI, Classic>);
+    static_assert(!artist::graphic::opengl::validator::OpenGLPipelineFlow<NonVoidAPI, Classic>);
 }
 
 TEST(PipelineBorrowedContractTests, FlowRequiresBorrowedVoidComponents)
