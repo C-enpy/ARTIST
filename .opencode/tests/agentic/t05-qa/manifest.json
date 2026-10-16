@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "lot": "t05-qa",
+  "agents": [
+    {"id":"qa-planner","path":".opencode/agents/qa-planner.md","skills":["artist-build-validation"]},
+    {"id":"test-engineer","path":".opencode/agents/test-engineer.md","skills":["artist-build-validation"]},
+    {"id":"test-reviewer","path":".opencode/agents/test-reviewer.md","skills":["artist-build-validation"]}
+  ],
+  "skills": [],
+  "obligations": ["G-03","G-06","G-07","T-01","T-03","T-04","T-05","T-06","T-07"],
+  "requiredLinks": [
+    {"from":".opencode/agents/qa-planner.md","to":".opencode/skills/artist-build-validation/SKILL.md"},
+    {"from":".opencode/agents/test-engineer.md","to":".opencode/skills/artist-build-validation/SKILL.md"},
+    {"from":".opencode/agents/test-reviewer.md","to":".opencode/skills/artist-build-validation/SKILL.md"}
+  ],
+  "allowedPaths": [
+    ".opencode/agents/qa-planner.md",
+    ".opencode/agents/test-engineer.md",
+    ".opencode/agents/test-reviewer.md",
+    ".opencode/tests/agentic/t05-qa/contract.test.mjs",
+    ".opencode/tests/agentic/t05-qa/manifest.json",
+    ".opencode/tests/agentic/t05-qa/fixtures/expectations.json",
+    ".opencode/tests/agentic/t05-qa/fixtures/offline-checks.mjs",
+    ".opencode/tests/agentic/t05-qa/fixtures/native-canaries.json",
+    ".opencode/evidence/mission-gpu-qa/t05-result.md"
+  ]
+}

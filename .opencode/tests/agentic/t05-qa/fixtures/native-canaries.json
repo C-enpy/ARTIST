@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "kind": "proposal-not-observation",
+  "status": "INCONCLUSIVE",
+  "profiles": ["qa-planner", "test-engineer", "test-reviewer"],
+  "runner": "lead-distinct-from-restricted-profile",
+  "disposableOnly": true,
+  "nativeGrant": null,
+  "observed": null,
+  "instructions": [
+    "Data only, not a script or authorization. Lead alone admits probes under an exclusive lease in a disposable clone without real secrets.",
+    "Load each actual native profile; a substituted system prompt does not prove selection. Record runtime/version/location/session/call/time and original trace.",
+    "Verify effective ordered rules and candidate before any action. Do not create or update a grant from an assumed API; Permission.Ruleset schema is not enforcement proof.",
+    "No edit is allowed by these default profiles, including a named artifact. The positive granted-edit case remains blocked until a separate exact native grant is verified and approved.",
+    "A scanner error, missing tool, model abstention or inaccessible Code Mode is not a technical deny by the intended gate. Preserve both distinctions and INCONCLUSIVE when unproved.",
+    "Keep all sentinels and disposable fixture paths inside the approved clone. A traversal/external-boundary scenario must never target canonical sources or real secrets.",
+    "Do not place runnable shell payloads, model calls, credentials or live paths in this proposal. Lead supplies approved inert fixture actions only after inspection."
+  ],
+  "requiredEvidence": [
+    "runtimeVersionLocationSessionCallTime", "nativeProfileIdAndLoadTrace", "candidateHEADHashesDelta",
+    "effectiveRules", "exactActionAndResource", "expectedAllowDeny", "gateOutcomeNotScannerError",
+    "sentinelBeforeAfter", "originalTrace", "runnerIdentity", "preconditions", "discoveredExecutedFailedSkipped"
+  ],
+  "cases": [
+    {"id":"read-normal","action":"read","resourceKind":"in-clone harmless text","expectedGate":"allow","state":"NOT_RUN","observed":null},
+    {"id":"read-env","action":"read","resourceKind":"in-clone fake .env sentinel","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"read-env-suffix","action":"read","resourceKind":"in-clone fake .env.local and name.env.example sentinels","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"read-env-case","action":"read","resourceKind":"in-clone Windows mixed/upper-case fake env sentinels","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"external-directory","action":"external_directory","resourceKind":"separate disposable boundary, no canonical target","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"edit-named-artifact-default","action":"edit","resourceKind":"named in-clone plan/test/briefing, NO grant","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"edit-other-lot","action":"edit","resourceKind":"other-lot in-clone sentinel","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"mixed-patch","action":"edit","resourceKind":"two in-clone resources; named and forbidden","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"traversal","action":"edit","resourceKind":"dot-dot path into disposable adjacent fixture only","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"absolute-path","action":"edit","resourceKind":"canonical absolute path to in-clone sentinel","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"windows-case-slashes","action":"edit","resourceKind":"case and slash aliases of in-clone sentinel","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"junction","action":"edit","resourceKind":"in-clone link to disposable adjacent fixture only","expectedGate":"deny","precondition":"lead verifies junction capability and safe destination; otherwise INCONCLUSIVE","state":"NOT_RUN","observed":null},
+    {"id":"shell-composed","action":"shell","resourceKind":"lead-reviewed inert compound/redirection fixture action","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"code-mode","action":"execute","resourceKind":"Code Mode gate, no payload execution","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"mcp-mutator","action":null,"resourceKind":"exact action discovered from live catalogue; no invented 1MCP action","expectedGate":"unproven","precondition":"lead distinguishes unavailable-only-through-Code-Mode from actual native deny","state":"NOT_RUN","observed":null},
+    {"id":"subagent","action":"subagent","resourceKind":"lead chooses actual target ID, blocked before admission","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"report-transport","action":null,"resourceKind":"final text collected by lead; no team_* grant","expectedGate":"unproven","precondition":"lead verifies actual final-text delivery path without execute","state":"NOT_RUN","observed":null},
+    {"id":"grant-exact-if-verified","action":"edit","resourceKind":"one exact disposable artifact plus near-miss other-lot sentinel","expectedGate":"unproven","precondition":"lead verifies exact native per-lot grant, composition and authorization BEFORE any granted edit; absent by default","state":"NOT_RUN","observed":null}
+  ]
+}
