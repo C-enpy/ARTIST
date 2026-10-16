@@ -50,7 +50,10 @@ namespace artist::common::exception
         {
         }
 
-        const std::string &getStackTraceString() const
+        // Returns by value: a const& return would bind the caller to a
+        // temporary destroyed at the end of this return statement (incident
+        // S-GSS, docs/development/known-incidents.md).
+        std::string getStackTraceString() const
         {
             return "Stacktrace not available";
         }
