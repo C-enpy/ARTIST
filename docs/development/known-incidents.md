@@ -278,7 +278,7 @@ Archive : [[architecture/missions/2026-10-15-failure-contracts|mission C]] ; man
 `_meta/session-2026-10-15-failure-contracts-validation.json`. Les anomalies ci-dessous ne sont
 pas des preuves et ne sont pas comptées dans les totaux.
 
-### getStackTraceString — référence pendante (incident OPEN)
+### getStackTraceString — référence pendante (traité en mission A1+A2, S-GSS)
 
 - Constat : `ARTIST/include/common/exception/TraceableException.hpp:46-57`, branche `#else`
   (active lorsque la condition `#if` des lignes 5 et 17 est fausse, par exemple sous MSVC) :
@@ -289,6 +289,26 @@ pas des preuves et ne sont pas comptées dans les totaux.
 - Décision : **non corrigé** en mission C (fichier hors périmètre, interdit par la fiche). Coupe
   séparée avant toute exposition ou tout appel. R (point δ) confirme : défaut dormant, pas un
   fixed en C.
+- Traitement (mission A1+A2, S-GSS, `433bdbc`) : retour par valeur `std::string` sur la branche
+  `#else` (l.56 après correction) branches alignées (l.29 déjà par valeur). RED causal double,
+  observé avant fix : runtime ASan strict — `stack-buffer-overflow` sur « compiler temporary »
+  détruit (temporaire de 23 caractères, hors SSO 15), lu depuis le test
+  `TraceableExceptionTests.cpp`, options `halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0`,
+  log `out/logs/s-gss-red-run.log` ; sonde compile-time hors dépôt — `C2338` sur la signature
+  `const&`, `out/logs/s-gss-red-compile.log`. GREEN : 2/2 sous ASan ; suite normale 167/167
+  (136 unit + 31 OpenGL, RTX 3090 / driver 617.42, 0 skip, `ctest-s-gss.xml`) ; ASan unit
+  136/136 avec options strictes (`ctest-unit-s-gss-asan.xml`) ; canari 0/86 `verify_asan.py`
+  PASS. Branche de travail : `befb5a8` (RED, test seul) → `36e4a34` (fix +
+  `static_assert` branch-agnostique). Premier consommateur de l'accesseur : tests uniquement,
+  zéro appelant de production ajouté — le défaut reste dormant en production, exposition inchangée.
+- Défaut latent découvert par S-GSS (**OPEN**, hors périmètre, non corrigé — à arbitrer) : dans
+  la branche `#if` (libstdc++), `getStackTraceString() const` (l.29) appelle `format_stacktrace`,
+  membre **non const** (l.37) — la première instanciation réelle de cette branche ne compilerait
+  pas (const-correctness). Branche inatteignable sous MSVC (exige des macros libstdc++ ET
+  `__cplusplus > 202002L`) ; non compilable ni exécutable sur cette baseline (GCC MSYS2 13.2 sans
+  `std::stacktrace`). Coupe dédiée recommandée avant toute exposition de l'accesseur sous
+  GCC/libstdc++. Les références OPEN résiduelles dans l'index, ADR-0003 et l'archive mission C
+  sont à réconcilier en DOC-F/I1.
 
 ### F8 — preuve de lecture incomplète (traité partiellement)
 
