@@ -9,7 +9,7 @@ implementation: partial
 decision_origin: Analyse des contexts partagés et recommandation commune des rapports ; adoption explicite par l'utilisateur le 2026-10-03 avec une migration franche (rien n'est en production).
 summary: Séparer propriétaires et emprunts du chemin d'appel, définir invalidation et libération conforme aux règles du backend.
 created: 2026-10-03
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # ADR-0003 — Ownership et lifetime CPU/GPU
@@ -192,6 +192,40 @@ sélection des chemins d'erreur après avis PM/architecte — RED causal, correc
 bornée des deux loaders et validation indépendante (143/143 distincts, 121 ASan
 distincts). Cette coupe ne modifie pas `implementation: partial` et ne démarre
 pas Pipeline.
+
+### Tranche C — bornage des contrats d'échec, vérifiée le 2026-10-15
+
+Mission [[architecture/missions/2026-10-15-failure-contracts|bornage des contrats d'échec]]
+à `e736bba`, périmètre Windows x64 Debug. Statuts par finding, sans élargissement :
+
+- **Q3 (publication)** : publication différée dans `pass/Loader.hpp` (un seul `setPassID`
+  après link vérifié ; `glDeleteProgram` unique sur échec pré-publication). L'attacher
+  emprunte le contexte et reçoit le handle par valeur (`ShaderAttacher.hpp:40`). Le repli
+  non-rollback n'est pas adopté.
+- **Q1 (log aberrant)** : capacité de log bornée à `[1, 4096]` dans les deux loaders,
+  exceptions métier inchangées. Le clamp borne l'allocation, pas la pénurie mémoire du processus.
+- **F4 (bornes)** : `PassContext::getShader` et `PipelineContext::getPass` rejettent par une
+  garde avant indexation (`TraceableException<std::out_of_range>`). Limite : l'accesseur seul ;
+  le curseur `use(index)` relève de Pipeline A1.
+- **F8 (lecture)** : `Reader.hpp` lit par `read()`/`gcount()`, publie après fermeture vérifiée,
+  distingue fichier absent et fichier vide lisible. **Traité partiellement** : les branches de
+  fermeture échouée et d'`ifstream::failure` réel ne sont pas exercées.
+- **F10 (`glUseProgram(0)`)** : conservation documentée (unbind explicite), caractérisée par
+  `UsePass_ZeroPassIDStillCallsGL`. Ce n'est pas une correction.
+- **Concept `OpenGLPassFlow`** : `HasBorrowedOnMethodWithHandle` contrôle l'appelabilité, pas
+  la signature exacte. Décision de l'architecte ouverte (point γ de la revue R).
+
+Preuves recomptées sur les XML à `e736bba` : normal 165 distincts (134 unit + 31 GL) ; ASan
+143 distincts (134 + 9 GL lifetime) ; RED causal C1 8/25 échecs, RED causal C2 11/16 ; revue
+R PASS de lecture avec réserves ; QA V 12 PASS et 2 INCONCLUSIVE sur 14 critères. Détails et
+horodatages : [[architecture/missions/2026-10-15-failure-contracts|l'archive]] et
+`_meta/session-2026-10-15-failure-contracts-validation.json`.
+
+`implementation: partial` reste inchangé : Pipeline A1–A2, contexte `Pass` partagé (F6),
+`UniformReader` (F7), curseur `use(index)`, extraction et fermeture F8, concept négatif,
+autres GL sous ASan, Release, Linux et CI ne sont pas fermés. `getStackTraceString`
+(branche `#else` de `TraceableException`, référence pendante dormante) est un incident ouvert,
+à traiter dans une coupe séparée. Aucun autre ADR `Proposed` n'est adopté par cette mission.
 
 ## Références
 

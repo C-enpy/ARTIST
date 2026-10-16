@@ -4,8 +4,8 @@ category: development
 tags: [artist, cpp, ownership, testing, tooling]
 summary: Incidents corrigés, hypothèses rectifiées et expériences discriminantes pour les chemins encore non couverts de Shader→Pass.
 created: 2026-10-03
-updated: 2026-10-15
-sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json]
+updated: 2026-10-16
+sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json]
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -16,8 +16,10 @@ provenance:
 
 ## Règle de lecture
 
-Les **143/143** normaux de [[development/build-and-test|la suite courante]] sont une preuve
-de ces tests Windows Debug, pas une absence exhaustive d'UB ou de fuite. Le
+Les **165/165** normaux de la suite courante à `e736bba` (134 unit + 31 OpenGL) et les
+**143** cas ASan distincts (archive [[architecture/missions/2026-10-15-failure-contracts|mission C]])
+sont une preuve de ces tests Windows Debug, pas une absence exhaustive d'UB ou de fuite.
+Les 143/143 de F5 cités plus bas sont historiques. Le
 [[references/session-2026-10-03-shader-pass|journal de session]] attribue les avis
 aux sous-agents ; les expériences proposées ici ne sont pas des tests exécutés.
 
@@ -115,8 +117,13 @@ global de tous les `ctest`/`ArtistLib_tests` comme procédure normale.
   contexte Pass gardés par `ctx()` ; `free()` moved-from no-op, `load()` gardé.
   `getContext()` reste une copie de `shared_ptr`, vide sur moved-from, pas une
   référence gardée. Ne pas décrire tous les accesseurs comme throwing.
-- **F4 ouvert** : `PassContext::getShader(index)` emploie `operator[]`, donc
-  indice négatif/hors borne à qualifier ; test de rejet et contrat de bornes requis.
+- **F4 traité pour l'accesseur seul (mission C)** : `PassContext::getShader(index)` et
+  `PipelineContext::getPass(index)` employaient `operator[]` sans garde (`30a46b5`,
+  `PassContext.hpp:72`, `PipelineContext.hpp:25`). Garde `index < 0 || size_type(index) >= size()`
+  avant indexation, exception `TraceableException<std::out_of_range>`, messages
+  `ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE` et `ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE`. Le RED
+  est un plantage CRT `0xc0000409` (STL debug), pas un rejet métier observé : réserve α de R.
+  Le curseur `use(index)` reste hors coupe (Pipeline A1).
 - **F5 corrigé dans le périmètre 2026-10-15** : `&infoLog[0]` avec longueur de
   log zéro dans les loaders GL. RED causal mocké (`GL_INFO_LOG_LENGTH = 0`)
   avant fix : CTest exit 8, natif `0xc0000409`,
@@ -134,7 +141,7 @@ global de tous les `ctest`/`ArtistLib_tests` comme procédure normale.
   [[references/session-2026-10-15-f5-gl-diagnostics|synthèse de session]].
   F4/F8/Q1 et la migration Pipeline restent hors de cette coupe.
 
-### Suite de revue F5 — Q1, exposition INT_MAX préexistante (ouvert)
+### Suite de revue F5 — Q1, exposition INT_MAX préexistante (traité en mission C)
 
 Item **Q1** de la revue indépendante, faible, préexistant et hors du diff corrigé :
 la capacité du buffer vient du pilote ; une valeur aberrante
@@ -152,6 +159,11 @@ contre le code : chemin shader, le handle créé n'est ni stocké ni supprimé ;
 chemin pass, le handle est déjà publié dans le contexte et le contrat
 `glDeleteProgram + setPassID(0)` du link-fail testé n'est pas exécuté.
 
+Traitement (mission C, `e736bba`) : capacité de log bornée à `[1, 4096]` dans les deux loaders
+(`shader/Loader.hpp:82-83`, `pass/Loader.hpp:97-98`), exceptions métier inchangées ; 10 cas
+`InfoLogLengths` (dont INT_MAX et -5) passent en normal et en ASan. Limite : le clamp borne
+l'allocation, pas la pénurie mémoire du processus. Archive : [[architecture/missions/2026-10-15-failure-contracts|mission C]].
+
 ### Suite de revue F5 — Q2 à Q5 consignées
 
 - **Q2, faible, limite de preuve** : si un pilote renvoie
@@ -159,7 +171,7 @@ chemin pass, le handle est déjà publié dans le contexte et le contrat
   silencieusement — conforme à la spec, pas une régression (l'ancien code
   crashait). Non observé sur RTX 3090 / driver 617.42 ; pilote réel rapportant 0
   indisponible sur cette machine.
-- **Q3, info, hors diff — ruling reçu** : si `ShaderAttacher::on` lève après
+- **Q3, info, hors diff — ruling appliqué en mission C (publication différée)** : si `ShaderAttacher::on` lève après
   `setPassID(passID)` (`pass Loader.hpp:42-46`), le handle programme reste publié
   sans rollback. C'est la limite **F1** déjà consignée ci-dessus. L'architecte a
   livré le ruling le 2026-10-15 : variante préférée = **publication différée**
@@ -168,7 +180,7 @@ chemin pass, le handle est déjà publié dans le contexte et le contrat
   tel quel) ; variante de repli = non-rollback **documenté et testé** (handle
   conservé + `free()` idempotent + B intact). Les deux variantes sont fermées
   par des tests RED, la preuve décide — aucune des deux reste en doc seule.
-  À exécuter dans [[architecture/next-mission|la mission C]] (C1), avec la sonde
+  Exécuté en mission C (C1), la sonde
   encodeant l'ordre actuel (`LoaderTests.cpp` : `passID==7` pendant le
   rappel de information-log) conformée comme point de revue explicite.
 - **Q4, info** : `std::string_view` imprime désormais un éventuel NUL interne du
@@ -185,13 +197,18 @@ chemin pass, le handle est déjà publié dans le contexte et le contrat
 - **F7 différé** : `UniformReader` absent d'`OpenGLPassFlow` malgré appel nominal,
   absence silencieuse sous `if constexpr`. Test négatif de concept à écrire dans
   la tranche uniform/attribute ; ce n'est pas un composant aujourd'hui garanti.
-- **F8 ouvert** : reader de fichier n'active que `badbit` ; fichier absent peut
-  devenir compilation d'une chaîne vide. Test de fichier absent, erreur de lecture
-  distincte et contrat `failbit` à instruire.
+- **F8 traité partiellement (mission C)** : le reader n'activait que `badbit` ; un fichier
+  absent devenait une compilation de chaîne vide (`30a46b5`, `Reader.hpp` l.31 et l.38). Désormais :
+  extraction par `read()`/`gcount()`, `failbit` sans EOF = `ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ`,
+  fermeture vérifiée avant publication, fichier vide lisible = chaîne vide. Non exercées : la branche
+  de fermeture échouée et la branche `ifstream::failure` réelle (badbit). V : INCONCLUSIVE ; réserve
+  β de R. La formule « les chemins réels couvrent chaque branche » est écartée.
 - **F9 amélioré** : tests supplémentaires d'accès shader/pass moved-from ; couverture
   non exhaustive de toutes les méthodes. Les traits move/noexcept ne prouvent pas RAII.
-- **F10 choix ouvert** : `use()` sur programme zéro appelle `glUseProgram(0)` ;
-  GL-valide mais désarme le programme plutôt que signaler un pass non chargé.
+- **F10 décision : conservation documentée (mission C)** : `use()` sur programme zéro appelle
+  `glUseProgram(0)`, unbind explicite valide en OpenGL plutôt que rejet d'un pass non chargé.
+  Caractérisé par `UsePass_ZeroPassIDStillCallsGL` (`UserTests.cpp:49`), sans migration de
+  consommateur. Ce n'est pas une correction ; aucun test moved-from dédié.
 - **F11 faux positif écarté** : un `shared_ptr<T>` peut posséder un T non copiable ;
   aucune copie de `Pass` n'est nécessaire pour le stocker par pointeur partagé.
 
@@ -255,6 +272,65 @@ utilisateur, attribution exacte non établie, aucune réversion. Les 15 entrées
 source/build intégrées restent identiques ; ne pas affirmer une immutabilité
 globale du checkout. ^[ambiguous]
 
+## Mission C — incidents, anomalies et statuts (2026-10-15, `e736bba`)
+
+Archive : [[architecture/missions/2026-10-15-failure-contracts|mission C]] ; manifeste
+`_meta/session-2026-10-15-failure-contracts-validation.json`. Les anomalies ci-dessous ne sont
+pas des preuves et ne sont pas comptées dans les totaux.
+
+### getStackTraceString — référence pendante (incident OPEN)
+
+- Constat : `ARTIST/include/common/exception/TraceableException.hpp:46-57`, branche `#else`
+  (active lorsque la condition `#if` des lignes 5 et 17 est fausse, par exemple sous MSVC) :
+  `const std::string &getStackTraceString() const` retourne `"Stacktrace not available"`, soit
+  une référence vers un temporaire.
+- Portée : membre de template, instancié seulement à l'usage. Grep à `e736bba` : deux
+  déclarations (l.29 et l.53), zéro appelant dans `ARTIST/`. Défaut dormant.
+- Décision : **non corrigé** en mission C (fichier hors périmètre, interdit par la fiche). Coupe
+  séparée avant toute exposition ou tout appel. R (point δ) confirme : défaut dormant, pas un
+  fixed en C.
+
+### F8 — preuve de lecture incomplète (traité partiellement)
+
+- Non exercés : la branche « fermeture échouée » (`Reader.hpp:72-77`) et la branche
+  `catch (std::ifstream::failure)` (`Reader.hpp:82-88`, badbit réel). Preuve manquante : une seam
+  d'extraction (`streambuf` de test) ou un échec réel reproductible. Non exécutée ; V : INCONCLUSIVE.
+- Ne pas écrire que « les chemins réels couvrent chaque branche » : formule du message de commit
+  `e736bba`, écartée avec la réserve β de R.
+
+### Anomalie RED de développement — baseline C2 du 20:35 (OPEN, cause non établie)
+
+- `mission-c2-baseline-ctest.xml` (20:35) : 165 cas, 13 échecs : 10 F4 (`0xc0000409`) et 3
+  `ReaderTests`.
+- `EmptyReadableFileYieldsEmptyCode` échoue sur `std::filesystem::exists(emptyPath)` faux
+  (`ReaderTests.cpp:114` dans le log) ; `MultiBlockReadPreservesContent` échoue à
+  `ReaderTests.cpp:146`.
+- `mission-c2-red-exact.xml` (20:38) : 16 cas, 11 échecs (10 F4 et `AbsentFileRejected`). Ces
+  deux tests Reader y passent. Les numéros de ligne diffèrent : version antérieure possible du
+  fichier de tests, non vérifiée. Aucun rapport n'attribue ces échecs.
+- Statut : la baseline 20:35 **n'est pas un RED causal** et n'est citée nulle part comme tel. Seul
+  `red-exact` (20:38) sert de RED F8 causal.
+
+### Campagne ASan incrémentale — FAIL 133/134 (OPEN, outillage)
+
+- `asan-unit.xml` (21:00) : 134 cas, 1 échec, `ReadShaderTest_AbsentFileRejected` (« Expected an
+  exception to be thrown »). `asan-reader-reproduce.xml` (21:00) : 1/1 échec.
+- Sur le même HEAD, après rebuild propre (`asan-clean-*`, 21:07-21:08) : 134/134 et 9/9.
+- Recommandation du QA : clean-first pour toute campagne de candidat ; enquête séparée sur la
+  fraîcheur des artefacts (objets obsolètes ou COMDAT, non démontré). Ne pas masquer le premier
+  échec.
+
+### Harnais et environnement (clos)
+
+- Découverte `GoogleTestAddTests` expirée à 5 s pendant le lien (`normal-clean-build.log`, 21:06) ;
+  relance identique, sans échec.
+- La sonde `artist_asan_probe` supprimée par le clean-first donnait `FileNotFoundError` ; rebuild
+  explicite, canari 0 puis 86.
+- Re-glob CMake après intégration : le premier run C2 à 153/153 était pré-glob et invalide ; 165/165
+  après re-glob.
+- Chemins longs (C1083) : `subst Z:` (C1) et `subst Y:` (C2) autorisés, sans modification Git ni
+  CMake. Ce ne sont pas des RED.
+
 ## Expériences encore absentes
 
 ASan Windows Debug est exécuté séparément et instrumenté ; après F5, la sélection
@@ -262,9 +338,11 @@ ASan couvre **121 cas distincts** (112 unit — dont les 6 nouveaux diagnostics 
 plus 9 GL lifetime) contre 115 lors de la mission loaded-owner move, toujours
 sans résultat pour les 22 GL non sélectionnés, UBSan/TSan ou les autres
 plateformes. Les 22 ne sont ni des tests échoués ni des tests abandonnés : la
-sélection ASan était ciblée dès le plan ; la suite normale couvre bien les 31 GL.
-L'exposition INT_MAX (Q1 ci-dessus) et l'entrée d'environnement ASan héritée
-(Q1 du harness) restent ouvertes. Les dépendances Conan GLFW/GLEW et le driver
+sélection ASan était ciblée dès le plan ; la suite normale couvre bien les 31 GL. Après la
+mission C (`e736bba`), la sélection couvre 143 cas distincts (134 unit + 9 GL lifetime) ; les 22
+autres GL restent non exécutés sous ASan.
+L'entrée d'environnement ASan héritée (Q1 du harness) reste ouverte ; l'exposition INT_MAX
+(Q1 ci-dessus) est traitée en mission C, dans la limite d'allocation documentée. Les dépendances Conan GLFW/GLEW et le driver
 restent non instrumentés. Release, Linux, CI distante, couverture, images et
 performance restent non validés.
 

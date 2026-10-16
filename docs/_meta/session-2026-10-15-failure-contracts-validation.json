@@ -1,0 +1,161 @@
+{
+  "generated_on": "2026-10-16T09:28:55Z",
+  "scope": "Clôture documentaire de la mission C : docs/** et docs/_meta/** uniquement. Aucune ligne de code, aucun script ajouté, aucun build ni test relancé par DOC.",
+  "mission": "C - bornage des contrats d'échec (Q1, Q3, F4, F8, F10)",
+  "status": "completed-in-scope",
+  "implementation": "verified",
+  "verified_scope": "Windows x64 Debug, MSVC 19.44, HEAD e736bba uniquement. Hors périmètre : Release, Linux, CI distante, UBSan, TSan, couverture, images, performance.",
+  "principal_head": "e736bba2782fa71b80ed14d7cd79a98ed7b8ae5b",
+  "base": {
+    "commit": "30a46b5",
+    "contains": "b80c353 (F5)"
+  },
+  "verification_column": {
+    "verifie_par_doc": true,
+    "meaning": "true = recalcul ou relecture par DOC (git, SHA-256, XML recomptés, lecture du code à e736bba). partiel = vérifié seulement en partie. false = affirmation d'une autre source, non recalculée par DOC (champ source indiqué)."
+  },
+  "tasks": [
+    {"role": "A-C2 rulings F4/F8/F10", "session": "architect-c2", "agent": "engine-architect", "task_id": "task_mv9tp6rc_000n_5vge8e", "complexity": 42, "risk": 52, "verifie_par_doc": false, "source": "fiche de tâche (coordinateur)"},
+    {"role": "D-C1 Q1 et Q3", "session": "gpu-c1", "agent": "gpu-engineer", "task_id": "task_mv9tp6re_000o_0vitj0", "complexity": 70, "risk": 66, "verifie_par_doc": false, "source": "fiche de tâche (coordinateur)"},
+    {"role": "D-C2 F4, F8, F10", "session": "cpp-c2", "agent": "cpp-engineer", "task_id": "task_mv9v0qto_0017_8prq7w", "complexity": 70, "risk": 58, "verifie_par_doc": false, "source": "fiche de tâche (coordinateur)"},
+    {"role": "R revue indépendante", "session": "correctness-r", "agent": "correctness-reviewer", "task_id": "task_mv9wgqfn_001j_c9641w", "complexity": 50, "risk": 66, "verifie_par_doc": false, "source": "fiche de tâche (coordinateur)"},
+    {"role": "V QA indépendante", "session": "verify-v", "agent": "rendering-verifier", "task_id": "task_mv9wgqfo_001k_gciwok", "complexity": 45, "risk": 62, "verifie_par_doc": true, "source": "qa-report.json : sessionId ses_ebf13669cffeIekEMbBFGbf6A9, task et head relus"},
+    {"role": "DOC clôture", "session": "doc-writer", "agent": "engine-architect", "task_id": "task_mv9x1784_001u_2r8t87", "complexity": 30, "risk": 33, "verifie_par_doc": true, "source": "fiche de tâche"}
+  ],
+  "scores_note": "complexity et risk sont des heuristiques PM/LLM, pas des probabilités de succès ni des mesures.",
+  "integration_barriers": [
+    {"id": "I-C1", "commit": "b00f484", "note": "intégration C1 ; empreintes annoncées 8/8 dans le message de commit", "verifie_par_doc": true},
+    {"id": "I0", "commit": "e736bba", "note": "intégration C2 ; re-glob CMake obligatoire ; premier run 153/153 pré-glob invalide, remplacé par 165/165", "verifie_par_doc": true}
+  ],
+  "git": {
+    "tags": [
+      {"name": "c1-red", "commit": "990ccfb", "verifie_par_doc": true},
+      {"name": "c1-green", "commit": "68c43dd", "verifie_par_doc": true},
+      {"name": "f5-red", "commit": "5dfafd1", "verifie_par_doc": true},
+      {"name": "f5-green", "commit": "4154780", "verifie_par_doc": true}
+    ],
+    "commits": [
+      {"role": "base", "commit": "30a46b5", "verifie_par_doc": true},
+      {"role": "C1 intégration", "commit": "b00f484", "verifie_par_doc": true},
+      {"role": "C2 red auteur", "commit": "4af1312", "verifie_par_doc": true},
+      {"role": "C2 green auteur", "commit": "0857ba4", "verifie_par_doc": true},
+      {"role": "C2 intégration = HEAD", "commit": "e736bba", "parent": "b00f484", "verifie_par_doc": true}
+    ],
+    "diff_stats": [
+      {"range": "30a46b5..e736bba", "files": 16, "insertions": 692, "deletions": 54, "verifie_par_doc": true},
+      {"range": "b00f484..e736bba", "files": 8, "insertions": 471, "deletions": 12, "verifie_par_doc": true},
+      {"range": "4af1312..0857ba4", "files": 5, "insertions": 104, "deletions": 10, "verifie_par_doc": true, "note": "RED vers GREEN auteur : aucun changement de ReaderTests.cpp, PassContextTests.cpp, PipelineContextTests.cpp"},
+      {"range": "0857ba4..e736bba", "files": 0, "verifie_par_doc": true, "note": "diff vide : arbres identiques"}
+    ]
+  },
+  "source_hashes": [
+    {"file": "ARTIST/include/graphic/context/PassContext.hpp", "sha256": "57c86819c987a2a6dabeb44cd900ecb4c602de032f878583177e34b5e01211e3", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/include/graphic/context/PipelineContext.hpp", "sha256": "d5a84972f80148763178ed30400ffbca8a7355eb429e625dcf70210a10653562", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/include/graphic/opengl/pipeline/component/pass/Loader.hpp", "sha256": "9ce80e3677904f1d998b7ff0d750b263c7e83bb0f16f0b8cb26e1f2949857c8a", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/include/graphic/opengl/pipeline/component/pass/ShaderAttacher.hpp", "sha256": "d39fff5a01641cc7a9eb29389bcc1739e992e3c4a54dde57395665639fcf8fa2", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/include/graphic/opengl/pipeline/component/shader/Loader.hpp", "sha256": "7310563f797ff9cf4ef0a9258bc91abc653cb18353630f56a842de03ac86ce79", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/include/graphic/opengl/pipeline/component/shader/Reader.hpp", "sha256": "84a7e9adb6344151dbabe7ed6b588251652d62db223d7d4875046384128abac2", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/include/graphic/opengl/validator/PassConcept.hpp", "sha256": "564d8c68d4fa27d308ada6f0710b05bf226a5dbd9a5336a7f67596faf5b85cfa", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/mock/graphic/opengl/pipeline/component/pass/MockShaderAttacher.hpp", "sha256": "d336364f96244aa82c7a8e84800b390c24877516739e30796041521741af2013", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/context/PassContextTests.cpp", "sha256": "04bab9a75f0b4b2d1f82f39cc9393adef25450be515f2fc6cebac1a6d1521a26", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/context/PipelineContextTests.cpp", "sha256": "618fd4e5e982624c2f8ed3bb189387acb17fe83f148bf1606e8d382a387a3c12", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/LoaderTests.cpp", "sha256": "3f8780e57608b5692a8f65738751bf055ddb1c46956123a3c15752b242597660", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/ShaderAttacherTests.cpp", "sha256": "2bc12b3f39eb21ffc731dde59c56b17d4f0d93e3c7aeb15835ceae36e1af85cb", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/UserTests.cpp", "sha256": "04c7b8ef0bb685fa74cf9b70ce3d99eee7c911fbca762873b148b604b88ef9bf", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/opengl/pipeline/component/shader/LoaderTests.cpp", "sha256": "7ef1628f4472e29445bffe95537fbe7c68a055e96c259a31bceef3ac45175e2d", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/opengl/pipeline/component/shader/ReaderTests.cpp", "sha256": "6a46f9729d01863c1d409fb52822afca0a139a3747b578e22ea26945d4b55809", "sourceDiff_match": true, "verifie_par_doc": true},
+    {"file": "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp", "sha256": "251160dab422feb6dba596c0953379255d0a24a4a913fd8b3d6651c9444e3ba9", "sourceDiff_match": true, "verifie_par_doc": true}
+  ],
+  "source_hashes_note": "Les 16 empreintes ont été calculées par DOC sur le worktree propre à e736bba et sur le dépôt principal ; elles sont identiques aux 16 entrées sourceDiff de qa-report.json.",
+  "artifacts": [
+    {"path": "out/logs/missionc-qa/qa-report.json", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T21:10", "sha256": "62545090bdeed3a057d2544ebdbe5a092c1c75410e6a6cd0a47a65889129c67b", "content": "rapport QA V, task task_mv9wgqfo_001k_gciwok, head e736bba", "verifie_par_doc": true},
+    {"path": "out/logs/missionc-qa/normal-unit.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T20:58", "sha256": "2c20415e708913c78115e80c7d7db3b78689a65220bb4d7ca3796def0566d7f5", "testcases": 134, "failing": 0, "skipped": 0, "verifie_par_doc": true, "note": "première campagne normale, avant rebuild propre"},
+    {"path": "out/logs/missionc-qa/normal-opengl.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T20:58", "sha256": "13e980c2fc06f3309a9674680741cf5f9ede6b95feba8e6bfac536ec56035a3e", "testcases": 31, "failing": 0, "skipped": 0, "verifie_par_doc": true, "note": "première campagne normale, avant rebuild propre"},
+    {"path": "out/logs/missionc-qa/normal-clean-unit.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T21:07", "sha256": "ebc09b7aa1ac5b45d425f7350b9c6838a5e6df57d7eae9b8ac2f24cacd291109", "testcases": 134, "distinct": 134, "failing": 0, "skipped": 0, "verifie_par_doc": true},
+    {"path": "out/logs/missionc-qa/normal-clean-opengl.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T21:07", "sha256": "9ad6346bcacd91010135d2b9addba75cffed68a63d48d34d5885612c8f11a646", "testcases": 31, "distinct": 31, "failing": 0, "skipped": 0, "verifie_par_doc": true},
+    {"path": "out/logs/missionc-qa/asan-clean-unit.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T21:07", "sha256": "7df6e4f77fe621c9a7dc12b6eb4dbbd9fd8849b92d5735b3a9ed9df91aeb923a", "testcases": 134, "distinct": 134, "failing": 0, "skipped": 0, "verifie_par_doc": true},
+    {"path": "out/logs/missionc-qa/asan-clean-opengl-lifetime.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T21:08", "sha256": "d2871f8d5fd1ef5e0566ffd93080fc9b3e0d202b619313115e96885c5eb0a5d2", "testcases": 9, "distinct": 9, "failing": 0, "skipped": 0, "verifie_par_doc": true},
+    {"path": "out/logs/missionc-qa/asan-unit.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T21:00", "sha256": "d65fa42c48bd84a4b6ba768ae3beec59a44ccd00852b7db09276fdb6da4ee194", "testcases": 134, "failing": 1, "failing_case": "unit.ReaderTests.ReadShaderTest_AbsentFileRejected", "verifie_par_doc": true, "note": "campagne ASan incrémentale ; anomalie ouverte"},
+    {"path": "out/logs/missionc-qa/asan-reader-reproduce.xml", "location": "dépôt principal, non versionné", "local_mtime": "2026-10-15T21:00", "sha256": "dae5888da20b59bba7a25f37e40416a70f7a4c76280935038e6dd68eeaf7a3f9", "testcases": 1, "failing": 1, "failing_case": "unit.ReaderTests.ReadShaderTest_AbsentFileRejected", "verifie_par_doc": true},
+    {"path": "out/logs/c1-red-focused.xml", "location": "worktree auteur gpu-c1, non versionné", "local_mtime": "2026-10-15T19:55", "sha256": "1106fd6e47209b758f5c214a22cbb38c9f973387c23045a5d449782abaeda390", "testcases": 25, "distinct": 25, "failing": 8, "verifie_par_doc": true, "note": "RED causal C1 : 2 Q3, 5 diagnostics pass, 1 diagnostics shader INT_MAX"},
+    {"path": "out/logs/c1-green-focused.xml", "location": "worktree auteur gpu-c1, non versionné", "local_mtime": "2026-10-15T20:05", "sha256": "44b514fd7d8b8e550150097166ee95a25f0cd6b43fae3b72dc61cc005a3109b0", "testcases": 66, "distinct": 66, "failing": 0, "verifie_par_doc": true},
+    {"path": "out/logs/mission-c2-baseline-ctest.xml", "location": "worktree auteur cpp-c2, non versionné", "local_mtime": "2026-10-15T20:35", "sha256": "271bc222a6d00f18d8374716587b934fc5ba5159015dc049a930312c0311b68f", "testcases": 165, "distinct": 165, "failing": 13, "verifie_par_doc": true, "note": "ANOMALIE : pas un RED causal ; 10 F4 + 3 ReaderTests (AbsentFileRejected, EmptyReadableFileYieldsEmptyCode, MultiBlockReadPreservesContent) ; cause non établie"},
+    {"path": "out/logs/mission-c2-red-exact.xml", "location": "worktree auteur cpp-c2, non versionné", "local_mtime": "2026-10-15T20:38", "sha256": "25353bfed4316ed9775ff00195345a216cbe983cf706aae1d7a3ad21462d1a64", "testcases": 16, "distinct": 16, "failing": 11, "verifie_par_doc": true, "note": "RED causal C2 : 10 F4 (0xc0000409) + AbsentFileRejected (Expected an exception)"},
+    {"path": "out/logs/mission-c2-green-focused.xml", "location": "worktree auteur cpp-c2, non versionné", "local_mtime": "2026-10-15T20:42", "sha256": "ebcdc29b0a0ca09b250b25c2c15a951bc93a86ae1ad518e16461e67682aecf01", "testcases": 94, "distinct": 94, "failing": 0, "verifie_par_doc": true, "note": "focalisé ; ne s'additionne pas au total distinct"},
+    {"path": "out/logs/mission-c2-green-ctest.xml", "location": "worktree auteur cpp-c2, non versionné", "local_mtime": "2026-10-15T20:42", "sha256": "a960a37b3a64434011506058c10a96c726ea2d7531a1c54003caa8204c6132c0", "testcases": 165, "distinct": 165, "failing": 0, "verifie_par_doc": true},
+    {"path": "out/logs/mission-c2-asan-unit.xml", "location": "worktree auteur cpp-c2, non versionné", "local_mtime": "2026-10-15T20:49", "sha256": "e7f7e325839857f3c16112b3f294ee15fbc9871484479c28a243b6f5b52b2058", "testcases": 134, "distinct": 134, "failing": 0, "verifie_par_doc": true},
+    {"path": "out/logs/mission-c2-asan-gl-lifetime.xml", "location": "worktree auteur cpp-c2, non versionné", "local_mtime": "2026-10-15T20:49", "sha256": "ac9293f45bd93da959ca3e25245e1ab17b8245eb669d4269b2f8cb5c95cf67e9", "testcases": 9, "distinct": 9, "failing": 0, "verifie_par_doc": true}
+  ],
+  "artifacts_note": "local_mtime = heure locale du poste, UTC = locale - 2 h (cf. qa-report timestamp 2026-10-15T19:10:08Z pour 21:10 locale). Les dossiers out/ ne sont pas versionnés ; les empreintes ci-dessus permettent le recoupement.",
+  "counts": {
+    "normal_final_distinct": {"value": 165, "composition": "134 unit + 31 OpenGL", "failures": 0, "verifie_par_doc": true},
+    "asan_final_distinct": {"value": 143, "composition": "134 CPU + 9 OpenGL lifetime", "failures": 0, "verifie_par_doc": true},
+    "asan_not_selected_gl": {"value": 22, "verifie_par_doc": true, "note": "exclus de la sélection ASan de mission, non abandonnés"},
+    "infolog_length_cases": {"value": 10, "composition": "5 PassLoaderDiagnostics + 5 ShaderLoaderDiagnostics", "verifie_par_doc": true},
+    "new_unit_tests_c2": {"value": 15, "composition": "6 PassContextTests + 6 PipelineContextTests + 3 ReaderTests", "verifie_par_doc": true},
+    "red_c1_failures": {"value": 8, "of": 25, "verifie_par_doc": true},
+    "red_c2_exact_failures": {"value": 11, "of": 16, "verifie_par_doc": true},
+    "c2_baseline_anomaly_failures": {"value": 13, "of": 165, "verifie_par_doc": true, "note": "non utilisée comme RED causal"},
+    "asan_incremental_failures": {"value": 1, "of": 134, "verifie_par_doc": true, "note": "non reproduite après rebuild propre"},
+    "c1_normal_150_claim": {"value": 150, "verifie_par_doc": false, "source": "message de commit b00f484 (auteur) ; non recompté, pas de XML normal C1 dans le worktree"}
+  },
+  "verdicts": {
+    "R_correctness_reviewer": {
+      "task_id": "task_mv9wgqfn_001j_c9641w",
+      "verdict": "PASS de lecture, avec réserves",
+      "reserves": ["alpha : RED F4 = plantage STL debug, clause de RED sûre écartée", "beta : branches F8 extraction et fermeture non exercées ; formule chemins réels trop forte ; seam déclinée admissible avec réserve", "gamma : HasBorrowedOnMethodWithHandle contrôle l'appelabilité, pas la signature ; DEFER architecte", "delta : getStackTraceString pendant, dormant, 0 appelant ; incident OPEN, coupe séparée, pas un fixed en C"],
+      "source": "résumé du coordinateur (fiche DOC) ; aucun fichier de rapport archivé pour C",
+      "verifie_par_doc": false
+    },
+    "V_rendering_verifier": {
+      "task_id": "task_mv9wgqfo_001k_gciwok",
+      "session": "ses_ebf13669cffeIekEMbBFGbf6A9",
+      "artifact": "out/logs/missionc-qa/qa-report.json",
+      "criteria_total": 14,
+      "pass": 12,
+      "inconclusive": 2,
+      "inconclusive_criteria": ["F8 actual extraction failure", "Independent negative concept compilation"],
+      "out_of_scope": ["visual", "performance"],
+      "verifie_par_doc": true,
+      "note": "critères et compteurs relus dans le JSON ; QA non rejouée par DOC"
+    }
+  },
+  "findings": [
+    {"id": "Q1", "status": "traité", "evidence": "shader/Loader.hpp:82-89, pass/Loader.hpp:97-104 ; 10 cas InfoLogLengths", "limit": "clamp borne l'allocation, pas la pénurie mémoire du processus", "verifie_par_doc": true},
+    {"id": "Q3", "status": "traité (publication différée appliquée)", "evidence": "pass/Loader.hpp:35-69 ; LoadPassTest_passIDPublishedOnlyAfterLinkSuccess, LoadPassTest_attacherFailureReleasesProgramOnce", "limit": "variante de repli non adoptée", "verifie_par_doc": true},
+    {"id": "Q3-sonde", "status": "conformée", "evidence": "PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp : EXPECT_EQ(getPassID(), 7) remplacé par 0u pendant le rappel info-log (diff 30a46b5..e736bba)", "limit": "changement de sens signalé en point de revue", "verifie_par_doc": true},
+    {"id": "F4", "status": "traité pour l'accesseur seul", "evidence": "PassContext.hpp:79-86, PipelineContext.hpp:38-45 ; messages ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE et ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE", "limit": "curseur use(index) hors coupe (Pipeline A1) ; RED par plantage STL, réserve alpha", "verifie_par_doc": true},
+    {"id": "F8", "status": "traité partiellement", "evidence": "shader/Reader.hpp:33, 50-57, 63-66, 72-77, 80, 82-88", "limit": "branches fermeture échouée et ifstream::failure réel non exercées ; V INCONCLUSIVE ; réserve beta de R", "verifie_par_doc": true},
+    {"id": "F10", "status": "conservation documentée (caractérisation, pas une correction)", "evidence": "UserTests.cpp:49-65 UsePass_ZeroPassIDStillCallsGL", "limit": "pas de test moved-from dédié dans UserTests.cpp", "verifie_par_doc": true},
+    {"id": "concept-OpenGLPassFlow", "status": "ouvert (décision architecte)", "evidence": "validator/PassConcept.hpp:33-38", "limit": "appelabilité seulement ; compilation négative non exécutée (V INCONCLUSIVE)", "verifie_par_doc": true},
+    {"id": "getStackTraceString", "status": "incident OPEN", "evidence": "common/exception/TraceableException.hpp:46-57 (branche #else) ; 0 appelant dans ARTIST/", "limit": "dormant ; coupe séparée avant toute exposition ; fichier hors périmètre C", "verifie_par_doc": true}
+  ],
+  "incidents": [
+    {"id": "getStackTraceString-dangling", "status": "OPEN", "classification": "défaut latent dormant", "verifie_par_doc": true},
+    {"id": "F8-preuve-partielle", "status": "traité partiellement", "classification": "limite de preuve", "verifie_par_doc": true},
+    {"id": "red-baseline-c2-20h35", "status": "OPEN (anomalie de développement)", "classification": "baseline intermédiaire non causale ; 2 échecs Reader non reproduits à 20h38 ; cause non établie", "verifie_par_doc": true},
+    {"id": "asan-incremental-reader", "status": "OPEN (outillage)", "classification": "FAIL 133/134 sur arbre incrémental, non reproduit après rebuild propre ; cause de fraîcheur non démontrée", "verifie_par_doc": true},
+    {"id": "discovery-timeout-googletestaddtests", "status": "clos (transitoire)", "classification": "timeout de découverte 5 s pendant le lien ; relance identique sans échec", "verifie_par_doc": false, "source": "qa-report.json incidents"},
+    {"id": "asan-probe-after-clean", "status": "clos (harnais)", "classification": "FileNotFoundError après clean-first ; rebuild explicite de artist_asan_probe", "verifie_par_doc": false, "source": "qa-report.json incidents"},
+    {"id": "reglob-after-integration", "status": "procédure", "classification": "re-glob CMake obligatoire après intégration ; 153/153 pré-glob invalide", "verifie_par_doc": false, "source": "message de commit e736bba"},
+    {"id": "c1083-long-path", "status": "clos (environnement)", "classification": "chemin long de worktree ; subst Z: (C1) et Y: (C2) autorisés ; pas un RED", "verifie_par_doc": true, "note": "log C2 relu : chemins Y:\\ARTIST\\..."}
+  ],
+  "not_claimed": [
+    "aucune mesure de performance ni comparaison d'image",
+    "aucun test Release, Linux, CI distante, UBSan, TSan, couverture",
+    "F8 n'est pas fermé : branches fermeture et ifstream::failure réel non prouvées",
+    "pas d'absence exhaustive d'UB, de fuite driver ou de RAII défaillante hors périmètre testé",
+    "22 GL non exécutés sous ASan (sélection de mission, non abandonnés)",
+    "concept OpenGLPassFlow : appelabilité seulement, signature exacte non vérifiée",
+    "Q1 : le clamp borne l'allocation, pas la pénurie mémoire du processus",
+    "getStackTraceString n'est pas corrigé par cette mission"
+  ],
+  "statuses_kept": {
+    "ADR-0003": "Accepted / partial inchangé ; verified seulement au périmètre mission C Windows x64 Debug @ e736bba",
+    "next_mission": "aucune sélectionnée ; Pipeline A1-A2 et ADR-0004 restent proposés"
+  },
+  "qmd": {
+    "status": "non utilisé par DOC pour cette passe ; lectures directes du vault docs/ autorisées par le lead",
+    "collection": "artist-wiki"
+  }
+}

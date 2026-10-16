@@ -3,12 +3,12 @@ title: "Prochaine mission — bornage des contrats d'échec (loaders et accesseu
 category: architecture
 tags: [artist, cpp, testing, ownership]
 summary: Contrats d'échec figés (longueur de log aberrante, publication de l'attacher, bornes des accesseurs, lecture fichier et glUseProgram(0)) avant la tranche Pipeline.
-status: selected
-implementation: not-started
-source_revision: b80c353
+status: completed
+implementation: verified
+source_revision: e736bba
 created: 2026-10-15
-updated: 2026-10-15
-sources: [docs/development/known-incidents.md, docs/adr/0003-ownership-et-lifetime-cpu-gpu.md, docs/_meta/next-mission-2026-10-15-c-selection.json, docs/architecture/missions/2026-10-15-f5-gl-diagnostics.md]
+updated: 2026-10-16
+sources: [docs/development/known-incidents.md, docs/adr/0003-ownership-et-lifetime-cpu-gpu.md, docs/_meta/next-mission-2026-10-15-c-selection.json, docs/architecture/missions/2026-10-15-f5-gl-diagnostics.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json]
 provenance:
   extracted: 0.95
   inferred: 0.05
@@ -17,9 +17,14 @@ provenance:
 
 # Prochaine mission : les contrats d'échec doivent être figés, pas assumés
 
-**Sélectionnée à la demande de l'utilisateur le 2026-10-15, pas commencée.**
-Cette fiche prépare C ; elle ne lance ni auteur, ni build, ni test. Aucune tâche
-d'implémentation n'est publiée. La mission F5 est archivée dans
+**Statut : terminée dans son périmètre Windows x64 Debug à `e736bba`, le 2026-10-15.**
+Sélectionnée à la demande de l'utilisateur le même jour. L'archive de mission est
+[[architecture/missions/2026-10-15-failure-contracts|2026-10-15-failure-contracts]]
+(résultats recomptés, statuts par finding, limites) ; le manifeste est
+`_meta/session-2026-10-15-failure-contracts-validation.json`. Le texte ci-dessous est
+le contrat initial, conservé sans réécriture. Statuts réels : Q1 et Q3 traités, F4
+traité pour l'accesseur, F8 traité partiellement, F10 conservé, concept
+`OpenGLPassFlow` en appelabilité seulement, `getStackTraceString` ouvert. La mission F5 est archivée dans
 [[architecture/missions/2026-10-15-f5-gl-diagnostics|2026-10-15-f5-gl-diagnostics]].
 
 ## Pourquoi cette mission avant la tranche Pipeline

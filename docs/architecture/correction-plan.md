@@ -5,7 +5,7 @@ tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
 status: proposed
 created: 2026-10-03
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # Plan de correction de l'existant
@@ -29,19 +29,33 @@ empreintes dans `b80c353` (commits auteur RED/GREEN étiquetés `f5-red`/
 reste Accepted/partial et Q2/Q4/Q5 restent info ; la passage de suite ouverte
 (Q1, Q3, F4, F8, F10) est traitée par la sélection ci-dessous.
 
-## Prochaine mission sélectionnée — C « bornage contrats d'échec »
+## Mission C « bornage contrats d'échec » — terminée dans son périmètre
+
+[[architecture/missions/2026-10-15-failure-contracts|Archive de la mission C]] : **terminée
+dans le périmètre Windows x64 Debug à `e736bba`**. Q1 et Q3 sont traités ; F4 est traité pour
+l'accesseur seul ; F8 est traité partiellement ; F10 est conservé (caractérisation, pas une
+correction) ; le concept `OpenGLPassFlow` vérifie l'appelabilité seulement ; `getStackTraceString`
+reste ouvert (dormant). RED causal : C1 8/25 échecs, C2 11/16. Normal 165/165, ASan 143
+distincts. Revue R : PASS de lecture avec réserves ; QA V : 12 PASS et 2 INCONCLUSIVE sur
+14 critères. ADR-0003 reste Accepted / partial. Manifeste :
+`docs/_meta/session-2026-10-15-failure-contracts-validation.json`.
+
+Sélection initiale, conservée :
 
 [[architecture/next-mission|Bornage des contrats d'échec des loaders et
 accesseurs]] : Q1 (longueur de log aberrante, contrat + cleanup), Q3 (ruling
 publication différée de l'attacher), F4 (bornes des accesseurs), F8 (erreur de
 lecture fichier distincte de l'erreur de compilation) et F10 (contrat
 `glUseProgram(0)`). Sélectionnée le 2026-10-15 à la demande de l'utilisateur
-après PM/architect fresh ; **aucun développement lancé**. L'ordre architecte :
+après PM/architect fresh ; développement réalisé le même jour (voir l'archive). L'ordre architecte :
 C avant la tranche Pipeline A (figer les contrats d'échec avant le churn), puis
 B (ADR-0004, Adoption explicite requise). Author C64→70/R66 et C44→70/R58 en
 PM/LLM, RED causal requis, empreintes des fichiers cibles relevées et invariants
 préservés. Fiche complète : [[architecture/next-mission|next-mission]] ;
 manifeste machine : `docs/_meta/next-mission-2026-10-15-c-selection.json`.
+
+Aucune mission suivante n'est sélectionnée après C. Pipeline (A1a–A2) et ADR-0004 restent
+des tranches proposées, à sélectionner explicitement.
 
 ## Mission loaded-owner du 2026-10-15 — terminée dans son périmètre
 
