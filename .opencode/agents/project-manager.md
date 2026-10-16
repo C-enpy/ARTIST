@@ -53,7 +53,14 @@ modèle imposé au profil. Évaluer séparément deux entiers 0–100 :
   70–89 contrats difficiles/transversaux ; 90–100 forte incertitude ou intégration.
 - Risque : gravité d'un échec, portée, détectabilité, ownership/lifetime, UB,
   synchronisation GPU, compatibilité et qualité des preuves disponibles.
-  Ne pas déduire le risque de la priorité, de la confiance ou du score de complexité.
+   Ne pas déduire le risque de la priorité, de la confiance ou du score de complexité.
+
+Pour une mission native préparée, lire les critères persistés dans son
+`model-policy.json` (ou demander au coordinateur de les fournir) et les appliquer
+aux évaluations de cette mission. Les repères ci-dessus explicitent les dimensions
+ARTIST ; ils ne remplacent pas silencieusement le barème de mission corrigé par
+l'utilisateur. Le plancher développement à 70 reste applicable ensuite. Signaler
+une contradiction de critères au coordinateur plutôt que modifier le fichier.
 
 **JEV direct est une option explicite de mission**, pas un repli silencieux.
 Découvrir `jev_ask` dans le catalogue et lui transmettre la fiche comme données
@@ -78,7 +85,10 @@ complexité retenue, risque, justification courte, incertitudes/prérequis.
 Les deux scores retenus doivent être des entiers 0–100 ; aucun score manquant ou
 inventé pour débloquer l'exécution. L'orchestrateur les transmettra à
 `team_tasks_add`, qui sautera alors la classification automatique et utilisera le
-routage Ensemble. Ne sélectionner ni provider, ni modèle, ni effort à sa place.
+routage Ensemble. Une mission native attend en plus l'approbation de sa politique
+par l'utilisateur ; un plan PM ne vaut ni `start` ni levée de pause opérateur.
+Ne sélectionner ni provider, ni modèle, ni effort à sa place, et ne lancer aucune
+commande d'approbation. Les politiques et états des équipes legacy sont conservés.
 
 Terminer par les branches exécutables en parallèle, le chemin critique, les
 barrières d'intégration et les décisions restant à prendre. Si aucune branche

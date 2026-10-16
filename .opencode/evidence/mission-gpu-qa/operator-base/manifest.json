@@ -1,0 +1,46 @@
+{
+  "time": "2026-10-16T19:53:02.611Z",
+  "consent": "User selected Base séparée (Recommended), targeted six files only",
+  "canonicalHead": "b4b7e873cea63c15d36581cf5aff0c082271b34c",
+  "integrationHead": "8f0a2ca6df6266ef8783dd8e9205a9e7f333cec6",
+  "status": "Approved six-file operator baseline import only, byte-identical to snapshots; not authored by the mission. Review input 8f0a2ca completed before import. Snapshot files remain local ignored data; Git commit preserves the source baseline.",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "c9022e1e8c9394a7e320a29ac42d7d6e1463772365345f272221ba4503a89c37",
+      "snapshot": "AGENTS.md.txt"
+    },
+    {
+      "path": ".opencode/agents/orchestrator.md",
+      "sha256": "f8dc03592ecfce19ec30d644b9d5c94dc5c1bc991841c502108f7cf5b6620a46",
+      "snapshot": ".opencode__agents__orchestrator.md.txt"
+    },
+    {
+      "path": ".opencode/agents/project-manager.md",
+      "sha256": "e177fc876b64ad7f7ed9aee2e4786323c151616ff068614246923bd1fdef782e",
+      "snapshot": ".opencode__agents__project-manager.md.txt"
+    },
+    {
+      "path": ".opencode/commands/engine-mission.md",
+      "sha256": "915027374f1328f4709a24d95ee7f256b90a20c60bf771d1554326bd1ad3a8a1",
+      "snapshot": ".opencode__commands__engine-mission.md.txt"
+    },
+    {
+      "path": ".opencode/commands/engine-tdd.md",
+      "sha256": "f90085559b54c541d9e4c170fbea2532e41cd17eea479dcf6f2a80139b8e2697",
+      "snapshot": ".opencode__commands__engine-tdd.md.txt"
+    },
+    {
+      "path": "docs/opencode-harness.md",
+      "sha256": "55d4fe054eed90b953c349518e4217a2076a64710da715a05919a4b198ff5def",
+      "snapshot": "docs__opencode-harness.md.txt"
+    }
+  ],
+  "excluded": [
+    ".grepai/config.yaml",
+    "Reader.hpp",
+    "ReaderTests.cpp",
+    "model-policy.json",
+    "all other changes"
+  ]
+}

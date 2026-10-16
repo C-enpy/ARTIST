@@ -2,9 +2,9 @@
 title: Harness OpenCode d'ARTIST
 category: tooling
 tags: [artist, tooling, guide]
-summary: Missions ARTIST planifiées par PM, évaluées par LLM ou JEV, routées et parallélisées avec Ensemble, TDD et QA indépendante.
+summary: Missions ARTIST préparées avec le PM, politique Ensemble persistée et approuvée avant exécution, évaluation LLM/JEV, TDD et QA indépendante.
 created: 2026-10-03
-updated: 2026-10-15
+updated: 2026-10-16
 qmd_collection: artist-wiki
 ---
 
@@ -20,8 +20,15 @@ Les profils natifs ne fixent aucun modèle. Le PM et le travail hors routage
 héritent de la sélection de session ; les tâches Ensemble sont routées selon
 leur complexité/risque et les modèles/efforts autorisés par l'opérateur.
 
-- `/engine-mission <objectif> [evaluation=llm|jev]` : plan PM, évaluation, exécution
-  parallèle des tâches prêtes, intégration et QA.
+- `/ensemble-mission <objectif> [evaluation=llm|jev]` : prépare une nouvelle mission
+  native avec un brouillon de politique ; aucune exécution n'est encore approuvée.
+- `/ensemble-mission config [corrections]` : discute providers, modèles/variantes,
+  équivalents ordonnés et critères ; les corrections sont écrites dans le brouillon.
+  Relancer `config` sans corrections pour présenter la version résultante.
+- `/ensemble-mission start` : approuve la version présentée et libère les admissions.
+- `/engine-mission <objectif> [evaluation=llm|jev]` : entrée ARTIST de préparation
+  et de plan PM ; sans mission native préparée, indique la commande native à lancer
+  puis s'arrête. Ce n'est pas un second mécanisme d'approbation.
 - `/engine-tdd <comportement> [evaluation=llm|jev]` : même circuit, centré sur les
   preuves RED/GREEN/REFACTOR d'une fonctionnalité ou correction.
 - `/static-audit [périmètre]` : staticité réelle, frontières et contrat proposé.
@@ -30,8 +37,9 @@ leur complexité/risque et les modèles/efforts autorisés par l'opérateur.
 - `/gpu-diagnose <symptôme>` : enquête GPU et correction proposée, sans patch.
 
 Une demande normale de développement est prise en charge par l'orchestrateur,
-avec planification PM et contrats bornés. Pour une petite tâche indivisible,
-l'orchestrateur applique directement ce contrat. Les branches indépendantes sont
+avec planification PM et contrats bornés. Une nouvelle mission Ensemble passe par
+le cycle natif ; un travail local indivisible peut rester hors équipe et appliquer
+directement le contrat PM/TDD. Les branches indépendantes sont
 recherchées systématiquement, y compris pour les missions de harness, tests et QA.
 
 ## Organisation
@@ -60,22 +68,35 @@ requête. Les invariants indispensables restent dans `AGENTS.md`.
 
 ## Missions, évaluation et TDD
 
+0. **Préparer et configurer** : utiliser le cycle natif `/ensemble-mission`. La
+   politique effective est matérialisée dans
+   `.opencode/missions/<team-id>/model-policy.json`, à partir du défaut explicite
+   `missionPolicy` hérité ou, à défaut, du catalogue global. Ne pas recopier une
+   table de modèles dans la configuration ARTIST. Le brouillon doit être présenté
+   et approuvé ; ce n'est pas une validation automatique de l'adéquation des modèles.
 1. **Planifier** : le PM transforme l'objectif en fiches concises et exécutables,
    avec livrable, entrées, ownership, profil, critères/tests, dépendances, ressources
    exclusives et contexte motivé. Les phases TDD d'une même tranche restent ordonnées.
 2. **Évaluer** : PM/LLM par défaut, JEV direct sur demande explicite. Conserver les
    scores bruts et la justification, puis appliquer `complexity = max(70, estimation)`
    à tout développement, y compris code de test, shader, script et harness exécutable.
-   Le risque est distinct. Pour JEV, convertir une fois les scores natifs [0,1] en
+   Appliquer les critères persistés de la mission ; le risque est distinct. Pour
+   JEV, convertir une fois les scores natifs [0,1] en
    entiers 0–100 (`ceil(100 * score)`) avant le plancher ; la confiance n'est pas le
    risque. Une évaluation indisponible bloque, sans changement silencieux de méthode.
 3. **Publier et router** : l'orchestrateur valide et transmet les deux scores à
    `team_tasks_add`. Cette évaluation préalable contourne volontairement le
    classificateur automatique à barème fixe : l'état devient `not_required` sans
-   appel helper ni notification de fin de classification. Ensemble choisit ensuite
-   le modèle et l'effort dans le catalogue autorisé. Les profils n'imposent pas de
-   modèle ; les préférences opérateur et demandes explicites restent prioritaires.
+   appel helper ni notification de fin de classification. Pour une mission native,
+   la grille complexité × risque approuvée choisit le modèle/variant exact, sous les
+   restrictions opérateur. Une demande de modèle différent passe par une révision
+   présentée/approuvée, pas par un override de spawn. Les profils n'imposent pas de
+   modèle. Les équipes legacy gardent leur routage catalogue/préférences existant.
 4. **Paralléliser** : `.opencode/ensemble.json` active `autoDispatch` et `autoScale`.
+   Le verrou du plugin bloque les admissions des missions natives avant `start` :
+   publier des tâches ne vaut pas approbation. Après approbation, les branches
+   prêtes peuvent partir immédiatement. Les équipes legacy sans ce verrou gardent
+   leur comportement ; ne pas les recréer ni les convertir implicitement.
    Seules les tâches évaluées, aux dépendances satisfaites et au contexte décidé,
    sont publiées pour exécution. Exiger les contextes avant publication avec
    `team_tasks_add({tasks: [], require_context: true})`. Utiliser `fresh` par défaut,
@@ -103,10 +124,38 @@ changements documentaires utilisent leurs contrôles adaptés. Les preuves garde
 commandes, environnement, attendu/observé et nombres de tests ; les exigences GPU,
 image et performance restent celles de [[development/build-and-test|la validation]].
 
-Exemples : `/engine-mission sécuriser l'assignation move Shader/Pass`,
+Exemples : `/ensemble-mission sécuriser l'assignation move Shader/Pass`,
 `/engine-mission plan seul pour la prochaine tranche Pipeline evaluation=jev`,
 `/engine-tdd rejeter un re-load sans mutation de l'état OpenGL`.
 Pour une coordination explicite : `@opencode-ensemble <mission>`.
+
+### Approbation, révisions et pauses
+
+Les commandes ARTIST restent des prompts de préparation. Elles ne créent pas une
+équipe legacy via `team_create` pour éviter le cycle natif. Un plan seul ne lance
+aucun worker d'exécution et ne modifie aucune source. Le PM reste en lecture seule ;
+l'orchestrateur persiste les corrections dans le brouillon puis demande sa nouvelle
+présentation avec `config`. Ni un GO en prose, ni `/engine-mission start`, ni une
+approbation de plan de teammate, ni une propriété JSON ne remplacent le `start`
+natif de l'utilisateur. Le coordinateur ne l'invoque pas à sa place.
+
+Les groupes sont des équivalences acceptables pour cette mission, avec principal
+puis alternatives ordonnées, pas une affirmation de performances universelles.
+Les alternatives ne sont pas des retries automatiques. Une nouvelle configuration
+pause les admissions ; les tâches déjà admises conservent leur révision, et les
+changements de critères font réévaluer les scores automatiques non attribués.
+Le worker suivant est routé à nouveau au départ ; un auto-claim en cours de tour
+n'est pas une frontière fiable de changement de modèle. Utiliser spawn du lead ou
+dispatch idle pour les missions natives.
+
+Le GO de reprise d'une pause opérateur reste distinct de l'approbation de grille.
+Un superviseur dont les requêtes sont bloquées ne peut pas lever lui-même ce verrou
+par un message qu'il ne peut pas lire : faire lever uniquement la pause de l'équipe
+concernée par un opérateur autorisé, puis reprendre son chat. Ne pas modifier les
+autres missions ni élargir les permissions d'un spécialiste.
+
+Le SDK permet l'invocation programmatique des commandes : ce verrou impose une
+route d'approbation explicite, sans garantir l'identité humaine de l'appelant.
 
 Ensemble et son skill opérationnel sont fournis par l'installation globale
 existante. La configuration projet hérite du catalogue de modèles, de sa politique
@@ -245,6 +294,15 @@ client/service ; une liste d'outils déjà figée dans une conversation peut res
 ancienne. Distinguer fichier valide, définition découverte, connexion MCP et
 opération utile réussie. Ne pas annoncer l'activation d'un agent sur la seule
 existence de son fichier.
+
+Vérification native du **2026-10-16** : le plugin global Ensemble
+`20261016-mission-policy-5504fe8e8df8` est actif dans ARTIST ; `/ensemble-mission`,
+les commandes ARTIST actualisées, les onze profils et une seule copie du skill
+`opencode-ensemble` sont découverts. Le cache ARTIST seul a été rechargé, sans
+redémarrage global ni prompt de mission. Modèles, modes et permissions des profils
+sont conservés. Les preuves locales sont dans `.opencode/evidence/` ; cette
+validation de découverte n'est ni un test d'exécution d'une mission, ni une
+validation C++/GPU.
 
 Références de format consultées le 2026-10-03 :
 [configuration](https://opencode.ai/v2/docs/config),

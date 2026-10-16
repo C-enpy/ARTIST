@@ -100,6 +100,26 @@ les tests et la QA. Exécuter en parallèle les tâches prêtes sans conflit d'o
 ni ressource partagée ; justifier les dépendances qui imposent une séquence.
 La composition et la taille de l'équipe dépendent de la mission.
 
+Pour une **nouvelle mission Ensemble**, utiliser le cycle natif
+`/ensemble-mission <objectif>` → `/ensemble-mission config` →
+`/ensemble-mission start`. `engine-mission` et `engine-tdd` restent les entrées
+ARTIST de préparation, pas des chemins d'approbation concurrents. Sans mission
+native préparée, ils indiquent la commande à lancer et n'utilisent pas `team_create`
+pour éviter le verrou. Un plan seul reste en lecture seule, sans exécution.
+Les missions legacy existantes gardent leur état et leur politique ; ne pas les
+recréer ni les convertir implicitement pendant une reprise.
+
+Les providers autorisés, modèles/variantes, groupes d'équivalents ordonnés et
+critères sont persistés dans `.opencode/missions/<team-id>/model-policy.json`.
+Les corrections de chat modifient ce brouillon puis exigent une nouvelle
+présentation par `config`. Seul le `start` natif demandé par l'utilisateur
+approuve cette version ; ne pas l'invoquer à sa place. Un GO en prose, une
+approbation de plan de teammate ou la seule édition du JSON ne le remplacent pas.
+Avant approbation : préparation uniquement, aucun worker d'exécution ni changement
+de source. Une pause opérateur demande un GO de reprise distinct et n'est jamais
+levée par ces commandes. Un travail local indivisible hors mission Ensemble
+conserve le flux local et les contrôles TDD, sans création artificielle d'équipe.
+
 L'évaluation **PM/LLM** est le défaut ; **JEV direct** est un choix explicite par
 mission. Le PM évalue avant publication et conserve méthode, estimation brute,
 justification, incertitudes et scores retenus. Pour toute tâche de développement
@@ -112,15 +132,22 @@ L'orchestrateur valide les fiches puis publie **les deux entiers `complexity` et
 `risk` (0–100)** dans `team_tasks_add`. Ils évitent la classification automatique ;
 ne pas attendre une notification JEV pour une tâche marquée `not_required`.
 Fournir une affinité `agent`, les vrais IDs des dépendances déjà créées et une
-décision `context` explicite. Le routage Ensemble choisit le modèle/effort autorisé
-dans le catalogue opérateur ; ne pas le court-circuiter par un `model` explicite
-sans demande utilisateur, ni modifier les scores du catalogue. Le PM et le travail
-hors routage Ensemble conservent la sélection native de la session.
+décision `context` explicite. Pour une mission native préparée, la grille approuvée
+complexité × risque choisit le modèle/effort exact, sous les restrictions opérateur.
+Une demande de modèle différent se traite par révision de la politique, jamais par
+un `model` explicite ou des scores modifiés pour contourner la grille. L'affectation
+passe par le spawn du lead ou le dispatch d'un worker idle, pas par un auto-claim
+en cours de tour. Les équipes legacy conservent leur routage catalogue/préférences.
+Ne pas modifier les scores du catalogue. Le PM et le travail hors routage Ensemble
+conservent la sélection native de la session.
 
-`autoDispatch` et `autoScale` sont activés dans `.opencode/ensemble.json` ; les
-tâches publiées peuvent donc démarrer immédiatement. Publier seulement des tâches
-exécutables et évaluées, avec un contexte décidé (`fresh` par défaut, requis pour
-une revue indépendante). Réserver `pending` aux décisions de contexte ouvertes.
+`autoDispatch` et `autoScale` restent activés dans `.opencode/ensemble.json`.
+Pour une mission native préparée, le plugin bloque les admissions avant approbation ;
+publier ne vaut pas `start`. Après approbation, les tâches prêtes peuvent démarrer
+immédiatement ; c'est aussi le comportement des équipes legacy sans ce verrou.
+Publier seulement des tâches exécutables et évaluées, avec un contexte décidé
+(`fresh` par défaut, requis pour une revue indépendante). Réserver `pending` aux
+décisions de contexte ouvertes.
 Les tâches dépendantes attendent les livrables réellement intégrés : le coordinateur
 doit organiser cette barrière, pas seulement la fin du travail d'un auteur.
 
