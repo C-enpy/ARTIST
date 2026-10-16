@@ -217,16 +217,91 @@ identité), les 6 `PipelineContextTests` F4 (owners uniques, adresses),
 `ProgramTests.cpp` (programmes chargés — `UsePassTest` ne caractérise plus
 implicitement F10, le test F10 dédié reste).
 
-## A2/F6 — décisions explicitement ouvertes (fiche complémentaire requise)
+## A2/F6 — contrat complémentaire ratifié, exécution après I0/R/V
 
-A1 ne touche ni `IPass::m_context`, ni `IPass::getContext()`, ni les
-consommateurs Uniform/Attribute. Avant A2, l'architecte doit décider : quel
-accesseur remplace les aliases partagés de `PassContext` ; quels emprunts
-survivent à move/free/reload/destruction ; comment les derniers aliases et
-shaders sont détruits avant teardown GL ; comment les bindings deviennent
-invalides sans anticiper ADR-0004 ; quels consommateurs migrer et quelles
-preuves loaded-owner conserver. Un handle générationnel ne résoudrait pas une
-destruction GPU en vol.
+Consultation G-A2 en lecture seule, puis décisions du coordinateur : **un seul
+écrivain CPP pour toute A2**, deux étapes chez le même auteur ; pas de handoff
+au milieu d'une rupture d'API. Rejet des nuls dans les maps uniform/attribute
+**hors A2**. Archiver la caractérisation de l'ancien alias, ne pas conserver
+un test devenu incompatible ni affaiblir la preuve du nouveau contrat.
+
+Ce contrat ne décrit **pas** le candidat I0 : son `IPass` reste partagé.
+Publication de D-A2 seulement après revue/QA I0 reçues et arbitrées, producteurs
+intégrés, ressources libérées. Nouvelle revue et QA indépendantes **après A2**,
+avant DOC-F/I1. ADR-0003 reste Accepted/partial ; ADR-0004 Proposed/hors mission.
+
+### Stockage, accesseur et lifetimes
+
+- `IPass::m_context` devient `unique_ptr<API::PassContext>`. Les signatures de
+  construction (déjà `unique_ptr`), rejet NULL_CONTEXT, copie interdite,
+  construction move noexcept et self-move no-op sont conservés. Pas de
+  destructeur de base appelant un hook virtuel.
+- `getContext() const` devient une référence `API::PassContext&`, gardée par
+  `ctx()` ; moved-from lève l'erreur FREED_CONTEXT existante, exacte. Aucun
+  accesseur partagé de repli. Assignation de base protégée et cleanup natif
+  destination avant transfert conservés : après succès de `free()`, remplacement
+  du contexte destination détruit ses shaders. Si cleanup lève avant transfert,
+  pointeurs non transférés ; aucun rollback backend promis.
+- `free()` remet le handle programme à zéro sans détruire le contexte ni ses
+  shaders : emprunts CPU encore valides. **Ne pas promettre `free(); load()`
+  directement** : `IPass::load()` recharge d'abord les shaders (`Pass.hpp:97-110`)
+  et strict B reste applicable. Le cycle complet exige aussi de libérer les
+  shaders concernés, comme avant A2 ; pas de rollback global ajouté.
+- Construction move : adresses et emprunts source conservés par le nouvel
+  owner ; accesseurs gardés de la source déplacée rejetés, `free()` moved-from
+  reste no-op comme avant (pas de nouvelle erreur). Assignation : emprunts vers l'ancien
+  contexte destination invalidés, emprunts source conservés. Destruction :
+  programme libéré, contexte détruit, shaders détruits ; contexte GL courant
+  requis. Aucun emprunt invalide déréférencé dans les tests.
+- Maps uniform/attribute et contextes de leurs wrappers restent partagés,
+  inchangés. Ces owners CPU externes peuvent survivre ; leurs métadonnées GL
+  peuvent être obsolètes après free/remplacement/destruction du Pass. Ne pas
+  promettre leur usage GPU après invalidation ni ajouter handle générationnel,
+  réflexion ou validation de binding ADR-0004/F7. Aucun lifetime GPU en vol résolu.
+
+### Partition et preuves
+
+- Écrivain CPP unique : `ARTIST/include/graphic/pipeline/Pass.hpp`, unitaires
+  `PassTests.cpp`/`ShaderLifetimeTests.cpp`, composantes GL
+  `ShaderLifetimeComponentTests.cpp`, `ProgramTests.cpp` et
+  `PipelineLifetimeComponentTests.cpp`. Mocks à vérifier ; aucune modification
+  supplémentaire sans constat de compilation et arbitrage du coordinateur.
+  Pas de changement Shader/Loader/contexts/GLSL/glFunctionMock/harness.
+- Étape A2a : RED causal de `getContext()` moved-from (ancien retour partagé
+  vide sans exception), contrôle positif de compilation puis sondes distinctes
+  retour-référence/copies interdites/absence d'ancien accesseur owner ; GREEN
+  minimal. Adaptations mécaniques des consommateurs chez le même écrivain,
+  sans présenter les cibles GL temporairement non adaptées comme GREEN global.
+- Étape A2b : conserver les preuves GL chargées A1c (owners body-local avant
+  teardown, handles observés par valeur, aucun alias vivant). Archiver avant
+  réécriture le cas historique « alias prolonge les shaders » ; après migration,
+  prouver la destruction destination sans alias, le transfert d'identité,
+  self-move, moved-from, binding et suppression différée jusqu'à unbind.
+  Programme courant et contexte CPU vivant sont des critères distincts.
+- La réserve RED A1c `df35b3f` reste consignée : pas de réexécution de sa sonde
+  chargée après teardown, pas de requalification rétroactive en CPU-only.
+  Une caractérisation déjà verte n'est pas un nouveau RED ; un défaut découvert
+  reçoit sa propre preuve causale avant correction.
+- Suites normales CPU puis GL réelles, découverte/JUnit frais et empreintes ;
+  ASan sélection déclaré avant run, clean-first et sonde reconstruite/canari
+  0/86. Ne pas réduire les 9 cas GL historiques ni la sélection Pipeline A1c
+  sans décision explicite. GPU/build exclusifs pendant la phase concernée.
+- Aucun alias `subst` à recréer. Si chemins longs : sorties de build courtes
+  et distinctes sous `out/` du principal ou le répertoire temporaire OpenCode
+  approuvé, ressources attribuées par le lead ; conserver l'isolation des
+  sources. Réutiliser tooling/cache Conan existants sous bail, pas les copier.
+
+### Évaluation et fermeture
+
+PM/LLM local : D-A2 fusionne les deux étapes d'auteur proposées par G-A2,
+complexité brute/retenue **78/78**, risque **80** (ownership, rupture d'accesseur,
+matrice CPU/GL et cleanup). Ce regroupement n'unit pas A1 et A2 et réduit les
+handoffs/builds ; aucune sélection de modèle hors grille approuvée. R-A2
+**55/70**, V-A2 **58/72**, fresh, après intégration A2 ; pas de nouveau code de
+test/runner par les reviewers. Incertitudes à lever : ordre de destruction
+chargée et exceptions, preuve de non-prolongation par l'ancien accesseur.
+DOC-F attend ces verdicts, garde les réserves historiques et actualise F6/ADR
+uniquement au périmètre effectivement prouvé. Aucun gain perf/image revendiqué.
 
 ## F8-SEAM — contrat complémentaire ratifié le 2026-10-16
 
@@ -342,7 +417,9 @@ B0 (af14c88)
                                              R   V
                                              └─┬─┘
                                       D-A2 (contrat A2 complémentaire)
-                                             └──┬──┘
+                                             ┌─┴─┐
+                                           R-A2 V-A2
+                                             └─┬─┘
                                             DOC-F ── I1
 ```
 
@@ -356,8 +433,10 @@ B0 (af14c88)
 | F8-SEAM | cpp-engineer | 70 / 55 | fresh, worktree, après ruling |
 | R | correctness-reviewer | 63 / 77 | fresh, après I0 |
 | V | rendering-verifier | 66 / 78 | fresh, après I0 |
-| D-A2 | cpp-engineer | 74 / 78 | fresh, worktree, après contrat A2 + I0 |
-| DOC-F | engine-architect | 44 / 42 | fresh, après R/V/D-A2 |
+| D-A2 | cpp-engineer | 78 / 80 | fresh, worktree, après contrat A2 + I0/R/V |
+| R-A2 | correctness-reviewer | 55 / 70 | fresh, après intégration D-A2 |
+| V-A2 | rendering-verifier | 58 / 72 | fresh, après intégration D-A2 |
+| DOC-F | engine-architect | 44 / 42 | fresh, après R/V/D-A2/R-A2/V-A2 |
 
 Barrières du coordinateur : **I-A1** (intégration D-A1 vérifiée : empreintes,
 re-glob, découverte CPU, transfert `ProgramTests.cpp`) ; **I0** (candidat gelé,
