@@ -25,6 +25,40 @@ const ROUTES = [
   ['gpu-portability-engineer', ['gpu-backend-portability', 'artist-gpu-debug']],
 ];
 const CANARIES = Array.from({ length: 10 }, (_, i) => `C${String(i + 1).padStart(2, '0')}`);
+// Déclaration approuvée, pas évaluateur de gates : qa-policy-boundary.md.
+// Autorité FIXE du harness ; ne jamais la charger depuis le candidat/manifest.
+const QA_IDS = ['qa-planner', 'test-engineer', 'test-reviewer'];
+const QA_TEMPLATE = 'qa-readonly-declared-v1';
+const QA_TEMPLATE_VERSION = 1;
+const QA_DECLARED_RULES = [
+  { action: '*', resource: '*', effect: 'deny' },
+  { action: 'read', resource: '*', effect: 'allow' },
+  { action: 'glob', resource: '*', effect: 'allow' },
+  { action: 'skill', resource: 'artist-build-validation', effect: 'allow' },
+  { action: 'read', resource: '*.env', effect: 'deny' },
+  { action: 'read', resource: '*.env.*', effect: 'deny' },
+  { action: 'read', resource: '*.ENV', effect: 'deny' },
+  { action: 'read', resource: '*.ENV.*', effect: 'deny' },
+  { action: 'read', resource: '*.Env', effect: 'deny' },
+  { action: 'read', resource: '*.Env.*', effect: 'deny' },
+  { action: 'read', resource: '*.eNv', effect: 'deny' },
+  { action: 'read', resource: '*.eNv.*', effect: 'deny' },
+  { action: 'read', resource: '*.enV', effect: 'deny' },
+  { action: 'read', resource: '*.enV.*', effect: 'deny' },
+  { action: 'read', resource: '*.ENv', effect: 'deny' },
+  { action: 'read', resource: '*.ENv.*', effect: 'deny' },
+  { action: 'read', resource: '*.EnV', effect: 'deny' },
+  { action: 'read', resource: '*.EnV.*', effect: 'deny' },
+  { action: 'read', resource: '*.eNV', effect: 'deny' },
+  { action: 'read', resource: '*.eNV.*', effect: 'deny' },
+  { action: 'read', resource: '**/.env*', effect: 'deny' },
+  { action: 'read', resource: '**/.ENV*', effect: 'deny' },
+  { action: 'edit', resource: '*', effect: 'deny' },
+  { action: 'shell', resource: '*', effect: 'deny' },
+  { action: 'execute', resource: '*', effect: 'deny' },
+  { action: 'subagent', resource: '*', effect: 'deny' },
+  { action: 'external_directory', resource: '*', effect: 'deny' },
+];
 const MAX_BYTES = 4 * 1024 * 1024;
 const object = v => v !== null && typeof v === 'object' && !Array.isArray(v);
 const text = v => typeof v === 'string' && v.trim().length > 0;
@@ -98,14 +132,25 @@ function scalar(source) {
   }
   if (source === '[]') return [];
   if (source === '{}') return Object.create(null);
-  if (/^[!&*\[\]{}>|%@`]|^<<|^[-?:](?:\s|$)|:(?:\s|$)|\s[&*][^ ]/.test(source))
-    reject('YAML_UNSUPPORTED', `Syntaxe hors sous-ensemble YAML : ${source}`);
   if (/^(true|True|TRUE|false|False|FALSE)$/.test(source)) return source.toLowerCase() === 'true';
   if (/^(null|Null|NULL|~)$/.test(source)) return null;
   if (/^-?(0|[1-9]\d*)(\.\d+)?$/.test(source)) return Number(source);
-  if (/^[+\-.]?\d|^[+-]?\.(inf|nan)$/i.test(source))
-    reject('YAML_UNSUPPORTED', 'Scalaire numérique/date hors sous-ensemble décimal ; utiliser des quotes pour du texte.');
+  // Grammaire plain bornée, pas fallback à une liste noire d'amorces YAML/core.
+  // Texte : lettre Unicode ou underscore initial, sans contrôle ni mapping/alias.
+  // Autres amorces (dont ,item et +/-.5) : quotes obligatoires, jamais du texte implicite.
+  if (!/^[\p{L}_][^\x00-\x1f\x7f-\x9f]*$/u.test(source) || /:(?:\s|$)|\s[&*][^ ]/.test(source))
+    reject('YAML_UNSUPPORTED', `Scalaire hors sous-ensemble plain/core ; utiliser des quotes pour du texte : ${source}`);
   return source;
+}
+
+function qaRuleMismatch(rules) {
+  const keys = ['action', 'resource', 'effect'];
+  for (let i = 0; i < Math.max(rules.length, QA_DECLARED_RULES.length); i++) {
+    const expected = QA_DECLARED_RULES[i] ?? null, observed = rules[i] ?? null;
+    if (!expected || !observed || Object.keys(observed).some(k => !keys.includes(k)) ||
+      keys.some(k => observed[k] !== expected[k])) return { rule: i + 1, expected, observed };
+  }
+  return null;
 }
 
 function frontmatter(source) {
@@ -395,7 +440,15 @@ function validate(args) {
       : lastUniversalDeny >= 0 && !rules.slice(lastUniversalDeny + 1).some(r => matches(r.action, 'subagent') && r.effect !== 'deny');
     check('PERMISSION_SUBAGENT', subagentSafe ? 'PASS' : 'FAIL', entity.id, { obligation: 'T-06',
       expected: coordinator ? 'Coordinateur : dernière règle applicable interdit sa propre délégation.' : 'Feuille : deny subagent universel, non rouvert.' });
-    if (!['qa-planner', 'test-engineer', 'test-reviewer'].includes(entity.id)) return;
+    const ruleMismatch = qaRuleMismatch(rules);
+    // Un rôle arbitraire ne peut emprunter B sous un ID inventé dans le manifest.
+    if (!QA_IDS.includes(entity.id) && ruleMismatch !== null) return;
+    const expectedPath = `.opencode/agents/${entity.id}.md`;
+    const identityMismatch = !QA_IDS.includes(entity.id) ? { field: 'id', expected: QA_IDS, observed: entity.id }
+      : entity.path !== expectedPath ? { field: 'path', expected: expectedPath, observed: entity.path }
+      : metadata.mode !== 'subagent' ? { field: 'mode', expected: 'subagent', observed: metadata.mode } : null;
+    const firstMismatch = identityMismatch ?? ruleMismatch;
+    const declared = firstMismatch === null;
     const denyAll = rules[0]?.action === '*' && rules[0]?.resource === '*' && rules[0]?.effect === 'deny';
     const bounded = r => {
       if (r.action === 'skill') return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(r.resource) && r.resource.length <= 64;
@@ -406,14 +459,19 @@ function validate(args) {
         const name = relativeName(r.resource);
         if (!/^[a-zA-Z0-9_./-]+$/.test(name) || name.split('/').some(p =>
           /^(\.env|\.git$|\.ssh$|\.aws$|\.azure$|\.gnupg$|\.npmrc$|\.pypirc$|\.?secrets?(\.|$)|credentials?(\.|$)|id_(rsa|dsa|ecdsa|ed25519)(\.|$))/i.test(p) ||
-          /\.(key|pem|p12|pfx|kdbx)$/i.test(p))) return false;
+          /\.env(?:\.|$)|\.(key|pem|p12|pfx|kdbx)$/i.test(p))) return false;
         const { absolute } = safePath(name);
         return fs.existsSync(absolute) && fs.statSync(absolute).isFile();
       } catch { return false; }
     };
     const unsafe = rules.filter(r => r.effect !== 'deny' && !bounded(r));
-    check('PERMISSION_QA', denyAll && !unsafe.length ? 'PASS' : 'FAIL', { agent: entity.id, unsafe },
-      { obligation: 'T-06', expected: 'QA deny-all, exceptions fichiers exacts non secrets conventionnels ou IDs skill exacts ; globs non prouvés rejetés. D-PERM non résolu.' });
+    const exact = !identityMismatch && denyAll && !unsafe.length;
+    check('PERMISSION_QA', declared || exact ? 'PASS' : 'FAIL', {
+      agent: entity.id, path: entity.path, form: declared ? 'B' : exact ? 'A' : null,
+      template: QA_TEMPLATE, templateVersion: QA_TEMPLATE_VERSION, firstMismatch,
+      message: declared ? 'template déclaré reconnu' : exact ? 'exceptions exactes reconnues' : 'déclaration QA refusée',
+      unsafe: declared ? [] : unsafe,
+    }, { obligation: 'T-06', expected: 'QA forme A : deny-all et fichiers exacts non secrets/IDs skill exacts ; forme B : template déclaré exact, identité/path/mode fixes. D-PERM : mode décidé, enforcement non prouvé.' });
   }
   function candidate() {
     const hashes = sorted(Object.fromEntries([...inputBytes].map(([p, b]) => [p, hash(b)])));
