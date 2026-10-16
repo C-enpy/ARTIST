@@ -23,6 +23,10 @@ $preset = 'windows-msvc-' + $Configuration.ToLowerInvariant()
 if ($AddressSanitizer) { $preset += '-asan' }
 $buildDir = Join-Path $root "out/build/$preset"
 $savedEnvironment = @{}
+# Q1: the ASan policy of every instrumented child (GoogleTest discovery, the
+# canary itself, CTest and its test processes) must not depend on the parent
+# session. The module lives next to this script.
+. (Join-Path $PSScriptRoot 'asan-env.ps1')
 
 function Invoke-Checked([string]$Program, [string[]]$Arguments) {
     & $Program @Arguments
@@ -78,6 +82,13 @@ try {
     Invoke-Checked 'conan' @('--version')
     Invoke-Checked 'ninja' @('--version')
     Write-Output "MSVC $env:VCToolsVersion | Windows SDK $env:WindowsSDKVersion"
+
+    if ($AddressSanitizer) {
+        # Q1: fix the instrumented runtime policy for this whole session before
+        # any child runs (build-time GoogleTest discovery included); the canary
+        # re-applies the same values for its own probe runs.
+        Set-AsanTestEnvironment
+    }
 
     $profile = Join-Path $root 'conan/profiles/windows-msvc'
     Invoke-Checked 'conan' @('install', '.', '-pr:h', $profile, '-pr:b', $profile,
