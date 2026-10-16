@@ -405,6 +405,29 @@ RED moteur ; aucune preuve GL ou ASan de l'union n'est tirée de cette expérien
 Commandes, empreintes et JUnit :
 `docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json`.
 
+## Pipeline A1c — réserve du protocole RED historique
+
+Le GREEN producteur `3526ead`, intégré en `3c670c9`, contient les owners GPU
+locaux aux corps de tests ; 39/39 GL ont été rejoués sur le principal après
+reconfiguration/découverte fraîche. Les 13 cas GL ASan du producteur sont les
+5 `PipelineTest` devenus chargés et les 8 nouveaux `PipelineLifetimeTest` :
+ils ne couvrent pas les 9 `ShaderLifetimeComponentTests` historiques.
+
+L'inspection du RED `df35b3f` a trouvé un écart confirmé par l'auteur :
+`ContextCheckedOwner::~ContextCheckedOwner` (`ProgramTests.cpp:69-80`) vérifie
+le drapeau CPU puis appelle `m_owned.reset()` après `TearDown()` ; le destructeur
+de `Pass` appelle `free()`, donc le cleanup GL chargé hors contexte. L'assertion
+CPU préalable ne qualifie pas la suite comme CPU-only. Cette sonde concernait
+les 5 `PipelineTest`, pas les 8 nouveaux tests body-local non chargés du RED.
+Son comportement driver/WGL silencieux n'est pas une preuve valable.
+
+**FAIL du protocole historique** « aucun appel GL volontaire après teardown »,
+pas un défaut conservé dans le GREEN. Aucune réexécution de la sonde interdite ;
+originaux/manifeste préservés et addendum séparé. La réserve reste à transmettre
+à la revue fresh et à la QA I0, sans transformer les succès GREEN en conformité
+TDD historique globale. Preuves et empreintes :
+`docs/_meta/session-2026-10-16-pipeline-a1c-validation.json`.
+
 ## Expériences encore absentes
 
 ASan Windows Debug est exécuté séparément et instrumenté ; après F5, la sélection

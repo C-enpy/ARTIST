@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-16",
+  "scope": "A1c integration; not I0 or global mission QA",
+  "producer_head": "3526eadd9945749543b1cf2be0622e0643218706",
+  "integrated_commit": "3c670c9",
+  "source_hashes_verified_before_and_after_merge": "2/2",
+  "producer_artifact_hashes_verified": "18/18",
+  "local_evidence_backup": "out/mission-a1a2/pool-5/",
+  "producer_results": {
+    "normal_unit": {"tests": 167, "failures": 0, "skipped": 0},
+    "normal_gl": {"tests": 39, "failures": 0, "skipped": 0},
+    "asan_gl_selection": {"tests": 13, "failures": 0, "skipped": 0},
+    "asan_selection_matches_junit_names": true,
+    "asan_selection": "5 converted loaded PipelineTest cases + 8 new PipelineLifetimeTest cases",
+    "asan_canary_exit_codes": [0, 86],
+    "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "historical_nine_ShaderLifetime_asan_cases_rerun": false
+  },
+  "integration_gl": {
+    "status": "PASS",
+    "command": "cmd.exe /d /c out/mission-a1a2/i-a1c-gl.cmd",
+    "steps": [
+      "vcvarsall x64 -vcvars_ver=14.44 in the same process",
+      "cmake --preset windows-msvc-debug",
+      "cmake --build --preset windows-msvc-debug --target ArtistLib_component_tests --parallel 1",
+      "ctest --test-dir out/build/windows-msvc-debug -L opengl --show-only=json-v1",
+      "ctest --test-dir out/build/windows-msvc-debug -L opengl --parallel 1 --output-on-failure --no-tests=error --output-junit i-a1c-union-opengl.xml"
+    ],
+    "discovered_distinct": 39,
+    "tests": 39,
+    "failures": 0,
+    "skipped": 0,
+    "disabled": 0,
+    "junit": "out/mission-a1a2/i-a1c-union-opengl.xml",
+    "junit_sha256": "998afd00d6d531387f067568229cb695e0b131eeeb470fd784de72b8ca296778",
+    "log": "out/mission-a1a2/i-a1c-gl-integration.log",
+    "cpu_tests_executed_in_this_check": false
+  },
+  "historical_red_reserve": {
+    "status": "FAIL for no-post-teardown-GL protocol; retained, not retroactively repaired",
+    "commit": "df35b3f",
+    "affected_cases": "5 PipelineTest cases; not the 8 unloaded body-local PipelineLifetimeTest cases",
+    "finding": "ContextCheckedOwner asserts contextAlive then resets a loaded Pass after base TearDown. Pass::~Pass calls free(). The failing assertion does not make this a CPU-only path.",
+    "author_confirmation": "Confirmed by source/call-chain inspection; driver-specific no-op cleanup is not qualifying evidence",
+    "unsafe_probe_rerun": false,
+    "present_in_final_green_source": false,
+    "addendum": "out/mission-a1a2/pool-5/A1c-evidence-qualification-addendum.md",
+    "addendum_sha256": "37052b92c6615bab4712975b4e2bbef86661fca57c5455a53757db718410a2bc"
+  },
+  "remaining": [
+    "Fresh correctness review and QA at I0 must receive the historical RED protocol finding",
+    "Integrated CPU union after F8 and integrated ASan selection remain to be run",
+    "Nine historical GL lifetime cases are not covered by the producer ASan13 campaign",
+    "No exhaustive GPU leak, image, performance, Release or other-platform claim",
+    "A2 Pass context ownership remains unmigrated"
+  ]
+}

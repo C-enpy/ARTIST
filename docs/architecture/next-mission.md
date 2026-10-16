@@ -25,9 +25,13 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > [!info] Avancement vérifié, non clôture globale
 > A1a+A1b intégrés en `d319096` ; I-A1 vérifiée sur l'union : 167/167 CPU,
 > 15/15 empreintes sources conformes, manifeste
-> `_meta/session-2026-10-16-pipeline-i-a1-validation.json`. A1c en cours, pas de
-> preuve lifetime Pipeline chargé ni de migration A2 acquise ici. R/V et
-> clôture documentaire restent à réaliser ; aucun PASS global de mission.
+> `_meta/session-2026-10-16-pipeline-i-a1-validation.json`.
+> A1c intégrée en `3c670c9` : 39/39 GL rejoués sur le principal et sélection
+> producteur ASan 13/13 (pas les 9 GL historiques). Réserve conservée : la
+> sonde RED historique de bail appelait le cleanup GL après teardown,
+> contrairement au protocole ; elle n'existe plus dans le GREEN. Manifeste
+> `_meta/session-2026-10-16-pipeline-a1c-validation.json`. A2 non migrée ; R/V
+> et clôture documentaire restent à réaliser, aucun PASS global de mission.
 
 ## Pourquoi cette mission
 
