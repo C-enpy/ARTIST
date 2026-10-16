@@ -47,21 +47,29 @@ recherchées systématiquement, y compris pour les missions de harness, tests et
 - `AGENTS.md` : cap, style de travail, routage, outils et exigences de preuve.
 - `opencode.jsonc` : agent par défaut et MCP propres à ce projet.
 - `.opencode/ensemble.json` : auto-dispatch et auto-scaling des tâches admissibles.
-- `.opencode/agents/` : un coordinateur, un PM et neuf spécialistes.
-- `.opencode/skills/` : six procédures activées selon le travail.
+- `.opencode/agents/` : 23 profils locaux, dont le coordinateur unique, le PM et trois QA.
+- `.opencode/skills/` : 17 procédures activées progressivement, pas toutes à chaque tâche.
 - `.opencode/commands/` : six points d'entrée explicites.
-- `.opencode/evidence/` : preuves locales ignorées, transmission des enquêtes.
+- `.opencode/evidence/` : preuves locales, avec contrats/rapports mission-gpu-qa explicitement versionnés.
 - `docs/engineering-principles.md` : synthèse de la philosophie et écarts observés.
 - `docs/adr/` : décisions durables lorsque nécessaires.
 
-Les neuf spécialistes sont `engine-architect`, `cpp-engineer`, `gpu-engineer`,
+Les neuf spécialistes historiques sont `engine-architect`, `cpp-engineer`, `gpu-engineer`,
 `asset-engineer`, `build-engineer`, `correctness-reviewer`, `shader-reviewer`,
 `performance-reviewer` et `rendering-verifier`. Les descriptions précisent quand
 les appeler. Les reviewers ne corrigent pas les sources qu'ils évaluent.
 `project-manager` prépare le graphe et les évaluations en lecture seule ;
 `orchestrator` valide, publie, coordonne et intègre.
 
-Les skills `artist-static-boundary`, `artist-cpp-contracts`, `artist-gpu-debug`,
+Le [[agentic/gpu-qa-harness|catalogue GPU et la boucle QA]] raccordent les 19
+responsabilités GPU, quatre expertises API et les trois QA à ce coordinateur.
+Déclencheur : comportement sous contrat OU suite d'intégration étendue OU risque
+PM >= 50 ; plan avant auteurs, producteurs intégrés avant generator, reviewer fresh
+hors board puis ré-audit. Runner séparé : propositions QA, persistance/relecture/
+exécution par lead distinct. Aucun grant/autonomie/enforcement natif démontré ;
+les contrôles statiques ne prouvent ni sélection de profil ni chargement de skill.
+
+Les six skills historiques `artist-static-boundary`, `artist-cpp-contracts`, `artist-gpu-debug`,
 `artist-performance`, `artist-build-validation` et `artist-asset-cooking` contiennent
 les procédures détaillées. Les triggers évitent de charger tout le corpus à chaque
 requête. Les invariants indispensables restent dans `AGENTS.md`.

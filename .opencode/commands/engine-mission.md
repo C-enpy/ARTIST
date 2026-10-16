@@ -38,3 +38,15 @@ override de modèle ni auto-claim en cours de tour. Intègre les livrables avant
 consommateurs, conduis les tranches en TDD puis la QA indépendante, et rapporte les
 preuves et limites. Une pause opérateur exige un GO de reprise distinct ; ce
 raccourci ne la retire jamais.
+
+Applique le catalogue et la boucle QA de `.opencode/agents/orchestrator.md`,
+coordinateur unique : description → skill pertinent → référence utile, API ambiguë
+clarifiée. Un comportement sous contrat OU une suite d’intégration étendue OU un
+risque PM >= 50 impose `qa-planner` avant les auteurs ; plan persisté/commité avant
+leurs worktrees, TDD des auteurs, intégration effective des producteurs, puis
+`test-engineer` pour les gaps et `test-reviewer` fresh hors board d'implémentation,
+correction/ré-audit. QA I×P 1–5 distinct de PM 0–100, aucune conversion de grille.
+Runner séparé : propositions texte/patch des trois QA, persistance, relecture et
+exécution attribuées au lead mandaté ; aucune édition/exécution autonome démontrée.
+Les permissions fermées et la limite Code Mode restent applicables. Ce raccordement
+ne crée ni nouveau coordinateur ni approbation ni preuve native.
