@@ -54,8 +54,11 @@ PM/LLM, RED causal requis, empreintes des fichiers cibles relevées et invariant
 préservés. Fiche complète : [[architecture/next-mission|next-mission]] ;
 manifeste machine : `docs/_meta/next-mission-2026-10-15-c-selection.json`.
 
-Aucune mission suivante n'est sélectionnée après C. Pipeline (A1a–A2) et ADR-0004 restent
-des tranches proposées, à sélectionner explicitement.
+Mission suivante sélectionnée le 2026-10-16 : [[architecture/next-mission|Pipeline A1+A2]]
+(ownership du Pipeline, curseur et contexte unique — contrat préalable G-A de l'architecte),
+avec les micro-incidents ouverts en branches latérales (ASan incrémental,
+`getStackTraceString`, refresh documentaire, F8-extraction sous ruling).
+ADR-0004 reste une sélection séparée, à adoption explicite.
 
 ## Mission loaded-owner du 2026-10-15 — terminée dans son périmètre
 
