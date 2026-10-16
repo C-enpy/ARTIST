@@ -1,51 +1,52 @@
 ---
 name: artist-performance
-description: Mesure et revue des performances CPU/GPU et du coût de spécialisation d'ARTIST. À utiliser pour optimisation, benchmarks, zero-cost, allocations, dispatch, cache, latence et code size.
+description: Protocole et diagnostic des goulots CPU/GPU, A/B à qualité égale, soumission/attentes/cadence, dispersion et coût total de spécialisation. À charger pour profiling, benchmarks ou revendication de gain ; aucun correctif par le reviewer.
 ---
 
-# Une hypothèse, un protocole, une mesure
+# Une hypothèse réfutable, un protocole, une mesure
 
-## Préparer
+## Déclencheurs et exclusions
 
-Énoncer le goulot supposé et le résultat observable. Vérifier d'abord correctness
-et équivalence de qualité. Relever commit/diff, compilateur/STL, flags, LTO/PGO,
-configuration, OS, CPU, GPU, driver, scène, résolution, seed et paramètres.
-Mesurer en configuration optimisée ; les runs sanitizés servent au diagnostic.
+Pour goulot GPU/CPU, profiling, coût de shader/dispatch, latence, allocations,
+cache, code-size ou affirmation zero-cost. Principal du diagnostic :
+`performance-reviewer`, lecture seule ; le lead attribue ensuite le correctif.
+Une frame noire demande d'abord correctness/debug, pas un benchmark ; pure
+question CPU → `cpp-engineer` via lead, pas sélection automatique d'un backend.
 
-Définir warm-up, nombre de répétitions, durée, ordre des variantes et conditions
-thermiques/charge de fond. Rapporter médiane et dispersion/percentiles lorsque
-pertinents, pas seulement une moyenne de FPS. Garder les données brutes locales.
+## Préconditions
 
-## Séparer les coûts
+Énoncer résultat observable, goulot supposé et oracle qualité ; identifier
+candidat HEAD/diff/hashes, environnement, configuration optimisée et workload.
+Pin ARTIST 2026-10-16 / `40a7cc3` : OpenGL présent ; ne pas déduire benchmark,
+autres backends ou outil disponible de leur nom dans les rapports. Distinguer
+outil installé, accès device/counters, autorisation, données effectivement lues.
+Aucune installation/capture/mesure au chargement de ce skill. Sortie isolée
+possédée et bail requis si ressource partagée. Sans droit/exécutable : INCONCLUSIVE,
+protocole possible ; ne pas fabriquer une commande ni un résultat.
 
-- CPU : préparation, traversée, soumission, allocations/octets, copies et
-  refcounts, branches/cache, locks/attentes.
-- GPU : temps de passes, travail utile, bandwidth/occupation quand mesurables,
-  synchronisation, soumissions, bubbles, changements de pipeline/ressources.
-- Présentation : vsync, cadence, attente et latency ; ne pas les confondre avec
-  l'exécution du draw. Récupérer les queries de façon différée pour éviter de
-  mesurer surtout une synchronisation introduite par l'instrumentation.
-- Hors frame : import/cook/load, création PSO, compilation clean/incrémentale,
-  mémoire du compilateur/linker, taille du binaire et nombre de variantes.
+## Procédure
 
-## Comparer équitablement
+1. Fixer une hypothèse, baseline, variable A/B, invariants et seuil avant run.
+2. Suivre le [protocole détaillé](references/protocol.md) : qualité/workload/options
+   équivalents, warm-up, ordre, répétitions, dispersion et artefacts bruts.
+3. Séparer CPU submit, GPU, waits et cadence ; ne pas sommer des intervalles
+   qui se chevauchent. Utiliser les compteurs pour discriminer une cause, pas
+   inventer une métrique inaccessible ou déduire un gain d'un seul indicateur.
+4. Évaluer le travail total : import/cook/load, pipelines/PSO, build clean et
+   incrémental, instanciations, mémoire de compilation et taille du binaire.
+5. Inspecter code généré/optimization remarks pour inlining, vectorisation ou
+   dévirtualisation ; confirmer sur un workload représentatif après micro-mesure.
+6. Réutiliser `artist-build-validation` pour identité/niveaux des preuves ;
+   appliquer une revue indépendante fresh au correctif intégré, pas auto-validation.
 
-Comparer spécialisation statique, dispatch de lot et baseline existante avec mêmes
-données, travail et qualité. Placer le dispatch à sa vraie fréquence. Empêcher
-l'élimination du travail par le compilateur sans polluer la boucle mesurée.
-Inspecter désassemblage/optimization remarks pour une affirmation d'inlining,
-dévirtualisation ou vectorisation ; le mot-clé source ne suffit pas.
+## Retour et handoff
 
-Les budgets sont attachés à un workload et un matériel. Ne pas inventer un budget
-de millisecondes universel, un gain en pourcentage ou une capacité de scène.
-Une micro-mesure éclaire un mécanisme ; confirmer l'effet sur une scène pertinente
-avant de revendiquer un gain moteur. Documenter les coûts déplacés au cook/build.
+- **MEASURED** : protocole exécuté, données brutes, médiane/dispersion, qualité,
+  coûts déplacés et conclusion bornée. Ne signifie pas forcément gain ou PASS.
+- **HYPOTHESIS / MEASURE** : mécanisme plausible, site/fréquence et expérience.
+- **INCONCLUSIVE** : précondition absente, bruit excessif, comparaison non
+  équivalente ou métrique manquante ; ne pas convertir cela en pourcentage.
 
-## Verdict
-
-- **MEASURED** : protocole exécuté, résultats et dispersion, conclusion bornée.
-- **HYPOTHESIS / MEASURE** : risque plausible et expérience proposée.
-- **INCONCLUSIVE** : prérequis absent, bruit excessif ou comparaison non équivalente.
-
-Sans benchmark existant, demander une implémentation bornée au coordinateur si
-nécessaire. Ne pas inventer une commande ou installer automatiquement un profiler.
+`DEFER_TO` au lead : hypothèse et observations, auteur du goulot proposé, fichiers,
+risques et prochain oracle. Pas de sous-agent, correctif ou nouveau benchmark par
+un reviewer. Une bibliothèque/profiler mentionné n'est pas une dépendance adoptée.

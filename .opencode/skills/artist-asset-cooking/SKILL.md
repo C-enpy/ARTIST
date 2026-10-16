@@ -1,47 +1,53 @@
 ---
 name: artist-asset-cooking
-description: Définit les données importées, cookées et runtime d'ARTIST. À utiliser pour meshes, textures, matériaux, animation, particules, formats, cache, streaming et chargement GPU.
+description: Prépare meshes, tangentes, indices, meshlets/LOD et textures DDS/BC/ASTC ; contrats source/IR/cook/runtime, mips, formats et cache. À charger pour contenu et validation offline, pas pour implémenter l'upload GPU.
 ---
 
-# Compiler le contenu sans en faire des types C++
+# Contenu préparé, kernels spécialisés
 
-Lire `docs/engineering-principles.md` et identifier d'abord le sous-système
-réellement présent. Ne pas supposer un cooker ou un cache déjà implémenté.
+## Déclencheurs et exclusions
 
-## Contrat minimal
+Charger pour import, géométrie, textures, matériaux, formats/caches et contrat de
+streaming ; un DDS compressé relève d'abord de `asset-engineer`, pas de D3D12.
+Exclure allocation GPU, barriers/fences, code shader et solveur runtime :
+décrire leur interface et transmettre au lead, sans étendre l'ownership.
+Animation/particules/cloth/hair : données d'état et kernels bornés, pas un type
+par clip/emitter. Ne pas créer ces sous-systèmes pour satisfaire un exemple.
 
-1. **Source** : format, provenance, unité/espace, version et dépendances externes.
-2. **Import** : validation des tailles, indices, ranges, encodages et limites de
-   ressources ; les données malformées doivent produire une erreur explicite.
-3. **Cook** : transformations déterministes, profils cibles, optimisations offline,
-   formats, layout et permutations bornées ; hashes et version des outils/options.
-4. **Stockage** : schéma versionné, endianness, alignement, offsets vérifiés,
-   intégrité et compatibilité. Ne pas sérialiser directement un objet C++ avec
-   vtable, pointeurs ou padding indéterminé.
-5. **Runtime** : ID logique → handle générationnel → résidence → upload →
-   consommateur ; budgets mémoire, erreurs, fallback, annulation et libération.
+## Préconditions
 
-## Points de vigilance
+Lire `docs/engineering-principles.md`, HEAD/diff et la source consommatrice.
+Pin 2026-10-16 / `40a7cc3` : OpenGL présent ; cooker, streaming, animation non
+établis par ce pin. Les rapports sont des propositions, pas des APIs disponibles.
+Vérifier format/version, provenance/licence, profil cible, budgets et oracle.
+Outil/bibliothèque seulement après découverte effective ; aucune installation au
+chargement. Si introuvable, contrat documentaire possible, exécution INCONCLUSIVE.
 
-- Meshes : topology, indices, tangentes, handedness, unités et layout GPU.
-- Textures : colorimétrie vs données, mips, compression cible et résidence.
-- Matériaux : noms résolus hors frame, paramètres en données, vocabulaire borné
-  de kernels/shaders. Distinguer bytecode portable et cache dépendant du driver.
-- Animation : squelette/tracks cookés ; sampling/blending/skinning spécialisés,
-  poses et temps en données. Tester conventions, interpolation et précision.
-- Particules/cloth/hair : opérateurs/kernels bornés, buffers d'état dynamiques,
-  scheduling et synchronisation explicites ; pas un template par instance.
-- Streaming : invalidation de cache, hot reload, double-buffering éventuel,
-  ressources encore utilisées par CPU/GPU, version et génération des handles.
+## Procédure
 
-Évaluer importeurs, compression et autres bibliothèques matures selon un contrat
-borné. Leurs noms dans un rapport de recherche ne les rendent pas déjà intégrés.
+1. Définir source → import/représentation intermédiaire → cook immuable/versionné
+   → données runtime ; utiliser le [contrat commun](references/data-contract.md).
+2. Choisir une seule branche utile : [géométrie](references/geometry.md) pour
+   unités/tangentes/indices/cache/meshlets/LOD ; [textures](references/textures.md)
+   pour DDS/BC/ASTC, mips/colorimétrie, blocs/pitch/offsets et troncature.
+3. Évaluer une bibliothèque mature contre le besoin borné avant réimplémentation.
+   Les candidats des rapports ne sont pas des dépendances sélectionnées.
+4. Préparer hors frame layouts, indices, mips, métadonnées de réflexion et
+   permutations bornées. Un cache PSO natif reste lié au device/driver/API.
+5. Fixer fixtures nominales/négatives et oracle avant code : bytes validés,
+   déterminisme, round-trip approprié, invalidation source/options/version/ABI.
+   Une donnée quantifiée/compressée se compare avec borne d'erreur, pas identité
+   binaire exigée après décompression. Ne jamais affaiblir l'oracle pour verdir.
+6. Mesurer import/cook/load séparément de la frame avec `artist-performance`
+   seulement si la tâche demande un coût. Pour les preuves, réutiliser
+   `artist-build-validation` ; un test CPU ne prouve pas l'upload/rendu GPU.
 
-## Validation
+## Retour et handoff
 
-Petites fixtures connues, erreurs représentatives, déterminisme, changement de
-version/options et invalidation, round-trip lorsque pertinent, puis upload et
-consommation GPU réels si le contrat le demande. Mesurer cook/load séparément du
-temps de frame. Les benchmarks et images doivent utiliser les mêmes données.
-
-Retour : schéma et invariants, dépendances choisies/proposées, preuve, limites.
+Contrat/espaces/unités, schéma/versions/dépendances/clés, limites de tailles,
+fixtures, attendu/observé, candidat HEAD/delta/hashes, commandes/comptages et
+PASS/FAIL/INCONCLUSIVE ; coûts de chargement et mémoire transitoire si mesurés.
+`DEFER_TO` au lead puis `gpu-resource-engineer` pour résidence/upload/retrait,
+`gpu-portability-engineer` pour capacités/fallback, `shader-engineer` pour ABI.
+Pas d'appel à un sous-agent ni d'API moteur supposée. Succès documentaire ≠
+chargement natif du skill ≠ cooker exécuté ≠ consommation GPU vérifiée.

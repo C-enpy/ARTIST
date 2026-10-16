@@ -1,0 +1,32 @@
+{
+  "source": "qa-plan G-02/G-04/G-05/G-06/T-07 et t03-contract sections 3, 5, 6 ; oracles écrits avant les documents T12",
+  "evidenceKind": "static-presence",
+  "dds": {
+    "id": "D-01",
+    "prompt": "Charger un DDS BC1 5x3, trois mips, sans API choisie",
+    "principal": "asset-engineer",
+    "skills": ["artist-asset-cooking"],
+    "notImplied": "d3d12-backend-engineer",
+    "legacyHeaderBytes": 128,
+    "mipBytes": [16, 8, 8],
+    "totalBytes": 160,
+    "negativeCases": ["D-02: 159 octets, dernier mip tronqué", "D-03: format non supporté, pas de réinterprétation RGBA"]
+  },
+  "performance": {
+    "id": "P-01",
+    "prompt": "Identifier le goulot GPU sans benchmark ni mesure fournis",
+    "principal": "performance-reviewer",
+    "skills": ["artist-performance"],
+    "expected": "HYPOTHESIS",
+    "negativeCases": ["P-02: travail ou qualité A/B différents", "P-03: capture seule ou run unique"],
+    "handoff": "DEFER_TO au lead, puis auteur du goulot ; aucun correctif par le reviewer"
+  },
+  "validation": [
+    { "id": "V-01", "input": "tests CPU réussis ; GPU requis indisponible", "expected": "INCONCLUSIVE", "scope": "GPU seulement ; PASS CPU conservé" },
+    { "id": "V-02", "input": "zéro test découvert", "expected": "INCONCLUSIVE" },
+    { "id": "V-03", "input": "skip requis", "expected": "INCONCLUSIVE" },
+    { "id": "V-04", "input": "ancien HEAD ou hashes modifiés après run", "expected": "INCONCLUSIVE" },
+    { "id": "V-05", "input": "échec reproduit plus précondition manquante", "expected": "FAIL", "scope": "conserver aussi le blocage" },
+    { "id": "V-06", "input": "oracle CPU satisfait, candidat frais, un test exécuté, zéro skip", "expected": "PASS", "scope": "CPU uniquement" }
+  ]
+}

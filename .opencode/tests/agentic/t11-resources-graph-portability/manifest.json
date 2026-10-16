@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "lot": "T11",
+  "agents": [
+    { "id": "gpu-resource-engineer", "path": ".opencode/agents/gpu-resource-engineer.md", "skills": ["gpu-resource-lifecycle", "d3d12-backend"] },
+    { "id": "render-graph-engineer", "path": ".opencode/agents/render-graph-engineer.md", "skills": ["gpu-render-graph", "artist-static-boundary"] },
+    { "id": "gpu-portability-engineer", "path": ".opencode/agents/gpu-portability-engineer.md", "skills": ["gpu-capability-detection", "gpu-backend-portability", "artist-gpu-debug"] }
+  ],
+  "skills": [
+    { "id": "gpu-resource-lifecycle", "path": ".opencode/skills/gpu-resource-lifecycle/SKILL.md" },
+    { "id": "gpu-render-graph", "path": ".opencode/skills/gpu-render-graph/SKILL.md" },
+    { "id": "gpu-capability-detection", "path": ".opencode/skills/gpu-capability-detection/SKILL.md" },
+    { "id": "gpu-backend-portability", "path": ".opencode/skills/gpu-backend-portability/SKILL.md" }
+  ],
+  "obligations": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07", "T-07"],
+  "requiredLinks": [
+    { "from": ".opencode/agents/gpu-resource-engineer.md", "to": ".opencode/skills/gpu-resource-lifecycle/SKILL.md" },
+    { "from": ".opencode/agents/gpu-resource-engineer.md", "to": ".opencode/skills/d3d12-backend/SKILL.md" },
+    { "from": ".opencode/agents/render-graph-engineer.md", "to": ".opencode/skills/gpu-render-graph/SKILL.md" },
+    { "from": ".opencode/agents/render-graph-engineer.md", "to": ".opencode/skills/artist-static-boundary/SKILL.md" },
+    { "from": ".opencode/agents/gpu-portability-engineer.md", "to": ".opencode/skills/gpu-capability-detection/SKILL.md" },
+    { "from": ".opencode/agents/gpu-portability-engineer.md", "to": ".opencode/skills/gpu-backend-portability/SKILL.md" },
+    { "from": ".opencode/agents/gpu-portability-engineer.md", "to": ".opencode/skills/artist-gpu-debug/SKILL.md" },
+    { "from": ".opencode/skills/gpu-resource-lifecycle/SKILL.md", "to": ".opencode/skills/gpu-resource-lifecycle/references/ledger-and-hazards.md" },
+    { "from": ".opencode/skills/gpu-render-graph/SKILL.md", "to": ".opencode/skills/gpu-render-graph/references/graph-contract.md" },
+    { "from": ".opencode/skills/gpu-capability-detection/SKILL.md", "to": ".opencode/skills/gpu-capability-detection/references/api-capabilities.md" },
+    { "from": ".opencode/skills/gpu-backend-portability/SKILL.md", "to": ".opencode/skills/gpu-backend-portability/references/conventions.md" }
+  ],
+  "allowedPaths": [
+    ".opencode/agents/gpu-resource-engineer.md",
+    ".opencode/agents/render-graph-engineer.md",
+    ".opencode/agents/gpu-portability-engineer.md",
+    ".opencode/skills/gpu-resource-lifecycle/SKILL.md",
+    ".opencode/skills/gpu-resource-lifecycle/references/ledger-and-hazards.md",
+    ".opencode/skills/gpu-render-graph/SKILL.md",
+    ".opencode/skills/gpu-render-graph/references/graph-contract.md",
+    ".opencode/skills/gpu-capability-detection/SKILL.md",
+    ".opencode/skills/gpu-capability-detection/references/api-capabilities.md",
+    ".opencode/skills/gpu-backend-portability/SKILL.md",
+    ".opencode/skills/gpu-backend-portability/references/conventions.md",
+    ".opencode/tests/agentic/t11-resources-graph-portability/manifest.json",
+    ".opencode/tests/agentic/t11-resources-graph-portability/contract.test.mjs",
+    ".opencode/evidence/mission-gpu-qa/t11-result.md"
+  ]
+}

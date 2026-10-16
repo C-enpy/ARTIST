@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "lot": "T04",
+  "agents": [],
+  "skills": [],
+  "obligations": ["G-03", "G-06", "G-07", "G-08", "T-06", "T-07"],
+  "requiredLinks": [],
+  "allowedPaths": [
+    ".opencode/scripts/validate-agentic.mjs",
+    ".opencode/tests/agentic/t04-harness/**",
+    ".opencode/evidence/mission-gpu-qa/t04-result.md"
+  ]
+}
