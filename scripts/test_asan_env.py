@@ -155,19 +155,71 @@ def _stage_build_dir_file(build_dir: Path) -> Path | None:
     """Make build_dir a plain empty file so conan's generator write fails fast
     once the packages are bound in the cache: the exception is then raised
     strictly after Set-AsanTestEnvironment ran. Returns the hold path of a
-    build directory moved aside (None when nothing had to be moved)."""
+    build directory moved aside (None when nothing had to be moved).
+
+    Review R-A2 P2 contract: if anything fails AFTER a real build directory
+    was moved aside, that directory (with its artifacts) is restored to its
+    original path before the error propagates; no hold or empty fixture
+    artifact may survive; the initial error stays observable, and a rollback
+    that itself fails is reported explicitly instead of being swallowed. A
+    foreign or non-empty artifact at the original path is never removed or
+    overwritten to force the restoration."""
     hold = _hold_path(build_dir)
     if hold.exists():
         raise RuntimeError(f"hold path already exists: {hold}")
+    preexisting_empty_file = build_dir.is_file() and build_dir.stat().st_size == 0
     moved = None
     if build_dir.is_dir():
         build_dir.rename(hold)
         moved = hold
-    if build_dir.is_file():
-        raise RuntimeError(f"unexpected non-empty file at {build_dir}")
-    build_dir.parent.mkdir(parents=True, exist_ok=True)
-    build_dir.write_bytes(b"")
+    try:
+        if build_dir.is_file():
+            raise RuntimeError(f"unexpected non-empty file at {build_dir}")
+        build_dir.parent.mkdir(parents=True, exist_ok=True)
+        build_dir.write_bytes(b"")
+    except BaseException as error:
+        try:
+            _rollback_failed_staging(build_dir, moved, preexisting_empty_file)
+        except BaseException as rollback_error:
+            raise RuntimeError(
+                f"staging of {build_dir} failed and its restoration also failed; "
+                f"original error: {error!r}; restoration error: {rollback_error!r}"
+            ) from error
+        raise
     return moved
+
+
+def _rollback_failed_staging(build_dir: Path, hold: Path | None, preexisting_empty_file: bool) -> None:
+    """Undo a failed _stage_build_dir_file as far as the filesystem allows,
+    without touching artifacts this attempt did not create: the empty fixture
+    file possibly left by the failed write is removed, then the real directory
+    displaced at the hold is moved back to its original path. Every problem
+    encountered during the rollback is collected and raised together."""
+    problems: list[str] = []
+    if build_dir.is_file():
+        size = build_dir.stat().st_size
+        if size == 0 and (hold is not None or not preexisting_empty_file):
+            try:
+                build_dir.unlink()
+            except OSError as unlink_error:
+                problems.append(f"could not remove empty fixture file {build_dir}: {unlink_error!r}")
+        elif size != 0:
+            problems.append(
+                f"unexpected non-empty file at {build_dir}; "
+                "refusing to remove or overwrite a foreign artifact"
+            )
+        # else: pre-existing empty file this attempt did not create; leave it to the
+        # documented normalization hygiene rather than delete an artifact we do not own.
+    if hold is not None:
+        if hold.is_dir():
+            try:
+                hold.rename(build_dir)
+            except OSError as rename_error:
+                problems.append(f"could not move {hold} back to {build_dir}: {rename_error!r}")
+        else:
+            problems.append(f"hold directory disappeared: {hold}")
+    if problems:
+        raise RuntimeError("; ".join(problems))
 
 
 def _release_build_dir_file(build_dir: Path, hold: Path | None) -> None:
