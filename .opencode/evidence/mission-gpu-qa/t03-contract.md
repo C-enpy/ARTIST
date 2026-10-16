@@ -9,7 +9,7 @@ Ce contrat n'est ni une ADR, ni une nouvelle politique modèle, ni une preuve GP
 
 - **APPROUVÉ pour T04 et T06–T12** : frontières, IDs, allowlists, interfaces et
   oracles ci-dessous. Ces huit branches sont indépendantes et publiables après
-  commit du contrat. T05 reste non publié tant que D-PERM n'est pas tranché.
+  commit du contrat. T05 a attendu le ruling explicite D-PERM ci-dessous.
 - G-08 (idempotence du validateur) et T-07 (identité du candidat) sont retenus
   comme obligations du harness, pas comme nouvelles fonctionnalités moteur.
 - D-NATIVE accès catalogue : résolu par le préflight lead, commit `1759a5f`.
@@ -20,10 +20,18 @@ Ce contrat n'est ni une ADR, ni une nouvelle politique modèle, ni une preuve GP
   `vector<unique_ptr<IPass<API>>>` et getPass emprunte
   (`ARTIST/include/graphic/context/PipelineContext.hpp:42,67,96`). Ne pas recopier
   l'ancienne photographie shared_ptr dans les nouveaux pins.
-- **D-PERM / T-06 : OUVERT**. Aucun grant par lot ou confinement d'exécution
-  vérifié. Recommandation : QA fail-closed et runner/persistance lead distincts,
-  avec limite d'autonomie déclarée. Pas d'activation QA prétendument autonome
-  avant décision et canaris. Aucun sandbox OS/global/plugin/SDK autorisé ici.
+- **D-PERM / T-06 : MODE DÉCIDÉ PAR L'UTILISATEUR**, 2026-10-16, réponse
+  « Runner séparé (Recommended) ». T05 devient publiable après intégration de ce
+  ruling : profils fail-closed, sans shell/Code Mode libre, droits d'écriture
+  exacts seulement après vérification native ; à défaut retour texte/patch et
+  persistance lead. Tests relus exécutés par runner lead DISTINCT, attribution
+  explicite, autonomie dégradée déclarée. Aucun sandbox OS/global/plugin/SDK
+  autorisé ici. Cela n'accepte pas un faux PASS d'enforcement ou d'autonomie.
+- L'OpenAPI du runtime expose effectivement permissions: Permission.Ruleset sur
+  session.create/session.update et Session.Info (règles action/resource/effect).
+  **Schéma observé seulement** : composition avec règles d'agent, applicabilité
+  Ensemble et enforcement par lot non vérifiés. Aucun grant appliqué par cette
+  observation ; à défaut profils sans edit et restitution au lead.
 - Le refus `permission.rejected: edit` de T03 concerne CE profil seulement.
   L'architecte n'a pas contourné le refus ; le lead persiste son texte.
 
@@ -137,7 +145,8 @@ exécutable nouveau sauf contrat explicite. Chaque lot possède
 inertes et son seul `.opencode/evidence/mission-gpu-qa/tNN-result.md`.
 
 - T04 : `.opencode/scripts/validate-agentic.mjs`, tests `t04-harness/`.
-- T05 : agents qa-planner/test-engineer/test-reviewer, tests `t05-qa/` (non publié).
+- T05 : agents qa-planner/test-engineer/test-reviewer, tests `t05-qa/` ; mode
+  fail-closed/runner séparé ci-dessus, aucune autonomie non démontrée.
 - T06 : agent vulkan-backend-engineer, skill vulkan-backend, tests `t06-vulkan/`.
 - T07 : agent d3d12-backend-engineer, skill d3d12-backend, tests `t07-d3d12/`.
 - T08 : agent metal-backend-engineer, skill metal-backend, tests `t08-metal/`.
@@ -266,7 +275,7 @@ serveur entier ni action 1MCP inventée. Stockage géré index/search/fetch n'es
 zéro écriture machine ; effets compatibles à qualifier. Besoin de rapport
 Ensemble : transport/action minimal à vérifier, pas allow team_* arbitraire.
 
-D-PERM : recommandation sûre, aucun edit sans grant exact vérifié ; retour texte
+D-PERM : mode utilisateur retenu, aucun edit sans grant exact vérifié ; retour texte
 et persistance lead, tests relus exécutés par runner distinct de confiance et
 attribués à celui-ci. Autonomie dégradée/critère artefact autonome blocked à
 décider explicitement. Une vraie isolation OS/montages/identité/réseau/canaris

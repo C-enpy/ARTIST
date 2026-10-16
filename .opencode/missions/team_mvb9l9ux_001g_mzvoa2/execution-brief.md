@@ -95,9 +95,13 @@ Revue test-reviewer fresh hors board : 73/68 ; vérification indépendante : 68/
 
 Après T03, le contrat intégré `.opencode/evidence/mission-gpu-qa/t03-contract.md`
 fixe les IDs et allowlists définitifs (ils priment sur les noms proposés au plan).
-G2 est validée pour T04 et T06-T12, huit branches indépendantes. T05 n'est pas
-publiée tant que D-PERM (permissions/autonomie QA) n'a pas une décision explicite
-et un chemin d'enforcement vérifié. Aucun autre score/routage modèle modifié.
+G2 est validée pour T04 et T06-T12, huit branches indépendantes. Le ruling
+utilisateur du 2026-10-16 « Runner séparé (Recommended) » autorise ensuite T05 :
+QA fail-closed, pas d'édition autonome sans grant exact natif vérifié ; à défaut
+restitution texte/patch, persistance et exécution des tests relus par le lead.
+Attribution et autonomie dégradée explicites, aucun PASS sandbox/enforcement
+non prouvé. Aucune installation ni modification globale/modèle. Aucun score
+ou routage modèle modifié.
 
 ## Barrières et preuves
 

@@ -128,9 +128,12 @@ Décision du coordinateur après T03 : G-08 et T-07 sont retenues pour le harnes
 de validation, sans changement de contrat moteur. La découverte initiale
 préexistante est observée dans `native-preflight.md` ; elle résout la seule
 précondition d'accès D2, pas les futurs profils/routages ni les permissions.
-D-PERM reste ouvert : T05/activation QA attend une décision explicite ; les
-branches GPU documentaires et T04 sont indépendantes et peuvent démarrer après
-intégration de `t03-contract.md`.
+D-PERM : décision utilisateur du 2026-10-16 « Runner séparé (Recommended) ».
+Profils QA fail-closed ; édition autonome non accordée tant qu'un grant exact
+n'est pas vérifié ; retour texte/patch, persistance et tests relus par le lead,
+attribution explicite. L'autonomie dégradée est consentie, pas un PASS de
+confinement. Les canaris et droits par lot restent à prouver. T05 peut démarrer
+après intégration du ruling ; les branches GPU/T04 sont déjà indépendantes.
 
 ## Matrice QA — impact et probabilité 1–5
 
