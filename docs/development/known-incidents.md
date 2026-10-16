@@ -444,7 +444,11 @@ une nouvelle exécution de tests par le reviewer. QA indépendante ensuite reçu
   PowerShell appelant. V-I0 l'a reproduit par appel réel de
   `build-windows.ps1 -AddressSanitizer -ConfigureOnly` dans le même processus :
   variable absente avant, canonique encore présente après retour. FAIL exécuté,
-  non corrigé dans I0 ; correction H-RESTORE admise en branche isolée. Ce point
+  non corrigé dans I0 ; correction H-RESTORE intégrée ensuite en `1a75c75`.
+  Producteur : deux bras absence échouent avant fix, quatre bras restauration
+  et Q1 passent après fix (5/5 JUnit) ; source/artefacts recoupés, module de
+  normalisation inchangé. Vérification indépendante finale du correctif encore
+  attendue, pas de relance du principal pendant le bail Conan A2. Ce point
   concerne la restauration après campagne, pas la normalisation stricte/fail-close
   de la campagne courante, dont les 197 tests sélectionnés ont passé.
 - **P3 fixture TEMP, question non reproduite** :

@@ -422,6 +422,13 @@ Cette branche scripts n'a aucun ownership des fichiers CPP A2 ni du GPU ;
 les caches/output A2 sont réservés au CPP. Intégrer les deux branches avant
 revue/QA finales ; aucun alias à recréer et aucun gain revendiqué.
 
+H-RESTORE livré puis intégré en `1a75c75` : deux fichiers, empreintes conformes
+aux octets GREEN, module normaliseur inchangé ; régressions wrapper réel
+5 cas (4 bras + Q1), RED causal 2 échecs sur absence puis GREEN 5/5. Preuves
+producteur sauvegardées, vérification indépendante finale encore attendue.
+Ne pas exécuter ces contrôles réels sur le principal pendant le bail Conan A2.
+Manifeste : `_meta/session-2026-10-16-asan-caller-restoration.json`.
+
 ```text
 B0 (af14c88)
  ├── D-A1 (A1a+A1b) ── I-A1 ── D-A1c ───────────┐

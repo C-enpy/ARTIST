@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-16",
+  "scope": "H-RESTORE P3 fix integration; final independent verification pending",
+  "producer": "pool-11 / build-engineer",
+  "producer_commit": "14d5c15",
+  "integrated_commit": "1a75c75",
+  "source_files": ["scripts/build-windows.ps1", "scripts/test_asan_env.py"],
+  "source_hashes_verified_before_after_merge": "2/2",
+  "normalizer_unchanged_sha256": "2b81ab498a77ab1be4c951ad50a5be61f6ef75b2f55a1a5b794b1f65a33daeb2",
+  "wrapper_sha256": "7ef220d8038b239748782304774787f7b7128064c4d40f62e943326c1cbbaafb",
+  "test_sha256": "1fba2c726d42308f7154a7788225a2b0028498699123129256a53a5a65cfdb91",
+  "evidence_backup": "out/mission-a1a2/h-restore-pool-11/",
+  "coordinator_manifest": "out/mission-a1a2/h-restore-coordinator-manifest.json",
+  "evidence_files_backed_up": 60,
+  "oracle": "Actual wrapper invoked with & in the same powershell.exe as before/after environment assertions; ConfigureOnly success and controlled conan failure after normalization",
+  "regression_arms": [
+    "throw-absent-absent", "throw-present-present",
+    "return-absent-absent", "return-present-present"
+  ],
+  "red": {
+    "label": "red-unfixed-c2",
+    "wrapper_sha256": "47e4bb8b464e1eec7de40a22dbb6dd8d241ef4af503b67e72e3077fcb1e8fa58",
+    "junit_cases": 5,
+    "failures": 2,
+    "causal_failures": "Both initially absent ASAN_OPTIONS arms leak canonical value after wrapper return/throw",
+    "controls": "Both present arms and original Q1 hermetic normalization pass",
+    "initial_probe_wiring_failure": "red-unfixed retained separately; not counted as causal product RED"
+  },
+  "green": {
+    "label": "green-final",
+    "junit_cases": 5,
+    "failures": 0,
+    "restoration_arms_passed": 4,
+    "original_Q1_contract": "PASS",
+    "runtime_policy": "canonical options and activation-channel removal during campaign unchanged"
+  },
+  "implementation": "Save both ASan variables at wrapper entry including null/absence only when AddressSanitizer is selected; restore in finally on return and exception",
+  "limits": [
+    "No new engine/GPU/ASan197 campaign run for this isolated script fix",
+    "No principal wrapper test run while A2 owns principal Conan cache",
+    "Final R/QA must consume combined A2 + H-RESTORE integrated candidate",
+    "Original I0 P3 FAIL remains historical evidence, not rewritten as a PASS",
+    "No alias created or deleted for this tranche; source and evidence preserved"
+  ]
+}
