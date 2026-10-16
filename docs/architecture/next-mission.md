@@ -253,6 +253,12 @@ historique établie.
 Répertoire possédé par chaque fixture, acquis par `create_directory` avec
 collisions traitées ; timestamp/random seuls ne prouvent pas l'exclusivité.
 Contrôler création/open/write/close et limiter le cleanup au répertoire possédé.
+L'espace des nouvelles racines doit être **extérieur** à l'arbre hérité
+`%TEMP%/artist-reader-tests` : l'ancien `TearDown()` en supprime récursivement
+le parent, y compris des sous-racines pourtant uniques. Prouver cette isolation
+vis-à-vis des fixtures anciennes avant de libérer le bail partagé. Les tests
+de suppression utilisent uniquement des arbres qu'ils possèdent, jamais une
+suppression volontaire du vrai parent partagé pour provoquer une collision.
 Le helper de chemin absent doit rejeter une suppression échouée ou un résidu
 avant d'appeler le Reader. Aucun skip, aucune assertion métier englobant le
 setup. RED : placer un répertoire non vide au chemin demandé absent ; l'ancien
