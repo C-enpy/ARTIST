@@ -6,6 +6,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <memory>
+#include <utility>
 #include <utils.hpp>
 #include <common/exception/TraceableException.hpp>
 #include <graphic/pipeline/Pass.hpp>
@@ -28,26 +29,38 @@ namespace artist::graphic::pipeline
     class IPipeline
     {
     public:
+        // The context owns the pass registry. Destruction must never dispatch
+        // an API hook from this base; the context destroys its registered passes.
         virtual ~IPipeline() = default;
 
+        IPipeline(const IPipeline &) = delete;
+        IPipeline &operator=(const IPipeline &) = delete;
+
+        IPipeline(IPipeline &&other) : m_context(std::move(other.m_context)) {}
+
         /**
-         * Constructs a pipeline with a list of passes and an optional context.
+         * Constructs a pipeline by consuming passes and a context.
          *
-         * @param passes A list of shared pointers to IPass objects to be added to the pipeline.
-         * @param context A shared pointer to the API-specific PipelineContext, defaulting to a new instance if not provided.
+         * @param passes Unique owners to register; initializer lists of shared
+         * pointers are deliberately unsupported.
+         * @param context The API-specific context whose ownership is transferred.
          */
-        IPipeline(const std::initializer_list<std::shared_ptr<IPass<API>>> &passes,
-                  std::shared_ptr<typename API::PipelineContext> context)
-            : m_context(context)
+        IPipeline(std::vector<std::unique_ptr<IPass<API>>> passes,
+                  std::unique_ptr<typename API::PipelineContext> context)
+            : m_context(std::move(context))
         {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::PIPELINE::NULL_CONTEXT");
+            }
             for (auto &pass : passes)
             {
-                m_context->addPass(pass);
+                m_context->addPass(std::move(pass));
             }
         }
 
-        explicit IPipeline(const std::initializer_list<std::shared_ptr<IPass<API>>> &passes) : IPipeline(passes,
-                                                                                                         std::make_shared<typename API::PipelineContext>())
+        explicit IPipeline(std::vector<std::unique_ptr<IPass<API>>> passes)
+            : IPipeline(std::move(passes), std::make_unique<typename API::PipelineContext>())
         {
         }
 
@@ -55,11 +68,12 @@ namespace artist::graphic::pipeline
          * Retrieves a pass by its index.
          *
          * @param pass The index of the pass to retrieve.
-         * @return A shared pointer to the requested IPass instance.
+         * @return A borrow of the requested IPass, stable across registry growth
+         * and move, but invalidated by owner destruction or replacement.
          */
-        [[nodiscard]] std::shared_ptr<IPass<API>> forPass(const int &pass)
+        [[nodiscard]] IPass<API> &forPass(const int &pass)
         {
-            return m_context->getPass(pass);
+            return getContext().getPass(pass);
         }
 
         /**
@@ -67,7 +81,7 @@ namespace artist::graphic::pipeline
          */
         [[nodiscard]] virtual int getPassesCount() const
         {
-            return m_context->getPassesCount();
+            return static_cast<int>(getContext().getPassesCount());
         }
 
         /**
@@ -77,7 +91,9 @@ namespace artist::graphic::pipeline
          */
         [[nodiscard]] bool hasNext() const
         {
-            return m_context->getCurrentPass() + 1 < getPassesCount();
+            const auto &context = getContext();
+            // N <= INT_MAX and c in {-1} union [0,N): no unchecked c + 1.
+            return context.getCurrentPass() < static_cast<int>(context.getPassesCount()) - 1;
         }
 
         /**
@@ -89,7 +105,7 @@ namespace artist::graphic::pipeline
         {
             if (hasNext())
             {
-                use(m_context->getCurrentPass() + 1);
+                use(getContext().getCurrentPass() + 1);
                 return hasNext();
             }
             reset();
@@ -103,33 +119,64 @@ namespace artist::graphic::pipeline
          */
         virtual void use(const int &pass)
         {
-            m_context->setCurrentPass(pass);
-            use(m_context);
+            auto &context = getContext();
+            (void)context.getPass(pass); // use(-1) is invalid, unlike reset's -1.
+            const int previous = context.getCurrentPass();
+            context.setCurrentPass(pass);
+            try
+            {
+                use(context);
+            }
+            catch (...)
+            {
+                // CPU cursor transaction only. The backend may already have
+                // changed state; no rollback of GPU work is promised.
+                context.setCurrentPass(previous);
+                throw;
+            }
         }
 
         /**
          * Resets the pipeline to its initial state.
-         * This is API specific and may involve unsetting the pipeline context.
+         * Resets the CPU cursor; this does not unbind a backend program.
          */
         virtual void reset()
         {
-            reset(m_context);
+            reset(getContext());
         }
 
         /**
-         * @return The current context of the pipeline.
+         * @return A borrow of the owned context, never a lifetime extension.
+         * A move keeps its address; assignment invalidates destination borrows.
+         * Callers serialize access and keep the required GPU context alive while
+         * destroying passes. CPU scope alone does not prove GPU completion.
          */
-        [[nodiscard]] virtual std::shared_ptr<typename API::PipelineContext> getContext() const
+        [[nodiscard]] virtual typename API::PipelineContext &getContext() const
         {
-            return m_context;
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PIPELINE::FREED_CONTEXT");
+            }
+            return *m_context;
         }
 
     protected:
-        virtual void use(std::shared_ptr<typename API::PipelineContext> context) = 0;
-        virtual void reset(std::shared_ptr<typename API::PipelineContext> context) = 0;
+        IPipeline &operator=(IPipeline &&other)
+        {
+            if (this != &other)
+            {
+                // Destroy destination passes before installing the source context.
+                m_context.reset();
+                m_context = std::move(other.m_context);
+            }
+            return *this;
+        }
+
+        virtual void use(typename API::PipelineContext &context) = 0;
+        virtual void reset(typename API::PipelineContext &context) = 0;
 
     private:
-        std::shared_ptr<typename API::PipelineContext> m_context;
+        std::unique_ptr<typename API::PipelineContext> m_context;
     };
 
     /**
@@ -151,16 +198,25 @@ namespace artist::graphic::pipeline
         using IPipeline<API>::use;
         using IPipeline<API>::reset;
 
+        Pipeline(const Pipeline &) = delete;
+        Pipeline &operator=(const Pipeline &) = delete;
+        Pipeline(Pipeline &&other) : IPipeline<API>(std::move(other)) {}
+        Pipeline &operator=(Pipeline &&other)
+        {
+            IPipeline<API>::operator=(std::move(other));
+            return *this;
+        }
+
     protected:
         /**
          * Uses the specialized component for the current profile and API.
-         * This method dynamically checks for the existence of a component specific to the PROFILE
+         * This method checks at compile time for a component specific to the PROFILE
          * and invokes its 'on' method if available. This allows for profile-specific behavior
          * to be executed, adapting the pipeline to various rendering requirements.
          *
-         * @param context The shared pointer to the current API's PipelineContext.
+         * @param context A borrow of the current API's PipelineContext.
          */
-        void use(std::shared_ptr<typename API::PipelineContext> context) override
+        void use(typename API::PipelineContext &context) override
         {
             if constexpr (graphic::validator::HasComponent<typename API::PipelineContext::template User<PROFILE>>)
             {
@@ -174,9 +230,9 @@ namespace artist::graphic::pipeline
          * and invokes its 'on' method to reset any state or configuration back to its default.
          * This is crucial for ensuring that the pipeline can be correctly reinitialized or reused.
          *
-         * @param context The shared pointer to the current API's PipelineContext.
+         * @param context A borrow of the current API's PipelineContext.
          */
-        void reset(std::shared_ptr<typename API::PipelineContext> context) override
+        void reset(typename API::PipelineContext &context) override
         {
             if constexpr (graphic::validator::HasComponent<typename API::PipelineContext::template Resetter<PROFILE>>)
             {
