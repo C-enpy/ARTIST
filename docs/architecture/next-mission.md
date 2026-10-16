@@ -64,6 +64,16 @@ Exécution engagée dans la mission native approuvée.** Cette fiche remplace ce
 > CTest I0 malgré `Test Passed`, pas seulement en exécution directe. Absence
 > dans les JUnit scannés ne signifie pas absence de diagnostic dans les logs.
 
+> [!info] QA finale reçue sur `f914d77`, sans PASS global
+> 215 cas normaux et 198 ASan comptés CTest sans échec/skip ; cinq contrôles
+> H-RESTORE séparés, getter-owner frais 0/2/0. **14 critères PASS, 3 FAIL,
+> 7 INCONCLUSIVE** : oracle GMock préexistant FAIL reproduit aussi sous CTest,
+> deux FAIL historiques conservés ; fenêtre de faute fixture encore à corriger.
+> 85/85 artefacts et 129/129 empreintes sources recoupés par le coordinateur.
+> La QA est terminée et ses baux libérés. La clôture attend H-FIXTURE intégré
+> puis sa vérification indépendante, sans élargir tacitement la mission au
+> défaut Attribute préexistant. Rapport et limites dans le manifeste final.
+
 ## Pourquoi cette mission
 
 L'ordre adopté le 2026-10-15 : figer les contrats d'échec (mission C, terminée à

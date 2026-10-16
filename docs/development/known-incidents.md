@@ -453,6 +453,18 @@ suffisent pas à certifier stdout ; QA finale doit contrôler le LastTest.log.
 Conserver séparément les décomptes CTest, ce défaut d'oracle et le FAIL du
 protocole historique RED A1c. Ne pas transformer un exit0 en PASS sans réserve.
 
+V-A2 l'a ensuite **reproduit fraîchement** sur le candidat intégré `f914d77` :
+direct, CTest normal individuel et LastTest.log ASan final. La sortie JUnit des
+campagnes était tronquée à 1024 octets ; un témoin avec limite 65536 conserve
+le diagnostic dans `normal-attribute-settest.xml`. Les décomptes exécutés
+restent 176 CPU + 39 GL et sélection ASan 198, zéro échec/skip **rapporté par
+CTest**, pas une conformité de tous les oracles. Bilan indépendant : 14 PASS,
+3 FAIL (oracle actuel + deux historiques), 7 INCONCLUSIVE. 85 artefacts et
+129 empreintes source recoupés. Cinq contrôles H-RESTORE réels passent et le
+build a été restauré sans hold ; la fenêtre d'échec du staging n'est pas
+couverte par ces cinq contrôles et attend H-FIXTURE. Aucun PASS global.
+Voir `_meta/session-2026-10-16-pipeline-final-validation.json`.
+
 ### Revue I0 — réserves mineures distinctes des verdicts exécutés
 
 Revue fresh de `18edc72`, 24 fichiers du diff et 129/129 empreintes recoupées :
