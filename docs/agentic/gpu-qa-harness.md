@@ -4,7 +4,7 @@ category: development
 tags: [artist, tooling, testing, rendering, guide]
 summary: Raccordement documentaire des expertises GPU et du runner QA séparé ; preuves statiques distinctes du routage et des permissions natifs.
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # Catalogue GPU et boucle QA
@@ -81,6 +81,22 @@ séparément **82edafe** ; aucune copie du canonique dirty. Le rapport candidat
 `.opencode/evidence/mission-gpu-qa/t13-result.md` conserve commandes, comptes,
 empreintes et limites ; `validation-report.md` garde les gaps par critère.
 Les résultats du harness ne sont pas une nouvelle baseline moteur 143/165.
+
+Clôture locale du 2026-10-17 : **588/588 tests Node** recoupés par le lead,
+zéro fail/skip/cancel ; union syntax/schema/offline **41/81/215 contrôles**.
+T14 propose zéro test supplémentaire : KEEP local/DEFER natif, pas acceptation
+humaine des gaps. Deux revues fresh parallèles, QA et technique GPU, ne trouvent
+aucun défaut démontré dans leur périmètre. Les reviewers n'ont exécuté aucun test.
+Rapports attribués : `.opencode/evidence/mission-gpu-qa/final-reviews.md` et
+`final-validation.md` ; livraison **partielle**, aucun PASS global.
+
+Les vrais profils QA sont absents du root d'admission de cette mission et présents
+dans le worktree : generator et revue finale ont appliqué leurs méthodes via
+substituts disponibles, explicitement signalés. Cela n'est pas une preuve native
+des profils QA. Au candidat de revue **245f1f3**, découverte GET : 30 profils
+résolus (23 locaux + 7 natifs), 17 skills locaux présents parmi 103 résolus ;
+27 règles QA déclarées, 32 résolues avec héritage. Ni découverte ni comptage
+ne démontrent sélection, chargement ou enforcement. Voir `qa-admission-limit.md`.
 
 - **Intention** : catalogue, oracles et boucle ci-dessus.
 - **Code/config observés** : profils/skills et template QA ; correction textuelle

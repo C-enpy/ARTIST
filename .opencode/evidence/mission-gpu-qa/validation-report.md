@@ -1,5 +1,9 @@
 # Validation provisoire T13 — pas de PASS global
 
+> Rapport historique de l'auteur, conservé sans réattribution. Clôture après
+> intégration/T14 et revues fresh : [bilan final](final-validation.md) et
+> [revues indépendantes](final-reviews.md), 2026-10-17. Les gaps natifs restent ouverts.
+
 Date : 2026-10-16. Candidat source :
 `89bf66f19bd6ef648b5a7d43f68ce668d7f9d722`, input `1821af6`.
 Auteur/exécutant integrate-gpu-qa ; ce rapport **n'est pas une revue indépendante**.
