@@ -2,7 +2,7 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: Incidents corrigés, hypothèses rectifiées et expériences discriminantes pour les chemins encore non couverts de Shader→Pass.
+summary: "Incidents Shader→Pass/Pipeline et harnais, oracle Attribute corrigé b9c90fd, fragilités de shuffle Loader/ShaderLoader préexistantes conservées ; preuves historiques et chemins encore non couverts distingués."
 created: 2026-10-03
 updated: 2026-10-17
 sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
@@ -437,7 +437,7 @@ A1+A2]] ; manifeste figé `_meta/session-2026-10-16-pipeline-final-validation.js
 test** et **ne réexécute rien** ; les statuts ci-dessous complètent, sans
 écraser, les sections ci-dessus.
 
-### Oracle GMock préexistant — FAIL retenu, correction autorisée (extension PENDING)
+### Oracle GMock Attribute — FAIL historique, corrigé et vérifié le 2026-10-17
 
 - Constat conservé : `AttributeTests.cpp:65` (`AttributeTest.SetTest`), diagnostic
   `mockOn` attendu une fois / observé zéro **après summary** ; exit 0 du
@@ -447,20 +447,44 @@ test** et **ne réexécute rien** ; les statuts ci-dessous complètent, sans
   individuel et « Test Passed ». Les sorties JUnit des campagnes tronquées à
   1024 octets cachaient l'erreur ; un témoin à 65536 conserve le diagnostic dans
   `normal-attribute-settest.xml` ; croisement `LastTest.log`.
-- Arbitrage inchangé : défaut d'oracle **préexistant hors périmètre**, pas une
-  régression A2 ; retenu FAIL ; l'absence dans les JUnit scannés ne prouve pas
-  l'absence dans les logs bruts.
+- Arbitrage historique : défaut d'oracle **préexistant hors périmètre A2**, pas
+  une régression A2 ; corrigé ensuite par amendement explicite, sans effacer le
+  FAIL initial. L'absence dans les JUnit tronqués ne prouve pas l'absence dans
+  les logs bruts.
 - **Interdits** : qualifier le défaut « direct-only », qualifier 215/198 comme
   « tous les oracles valides » ou annoncer un PASS global ; ne pas transformer
   un exit 0 en PASS sans réserve.
-- **Amendement oracle en cours** : l'utilisateur a autorisé la correction le
-  2026-10-17 (« Alors vas-y »). Plan PM validé, G1 publié, checkpoint oracle-only
+- **Amendement oracle terminé au périmètre** : l'utilisateur a autorisé la
+  correction le 2026-10-17 (« Alors vas-y »). Checkpoint oracle-only
   `d1a9ee1` : ancien test réellement RED (binaire1, CTest8, JUnit failure1 avant
-  résumé), binaire négatif préservé et recoupé. Aucun GREEN intégré ou préjugé.
-  La clôture documentaire ne modifie ni code ni tests ; l'amendement attend
-  son intégration puis une revue/QA indépendantes. Le FAIL historique reste
-  consigné. Contrat : `_meta/session-2026-10-17-attribute-oracle-plan.json` ; fiche courte :
+  résumé), binaire négatif préservé et recoupé. GREEN intégré `b9c90fd`, un seul
+  fichier test : TearDown vérifie/efface les quatre singletons sans court-circuit,
+  attente sur la spécialisation effective `MockSetter<shared_ptr<int>>`, Times(1)
+  conservé, contexte et valeur resserrés. Production et mocks inchangés.
+  Revue G2 **PASS sans finding** ; QA G3 indépendante **176 CPU + 176 CPU ASan**,
+  contrôles négatifs répétés1/8/failure1 et positifs0/0/failure0 sans diagnostic
+  tardif, 137 artefacts et 130 empreintes recoupés. TearDown après assertion
+  fatale vérifié statiquement dans GoogleTest v1.14.0, pas de scénario dédié
+  exécuté. Le FAIL historique n'est pas requalifié. Manifeste :
+  `_meta/session-2026-10-17-attribute-oracle-validation.json` ; contrat :
+  `_meta/session-2026-10-17-attribute-oracle-plan.json` ; fiche courte :
   [[architecture/next-mission|next-mission]].
+
+### Ordre des fixtures Loader/ShaderLoader — FAIL préexistant, non corrigé
+
+L'essai G1 de shuffle du binaire CPU complet révèle neuf cas Loader/ShaderLoader
+en échec sous seed20261017 (effectif61219), et `LoadShaderTest_callCreate` sous
+seed7. Auteur puis QA indépendante ont rejoué **PRE_G1, RED et GREEN** : mêmes
+176 tests dans le même ordre par seed ; les ensembles d'échecs PRE_G1/GREEN
+sont exactement identiques, RED ajoute seulement `AttributeTest.SetTest` attendu.
+Le vrai binaire PRE_G1 est lié à la QA `f914d77` par SHA, pas au checkpoint RED
+déjà modifié. Préexistence indépendante de tout l'amendement établie pour ces
+deux ordres, pas une garantie toutes permutations. Pas de défaut moteur nouveau
+prouvé par cette expérience ; enquête lifecycle/isolation des autres mocks à
+autoriser séparément. Aucun correctif ou nouveau chantier implicite. Preuves :
+`out/mission-a1a2/gmock-amendment/qa/shuffle-tripartite-results.json`.
+La suite en ordre par défaut et la fixture Attribute corrigée restent conformes
+dans les campagnes déclarées ; **pas de PASS global toutes configurations**.
 
 ### Clôtures des correctifs harnais
 

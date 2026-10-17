@@ -1,6 +1,6 @@
 {
   "date": "2026-10-16",
-  "status": "A2/H-RESTORE reviewed and executed; P2 fixture correction integrated and independently verified; documentary closure pending, no global PASS",
+  "status": "A2/H-RESTORE and P2 fixture correction reviewed/executed and archived39cec34; Attribute oracle amended b9c90fd and independently verified separately; historical verdicts unchanged, no global engine PASS",
   "candidate": "f914d77b17b1c3013bf06679c0f94537ee7ba24a",
   "composition": "A2/F6 plus H-RESTORE 1a75c75, following integrated I0 18edc72",
   "source_manifest": "out/mission-a1a2/final-source-manifest.json",

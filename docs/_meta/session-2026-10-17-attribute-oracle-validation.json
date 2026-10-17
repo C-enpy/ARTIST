@@ -1,7 +1,7 @@
 {
   "date": "2026-10-17",
   "scope": "User-authorized Attribute GMock oracle amendment to existing approved Pipeline mission",
-  "status": "Integrated; independent QA confirms targeted fix, static review pending; known shuffle defects and historical failures prevent global PASS",
+  "status": "Completed at targeted scope: integrated, independent correctness review PASS and independent CPU/ASan QA accepted; known shuffle defects and historical failures remain, no global engine PASS",
   "candidate": "b9c90fd51b0ff8a85b1db1d0674c1243ccdd0951",
   "baseline": "39cec34",
   "author_head": "2c7af8eeb8c15615854202273702ac54ebfbe445",
@@ -42,6 +42,18 @@
     "context": "fresh; actual integrated candidate; review read-only parallel QA exclusive CPU build/cache",
     "selection_declared": "out/mission-a1a2/gmock-amendment/qa-selection-declared.json"
   },
+  "independent_review": {
+    "task": "task_mvc5h18n_000k_h4g0kg",
+    "verdict": "PASS at scope; zero demonstrated bug, blocker or finding",
+    "report": "out/mission-a1a2/gmock-amendment/review/g2-correctness-review.md",
+    "report_sha256_checked_by_coordinator": "bb75d432d35ee6dd05c1c0541ef8ed7d15f6645903848ac07f518ceb3660a50e",
+    "identity": "One-file diff and source bytes equal at author/integrated/disk,130 paths present with exactly1 changed;82 frozen artifact hashes matched",
+    "fatal_assertion_contract": "Statically verified in linked GoogleTest v1.14.0 Test::Run: TearDown unconditional after fatal test-body failure; no dedicated executed fatal-body scenario claimed",
+    "reset_behavior": "Four independent nonfatal VerifyAndClearExpectations calls, no short-circuit; singleton consumers limited to this fixture",
+    "assertions": "Times(1) retained, context matcher tightened, ASSERT_NO_THROW retained and non-null/identity/value assertions added; no masking",
+    "historical_invocation_residues": "Initial negative replay without CTestTestfile found zero tests and was not accepted as RED; later XML/LastTest confirm realfailure. Unsupported ctest --shuffle invocation retained; actual shuffle uses gtest flags.",
+    "limits": "Review static and archive-only; executed verification delegated independently to G3; no global shuffled-suite PASS"
+  },
   "independent_qa": {
     "task": "task_mvc5h18n_000l_nncpwh",
     "report": "out/mission-a1a2/gmock-amendment/qa/report.json",
@@ -73,10 +85,16 @@
     "limits": "No new GPU39 run; do not reuse historical198 as new amendment proof or aggregate separate campaign criterion totals"
   },
   "limits": [
-    "Independent execution complete, independent static review still pending",
+    "Independent execution and static review complete; final documentary reconciliation and QMD logged separately",
     "No GPU, image, performance, Release or other-platform claim",
     "Historical Attribute false green, A1c RED protocol violation and I0 caller pollution remain immutable records",
     "Preexisting Loader/ShaderLoader shuffle failures are separately retained, not masked",
     "All SUBST aliases remain absent; no cache/worktree/file cleanup authorized or performed"
-  ]
+  ],
+  "documentary_closure": {
+    "owner": "Coordinator, local G4 contract (PM/LLM complexity36 risk44), no new worker or executable code",
+    "scope": "Update current state, incidents, selection pointer and archive addendum without altering historical contract body or raw reports",
+    "indexing": "Collection-scoped artist-wiki update/embed and retrieval verification after documentation integration, result recorded separately",
+    "remaining_findings": "Loader/ShaderLoader shuffled-order failures retained for separately authorized follow-up; no implicit scope expansion"
+  }
 }

@@ -98,8 +98,9 @@ les écarts constatés. La photographie détaillée, avec sa révision, est dans
 [[architecture/current-state|État réel d'ARTIST]].
 Le code moteur observé est celui de `f914d77` ; `95c2b9e` ne change que le
 harnais Python. L'amendement de l'oracle Attribute est intégré en `b9c90fd`
-(test seul, moteur inchangé), en attente de revue/QA indépendantes ; les
-décomptes CTest historiques ne masquent pas son FAIL préexistant.
+(test seul, moteur inchangé), avec revue indépendante PASS et QA CPU/ASan
+conforme au périmètre. Les décomptes CTest historiques ne masquent pas le FAIL
+préexistant ; les fragilités de shuffle Loader/ShaderLoader restent consignées.
 
 - `ARTIST/CMakeLists.txt` crée `ArtistLib` en `INTERFACE` : bibliothèque header-only.
 - `ARTIST/include/graphic/pipeline/Pipeline.hpp` combine `IPipeline` virtuel et

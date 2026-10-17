@@ -2,7 +2,7 @@
 title: Build et tests actuels
 category: development
 tags: [artist, build, testing, guide]
-summary: Windows MSVC et Conan 2 vérifiés, 215 tests normaux et ASan opt-in séparé (198 cas sélectionnés, 17 GL hors sélection) ; commandes, instrumentation et limites.
+summary: "Windows MSVC/Conan2 : amendement oracle b9c90fd vérifié sur176CPU normaux et176ASan, contrôles négatifs/positifs réels ; historique Pipeline215/198 conservé, fragilités de shuffle hors correction, aucune nouvelle preuve GPU."
 status: verified-windows-debug
 created: 2026-10-03
 updated: 2026-10-17
@@ -14,6 +14,38 @@ provenance:
 ---
 
 # Build et tests actuels
+
+## Amendement oracle Attribute — validation indépendante du 2026-10-17
+
+`b9c90fd` ne modifie qu'`AttributeTests.cpp` (+26/-2), sans changement moteur,
+mocks, scripts ou configuration. Revue G2 fresh **PASS au périmètre, zéro finding**.
+QA G3 indépendante : **176/176 CPU normaux** puis **176/176 CPU ASan**, sélection
+unit-only déclarée avant run, 39 GL exclus ; pas une nouvelle campagne 215/198.
+Répétition normale2 : 352 exécutions de176 noms, pas352 cas distincts. Fixture
+Attribute4/4 et répétition/shuffle3 seed99 :12RUN/12OK, aucun diagnostic tardif
+ou GMock warning. Instrumentation reconstruite proprement, politique stricte
+avant discovery, canari0/86 avant CTest ; logs bruts et JUnit non tronqués recoupés.
+
+Contrôles négatifs préservés (checkpoint oracle-only `d1a9ee1`, ancienne attente
+conservée) répétés : binaire exit1, CTest exit8, JUnit failure1 **avant résumé**,
+pas de crash/code86. Contrôles positifs final :0/0/failure0, mêmes répétitions.
+Le CTest négatif ordinaire n'utilise pas WILL_FAIL ; copie byte-exacte de son
+artefact sous les sorties QA, preuves originales intactes. Le défaut ancien
+est désormais détectable, pas masqué par suppression d'assertion.
+
+137 artefacts et 130 empreintes source vérifiés ; commandes exactes, stdout,
+stderr, LastTest et XML : `out/mission-a1a2/gmock-amendment/qa/`.
+Manifeste : `_meta/session-2026-10-17-attribute-oracle-validation.json`.
+GoogleTest v1.14.0 garantit statiquement le TearDown après assertion fatale ;
+aucun scénario exécuté dédié revendiqué. Les premiers incidents cmd/vcvars et
+quoting activation ASan sont conservés comme erreurs d'invocation ; le canari
+a refusé l'activation avant tout test, sans affaiblir la politique.
+
+**Réserve distincte** : deux seeds du shuffle CPU complet reproduisent les
+mêmes échecs Loader/ShaderLoader sur le vrai binaire pré-G1 et le GREEN ; la
+QA indépendante confirme les ensembles et les ordres. Fragilité préexistante
+hors correction, pas de PASS global toutes permutations. Aucun GPU, image,
+performance, Release/CI/autre plateforme nouvellement validé.
 
 ## Mission Pipeline A1+A2 — validation indépendante du 2026-10-16
 

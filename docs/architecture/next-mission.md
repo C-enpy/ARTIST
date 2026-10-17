@@ -1,12 +1,12 @@
 ---
-title: "Amendement oracle en cours — aucune nouvelle mission sélectionnée"
+title: "Prochaine mission — aucune sélection, amendement oracle terminé"
 category: architecture
 tags: [artist, architecture, cpp, testing, pipeline]
 aliases: [next-mission, Fiche de sélection]
-summary: "Socle Pipeline A1+A2 archivé avec ses réserves ; amendement GMock Attribute autorisé le 2026-10-17 et engagé sous la même politique. RED causal recoupé, GREEN intégré b9c90fd, revue/QA indépendantes encore attendues. ADR-0003 reste Accepted/partial et ADR-0004 hors mission."
-status: in-progress
-implementation: partial
-source_revision: 95c2b9e3064a0af4bf1a50f78055ba2d5a78526a
+summary: "Pipeline A1+A2 archivé et amendement GMock Attribute b9c90fd terminé au périmètre : revue indépendante PASS, QA176CPU/176ASan et contrôles négatifs/positifs conformes. Fragilité de shuffle préexistante conservée ; aucune nouvelle mission choisie, aucun PASS global moteur."
+status: completed
+implementation: verified
+source_revision: b9c90fd51b0ff8a85b1db1d0674c1243ccdd0951
 created: 2026-10-17
 updated: 2026-10-17
 sources: [docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/development/known-incidents.md, docs/architecture/correction-plan.md, docs/adr/0003-ownership-et-lifetime-cpu-gpu.md]
@@ -16,7 +16,7 @@ provenance:
   ambiguous: 0.0
 ---
 
-# Aucune nouvelle mission sélectionnée — amendement oracle en cours
+# Aucune nouvelle mission sélectionnée — amendement oracle terminé au périmètre
 
 La [[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline A1+A2 —
 ownership du Pipeline, curseur, contexte unique et restauration du harnais]] est
@@ -36,9 +36,10 @@ inchangés, **aucun rerun moteur**). QA indépendante finale : **24 critères �
 [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]] reste
 `Proposed / not-started`, à adoption explicite séparée.
 
-> [!warning] Amendement GMock intégré — QA reçue, revue statique attendue
-> Défaut d'oracle **préexistant, hors périmètre de la mission Pipeline, retenu
-> FAIL** : `ARTIST/tests/.../AttributeTests.cpp:65` (`AttributeTest.SetTest`) —
+> [!success] Amendement GMock corrigé et vérifié, sans PASS global moteur
+> Défaut d'oracle **préexistant conservé historiquement comme FAIL**, puis
+> corrigé dans l'amendement autorisé : ancien `AttributeTests.cpp:65`
+> (`AttributeTest.SetTest`) —
 > expectation `mockOn` attendue une fois, observée zéro **après summary** ; exit
 > 0 du processus et CTest passant malgré le diagnostic. Reproduit en direct
 > **et** sous CTest normal/ASan ; visible dans `LastTest.log` (`out/mission-a1a2/
@@ -46,19 +47,19 @@ inchangés, **aucun rerun moteur**). QA indépendante finale : **24 critères �
 > Passed ») ; la sortie JUnit tronquée à 1024 octets cachait l'erreur, le témoin
 > à 65536 + `LastTest.log` le prouvent.
 > L'utilisateur a **autorisé sa correction** le 2026-10-17 (« Alors vas-y »).
-> Le plan PM/LLM est validé : G1 `cpp-engineer`, complexité **74**, risque **72**,
+> Le plan PM/LLM est exécuté : G1 `cpp-engineer`, complexité **74**, risque **72**,
 > sous la politique de mission inchangée. `AttributeTests.cpp` est le propriétaire
 > principal du diff ; le setter moteur reste en lecture seule, sans adoption F7.
 > Le checkpoint oracle-only `d1a9ee1` conserve l'ancienne attente et produit le
 > **RED causal** : binaire exit1, CTest exit8, JUnit failure1 avant résumé, sans
 > crash ; binaire négatif préservé et empreinte recoupée. Ce n'est pas encore
-> un PASS global. Le GREEN est maintenant intégré en `b9c90fd` : un seul fichier
-> test, production inchangée, producteur 176 CPU et 176 CPU ASan conformes.
-> La revue G2 et la QA G3 fresh sont publiées sur ce candidat intégré ; leurs
-> résultats d'exécution sont reçus : 176 CPU normaux, 176 CPU ASan, contrôles
+> un PASS global. Le GREEN est intégré en `b9c90fd` : un seul fichier test,
+> production inchangée. La revue G2 fresh est **PASS au périmètre, zéro finding**.
+> La QA G3 indépendante confirme 176 CPU normaux, 176 CPU ASan, contrôles
 > négatifs réels répétés (binaire1/CTest8/XML failure1) et positifs propres.
-> 137/137 artefacts et 130/130 empreintes recoupés ; verdict statique G2 encore
-> attendu. Une fragilité Loader/ShaderLoader au shuffle est
+> 137/137 artefacts et 130/130 empreintes recoupés. GoogleTest v1.14.0 garantit
+> statiquement le TearDown après assertion fatale, sans scénario exécuté dédié.
+> Une fragilité Loader/ShaderLoader au shuffle est
 > reproduite à l'identique sur le vrai binaire pré-G1 et le GREEN (deux seeds),
 > conservée séparément, non corrigée par cet amendement.
 > Contrat, scores, IDs et preuves :
@@ -70,6 +71,9 @@ inchangés, **aucun rerun moteur**). QA indépendante finale : **24 critères �
 
 - **F7** : maps uniform/attribute et contextes des wrappers restent **shared**
   (hors tranche).
+- **Ordre des fixtures Loader/ShaderLoader** : échecs sous deux seeds reproduits
+  à l'identique sur le binaire pré-G1 et le GREEN ; sujet de suivi séparé,
+  aucune correction ou nouvelle mission choisie implicitement.
 - **FAIL historiques conservés** : protocole RED A1c (cleanup GL chargé après
   teardown, sonde jamais réexécutée) ; environnement appelant ASan (reproduit
   FAIL, corrigé par H-RESTORE sans effacer la preuve).

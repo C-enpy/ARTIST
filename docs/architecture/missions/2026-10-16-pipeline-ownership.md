@@ -83,13 +83,18 @@ aucune nouvelle mission.
 > - Les empreintes des binaires ont été relevées **après** les campagnes, avant la
 >   vérification : ce ne sont pas des empreintes pré-build rétrodatées.
 
-> [!info] Suite : amendement oracle en cours, pas de nouvelle mission sélectionnée
+> [!info] Addendum du 2026-10-17 : amendement oracle terminé au périmètre
 > L'utilisateur a autorisé, le 2026-10-17 (« Alors vas-y »), la correction de
-> l'oracle GMock préexistant. Le plan PM de l'amendement est validé et son
-> RED causal recoupé, pas encore de GREEN intégré ; la fiche courte
-> [[architecture/next-mission|next-mission]] le pointe et n'anticipe **pas** de GREEN.
-> La rédaction de cette archive n'a modifié **ni code ni tests** ; l'amendement attendra sa
-> propre intégration puis sa revue/QA indépendante avant toute qualification.
+> l'oracle GMock préexistant. `b9c90fd` ne change qu'`AttributeTests.cpp` :
+> vérification en TearDown et observation du setter effectif, Times(1) conservé,
+> contexte/valeur renforcés. RED oracle-only `d1a9ee1` et binaire négatif préservés.
+> Revue indépendante **PASS**, QA **176 CPU + 176 CPU ASan**, contrôles négatifs
+> réels et positifs répétés ; 137 artefacts et 130 empreintes recoupés. Ce nouvel
+> addendum ne réécrit ni le bilan historique 14/3/7 ni le contrat copié ci-dessous.
+> Les échecs de shuffle Loader/ShaderLoader sont reproduits à l'identique sur le
+> vrai pré-G1 et le GREEN sous deux seeds, conservés séparément sans élargissement.
+> Manifeste : `_meta/session-2026-10-17-attribute-oracle-validation.json`.
+> [[architecture/next-mission|La fiche courte]] ne choisit aucune nouvelle mission.
 > ADR-0004 reste `Proposed / not-started`, hors mission.
 
 ## Chaîne d'intégration réelle

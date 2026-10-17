@@ -275,9 +275,11 @@ restent exacts à leur date.
   partagés (F7), rejet des nuls dans ces maps, 17 GL ASan, Release, Linux, CI,
   performance/image, cost machine, lifetime GPU en vol (emprunt invalidé,
   fin de frame) ; aucun handle générationnel. Suite (amendement de l'oracle
-  GMock, autorisé utilisateur 2026-10-17) : **en cours**, plan PM validé et
-  RED causal recoupé, pas encore intégré — voir [[architecture/next-mission|la
-  fiche courte]]. Aucun GREEN de cet amendement n'est présagé par cet ADR.
+  GMock, autorisé utilisateur 2026-10-17) : **terminé au périmètre**, intégré en
+  `b9c90fd`, revue indépendante PASS et QA176CPU/176ASan avec contrôles appariés
+  négatifs/positifs. Ce changement de test ne résout pas F7 et n'efface pas les
+  FAIL historiques ni les fragilités de shuffle hors périmètre — voir
+  [[architecture/next-mission|la fiche courte]].
 
 ## Références
 

@@ -3,9 +3,9 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: Photographie source de la bibliothèque OpenGL à l'état de la mission Pipeline A1+A2 (C++ f914d77, harnais 95c2b9e) : Pipeline et IPass propriétaires uniques, curseur borné, F7 hors tranche, harnais de tests restauré, mécanismes statiques et limites observées.
+summary: "Photographie Pipeline A1+A2 (moteur f914d77, harnais95c2b9e) et amendement oracle b9c90fd vérifié : ownership unique, curseur borné, F7 partagé hors tranche, 176CPU/176ASan ciblés et fragilités de shuffle préexistantes conservées."
 status: observed
-source_revision: f914d77b17b1c3013bf06679c0f94537ee7ba24a
+source_revision: b9c90fd51b0ff8a85b1db1d0674c1243ccdd0951
 created: 2026-10-03
 updated: 2026-10-17
 ---
@@ -236,17 +236,27 @@ distinctes** (134 unitaires + 31 OpenGL) et **143 cas ASan distincts** ;
 revue PASS de lecture avec réserves α–δ et QA 12 PASS / 2 INCONCLUSIVE sur
 14 critères — résultats datés, pas des totaux quotidiens actuels.
 
-## Extension en attente (PENDING)
+## Amendement oracle Attribute — terminé et vérifié le 2026-10-17
 
 La [[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline]] est
 terminée et archivée intégralement ; la [[architecture/next-mission|fiche
 courte]] ne sélectionne **aucune nouvelle mission** et pointe seulement
-l'**amendement oracle en cours** : correction de l'oracle GMock préexistant
+l'**amendement oracle terminé au périmètre** : correction de l'oracle GMock préexistant
 (`AttributeTests.cpp:65`, `AttributeTest.SetTest`, diagnostic après summary,
 exit 0), autorisée par l'utilisateur le 2026-10-17. Le plan PM est validé et
 le RED oracle-only a été recoupé (binaire1, CTest8, JUnit failure1 avant résumé).
-Le GREEN de l'amendement est intégré en `b9c90fd` (test seul, moteur inchangé) ;
-revue/QA indépendantes restent attendues, sans réécriture des résultats historiques.
+Le GREEN est intégré en `b9c90fd` (test seul, moteur inchangé) : revue fresh
+**PASS sans finding**, QA indépendante **176 CPU + 176 CPU ASan**, contrôles
+négatifs binaire1/CTest8/JUnit failure1 et positifs0/0/failure0 répétés. L'ancien
+faux vert reste historique ; l'attente effective `Setter<shared_ptr<int>>`,
+`Times(1)`, le contexte et la valeur sont désormais contrôlés avant résumé.
+Le pin GoogleTest v1.14.0 garantit statiquement le TearDown après assertion fatale.
+Manifeste : `_meta/session-2026-10-17-attribute-oracle-validation.json`.
+
+Une fragilité d'ordre Loader/ShaderLoader est reproduite sur le vrai binaire
+pré-G1 et le GREEN : mêmes neuf échecs sous seed20261017 (effectif61219), même
+échec sous seed7. Indépendance de l'amendement établie pour ces deux ordres,
+pas de PASS global toutes permutations ; aucune correction supplémentaire engagée.
 
 [[engineering-principles|Le cap]] explique l'intention ;
 [[adr/README|les ADR]] proposent les contrats ;

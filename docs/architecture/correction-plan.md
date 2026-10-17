@@ -61,8 +61,11 @@ ownership du Pipeline, curseur et contexte unique — contrat préalable G-A de 
 vérifiés indépendamment ; QA indépendante 24 critères — 14 PASS, 3 FAIL, 7 INCONCLUSIVE, aucun PASS
 global (oracle GMock préexistant reten FAIL). ADR-0003 reste Accepted / partial ;
 [[architecture/next-mission|la fiche courte]] ne sélectionne **aucune nouvelle mission** et pointe
-seulement l'amendement GMock Attribute en cours, autorisé par
-l'utilisateur le 2026-10-17 : plan PM validé, RED causal recoupé, intégration et revue/QA encore attendues. ADR-0004 reste une
+seulement l'amendement GMock Attribute terminé au périmètre, autorisé par
+l'utilisateur le 2026-10-17 : `b9c90fd`, RED causal et contrôle négatif préservés,
+revue fresh PASS, QA176CPU/176ASan indépendante conforme. La fragilité d'ordre
+Loader/ShaderLoader est démontrée préexistante sous deux seeds et reste un suivi
+séparé, sans nouvelle mission choisie. ADR-0004 reste une
 sélection séparée, à adoption explicite. Micro-incidents latéraux traités : ASan incrémental
 (H-ASan), `getStackTraceString` (S-GSS), refresh documentaire (DOC-REF), F8-EXTRACTION (seam
 I0, F8 encore partial).
