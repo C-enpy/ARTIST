@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-17",
+  "scope": "User-authorized Attribute GMock oracle amendment to existing approved Pipeline mission",
+  "status": "Integrated; independent review and execution pending, no global PASS",
+  "candidate": "b9c90fd51b0ff8a85b1db1d0674c1243ccdd0951",
+  "baseline": "39cec34",
+  "author_head": "2c7af8eeb8c15615854202273702ac54ebfbe445",
+  "author_red_checkpoint": "d1a9ee1cfba3672b024698a61dc1a7171504d94f",
+  "changed_files": ["ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp"],
+  "source_sha256_checked_before_after_merge": "f3117e8fd9c44128cae327ad726da3e0c589e45bdafd9376e3fbc15ad95111ca",
+  "diff": "+26/-2; production, mock headers, build configuration and scripts unchanged",
+  "integrated_manifest": "out/mission-a1a2/gmock-amendment/integrated-source-manifest.json",
+  "input_identity": "130 inputs frozen; 129 identical to post-fixture baseline, only AttributeTests changed",
+  "proof_backup": "out/mission-a1a2/gmock-amendment/author-final-2c7af8e/",
+  "proof_manifest": "out/mission-a1a2/gmock-amendment/author-final-coordinator-manifest.json",
+  "proof_files_frozen": 82,
+  "author_results": {
+    "baseline": "False green reproduced: process0/CTest0 despite unsatisfied expectation after summary, XML failure0",
+    "red": "Oracle-only teardown change with old wrong expectation: process1/CTest8/XML failure1 before summary, no crash or sanitizer86",
+    "green": "Observe effective MockSetter<shared_ptr<int>>, Times(1), same context and stored value/non-null/object identity; focused4 and unit176 pass",
+    "unit_ctest": {"tests": 176, "failures": 0, "skipped": 0, "repeat": "two consecutive successful runs; same176 distinct cases"},
+    "attribute_direct_repeat_shuffle": {"iterations": 3, "runs": 12, "failures": 0, "seed": 99},
+    "asan_cpu": {"tests": 176, "failures": 0, "skipped": 0, "selection": "unit only declared before run; all39GL excluded"},
+    "canary": [0, 86],
+    "negative_binary_sha256": "487d4a91753847575fdbd7eb325b8fb619d63c75c323b5c07567f17b1401e1e6",
+    "positive_binary_sha256": "2fc97a418cb8d9cf0f838646c5dead121f35f6bd444df6d1b0126263e29eb5ff",
+    "negative_replay": "Ordinary add_test, no WILL_FAIL; expected real CTest failure and XML failure, separate from GREEN/sanitizer failures",
+    "fatal_body_assertion": "Teardown follows GoogleTest framework contract; no dedicated executed fatal-body scenario claimed"
+  },
+  "preexisting_shuffle_finding": {
+    "scope": "CPU LoaderTests/ShaderLoaderTests order sensitivity, not corrected by this one-file amendment",
+    "pre_G1_binary_sha256": "3d4fb31ee463a1c44370e9ba051e584784bf2f5becbf584341169d71d2ea1388",
+    "baseline_identity": "Matches immutable f914d77 QA binary snapshot before any amendment; preserved copy made before canonical rebuild",
+    "seeds": [{"requested": 20261017, "effective": 61219, "failed_cases": 9}, {"requested": 7, "failed_cases": 1}],
+    "comparison": "True pre-G1 and GREEN have exactly identical failing-case sets on both seeds; RED has same sets plus expected AttributeTest.SetTest failure",
+    "proof": "shuffle-preexisting-check/tripartite-sets.json and pre-g1-shuffle-manifest.json in frozen author backup",
+    "limit": "Preexistence demonstrated for these two orders, not proof of every ordering; no global shuffled-suite PASS"
+  },
+  "independent_tasks": {
+    "G2": "task_mvc5h18n_000k_h4g0kg",
+    "G3": "task_mvc5h18n_000l_nncpwh",
+    "context": "fresh; actual integrated candidate; review read-only parallel QA exclusive CPU build/cache",
+    "selection_declared": "out/mission-a1a2/gmock-amendment/qa-selection-declared.json"
+  },
+  "limits": [
+    "Author GREEN is not yet independent integrated QA",
+    "No GPU, image, performance, Release or other-platform claim",
+    "Historical Attribute false green, A1c RED protocol violation and I0 caller pollution remain immutable records",
+    "Preexisting Loader/ShaderLoader shuffle failures are separately retained, not masked",
+    "All SUBST aliases remain absent; no cache/worktree/file cleanup authorized or performed"
+  ]
+}

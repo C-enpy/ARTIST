@@ -245,8 +245,8 @@ l'**amendement oracle en cours** : correction de l'oracle GMock préexistant
 (`AttributeTests.cpp:65`, `AttributeTest.SetTest`, diagnostic après summary,
 exit 0), autorisée par l'utilisateur le 2026-10-17. Le plan PM est validé et
 le RED oracle-only a été recoupé (binaire1, CTest8, JUnit failure1 avant résumé).
-Le code d'amendement n'est pas encore intégré ; GREEN et revue/QA indépendantes
-restent attendus, sans réécriture des résultats historiques.
+Le GREEN de l'amendement est intégré en `b9c90fd` (test seul, moteur inchangé) ;
+revue/QA indépendantes restent attendues, sans réécriture des résultats historiques.
 
 [[engineering-principles|Le cap]] explique l'intention ;
 [[adr/README|les ADR]] proposent les contrats ;

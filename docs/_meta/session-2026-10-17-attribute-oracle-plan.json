@@ -47,5 +47,5 @@
     "replay_xml_checked_by_coordinator": "tests=1, failures=1, failure node present",
     "production_and_mock_headers": "Unchanged in author checkpoint; full final identity check still required"
   },
-  "status": "RED causal received and negative binary/XML recouped; author GREEN and declared ASan CPU pending, independent consumers unpublished"
+  "status": "G1 integrated b9c90fd after author176CPU/176ASan, source and control binaries recouped; G2/G3 published fresh after integration, results pending; see attribute-oracle-validation.json"
 }

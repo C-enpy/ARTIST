@@ -3,7 +3,7 @@ title: "Amendement oracle en cours — aucune nouvelle mission sélectionnée"
 category: architecture
 tags: [artist, architecture, cpp, testing, pipeline]
 aliases: [next-mission, Fiche de sélection]
-summary: "Socle Pipeline A1+A2 archivé avec ses réserves ; amendement GMock Attribute autorisé le 2026-10-17 et engagé sous la même politique. RED causal recoupé, GREEN et revue/QA encore attendus. ADR-0003 reste Accepted/partial et ADR-0004 hors mission."
+summary: "Socle Pipeline A1+A2 archivé avec ses réserves ; amendement GMock Attribute autorisé le 2026-10-17 et engagé sous la même politique. RED causal recoupé, GREEN intégré b9c90fd, revue/QA indépendantes encore attendues. ADR-0003 reste Accepted/partial et ADR-0004 hors mission."
 status: in-progress
 implementation: partial
 source_revision: 95c2b9e3064a0af4bf1a50f78055ba2d5a78526a
@@ -36,7 +36,7 @@ inchangés, **aucun rerun moteur**). QA indépendante finale : **24 critères �
 [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]] reste
 `Proposed / not-started`, à adoption explicite séparée.
 
-> [!warning] Amendement GMock engagé — GREEN et vérifications encore attendus
+> [!warning] Amendement GMock intégré — vérifications indépendantes attendues
 > Défaut d'oracle **préexistant, hors périmètre de la mission Pipeline, retenu
 > FAIL** : `ARTIST/tests/.../AttributeTests.cpp:65` (`AttributeTest.SetTest`) —
 > expectation `mockOn` attendue une fois, observée zéro **après summary** ; exit
@@ -52,9 +52,15 @@ inchangés, **aucun rerun moteur**). QA indépendante finale : **24 critères �
 > Le checkpoint oracle-only `d1a9ee1` conserve l'ancienne attente et produit le
 > **RED causal** : binaire exit1, CTest exit8, JUnit failure1 avant résumé, sans
 > crash ; binaire négatif préservé et empreinte recoupée. Ce n'est pas encore
-> un correctif intégré. GREEN puis intégration et revue/QA fresh restent requis.
+> un PASS global. Le GREEN est maintenant intégré en `b9c90fd` : un seul fichier
+> test, production inchangée, producteur 176 CPU et 176 CPU ASan conformes.
+> La revue G2 et la QA G3 fresh sont publiées sur ce candidat intégré ; leurs
+> résultats restent attendus. Une fragilité Loader/ShaderLoader au shuffle est
+> reproduite à l'identique sur le vrai binaire pré-G1 et le GREEN (deux seeds),
+> conservée séparément, non corrigée par cet amendement.
 > Contrat, scores, IDs et preuves :
 > `_meta/session-2026-10-17-attribute-oracle-plan.json`.
+> État d'intégration : `_meta/session-2026-10-17-attribute-oracle-validation.json`.
 > Les décomptes historiques 215/198 ne deviennent pas « tous oracles valides ».
 
 ## Ce qui reste ouvert après la mission Pipeline (hérité, non sélectionné ici)
