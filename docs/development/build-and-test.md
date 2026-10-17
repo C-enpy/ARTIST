@@ -2,11 +2,11 @@
 title: Build et tests actuels
 category: development
 tags: [artist, build, testing, guide]
-summary: Windows MSVC et Conan 2 vérifiés, 165 tests normaux et ASan opt-in séparé (143 cas sélectionnés) ; commandes, instrumentation et limites.
+summary: Windows MSVC et Conan 2 vérifiés, 215 tests normaux et ASan opt-in séparé (198 cas sélectionnés, 17 GL hors sélection) ; commandes, instrumentation et limites.
 status: verified-windows-debug
 created: 2026-10-03
-updated: 2026-10-16
-sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json]
+updated: 2026-10-17
+sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -14,6 +14,61 @@ provenance:
 ---
 
 # Build et tests actuels
+
+## Mission Pipeline A1+A2 — validation indépendante du 2026-10-16
+
+Intégrée au HEAD principal après I0 `18edc72` : C++ final `f914d77` (les six
+fichiers A2, octets conformes au producteur `1dfff22`) et H-RESTORE `1a75c75`,
+puis le harnais `95c2b9e` (H-FIXTURE). Dans un périmètre Windows x64 Debug,
+MSVC 19.44, GPU réel RTX 3090 / OpenGL 3.3.0 / driver 617.42 :
+
+- **Suite normale finale** : **215/215** — comptage CTest
+  `normal_ctest_accounting` = 176 unitaires + 39 OpenGL, 0 échec, 0 skip,
+  0 disabled. Ces échecs/skips sont les nombres déclarés du manifeste, pas une
+  conformité de tous les oracles : voir le FAIL d'oracle ci-dessous.
+- **ASan séparé, sélection déclarée avant run** (`final-asan-selection.json`) :
+  **198/198** — 176 unitaires + 22 GL (9 historiques + 13 Pipeline) ;
+  **17 autres GL non sélectionnés** sous ASan (`other_gl_not_selected_under_asan
+  = 17`), ce n'est pas un abandon. Canari `artist_asan_probe` **0 puis 86**,
+  options strictes par processus, premier FAIL conservé.
+  Première invocation de la campagne ASan : exit 8 **avant tout test** — chemin
+  `--tests-from-file` **relatif** résolu contre le répertoire de build ;
+  erreur d'invocation, **pas un RED** ; l'invocation suivante (chemin absolu)
+  donne les 198, log original conservé.
+- **Sonde getter-owner** (experiments en-outil) : exit de compilation
+  **0 / 2 / 0** (header « fresh » I0 0, final C2440 2, contrôle référence
+  0, empreintes numériques/octet exactes) ; le packaging du getter moved-from
+  est verrouillé par `ShaderLifetimeTests.MovedFromPassContextGetterThrows`.
+- **Revue R-A2** (lecture seule, 8 fichiers, 129/129 empreintes conformes) :
+  aucun défaut nouveau C++ identifié — pas une preuve exhaustive ni une
+  exécution de tests par le reviewer.
+- **QA V-A2 indépendante** : rapport
+  `out/mission-a1a2/final-verification/report.json`(SHA-256 `c22213a3…f04f5`),
+  85/85 artefacts recoupés par le coordinateur, **24 critères — 14 PASS,
+  3 FAIL, 7 INCONCLUSIVE**, aucun PASS global. FAIL retenus : l'oracle GMock
+  **préexistant** `AttributeTest.SetTest` (diagnostic après summary, exit 0 ;
+  reproduit direct **et** sous CTest ; JUnit tronqué à 1024 octets cachait
+  l'erreur, témoin 65536 + `LastTest.log` prouvent), le FAIL du protocole RED
+  A1c (historique), et le FAIL historique d'environnement appelant (reproduit,
+  corrigé par H-RESTORE sans l'effacer).
+- **Harnais vérifié séparément** (identité harnais/moteur distincte) :
+  H-RESTORE — 5 bras réels (4 restauration + Q1) **séparés** du compte 198 ;
+  H-FIXTURE `95c2b9e` — 9 injections TEMP + 5 bras réels = **14 contrôles
+  harnais séparés**, 21/21 artefacts recoupés, 130/130 empreintes (128
+  inchangées + 1 runner + 1 test), **cinq binaires identiques** et hold list
+  vide. **Aucun rerun 215/198/GPU sur `95c2b9e`** : les empreintes des binaires
+  ont été relevées **après** les campagnes (pas des empreintes pré-build
+  rétrodatées) ; pas de nouvelle campagne moteur, pas de recertification.
+
+Commandes, empreintes, limites et chaînes d'intégration :
+[[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline
+archivée]], [[development/known-incidents|registre d'incidents]] et manifestes
+figés `_meta/session-2026-10-16-pipeline-{i-a1,a1c,i0,final}-validation.json` +
+`_meta/session-2026-10-16-asan-caller-restoration.json`. Preuves non versionnées
+(dépôt principal) : `out/mission-a1a2/` (`final-verification/`,
+`post-fixture-verification/`, historiques auteurs `a2-author-final-1dfff22/`,
+`h-fixture-author-final-4d1b655/`). Aucune mesure de performance, aucune image,
+aucun Release/Linux/CI.
 
 ## Mission C — contrats d'échec bornés — validation indépendante du 2026-10-15
 
@@ -301,8 +356,10 @@ detach → deleteProgram → deleteShader. Points de fiabilité documentés :
   son destructeur ; la libération RAII se déclenche côté dérivé.
 
 Les comptes historiques de cette tranche : **95 unit + 27 OpenGL = 122** ;
-après loaded-owner move **106 + 31 = 137**, après F5 **112 + 31 = 143**, et
-après la mission C **134 + 31 = 165** (côté unitaire : 124 macros
+après loaded-owner move **106 + 31 = 137**, après F5 **112 + 31 = 143**, après
+la mission C **134 + 31 = 165**, et après la mission Pipeline **176 + 39 = 215**
+(GL à l'état chargé ; sélection ASan séparée 176 + 22, 17 autres GL hors
+sélection). (Côté unitaire de la mission C : 124 macros
 TEST/TEST_F directes plus 10 cas paramétrés `InfoLogLengths`, 2 suites ×
 5 valeurs). À chaque nouveau test, vérifier l'unicité des noms de fixtures
 entre TU et re-globber CMake (`GLOB_RECURSE`).

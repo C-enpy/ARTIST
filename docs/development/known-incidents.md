@@ -4,8 +4,8 @@ category: development
 tags: [artist, cpp, ownership, testing, tooling]
 summary: Incidents corrigés, hypothèses rectifiées et expériences discriminantes pour les chemins encore non couverts de Shader→Pass.
 created: 2026-10-03
-updated: 2026-10-16
-sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json]
+updated: 2026-10-17
+sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -428,6 +428,85 @@ originaux/manifeste préservés et addendum séparé. La réserve reste à trans
 TDD historique globale. Preuves et empreintes :
 `docs/_meta/session-2026-10-16-pipeline-a1c-validation.json`.
 
+## Mission Pipeline A1+A2 — clôture documentaire (2026-10-16, retouches 2026-10-17)
+
+Archive : [[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline
+A1+A2]] ; manifeste figé `_meta/session-2026-10-16-pipeline-final-validation.json`
+(24 critères : **14 PASS, 3 FAIL, 7 INCONCLUSIVE**, 85/85 artefacts recoupés,
+129/129 empreintes sources identiques). Cette clôture **ne modifie aucun code ni
+test** et **ne réexécute rien** ; les statuts ci-dessous complètent, sans
+écraser, les sections ci-dessus.
+
+### Oracle GMock préexistant — FAIL retenu, correction autorisée (extension PENDING)
+
+- Constat conservé : `AttributeTests.cpp:65` (`AttributeTest.SetTest`), diagnostic
+  `mockOn` attendu une fois / observé zéro **après summary** ; exit 0 du
+  processus et CTest passant malgré tout. Reproduit **directement** (toutes
+  suites) **et** sous CTest normal/ASan ; la revue l'a trouvé dans
+  `out/mission-a1a2/i0-verification/asan-last-test.log:2494-2501` avec filtre
+  individuel et « Test Passed ». Les sorties JUnit des campagnes tronquées à
+  1024 octets cachaient l'erreur ; un témoin à 65536 conserve le diagnostic dans
+  `normal-attribute-settest.xml` ; croisement `LastTest.log`.
+- Arbitrage inchangé : défaut d'oracle **préexistant hors périmètre**, pas une
+  régression A2 ; retenu FAIL ; l'absence dans les JUnit scannés ne prouve pas
+  l'absence dans les logs bruts.
+- **Interdits** : qualifier le défaut « direct-only », qualifier 215/198 comme
+  « tous les oracles valides » ou annoncer un PASS global ; ne pas transformer
+  un exit 0 en PASS sans réserve.
+- **EXTENSION ORACLE PENDING** : l'utilisateur a autorisé la correction le
+  2026-10-17 (« Alors vas-y »). Un amendement C++ est **en préparation par le
+  PM**, distinct de G-FIX PENDING ; il n'y a **ni code ni test modifié par la
+  clôture documentaire**, et aucun GREEN préjugé. L'amendement attendra sa
+  fiche, son RED causal, son intégration puis une revue/QA indépendantes ; le
+  FAIL reste historique en attendant. Fiche courte :
+  [[architecture/next-mission|next-mission]].
+
+### Clôtures des correctifs harnais
+
+- **H-RESTORE (`1a75c75`)** : restauration de l'env appelant vérifiée
+  indépendamment avant clôture — cinq contrôles réels **séparés** du compte 198
+  (4 bras appelant + Q1), 0 échec ; module normaliseur inchangé ; manifeste
+  `_meta/session-2026-10-16-asan-caller-restoration.json`. Le FAIL de
+  reproduction I0 reste l'historique de la découverte.
+- **H-FIXTURE (`95c2b9e`, deux fichiers Python uniquement)** : P2 du staging
+  corrigé après RED d'injection isolé **avant** fix ; vérification indépendante
+  (producteur `4d1b655`, `out/mission-a1a2/post-fixture-verification/report.json`,
+  SHA-256 `cac855ff…00e8a`) : **14 contrôles harnais séparés** (9 injections
+  TEMP + 5 bras réels), 21/21 artefacts recoupés, 130/130 empreintes
+  (128 inchangées + 1 runner + 1 test), **cinq binaires identiques** avant/après
+  et état du build sans hold. **Aucun rerun 215/198/GPU** : C++ et configuration
+  inchangés, comptage antérieur conservé avec l'oracle FAIL — pas une
+  recertification, pas une nouvelle campagne. Les fenêtres signal/état + TOCTOU
+  ne prouvent qu'une exclusivité, pas une atomicité ni une interruption
+  brutale.
+
+### Distinctions d'invocation et d'empreintes (leçons de la campagne)
+
+- **Premier appel ASan CTest exit 8 avant tout test** : chemin **relatif** du
+  `--tests-from-file` résolu contre le répertoire de build. Erreur
+  d'invocation, **pas un RED** ; l'invocation suivante avec chemin absolu donne
+  les 198. Le log original est conservé ; seul le chemin a changé.
+- **Empreintes binaires** relevées **après** les campagnes, avant la
+  vérification finale : elles ne sont pas des empreintes pré-build rétrodatées
+  ; l'identité binaire de `95c2b9e` provient d'une comparaison
+  avant/après wrapper dans la même session.
+- **`validation-levels.md`** : absente du vault, **non restaurée** par cette
+  coupe ; aucune reconstruction sans source.
+- **Ancien LNK `__std_rotate`** : livré par la reconstruction ciblée des
+  archives gmock (`_deps` locales), **pas par le moteur** ; voir la section
+  « Intégration Pipeline A1 » ci-dessus.
+- **Réserve H-TEMP-LOCK** : l'expérience E1–E3 prouve la **suffisance du
+  mécanisme** état-fichier ; le déclencheur réel du FAIL 21:00 reste
+  INCONCLUSIVE — voir « Campagne ASan incrémentale » (mission C) : mécanisme
+  prouvé, cause historique jamais établie.
+- **Reste non résolu** (hors périmètre de cette mission) : tant `ReaderTests`
+  `removeError` non consulté + `exists` suivant les liens (P3, INCONCLUSIVE),
+  qu'une panne OS d'extraction ou de fermeture échouée (F8 partiel), le latent
+  `getStackTraceString` const `libstdc++` hors MSVC, la fenêtre d'un contexte GL
+  courant invalide, un GPU en vol au-delà du scope C++ et de la frame de
+  soumission — et l'absence exhaustive de preuve RAII/image/perf
+  (Release, Linux, CI distante).
+
 ## Expériences encore absentes
 
 ### Revue finale A2 — P2 fixture et oracle GMock préexistant
@@ -441,7 +520,10 @@ crée un fichier vide. Si cette création lève avant le retour du helper,
 build original en place. Défaut de contrôle de flux établi ; injection causale
 à exécuter avant correction dans H-FIXTURE, branche isolée et temporaire privé.
 Il concerne la fixture du test, pas la restauration des variables PowerShell.
-La clôture attend intégration puis vérification indépendante du correctif.
+**Clôture intervenue** : correctif intégré `95c2b9e`, vérification indépendante
+reçue (14 contrôles harnais séparés, voir la section « Mission Pipeline A1+A2 —
+clôture documentaire ») ; le constat ci-dessus reste l'historique de la
+découverte.
 
 **Correction de qualification GMock** : le diagnostic `AttributeTests.cpp:65`
 (`AttributeTest.SetTest`, `mockOn` attendu une fois, observé zéro après résumé)
@@ -485,7 +567,10 @@ une nouvelle exécution de tests par le reviewer. QA indépendante ensuite reçu
   normalisation inchangé. Vérification indépendante finale du correctif encore
   attendue, pas de relance du principal pendant le bail Conan A2. Ce point
   concerne la restauration après campagne, pas la normalisation stricte/fail-close
-  de la campagne courante, dont les 197 tests sélectionnés ont passé.
+  de la campagne courante, dont les 197 tests sélectionnés ont passé. Le
+  correctif a ensuite reçu sa vérification indépendante (cinq contrôles réels
+  séparés du compte 198 lors de la QA finale) et le harnais a été re-vérifié à
+  `95c2b9e`, sans relance du moteur.
 - **P3 fixture TEMP, question non reproduite** :
   `ReaderTests.cpp:136-150` calcule `removeError` sans la consulter, et `exists`
   suit les liens. Le cas suppression en erreur puis absence, ou lien pendant,

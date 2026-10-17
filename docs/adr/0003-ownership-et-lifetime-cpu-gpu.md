@@ -9,7 +9,7 @@ implementation: partial
 decision_origin: Analyse des contexts partagés et recommandation commune des rapports ; adoption explicite par l'utilisateur le 2026-10-03 avec une migration franche (rien n'est en production).
 summary: Séparer propriétaires et emprunts du chemin d'appel, définir invalidation et libération conforme aux règles du backend.
 created: 2026-10-03
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # ADR-0003 — Ownership et lifetime CPU/GPU
@@ -221,11 +221,63 @@ R PASS de lecture avec réserves ; QA V 12 PASS et 2 INCONCLUSIVE sur 14 critèr
 horodatages : [[architecture/missions/2026-10-15-failure-contracts|l'archive]] et
 `_meta/session-2026-10-15-failure-contracts-validation.json`.
 
-`implementation: partial` reste inchangé : Pipeline A1–A2, contexte `Pass` partagé (F6),
-`UniformReader` (F7), curseur `use(index)`, extraction et fermeture F8, concept négatif,
-autres GL sous ASan, Release, Linux et CI ne sont pas fermés. `getStackTraceString`
-(branche `#else` de `TraceableException`, référence pendante dormante) est un incident ouvert,
-à traiter dans une coupe séparée. Aucun autre ADR `Proposed` n'est adopté par cette mission.
+`implementation: partial` reste inchangé à cette date : Pipeline A1–A2, contexte
+`Pass` partagé (F6), `UniformReader` (F7), curseur `use(index)`, extraction et
+fermeture F8, concept négatif, autres GL sous ASan, Release, Linux et CI ne sont
+pas fermés. `getStackTraceString` (branche `#else` de `TraceableException`,
+référence pendante dormante) est un incident ouvert, à traiter dans une coupe
+séparée. Aucun autre ADR `Proposed` n'est adopté par cette mission.
+
+### Tranche Pipeline A1–A2/F6 — vérifiée le 2026-10-16
+
+Mission [[architecture/missions/2026-10-16-pipeline-ownership|Pipeline A1+A2 —
+ownership du Pipeline, curseur, contexte unique et restauration du harnais]],
+C++ final `f914d77`, harnais restauré `95c2b9e`, périmètre Windows x64 Debug.
+Cette tranche clôt la déviation F6 nommée plus haut et la réserve « Pipeline
+restant », **au périmètre prouvé uniquement** ; les passages de la section C
+restent exacts à leur date.
+
+- **Ownership migré** : `IPipeline::m_context` et `IPass::m_context` sont des
+  `unique_ptr` avec `getContext()` par référence (`API::PipelineContext&`,
+  `API::PassContext&`) ; moved-from rejeté (`ERROR::…::FREED_CONTEXT`, erreur
+  exacte : test unitaire getter moved-from ajouté) ; copie interdite, move `noexcept`,
+  self-move no-op, assignation de base protégée avec cleanup de la destination
+  avant transfert. `PipelineContext::m_passes` est
+  `vector<unique_ptr<IPass<API>>>` : `addPass` rejette le nul
+  (`NULL_PASS`) et vérifie la cardinalité (`PASS_COUNT_LIMIT_EXCEEDED`,
+  `length_error`) avant insertion ; `getPass`/`forPass` empruntent avec la garde
+  C2 conservée.
+- **Curseur** : invariants `c ∈ {-1} ∪ [0, N)`, `N ≤ INT_MAX` ; `setCurrentPass`
+  et `use(index)` valident **avant mutation** ; en cas de hook levant, l'ancien
+  curseur est restauré et l'exception relancée inchangée — rollback **CPU
+  seulement**, aucun rollback backend promis. `hasNext` sans addition non
+  protégée ; `reset` remet le curseur sans unbind (F10 conservation inchangée).
+- **Lifetime du cycle Pass** : `free()` remet le handle programme à zéro sans
+  détruire le contexte ni ses shaders (emprunts CPU valides, `free()` moved-from
+  no-op) ; le strict B est inchangé (`RELOAD_WITHOUT_FREE` ; pas de promesse
+  `free(); load()` directe) ; destruction programme → contexte → shaders avec
+  contexte GL courant requis ; suppression d'un programme courant différée
+  jusqu'à l'unbind ; deux cas alias (unitaire et GL) remplacés 1:1 et archivés :
+  l'alias ne prolonge plus le programme.
+- **Preuves** : sonde getter-owner ancien/final/contrôle **0/2/0** (empreintes
+  numériques/octet exactes) ; suites finales **215/215 normales** (176 unitaires
+  + 39 OpenGL) et **sélection ASan déclarée 198/198** (176 + 22 GL) ;
+  **17 autres GL non sélectionnés** sous ASan ; QA indépendante **24 critères —
+  14 PASS, 3 FAIL, 7 INCONCLUSIVE**, 85/85 artefacts, 129/129 empreintes
+  recoupés ; les trois FAIL retenus sont l'oracle GMock préexistant
+  (`AttributeTest.SetTest`, après summary, hors périmètre), le FAIL du protocole
+  RED A1c (historique, sonde jamais réexécutée) et le FAIL historique
+  d'environnement appelant (reproduit, corrigé par H-RESTORE `1a75c75` sans
+  effacer la preuve). Harnais vérifié séparément à `95c2b9e`
+  (quatorze contrôles séparés, cinq binaires identiques, **aucun rerun
+  moteur**). Manifeste figé : `_meta/session-2026-10-16-pipeline-final-validation.json`.
+- **Pas fermé par cette tranche** : `Uniform`/`Attribute` et leurs maps restent
+  partagés (F7), rejet des nuls dans ces maps, 17 GL ASan, Release, Linux, CI,
+  performance/image, cost machine, lifetime GPU en vol (emprunt invalidé,
+  fin de frame) ; aucun handle générationnel. Suite (amendement de l'oracle
+  GMock, autorisé utilisateur 2026-10-17) : **PENDING**, en préparation PM,
+  distinct de G-FIX PENDING — voir [[architecture/next-mission|la fiche
+  courte]] ; cette tranche n'a ni modifié le code ni présagé de GREEN.
 
 ## Références
 
