@@ -36,7 +36,7 @@ inchangés, **aucun rerun moteur**). QA indépendante finale : **24 critères �
 [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]] reste
 `Proposed / not-started`, à adoption explicite séparée.
 
-> [!warning] Amendement GMock intégré — vérifications indépendantes attendues
+> [!warning] Amendement GMock intégré — QA reçue, revue statique attendue
 > Défaut d'oracle **préexistant, hors périmètre de la mission Pipeline, retenu
 > FAIL** : `ARTIST/tests/.../AttributeTests.cpp:65` (`AttributeTest.SetTest`) —
 > expectation `mockOn` attendue une fois, observée zéro **après summary** ; exit
@@ -55,7 +55,10 @@ inchangés, **aucun rerun moteur**). QA indépendante finale : **24 critères �
 > un PASS global. Le GREEN est maintenant intégré en `b9c90fd` : un seul fichier
 > test, production inchangée, producteur 176 CPU et 176 CPU ASan conformes.
 > La revue G2 et la QA G3 fresh sont publiées sur ce candidat intégré ; leurs
-> résultats restent attendus. Une fragilité Loader/ShaderLoader au shuffle est
+> résultats d'exécution sont reçus : 176 CPU normaux, 176 CPU ASan, contrôles
+> négatifs réels répétés (binaire1/CTest8/XML failure1) et positifs propres.
+> 137/137 artefacts et 130/130 empreintes recoupés ; verdict statique G2 encore
+> attendu. Une fragilité Loader/ShaderLoader au shuffle est
 > reproduite à l'identique sur le vrai binaire pré-G1 et le GREEN (deux seeds),
 > conservée séparément, non corrigée par cet amendement.
 > Contrat, scores, IDs et preuves :

@@ -1,7 +1,7 @@
 {
   "date": "2026-10-17",
   "scope": "User-authorized Attribute GMock oracle amendment to existing approved Pipeline mission",
-  "status": "Integrated; independent review and execution pending, no global PASS",
+  "status": "Integrated; independent QA confirms targeted fix, static review pending; known shuffle defects and historical failures prevent global PASS",
   "candidate": "b9c90fd51b0ff8a85b1db1d0674c1243ccdd0951",
   "baseline": "39cec34",
   "author_head": "2c7af8eeb8c15615854202273702ac54ebfbe445",
@@ -42,8 +42,38 @@
     "context": "fresh; actual integrated candidate; review read-only parallel QA exclusive CPU build/cache",
     "selection_declared": "out/mission-a1a2/gmock-amendment/qa-selection-declared.json"
   },
+  "independent_qa": {
+    "task": "task_mvc5h18n_000l_nncpwh",
+    "report": "out/mission-a1a2/gmock-amendment/qa/report.json",
+    "report_sha256": "b6bf34b5ab18424ba9be819a18e431504e4aa4781bb78ed1d9eee0d1395b4d74",
+    "artifact_manifest": "out/mission-a1a2/gmock-amendment/qa/artifacts-manifest.json",
+    "artifact_manifest_sha256": "751c4aae8bbb4e1f05338a2b5da3943fb2908f3d3c8ef97a1bfcd86f854f4900",
+    "artifact_hashes_rechecked_by_coordinator": "137/137",
+    "source_identity": "130/130 conform before build, postbuild/pretests and after execution; 129 baseline inputs unchanged",
+    "criteria": {"PASS": 10, "FAIL": 2, "INCONCLUSIVE": 2},
+    "targeted_fix": "PASS: expectation verified before summary and effective setter observed; clean current fixture direct and CTest",
+    "normal_cpu": {"tests": 176, "failures": 0, "skipped": 0, "repeat2": "352 executions of176 distinct names,0failure"},
+    "asan_cpu": {"tests": 176, "failures": 0, "skipped": 0, "matches_predeclared_selection": true},
+    "focused_fixture": "4/4 direct and CTest, shuffle/repeat3 seed99 =12RUN/12OK; no unsatisfied expectation or GMock warning, including after summary",
+    "negative_controls_repeated": {"direct_exit_codes": [1, 1], "ctest_exit_codes": [8, 8], "junit_failures": [1, 1], "failure_before_summary": true, "crash_or_sanitizer86": false},
+    "paired_positive_controls_repeated": {"direct_exit_codes": [0, 0], "ctest_exit_codes": [0, 0], "junit_failures": [0, 0], "late_diagnostics": 0},
+    "negative_artifact_preservation": "Private replay copies of original CTestTestfile byte-exact; no WILL_FAIL;165 author/snapshot/coordinator files unchanged",
+    "canary_exit_codes": [0, 86],
+    "first_invocation_errors": "Original cmd/vcvars transport error and unquoted activation assignment leaving a space both preserved; canary rejected activation before tests, quoting corrected separately, no source change or suppressed test failure",
+    "shuffle": "Six fresh runs: PRE_G1/RED/current GREEN on both requested seeds. All176 test orders match per seed; same9 and1 Loader/ShaderLoader failures PRE_G1/GREEN, RED adds only SetTest. Preexistence confirmed independently for both orders.",
+    "fail_criteria": ["Preexisting whole-binary shuffle failures", "Historical false green reproduced on preserved PRE_G1 binary"],
+    "inconclusive_criteria": ["Dedicated fatal-body ASSERT scenario not executed; framework contract only", "GPU/image/performance/other-platform criteria not executed"],
+    "binary_hashes": {
+      "normal": "5717fa4bf380811297cb57fecc4b856ae91e6ab63dc17914c095c53f7c6509f6",
+      "asan": "0304a0673f962d7c8ceaaebd5b460a5ef329600ba01ca057acbd4ffab022ae31",
+      "probe": "44e9827ec1ac17ffcf13a1022d77d73f7bf7adfd7dd97fca9359b8818dd5b6e9"
+    },
+    "binary_identity": "Authenticated prebuild snapshot and postbuild/pretests then posttests records; final binary hashes stable during tests",
+    "resources": "Verifier shut down; leases released, process-final count0, no source write/alias/Docker/new runner/cache deletion",
+    "limits": "No new GPU39 run; do not reuse historical198 as new amendment proof or aggregate separate campaign criterion totals"
+  },
   "limits": [
-    "Author GREEN is not yet independent integrated QA",
+    "Independent execution complete, independent static review still pending",
     "No GPU, image, performance, Release or other-platform claim",
     "Historical Attribute false green, A1c RED protocol violation and I0 caller pollution remain immutable records",
     "Preexisting Loader/ShaderLoader shuffle failures are separately retained, not masked",
