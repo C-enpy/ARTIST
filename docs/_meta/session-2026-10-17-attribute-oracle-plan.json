@@ -36,5 +36,16 @@
   },
   "documentation_recovery": "Original architect DOC-F lacked write permission outside ADR and was stopped with clean worktree before any edit; checkpoint out/mission-a1a2/doc-f-recovery-pool17. Explicit cpp-engineer documentation-only substitution task_mvc3ugxj_0006_1symr5 retains approved scores/model routing, no permission bypass",
   "historical_evidence": "Keep I0/final Attribute oracle FAIL and A1c unsafe RED protocol FAIL immutable; a final corrected test does not rewrite historical results",
-  "status": "Plan validated; G1 and independent DOC-F recovery published under existing approved grid, no model override; RED/GREEN not yet received"
+  "red_checkpoint": {
+    "commit": "d1a9ee1cfba3672b024698a61dc1a7171504d94f",
+    "change": "Oracle-only TearDown verification; original wrong MockSetter<int> expectation deliberately still present",
+    "baseline_observed": "Direct and CTest return0 with unsatisfied expectation after summary; baseline XML failure0",
+    "red_observed": "Direct return1, CTest return8, unsatisfied expectation during teardown before summary, XML failure1; no crash/sanitizer86",
+    "negative_binary": "out/mission-a1a2/gmock-amendment/author/negative/ArtistLib_tests-negative-red.exe",
+    "negative_binary_sha256_checked_by_coordinator": "487d4a91753847575fdbd7eb325b8fb619d63c75c323b5c07567f17b1401e1e6",
+    "replay_surface": "Existing private CTestTestfile.cmake uses ordinary add_test with no WILL_FAIL",
+    "replay_xml_checked_by_coordinator": "tests=1, failures=1, failure node present",
+    "production_and_mock_headers": "Unchanged in author checkpoint; full final identity check still required"
+  },
+  "status": "RED causal received and negative binary/XML recouped; author GREEN and declared ASan CPU pending, independent consumers unpublished"
 }
