@@ -1,0 +1,54 @@
+{
+  "session": "2026-10-17",
+  "mission": "F7 option A — Uniform/Attribute + UniformReader durci",
+  "barrier": "T4 (lead)",
+  "head_integrated": "18dcf31",
+  "mainline_chain": {
+    "start_of_mission": "eb0dd14 (docs-only b4335f0 incorporated at evidence commit)",
+    "evidence_commits": ["4f64a2b (QA plan + P1)", "25ced63 (P2 + D2)", "d4b62f2 (P3 + D6-D8)", "67cbb02 (D9)"],
+    "author_commits": {
+      "T1": "2cd38e8 (branch pool-5)",
+      "T2": "d30e69f (branch pool-6)",
+      "T3": "b856802 (branch t3-worker-3)"
+    },
+    "integration_commits": {
+      "T1": "cb9f268",
+      "T2": "05fef28",
+      "T3": "18dcf31"
+    }
+  },
+  "normal_campaign": {
+    "command": "scripts/build-windows.ps1 -Jobs 1 (vcvars 14.44 in-process, conan cache out/conan2 under bail, cmake --fresh, build --parallel 1, ctest --output-junit)",
+    "result": "268/268 passed (223 unit + 45 opengl), zero failed/disabled/skipped",
+    "witness": "out/build/windows-msvc-debug/ctest.xml (tests=268 failures=0 disabled=0 skipped=0) + rerun.junit.xml (direct ctest, CTEST_EXIT=0)",
+    "new_components_green": ["opengl.UniformReaderComponentTest.NominalUniformHasNativeLocationAndType", "opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName", "opengl.UniformReaderComponentTest.ExplicitFreeThenReloadReflectsTheNewProgram"]
+  },
+  "asan_campaign": {
+    "selection_declared_before_run": true,
+    "selection_file": "out/mission-f7/t4/asan-selection.txt",
+    "selection_sha256": "7F0AEB267EEEF12906D5A7ED202B322222EB0CBEB3831A440010C5DEAF6E6ABE",
+    "selection_content": "245 = 223 unit (discovered) + 22 GL lifetime (9 ShaderLifetimeComponentTests + 8 PipelineLifetimeTest + 5 PipelineTest, names taken from validated T3 selection)",
+    "exclusions": "23 GL non-lifetime explicitly excluded from ASan selection, including the 3 new UniformReaderComponentTest cases (no implicit requalification)",
+    "canary": "verify_asan PASS — artist_asan_probe rebuilt on fresh asan tree: healthy exit 0, use-after-free exit 86",
+    "run": "ctest --preset windows-msvc-debug-asan --tests-from-file <ABSOLUTE path> --output-junit <ABSOLUTE path>",
+    "result": "245/245 passed, zero failed/disabled/skipped, CTEST_EXIT=0",
+    "witness": "out/mission-f7/t4/asan.junit.xml (tests=245 failures=0 disabled=0 skipped=0)"
+  },
+  "invocation_incidents_not_red": [
+    "C1083 cstddef on manual cmake build without vcvarsall env — documented invocation incident (VsDevCmd in same process required); retried in-process, exit 0",
+    "relative --output-junit path resolved under the build tree (out/build/windows-msvc-debug/out/...): Pipeline precedent, invocation error, recovered with absolute paths",
+    "shell wrapper exit code 1 on the normal campaign pipeline (2>&1 | Select-Object): discriminated by clean JUnit witness (268/0/0/0) and direct rerun CTEST_EXIT=0 — wrapper artifact, not a campaign failure"
+  ],
+  "lead_diff_review": {
+    "T1": "Uniform.hpp (unique_ptr/NULL_CONTEXT, copy deleted/move default, borrowed getContext via private ctx()), UniformContext.hpp (value forms, GET::UNINITIALIZED/TYPE_MISMATCH with real stored type, REPASSE semantics), PassContext.hpp (addUniform unique_ptr + NULL_UNIFORM, getUniform borrowed nullable) — conform contract",
+    "T2": "Attribute.hpp (Setter<T> dispatch D2, unique_ptr context, NULL_CONTEXT/FREED_CONTEXT), Setter.hpp (on(C&) D9-E, BUFFER_ID_NOT_SET kept, NULL_VALUE before GL calls, sizeof(A) size+stride), PassContext.hpp (addAttribute unique_ptr + NULL_ATTRIBUTE), docs addendum kept (blocks 440-471 intact octets) — conform contract",
+    "T3": "PassConcept.hpp (UniformReader presence + borrowed-on void), UniformReader.hpp (driver-sized buffer, typed INVALID_NAME/DUPLICATE_NAME-intra-reflection/INVALID_SIZE/INVALID_LOCATION, setSize after positive validation, early return numUniforms<=0), contexts/Pass.hpp dispatch/Shader/Loader/Freer/glFunctionMock untouched — conform contract"
+  },
+  "out_of_mission_adjacent_defects_consigned": [
+    "C4834 dead catch + misleading SET label + typeid(std::any) in AttributeContext mismatch (unreachable in production after T2 key fix)",
+    "VBO created by OpenGLBinder never freed (inherited GPU lifetime scope)",
+    "docs/architecture/current-state.md:141-142 describes shared_ptr maps (updates at DOC-F closure)",
+    "move-assign proven statically only (T1 reserve); no unit dispatch set<float> case (T2 reserve); generation/publication atomicity left out of tranches (T3 reserve)"
+  ],
+  "verdict": "BARRIER T4 PASSED — no global PASS claim: per-criterion verdicts continue with T5/T6/TE/test-reviewer on the integrated diff"
+}
