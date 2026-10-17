@@ -5,7 +5,7 @@ tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
 status: proposed
 created: 2026-10-03
-updated: 2026-10-16
+updated: 2026-10-17
 ---
 
 # Plan de correction de l'existant
@@ -42,8 +42,8 @@ distincts. Revue R : PASS de lecture avec réserves ; QA V : 12 PASS et 2 INCONC
 
 Sélection initiale, conservée :
 
-[[architecture/next-mission|Bornage des contrats d'échec des loaders et
-accesseurs]] : Q1 (longueur de log aberrante, contrat + cleanup), Q3 (ruling
+[[architecture/missions/2026-10-15-failure-contracts|Bornage des contrats d'échec des
+loaders et accesseurs]] : Q1 (longueur de log aberrante, contrat + cleanup), Q3 (ruling
 publication différée de l'attacher), F4 (bornes des accesseurs), F8 (erreur de
 lecture fichier distincte de l'erreur de compilation) et F10 (contrat
 `glUseProgram(0)`). Sélectionnée le 2026-10-15 à la demande de l'utilisateur
@@ -51,14 +51,21 @@ après PM/architect fresh ; développement réalisé le même jour (voir l'archi
 C avant la tranche Pipeline A (figer les contrats d'échec avant le churn), puis
 B (ADR-0004, Adoption explicite requise). Author C64→70/R66 et C44→70/R58 en
 PM/LLM, RED causal requis, empreintes des fichiers cibles relevées et invariants
-préservés. Fiche complète : [[architecture/next-mission|next-mission]] ;
-manifeste machine : `docs/_meta/next-mission-2026-10-15-c-selection.json`.
+préservés. Fiche complète : [[architecture/missions/2026-10-15-failure-contracts|mission C
+archivée]] ; manifeste machine : `docs/_meta/next-mission-2026-10-15-c-selection.json`.
 
-Mission suivante sélectionnée le 2026-10-16 : [[architecture/next-mission|Pipeline A1+A2]]
-(ownership du Pipeline, curseur et contexte unique — contrat préalable G-A de l'architecte),
-avec les micro-incidents ouverts en branches latérales (ASan incrémental,
-`getStackTraceString`, refresh documentaire, F8-extraction sous ruling).
-ADR-0004 reste une sélection séparée, à adoption explicite.
+Mission Pipeline exécutée : sélectionnée le 2026-10-16 ([[architecture/missions/2026-10-16-pipeline-ownership|Pipeline A1+A2 —
+ownership du Pipeline, curseur et contexte unique — contrat préalable G-A de l'architecte]]),
+**terminée dans son périmètre le 2026-10-16** : A1a→A1c, F8-SEAM, A2/F6 intégrés et vérifiés (C++ `f914d77` :
+215 normales (176 unit + 39 GL) / 198 ASan sélection), H-RESTORE `1a75c75` et H-FIXTURE `95c2b9e`
+vérifiés indépendamment ; QA indépendante 24 critères — 14 PASS, 3 FAIL, 7 INCONCLUSIVE, aucun PASS
+global (oracle GMock préexistant reten FAIL). ADR-0003 reste Accepted / partial ;
+[[architecture/next-mission|la fiche courte]] ne sélectionne **aucune nouvelle mission** et pointe
+seulement l'amendement GMock Attribute en cours, autorisé par
+l'utilisateur le 2026-10-17 : plan PM validé, RED causal recoupé, intégration et revue/QA encore attendues. ADR-0004 reste une
+sélection séparée, à adoption explicite. Micro-incidents latéraux traités : ASan incrémental
+(H-ASan), `getStackTraceString` (S-GSS), refresh documentaire (DOC-REF), F8-EXTRACTION (seam
+I0, F8 encore partial).
 
 ## Mission loaded-owner du 2026-10-15 — terminée dans son périmètre
 
@@ -107,10 +114,13 @@ L'assignation vers un owner chargé et ASan sont désormais qualifiés dans le
 [[references/session-2026-10-15-loaded-owner-move|périmètre Windows Debug du 2026-10-15]],
 pas sur toutes les plateformes ni tous les chemins de lifetime.
 Les [[development/known-incidents|findings non traités]] ne sont pas annulés par
-ces suites vertes. L'avis d'architecture propose ensuite `PipelineContext::m_passes`
-en ownership unique et `forPass` par emprunt, puis le contexte de `IPass` ; ce
-travail n'est pas encore implémenté. Durcir `UniformReader` lors de la tranche
-uniform/attribute, avec un test de concept négatif.
+ces suites vertes. La suite recommandée par l'avis d'architecture —
+`PipelineContext::m_passes` en ownership unique, `forPass` par emprunt, contexte
+de `IPass` unique — est **réalisée et vérifiée le 2026-10-16**
+([[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline]]) ;
+l'avis propose ensuite de durcir `UniformReader` lors de la tranche
+uniform/attribute, avec un test de concept négatif — les maps uniform/attribute
+restent partagées (F7, hors coupe à ce jour).
 
 **Sortie** : baseline caractérisée, configurations valides/invalides, données et
 workload figés ; aucune performance inventée faute de mesure.

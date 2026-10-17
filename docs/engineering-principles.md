@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, performance]
 summary: Philosophie multi-étapes, séparation préparation/exécution, choix de langage et limites des promesses de staticité.
 created: 2026-10-03
-updated: 2026-10-15
+updated: 2026-10-17
 ---
 
 # Cap technique d'ARTIST
@@ -91,19 +91,25 @@ Voir [[adr/0007-cpp23-et-cooker-independant|ADR-0007]].
    bibliothèque mature peut servir l'excellence ; la réécriture exhaustive n'est
    pas une preuve.
 
-## Photographie du code au bootstrap du harness
+## Photographie du code après la tranche Pipeline A1+A2
 
 À revérifier lors de chaque intervention : cette section n'impose pas de conserver
 les écarts constatés. La photographie détaillée, avec sa révision, est dans
 [[architecture/current-state|État réel d'ARTIST]].
+Le code moteur observé est celui de `f914d77` ; `95c2b9e` ne change que le
+harnais Python. L'amendement de l'oracle Attribute est en cours, pas encore
+intégré ni vérifié ; les décomptes CTest ne masquent pas son FAIL préexistant.
 
 - `ARTIST/CMakeLists.txt` crée `ArtistLib` en `INTERFACE` : bibliothèque header-only.
 - `ARTIST/include/graphic/pipeline/Pipeline.hpp` combine `IPipeline` virtuel et
   `Pipeline<API, PROFILE>` avec validation/sélection statique de composants.
 - `ARTIST/include/graphic/context/PipelineContext.hpp` stocke les passes dans un
-  `vector<shared_ptr<IPass<API>>>` ; la collection est résolue à l'exécution.
-- `ARTIST/include/graphic/context/PassContext.hpp` conserve des shaders par
-  pointeurs et des uniforms/attributes dans des maps indexées par chaînes.
+  `vector<unique_ptr<IPass<API>>>` ; la collection demeure résolue à l'exécution
+  et `forPass` l'emprunte. Les wrappers Pipeline et Pass possèdent aussi leur
+  contexte de façon unique ; leurs accesseurs exposent des références empruntées.
+- `ARTIST/include/graphic/context/PassContext.hpp` possède ses shaders par
+  `unique_ptr`, mais conserve les uniforms/attributes partagés dans des maps
+  indexées par chaînes, hors de cette migration.
 - `ARTIST/include/graphic/context/AttributeContext.hpp` stocke une valeur dans
   `std::any`, puis récupère un `shared_ptr<T>` par cast runtime.
 - `ARTIST/include/graphic/opengl/` fournit le backend présent. Les noms d'autres
