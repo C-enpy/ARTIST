@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-17",
+  "scope": "Verified Pipeline and targeted Attribute oracle amendment documentary closure",
+  "code_candidate": "b9c90fd51b0ff8a85b1db1d0674c1243ccdd0951",
+  "documentary_head": "aa71fb20c4c11111c1c4e248ca1863fc4310cf7a",
+  "documentation_checks": {
+    "yaml_frontmatter_parsed": 10,
+    "json_parsed": 3,
+    "wikilink_file_targets": 137,
+    "broken_file_targets": 0,
+    "known_journal_code_attribute_false_positives": 2,
+    "heading_anchors": "Not checked",
+    "historical_contract": "738891f next-mission body preserved verbatim after LF normalization in mission archive",
+    "source_identity": "130/130 candidate inputs unchanged after documentary edits",
+    "git_diff_check": "PASS"
+  },
+  "qmd": {
+    "collection": "artist-wiki",
+    "canonical_root": "C:/Users/djden/source/repos/ARTIST/docs",
+    "update_command": "node .opencode/scripts/update-wiki.mjs",
+    "embed_command": "qmd embed -c artist-wiki",
+    "update_exit": 0,
+    "embed_exit": 0,
+    "first_update": {"indexed": 3, "updated": 10, "unchanged": 20, "collection_documents": 33},
+    "embedding": {"documents": 13, "chunks": 150, "seconds_reported": 14},
+    "retrieval": "PASS via scoped lex+vec MCP query with explicit intent, followed by get of architecture/next-mission.md lines39-73 confirming current G2 PASS/G3 results and retained shuffle findings",
+    "other_collections": "Not updated; collection-scoped commands only",
+    "needs_embedding_after_first_refresh": 0,
+    "logs": "out/mission-a1a2/gmock-amendment/documentary-close/qmd-{update,embed}.log",
+    "journal_consolidation": "PASS: scoped update exit0 (indexed0,updated1,unchanged32), embed exit0 (11chunks/1document,4s); final MCP get log.md66-68 confirms journal entry and status33docs/needsEmbedding0",
+    "final_journal_logs": "out/mission-a1a2/gmock-amendment/documentary-close/qmd-journal-{update,embed}.log"
+  },
+  "remaining_limits": [
+    "Loader/ShaderLoader shuffled-order failures confirmed preexisting on two seeds and not corrected",
+    "Historical unsafe A1c RED, I0 caller pollution and Attribute false-green evidence retained",
+    "No new GPU/image/performance/Release/other-platform or exhaustive RAII proof",
+    "Unrelated user/harness changes and unaccepted duplicate documentation branch preserved, no cleanup"
+  ],
+  "aliases": "S/T/U/Y/Z removed, no SUBST alias recreated; final check recorded separately"
+}
