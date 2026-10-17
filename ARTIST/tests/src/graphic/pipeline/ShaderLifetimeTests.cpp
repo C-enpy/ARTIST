@@ -358,6 +358,10 @@ TEST_F(ShaderLifetimeTests, PassDestructorReleasesProgramThenShaders)
     auto &gl = *mock::opengl::glFunctionMock::instance();
     ON_CALL(gl, glCreateShader_mock).WillByDefault([](GLenum) { return 8u; });
     ON_CALL(gl, glCreateProgram_mock).WillByDefault([]() { return 5u; });
+    // Reflection now asks the driver for name capacity. The generic mock's
+    // value 1 is a count/status, not a capacity for its "uniform_test" name.
+    ON_CALL(gl, glGetProgramiv_mock(5, GL_ACTIVE_UNIFORM_MAX_LENGTH, testing::_))
+        .WillByDefault(testing::SetArgPointee<2>(sizeof(mock::opengl::glFunctionMock::UNIFORM_NAME)));
 
     {
         testing::InSequence sequence;

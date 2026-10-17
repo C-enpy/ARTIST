@@ -5,7 +5,7 @@
  * This concept checks for essential components within an OpenGL rendering pass for a specific PROFILE,
  * ensuring each pass in the pipeline is correctly structured and functional. It validates the presence
  * and proper implementation of key components such as `Loader`, `Freer`, `ShaderAttacher`, `AttributeReader`,
- * and `User` within the `PassContext`. Additionally, it verifies that these components have the `on` method
+ * `UniformReader` and `User` within the `PassContext`. Additionally, it verifies that these components have the `on` method
  * for operational use, aligning with the requirements for effective pass execution in the OpenGL context.
  *
  * @tparam API The graphics API context, tailored for OpenGL.
@@ -43,12 +43,14 @@ namespace artist::graphic::opengl::validator
         requires HasComponent<typename API::PassContext::template Freer<PROFILE>>;
         requires HasComponent<typename API::PassContext::template ShaderAttacher<PROFILE>>;
         requires HasComponent<typename API::PassContext::template AttributeReader<PROFILE>>;
+        requires HasComponent<typename API::PassContext::template UniformReader<PROFILE>>;
         requires HasComponent<typename API::PassContext::template User<PROFILE>>;
 
         requires HasBorrowedOnMethod<typename API::PassContext::template Loader<PROFILE>, typename API::PassContext>;
         requires HasBorrowedOnMethod<typename API::PassContext::template Freer<PROFILE>, typename API::PassContext>;
         requires HasBorrowedOnMethodWithHandle<typename API::PassContext::template ShaderAttacher<PROFILE>, typename API::PassContext>;
         requires HasBorrowedOnMethod<typename API::PassContext::template AttributeReader<PROFILE>, typename API::PassContext>;
+        requires HasBorrowedOnMethod<typename API::PassContext::template UniformReader<PROFILE>, typename API::PassContext>;
         requires HasBorrowedOnMethod<typename API::PassContext::template User<PROFILE>, typename API::PassContext>;
     };
 }
