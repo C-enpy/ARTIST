@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "providers": [
+    "openai",
+    "opencode",
+    "opencode-go",
+    "zai-coding-plan"
+  ],
+  "assessment": {
+    "complexity": [
+      "Low: local, clear requirements and established patterns.",
+      "High: ambiguous contracts, interacting components or difficult reconstruction."
+    ],
+    "risk": [
+      "Low: isolated, reversible failure with limited impact.",
+      "High: security, persisted data, compatibility or critical correctness is at stake."
+    ]
+  },
+  "complexityBands": [
+    0,
+    34,
+    67,
+    101
+  ],
+  "riskBands": [
+    0,
+    34,
+    67,
+    101
+  ],
+  "groups": {
+    "light": [
+      {
+        "id": "opencode-go/gpt-6-luna",
+        "variant": "none"
+      }
+    ],
+    "standard": [
+      {
+        "id": "openai/gpt-6.1-sol",
+        "variant": "low"
+      }
+    ],
+    "strong": [
+      {
+        "id": "openai/gpt-6-astra",
+        "variant": "max"
+      }
+    ]
+  },
+  "matrix": [
+    [
+      "light",
+      "standard",
+      "strong"
+    ],
+    [
+      "standard",
+      "standard",
+      "strong"
+    ],
+    [
+      "strong",
+      "strong",
+      "strong"
+    ]
+  ]
+}
