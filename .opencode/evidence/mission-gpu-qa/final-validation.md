@@ -107,3 +107,20 @@ Logs privés préservés sous out/agentic/mission-gpu-qa/ (auteurs R2/T13 et lea
 Pas de nettoyage/purge de branches ou de worktrees dans cette clôture ; ces logs
 ignorés ne sont pas publiés par Git. Rapports/hashes/provenance versionnés permettent
 leur attribution, pas leur reconstruction ni une preuve native manquante.
+
+## Sondes natives du 2026-10-17
+
+Le lead a exécuté le routage et le gate sur OpenCode v2.0.30, candidat
+`3f7d9c42d97835a2e0d4348337886a13b831eb41`, copie jetable seulement.
+Détail, sessions et écarts : native-routing-enforcement.md.
+
+- **G-04** : S01–S12 ont émis le principal attendu et les skills minimum.
+  S09 a exigé une reprise parce que la première collecte avait interrompu
+  l'enfant avant les skills. N02, API non précisée, a choisi OpenGL : échec du
+  négatif. OP1–OP3 restent non exécutés.
+- **T-06** : l'évaluateur et les outils `read`/`skill` appliquent les 32 règles
+  résolues. Le positif inoffensif et le skill autorisé passent ; `.env`,
+  chemin absolu externe et skill non autorisé sont refusés. **Échec** : un lien
+  symbolique interne a livré le contenu externe `INERT_EXTERNAL`. Les routes
+  opérateur `session.shell` et `session.skill` ne passent pas par ce gate.
+- GPU, image, performance et grant d'édition restent non prouvés. Pas de PASS global.
