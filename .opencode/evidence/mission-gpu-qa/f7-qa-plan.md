@@ -55,9 +55,16 @@ d'image/draw/readback.
   (observé 8) + 2e type vec3→12 ; stride glVertexAttribPointer idem ;
   SetterTests.cpp:39,59 (tautologiques, static-presence) mis à jour SEULEMENT après RED
   conservé, jamais wildcard.
-- **A3 (T2) null** : NON_OPENGL_CONTEXT/BUFFER_ID_NOT_SET conservés
-  (SetterTests.cpp:66-83) + valeur stockée null → rejet typé AVANT glBufferData
-  (aujourd'hui 8+null part au driver).
+- **A3 (T2) null — ARBITRAGE D9 FERMÉ (lead, 2026-10-17) : option (E)**. Les
+  composants passent à on(C&) (précédent T1, HasBorrowedOnMethod) → NON_OPENGL_CONTEXT
+  supprimé (contrôle inatteignable sur shared_ptr nul, précédent exact 4d29842 :
+  ReadAttributes_NullContext + 6 NON_OPENGL_CONTEXT Shader/Pass supprimés au passage
+  on(C&)) ; les 3 tests composant nul (SetterTests:66-72, BinderTests:73-82,
+  UnbinderTests:45-54) remplacés par static_asserts négatifs au motif (on(nullptr) et
+  on(shared_ptr<C>) non invocables, paire minimale) ; le rejet typé du « pas de
+  contexte » est porté par NULL_CONTEXT au constructeur du wrapper + FREED_CONTEXT
+  moved-from ; BUFFER_ID_NOT_SET conservé tel quel. Rejets considérés à (D) surcharge
+  morte en production et (P) on(C*) divergent de T1.
 - **A4 (T2) ownership unique IAttribute + virtuals bind/unbind en emprunt** ;
   MockAttribute adapté même règle que T1.
 - **A5 (T2) GL réel (nouveau, label opengl, OpenGLComponentTests.hpp 3.3 core)** :
