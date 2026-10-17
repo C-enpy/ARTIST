@@ -32,6 +32,8 @@ public:
         // verification always reports before the run summary is finalized.
         mock::MockSetter<int>::reset();
         mock::MockSetter<std::shared_ptr<int>>::reset();
+        mock::MockSetter<float>::reset();
+        mock::MockSetter<std::shared_ptr<float>>::reset();
         mock::MockBinder<Classic>::reset();
         mock::MockUnbinder<Classic>::reset();
     }
@@ -90,6 +92,25 @@ TEST_F(AttributeTest, SetTest)
     ASSERT_NE(nullptr, stored);
     ASSERT_EQ(value, stored);
     ASSERT_EQ(1, *stored);
+}
+
+TEST_F(AttributeTest, SetFloatDispatchesByElementType)
+{
+    auto attributeContext = std::make_unique<api::MockOpenGL::AttributeContext>();
+    auto &ownedContext = *attributeContext;
+    pipeline::Attribute<api::MockOpenGL, Classic> attribute(std::move(attributeContext));
+    auto const value = std::make_shared<float>(0.5f);
+
+    // D2: the key is float, not the shared_ptr<float> stored in the context.
+    EXPECT_CALL(*mock::MockSetter<float>::instance(), mockOn(::testing::Ref(ownedContext))).Times(1);
+    EXPECT_CALL(*mock::MockSetter<std::shared_ptr<float>>::instance(), mockOn(::testing::_)).Times(0);
+
+    ASSERT_NO_THROW(attribute.set(value));
+
+    auto const stored = ownedContext.getValue<float>();
+    ASSERT_NE(nullptr, stored);
+    EXPECT_EQ(value, stored);
+    EXPECT_EQ(0.5f, *stored);
 }
 
 TEST_F(AttributeTest, GetContextTest)

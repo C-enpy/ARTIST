@@ -170,6 +170,31 @@ TEST_F(UniformReaderTests, ReadUniforms_ReflectedArraySizeIsStored)
     EXPECT_EQ(passContext.getUniforms().at("arrayUniform[0]")->getContext().getGLSize(), 2u);
 }
 
+/// Characterization only: a failed reflection is not an atomic generation swap.
+TEST_F(UniformReaderTests, ReadUniforms_LateFailureKeepsPublishedPrefixAndPreviousEntries)
+{
+    context::OpenGLPassContext passContext;
+    passContext.setPassID(1);
+    reflect({"staleUniform", "reloadedUniform"}, false, 2);
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
+    ASSERT_EQ(2u, passContext.getUniforms().size());
+    const auto *staleUniform = passContext.getUniforms().at("staleUniform").get();
+    ASSERT_EQ(2u, passContext.getUniforms().at("reloadedUniform")->getContext().getGLSize());
+    mock::opengl::glFunctionMock::reset();
+
+    // A different size makes the new prefix distinguishable from the old entry.
+    reflect({"reloadedUniform", "reloadedUniform"}, false, 3);
+    expectSpecificError([&] { pass::OpenGLPassUniformReader<Classic>::on(passContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::DUPLICATE_NAME"));
+
+    ASSERT_EQ(2u, passContext.getUniforms().size());
+    ASSERT_TRUE(passContext.getUniforms().contains("staleUniform"));
+    ASSERT_TRUE(passContext.getUniforms().contains("reloadedUniform"));
+    EXPECT_EQ(staleUniform, passContext.getUniforms().at("staleUniform").get());
+    EXPECT_EQ(2u, passContext.getUniforms().at("staleUniform")->getContext().getGLSize());
+    EXPECT_EQ(3u, passContext.getUniforms().at("reloadedUniform")->getContext().getGLSize());
+}
+
 class UniformReaderInvalidSizeTests : public UniformReaderTests,
     public ::testing::WithParamInterface<GLint> {};
 
