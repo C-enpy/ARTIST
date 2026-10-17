@@ -96,5 +96,30 @@
     "scope": "Update current state, incidents, selection pointer and archive addendum without altering historical contract body or raw reports",
     "indexing": "Collection-scoped artist-wiki update/embed and retrieval verification after documentation integration, result recorded separately",
     "remaining_findings": "Loader/ShaderLoader shuffled-order failures retained for separately authorized follow-up; no implicit scope expansion"
+  },
+  "f7_t2_followup": {
+    "appended": "2026-10-17; every key above keeps its b9c90fd-era value and remains the historical record",
+    "status": "Author output of F7 option A task T2 (task_mvcebdf3_001s_58nvmt, pool-6); not integrated and not independently reviewed when written; the lead reviews the diff before T3",
+    "base": "cb9f2688dcb268a430c37cb66de3bd3aa31dd843",
+    "branch": "ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6",
+    "cause": "The effective MockSetter<shared_ptr<int>> observed at b9c90fd was the hard-coded IAttribute::set dispatch key Setter<std::shared_ptr<int>> (Attribute.hpp:88,90 at cb9f268), not an oracle choice. Production fix D2 keys the dispatch on Setter<T>.",
+    "red_oracle_only": "Production unchanged, only test files modified: MockSetter<int> Times(1) never called and MockSetter<shared_ptr<int>> Times(0) called once, both reported inside the test before the GoogleTest summary; CTest exit 8, JUnit 4 cases / 1 failure. Real GL: set<int> and set<glm::vec3> threw ERROR::ATTRIBUTE::SET::TYPE_MISMATCH, 2/2 failed",
+    "red_binary_sha256": "d72af41cafa684e5eb563a277943da04d029ecf3e82cdcece577d82b7bb41611",
+    "red_junit_sha256": {
+      "unit": "a86a4072b37e46f0ff87224aed36a76f8948b5f4bb37c9a1471f0513988f0b77",
+      "opengl": "6fe7a4e6f3dab3e529b04d0be2d2d03e25a64247ba3e51a8f6c56cc9476e5024"
+    },
+    "final_oracle": "MockSetter<int>::mockOn(Ref(owned context)) Times(1); MockSetter<shared_ptr<int>> Times(0); ASSERT_NO_THROW(set); stored value non-null, same object, equal to 1. b9c90fd TearDown (four singletons verified and cleared without short-circuit) unchanged; its code comment rewritten without history",
+    "author_results": {
+      "discovery": "249 = 207 unit + 42 opengl, fresh after re-glob",
+      "unit": "207/207",
+      "opengl": "42/42 on a real OpenGL 3.3 core context",
+      "junit_output_limit": 65536,
+      "unit_junit_sha256": "f0e5fc04fd0c6d986005a031612aedd2d752d9bc0ff1db7b509e98eee86c0789",
+      "opengl_junit_sha256": "24944197dda25dd025c78262e5844d250f45b9f995a8f4f680b7db21ccb2e1fd"
+    },
+    "historical_record": "known-incidents.md lines 440-471 byte-identical to the cb9f268 blob (sha256 ff4e27b51b51e86d294706538c56958589256aabf2eb98ef116b6bf42c081523 over 2310 bytes); addendum appended after them",
+    "evidence": "out/mission-f7/t2/ (t2-slice-note.md, logs, JUnit, preserved RED binaries red-b/, red-a/, red-n/)",
+    "limits": "No ASan, shuffle, independent review or QA for T2 yet; the historical FAIL and the Loader/ShaderLoader shuffle findings are unchanged"
   }
 }

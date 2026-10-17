@@ -15,9 +15,11 @@
 #pragma once
 
 #include <memory>
+#include <utility>
 #include <graphic/Api.hpp>
 #include <graphic/context/AttributeContext.hpp>
 #include <graphic/validator/ComponentConcept.hpp>
+#include <common/exception/TraceableException.hpp>
 
 namespace artist::graphic::pipeline
 {
@@ -37,13 +39,29 @@ namespace artist::graphic::pipeline
     public:
         virtual ~IAttribute() = default;
 
-        // Constructor
-        explicit IAttribute(std::shared_ptr<typename API::AttributeContext> context)
-            : m_context(context) {}
+        /**
+         * @brief Takes unique ownership of an API-specific attribute context.
+         *
+         * @throws ERROR::ATTRIBUTE::NULL_CONTEXT if `context` is null.
+         */
+        explicit IAttribute(std::unique_ptr<typename API::AttributeContext> context) : m_context(std::move(context))
+        {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::ATTRIBUTE::NULL_CONTEXT");
+            }
+        }
 
-        IAttribute() : IAttribute(std::make_shared<typename API::AttributeContext>())
+        IAttribute() : IAttribute(std::make_unique<typename API::AttributeContext>())
         {
         }
+
+        IAttribute(const IAttribute &) = delete;
+        IAttribute &operator=(const IAttribute &) = delete;
+
+        /// The source becomes moved-from: any further access throws ERROR::ATTRIBUTE::FREED_CONTEXT.
+        IAttribute(IAttribute &&) = default;
+        IAttribute &operator=(IAttribute &&) = default;
 
         /**
          * @brief Binds the attribute.
@@ -54,7 +72,7 @@ namespace artist::graphic::pipeline
          */
         void bind()
         {
-            bind(m_context);
+            bind(ctx());
         }
 
         /**
@@ -83,11 +101,12 @@ namespace artist::graphic::pipeline
         template <typename T>
         void set(std::shared_ptr<T> value)
         {
-            m_context->template setValue<T>(value);
+            auto &context = ctx();
+            context.template setValue<T>(value);
 
-            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Setter<std::shared_ptr<int>>>)
+            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Setter<T>>)
             {
-                API::AttributeContext::template Setter<std::shared_ptr<int>>::on(m_context);
+                API::AttributeContext::template Setter<T>::on(context);
             }
             else
             {
@@ -104,25 +123,34 @@ namespace artist::graphic::pipeline
          */
         void unbind()
         {
-            unbind(m_context);
+            unbind(ctx());
         }
 
         /**
-         * @brief Retrieves the attribute context.
+         * @brief Borrows the owned attribute context.
          *
-         * @return A shared pointer to the attribute context.
+         * The reference must not outlive this attribute.
          */
-        [[nodiscard]] virtual std::shared_ptr<typename API::AttributeContext> getContext() const
+        [[nodiscard]] virtual typename API::AttributeContext &getContext() const
         {
-            return m_context;
+            return ctx();
         }
 
     protected:
-        virtual void unbind(std::shared_ptr<typename API::AttributeContext> context) = 0;
-        virtual void bind(std::shared_ptr<typename API::AttributeContext> context) = 0;
+        virtual void unbind(typename API::AttributeContext &context) = 0;
+        virtual void bind(typename API::AttributeContext &context) = 0;
 
     private:
-        std::shared_ptr<typename API::AttributeContext> m_context;
+        [[nodiscard]] typename API::AttributeContext &ctx() const
+        {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::ATTRIBUTE::FREED_CONTEXT");
+            }
+            return *m_context;
+        }
+
+        std::unique_ptr<typename API::AttributeContext> m_context;
     };
 
     /**
@@ -147,7 +175,7 @@ namespace artist::graphic::pipeline
         using IAttribute<API>::set;
 
     protected:
-        void bind(std::shared_ptr<typename API::AttributeContext> context) override
+        void bind(typename API::AttributeContext &context) override
         {
             if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Binder<PROFILE>>)
             {
@@ -155,7 +183,7 @@ namespace artist::graphic::pipeline
             }
         }
 
-        void unbind(std::shared_ptr<typename API::AttributeContext> context) override
+        void unbind(typename API::AttributeContext &context) override
         {
             if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Unbinder<PROFILE>>)
             {

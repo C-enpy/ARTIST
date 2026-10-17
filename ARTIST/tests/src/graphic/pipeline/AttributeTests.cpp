@@ -40,9 +40,9 @@ public:
 TEST_F(AttributeTest, BindTest)
 {
     // Arrange
-    auto attributeContext = std::make_shared<api::MockOpenGL::AttributeContext>();
+    auto attributeContext = std::make_unique<api::MockOpenGL::AttributeContext>();
 
-    pipeline::Attribute<api::MockOpenGL, Classic> attribute(attributeContext);
+    pipeline::Attribute<api::MockOpenGL, Classic> attribute(std::move(attributeContext));
 
     // Expect calls
     EXPECT_CALL(*mock::MockBinder<Classic>::instance(), mockOn(::testing::_)).Times(1);
@@ -54,9 +54,9 @@ TEST_F(AttributeTest, BindTest)
 TEST_F(AttributeTest, UnbindTest)
 {
     // Arrange
-    auto attributeContext = std::make_shared<api::MockOpenGL::AttributeContext>();
+    auto attributeContext = std::make_unique<api::MockOpenGL::AttributeContext>();
 
-    pipeline::Attribute<api::MockOpenGL, Classic> attribute(attributeContext);
+    pipeline::Attribute<api::MockOpenGL, Classic> attribute(std::move(attributeContext));
 
     // Expect calls
     EXPECT_CALL(*mock::MockUnbinder<Classic>::instance(), mockOn(::testing::_)).Times(1);
@@ -68,25 +68,25 @@ TEST_F(AttributeTest, UnbindTest)
 TEST_F(AttributeTest, SetTest)
 {
     // Arrange
-    auto attributeContext = std::make_shared<api::MockOpenGL::AttributeContext>();
+    auto attributeContext = std::make_unique<api::MockOpenGL::AttributeContext>();
+    auto &ownedContext = *attributeContext;
 
-    pipeline::Attribute<api::MockOpenGL, Classic> attribute(attributeContext);
+    pipeline::Attribute<api::MockOpenGL, Classic> attribute(std::move(attributeContext));
 
     auto const value = std::make_shared<int>(1);
 
     // Expect calls
-    // IAttribute::set invokes the hardcoded specialization
-    // API::AttributeContext::Setter<std::shared_ptr<int>> (Attribute.hpp:88-91),
-    // so the observable component is MockSetter<std::shared_ptr<int>>, not
-    // MockSetter<int>. The call count stays Times(1) and the context matcher
-    // enforces identity; no expectation is removed or relaxed.
-    EXPECT_CALL(*mock::MockSetter<std::shared_ptr<int>>::instance(), mockOn(attributeContext)).Times(1);
+    // set<T> dispatches to API::AttributeContext::Setter<T>, keyed by the element
+    // type: MockSetter<int> runs once on this context, while the setter keyed by
+    // the storage type, Setter<std::shared_ptr<int>>, must never run.
+    EXPECT_CALL(*mock::MockSetter<int>::instance(), mockOn(::testing::Ref(ownedContext))).Times(1);
+    EXPECT_CALL(*mock::MockSetter<std::shared_ptr<int>>::instance(), mockOn(::testing::_)).Times(0);
 
     // Act
     ASSERT_NO_THROW(attribute.set(value));
 
     // The context kept the parameter: int type, value 1, same stored object.
-    auto const stored = attributeContext->getValue<int>();
+    auto const stored = ownedContext.getValue<int>();
     ASSERT_NE(nullptr, stored);
     ASSERT_EQ(value, stored);
     ASSERT_EQ(1, *stored);
@@ -95,10 +95,11 @@ TEST_F(AttributeTest, SetTest)
 TEST_F(AttributeTest, GetContextTest)
 {
     // Arrange
-    auto attributeContext = std::make_shared<api::MockOpenGL::AttributeContext>();
+    auto attributeContext = std::make_unique<api::MockOpenGL::AttributeContext>();
+    auto *const ownedContext = attributeContext.get();
 
-    pipeline::Attribute<api::MockOpenGL, Classic> attribute(attributeContext);
+    pipeline::Attribute<api::MockOpenGL, Classic> attribute(std::move(attributeContext));
 
     // Act
-    ASSERT_EQ(attributeContext, attribute.getContext());
+    ASSERT_EQ(ownedContext, &attribute.getContext());
 }

@@ -155,14 +155,14 @@ TEST_F(PassTest, GetAttributes)
 {
     // Arrange
     auto mockShader = std::make_unique<MockShader<api::MockOpenGL>>();
-    auto mockAttribute = std::make_shared<MockAttribute<api::MockOpenGL>>();
+    auto mockAttribute = std::make_unique<MockAttribute<api::MockOpenGL>>();
     std::vector<std::unique_ptr<pipeline::IShader<api::MockOpenGL>>> shaders;
     shaders.push_back(std::move(mockShader));
     pipeline::Pass<api::MockOpenGL, Classic> pass(std::move(shaders));
 
     // Expect calls
     EXPECT_CALL(api::MockOpenGL::PassContext::AttributeReader<Classic>::instance(), mockOn(::testing::_)).WillOnce(::testing::Invoke([&](context::PassContext<api::MockOpenGL> &context)
-                                                                                                                                      { context.addAttribute("test", mockAttribute); }));
+                                                                                                                                      { context.addAttribute("test", std::move(mockAttribute)); }));
 
     pass.load();
     // Act

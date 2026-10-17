@@ -470,6 +470,39 @@ test** et **ne réexécute rien** ; les statuts ci-dessous complètent, sans
   `_meta/session-2026-10-17-attribute-oracle-plan.json` ; fiche courte :
   [[architecture/next-mission|next-mission]].
 
+#### Addendum F7 T2 (2026-10-17) — oracle `SetTest` réaligné sur `Setter<T>`
+
+Ajout postérieur : la section ci-dessus reste l'état vérifié à `b9c90fd`, sans
+réécriture. **Sortie auteur** de la tâche T2 de F7 option A
+(`task_mvcebdf3_001s_58nvmt`, base `cb9f268`, branche
+`ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6`) :
+**ni intégrée ni revue indépendamment** à la rédaction ; le lead relit le diff
+avant T3.
+
+- Cause : `MockSetter<shared_ptr<int>>`, observé par `b9c90fd`, venait de la
+  clé figée de `IAttribute::set` (`Setter<std::shared_ptr<int>>`,
+  `Attribute.hpp:88,90` à `cb9f268`), pas d'un choix d'oracle. Le correctif de
+  production D2 indexe le dispatch sur `Setter<T>` : l'observateur effectif de
+  `SetTest` devient `MockSetter<int>`.
+- RED-B, oracle seul, production intacte : `MockSetter<int>` `Times(1)` jamais
+  appelé et `MockSetter<shared_ptr<int>>` `Times(0)` appelé une fois, tous deux
+  signalés avant le résumé GoogleTest ; CTest exit 8, JUnit 4 cas / 1 échec.
+  Binaire préservé `out/mission-f7/t2/red-b/ArtistLib_tests.exe`
+  (`D72AF41C…1611`). Sur GL réel, la même clé levait `TYPE_MISMATCH` pour
+  `int` et `glm::vec3` (2/2).
+- Oracle final : `MockSetter<int>::mockOn(Ref(contexte possédé))` `Times(1)`,
+  `MockSetter<shared_ptr<int>>` `Times(0)`, `ASSERT_NO_THROW`, valeur stockée
+  non nulle, même objet, égale à 1. Le `TearDown` de `b9c90fd` est inchangé ;
+  son commentaire de code est réécrit sans historique, conservé ici.
+- Résultats auteur sur le diff final : 207/207 unit et 42/42 OpenGL réels,
+  découverte fraîche 249, limite de sortie JUnit 65536 ; ni ASan ni shuffle.
+  Le FAIL historique n'est pas requalifié ; les réserves Loader/ShaderLoader
+  ci-dessous restent ouvertes. Les autres défauts établis par RED causal dans
+  T2 (taille d'un pointeur transmise à `glBufferData`, valeur nulle transmise
+  au driver, déplacement implicite supprimé par le destructeur virtuel) sont
+  décrits dans `out/mission-f7/t2/t2-slice-note.md`. Manifeste : clé
+  `f7_t2_followup` de `_meta/session-2026-10-17-attribute-oracle-validation.json`.
+
 ### Ordre des fixtures Loader/ShaderLoader — FAIL préexistant, non corrigé
 
 L'essai G1 de shuffle du binaire CPU complet révèle neuf cas Loader/ShaderLoader

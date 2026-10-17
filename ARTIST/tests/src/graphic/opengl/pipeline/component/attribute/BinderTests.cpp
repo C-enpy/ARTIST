@@ -7,15 +7,12 @@
 #include <graphic/Api.hpp>
 #include <graphic/opengl/context/AttributeContext.hpp>
 #include <graphic/opengl/pipeline/component/attribute/Binder.hpp>
-#include <common/exception/TraceableException.hpp>
-#include <TestUtils.hpp>
 
 namespace api = artist::graphic::api;
 namespace mock = artist::mock;
 namespace context = artist::graphic::opengl::context;
 namespace attribute = artist::graphic::opengl::pipeline::component::attribute;
 using artist::graphic::opengl::profile::Attribute::Classic;
-using artist::test::utils::expectSpecificError;
 
 class AttributeBinderTests : public ::testing::Test
 {
@@ -43,7 +40,7 @@ TEST_F(AttributeBinderTests, BindAttributeTest_createBuffer)
                                     { *buffer = 42; }));
 
     // Act
-    ASSERT_NO_THROW(binder->on(attributeContext));
+    ASSERT_NO_THROW(binder->on(*attributeContext));
 
     // Assert
     ASSERT_EQ(attributeContext->getBufferID(), 42);
@@ -64,21 +61,10 @@ TEST_F(AttributeBinderTests, BindAttributeTest_bindBuffer)
         .Times(1);
 
     // Act
-    ASSERT_NO_THROW(binder->on(attributeContext));
+    ASSERT_NO_THROW(binder->on(*attributeContext));
 
     // Assert
     ASSERT_EQ(attributeContext->getBufferID(), 42);
-}
-
-TEST_F(AttributeBinderTests, BindAttributeTest_invalidContext)
-{
-    // Arrange
-    auto binder = std::make_shared<attribute::OpenGLBinder<Classic>>();
-
-    // Act & Assert
-    expectSpecificError([&binder]()
-                        { binder->on(nullptr); },
-                        artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::SET::NON_OPENGL_CONTEXT")));
 }
 
 #endif // __mock_gl__

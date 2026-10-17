@@ -156,7 +156,7 @@ namespace artist::graphic::pipeline
         /**
          * @brief Returns a const reference to the map of attributes in the pass.
          */
-        [[nodiscard]] virtual const std::unordered_map<std::string, std::shared_ptr<IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getAttributes() const
+        [[nodiscard]] virtual const std::unordered_map<std::string, std::unique_ptr<IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getAttributes() const
         {
             return ctx().getAttributes();
         }
@@ -183,9 +183,8 @@ namespace artist::graphic::pipeline
          * The pass owns this context uniquely: callers borrow it by reference
          * and must not extend its lifetime beyond the pass. A moved-from pass
          * rejects this borrowing accessor with ERROR::PASS::FREED_CONTEXT,
-         * exactly like `ctx()`. Uniforms and their contexts are owned
-         * uniquely too; the Attribute map and the contexts of its wrappers
-         * remain shared.
+         * exactly like `ctx()`. Uniforms, attributes and their contexts are
+         * owned uniquely too.
          */
         [[nodiscard]] virtual typename API::PassContext &getContext() const
         {

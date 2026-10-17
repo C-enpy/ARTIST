@@ -58,14 +58,19 @@ namespace artist::graphic::context
         }
 
         /**
-         * @brief Add attribute to the pass.
+         * @brief Take unique ownership of an attribute in the pass.
          *
-         * @param name Name of the attribute to add.
-         * @param attribute Attribute to add.
+         * @param name Name of the attribute; an attribute already registered under it is replaced.
+         * @param attribute Attribute to own.
+         * @throws ERROR::PASS::NULL_ATTRIBUTE if `attribute` is null; the attributes are left unchanged.
          */
-        void addAttribute(const std::string &name, std::shared_ptr<pipeline::IAttribute<API>> attribute)
+        void addAttribute(const std::string &name, std::unique_ptr<pipeline::IAttribute<API>> attribute)
         {
-            m_attributes[name] = attribute;
+            if (!attribute)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::PASS::NULL_ATTRIBUTE");
+            }
+            m_attributes[name] = std::move(attribute);
         }
 
         /**
@@ -105,15 +110,15 @@ namespace artist::graphic::context
         }
 
         /**
-         * @brief Get the attribute with the given name.
+         * @brief Borrow the attribute with the given name.
          * @param name Name of the attribute to get.
-         * @return Attribute with the given name.
+         * @return Borrowed attribute owned by the pass, or nullptr if no attribute has this name.
          */
-        [[nodiscard]] std::shared_ptr<pipeline::IAttribute<API>> getAttribute(const std::string &name) const
+        [[nodiscard]] pipeline::IAttribute<API> *getAttribute(const std::string &name) const
         {
             if (m_attributes.contains(name))
             {
-                return m_attributes.at(name);
+                return m_attributes.at(name).get();
             }
             return nullptr;
         }
@@ -146,10 +151,10 @@ namespace artist::graphic::context
         }
 
         /**
-         * @brief Get the attributes in the pass.
-         * @return Attributes in the pass.
+         * @brief Borrow the attributes owned by the pass.
+         * @return Attributes in the pass, none of them null.
          */
-        [[nodiscard]] const std::unordered_map<std::string, std::shared_ptr<pipeline::IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getAttributes() const
+        [[nodiscard]] const std::unordered_map<std::string, std::unique_ptr<pipeline::IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getAttributes() const
         {
             return m_attributes;
         }
@@ -157,6 +162,6 @@ namespace artist::graphic::context
     private:
         std::vector<std::unique_ptr<pipeline::IShader<API>>> m_shaders;
         std::unordered_map<std::string, std::unique_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_uniforms;
-        std::unordered_map<std::string, std::shared_ptr<pipeline::IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_attributes;
+        std::unordered_map<std::string, std::unique_ptr<pipeline::IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_attributes;
     };
 }

@@ -22,13 +22,9 @@ namespace artist::graphic::opengl::pipeline::component::attribute
     class OpenGLUnbinder<graphic::opengl::profile::Attribute::Classic>
     {
     public:
-        static void on(std::shared_ptr<typename graphic::api::OpenGL::AttributeContext> attribute)
+        static void on(typename graphic::api::OpenGL::AttributeContext &attribute)
         {
-            if (!attribute)
-            {
-                throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::UNBIND::NON_OPENGL_CONTEXT"));
-            }
-            if (attribute->getBufferID() == 0)
+            if (attribute.getBufferID() == 0)
             {
                 throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::UNBIND::BUFFER_ID_NOT_SET"));
             }

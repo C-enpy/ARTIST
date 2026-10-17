@@ -117,10 +117,10 @@ TEST_F(PassTest, AttributeReadingTest)
     // Assuming the shaders have at least one attribute
     ASSERT_FALSE(attributes.empty());
     ASSERT_TRUE(attributes.contains("aPos"));
-    auto attribute = attributes.at("aPos");
+    const auto &attribute = attributes.at("aPos");
     ASSERT_NE(attribute, nullptr);
-    ASSERT_NE(attribute->getContext(), nullptr);
-    ASSERT_EQ(attribute->getContext()->getGLType(), GL_FLOAT_VEC3);
+    ASSERT_NO_THROW((void)attribute->getContext());
+    ASSERT_EQ(attribute->getContext().getGLType(), GL_FLOAT_VEC3);
 }
 
 TEST_F(PassTest, FreeResourcesTest)

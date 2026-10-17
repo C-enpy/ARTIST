@@ -55,14 +55,14 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 GLuint location = glGetAttribLocation(passID, attributeName);
 
                 // Create an Attribute object and store it in the context
-                auto attributeContext = std::make_shared<graphic::api::OpenGL::AttributeContext>();
+                auto attributeContext = std::make_unique<graphic::api::OpenGL::AttributeContext>();
                 attributeContext->setAttributeID(location);
                 attributeContext->setGLSize(size);
                 attributeContext->setGLType(type);
 
                 // Known limitation of OpenGL: Attributes profile are driven by Pass profile
-                auto attribute = std::make_shared<graphic::pipeline::Attribute<graphic::api::OpenGL, graphic::opengl::profile::Attribute::Classic>>(attributeContext);
-                openglContext.addAttribute(std::string(attributeName), attribute);
+                auto attribute = std::make_unique<graphic::pipeline::Attribute<graphic::api::OpenGL, graphic::opengl::profile::Attribute::Classic>>(std::move(attributeContext));
+                openglContext.addAttribute(std::string(attributeName), std::move(attribute));
             }
         }
     };

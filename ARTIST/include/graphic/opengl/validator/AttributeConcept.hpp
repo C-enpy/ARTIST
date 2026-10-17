@@ -19,8 +19,8 @@
 
 namespace artist::graphic::opengl::validator
 {
+    using artist::graphic::validator::HasBorrowedOnMethod;
     using artist::graphic::validator::HasComponent;
-    using artist::graphic::validator::HasOnMethod;
 
     template <typename API, auto PROFILE>
     concept OpenGLAttributeFlow = requires {
@@ -28,8 +28,8 @@ namespace artist::graphic::opengl::validator
         requires HasComponent<typename API::AttributeContext::template Unbinder<PROFILE>>;
         requires HasComponent<typename API::AttributeContext::template Setter<int>>;
 
-        requires HasOnMethod<typename API::AttributeContext::template Binder<PROFILE>, typename API::AttributeContext>;
-        requires HasOnMethod<typename API::AttributeContext::template Unbinder<PROFILE>, typename API::AttributeContext>;
-        requires HasOnMethod<typename API::AttributeContext::template Setter<int>, typename API::AttributeContext>;
+        requires HasBorrowedOnMethod<typename API::AttributeContext::template Binder<PROFILE>, typename API::AttributeContext>;
+        requires HasBorrowedOnMethod<typename API::AttributeContext::template Unbinder<PROFILE>, typename API::AttributeContext>;
+        requires HasBorrowedOnMethod<typename API::AttributeContext::template Setter<int>, typename API::AttributeContext>;
     };
 }

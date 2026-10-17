@@ -16,8 +16,8 @@ namespace artist::mock::graphic::pipeline
         }
 
     protected:
-        MOCK_METHOD(void, bind, (std::shared_ptr<typename API::AttributeContext> context), (override));
-        MOCK_METHOD(void, unbind, (std::shared_ptr<typename API::AttributeContext> context), (override));
+        MOCK_METHOD(void, bind, (typename API::AttributeContext & context), (override));
+        MOCK_METHOD(void, unbind, (typename API::AttributeContext & context), (override));
     };
 
 } // namespace artist::graphic::pipeline

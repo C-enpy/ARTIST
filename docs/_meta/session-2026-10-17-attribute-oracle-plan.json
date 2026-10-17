@@ -47,5 +47,6 @@
     "replay_xml_checked_by_coordinator": "tests=1, failures=1, failure node present",
     "production_and_mock_headers": "Unchanged in author checkpoint; full final identity check still required"
   },
-  "status": "G1 integrated b9c90fd; G2 PASS without findings, G3 targeted176CPU/176ASan and paired controls accepted with137artifact hashes recouped; local G4 documentary closure, no new scope or model-policy change"
+  "status": "G1 integrated b9c90fd; G2 PASS without findings, G3 targeted176CPU/176ASan and paired controls accepted with137artifact hashes recouped; local G4 documentary closure, no new scope or model-policy change",
+  "f7_t2_followup": "Appended 2026-10-17; every key above stays the b9c90fd-era record. F7 option A task T2 (task_mvcebdf3_001s_58nvmt, author output, not integrated or independently reviewed when written) replaces the hard-coded Setter<std::shared_ptr<int>> dispatch key with Setter<T>, so SetTest now expects MockSetter<int> Times(1) and MockSetter<shared_ptr<int>> Times(0), after an oracle-only RED preserved under out/mission-f7/t2/red-b/. Details: key f7_t2_followup of session-2026-10-17-attribute-oracle-validation.json."
 }

@@ -39,18 +39,7 @@ TEST_F(AttributeUnbinderTests, BindAttributeTest_unbindBuffer)
         .Times(1);
 
     // Act
-    ASSERT_NO_THROW(unbinder->on(attributeContext));
-}
-
-TEST_F(AttributeUnbinderTests, BindAttributeTest_nullContext)
-{
-    // Arrange
-    auto unbinder = std::make_shared<attribute::OpenGLUnbinder<Classic>>();
-
-    // Act & Assert
-    expectSpecificError([&unbinder]()
-                        { unbinder->on(nullptr); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::ATTRIBUTE::UNBIND::NON_OPENGL_CONTEXT"));
+    ASSERT_NO_THROW(unbinder->on(*attributeContext));
 }
 
 TEST_F(AttributeUnbinderTests, BindAttributeTest_defaultBindID)
@@ -63,7 +52,7 @@ TEST_F(AttributeUnbinderTests, BindAttributeTest_defaultBindID)
 
     // Expected call
     expectSpecificError([&unbinder, &attributeContext]()
-                        { unbinder->on(attributeContext); },
+                        { unbinder->on(*attributeContext); },
                         artist::common::exception::TraceableException<std::runtime_error>("ERROR::ATTRIBUTE::UNBIND::BUFFER_ID_NOT_SET"));
 }
 

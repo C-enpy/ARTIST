@@ -6,8 +6,8 @@
 namespace artist::graphic::validator
 {
     // Borrowed contract: the component takes `C&` and returns void. This is
-    // the tranche contract (Shader, Pass, Uniform): a borrowed context must not
-    // extend the lifetime of the owner.
+    // the tranche contract (Shader, Pass, Uniform, Attribute): a borrowed
+    // context must not extend the lifetime of the owner.
     template <typename T, typename C>
     concept HasBorrowedOnMethod = requires(C &context) {
         {
@@ -15,9 +15,9 @@ namespace artist::graphic::validator
         } -> std::same_as<void>;
     };
 
-    // Shared contract (legacy call sites outside migrated tranches, e.g.
-    // Attribute components): `static void on(std::shared_ptr<C>)`.
-    // Kept as the original concept so unrelated concepts remain untouched.
+    // Shared contract: `static void on(std::shared_ptr<C>)`. No validator
+    // requires it; contract tests use it to check that a component offers no
+    // shared entry point.
     template <typename T, typename C>
     concept HasOnMethod = requires(std::shared_ptr<C> context) {
         {
