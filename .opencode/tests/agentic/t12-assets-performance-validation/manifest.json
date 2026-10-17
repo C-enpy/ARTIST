@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "lot": "T12",
+  "agents": [
+    { "id": "asset-engineer", "path": ".opencode/agents/asset-engineer.md", "skills": ["artist-asset-cooking"] },
+    { "id": "performance-reviewer", "path": ".opencode/agents/performance-reviewer.md", "skills": ["artist-performance"] }
+  ],
+  "skills": [
+    { "id": "artist-asset-cooking", "path": ".opencode/skills/artist-asset-cooking/SKILL.md" },
+    { "id": "artist-performance", "path": ".opencode/skills/artist-performance/SKILL.md" },
+    { "id": "artist-build-validation", "path": ".opencode/skills/artist-build-validation/SKILL.md" }
+  ],
+  "obligations": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07", "G-08", "T-07"],
+  "requiredLinks": [
+    { "from": ".opencode/agents/asset-engineer.md", "to": ".opencode/skills/artist-asset-cooking/SKILL.md" },
+    { "from": ".opencode/agents/performance-reviewer.md", "to": ".opencode/skills/artist-performance/SKILL.md" },
+    { "from": ".opencode/skills/artist-asset-cooking/SKILL.md", "to": ".opencode/skills/artist-asset-cooking/references/data-contract.md" },
+    { "from": ".opencode/skills/artist-asset-cooking/SKILL.md", "to": ".opencode/skills/artist-asset-cooking/references/geometry.md" },
+    { "from": ".opencode/skills/artist-asset-cooking/SKILL.md", "to": ".opencode/skills/artist-asset-cooking/references/textures.md" },
+    { "from": ".opencode/skills/artist-performance/SKILL.md", "to": ".opencode/skills/artist-performance/references/protocol.md" },
+    { "from": ".opencode/skills/artist-build-validation/SKILL.md", "to": ".opencode/skills/artist-build-validation/references/validation-levels.md" }
+  ],
+  "allowedPaths": [
+    ".opencode/agents/asset-engineer.md",
+    ".opencode/agents/performance-reviewer.md",
+    ".opencode/skills/artist-asset-cooking/SKILL.md",
+    ".opencode/skills/artist-asset-cooking/references/data-contract.md",
+    ".opencode/skills/artist-asset-cooking/references/geometry.md",
+    ".opencode/skills/artist-asset-cooking/references/textures.md",
+    ".opencode/skills/artist-performance/SKILL.md",
+    ".opencode/skills/artist-performance/references/protocol.md",
+    ".opencode/skills/artist-build-validation/SKILL.md",
+    ".opencode/skills/artist-build-validation/references/validation-levels.md",
+    ".opencode/tests/agentic/t12-assets-performance-validation/contract.test.mjs",
+    ".opencode/tests/agentic/t12-assets-performance-validation/manifest.json",
+    ".opencode/tests/agentic/t12-assets-performance-validation/fixtures/scenarios.json",
+    ".opencode/evidence/mission-gpu-qa/t12-result.md"
+  ]
+}

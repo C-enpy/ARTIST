@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "lot": "T08",
+  "agents": [
+    {
+      "id": "metal-backend-engineer",
+      "path": ".opencode/agents/metal-backend-engineer.md",
+      "skills": ["metal-backend", "artist-build-validation"]
+    }
+  ],
+  "skills": [
+    {"id": "metal-backend", "path": ".opencode/skills/metal-backend/SKILL.md"}
+  ],
+  "obligations": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07", "T-07"],
+  "requiredLinks": [
+    {"from": ".opencode/agents/metal-backend-engineer.md", "to": ".opencode/skills/metal-backend/SKILL.md"},
+    {"from": ".opencode/skills/metal-backend/SKILL.md", "to": ".opencode/skills/metal-backend/references/procedures.md"},
+    {"from": ".opencode/skills/metal-backend/SKILL.md", "to": ".opencode/skills/metal-backend/references/sources.md"},
+    {"from": ".opencode/skills/metal-backend/SKILL.md", "to": ".opencode/skills/gpu-shader-compilation/SKILL.md"},
+    {"from": ".opencode/skills/metal-backend/SKILL.md", "to": ".opencode/skills/gpu-resource-lifecycle/SKILL.md"},
+    {"from": ".opencode/skills/metal-backend/SKILL.md", "to": ".opencode/skills/gpu-backend-portability/SKILL.md"},
+    {"from": ".opencode/skills/metal-backend/SKILL.md", "to": ".opencode/skills/artist-build-validation/SKILL.md"}
+  ],
+  "allowedPaths": [
+    ".opencode/agents/metal-backend-engineer.md",
+    ".opencode/skills/metal-backend/SKILL.md",
+    ".opencode/skills/metal-backend/references/procedures.md",
+    ".opencode/skills/metal-backend/references/sources.md",
+    ".opencode/tests/agentic/t08-metal/contract.test.mjs",
+    ".opencode/tests/agentic/t08-metal/manifest.json",
+    ".opencode/evidence/mission-gpu-qa/t08-result.md"
+  ]
+}

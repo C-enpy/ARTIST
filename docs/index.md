@@ -59,6 +59,8 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 
 ## Développer
 
+- [[agentic/gpu-qa-harness|Catalogue GPU et boucle QA]] — 19 responsabilités, runner séparé et limites des preuves statiques/natives.
+
 - [[development/build-and-test|Build et tests]] — toolchain actuelle, blocages connus et commandes conditionnelles.
 - [[development/cpp-guidelines|Conventions C++]] — style observé, contrats, ownership et erreurs.
 - [[development/contributing|Contribuer]] — changement borné et vérification proportionnée.

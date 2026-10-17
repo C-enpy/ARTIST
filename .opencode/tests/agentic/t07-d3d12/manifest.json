@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "lot": "T07",
+  "agents": [
+    {
+      "id": "d3d12-backend-engineer",
+      "path": ".opencode/agents/d3d12-backend-engineer.md",
+      "skills": ["d3d12-backend", "artist-build-validation", "artist-gpu-debug"]
+    }
+  ],
+  "skills": [
+    {
+      "id": "d3d12-backend",
+      "path": ".opencode/skills/d3d12-backend/SKILL.md"
+    }
+  ],
+  "obligations": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07", "T-07"],
+  "requiredLinks": [
+    {
+      "from": ".opencode/agents/d3d12-backend-engineer.md",
+      "to": ".opencode/skills/d3d12-backend/SKILL.md"
+    },
+    {
+      "from": ".opencode/skills/d3d12-backend/SKILL.md",
+      "to": ".opencode/skills/d3d12-backend/references/diagnostic.md"
+    },
+    {
+      "from": ".opencode/skills/d3d12-backend/SKILL.md",
+      "to": ".opencode/skills/d3d12-backend/references/sources.md"
+    }
+  ],
+  "allowedPaths": [
+    ".opencode/agents/d3d12-backend-engineer.md",
+    ".opencode/skills/d3d12-backend/SKILL.md",
+    ".opencode/skills/d3d12-backend/references/diagnostic.md",
+    ".opencode/skills/d3d12-backend/references/sources.md",
+    ".opencode/tests/agentic/t07-d3d12/contract.test.mjs",
+    ".opencode/tests/agentic/t07-d3d12/manifest.json",
+    ".opencode/evidence/mission-gpu-qa/t07-result.md"
+  ]
+}

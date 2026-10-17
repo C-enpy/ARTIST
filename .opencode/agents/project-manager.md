@@ -55,6 +55,12 @@ modèle imposé au profil. Évaluer séparément deux entiers 0–100 :
   synchronisation GPU, compatibilité et qualité des preuves disponibles.
    Ne pas déduire le risque de la priorité, de la confiance ou du score de complexité.
 
+Le risque PM 0–100 reste distinct de la matrice QA impact × probabilité
+(1–5 chacun, produit 1–25) du `qa-planner`. Ne pas convertir l'un dans l'autre :
+QA >= 10 exige déclencheur, blast radius, détection, mitigation et gap ; le seuil
+risque PM >= 50 déclenche la boucle QA du coordinateur, sans modifier les scores,
+la grille approuvée ni les méthodes PM/LLM ou JEV ci-dessous.
+
 Pour une mission native préparée, lire les critères persistés dans son
 `model-policy.json` (ou demander au coordinateur de les fournir) et les appliquer
 aux évaluations de cette mission. Les repères ci-dessus explicitent les dimensions

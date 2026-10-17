@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "source": "docs/agentic/QA.md + t03-contract.md sections 6-8, ruling runner séparé 2026-10-16",
+  "agents": ["qa-planner", "test-engineer", "test-reviewer"],
+  "permissions": [
+    {"action":"*","resource":"*","effect":"deny"},
+    {"action":"read","resource":"*","effect":"allow"},
+    {"action":"glob","resource":"*","effect":"allow"},
+    {"action":"skill","resource":"artist-build-validation","effect":"allow"},
+    {"action":"read","resource":"*.env","effect":"deny"},
+    {"action":"read","resource":"*.env.*","effect":"deny"},
+    {"action":"read","resource":"*.ENV","effect":"deny"},
+    {"action":"read","resource":"*.ENV.*","effect":"deny"},
+    {"action":"read","resource":"*.Env","effect":"deny"},
+    {"action":"read","resource":"*.Env.*","effect":"deny"},
+    {"action":"read","resource":"*.eNv","effect":"deny"},
+    {"action":"read","resource":"*.eNv.*","effect":"deny"},
+    {"action":"read","resource":"*.enV","effect":"deny"},
+    {"action":"read","resource":"*.enV.*","effect":"deny"},
+    {"action":"read","resource":"*.ENv","effect":"deny"},
+    {"action":"read","resource":"*.ENv.*","effect":"deny"},
+    {"action":"read","resource":"*.EnV","effect":"deny"},
+    {"action":"read","resource":"*.EnV.*","effect":"deny"},
+    {"action":"read","resource":"*.eNV","effect":"deny"},
+    {"action":"read","resource":"*.eNV.*","effect":"deny"},
+    {"action":"read","resource":"**/.env*","effect":"deny"},
+    {"action":"read","resource":"**/.ENV*","effect":"deny"},
+    {"action":"edit","resource":"*","effect":"deny"},
+    {"action":"shell","resource":"*","effect":"deny"},
+    {"action":"execute","resource":"*","effect":"deny"},
+    {"action":"subagent","resource":"*","effect":"deny"},
+    {"action":"external_directory","resource":"*","effect":"deny"}
+  ],
+  "common": [
+    {"id":"T-01.portable-pin","phrases":["## Méthode portable","## Pin ARTIST observé","Pin observé","ne réécris pas le profil"]},
+    {"id":"T-06.runner","phrases":["Runner séparé","aucun edit","grant exact natif vérifié","restitution texte/patch","persistance par le lead","tests relus","runner distinct","autonomie dégradée","INCONCLUSIVE"]},
+    {"id":"T-06.tools","phrases":["Code Mode","execute est denied","QMD","Context Mode","digestion au lead","aucun contournement","transport à éprouver","pas une sandbox","Permission.Ruleset"]},
+    {"id":"T-07.candidate","phrases":["HEAD","SHA256","delta","preuve périmée","découverts","exécutés","échoués","skipped"]},
+    {"id":"G-06.evidence","phrases":["executed","static-presence","inference","PASS","FAIL","INCONCLUSIVE","zéro test"]},
+    {"id":"T-01.canon","phrases":["docs/engineering-principles.md","docs/adr/README.md","docs/architecture/correction-plan.md","Proposed / not-started","Accepted / partial","Accepted / verified","PipelineContext","unique_ptr","getPass","IPass<API>&"]},
+    {"id":"T-01.build-pin","phrases":["Conan 2","CMakeDeps","CMakeToolchain","std::format","std::stacktrace","compile_commands.json","ArtistLib_tests","ArtistLib_component_tests","artist_opengl","aucun résultat moteur"]},
+    {"id":"T-01.history","phrases":["433bdbc","e736bba","b00f484","760f4f8","lifetime","bornes","publication","ASAN_OPTIONS"]},
+    {"id":"T-01.fixtures","phrases":["ARTIST/tests/","ARTIST/component-tests/","ARTIST/tests-common/include/","MOCK_GL","OpenGL réel","scripts/build-windows.ps1","ctest --test-dir out/build/windows-msvc-debug -N","--no-tests=error"]}
+  ],
+  "byAgent": {
+    "qa-planner": [
+      {"id":"T-03.risk","phrases":["impact (I)","probabilité (P)","1–5","I × P","jamais l’impact","15–25","10–14","5–9","1–4","≥ 10","déclencheur","blast radius","détection actuelle","mitigation actuelle","gap vide"]},
+      {"id":"T-03.coverage","phrases":["obligations explicites","obligations inférées","nominal","négatif","intent","états","frontières","ordre","idempotence","COVERED","GAP","GAP-accept","GAP-defer","unassessed","blocked","test orphelin","doublon faible"]},
+      {"id":"T-03.budget","phrases":["70–80 %","20–30 %","setup","20–40 %","risque × effort","top 3","gaps bloquants","critères de sortie","décisions ouvertes","avant les auteurs isolés"]},
+      {"id":"T-03.plan-only","phrases":["sans écrire de test","couverture égale","théâtre du risque","one-shot","near-miss","stratégie d’entreprise","décision humaine"]}
+    ],
+    "test-engineer": [
+      {"id":"T-04.generator","phrases":["obligation → risque/invariant → scénario → oracle → code","KEEP / MODIFY / REJECT / DEFER","pas de code avant le plan","generator complète les gaps","auteurs conservent leur TDD","RED → GREEN → REFACTOR","observable","pas d’exception","G-<n>","T-<n>"]},
+      {"id":"T-04.oracle","phrases":["API inventée","mauvais niveau","oracle recopié","même contexte","seed","test ciblé exécuté","attribution au vrai runner","bug de production reste rouge","pas de fix de production"]},
+      {"id":"T-04.healer","phrases":["Healer","test qu’il vient d’écrire","deux auto-réparations maximum","troisième","fixture","helper","ne change pas l’oracle","skip","fonctionnalité cassée"]}
+    ],
+    "test-reviewer": [
+      {"id":"T-05.audit","phrases":["contexte fresh","hors board","input → bug plausible survivant → assertion","pas de finding haut sans scénario","inverser une condition","retirer une validation","retourner un défaut","ignorer une erreur","exécuter deux fois","déplacer une frontière","PASS est valide"]},
+      {"id":"T-05.finding","phrases":["fiabilité","diagnostic","design","lisibilité","API inventée","oracle recopié","symptômes et non verdicts","lignes du plan","assertion affaiblie","borne","vide","doublon","ordre","hors plage"]},
+      {"id":"T-05.boundary","phrases":["pas d’écriture de tests","APPLY","nouvelle autorisation","DEFER_TO: engine-architect","DEFER_TO: correctness-reviewer","DEFER_TO: shader-reviewer","DEFER_TO: performance-reviewer","DEFER_TO: test-engineer","DEFER_TO: qa-planner","briefing texte","pas un second coordinateur"]}
+    ]
+  }
+}

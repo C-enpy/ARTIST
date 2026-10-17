@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "lot": "T10",
+  "agents": [
+    {
+      "id": "gpu-pipeline-engineer",
+      "path": ".opencode/agents/gpu-pipeline-engineer.md",
+      "skills": ["gpu-pipelines"]
+    },
+    {
+      "id": "shader-engineer",
+      "path": ".opencode/agents/shader-engineer.md",
+      "skills": ["gpu-shader-compilation", "artist-performance", "gpu-backend-portability"]
+    },
+    {
+      "id": "gpu-simulation-engineer",
+      "path": ".opencode/agents/gpu-simulation-engineer.md",
+      "skills": ["gpu-compute-simulation", "gpu-pipelines"]
+    }
+  ],
+  "skills": [
+    {"id": "gpu-pipelines", "path": ".opencode/skills/gpu-pipelines/SKILL.md"},
+    {"id": "gpu-shader-compilation", "path": ".opencode/skills/gpu-shader-compilation/SKILL.md"},
+    {"id": "gpu-compute-simulation", "path": ".opencode/skills/gpu-compute-simulation/SKILL.md"}
+  ],
+  "obligations": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07"],
+  "requiredLinks": [
+    {"from": ".opencode/agents/gpu-pipeline-engineer.md", "to": ".opencode/skills/gpu-pipelines/SKILL.md"},
+    {"from": ".opencode/agents/shader-engineer.md", "to": ".opencode/skills/gpu-shader-compilation/SKILL.md"},
+    {"from": ".opencode/agents/shader-engineer.md", "to": ".opencode/skills/artist-performance/SKILL.md"},
+    {"from": ".opencode/agents/shader-engineer.md", "to": ".opencode/skills/gpu-backend-portability/SKILL.md"},
+    {"from": ".opencode/agents/gpu-simulation-engineer.md", "to": ".opencode/skills/gpu-compute-simulation/SKILL.md"},
+    {"from": ".opencode/agents/gpu-simulation-engineer.md", "to": ".opencode/skills/gpu-pipelines/SKILL.md"},
+    {"from": ".opencode/skills/gpu-pipelines/SKILL.md", "to": ".opencode/skills/gpu-pipelines/references/graphics.md"},
+    {"from": ".opencode/skills/gpu-pipelines/SKILL.md", "to": ".opencode/skills/gpu-pipelines/references/compute.md"},
+    {"from": ".opencode/skills/gpu-shader-compilation/SKILL.md", "to": ".opencode/skills/gpu-shader-compilation/references/compilation-abi.md"},
+    {"from": ".opencode/skills/gpu-compute-simulation/SKILL.md", "to": ".opencode/skills/gpu-compute-simulation/references/invariants.md"}
+  ],
+  "allowedPaths": [
+    ".opencode/agents/gpu-pipeline-engineer.md",
+    ".opencode/agents/shader-engineer.md",
+    ".opencode/agents/gpu-simulation-engineer.md",
+    ".opencode/skills/gpu-pipelines/SKILL.md",
+    ".opencode/skills/gpu-pipelines/references/graphics.md",
+    ".opencode/skills/gpu-pipelines/references/compute.md",
+    ".opencode/skills/gpu-shader-compilation/SKILL.md",
+    ".opencode/skills/gpu-shader-compilation/references/compilation-abi.md",
+    ".opencode/skills/gpu-compute-simulation/SKILL.md",
+    ".opencode/skills/gpu-compute-simulation/references/invariants.md",
+    ".opencode/tests/agentic/t10-pipelines-shaders-simulation/contract.test.mjs",
+    ".opencode/tests/agentic/t10-pipelines-shaders-simulation/manifest.json",
+    ".opencode/evidence/mission-gpu-qa/t10-result.md"
+  ]
+}

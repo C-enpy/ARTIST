@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "lot": "T06",
+  "agents": [
+    {
+      "id": "vulkan-backend-engineer",
+      "path": ".opencode/agents/vulkan-backend-engineer.md",
+      "skills": ["vulkan-backend", "artist-build-validation"]
+    }
+  ],
+  "skills": [
+    {
+      "id": "vulkan-backend",
+      "path": ".opencode/skills/vulkan-backend/SKILL.md"
+    }
+  ],
+  "obligations": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07", "T-07"],
+  "requiredLinks": [
+    {
+      "from": ".opencode/agents/vulkan-backend-engineer.md",
+      "to": ".opencode/skills/vulkan-backend/SKILL.md"
+    },
+    {
+      "from": ".opencode/skills/vulkan-backend/SKILL.md",
+      "to": ".opencode/skills/artist-build-validation/SKILL.md"
+    },
+    {
+      "from": ".opencode/skills/vulkan-backend/SKILL.md",
+      "to": ".opencode/skills/vulkan-backend/references/recipes.md"
+    },
+    {
+      "from": ".opencode/skills/vulkan-backend/SKILL.md",
+      "to": ".opencode/skills/vulkan-backend/references/sources.md"
+    }
+  ],
+  "allowedPaths": [
+    ".opencode/agents/vulkan-backend-engineer.md",
+    ".opencode/skills/vulkan-backend/SKILL.md",
+    ".opencode/skills/vulkan-backend/references/recipes.md",
+    ".opencode/skills/vulkan-backend/references/sources.md",
+    ".opencode/tests/agentic/t06-vulkan/contract.test.mjs",
+    ".opencode/tests/agentic/t06-vulkan/manifest.json",
+    ".opencode/evidence/mission-gpu-qa/t06-result.md"
+  ]
+}

@@ -22,3 +22,14 @@ Définis les critères, constate RED pour la bonne raison avant l'implémentatio
 obtiens GREEN puis refactore si utile. Charge artist-build-validation avant les
 builds/tests. Fais intégrer les livrables avant la QA et les consommateurs ;
 termine avec les preuves RED/GREEN, la non-régression et les limites réelles.
+
+Applique `.opencode/agents/orchestrator.md` pour le catalogue GPU et la boucle QA :
+comportement sous contrat OU suite d’intégration étendue OU risque PM >= 50 →
+`qa-planner` avant écriture, plan commité par le lead avant les worktrees auteurs.
+Après TDD et intégration des producteurs, `test-engineer` complète les gaps sans
+remplacer leur RED ; `test-reviewer` fresh hors board puis correction/ré-audit.
+Risque PM 0–100 distinct de QA impact × probabilité 1–5 → 1–25 ; grille inchangée.
+Runner séparé : QA en propositions texte/patch, le lead mandaté persiste, relit et
+exécute avec attribution réelle. Pas d'édition/exécution autonome démontrée, pas
+de grant supposé ni de contournement des permissions/Code Mode. Pour docs/config,
+contrôles de syntaxe/cohérence adaptés, jamais un faux RED comportemental.

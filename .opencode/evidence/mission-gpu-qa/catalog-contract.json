@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "kind": "static-test-oracle",
+  "base": "1821af67ce75f838d2ae35349a1085efa8d3168b",
+  "operatorBase": "82edafee15e42cea142b9b807598420cac84ee06",
+  "authored": "2026-10-16",
+  "nativeStatus": "NOT_RUN",
+  "apis": ["OpenGL", "Vulkan", "D3D12", "Metal"],
+  "implementedBackends": ["OpenGL"],
+  "sources": [
+    ".opencode/evidence/mission-gpu-qa/t03-contract.md",
+    ".opencode/evidence/mission-gpu-qa/qa-plan.md",
+    ".opencode/evidence/mission-gpu-qa/t02-source-inventory.md",
+    ".opencode/evidence/mission-gpu-qa/t02-external-sources.md",
+    ".opencode/evidence/mission-gpu-qa/qa-policy-boundary.md",
+    ".opencode/evidence/mission-gpu-qa/operator-base/manifest.json"
+  ],
+  "limits": [
+    "Oracle manuel dérivé du contrat T03, jamais auto-généré depuis les profils testés.",
+    "Responsabilités et scénarios sont des attentes documentaires, pas un routeur exécutable.",
+    "Nominal, négatif et oracle ci-dessous ne sont pas des expériences GPU exécutées.",
+    "Le manifest union borne la validation en lecture, pas les droits d'écriture T13.",
+    "Découverte historique 23 profils locaux/17 skills/30 profils résolus ne prouve pas chargement, sélection ou permissions.",
+    "Runner séparé décidé ; autonomie et enforcement natif non démontrés."
+  ],
+  "qaLoop": {
+    "triggers": ["contract-behaviour", "extended-integration-suite", "pm-risk-at-least-50"],
+    "pmRiskThreshold": 50,
+    "qaImpactRange": [1, 5],
+    "qaProbabilityRange": [1, 5],
+    "qaFiveFieldsThreshold": 10,
+    "order": ["planner", "lead-commits-plan", "authors-tdd", "integrate-producers", "generator-gaps", "fresh-reviewer-off-board", "re-audit"],
+    "runner": "separate-trusted-lead",
+    "autonomousEditing": false,
+    "nativeEnforcement": "INCONCLUSIVE"
+  },
+  "domains": [
+    {"id":"capabilities","principal":"gpu-portability-engineer","skill":"gpu-capability-detection","nominal":"Feature, limites et formats observés sur device/API identifiés.","negative":"Nom RTX seul ou feature supportée mais non activée.","oracle":"Distinguer observé/supporté/activé/compatible ; fallback ou refus."},
+    {"id":"graphics-pipelines","principal":"gpu-pipeline-engineer","skill":"gpu-pipelines","nominal":"Stages, vertex input, attachments et depth compatibles.","negative":"Format d'attachment ou interface de stage incompatible.","oracle":"Validation des interfaces et états fixes avant preuve de rendu."},
+    {"id":"compute-pipelines","principal":"gpu-pipeline-engineer","skill":"gpu-pipelines","nominal":"Dispatch, workgroups, bindings et cache cohérents.","negative":"Limite workgroup dépassée ou binding absent.","oracle":"Procédure compute distincte, bornes et layout contrôlés ; pas le solveur."},
+    {"id":"shader-compilation","principal":"shader-engineer","skill":"gpu-shader-compilation","nominal":"Source/options/cible/entry point et réflexion ABI épinglés.","negative":"Layout ou entry point discordant malgré compilation.","oracle":"Slang/HLSL/GLSL/MSL et SPIR-V/DXIL ; compile distinct de pipeline/rendu."},
+    {"id":"shader-optimization","principal":"shader-engineer","skill":"artist-performance","nominal":"A/B répété, qualité, options et workload identiques.","negative":"Gain revendiqué sans baseline ou qualité différente.","oracle":"Mesures/dispersion, coût total et revue performance fresh ; aucune vitesse inventée."},
+    {"id":"resources","principal":"gpu-resource-engineer","skill":"gpu-resource-lifecycle","nominal":"Owner/borrow/génération et dernières utilisations suivis.","negative":"Handle périmé ou destruction avec utilisation en vol.","oracle":"Allocation, upload/readback/résidence et retrait après complétion toutes queues."},
+    {"id":"synchronization","principal":"gpu-resource-engineer","skill":"gpu-resource-lifecycle","nominal":"Ledger RAW/WAR/WAW relie ordre, visibilité et queues.","negative":"Barrière globale supposée couvrir un transfert de queue absent.","oracle":"Stages/access/queues et complétion justifiés avant traduction API."},
+    {"id":"render-graph","principal":"render-graph-engineer","skill":"gpu-render-graph","nominal":"DAG shadow/post avec versions et transients ordonnés.","negative":"Cycle, read-before-produce ou aliasing de lifetimes chevauchants.","oracle":"Authoring, plan cook immuable et état frame distincts ; dépendances vérifiables."},
+    {"id":"frame-debugging","principal":"rendering-verifier","skill":"artist-gpu-debug","nominal":"Pass minimale avec entrées/sorties et capture utilisable.","negative":"Capture absente ou mauvais candidat donné comme diagnostic exécuté.","oracle":"Reproduction falsifiable et limites explicites ; aucune correction par reviewer."},
+    {"id":"profiling","principal":"performance-reviewer","skill":"artist-performance","nominal":"CPU submit/GPU/waits/cadence mesurés sur workload fixé.","negative":"Temps CPU utilisé comme temps GPU ou mesure unique.","oracle":"Diagnostic RO répété puis auteur du goulot choisi par le lead."},
+    {"id":"geometry","principal":"asset-engineer","skill":"artist-asset-cooking","nominal":"Indices/tangentes/meshlets/LOD validés au cook.","negative":"Indice hors bornes ou meshlet confondu avec capacité mesh shader.","oracle":"Contrats source/IR/cook/runtime et qualité ; upload séparé."},
+    {"id":"textures","principal":"asset-engineer","skill":"artist-asset-cooking","nominal":"DDS/BC/ASTC, mips, blocs/pitch/offsets cohérents.","negative":"Données tronquées, format non supporté ou DDS implique D3D12.","oracle":"Validation offline dimensions/couleur/layout ; transfert au propriétaire ressources."},
+    {"id":"simulation","principal":"gpu-simulation-engineer","skill":"gpu-compute-simulation","nominal":"Seed/pas de temps et invariants d'un solveur identifiés.","negative":"NaN, instabilité ou simulation confondue avec pipeline compute.","oracle":"Invariant numérique et tolérance motivés ; état runtime et rendu séparés."},
+    {"id":"portability","principal":"gpu-portability-engineer","skill":"gpu-backend-portability","nominal":"Conventions clip/depth/coordonnées/formats explicites.","negative":"Artefact backend masqué par tolérance ou abstraction non représentable.","oracle":"Mapping/fallback annoncé, mêmes entrées et images comparables."},
+    {"id":"validation","principal":"rendering-verifier","skill":"artist-build-validation","nominal":"Candidat, préconditions, oracle et comptes réels conservés.","negative":"Zéro test, skip requis ou preuve périmée présenté PASS.","oracle":"CPU/offline/GPU/image/performance distincts ; manque de preuve INCONCLUSIVE."},
+    {"id":"vulkan","principal":"vulkan-backend-engineer","skill":"vulkan-backend","nominal":"Device/features/queues/descriptors/layouts négociés.","negative":"Feature non activée ou stage/access/layout incompatible.","oracle":"Barriers/semaphores/fences et validation layers conditionnels ; connaissance pas backend moteur."},
+    {"id":"d3d12","principal":"d3d12-backend-engineer","skill":"d3d12-backend","nominal":"Root signatures/heaps/PSO/lists/queues/states/fences cohérents.","negative":"Réutilisation avant fence ou DXC pris pour un device D3D12.","oracle":"Debug layer/GBV/résidence conditionnels ; formats assets restent au cook."},
+    {"id":"metal","principal":"metal-backend-engineer","skill":"metal-backend","nominal":"metal-cpp lifetime/heaps/encoders/families/drawable identifiés.","negative":"MSL produit sous Windows présenté comme exécution Apple.","oracle":"Metal 3/4 gated par SDK/device ; validation native Apple distincte de revue."},
+    {"id":"opengl","principal":"gpu-engineer","skill":"opengl-backend","nominal":"Contexte/thread/profil et VAO/VBO/FBO/états vérifiés.","negative":"Contexte absent, FBO incomplet ou compute présumé en 3.3 core.","oracle":"Compile/link, completeness, sync et destruction sous contexte réel identifié."}
+  ],
+  "scenarios": [
+    {"id":"S01","prompt":"Créer un graphics pipeline Vulkan avec depth testing.","principal":"gpu-pipeline-engineer","minimumSkills":["gpu-pipelines","vulkan-backend"],"negative":"Ne pas choisir automatiquement le backend engineer seul ni charger tous les skills.","status":"NOT_RUN"},
+    {"id":"S02","prompt":"Diagnostiquer un shader HLSL coûteux.","principal":"shader-engineer","minimumSkills":["artist-performance","gpu-shader-compilation"],"negative":"Baseline/cible absentes : demander, ne pas annoncer un gain.","status":"NOT_RUN"},
+    {"id":"S03","prompt":"Corriger une resource barrier D3D12.","principal":"gpu-resource-engineer","minimumSkills":["gpu-resource-lifecycle","d3d12-backend"],"negative":"Pas de barrière universelle sans ledger de hazards.","status":"NOT_RUN"},
+    {"id":"S04","prompt":"Porter un shader Vulkan vers Metal.","principal":"shader-engineer","minimumSkills":["gpu-shader-compilation","gpu-backend-portability"],"negative":"Ne pas annoncer compilation Apple sous Windows ; Metal natif seulement si ABI/capacités touchées.","status":"NOT_RUN"},
+    {"id":"S05","prompt":"Concevoir des particules compute.","principal":"gpu-simulation-engineer","minimumSkills":["gpu-compute-simulation","gpu-pipelines"],"negative":"API/contraintes absentes : clarification, pas d'API inventée.","status":"NOT_RUN"},
+    {"id":"S06","prompt":"Analyser une frame RenderDoc incorrecte.","principal":"rendering-verifier","minimumSkills":["artist-gpu-debug"],"negative":"Capture/outils absents : INCONCLUSIVE, aucune installation/correction implicite.","status":"NOT_RUN"},
+    {"id":"S07","prompt":"Préparer une texture DDS compressée.","principal":"asset-engineer","minimumSkills":["artist-asset-cooking"],"negative":"DDS ne suffit pas à choisir D3D12 ni à autoriser un upload.","status":"NOT_RUN"},
+    {"id":"S08","prompt":"Planifier un render graph shadow puis post-processing.","principal":"render-graph-engineer","minimumSkills":["gpu-render-graph","artist-static-boundary"],"negative":"Pas de spécialiste ressources ajouté sans hazard concret ; cycle rejeté.","status":"NOT_RUN"},
+    {"id":"S09","prompt":"Reproduire un rendu OpenGL noir.","principal":"gpu-engineer","minimumSkills":["artist-gpu-debug","opengl-backend"],"negative":"Reproduction avant profiling ou migration vers une autre API.","status":"NOT_RUN"},
+    {"id":"S10","prompt":"Identifier le goulot GPU de cette frame.","principal":"performance-reviewer","minimumSkills":["artist-performance"],"negative":"Diagnostic RO, pas de correctif par reviewer ni gain sans mesure.","status":"NOT_RUN"},
+    {"id":"S11","prompt":"Vérifier la disponibilité des mesh shaders.","principal":"gpu-portability-engineer","minimumSkills":["gpu-capability-detection"],"negative":"Nom RTX insuffisant : demander API/device et distinguer activation/support.","status":"NOT_RUN"},
+    {"id":"S12","prompt":"Isoler un artefact visible sur un seul backend.","principal":"gpu-portability-engineer","minimumSkills":["gpu-backend-portability","artist-gpu-debug"],"negative":"Backends/images/conventions absents : demander avant conclusion.","status":"NOT_RUN"}
+  ]
+}

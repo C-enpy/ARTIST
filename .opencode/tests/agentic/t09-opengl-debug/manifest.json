@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "lot": "T09",
+  "agents": [
+    {
+      "id": "gpu-engineer",
+      "path": ".opencode/agents/gpu-engineer.md",
+      "skills": ["artist-gpu-debug", "opengl-backend", "artist-build-validation"]
+    },
+    {
+      "id": "rendering-verifier",
+      "path": ".opencode/agents/rendering-verifier.md",
+      "skills": ["artist-gpu-debug", "artist-build-validation"]
+    }
+  ],
+  "skills": [
+    { "id": "opengl-backend", "path": ".opencode/skills/opengl-backend/SKILL.md" },
+    { "id": "artist-gpu-debug", "path": ".opencode/skills/artist-gpu-debug/SKILL.md" }
+  ],
+  "obligations": ["G-01", "G-02", "G-03", "G-04", "G-05", "G-06", "G-07", "T-06", "T-07"],
+  "requiredLinks": [
+    { "from": ".opencode/agents/gpu-engineer.md", "to": ".opencode/skills/artist-gpu-debug/SKILL.md" },
+    { "from": ".opencode/agents/gpu-engineer.md", "to": ".opencode/skills/opengl-backend/SKILL.md" },
+    { "from": ".opencode/agents/gpu-engineer.md", "to": ".opencode/skills/artist-build-validation/SKILL.md" },
+    { "from": ".opencode/agents/rendering-verifier.md", "to": ".opencode/skills/artist-gpu-debug/SKILL.md" },
+    { "from": ".opencode/agents/rendering-verifier.md", "to": ".opencode/skills/artist-build-validation/SKILL.md" },
+    { "from": ".opencode/skills/opengl-backend/SKILL.md", "to": ".opencode/skills/opengl-backend/references/context-lifetime.md" },
+    { "from": ".opencode/skills/opengl-backend/SKILL.md", "to": ".opencode/skills/artist-gpu-debug/SKILL.md" },
+    { "from": ".opencode/skills/artist-gpu-debug/SKILL.md", "to": ".opencode/skills/artist-gpu-debug/references/frame-capture.md" },
+    { "from": ".opencode/skills/artist-gpu-debug/SKILL.md", "to": ".opencode/skills/opengl-backend/SKILL.md" },
+    { "from": ".opencode/skills/artist-gpu-debug/SKILL.md", "to": ".opencode/skills/artist-build-validation/SKILL.md" }
+  ],
+  "allowedPaths": [
+    ".opencode/agents/gpu-engineer.md",
+    ".opencode/agents/rendering-verifier.md",
+    ".opencode/skills/opengl-backend/**",
+    ".opencode/skills/artist-gpu-debug/**",
+    ".opencode/tests/agentic/t09-opengl-debug/**",
+    ".opencode/evidence/mission-gpu-qa/t09-result.md"
+  ]
+}
