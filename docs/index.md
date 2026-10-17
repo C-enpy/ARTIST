@@ -35,22 +35,24 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[adr/README|Registre des ADR]] — huit contrats avec statuts, périmètres et preuves.
 - [[architecture/correction-plan|Ordre de correction]] — build reproductible, ownership, exécution, bindings, mesures.
 - [[architecture/missions/2026-10-15-f5-gl-diagnostics|Mission F5 archivée]] — diagnostics GL vides compilation/link bornés, RED causal et validation indépendante (143/143 distincts, 121 ASan distincts) dans le périmètre Windows Debug.
-- [[architecture/missions/2026-10-15-failure-contracts|Mission C archivée]] — bornage des contrats d'échec (Q1 et Q3 traités ; F4 pour l'accesseur ; F8 partiel ; F10 conservé), RED causal, 165/165 normaux et 143 ASan distincts dans le périmètre Windows Debug à `e736bba` ; `getStackTraceString` ouvert.
-- [[architecture/next-mission|Fiche de sélection de C]] — prochaine mission : AUCUNE. Pipeline recommandé mais non sélectionné ; ordre des travaux dans le plan de correction.
+- [[architecture/missions/2026-10-15-failure-contracts|Mission C archivée]] — bornage des contrats d'échec (Q1 et Q3 traités ; F4 pour l'accesseur ; F8 partiel ; F10 conservé), RED causal, 165/165 normaux et 143 ASan distincts dans le périmètre Windows Debug à `e736bba` ; `getStackTraceString` ouvert (traité depuis par S-GSS, mission Pipeline A1+A2).
+- [[architecture/missions/2026-10-16-pipeline-ownership|Mission Pipeline A1+A2 archivée]] — le Pipeline, ses passes et leur contexte deviennent propriétaires (A1a/A1b/A1c puis A2/F6) ; branches H-ASan, S-GSS, DOC-REF, F8-SEAM, H-RESTORE, H-FIXTURE intégrées ; I0 214/214 + 197 ASan, final `f914d77` 215/215 + 198 ASan exacts, harnais 9+5 vérifié sur `95c2b9e` ; **sans PASS global** (oracle GMock `AttributeTest.SetTest` préexistant FAIL conservé, direct ET CTest malgré `exit 0`).
+- [[architecture/next-mission|Prochaine mission]] — AUCUNE sélectionnée : Pipeline A1+A2 terminée et archivée ; candidates restantes (ADR-0004, F7, défaut de suite GMock, validations complémentaires) pointées sans décision.
 - [[architecture/missions/2026-10-15-loaded-owner-move|Mission précédente archivée]] — loaded-owner move et ASan vérifiés dans leur périmètre, contrat préservé.
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
 
 > [!important] Statut des ADR initiaux
 > Cinq ADR restent **Proposed / not-started**. ADR-0003 est **Accepted / partial**
-> (Shader→Pass), ADR-0005 **Accepted / partial**, ADR-0008 **Accepted / verified**
-> pour sa baseline Windows Debug. Le diff loaded-owner move intégré à `e589aee`
-> a passé **137/137 tests normaux** (106 unitaires + 31 OpenGL) et
-> **106 CPU + 9 lifetime GL sous ASan**, vérifiés indépendamment le 2026-10-15.
-> La mission C à `e736bba` porte la suite courante à **165/165 normaux** (134 unit + 31 OpenGL)
-> et **143 cas ASan distincts** (134 + 9 lifetime GL), revue et QA indépendantes (R PASS de
-> lecture ; V 12 PASS et 2 INCONCLUSIVE). La mission F5 (143/143, ASan 121) est historique.
-> Les autres GL sous ASan, plateformes,
-> images et performances restent non validés.
+> (Shader→Pass, puis Pipeline A1+A2 intégrée le 2026-10-16), ADR-0005 **Accepted /
+> partial**, ADR-0008 **Accepted / verified** pour sa baseline Windows Debug.
+> La suite courante à `f914d77` (mission Pipeline A1+A2) compte **215/215 normales**
+> (176 unit + 39 OpenGL) et une sélection ASan exacte de **198 cas** (176 + 22 GL),
+> harnais H-FIXTURE vérifié indépendamment (9 + 5 scripts séparés) — **sans PASS
+> global** : l'oracle GMock préexistant `AttributeTest.SetTest` FAIL est conservé,
+> direct ET sous CTest malgré `exit 0` (JUnit campagne tronqué 1024, témoin 65536).
+> Les comptages loaded-owner (137/137, ASan 106+9) et mission C (165/165, ASan 143)
+> sont historiques, comme F5 (143/143, ASan 121). Les 17 autres GL non sélectionnés
+> sous ASan, plateformes, images et performances restent non validés.
 
 ## Développer
 

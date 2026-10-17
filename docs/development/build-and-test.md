@@ -2,11 +2,11 @@
 title: Build et tests actuels
 category: development
 tags: [artist, build, testing, guide]
-summary: Windows MSVC et Conan 2 vérifiés, 165 tests normaux et ASan opt-in séparé (143 cas sélectionnés) ; commandes, instrumentation et limites.
+summary: Windows MSVC et Conan 2 vérifiés, 215 tests normaux et ASan exact 198 (176 + 22 GL) sur f914d77 ; commandes, instrumentation et limites.
 status: verified-windows-debug
 created: 2026-10-03
 updated: 2026-10-16
-sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json]
+sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -14,6 +14,64 @@ provenance:
 ---
 
 # Build et tests actuels
+
+## Mission Pipeline A1+A2 — ownership unique et harnais — validation indépendante du 2026-10-16
+
+Validation indépendante aux candidats `18edc72` (I0), `f914d77` (A2 + H-RESTORE) puis
+`95c2b9e` (H-FIXTURE, Python-only). Le détail des filières, statuts et limites est dans
+[[architecture/missions/2026-10-16-pipeline-ownership|l'archive de mission]] ; cette section
+conserve l'accounting et les commandes utiles.
+
+- **I0 `18edc72`** : union normale **175 CPU + 39 GL = 214/214** (zéro échec/skip) et ASan
+  intégré exact **175 + 22 GL = 197/197** (9 ShaderLifetime historiques + 5 PipelineTest
+  chargés + 8 PipelineLifetime), sélection déclarée avant exécution, contenu 129/129
+  empreintes sources ; rapport `out/mission-a1a2/i0-verification/report.json`
+  (SHA-256 `14310521…`), 43/43 artefacts recoupés par le coordinateur.
+- **Candidat combiné `f914d77`** : normal **176 + 39 = 215/215** et ASan exact
+  **176 + 22 = 198** (17 autres GL non sélectionnés) ; sondes getter fraîches **0/2/0**
+  (overlay byte-exact du `Pass.hpp` I0 compile, header final refuse la conversion en
+  `shared_ptr` : `C2440`, contrôle référence 0, exits vérifiés numériquement) ; bilan
+  indépendant V-A2 : **14 PASS / 3 FAIL / 7 INCONCLUSIVE** sur 24 critères **sans PASS
+  global** ; 85/85 artefacts (`out/mission-a1a2/final-verification/report.json`, SHA-256
+  `c22213a3…`).
+- **`95c2b9e` (H-FIXTURE)** : 9 tests de fixture (faute TEMP injectée sous répertoire privé)
+  + 5 contrôles réels du wrapper **réexécutés indépendamment** (14/14 conformes) ;
+  identités sources **130/130** (128 inchangées + 1 runner modifié + 1 test ajouté) ;
+  cinq binaires de SHA identiques avant/après, état du build restauré sans hold. **Les
+  entrées moteur n'ont pas changé : les 215/198 ne sont pas relancés et ne sont pas
+  recertifiés comme campagne sur ce head** (preuve par delta et identité).
+  `out/mission-a1a2/post-fixture-verification/report.json` (SHA-256 `ac855ff…`), 21/21
+  artefacts. Le total harnais de mission est **9 + 5 = 14 cas de scripts, séparés des
+  215/198 du moteur** — jamais un total « 229 tests moteur ».
+- **Premier échec d'invocation ASan** : exit 8 **avant toute exécution** — chemin relatif
+  `tests-from-file` résolu contre le répertoire de build, réinvocation en absolu →
+  198/198 : **invocation, pas RED moteur** (log original conservé).
+- **Oracle GMock préexistant** : `AttributeTest.SetTest` (`AttributeTests.cpp:65`,
+  `EXPECT_CALL … mockOn(_)` attendu une fois, observé jamais, après le résumé) reproduit
+  **directement, ET** sous CTest normal individuel, **ET** dans le `LastTest.log` ASan,
+  malgré `exit 0` / `Test Passed`. Les XML de campagne tronquent `system-out` à **1024
+  octets** ; le témoin per-test à **65536** (`normal-attribute-settest.xml`) et
+  `final-verification/asan-LastTest.log:2494-2501` conservent le diagnostic : **une
+  absence dans les JUnit scannés n'établit pas la conformité des oracles** et les
+  décomptes CTest restent à lire avec cette réserve.
+- **H-RESTORE** : 5 bras réels (4 + Q1) avec oracle dans le **même** `powershell.exe`
+  appelant, échec Conan contrôlé (exit 1) après normalisation, succès `ConfigureOnly` ;
+  RED causal 2/5 (les deux bras d'absence initiale) puis GREEN 5/5 intégré en `1a75c75`.
+  Ces cas sont distincts des 198 ASan du moteur.
+- Environnement inchangé : `VsDevCmd.bat -arch=x64` dans le même processus que
+  `cmake`/`ctest`, options strictes par processus
+  (`halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0`), clean-first + sonde
+  reconstruite + canari 0/86, GPU réel RTX 3090 / OpenGL 3.3.0 / driver 617.42, MSVC
+  19.44 / CMake 3.31.7 / Conan 2.12.2 / Ninja 1.13.0.
+- **Retraits d'alias SUBST** : S:/T: puis U:/Y:/Z:, sortie `subst` vide, **aucun fichier
+  supprimé**, preuves préservées dans `out/mission-a1a2/` (checksums par
+  `alias-retirement.json`) ; les validations ont utilisé les chemins réels.
+- **Reste non établi** (recap des FAIL/INCONCLUSIVE de V-A2) : default suite préexistant
+  `AttributeTest.SetTest` à ouvrir hors mission ; historique RED A1c jamais rejoué ;
+  close-failure et panne filesystem réelle (F8) ; latent `#if` libstdc++ de
+  `getStackTraceString` ; Release/Linux/CI/couverture/UBSan ; image/performance ;
+  snapshots binaires post-campagne seulement (pas de hash pré-build) ; référence
+  `validation-levels` absente, absence qualifiée non restaurée.
 
 ## Mission C — contrats d'échec bornés — validation indépendante du 2026-10-15
 
@@ -304,8 +362,11 @@ Les comptes historiques de cette tranche : **95 unit + 27 OpenGL = 122** ;
 après loaded-owner move **106 + 31 = 137**, après F5 **112 + 31 = 143**, et
 après la mission C **134 + 31 = 165** (côté unitaire : 124 macros
 TEST/TEST_F directes plus 10 cas paramétrés `InfoLogLengths`, 2 suites ×
-5 valeurs). À chaque nouveau test, vérifier l'unicité des noms de fixtures
-entre TU et re-globber CMake (`GLOB_RECURSE`).
+5 valeurs). Après la mission Pipeline A1+A2 : **175 + 39 = 214** (I0 `18edc72`, F8
+compris) puis **176 + 39 = 215** (A2 `f914d77`, 1 test getter moved-from ajouté,
+2 cas alias remplacés 1:1) ; ASan exact **175 + 22 = 197** puis **176 + 22 = 198**
+(17 autres GL non sélectionnés). À chaque nouveau test, vérifier l'unicité des
+noms de fixtures entre TU et re-globber CMake (`GLOB_RECURSE`).
 
 ```powershell
 ctest --test-dir out/build/windows-msvc-debug -N

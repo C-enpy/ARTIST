@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, performance]
 summary: Philosophie multi-étapes, séparation préparation/exécution, choix de langage et limites des promesses de staticité.
 created: 2026-10-03
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # Cap technique d'ARTIST
@@ -99,11 +99,18 @@ les écarts constatés. La photographie détaillée, avec sa révision, est dans
 
 - `ARTIST/CMakeLists.txt` crée `ArtistLib` en `INTERFACE` : bibliothèque header-only.
 - `ARTIST/include/graphic/pipeline/Pipeline.hpp` combine `IPipeline` virtuel et
-  `Pipeline<API, PROFILE>` avec validation/sélection statique de composants.
-- `ARTIST/include/graphic/context/PipelineContext.hpp` stocke les passes dans un
-  `vector<shared_ptr<IPass<API>>>` ; la collection est résolue à l'exécution.
-- `ARTIST/include/graphic/context/PassContext.hpp` conserve des shaders par
-  pointeurs et des uniforms/attributes dans des maps indexées par chaînes.
+  `Pipeline<API, PROFILE>` avec validation/sélection statique de composants ;
+  depuis la [[architecture/missions/2026-10-16-pipeline-ownership|mission
+  A1+A2]], `IPipeline` possède son contexte en `unique_ptr` et expose un
+  emprunt par référence gardée.
+- `ARTIST/include/graphic/context/PipelineContext.hpp` stocke les passes dans
+  un `vector<unique_ptr<IPass<API>>>` avec rejets `addPass` (nul, cardinalité)
+  et un curseur transactionnel validé avant mutation ; l'ownership est unique,
+  la résolution reste faite à l'exécution sur des données vivantes.
+- `ARTIST/include/graphic/context/PassContext.hpp` possède les shaders dans un
+  `vector<unique_ptr<IShader<API>>>` ; les uniforms/attributes restent partagés
+  dans des maps indexées par chaînes (hors tranche, F7 différé). Depuis A2/F6,
+  `IPass` possède aussi son `PassContext` en `unique_ptr`.
 - `ARTIST/include/graphic/context/AttributeContext.hpp` stocke une valeur dans
   `std::any`, puis récupère un `shared_ptr<T>` par cast runtime.
 - `ARTIST/include/graphic/opengl/` fournit le backend présent. Les noms d'autres
@@ -112,9 +119,12 @@ les écarts constatés. La photographie détaillée, avec sa révision, est dans
   OpenGL réel. Ils ne forment pas à eux seuls une suite de benchmarks ou de
   régression d'images pour un moteur complet.
 
-Donc : la sélection statique d'un composant est réelle ; la promesse d'un pipeline
-entièrement aplati et sans overhead reste à démontrer. La présence d'interfaces
-ne prouve pas non plus un coût donné sans compilation optimisée et mesure.
+Donc : la sélection statique d'un composant est réelle ; l'ownership unique du
+Pipeline, des passes et des shaders est réelle (tranches Shader→Pass puis
+Pipeline A1+A2, [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003]] accepted/partial).
+La promesse d'un pipeline entièrement aplati et sans overhead reste à
+démontrer ; la présence d'interfaces ne prouve pas non plus un coût donné
+sans compilation optimisée et mesure.
 
 ## Axes futurs, sans présumer leur réalisation
 

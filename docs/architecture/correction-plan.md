@@ -51,14 +51,41 @@ après PM/architect fresh ; développement réalisé le même jour (voir l'archi
 C avant la tranche Pipeline A (figer les contrats d'échec avant le churn), puis
 B (ADR-0004, Adoption explicite requise). Author C64→70/R66 et C44→70/R58 en
 PM/LLM, RED causal requis, empreintes des fichiers cibles relevées et invariants
-préservés. Fiche complète : [[architecture/next-mission|next-mission]] ;
+préservés. Fiche complète : [[architecture/missions/2026-10-15-failure-contracts|fiche C archivée]] ;
 manifeste machine : `docs/_meta/next-mission-2026-10-15-c-selection.json`.
 
-Mission suivante sélectionnée le 2026-10-16 : [[architecture/next-mission|Pipeline A1+A2]]
-(ownership du Pipeline, curseur et contexte unique — contrat préalable G-A de l'architecte),
-avec les micro-incidents ouverts en branches latérales (ASan incrémental,
-`getStackTraceString`, refresh documentaire, F8-extraction sous ruling).
-ADR-0004 reste une sélection séparée, à adoption explicite.
+## Mission Pipeline A1+A2 du 2026-10-16 — terminée dans son périmètre
+
+[[architecture/missions/2026-10-16-pipeline-ownership|Archive de la mission Pipeline A1+A2]]
+: sélectionnée le 2026-10-16 (contrat préalable G-A de l'architecte) et exécutée en mission
+native ; code moteur intégré à `f914d77` (A2 + H-RESTORE `1a75c75`), harnais corrigé à
+`95c2b9e`, clôture documentaire à `738891f`. Le Pipeline, ses passes et leur contexte sont
+propriétaires (A1a/A1b/A1c puis A2/F6) ; branches latérales intégrées : H-ASan, S-GSS,
+DOC-REF, F8-SEAM, H-RESTORE, H-FIXTURE. Preuves recoupées : I0 `18edc72` **214/214**
+(175 CPU + 39 GL) et **197 ASan** exacts ; candidat combiné **215/215** (176 CPU + 39 GL)
+et **198 ASan** exacts (176 + 22 GL ; 17 autres non sélectionnés) ; sondes getter 0/2/0 ;
+H-RESTORE 5 cas réels distincts ; H-FIXTURE vérifiée indépendamment (9 + 5 harnais,
+binaires identiques, moteur non relancé).
+
+**Aucun PASS global** : oracle GMock préexistant `AttributeTest.SetTest`
+(`AttributeTests.cpp:65`) reproduit direct ET sous CTest malgré `exit 0`/`Test Passed`
+(JUnit campagne tronqué à 1024, témoin 65536 — ressorts dans le manifeste final) ; bilan
+V-A2 **14 PASS / 3 FAIL / 7 INCONCLUSIVE** ; FAIL du protocole RED historique A1c conservé
+(sonde interdite de réexécution) ; FAIL historique I0 de restauration d'environnement
+conservé (corrigé ensuite par H-RESTORE, preuve non effacée). ADR-0003 reste
+**Accepted / partial** : Uniform/Attribute et F7 restent partagés/différés ; le contexte GL
+courant et les ressources en vol restent des contrats du consommateur. Manifestes :
+`docs/_meta/session-2026-10-16-pipeline-{i-a1,a1c,i0,final}-validation.json` et
+`docs/_meta/session-2026-10-16-asan-caller-restoration.json` ; preuves non versionnées sous
+`out/mission-a1a2/` du dépôt principal.
+
+**Aucune nouvelle mission n'est sélectionnée.** Candidates restantes, toutes à adopter
+explicitement (décisions ouvertes : défaut suite `AttributeTest.SetTest` à ouvrir hors
+mission, ADR-0004 (Proposed), F7 (concept négatif `UniformReader`), F8 close-failure/panne
+OS réelle, latent `#if` libstdc++ de `getStackTraceString`, les 17 autres GL non sélectionnés
+sous ASan (campagne dédiée), Release/CI/couverture, performance/ADR-0006) — voir le pointeur
+[[architecture/next-mission|next-mission]]. ADR-0004 reste une sélection séparée, à adoption
+explicite.
 
 ## Mission loaded-owner du 2026-10-15 — terminée dans son périmètre
 
@@ -107,10 +134,11 @@ L'assignation vers un owner chargé et ASan sont désormais qualifiés dans le
 [[references/session-2026-10-15-loaded-owner-move|périmètre Windows Debug du 2026-10-15]],
 pas sur toutes les plateformes ni tous les chemins de lifetime.
 Les [[development/known-incidents|findings non traités]] ne sont pas annulés par
-ces suites vertes. L'avis d'architecture propose ensuite `PipelineContext::m_passes`
-en ownership unique et `forPass` par emprunt, puis le contexte de `IPass` ; ce
-travail n'est pas encore implémenté. Durcir `UniformReader` lors de la tranche
-uniform/attribute, avec un test de concept négatif.
+ces suites vertes. L'avis d'architecture proposait ensuite `PipelineContext::m_passes`
+en ownership unique et `forPass` par emprunt, puis le contexte de `IPass` —
+**réalisé le 2026-10-16** ([[architecture/missions/2026-10-16-pipeline-ownership|mission
+A1+A2 archivée]]). Durcir `UniformReader` (F7) lors de la tranche uniform/attribute avec un
+test de concept négatif reste **différé**, lié à l'adoption explicite d'ADR-0004.
 
 **Sortie** : baseline caractérisée, configurations valides/invalides, données et
 workload figés ; aucune performance inventée faute de mesure.

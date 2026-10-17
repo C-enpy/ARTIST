@@ -227,6 +227,77 @@ autres GL sous ASan, Release, Linux et CI ne sont pas fermés. `getStackTraceStr
 (branche `#else` de `TraceableException`, référence pendante dormante) est un incident ouvert,
 à traiter dans une coupe séparée. Aucun autre ADR `Proposed` n'est adopté par cette mission.
 
+### Tranche Pipeline A1+A2 — intégrée et vérifiée le 2026-10-16
+
+Mission [[architecture/missions/2026-10-16-pipeline-ownership|Pipeline A1+A2]], sélectionnée
+par l'utilisateur le 2026-10-16, exécutée en mission native. Contrat d'autorité G-A (A1),
+A2/F6 complémentaire, F8-SEAM ; branches latérales H-ASan, S-GSS, DOC-REF, H-RESTORE,
+H-FIXTURE. Les preuves sont sous le dépôt principal `out/mission-a1a2/` et les manifestes
+`_meta/session-2026-10-16-pipeline-{i-a1,a1c,i0,final}-validation.json` et
+`_meta/session-2026-10-16-asan-caller-restoration.json`.
+
+**État du code observé au HEAD de clôture `738891f` (moteur = `f914d77`)** :
+
+- `IPipeline<API>` (`graphic/pipeline/Pipeline.hpp`) : `m_context` en
+  `unique_ptr<API::PipelineContext>` (injection rejetant le nul
+  `ERROR::PIPELINE::NULL_CONTEXT`) ; `getContext() const` retourne une **référence** gardée,
+  rejet `ERROR::PIPELINE::FREED_CONTEXT` sur moved-from ; wrapper non-copiable, move
+  transférant le pointeur, assignation move protégée détruisant les passes destination avant
+  remplacement.
+- `PipelineContext` (`graphic/context/PipelineContext.hpp`) : **ni copiable ni déplaçable** ;
+  `m_passes` = `vector<unique_ptr<IPass<API>>>` ; `addPass(unique_ptr)` rejette le nul avant
+  insertion (`ERROR::PIPELINE::NULL_PASS`) et la sur-cardinalité par prédicat isolé
+  (`ERROR::PIPELINE::PASS_COUNT_LIMIT_EXCEEDED`, `length_error`, jamais par allocation
+  réelle) ; `getPass(index)` garde F4 avant indexation ; curseur invariant
+  `c ∈ {-1} ∪ [0,N)` avec `N ≤ INT_MAX` ; `setCurrentPass` valide avant mutation ; `use(index)`
+  valide l'index avant mutation et **restaure l'ancien curseur** si le hook lève — rollback
+  CPU seulement, aucun rollback backend promis ; `reset()` = curseur −1, aucun unbind (F10
+  reste une conservation).
+- `forPass(index)`/`getPass(index)` retournent `IPass&` (emprunts, jamais un owner) ; les
+  emprunts n'étendent aucun lifetime ; l'assignation move invalide les emprunts destination ;
+  la sérialisation reste une précondition de l'appelant.
+- Composants pipeline `User`/`Resetter` : `on(Context&)` canonique
+  (`HasBorrowedOnMethod` dans `OpenGLPipelineFlow`) ; surcharges fines
+  `on(shared_ptr<Context>)` conservées comme façades de compatibilité (nul →
+  `ERROR::SHADER::NON_VALID_CONTEXT`, aucune rétention).
+- `IPass<API>` (`graphic/pipeline/Pass.hpp`) : `m_context` en `unique_ptr<API::PassContext>` —
+  le programme GL et la destruction des shaders appartiennent au Pass ; `getContext()`/`ctx()`
+  retournent une **référence gardée** et lèvent `ERROR::PASS::FREED_CONTEXT` sur moved-from
+  (aucun accesseur partagé de repli) ; assignation : cleanup de l'ancienne destination avant
+  transfert, le contexte remplacé détruit **ses shaders** avec lui — aucun alias ne prolonge
+  ni l'ancien programme ni les shaders destination ; move : adresses et emprunts source
+  conservés, source moved-from rejette les accès et `free()` reste no-op ; `free()` remet le
+  handle programme à zéro sans détruire le contexte ni les shaders ; strict B inchangé.
+- **Uniformes/attributs restent partagés hors tranche** : wrappers `Uniform`/`Attribute` en
+  `shared_ptr`, maps indexées par `std::string` dans `PassContext` (ordre
+  `collection_utils::StringHash/StringEqual`) ; aucune promesse d'usage GPU après
+  invalidation du Pass ; F7 (`UniformReader` non exigé par `OpenGLPassFlow`) reste différé
+  avec ADR-0004.
+- `getStackTraceString()` retourne **par valeur** sur les deux branches (S-GSS `433bdbc`),
+  l'incident de référence pendante étant explicité dans le code ; zéro appelant de
+  production — l'exposition reste inchangée et le latent `#if` libstdc++
+  (const-correctness) reste OPEN, hors mission.
+
+**Preuves** : I0 `18edc72` = 175 CPU + 39 GL = **214/214**, ASan exact **197** ; candidat
+combiné `f914d77` = **176 + 39 = 215/215** et **176 + 22 = 198 ASan exact** (9 GL lifetime
+historiques + 5 `PipelineTest` chargés + 8 `PipelineLifetimeTest` ; 17 autres GL non
+sélectionnés) ; sondes getter compilées fraîches **0/2/0** (l'ancien accesseur partagé ne
+compile plus : `C2440`) ; canari ASan 0/86 ; sondes de compilation négatives conservées.
+Revue indépendante R-A2 : aucun défaut nouveau identifié. QA indépendante V-A2 sur
+`f914d77` : **14 PASS / 3 FAIL / 7 INCONCLUSIVE**, sans PASS global — `implementation`
+n'est pas monté à `verified` : les FAIL retenus sont l'oracle GMock préexistant
+`AttributeTest.SetTest` (direct **et** CTest malgré `exit 0`), le FAIL du protocole RED
+historique A1c (`df35b3f`, cleanup GL après teardown, sonde non rejouée) et le FAIL
+historique I0 de restauration d'environnement (corrigé ensuite par H-RESTORE, preuve
+conservée). H-FIXTURE `95c2b9e` corrigé et vérifié indépendamment (9 + 5 harnais, cinq
+binaires identiques, moteur non relancé).
+
+`implementation: partial` reste inchangé après A1+A2 : **Uniform/Attribute (F7) partagés**,
+les 17 autres GL non sélectionnés sous ASan, Release, Linux, CI distante, couverture,
+image et performance ne sont pas fermés. Le contexte GL courant requis par la destruction et
+les commandes GPU en vol restent un contrat du consommateur, pas une garantie RAII ; aucun
+handle générationnel n'est introduit. Aucun autre ADR `Proposed` n'est adopté implicitement.
+
 ## Références
 
 [[development/cpp-guidelines|Conventions]] · [[architecture/current-state|État réel]] ·

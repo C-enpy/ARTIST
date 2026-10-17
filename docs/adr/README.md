@@ -3,9 +3,9 @@ title: Registre des ADR ARTIST
 category: index
 tags: [artist, architecture, adr, index]
 aliases: [ADR ARTIST, Décisions ARTIST]
-summary: Registre des huit ADR, des propositions architecturales à la baseline Windows Conan 2 vérifiée.
+summary: Registre des huit ADR, des propositions architecturales au Pipeline A1+A2 vérifié (ADR-0003 Accepted/partial).
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-16
 ---
 
 # Registre des décisions d'architecture
@@ -13,13 +13,14 @@ updated: 2026-10-03
 ## Premiers contrats de correction
 
 Les ADR-0001, 0002, 0004, 0006 et 0007 restent **Proposed / not-started**.
-ADR-0003 est **Accepted / partial** (tranche Shader→Pass vérifiée Windows Debug).
-ADR-0005 est **Accepted / partial** ; ADR-0008 est **Accepted / verified** dans
-son périmètre Windows Debug. Voir les preuves propres à chaque décision.
+ADR-0003 est **Accepted / partial** (tranches Shader→Pass puis Pipeline A1+A2
+vérifiées dans leur périmètre). ADR-0005 est **Accepted / partial** ; ADR-0008
+est **Accepted / verified** dans son périmètre Windows Debug. Voir les preuves
+propres à chaque décision.
 
 - [[adr/0001-resolution-multi-etapes|ADR-0001 — Résolution multi-étapes]] : spécialiser au moment où l'information est réellement connue.
 - [[adr/0002-preparation-et-execution-specialisee|ADR-0002 — Préparation et exécution spécialisée]] : séparer l'API flexible du chemin fin et migrer une tranche.
-- [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003 — Ownership et lifetime CPU/GPU]] : migration franche Shader→Pass exécutée ; tranches suivantes à venir.
+- [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003 — Ownership et lifetime CPU/GPU]] : tranches Shader→Pass et Pipeline A1+A2 exécutées ; Uniform/Attribute et F7 restent partagés/différés.
 - [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004 — Layouts typés et données préparées]] : résoudre noms/types avant la boucle et valider l'invalidation.
 - [[adr/0005-build-reproductible-et-validation|ADR-0005 — Build reproductible et validation]] : restaurer une baseline propre avant les comparaisons.
 - [[adr/0006-preuves-performance-et-determinisme|ADR-0006 — Performance et déterminisme]] : protocole A/B, coût total et critères distincts CPU/GPU/image.

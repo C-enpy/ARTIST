@@ -3,9 +3,9 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: Photographie source de la bibliothèque OpenGL et des mécanismes dynamiques qui coexistent avec ses composants statiques, à l'état vérifié de la mission C.
+summary: Photographie source de la bibliothèque OpenGL et des mécanismes dynamiques qui coexistent avec ses composants statiques, à l'état vérifié de la mission Pipeline A1+A2.
 status: observed
-source_revision: a50f4661fcbd740cd9614931cbe80e949fae9e57
+source_revision: 738891fb98e23ee0dbe4afb1f1009c225105d894
 created: 2026-10-03
 updated: 2026-10-16
 ---
@@ -13,13 +13,18 @@ updated: 2026-10-16
 # État réel d'ARTIST
 
 > [!info] Portée de cette photographie
-> HEAD `a50f466`, vérifié le 2026-10-16. Le code est identique à `e736bba`
-> (intégration de la mission C) ; seuls des documents ont changé depuis.
-> Suites normales **165/165 distinctes** (134 unitaires + 31 OpenGL) et **143
-> cas ASan distincts** (134 + 9 GL lifetime ; 22 autres GL non sélectionnés),
-> revue et QA indépendantes PASS avec réserves consignées. ADR-0003 reste
-> Accepted/partial. La mission Pipeline A1+A2 est sélectionnée
-> ([[architecture/next-mission|fiche]]), pas commencée. Voir
+> HEAD `738891f`, vérifié le 2026-10-16 (clôture DOC-F). Le code moteur C++ est
+> identique à `f914d77` (intégration de A2/F6) ; depuis, seul le correctif
+> harness Python `95c2b9e` et des documents ont changé. Suites normales
+> **215/215 distinctes** (176 unitaires + 39 OpenGL) et sélection ASan exacte
+> de **198 cas** (176 + 22 GL : 9 ShaderLifetime historiques + 5 PipelineTest
+> chargés + 8 PipelineLifetime ; 17 autres GL non sélectionnés). La revue et la
+> QA indépendantes sont terminées **sans PASS global** : **14 PASS / 3 FAIL /
+> 7 INCONCLUSIVE**, oracle GMock préexistant `AttributeTest.SetTest`
+> reproduit direct et sous CTest malgré `exit 0`. ADR-0003 reste
+> Accepted/partial. La mission Pipeline A1+A2 est terminée et archivée
+> ([[architecture/missions/2026-10-16-pipeline-ownership|archive]]) ; la fiche
+> de sélection est devenue un pointeur ([[architecture/next-mission]]). Voir
 > [[architecture/missions/2026-10-15-failure-contracts|la mission C archivée]]
 > et [[development/build-and-test|les commandes]]. Aucune performance ni
 > équivalence d'image n'est mesurée.
@@ -59,13 +64,23 @@ Les concepts ne prouvent ni l'existence d'un contexte graphique, ni l'image prod
 
 - `IPipeline`, `IPass`, `IShader` et `IAttribute` comportent des fonctions
   virtuelles dans leurs headers de `graphic/pipeline/`.
-- `graphic/context/PipelineContext.hpp` stocke un
-  `std::vector<std::shared_ptr<IPass<API>>>` et un indice de passe courant.
-  Depuis la mission C, `getPass(index)` rejette un index négatif ou hors bornes
+- `graphic/context/PipelineContext.hpp` stocke désormais un
+  `std::vector<std::unique_ptr<IPass<API>>>` et un indice de passe courant
+  (mission A1+A2) : `addPass()` rejette un pass nul (`ERROR::PIPELINE::NULL_PASS`)
+  et vérifie `N ≤ INT_MAX` par prédicat isolé
+  (`ERROR::PIPELINE::PASS_COUNT_LIMIT_EXCEEDED`, jamais testé par allocation
+  réelle) ; `getPass(index)` rejette un index négatif ou hors bornes
   avec `ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE` (`out_of_range`) avant toute
-  indexation ; `addPass()` accepte encore un pass nul, `setCurrentPass` reste
-  sans garde et `hasNext()` additionne un au curseur — pré-état de la tranche
-  Pipeline sélectionnée, non migrée.
+  indexation ; `setCurrentPass` valide avant mutation ; le curseur est
+  transactionnel : `use(index)` valide l'index **avant** de le muter, puis
+  restaure l'ancien curseur si le hook lève — rollback CPU seulement, aucun
+  rollback backend promis ; `hasNext()` ne fait plus d'addition non protégée ;
+  `reset()` remet le curseur à −1 sans `glUseProgram(0)` (F10 reste une
+  conservation : reset ≠ unbind).
+- `IPipeline` possède son contexte en `unique_ptr<API::PipelineContext>`
+  (rejet nul `ERROR::PIPELINE::NULL_CONTEXT`) et l'expose par référence gardée
+  (`ERROR::PIPELINE::FREED_CONTEXT` sur moved-from) ; l'assignation move
+  détruit les passes destination avant le remplacement (A1a).
 - `graphic/context/PassContext.hpp` possède les shaders dans un
   `vector<unique_ptr<IShader<API>>>`. Les uniforms/attributes restent partagés
   dans des maps indexées par `std::string`. `getShader(index)` est gardé comme
@@ -76,9 +91,12 @@ Les concepts ne prouvent ni l'existence d'un contexte graphique, ni l'image prod
 - `graphic/pipeline/Shader.hpp` possède un `unique_ptr<ShaderContext>` et expose
   un emprunt par référence ; ses composants OpenGL prennent `Context&`.
   `Shader` libère le shader natif dans son destructeur dérivé, pas dans `~IShader`.
-- `IPass` reçoit un contexte en `unique_ptr`, mais le conserve encore en
-  `shared_ptr` ; `getContext()` retourne une copie qui peut étendre sa durée de
-  vie. Ce partage transitoire n'est pas une ownership entièrement unique.
+- `IPass` possède son contexte en `unique_ptr` depuis A2/F6 ;
+  `getContext()`/`ctx()` retournent une **référence gardée** — moved-from lève
+  `ERROR::PASS::FREED_CONTEXT`, et l'ancien accesseur partagé qui pouvait
+  étendre la durée de vie ne compile plus (sonde `C2440` verdict frais). Le
+  contexte destination d'une assignation est détruit avec ses shaders (aucun
+  alias conservé après transfert) ; les emprunts source restent valides.
   `Pass` libère son programme avant la destruction des shaders de son contexte.
   Le handle programme est publié une seule fois après un lien vérifié ; un échec
   pré-publication appelle `glDeleteProgram` une fois puis relance (publication
@@ -95,8 +113,10 @@ Les concepts ne prouvent ni l'existence d'un contexte graphique, ni l'image prod
 - `Shader` et `Pass` sont `final`. Leurs assignations move libèrent l'ancienne
   destination avant transfert et peuvent propager une exception de cleanup ;
   les opérateurs de base sont `protected`, les constructeurs move restent
-  `noexcept`. Le self-move ne change rien. Un alias de l'ancien contexte Pass
-  voit `passID=0` et peut encore retenir ses shaders ; il ne suit pas le nouvel owner.
+  `noexcept`. Le self-move ne change rien. L'alias partagé de l'ancien contexte
+  Pass n'existe plus depuis A2 : l'assignation détruit le contexte destination
+  **avec ses shaders** (cas alias archivés puis remplacés 1:1 dans la mission
+  A1+A2) — il ne suit pas le nouvel owner.
 - `common/exception/TraceableException.hpp` porte un incident ouvert dormant :
   la branche `#else` (active sous MSVC) retourne `"Stacktrace not available"`
   par référence vers un temporaire ; zéro appelant dans `ARTIST/`. Coupe
@@ -127,8 +147,10 @@ La baseline historique après migration compte **122/122 tests**
 d'ownership de la tranche Shader→Pass ([[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003]])
 : `IShader`/`IPass` non-copiables et déplaçables, contexte de shader en `unique_ptr`,
 `PassContext::m_shaders` en `unique_ptr<IShader>`, composants GL en emprunts
-`on(Context&)`, `Pass::shared()` supprimé. `Uniform`, `Attribute` et `Pipeline`
-conservent leurs `shared_ptr` actuels — tranches suivantes. Les corrections de
+`on(Context&)`, `Pass::shared()` supprimé. `Uniform` et `Attribute` conservent
+leurs `shared_ptr` (hors tranche, F7 différé) ; `Pipeline` est passé possédant
+dans la [[architecture/missions/2026-10-16-pipeline-ownership|mission A1+A2]].
+Les corrections de
 portabilité antérieures (noms de templates dépendants, contrainte `Uniform`,
 fixtures) restent en place. Les loaders rejettent un
 handle déjà vivant (`RELOAD_WITHOUT_FREE`) : la présence de la garde est statique,
@@ -168,12 +190,20 @@ pas des preuves et ne comptent pas dans les totaux
 debug, pas un rejet métier observé (réserve α) ; le curseur `use(index)` reste
 hors coupe.
 
-La mission Pipeline A1+A2 est [[architecture/next-mission|sélectionnée le
-2026-10-16]], pas commencée : `PipelineContext` stocke toujours un
-`vector<std::shared_ptr<IPass>>` et accepte un pass nul, le curseur reste sans
-garde et `IPipeline` partage encore son contexte par copie. Cette sélection ne
-produit aucun résultat de test ; l'état décrit ci-dessus est celui d'avant
-tranche.
+La mission Pipeline A1+A2 est **terminée dans son périmètre et archivée le
+2026-10-16** ([[architecture/missions/2026-10-16-pipeline-ownership|archive]]) :
+`IPipeline` et `IPass` possèdent leurs contexts en `unique_ptr`, `m_passes` est
+un registre d'owners uniques, le curseur est transactionnel et les accesseurs
+retournent des emprunts gardés. Preuves recoupées : I0 `18edc72` **214/214**
+(175 CPU + 39 GL) et **197 ASan** exacts ; candidat combiné `f914d77`
+**215/215** (176 CPU + 39 GL) et **198 ASan** exacts (176 + 22 GL, 17 autres non
+sélectionnés) ; V-A2 **14 PASS / 3 FAIL / 7 INCONCLUSIVE**, sans PASS global
+(oracle GMock `AttributeTest.SetTest` préexistant FAIL conservé, direct et sous
+CTest malgré `exit 0`). L'invalidation des emprunts à l'assignation/destruction
+est testée CPU ; le contexte GL courant de destruction et les ressources en vol
+restent un contrat du consommateur ;
+[[architecture/next-mission|next-mission]] est désormais un pointeur — aucune
+nouvelle mission n'est sélectionnée.
 
 [[engineering-principles|Le cap]] explique l'intention ;
 [[adr/README|les ADR]] proposent les contrats ;

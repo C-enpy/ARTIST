@@ -5,7 +5,7 @@ tags: [artist, cpp, ownership, testing, tooling]
 summary: Incidents corrigés, hypothèses rectifiées et expériences discriminantes pour les chemins encore non couverts de Shader→Pass.
 created: 2026-10-03
 updated: 2026-10-16
-sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json]
+sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json]
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -16,10 +16,11 @@ provenance:
 
 ## Règle de lecture
 
-Les **165/165** normaux de la suite courante à `e736bba` (134 unit + 31 OpenGL) et les
-**143** cas ASan distincts (archive [[architecture/missions/2026-10-15-failure-contracts|mission C]])
+Les **215/215** normaux de la suite courante à `f914d77` (176 unit + 39 OpenGL) et la
+sélection ASan exacte de **198** cas (archive
+[[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline A1+A2]])
 sont une preuve de ces tests Windows Debug, pas une absence exhaustive d'UB ou de fuite.
-Les 143/143 de F5 cités plus bas sont historiques. Le
+Les 165/165 de la mission C et les 143/143 de F5 cités plus bas sont historiques. Le
 [[references/session-2026-10-03-shader-pass|journal de session]] attribue les avis
 aux sous-agents ; les expériences proposées ici ne sont pas des tests exécutés.
 
@@ -117,6 +118,10 @@ global de tous les `ctest`/`ArtistLib_tests` comme procédure normale.
   contexte Pass gardés par `ctx()` ; `free()` moved-from no-op, `load()` gardé.
   `getContext()` reste une copie de `shared_ptr`, vide sur moved-from, pas une
   référence gardée. Ne pas décrire tous les accesseurs comme throwing.
+  **Actualisation (mission A1+A2, A2/F6, 2026-10-16)** : `IPass::m_context` est
+  passé en `unique_ptr` et `getContext()`/`ctx()` retournent une référence
+  gardée (`ERROR::PASS::FREED_CONTEXT`) ; l'ancien retour partagé qui étendait
+  la durée de vie ne compile plus (sonde `C2440`).
 - **F4 traité pour l'accesseur seul (mission C)** : `PassContext::getShader(index)` et
   `PipelineContext::getPass(index)` employaient `operator[]` sans garde (`30a46b5`,
   `PassContext.hpp:72`, `PipelineContext.hpp:25`). Garde `index < 0 || size_type(index) >= size()`
@@ -124,6 +129,9 @@ global de tous les `ctest`/`ArtistLib_tests` comme procédure normale.
   `ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE` et `ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE`. Le RED
   est un plantage CRT `0xc0000409` (STL debug), pas un rejet métier observé : réserve α de R.
   Le curseur `use(index)` reste hors coupe (Pipeline A1).
+  **Actualisation (mission A1+A2, 2026-10-16)** : le curseur est traité en A1b —
+  validations avant mutation, rollback du curseur CPU si le hook lève (aucun
+  rollback backend promis).
 - **F5 corrigé dans le périmètre 2026-10-15** : `&infoLog[0]` avec longueur de
   log zéro dans les loaders GL. RED causal mocké (`GL_INFO_LOG_LENGTH = 0`)
   avant fix : CTest exit 8, natif `0xc0000409`,
@@ -194,15 +202,26 @@ l'allocation, pas la pénurie mémoire du processus. Archive : [[architecture/mi
 - **F6 nommé, non migré** : `IPass` garde un contexte partagé et l'expose par copie ;
   lifetime extensible hors wrapper. Architecture propose de migrer d'abord le
   stockage/les consommateurs du pipeline ; aucune refonte faite aujourd'hui.
+  **→ Traité le 2026-10-16** (mission A1+A2, A2/F6) : `IPass` possède son
+  contexte en `unique_ptr` et l'expose par référence gardée ; archive
+  [[architecture/missions/2026-10-16-pipeline-ownership]].
 - **F7 différé** : `UniformReader` absent d'`OpenGLPassFlow` malgré appel nominal,
   absence silencieuse sous `if constexpr`. Test négatif de concept à écrire dans
   la tranche uniform/attribute ; ce n'est pas un composant aujourd'hui garanti.
+  **Resté différé à la clôture de la mission A1+A2 (2026-10-16)** :
+  `OpenGLPassFlow` n'exige toujours pas `UniformReader` ; à traiter avec
+  l'adoption explicite d'ADR-0004, jamais implicitement.
 - **F8 traité partiellement (mission C)** : le reader n'activait que `badbit` ; un fichier
   absent devenait une compilation de chaîne vide (`30a46b5`, `Reader.hpp` l.31 et l.38). Désormais :
   extraction par `read()`/`gcount()`, `failbit` sans EOF = `ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ`,
   fermeture vérifiée avant publication, fichier vide lisible = chaîne vide. Non exercées : la branche
   de fermeture échouée et la branche `ifstream::failure` réelle (badbit). V : INCONCLUSIVE ; réserve
   β de R. La formule « les chemins réels couvrent chaque branche » est écartée.
+  **Actualisation (mission A1+A2, I0)** : la seam d'extraction est prouvée
+  (badbit réel, exception sentinel, traduction exacte, `bad_alloc` non traduit)
+  et les fixtures Reader sont isolées hors du parent TEMP hérité (RED causal
+  d'ascendance, `b44ba0b`) ; fermeture échouée et panne filesystem réelle
+  restent non prouvées.
 - **F9 amélioré** : tests supplémentaires d'accès shader/pass moved-from ; couverture
   non exhaustive de toutes les méthodes. Les traits move/noexcept ne prouvent pas RAII.
 - **F10 décision : conservation documentée (mission C)** : `use()` sur programme zéro appelle
@@ -233,6 +252,9 @@ Consultation architecturale pendant la sélection F5, en lecture seule :
 
 Ces observations ne modifient pas les résultats antérieurs, ne sélectionnent pas
 Pipeline à la place de F5 et ne prouvent aucun défaut reproduit dans cette sélection.
+**Consultation conservée verbatim ; la tranche a depuis été exécutée en mission
+Pipeline A1+A2 ([[architecture/missions/2026-10-16-pipeline-ownership|archive
+2026-10-16]]) — les garde-fous ont été consommés par le contrat G-A.**
 
 ## Assignation move vers owner chargé — risque reproduit et corrigé
 
@@ -442,6 +464,15 @@ build original en place. Défaut de contrôle de flux établi ; injection causal
 à exécuter avant correction dans H-FIXTURE, branche isolée et temporaire privé.
 Il concerne la fixture du test, pas la restauration des variables PowerShell.
 La clôture attend intégration puis vérification indépendante du correctif.
+**→ Corrigé et vérifié (H-FIXTURE, 2026-10-16, `95c2b9e`)** : rollback
+exception-safe du build déplacé ; 9 tests de fixture (faute TEMP injectée sous
+répertoire privé) + 5 contrôles réels du wrapper réexécutés indépendamment
+(14/14 conformes) ; identités 130/130 (128 inchangées + 1 runner + 1 test
+ajouté), cinq binaires identiques avant/après, aucun hold résiduel. Les
+entrées moteur C++ n'ont pas changé : les 215/198 ne sont pas relancés et pas
+recertifiés (preuve par delta et identité, pas une campagne nouvelle).
+Injection Python = chemin d'erreur Python, pas une panne OS réelle ; fenêtre
+signal/TOCTOU restent bornées par la possession exclusive du build.
 
 **Correction de qualification GMock** : le diagnostic `AttributeTests.cpp:65`
 (`AttributeTest.SetTest`, `mockOn` attendu une fois, observé zéro après résumé)
@@ -456,7 +487,10 @@ protocole historique RED A1c. Ne pas transformer un exit0 en PASS sans réserve.
 V-A2 l'a ensuite **reproduit fraîchement** sur le candidat intégré `f914d77` :
 direct, CTest normal individuel et LastTest.log ASan final. La sortie JUnit des
 campagnes était tronquée à 1024 octets ; un témoin avec limite 65536 conserve
-le diagnostic dans `normal-attribute-settest.xml`. Les décomptes exécutés
+le diagnostic dans `normal-attribute-settest.xml`.
+**Reproduit par V-A2 sous trois voies (direct, CTest normal individuel,
+LastTest.log ASan) — ne réduire ni en « direct seulement », ni en conformité
+des seuls XML de campagne tronqués.** Les décomptes exécutés
 restent 176 CPU + 39 GL et sélection ASan 198, zéro échec/skip **rapporté par
 CTest**, pas une conformité de tous les oracles. Bilan indépendant : 14 PASS,
 3 FAIL (oracle actuel + deux historiques), 7 INCONCLUSIVE. 85 artefacts et
@@ -464,7 +498,13 @@ CTest**, pas une conformité de tous les oracles. Bilan indépendant : 14 PASS,
 build a été restauré sans hold ; la fenêtre d'échec du staging n'est pas
 couverte par ces cinq contrôles et attend H-FIXTURE. Aucun PASS global.
 Voir `_meta/session-2026-10-16-pipeline-final-validation.json`.
-
+**Statut ouvert après mission (priorité claire, hors correction moteur ici)** :
+ouvrir un défaut suite `AttributeTests.cpp:65` (diagnostic GMock après résumé,
+faux PASS `exit 0`) et le traiter dans un travail dédié ; garder le FAIL du
+protocole RED historique A1c interdit de réexécution ; suivre les P3 Reader
+(removeError/links, close-failure) qualifiés INCONCLUSIVE ; latent `#if`
+libstdc++ de `getStackTraceString` reste OPEN. Les corrections C++ et
+harness correspondantes sont hors de cette mission.
 ### Revue I0 — réserves mineures distinctes des verdicts exécutés
 
 Revue fresh de `18edc72`, 24 fichiers du diff et 129/129 empreintes recoupées :
@@ -482,8 +522,10 @@ une nouvelle exécution de tests par le reviewer. QA indépendante ensuite reçu
   non corrigé dans I0 ; correction H-RESTORE intégrée ensuite en `1a75c75`.
   Producteur : deux bras absence échouent avant fix, quatre bras restauration
   et Q1 passent après fix (5/5 JUnit) ; source/artefacts recoupés, module de
-  normalisation inchangé. Vérification indépendante finale du correctif encore
-  attendue, pas de relance du principal pendant le bail Conan A2. Ce point
+  normalisation inchangé. Vérification indépendante finale du correctif reçue
+  le 2026-10-16 (1a75c75 vérifié par 5 bras réels + Q1, puis H-FIXTURE
+  95c2b9e corrigé et vérifié 9 + 5) ; pas de relance du principal pendant le
+  bail Conan A2. Ce point
   concerne la restauration après campagne, pas la normalisation stricte/fail-close
   de la campagne courante, dont les 197 tests sélectionnés ont passé.
 - **P3 fixture TEMP, question non reproduite** :
@@ -527,6 +569,15 @@ L'entrée d'environnement ASan héritée (Q1 du harness) reste ouverte ; l'expos
 (Q1 ci-dessus) est traitée en mission C, dans la limite d'allocation documentée. Les dépendances Conan GLFW/GLEW et le driver
 restent non instrumentés. Release, Linux, CI distante, couverture, images et
 performance restent non validés.
+
+**Supersession (clôture DOC-F de la mission Pipeline A1+A2, 2026-10-16)** : les
+paragraphe et l'entrée « ASan héritée (Q1 du harness) reste ouverte » ci-dessus
+décrivent l'état pré-mission ; Q1 est traité (H-ASan `760f4f8`, H-RESTORE
+`1a75c75`, H-FIXTURE `95c2b9e`, le FAIL historique I0 restant une preuve datée),
+la sélection ASan courante est **198 cas (176 unit + 22 GL)**, les **17 autres
+GL** ne sont pas sélectionnés sous ASan (pas abandonnés) et dépendances
+Conan/driver restent non instrumentées. Les § antérieurs restent des faits datés,
+pas des énoncés courants.
 
 Navigation : [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003]] ·
 [[architecture/correction-plan|Plan de correction]] · [[index|Accueil]].

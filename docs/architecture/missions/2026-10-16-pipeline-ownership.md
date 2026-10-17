@@ -178,9 +178,9 @@ dans les manifestes `_meta/`.
   `log_path` redirigé) transmise tel quel, campagne 134/134 « PASSED » et harnais exit 0,
   probe use-after-free → exit 0 (masquage mécaniquement prouvé) ; un `log_path` malformé
   est rejeté par le parsing du runtime (fail-close). GREEN : observateur canonique au point
-  ctest, campagne 134/134 honnête. Module normalisateur inchangéût depuis
+  ctest, campagne 134/134 honnête. Module normalisateur inchangé depuis
   (`asan-env.ps1` SHA `2b81ab49…`).
-- **D-A1 (pool-1, producer `fc0254a`) → intégration I-A1 `d319096`, doc `11e4400`** : premier
+- **D-A1 (pool-1, producteur `fc0254a`) → intégration I-A1 `d319096`, doc `11e4400`** : premier
   build union échoué au lien `LNK2019 __std_rotate` dans l'archive locale `gmock_main.lib`
   (`out/mission-a1a2/i-a1-first-link-fail.log`). Expérience discriminante : reconstruire
   `gmock_main` dans l'environnement courant (archive `d24dbf3a…` → `0cd5fc45…`, référence
@@ -288,7 +288,7 @@ vérifiées **sur empreintes et diffs**, pas sur la fin de travail déclarée d'
   recompile le shader ; `pass.free()` ne libère pas ses shaders ; le cycle complet exige la
   libération de chaque shader puis `pass.load()` sous un contexte GL valide ; **pas de
   promesse `free(); load()` pass directe** (`IPass::load()` recharge d'abord les shaders).
-- **Aquedus d'alias** : S:/T: retirés ultérieurement, U:/Y:/Z: retirés en fin de mission,
+- **Retraits d'alias** : S:/T: retirés ultérieurement, U:/Y:/Z: retirés en fin de mission,
   sortie `subst` vide, **aucun alias recréé**, aucun fichier/cache/worktree supprimé,
   preuves préservées (`out/mission-a1a2/alias-retirement.json`). L'utilisateur voulait
   terminer puis dégager les alias — ce point est fait.
