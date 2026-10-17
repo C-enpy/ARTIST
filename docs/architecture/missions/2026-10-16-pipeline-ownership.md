@@ -211,11 +211,11 @@ dans les manifestes `_meta/`.
   intégré dans I0 `18edc72`. Preuve producteur : unit 175, filtre ASan 16 (12 ReaderTests +
   4), canari 0/86, sauvegardes `out/mission-a1a2/pool-7-final-b44ba0b/` et
   `out/mission-a1a2/pool-7-original-0e4f113/`. La transaction d'extraction réelle est
-  prouvée (4096 octets, sentinel, traduction exacte, contexte vidé,`bad_alloc` non
+  prouvée (4096 octets, sentinel, traduction exacte, contexte vidé, `bad_alloc` non
   traduit) ; fermeture échouée et panne filesystem réelle restent non prouvées.
 - **I0 (`18edc72`, docs `0948cbd`, ratification A2 `67c1c0d`, revue `59c9b6d`, QA `b4b7e87`)** :
   candidat gelé, union complète, R/V fresh terminés, alias SUBST privés retirés.
-- **H-RESTORE (pool-11,Producer `14d5c15`) → intégré `1a75c75`, doc `83d7bdd`** : wrapper
+- **H-RESTORE (pool-11, producteur `14d5c15`) → intégré `1a75c75`, doc `83d7bdd`** : wrapper
   `scripts/build-windows.ps1` + `scripts/test_asan_env.py` (module `asan-env.ps1` inchangé,
   SHA `2b81ab49…`) ; sauvegarde des deux variables (absence/null compris) à l'entrée du
   wrapper sous `-AddressSanitizer`, restauration en `finally` sur retour et exception ;
