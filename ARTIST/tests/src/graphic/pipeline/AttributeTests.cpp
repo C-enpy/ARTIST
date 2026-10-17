@@ -23,6 +23,17 @@ class AttributeTest : public ::testing::Test
 public:
     void TearDown() override
     {
+        // Oracle: verify-and-clear every touched attribute singleton mock during
+        // the fixture teardown. Each reset() verifies its own mock's active
+        // expectations before clearing them, so no mock short-circuits another
+        // and no expectation is left to be checked at mock static destruction
+        // (which happens after the GTest summary and any process resume).
+        // GTest runs TearDown even after a fatal ASSERT in the test body, so
+        // verification always reports before the run summary is finalized.
+        mock::MockSetter<int>::reset();
+        mock::MockSetter<std::shared_ptr<int>>::reset();
+        mock::MockBinder<Classic>::reset();
+        mock::MockUnbinder<Classic>::reset();
     }
 };
 
@@ -61,11 +72,24 @@ TEST_F(AttributeTest, SetTest)
 
     pipeline::Attribute<api::MockOpenGL, Classic> attribute(attributeContext);
 
+    auto const value = std::make_shared<int>(1);
+
     // Expect calls
-    EXPECT_CALL(*mock::MockSetter<int>::instance(), mockOn(::testing::_)).Times(1);
+    // IAttribute::set invokes the hardcoded specialization
+    // API::AttributeContext::Setter<std::shared_ptr<int>> (Attribute.hpp:88-91),
+    // so the observable component is MockSetter<std::shared_ptr<int>>, not
+    // MockSetter<int>. The call count stays Times(1) and the context matcher
+    // enforces identity; no expectation is removed or relaxed.
+    EXPECT_CALL(*mock::MockSetter<std::shared_ptr<int>>::instance(), mockOn(attributeContext)).Times(1);
 
     // Act
-    ASSERT_NO_THROW(attribute.set(std::make_shared<int>(1)));
+    ASSERT_NO_THROW(attribute.set(value));
+
+    // The context kept the parameter: int type, value 1, same stored object.
+    auto const stored = attributeContext->getValue<int>();
+    ASSERT_NE(nullptr, stored);
+    ASSERT_EQ(value, stored);
+    ASSERT_EQ(1, *stored);
 }
 
 TEST_F(AttributeTest, GetContextTest)
