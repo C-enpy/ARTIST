@@ -18,6 +18,8 @@
 
 #include <string>
 #include <format>
+#include <memory>
+#include <utility>
 #include <graphic/context/UniformContext.hpp>
 #include <graphic/validator/ComponentConcept.hpp>
 #include <common/exception/TraceableException.hpp>
@@ -49,11 +51,29 @@ namespace artist::graphic::pipeline
     class Uniform
     {
     public:
-        explicit Uniform(std::shared_ptr<typename API::UniformContext> context) : m_context(context) {}
+        /**
+         * @brief Takes unique ownership of an API-specific uniform context.
+         *
+         * @throws ERROR::UNIFORM::NULL_CONTEXT if `context` is null.
+         */
+        explicit Uniform(std::unique_ptr<typename API::UniformContext> context) : m_context(std::move(context))
+        {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::UNIFORM::NULL_CONTEXT");
+            }
+        }
 
-        Uniform() : Uniform(std::make_shared<typename API::UniformContext>())
+        Uniform() : Uniform(std::make_unique<typename API::UniformContext>())
         {
         }
+
+        Uniform(const Uniform &) = delete;
+        Uniform &operator=(const Uniform &) = delete;
+
+        /// The source becomes moved-from: any further access throws ERROR::UNIFORM::FREED_CONTEXT.
+        Uniform(Uniform &&) = default;
+        Uniform &operator=(Uniform &&) = default;
 
         /**
          * @brief Sets the value of the uniform variable.
@@ -69,8 +89,9 @@ namespace artist::graphic::pipeline
         {
             if constexpr (graphic::validator::HasComponent<typename API::UniformContext::template Setter<T>>)
             {
-                m_context->template setValue<T>(value);
-                API::UniformContext::template Setter<T>::on(m_context);
+                auto &context = ctx();
+                context.template setValue<T>(value);
+                API::UniformContext::template Setter<T>::on(context);
             }
             else
             {
@@ -90,16 +111,30 @@ namespace artist::graphic::pipeline
         template <typename T>
         const T &get() const
         {
-            return m_context->template getValue<T>();
+            return ctx().template getValue<T>();
         }
 
-        std::shared_ptr<typename API::UniformContext> getContext() const
+        /**
+         * @brief Borrows the owned uniform context.
+         *
+         * The reference must not outlive this uniform.
+         */
+        [[nodiscard]] typename API::UniformContext &getContext() const
         {
-            return m_context;
+            return ctx();
         }
 
     private:
-        std::shared_ptr<typename API::UniformContext> m_context; // API-specific shader context
+        [[nodiscard]] typename API::UniformContext &ctx() const
+        {
+            if (!m_context)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::UNIFORM::FREED_CONTEXT");
+            }
+            return *m_context;
+        }
+
+        std::unique_ptr<typename API::UniformContext> m_context; // API-specific uniform context
     };
 
 } // namespace artist::graphic::pipeline

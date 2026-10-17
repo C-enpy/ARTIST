@@ -18,12 +18,12 @@
 namespace artist::graphic::opengl::validator
 {
     using artist::graphic::validator::HasComponent;
-    using artist::graphic::validator::HasOnMethod;
+    using artist::graphic::validator::HasBorrowedOnMethod;
 
     template <typename API>
     concept OpenGLUniformFlow = requires {
         requires HasComponent<typename API::UniformContext::template Setter<int>>;
 
-        requires HasOnMethod<typename API::UniformContext::template Setter<int>, typename API::UniformContext>;
+        requires HasBorrowedOnMethod<typename API::UniformContext::template Setter<int>, typename API::UniformContext>;
     };
 }

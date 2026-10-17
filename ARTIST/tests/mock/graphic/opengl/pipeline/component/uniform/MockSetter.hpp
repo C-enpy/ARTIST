@@ -26,7 +26,7 @@ namespace artist::mock::graphic::opengl
         template <>
         struct MockSetter<GLfloat>
         {
-            static void on(std::shared_ptr<graphic::api::MockOpenGL::UniformContext> uniform)
+            static void on(graphic::api::MockOpenGL::UniformContext &uniform)
             {
                 glUniform1f(1, 3.14f);
             }
@@ -40,7 +40,7 @@ namespace artist::mock::graphic::opengl
         template <>
         struct MockSetter<GLint>
         {
-            static void on(std::shared_ptr<graphic::api::MockOpenGL::UniformContext> uniform)
+            static void on(graphic::api::MockOpenGL::UniformContext &uniform)
             {
                 glUniform1i(1, 1);
             }

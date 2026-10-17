@@ -27,7 +27,7 @@ namespace artist::mock::graphic::pipeline::opengl
         MOCK_METHOD(void, load, (), (override));
         MOCK_METHOD(void, free, (), (override));
 
-        MOCK_METHOD((const std::unordered_map<std::string, std::shared_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> &), getUniforms, (), (const, override));
+        MOCK_METHOD((const std::unordered_map<std::string, std::unique_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> &), getUniforms, (), (const, override));
         MOCK_METHOD(pipeline::IShader<API> &, getShader, (const int &), (const, override));
         MOCK_METHOD(int, getShadersCount, (), (const, override));
 

@@ -51,12 +51,12 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 GLuint location = glGetUniformLocation(passID, uniformName);
 
                 // Create a Uniform object and store it in the map
-                auto uniformContext = std::make_shared<graphic::api::OpenGL::UniformContext>();
+                auto uniformContext = std::make_unique<graphic::api::OpenGL::UniformContext>();
                 uniformContext->setUniformID(location);
                 uniformContext->setGLType(type);
                 // Known limitation of OpenGL: Uniforms profile are driven by Pass profile
-                auto uniform = std::make_shared<graphic::pipeline::Uniform<graphic::api::OpenGL>>(uniformContext);
-                openglContext.addUniform(std::string(uniformName), uniform);
+                auto uniform = std::make_unique<graphic::pipeline::Uniform<graphic::api::OpenGL>>(std::move(uniformContext));
+                openglContext.addUniform(std::string(uniformName), std::move(uniform));
             }
         }
     };

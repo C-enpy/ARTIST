@@ -25,9 +25,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<GLfloat>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform1f(uniform->getUniformID(), uniform->getValue<GLfloat>());
+            glUniform1f(uniform.getUniformID(), uniform.getValue<GLfloat>());
         }
 
         static constexpr GLenum glType = GL_FLOAT;
@@ -39,9 +39,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<GLint>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform1i(uniform->getUniformID(), uniform->getValue<GLint>());
+            glUniform1i(uniform.getUniformID(), uniform.getValue<GLint>());
         }
 
         static constexpr GLenum glType = GL_INT;
@@ -53,9 +53,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<GLuint>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform1ui(uniform->getUniformID(), uniform->getValue<GLuint>());
+            glUniform1ui(uniform.getUniformID(), uniform.getValue<GLuint>());
         }
 
         static constexpr GLenum glType = GL_UNSIGNED_INT;
@@ -67,9 +67,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<GLdouble>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform1d(uniform->getUniformID(), uniform->getValue<GLdouble>());
+            glUniform1d(uniform.getUniformID(), uniform.getValue<GLdouble>());
         }
 
         static constexpr GLenum glType = GL_DOUBLE;
@@ -81,9 +81,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::vec2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform2fv(uniform->getUniformID(), uniform->getGLSize(), &uniform->getValue<glm::vec2>()[0]);
+            glUniform2fv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::vec2>()[0]);
         }
 
         static constexpr GLenum glType = GL_FLOAT_VEC2;
@@ -95,9 +95,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::vec3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform3fv(uniform->getUniformID(), uniform->getGLSize(), &uniform->getValue<glm::vec3>()[0]);
+            glUniform3fv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::vec3>()[0]);
         }
 
         static constexpr GLenum glType = GL_FLOAT_VEC3;
@@ -109,9 +109,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::vec4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform4fv(uniform->getUniformID(), uniform->getGLSize(), &uniform->getValue<glm::vec4>()[0]);
+            glUniform4fv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::vec4>()[0]);
         }
 
         static constexpr GLenum glType = GL_FLOAT_VEC4;
@@ -123,9 +123,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dvec2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform2dv(uniform->getUniformID(), uniform->getGLSize(), &uniform->getValue<glm::dvec2>()[0]);
+            glUniform2dv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::dvec2>()[0]);
         };
 
         static constexpr GLenum glType = GL_DOUBLE_VEC2;
@@ -137,9 +137,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dvec3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform3dv(uniform->getUniformID(), uniform->getGLSize(), &uniform->getValue<glm::dvec3>()[0]);
+            glUniform3dv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::dvec3>()[0]);
         };
 
         static constexpr GLenum glType = GL_DOUBLE_VEC3;
@@ -151,9 +151,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dvec4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform4dv(uniform->getUniformID(), uniform->getGLSize(), &uniform->getValue<glm::dvec4>()[0]);
+            glUniform4dv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::dvec4>()[0]);
         };
 
         static constexpr GLenum glType = GL_DOUBLE_VEC4;
@@ -163,9 +163,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::ivec2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform2iv(uniform->getUniformID(), uniform->getGLSize(), glm::value_ptr(uniform->getValue<glm::ivec2>()));
+            glUniform2iv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::ivec2>()));
         }
 
         static constexpr GLenum glType = GL_INT_VEC2;
@@ -175,9 +175,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::ivec3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform3iv(uniform->getUniformID(), uniform->getGLSize(), glm::value_ptr(uniform->getValue<glm::ivec3>()));
+            glUniform3iv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::ivec3>()));
         }
 
         static constexpr GLenum glType = GL_INT_VEC3;
@@ -187,9 +187,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::ivec4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform4iv(uniform->getUniformID(), uniform->getGLSize(), glm::value_ptr(uniform->getValue<glm::ivec4>()));
+            glUniform4iv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::ivec4>()));
         }
 
         static constexpr GLenum glType = GL_INT_VEC4;
@@ -199,9 +199,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::uvec2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform2uiv(uniform->getUniformID(), uniform->getGLSize(), glm::value_ptr(uniform->getValue<glm::uvec2>()));
+            glUniform2uiv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::uvec2>()));
         }
 
         static constexpr GLenum glType = GL_UNSIGNED_INT_VEC2;
@@ -211,9 +211,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::uvec3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform3uiv(uniform->getUniformID(), uniform->getGLSize(), glm::value_ptr(uniform->getValue<glm::uvec3>()));
+            glUniform3uiv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::uvec3>()));
         }
 
         static constexpr GLenum glType = GL_UNSIGNED_INT_VEC3;
@@ -223,9 +223,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::uvec4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniform4uiv(uniform->getUniformID(), uniform->getGLSize(), glm::value_ptr(uniform->getValue<glm::uvec4>()));
+            glUniform4uiv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::uvec4>()));
         }
 
         static constexpr GLenum glType = GL_UNSIGNED_INT_VEC4;
@@ -235,9 +235,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix2fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat2>()));
+            glUniformMatrix2fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat2>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT2;
@@ -247,9 +247,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix3fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat3>()));
+            glUniformMatrix3fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat3>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT3;
@@ -259,9 +259,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix4fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat4>()));
+            glUniformMatrix4fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat4>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT4;
@@ -271,9 +271,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat2x3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix2x3fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat2x3>()));
+            glUniformMatrix2x3fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat2x3>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT2x3;
@@ -283,9 +283,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat3x2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix3x2fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat3x2>()));
+            glUniformMatrix3x2fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat3x2>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT3x2;
@@ -295,9 +295,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat2x4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix2x4fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat2x4>()));
+            glUniformMatrix2x4fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat2x4>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT2x4;
@@ -307,9 +307,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat4x2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix4x2fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat4x2>()));
+            glUniformMatrix4x2fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat4x2>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT4x2;
@@ -319,9 +319,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat3x4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix3x4fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat3x4>()));
+            glUniformMatrix3x4fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat3x4>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT3x4;
@@ -331,9 +331,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::mat4x3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix4x3fv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::mat4x3>()));
+            glUniformMatrix4x3fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat4x3>()));
         }
 
         static constexpr GLenum glType = GL_FLOAT_MAT4x3;
@@ -347,9 +347,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix2dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat2>()));
+            glUniformMatrix2dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat2>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT2;
@@ -359,9 +359,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix3dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat3>()));
+            glUniformMatrix3dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat3>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT3;
@@ -371,9 +371,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix4dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat4>()));
+            glUniformMatrix4dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat4>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT4;
@@ -383,9 +383,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat2x3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix2x3dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat2x3>()));
+            glUniformMatrix2x3dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat2x3>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT2x3;
@@ -395,9 +395,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat3x2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix3x2dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat3x2>()));
+            glUniformMatrix3x2dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat3x2>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT3x2;
@@ -407,9 +407,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat2x4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix2x4dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat2x4>()));
+            glUniformMatrix2x4dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat2x4>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT2x4;
@@ -419,9 +419,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat4x2>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix4x2dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat4x2>()));
+            glUniformMatrix4x2dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat4x2>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT4x2;
@@ -431,9 +431,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat3x4>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix3x4dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat3x4>()));
+            glUniformMatrix3x4dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat3x4>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT3x4;
@@ -443,9 +443,9 @@ namespace artist::graphic::opengl::pipeline::component::uniform
     template <>
     struct OpenGLUniformSetter<glm::dmat4x3>
     {
-        static void on(std::shared_ptr<artist::graphic::opengl::context::OpenGLUniformContext> uniform)
+        static void on(artist::graphic::opengl::context::OpenGLUniformContext &uniform)
         {
-            glUniformMatrix4x3dv(uniform->getUniformID(), uniform->getGLSize(), GL_FALSE, glm::value_ptr(uniform->getValue<glm::dmat4x3>()));
+            glUniformMatrix4x3dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat4x3>()));
         }
 
         static constexpr GLenum glType = GL_DOUBLE_MAT4x3;

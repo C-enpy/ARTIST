@@ -41,15 +41,20 @@ namespace artist::graphic::context
             m_shaders.push_back(std::move(shader));
         }
 
-        /*
-         * @brief Add uniform to the pass.
+        /**
+         * @brief Take unique ownership of a uniform in the pass.
          *
-         * @param name Name of the uniform to add.
-         * @param uniform Uniform to add.
+         * @param name Name of the uniform; a uniform already registered under it is replaced.
+         * @param uniform Uniform to own.
+         * @throws ERROR::PASS::NULL_UNIFORM if `uniform` is null; the uniforms are left unchanged.
          */
-        void addUniform(const std::string &name, std::shared_ptr<pipeline::Uniform<API>> uniform)
+        void addUniform(const std::string &name, std::unique_ptr<pipeline::Uniform<API>> uniform)
         {
-            m_uniforms[name] = uniform;
+            if (!uniform)
+            {
+                throw common::exception::TraceableException<std::invalid_argument>("ERROR::PASS::NULL_UNIFORM");
+            }
+            m_uniforms[name] = std::move(uniform);
         }
 
         /**
@@ -86,15 +91,15 @@ namespace artist::graphic::context
         }
 
         /**
-         * @brief Get the uniform with the given name.
+         * @brief Borrow the uniform with the given name.
          * @param name Name of the uniform to get.
-         * @return Uniform with the given name.
+         * @return Borrowed uniform owned by the pass, or nullptr if no uniform has this name.
          */
-        [[nodiscard]] std::shared_ptr<pipeline::Uniform<API>> getUniform(const std::string &name) const
+        [[nodiscard]] pipeline::Uniform<API> *getUniform(const std::string &name) const
         {
             if (m_uniforms.contains(name))
             {
-                return m_uniforms.at(name);
+                return m_uniforms.at(name).get();
             }
             return nullptr;
         }
@@ -132,10 +137,10 @@ namespace artist::graphic::context
         }
 
         /**
-         * @brief Get the uniforms in the pass.
-         * @return Uniforms in the pass.
+         * @brief Borrow the uniforms owned by the pass.
+         * @return Uniforms in the pass, none of them null.
          */
-        [[nodiscard]] const std::unordered_map<std::string, std::shared_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getUniforms() const
+        [[nodiscard]] const std::unordered_map<std::string, std::unique_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> &getUniforms() const
         {
             return m_uniforms;
         }
@@ -151,7 +156,7 @@ namespace artist::graphic::context
 
     private:
         std::vector<std::unique_ptr<pipeline::IShader<API>>> m_shaders;
-        std::unordered_map<std::string, std::shared_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_uniforms;
+        std::unordered_map<std::string, std::unique_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_uniforms;
         std::unordered_map<std::string, std::shared_ptr<pipeline::IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual> m_attributes;
     };
 }

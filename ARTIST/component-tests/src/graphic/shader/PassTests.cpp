@@ -75,9 +75,9 @@ TEST_F(PassTest, UniformManagementTest)
 
     ASSERT_NO_THROW(pass.withUniform("testUniform", testValue));
 
-    auto uniforms = pass.getUniforms();
+    const auto &uniforms = pass.getUniforms();
     ASSERT_TRUE(uniforms.contains("testUniform"));
-    auto uniform = uniforms.at("testUniform");
+    const auto &uniform = uniforms.at("testUniform");
     ASSERT_NE(uniform, nullptr);
     ASSERT_EQ(uniform->get<float>(), testValue);
 }
@@ -103,10 +103,10 @@ TEST_F(PassTest, UniformReadingTest)
     // Assuming the shaders have at least one uniform
     ASSERT_FALSE(uniforms.empty());
     ASSERT_TRUE(uniforms.contains("testUniform"));
-    auto uniform = uniforms.at("testUniform");
+    const auto &uniform = uniforms.at("testUniform");
     ASSERT_NE(uniform, nullptr);
-    ASSERT_NE(uniform->getContext(), nullptr);
-    ASSERT_EQ(uniform->getContext()->getGLType(), GL_INT);
+    ASSERT_NO_THROW((void)uniform->getContext());
+    ASSERT_EQ(uniform->getContext().getGLType(), GL_INT);
 }
 
 TEST_F(PassTest, AttributeReadingTest)

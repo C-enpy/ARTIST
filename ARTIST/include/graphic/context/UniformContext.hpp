@@ -4,6 +4,7 @@
 #include <string>
 #include <format>
 #include <any>
+#include <typeinfo>
 #include <common/exception/TraceableException.hpp>
 
 namespace artist::graphic::context
@@ -14,34 +15,35 @@ namespace artist::graphic::context
     public:
         virtual ~UniformContext() = default;
 
+        /**
+         * @brief Reads the stored value as a `T`.
+         *
+         * @throws ERROR::UNIFORM::GET::UNINITIALIZED if no value was set.
+         * @throws ERROR::UNIFORM::GET::TYPE_MISMATCH if the stored value is not a `T`.
+         */
         template <typename T>
         const T &getValue() const
         {
-            if (m_value.has_value())
+            if (!m_value.has_value())
             {
-                try
-                {
-                    std::any_cast<T>(&m_value);
-                }
-                catch (const std::bad_any_cast &)
-                {
-                    throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::UNIFORM::SET::TYPE_MISMATCH: The type of the value ({}) does not match the type of the uniform variable ({})", typeid(T).name(), typeid(m_value).name()));
-                }
+                throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::UNIFORM::GET::UNINITIALIZED: No value was set for the uniform variable (requested type {})", typeid(T).name()));
             }
-            return *std::any_cast<T>(&m_value);
+            const T *value = std::any_cast<T>(&m_value);
+            if (!value)
+            {
+                throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::UNIFORM::GET::TYPE_MISMATCH: The requested type ({}) does not match the type of the stored value ({})", typeid(T).name(), m_value.type().name()));
+            }
+            return *value;
         }
 
+        /**
+         * @brief Stores `value`, replacing the previous value and its type.
+         *
+         * If copying `value` throws, the previous value is kept.
+         */
         template <typename T>
         void setValue(const T &value)
         {
-            try
-            {
-                std::any_cast<T>(&m_value);
-            }
-            catch (const std::bad_any_cast &)
-            {
-                throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::UNIFORM::SET::TYPE_MISMATCH: The type of the value ({}) does not match the type of the uniform variable ({})", typeid(value).name(), typeid(m_value).name()));
-            }
             m_value = value;
         }
 
