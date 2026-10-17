@@ -114,10 +114,16 @@ avant haut coûteux, jamais buffer ni un haut pour du moyen ; toute coupe = GAP-
 - **D1 — TRANCHÉE** : messages TYPE_MISMATCH distingués GET vs SET, contenant le type
   réel observé (`m_value.type().name()`), motif TYPE_MISMATCH — corrige le message
   trompeur « SET » constaté par P1 ; oracle = motif, pas le texte entier.
-- **D2 — PARTIELLE** : la CONTRAINTE est ferme dès maintenant (oracle b9c90fd jamais
-  réécrit silencieusement ; update strictement plus forte après RED conservé). Le choix
-  du corps du setter générique ( getValue<A>() vs usage valide ) reste au fork T2 après
-  consultation de P2 ; décision consignée dans la note T2.
+- **D2 — TRANCHÉE au commit P2 (P2 + lead)** : la clé dispatch générique devient
+  **Setter<T>** (pas Setter<std::shared_ptr<T>> comme l'énonce la fiche) —
+  recommandation motivée du préflight P2 : le stockage est any(shared_ptr<T>),
+  getValue consomme shared_ptr<T>, Uniform.hpp:70-73 dispatche déjà Setter<T> et
+  AttributeConcept valide Setter<int> ; Setter<T> rend la porte concept cohérente sans
+  autre changement, l'alternative casserait contexte/Uniform/concept. Conséquence
+  oracle A1 : set<float> → MockSetter<float> Times(1) identity. Contrainte ferme :
+  oracle b9c90fd jamais réécrit silencieusement — RED conservé, update strictement
+  plus forte après. L'ordre est causal : alignement clé/stockage AVANT le fix sizeof
+  (sinon le fix est inatteignable sur le chemin nominal).
 - **D3 — TRANCHÉE** : flips mécaniques compil-only par tranche (T1 : consommateurs
   Uniform ; T2 : consommateurs Attribute/Setter ; T3 : readers durcis), précédent
   Pipeline A2 (adaptation mécanique d'API chez l'écrivain de la tranche). Le
