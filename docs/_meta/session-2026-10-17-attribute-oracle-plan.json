@@ -29,7 +29,12 @@
   "coordinator_plan_adjustment": "PM proposed DOC-F integration as B0. Removed as execution dependency: source inputs and fixture contract already integrated and hashed at 738891f; documentation has disjoint ownership and supplies no code/build input to G1. DOC-F recovery and G1 may run independently; both must be integrated before final documentary reconciliation.",
   "resources": "One C++ owner across all TDD steps; isolated source worktree; exclusive short physical outputs out/go-normal and out/go-asan, principal existing Conan cache/tooling leased to G1 then QA; no SUBST, copied caches, GPU or new dependency installation",
   "consumers": "G2/G3/G4 remain unpublished until required actual integrated inputs are available",
-  "documentation_recovery": "Original architect DOC-F lacked write permission outside ADR and was stopped with clean worktree; explicit cpp-engineer documentation-only substitution task_mvc3ugxj_0006_1symr5 retains approved scores/model routing, no permission bypass",
+  "tasks_published": {
+    "G1": "task_mvc3xfrd_000a_wrpmae",
+    "DOC_F_recovery": "task_mvc3ugxj_0006_1symr5",
+    "consumers": "G2/G3/G4 retained in plan, not published until integrated inputs exist"
+  },
+  "documentation_recovery": "Original architect DOC-F lacked write permission outside ADR and was stopped with clean worktree before any edit; checkpoint out/mission-a1a2/doc-f-recovery-pool17. Explicit cpp-engineer documentation-only substitution task_mvc3ugxj_0006_1symr5 retains approved scores/model routing, no permission bypass",
   "historical_evidence": "Keep I0/final Attribute oracle FAIL and A1c unsafe RED protocol FAIL immutable; a final corrected test does not rewrite historical results",
-  "status": "Plan validated, implementation ready for publication under existing approved grid; no model override"
+  "status": "Plan validated; G1 and independent DOC-F recovery published under existing approved grid, no model override; RED/GREEN not yet received"
 }
