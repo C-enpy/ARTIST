@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-17",
+  "kind": "Explicit user-authorized amendment to existing approved Pipeline mission, not a new mission or policy revision",
+  "user_authorization": "Alors vas-y, following explanation of the targeted GMock oracle correction",
+  "mission": "mission-8fa8c8948fe64c7e",
+  "entry_head": "738891fb98e23ee0dbe4afb1f1009c225105d894",
+  "entry_identity": "130/130 post-fixture manifest inputs conform; no SUBST aliases",
+  "assessment": "PM/LLM; independent project-manager plan then coordinator validation",
+  "scores": {
+    "G1": {"agent": "cpp-engineer", "complexity_raw": 74, "complexity": 74, "risk": 72},
+    "G2": {"agent": "correctness-reviewer", "complexity_raw": 58, "complexity": 58, "risk": 66},
+    "G3": {"agent": "rendering-verifier", "complexity_raw": 64, "complexity": 64, "risk": 70},
+    "G4": {"kind": "documentation", "complexity_raw": 36, "complexity": 36, "risk": 44}
+  },
+  "scope": {
+    "primary": "ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp",
+    "conditional": "Attribute MockSetter/MockBinder/MockUnbinder headers only if required and justified",
+    "production": "Attribute.hpp read-only; any production fix requires separate coordinator arbitration",
+    "requirements": [
+      "Verify and clear every touched singleton mock during fixture teardown, without short-circuit; fatal test assertion still reaches verification",
+      "First keep old unsatisfied expectation: corrected oracle must make GoogleTest and CTest fail before final summary with JUnit failure, no crash",
+      "Then correct only the demonstrated int versus shared_ptr<int> observer mismatch; preserve Times(1), strengthen context and value checks",
+      "Positive and negative process controls, repeat/shuffle fixture and CPU suites, inspect raw logs beyond truncated XML",
+      "No assertion removal, tolerance, NiceMock masking, setter redesign, F7/ADR-0004 adoption or GPU change"
+    ]
+  },
+  "negative_control_decision": "Use intermediate oracle-only checkpoint with unchanged wrong expectation as real failing control. Preserve its binary and source/header identity before rebuilding final positive version. Author may create a minimal private CTestTestfile.cmake artifact under out for that preserved binary; it is development covered by G1, not a new reviewer-written runner. Capture expected process1/CTest8 and XML failure separately from sanitizer86 and crashes.",
+  "graph": "G1 -> integrate/freeze -> (G2 static review parallel G3 execution) -> accept -> G4 documentary amendment -> integrate and index",
+  "coordinator_plan_adjustment": "PM proposed DOC-F integration as B0. Removed as execution dependency: source inputs and fixture contract already integrated and hashed at 738891f; documentation has disjoint ownership and supplies no code/build input to G1. DOC-F recovery and G1 may run independently; both must be integrated before final documentary reconciliation.",
+  "resources": "One C++ owner across all TDD steps; isolated source worktree; exclusive short physical outputs out/go-normal and out/go-asan, principal existing Conan cache/tooling leased to G1 then QA; no SUBST, copied caches, GPU or new dependency installation",
+  "consumers": "G2/G3/G4 remain unpublished until required actual integrated inputs are available",
+  "documentation_recovery": "Original architect DOC-F lacked write permission outside ADR and was stopped with clean worktree; explicit cpp-engineer documentation-only substitution task_mvc3ugxj_0006_1symr5 retains approved scores/model routing, no permission bypass",
+  "historical_evidence": "Keep I0/final Attribute oracle FAIL and A1c unsafe RED protocol FAIL immutable; a final corrected test does not rewrite historical results",
+  "status": "Plan validated, implementation ready for publication under existing approved grid; no model override"
+}
