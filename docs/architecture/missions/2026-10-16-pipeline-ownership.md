@@ -300,16 +300,16 @@ inscrites, sans décision :
 
 1. **Gestion pré-existante ouverte — oracle GMock `AttributeTest.SetTest`** : défaut de
    suite préexistant hors mission (mock attendu zéro appel, diagnostic post-résumé).
-   À **ouvrir et/software suivre** dans les incidents, avec priorité, sans modification C++
+   À **ouvrir et suivre** dans les incidents, avec priorité, sans modification C++
    de cette mission.
 2. **ADR-0004** (layouts typés / bindings) : Proposed / not-started, adoption explicite
    requise.
-3. **F7** : requêtes UniformReader requis dans `OpenGLPassFlow` ou concept négatif signé
-   (tranche uniform/attribute).
+3. **F7** : exiger `UniformReader` dans `OpenGLPassFlow` ou écrire le concept
+   négatif signé (tranche uniform/attribute).
 4. **F8-extraction complémentaire** : close-failure et panne OS réelle (INCONCLUSIVE),
    ou ruling d'ajournement.
 5. **Latent `#if` libstdc++** de `getStackTraceString` (avant toute exposition GCC).
-6. **22 autres GL sous ASan** (une campagne dédiée à décider), Release/CI/couverture,
+6. **Les 17 autres GL non sélectionnés sous ASan** (campagne dédiée à décider), Release/CI/couverture,
    performance et équivalence visuelle (ADR-0006).
 
 ## Navigation
