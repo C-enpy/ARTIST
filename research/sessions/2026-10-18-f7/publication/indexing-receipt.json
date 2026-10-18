@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-18T10:27:03.304Z",
+  "documentationCommit": "393ee5849131a4010de2f0468d64d3907f4864ac",
+  "scope": "artist-wiki only",
+  "steps": [
+    {
+      "command": "node .opencode/scripts/update-wiki.mjs",
+      "exit": 0,
+      "stdout": "{\n  \"collection\": \"artist-wiki\",\n  \"collections\": 1,\n  \"indexed\": 1,\n  \"updated\": 4,\n  \"unchanged\": 32,\n  \"removed\": 0,\n  \"skipped\": 0,\n  \"needsEmbeddingGlobal\": 5\n}\n",
+      "stderr": "",
+      "combinedLogSha256": "871faa7fe6d7782a94b2cdccbe0b0522e8860e9825e46a931ea8ec0956bea204"
+    },
+    {
+      "command": "qmd embed -c artist-wiki",
+      "exit": 0,
+      "stdout": "Model: embeddinggemma-300M-Q8_0.gguf\n\n\r██████████████████████████████ 100%                                    \n\n✓ Done! Embedded 56 chunks from 5 documents in 7s\n",
+      "stderr": "\u001b[?25l\u001b[?25h",
+      "combinedLogSha256": "2d24386d4d891f5617c52fee2bb2fee678964b852b4c12f9ddc3cc81736750c1"
+    }
+  ],
+  "retrieval": {
+    "collection": "artist-wiki",
+    "query": "lex sous-agents and F7, explicit intent",
+    "file": "artist-wiki/references/session-2026-10-18-f7.md",
+    "docid": "#e7cb50",
+    "multiGetLines": 42,
+    "verified": "29 public sessions,271proofs,root+28agents,scope and exclusions present",
+    "initialStrictNumericQuery": "empty; broader query and targeted retrieval confirmed coverage"
+  }
+}

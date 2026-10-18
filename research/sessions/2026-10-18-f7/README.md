@@ -23,6 +23,9 @@ Résultat technique : `docs/architecture/missions/2026-10-18-f7-uniform-attribut
 
 Les deux manifestes décrivent le snapshot au moment de l'archivage. Ils ne sont
 pas un journal vivant des actions ultérieures d'ingestion, commit ou push.
+Les sous-dossiers ASan preflight datés du15/16octobre proviennent de l'arbre
+partagé préexistant : historiques auxiliaires, pas des runs F7 supplémentaires.
+Les dates/chemins du manifeste distinguent ces contrôles du canariT4 du17octobre.
 L'export natif sanitize=true masque aussi le dialogue ; pour préserver les
 échanges utiles, un export public dérivé a été filtré avant écriture dans Git.
 Ce n'est pas une reproduction brute des contextes internes des modèles.
@@ -54,3 +57,6 @@ Candidat final `6d6dcb7` :299/299natifs (251CPU+48OpenGL), zéro skip, WindowsDe
 ASan245est un historiqueT4 avantTE/F2/F1, pas une validationASanfinale. Aucune
 prétention de performance/image/Release/autreOS ou couverture driver exhaustive.
 Les exports ne remplacent ni les JUnit ni l'identité du candidat testé.
+
+Le reçu des commandes d'indexation de cette ingestion est conservé séparément
+dans `publication/indexing-receipt.json` (hors des271preuves moteur du snapshot).

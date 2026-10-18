@@ -26,6 +26,7 @@
     "bytes": 17799656,
     "credential_redactions": 0,
     "legacy_log_encoding": "21 Windows ANSI/UTF16 logs initially classified incorrectly as binary were restored byte-identically; encoding recorded",
+    "shared_preflight_history": "Oct15/16 ASan preflight directories copied from the shared existing output tree are auxiliary historical records, not extra F7 runs; Oct17 T4 canary remains separately dated",
     "excluded_executables": 7,
     "excluded_executable_policy": "Hashes and sizes archived, original files retained locally; no executables/caches/build trees/serviceDB committed",
     "manifest": "research/sessions/2026-10-18-f7/evidence-manifest.json",
@@ -48,6 +49,21 @@
     "new_source_entries": 302,
     "total_ledger_sources": 317,
     "wiki_markdown_pages": 37
+  },
+  "indexing": {
+    "documentation_commit": "393ee5849131a4010de2f0468d64d3907f4864ac",
+    "collection": "artist-wiki",
+    "update_command": "node .opencode/scripts/update-wiki.mjs",
+    "update_exit": 0,
+    "indexed": 1,
+    "updated": 4,
+    "unchanged": 32,
+    "embedding_command": "qmd embed -c artist-wiki",
+    "embedding_exit": 0,
+    "embedded_documents": 5,
+    "embedded_chunks": 56,
+    "retrieval": "MCP lex sous-agents/F7 found references/session-2026-10-18-f7.md (#e7cb50), followed by multi_get of42lines confirming29sessions/271proofs; initial strict numeric query returned empty without indicating missing index",
+    "receipt": "research/sessions/2026-10-18-f7/publication/indexing-receipt.json"
   },
   "correction": "Native public exports show both test-engineer workers ended with local BLOCKED reports not delivered through team_results; pool-7 also performed reads. Idle/worktree-empty did not prove no turn ran. No native permission enforcement test performed.",
   "limits": "No new engine run or broader GPU/ASan/Release/performance claim; existing final299native and historical245ASan scopes unchanged"
