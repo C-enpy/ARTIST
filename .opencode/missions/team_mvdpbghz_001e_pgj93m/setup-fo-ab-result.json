@@ -1,0 +1,52 @@
+{
+  "kind": "setup-causal-experiment-not-functional-red-green",
+  "authorAndRunner": "pool-6 / gpu-engineer (D)",
+  "task": "task_mvdy0o26_000s_jn4jct",
+  "nativeCandidate": "result_mvdz8e1m_0019_i58vbo",
+  "nativeMessage": "msg_14f9dacd6001R5y1slLeiPWFKQ",
+  "sourceHead": "1f1ad63b3a4d9d5819845eeb135275beaee4234c",
+  "sourceSHA256": "6ad47f1dc16d2fe34d9548af42b4463c75656e8577de1e96f09f55cf20ea209c",
+  "sourcePathLength": 193,
+  "originalObjectPathLength": 267,
+  "shortObjectPathLength": 86,
+  "onlyChangedCompilerArgument": "/Fo",
+  "sameCwdSourceCompilerFlagsAndFd": true,
+  "phase0": {
+    "successfulObjects": 43,
+    "maximumAbsolutePathLength": 256,
+    "successfulObjectsLongerThan259": 0,
+    "manifestSHA256": "3c3159a3eaa20743e9e71a93e24f3dbbffbf5aacda144d4bdc49a5be9e969fe7"
+  },
+  "arm0": {
+    "exit": 1,
+    "observed": "C1083 generated file empty / Invalid argument reproduced",
+    "logSHA256": "48bff147a8a9029ff5f05fd32dae60d6e385ee0ce11c329f99319162e2a84bfa"
+  },
+  "arm1": {
+    "exit": 0,
+    "fatalErrors": 0,
+    "objectBytes": 2473560,
+    "objectSHA256": "7e438afccf205d93231e5f913f23181b6b85778eca4dd443c2c39cd2c518e6ce",
+    "logSHA256": "99eec5f3412750044a7024e58a5e4b6266dcd1133eb778347c050641164f7740"
+  },
+  "toolchainReported": {
+    "cl": "19.44.35221",
+    "vcvars": "14.44.35207",
+    "sdk": "10.0.26100.0",
+    "conan": "2.12.2",
+    "ninja": "1.13.0.git.kitware.jobserver-pipe-1"
+  },
+  "artifacts": "C:/Users/djden/AppData/Local/Temp/opencode/b-nj1cs8",
+  "commandsJSONSHA256": "3555244c1ce1c0ca9eeb8175d640f7978cefba13bb5b9894f439c0c8549a289f",
+  "stateBeforeAfterSHA256": "b6a26df4c92454f148692d72386d97c0c518b65fa726b0d12ce9b8936975dc18",
+  "resultJSONSHA256Reported": "2c402e0a2be3e081264d3919bd8abb9415bd75c73a0bcaec81c0970dc0436814",
+  "leadCrosscheck": "Read the short 22-line S/logs/result.json using the host-authorized read tool in the preapproved Temp/opencode directory; exit 1 vs 0, object bytes/hash and sourceUnchanged match. The denied long worktree log was not accessed or bypassed.",
+  "sourceStatusReported": "clean before and after, same HEAD and source hash",
+  "verdict": "PASS for the bounded /Fo output-path causal experiment in this environment",
+  "limitations": [
+    "Not a proof of a universal Windows path threshold",
+    "Not a functional RED or GREEN of Attribute-GL",
+    "No Phase2 configuration, CTest, shader probe or GPU run performed yet",
+    "No source, CMake, repository script or tests changed"
+  ]
+}

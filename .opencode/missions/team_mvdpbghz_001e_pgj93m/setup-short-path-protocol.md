@@ -106,3 +106,41 @@ Buildsource/flags inchangés,aucune source production/tests neuve à écrire,
 aucun RED fonctionnel ni GPU. Retour résultats/hashes/longueurs/commands/exits
 avant élargir àPhase1b/2. B support livré n'est pas une autorisation de cloreD.
 Lead réévaluera ensuite la bonne racine de sortie pour le cycleTDD complet.
+
+## Extension de mandat après Phase1 concluante
+
+Preuve D reçue :43objets réussis,maximum256,aucun>259 ; Arm0reproduitexit1/C1083,
+Arm1seul/Focourtexit0/objet2473560octets ; source/HEAD inchangés. Le lead a recoupé
+le résumé court S/logs/result.json via lecture host autorisée du Temp approuvé.
+Manifeste :setup-fo-ab-result.json. Ceci confirme la cause /Fo dans cet
+environnement, pas un seuil Windows universel ni un RED/GREEN moteur.
+
+Phase1b inutile/nonautorisée. Phase2 est désormais autorisée sous ses conditions
+ci-dessus :installation/configuration sourceR/buildS/build mêmes versions/flags,
+aucune transplantation de cache ni édition CMake/script/moteur pour réparer setup.
+CONAN_HOME resteR/out/conan2 ; user_presets vide obligatoire. Garder le worktree
+natif et son HEADsource1f1ad63 sans merge/cherry-pick de ce document.
+
+Avant compiler la TU :dry-run borné et normalisation des seules racines build
+dans la comparaison des commandes. Différence de flags/source/defines/SDK=>arrêt,
+pas interprétation comme variante acceptable. Phase2 doit produire le même objet
+depuis source inchangée sous sortie courte, sans C1083 et sans élargir le graphe
+au stade objet. Rapporter cette preuve comme setup, pas RED.
+
+Si Phase2 remplit ces critères, GO conditionnel pour poursuivre D dans S/build :
+build complet sérialisé des deux cibles puis baseline fraîche et préflights Q2,
+avant tests de régression/RED/production. Le build complet peut déclencher la
+découverte GoogleTest POST_BUILD ; ce GO l'autorise après réussite Phase2.
+Une erreur setup/réseau/flags ou une divergence native définie Q2=>arrêt et
+rapport précis, pas nouvelle tentative équivalente plus coûteuse.
+
+Pour les futures étapes TDD,installer/reconfigurer de manière incrémentale avec
+ces commandes équivalentes si nécessaire,pas script qui referait le build long.
+Exécuter CTest avec --test-dir S/build,labelsunit/opengl,--no-tests=error,
+--parallel1 et JUnit/logs sousS/logs. Aucun contexteGPU concurrent. Tracer chemins
+et candidat réellement compilé,native INTEGER/TYPE avant draw,cleanup courant,
+et tous critères Q2 renforcés. Garder les gardes CPU explicitement autorisées
+distinctes des preuvesGPU. Régression production uniquement après REDcausal.
+Le lead conserve l'intégration/relecture finale ; D ne se clôture pas sur le seul
+setup. Aucun nouveau GO opérateur n'est nécessaire pour suivre ce flux conditionnel,
+mais toute pause opérateur explicite resterait prioritaire.
