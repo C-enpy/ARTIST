@@ -27,16 +27,23 @@ namespace
     using Context = api::MockOpenGL::UniformContext;
     using Uniform = pipeline::Uniform<api::MockOpenGL>;
 
-    struct CopyObservedValue
+    struct LifeProbe
     {
         int value;
         int &copies;
+        int &deaths;
 
-        CopyObservedValue(int value, int &copies) : value(value), copies(copies) {}
-        CopyObservedValue(const CopyObservedValue &other) : value(other.value), copies(other.copies)
+        LifeProbe(int value, int &copies, int &deaths) : value(value), copies(copies), deaths(deaths) {}
+        LifeProbe(const LifeProbe &other) : value(other.value), copies(other.copies), deaths(other.deaths)
         {
             ++copies;
         }
+        ~LifeProbe()
+        {
+            ++deaths;
+        }
+        // No assignment: reference members make it non-assignable, and std::any
+        // constructs in place, so the probe only ever needs copy construction.
     };
 
     enum class OwnerState { Loaded, Empty, MovedFrom };
@@ -164,35 +171,42 @@ TEST_F(UniformOwnershipTests, NullContextIsRejected)
                         TraceableException<std::invalid_argument>("ERROR::UNIFORM::NULL_CONTEXT"));
 }
 
-/// Loaded->Loaded transfers the context, including its base any, without copying it.
+/// Loaded->Loaded transfers the context, including its base any, without copying
+/// and without destroying the transferred value.
 TEST_F(UniformOwnershipTests, MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue)
 {
     int copies = 0; // Outlives the values stored in both contexts.
+    int deaths = 0; // Destructions of stored LifeProbe payloads.
     Uniform destination;
-    destination.getContext().setValue(CopyObservedValue(17, copies));
+    destination.getContext().setValue(LifeProbe(17, copies, deaths));
     Context *transferredContext = nullptr;
 
     {
         Uniform source;
-        source.getContext().setValue(CopyObservedValue(23, copies));
+        source.getContext().setValue(LifeProbe(23, copies, deaths));
         transferredContext = &source.getContext();
         ASSERT_NE(transferredContext, &destination.getContext());
         ASSERT_GT(copies, 0); // The probe observes real copies into the base std::any.
         copies = 0;
+        deaths = 0;
 
         destination = std::move(source);
 
         EXPECT_EQ(transferredContext, &destination.getContext());
-        EXPECT_EQ(23, destination.get<CopyObservedValue>().value);
+        EXPECT_EQ(23, destination.get<LifeProbe>().value);
         EXPECT_EQ(0, copies);
         expectSpecificError([&source]
                             { (void)source.getContext(); },
                             TraceableException<std::runtime_error>("ERROR::UNIFORM::FREED_CONTEXT"));
     }
 
-    // Destroying the moved-from wrapper must not destroy the transferred context.
+    // Destroying the moved-from wrapper must not destroy the transferred context:
+    // exactly ONE payload death is contractual at move assignment (the old
+    // destination value 17, destroyed before the transfer), while the transferred
+    // value 23 survives (checked below even after the source is destroyed).
+    EXPECT_EQ(1, deaths);
     EXPECT_EQ(transferredContext, &destination.getContext());
-    EXPECT_EQ(23, destination.get<CopyObservedValue>().value);
+    EXPECT_EQ(23, destination.get<LifeProbe>().value);
     EXPECT_EQ(0, copies);
 }
 
