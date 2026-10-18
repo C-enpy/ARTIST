@@ -60,3 +60,6 @@ ne sont pas démontrés. Les [[adr/README|statuts ADR]] restent inchangés :
 0003/0005 Accepted/partial,0008WindowsDebug seulement,autresProposed.
 Voir [[development/build-and-test|Build et tests]] et le
 [[architecture/correction-plan|plan de correction]].
+
+La [[references/session-2026-10-18-attribute-gl|rétrospective de session Attribute-GL]]
+replace ce retrait dans les décisions, incidents et limites de la mission.
