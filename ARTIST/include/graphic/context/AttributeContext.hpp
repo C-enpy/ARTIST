@@ -26,7 +26,7 @@ namespace artist::graphic::context
                 }
                 catch (const std::bad_any_cast &)
                 {
-                    throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::SET::TYPE_MISMATCH: The type of the value ({}) does not match the type of the attribute variable ({})", typeid(T).name(), typeid(m_value).name()));
+                    throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::SET::TYPE_MISMATCH: The type of the value ({}) does not match the type of the attribute variable ({})", typeid(T).name(), m_value.type().name()));
                 }
             }
             return nullptr;
@@ -43,7 +43,7 @@ namespace artist::graphic::context
                 }
                 catch (const std::bad_any_cast &)
                 {
-                    throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::SET::TYPE_MISMATCH: The type of the value ({}) does not match the type of the attribute variable ({})", typeid(value).name(), typeid(m_value).name()));
+                    throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::SET::TYPE_MISMATCH: The type of the value ({}) does not match the type of the attribute variable ({})", typeid(value).name(), m_value.type().name()));
                 }
             }
             m_value = value;
