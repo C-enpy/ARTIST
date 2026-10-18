@@ -43,10 +43,28 @@
   "leadCrosscheck": "Read the short 22-line S/logs/result.json using the host-authorized read tool in the preapproved Temp/opencode directory; exit 1 vs 0, object bytes/hash and sourceUnchanged match. The denied long worktree log was not accessed or bypassed.",
   "sourceStatusReported": "clean before and after, same HEAD and source hash",
   "verdict": "PASS for the bounded /Fo output-path causal experiment in this environment",
+  "phase2": {
+    "buildRoot": "C:/Users/djden/AppData/Local/Temp/opencode/b-nj1cs8/build",
+    "conanExitReported": 0,
+    "configureExitReported": 0,
+    "dryRunReported": "exactly one TU",
+    "objectCompileExit": 0,
+    "objectPathLength": 174,
+    "objectBytesVerifiedByLead": 2471410,
+    "objectSHA256VerifiedByLead": "a23df25ab20732db322d994f51abc7875a06f943f4bf4c25f24f1c7e8ed55905",
+    "sourceHead": "1f1ad63b3a4d9d5819845eeb135275beaee4234c",
+    "sourceSHA256Reported": "6ad47f1dc16d2fe34d9548af42b4463c75656e8577de1e96f09f55cf20ea209c",
+    "sourceStatusReported": "clean",
+    "commandArgumentsEqualReported": true,
+    "normalizationReported": "Only build roots and four grouping-quote pairs on whitespace-free relocated GTest paths; no flag, define, source, compiler or SDK difference",
+    "leadCrosscheck": "Read S/logs/phase2-result.json and independently checked actual short object size and SHA256 with Get-Item/Get-FileHash in the preapproved Temp directory",
+    "verdict": "PASS short-build setup for the previously failing TU; not functional RED/GREEN",
+    "next": "D continues the already-authorized conditional full build, fresh baseline and Q2 native preflights before functional RED and production"
+  },
   "limitations": [
     "Not a proof of a universal Windows path threshold",
     "Not a functional RED or GREEN of Attribute-GL",
-    "No Phase2 configuration, CTest, shader probe or GPU run performed yet",
+    "Phase2 configuration and one-TU compilation completed subsequently; no CTest, shader probe or GPU result provided at this checkpoint",
     "No source, CMake, repository script or tests changed"
   ]
 }

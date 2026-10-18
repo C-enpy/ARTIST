@@ -292,6 +292,12 @@ Utilisateur a refuséDH2–DH4Q1. Renforcement ne choisit pas spelling/noms/erre
   observationpuisdécisionsuroracleoupreuveCPU ; pasnormalisationdriverimprovisée.
 - DH-NAME :ni300ni256lié=>INCONCLUSIVE,déciderautrelongueurnaturelleouhorslot.
 - DH-REFUS :dvec3/struct/boollié=>log,Readernonappelé,décision surpréconditiondriver.
+  Arbitrage obtenu pour struct uniquement,après observation native sur NVIDIA617.42 :
+  « Poursuivre, écart driver conservé ». Préflight de conformité struct resteFAIL,
+  isolé et jamais transformé enPASS/skip. Interfacesstruct exclues des chemins
+  Reader/Setter/draw/TF du lot ; bool exécuté indépendamment avant poursuite.
+  Détails,noms/sélections et preuves :native-preflight-struct-incident.md.
+  Toute sélection fonctionnelle est explicite et ne constitue pas unPASSglobal.
 - DH-LOC :sanslocationnégativenaturellemêmebuilt-ins,INVALID_LOCATIONnatif
   inatteignable ; décisionexplicitesurpreuveCPUuniquedelagarde.
 - DH-DUP :homonymes/location0activesrefusésavantReader ; décisionexplicitegarde
