@@ -1,0 +1,66 @@
+{
+  "mission": "F7 option A — Uniform/Attribute et findings T1-1/F2/F1",
+  "date": "2026-10-18",
+  "candidate": "6d6dcb79ef7d249dd1061e09f20e5514268fad9f",
+  "scope": "Windows x64 Debug, MSVC 14.44, OpenGL 3.3 core NVIDIA 617.42",
+  "integration": {
+    "T1": "cb9f268",
+    "T2": "05fef28",
+    "T3": "18dcf31",
+    "T4_historical": "17019e4",
+    "TE": "1dd7cd1",
+    "T1_1_final": "1db306a",
+    "F2": "1690bac",
+    "F1": "6d6dcb7"
+  },
+  "final_native_run": {
+    "executor": "lead",
+    "command": "ctest --preset windows-msvc-debug --no-tests=error --output-on-failure --output-junit C:/Users/djden/source/repos/ARTIST/out/mission-f7/final/native.xml",
+    "build": "Latest integrated F2/F1 configured with cmake --preset windows-msvc-debug (re-glob), built --parallel 1 after load-msvc.cmd in same cmd process",
+    "tests": 299,
+    "unit": 251,
+    "opengl": 48,
+    "failures": 0,
+    "disabled": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "junit": "out/mission-f7/final/native.xml",
+    "junit_sha256": "a9eee192161b405cd3dd00a39c2a02c0cb22d812e8bdb4f98d3ab236a50de575",
+    "log": "out/mission-f7/final/native.log"
+  },
+  "asan": {
+    "final_candidate": "NOT_RUN",
+    "historical_T4": "245/245 =223unit+22GL, canary healthy0/UAF86, declared selection, candidate17019e4 before TE/F2/F1",
+    "evidence": "docs/_meta/session-2026-10-17-f7-t4-barrier.json",
+    "restriction": "Do not requalify this historical campaign as final-candidate ASan coverage; ASan does not prove driver-side OOB absence"
+  },
+  "independent_reviews": {
+    "method": "Fresh read-only reviews of code and preserved executed evidence; comparison is not independent re-execution",
+    "T1_1": "test-reviewer-offboard final KEEP v3; aggregate-counter KEEP v2 invalidated; distinct counters and fatal guards verified; no production mutant executed",
+    "F2": "f2-correctness-review and f2-rendering-verifier: no in-scope FAIL on1690bac; 7sources/34artifacts and counts independently recouped",
+    "F1": "f1-correctness-review: no demonstrated finding on6d6dcb7; 25artifacts re-hashed, exact two-expression delta and freeze preserved"
+  },
+  "finding_disposition": {
+    "T1_1": "CLOSED at CPU mock Loaded-to-Loaded scope",
+    "F2": "CLOSED at single-value upload contract; array set rejected before GL",
+    "F1": "CLOSED at CPU stored-type diagnostic contract; historical error prefixes preserved",
+    "F3": "Current-state shared_ptr snapshot corrected in documentation"
+  },
+  "preserved_evidence": {
+    "local_roots": "out/mission-f7/{t1,t2,t3,t4,te,f2,f1,final}; copied to main before author shutdown; out ignored, do not purge",
+    "versioned_notes": ".opencode/evidence/mission-f7/ plus original f7-qa-plan under mission-gpu-qa",
+    "F2_manifest_sha256": "40d30bb9165b0c69385aced5a6b23c3d1a22ad9815a770c8889a18c8c592079f",
+    "F1_manifest_sha256": "1ea759528a79785cdd50db7473854df769cfd4f58bdf9f59e9a91eb62c9ada04"
+  },
+  "limits": [
+    "28 F2 setter specializations not exercised natively: static inventory/review, INCONCLUSIVE driver",
+    "fp64 observed only on tested device; production guard for absent fp64 remains pre-existing question",
+    "No global RAII, in-flight GPU retirement, concurrent-use, image, performance, Release, remote CI or other-OS proof",
+    "Reload retains absent old names and Reader publication may remain partial on failure",
+    "Binder VBO cleanup and historical Loader/ShaderLoader shuffle issues not corrected",
+    "QA profile silence root cause not proven by native transcript; substitution explicitly reported and QA permission rules unchanged"
+  ],
+  "adr_status": "0001/2/4/6/7 Proposed; 0003/5 Accepted partial; 0008 Windows Debug verified only; no0009 created",
+  "next_mission": "NOT_SELECTED",
+  "verdict": "Mission closed at stated scope, findings resolved per contract; not a global engine PASS"
+}

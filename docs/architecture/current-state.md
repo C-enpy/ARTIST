@@ -3,29 +3,24 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Photographie Pipeline A1+A2 (moteur f914d77, harnais95c2b9e) et amendement oracle b9c90fd vérifié : ownership unique, curseur borné, F7 partagé hors tranche, 176CPU/176ASan ciblés et fragilités de shuffle préexistantes conservées."
+summary: "Photographie F7 clôturée à6d6dcb7 : Uniform/Attribute et maps possédés en unique_ptr, composants empruntés, Reader durci, uploads single-value ;299natifs Windows Debug, ASan245 historique non requalifié."
 status: observed
-source_revision: b9c90fd51b0ff8a85b1db1d0674c1243ccdd0951
+source_revision: 6d6dcb79ef7d249dd1061e09f20e5514268fad9f
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # État réel d'ARTIST
 
 > [!info] Portée de cette photographie
-> HEAD `738891f` vérifié le 2026-10-17 : le C++ est identique à `f914d77`
-> (intégration de la mission Pipeline A1+A2/F6, après I0 `18edc72`) ; le seul
-> changement de code postérieur est le harnais Python `95c2b9e` (H-FIXTURE,
-> deux fichiers scripts/). Côté C++ : `IPipeline::m_context` et
-> `IPass::m_context` sont des `unique_ptr`, `PipelineContext::m_passes` stocke
-> des `unique_ptr<IPass>`, le curseur est borné et validé avant mutation. Les
-> maps uniform/attribute restent partagées (F7 hors tranche). Suites vérifiées à
-> `f914d77` : **215/215 normales** (176 unitaires + 39 OpenGL) et **198/198**
-> ASan sélection déclarée (176 + 22 GL ; 17 autres GL non sélectionnés) ; bilan
-> QA indépendant **24 critères — 14 PASS, 3 FAIL, 7 INCONCLUSIVE**, aucun PASS
-> global ([[architecture/missions/2026-10-16-pipeline-ownership|mission
-> archivée]]). ADR-0003 reste **Accepted / partial**. **Aucune performance ni
-> équivalence d'image n'est mesurée.**
+> Candidat `6d6dcb7`, vérifié le2026-10-18 : **299/299 natifs** (251CPU+48OpenGL),
+> zéro skip. F7 ajoute ownership unique Uniform/Attribute/maps et emprunts,
+> UniformReader durci, uploads single-value bornés et diagnostics corrigés.
+> Les garanties Pipeline A1+A2 restent en place. **ASan245 appartient à T4**,
+> avant TE/F2/F1, pas au candidat final. ADR-0003 reste **Accepted/partial**.
+> Voir [[architecture/missions/2026-10-18-f7-uniform-attribute|archive F7]],
+> `_meta/session-2026-10-18-f7-final.json` et l'archive Pipeline pour les historiques.
+> **Aucune performance ni équivalence d'image mesurée.**
 
 ## Ce qui est présent
 
@@ -138,14 +133,19 @@ graphique, ni l'image produite.
 
 ## Ce qui reste partagé — uniform/attribute (F7) et divers
 
-- `PassContext::getUniforms()/getAttributes()` exposent des maps d'
-  `shared_ptr<Uniform>/shared_ptr<IAttribute>` indexées par `std::string`
-  (`Pass.hpp:151, 159`) ; les contexts des wrappers `Uniform`/`Attribute`
-  restent partagés, inchangés. Ces owners CPU externes peuvent survivre au
-  pass ; leurs métadonnées GL peuvent devenir obsolètes après `free()`,
-  remplacement ou destruction du pass : **ne pas promettre leur usage GPU après
-  invalidation**, aucun handle générationnel ni validation de binding ADR-0004
-  n'existe.
+- `PassContext::getUniforms()/getAttributes()` empruntent les maps de
+  `unique_ptr<Uniform>/unique_ptr<IAttribute>` indexées par chaînes. Contextes
+  Uniform/Attribute possédés en unique_ptr, getContext() par référence ;
+  getUniform/getAttribute renvoient des pointeurs empruntés nullables. Rejet des
+  owners nuls avant insertion. Emprunts invalidés au remplacement/reload/destruction,
+  aucun handle générationnel ni garantie d'usage GPU après invalidation.
+- UniformReader est exigé par concept (présence+on(C&) void), utilise la capacité
+  driver des noms, valide location/size/doublons intra-réflexion. Reload garde
+  les noms anciens absents et peut publier partiellement avant erreur.
+- `Uniform::set<T>` porte une seule valeur ; les34setters OpenGL refusent size!=1
+  avant GL et30appels vector/matrix utilisent count1. Arrays restent réfléchis mais
+  leur set single-value est rejeté. Six types vérifiés nativement dont fp64 observé ;
+  28autres INCONCLUSIVE driver, inventaire/revue statique seulement.
 - `graphic/context/AttributeContext.hpp` stocke un `std::any` et récupère une
   valeur par `std::any_cast<std::shared_ptr<T>>`.
 - `graphic/pipeline/Shader.hpp` possède son `ShaderContext` en `unique_ptr` et

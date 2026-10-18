@@ -115,6 +115,31 @@ sur appareil sans extension (gate actuel dans les tests seulement) ; types
 unsupported rejetés à la compilation selon HasComponent ; stockages CPU conservés
 après exception du Setter. Aucun de ces points n'est présenté comme corrigé.
 
+## F1 — clôture après correction et revue indépendante
+
+Candidat `6d6dcb7` (auteur bfd94a0, planQA113411d). Delta production strictement
+deux expressions, type stocké diagnostiqué via m_value.type().name(). Type
+TraceableException<runtime_error>, motif SET-in-GET historique, champs1 des
+messages et freeze/payload inchangés. Deux testsCPU dédiés, noms typeid calculés
+dans le même binaire. RED2/2 champ2 avant patch, GREEN2/2 et251/251unitaires.
+
+Lead : sauvegarde25artefacts avant shutdown, hashes recoupés sans divergence,
+sources auteur/postmerge identiques, re-glob/build1job puis251/251CPU sur intégré.
+Revuefresh `f1-correctness-review` : aucun finding démontré, tous critères O1–O5/O7
+PASS, O6empty→nullptr GAP accepté inchangé. Les25artefacts et manifeste re-hashés
+par le reviewer, test inchangé RED/GREEN ; comparaison de preuves, pas sa propre
+réexécution. FindingF1 clos au périmètre diagnostiqueCPU Windows Debug.
+
+## Clôture de mission au périmètre
+
+Run finallead du2026-10-18, candidat `6d6dcb7` :299/299 (251CPU+48OpenGL),
+failure0/disabled0/skipped0, exit0. JUnit `out/mission-f7/final/native.xml`,
+SHA256 `a9eee192161b405cd3dd00a39c2a02c0cb22d812e8bdb4f98d3ab236a50de575`.
+ASan245àT4 reste un historique antérieur, pas un run du candidatfinal.
+T1-1/F2/F1 traités et revus ; limites précédemment consignées conservées.
+Archive documentaire et manifeste : docs/architecture/missions/2026-10-18-f7-uniform-attribute.md
+et docs/_meta/session-2026-10-18-f7-final.json. Pas de nouvelle mission sélectionnée.
+
 ## Limites de preuve
 
 - Aucune nouvelle campagne ASan n'est revendiquée pour les tests TE/T1-1.

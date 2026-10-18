@@ -9,10 +9,28 @@ implementation: partial
 decision_origin: Analyse des contexts partagés et recommandation commune des rapports ; adoption explicite par l'utilisateur le 2026-10-03 avec une migration franche (rien n'est en production).
 summary: Séparer propriétaires et emprunts du chemin d'appel, définir invalidation et libération conforme aux règles du backend.
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # ADR-0003 — Ownership et lifetime CPU/GPU
+
+## Addendum vérifié F7 — 2026-10-18
+
+**Accepted/partial inchangé.** Uniform/Attribute possèdent leurs contextes en
+unique_ptr ; PassContext possède les maps de wrappers uniques. Getters empruntés,
+rejets des owners nuls, composants on(C&), moved-from gardés ; UniformReader exigé
+par concept et durci. L'assignationmove Uniform Loaded→Loaded est couverte par
+testCPU à compteurs distincts et guards avant lecture, ré-auditfresh KEEP.
+
+Candidat `6d6dcb7` :299/299natifs Windows Debug (251CPU+48OpenGL), zéro skip,
+revuesfresh après intégration ; findings F2 uploads et F1 diagnostics corrigés.
+ASan245àT4 antérieur à TE/F2/F1, **non exécuté sur le candidat final**. Voir
+[[architecture/missions/2026-10-18-f7-uniform-attribute|archive F7]] et
+`_meta/session-2026-10-18-f7-final.json`. Les mentions F7 partagé/horscoupe dans les
+sections historiques ci-dessous décrivent leur date, pas l'état actuel.
+Pas de nouvelle garantie concurrence, purge/atomicité au reload, retirementGPU,
+RAIIexhaustive, images/performance ou plateformes supplémentaires. ADR0004 reste
+Proposed ; aucune ADR0009 créée pour ces corrections locales.
 
 ## Contexte et faits
 

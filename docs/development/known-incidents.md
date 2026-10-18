@@ -4,7 +4,7 @@ category: development
 tags: [artist, cpp, ownership, testing, tooling]
 summary: "Incidents Shader→Pass/Pipeline et harnais, oracle Attribute corrigé b9c90fd, fragilités de shuffle Loader/ShaderLoader préexistantes conservées ; preuves historiques et chemins encore non couverts distingués."
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 0.96
@@ -13,6 +13,41 @@ provenance:
 ---
 
 # Incidents, diagnostics et suivi
+
+## Clôture F7 et findings — 2026-10-18
+
+[[architecture/missions/2026-10-18-f7-uniform-attribute|F7]] est clôturée au
+périmètre `6d6dcb7` (299natifs Windows Debug, aucun runASanfinal).
+
+- T1-1 : oracle agrégé de destruction insuffisant sur fuiteancien+destruction
+  transféré ; correction `1db306a` à compteurs distincts et ASSERT avant lectures,
+  revuefresh KEEP après invalidation du premier KEEP. Mutation raisonnée par
+  lecture, pas mutantproduction exécuté ; cas Loaded→Loaded seulement.
+- F2 : après publication de size par T3, count=N pouvait faire lire Nobjets au
+  driver depuis un seulobjet. Corrigé `1690bac` :34gardes single-value/30count1,
+  init déterministe. REDmock sûrs puis readbacks natifs, deux revuesfresh sans
+  FAIL. Pas de lecture OOBdriver volontaire, ASan non probant pour ce hazard.
+- F1 : `6d6dcb7` corrige deux expressions diagnostiques AttributeContext (type
+  réellement stocké au lieu de std::any). SET::TYPE_MISMATCH reste public même
+  dans GET, freeze-type inchangé ; RED2/2 puis251CPU et revuefresh sansfinding.
+  La prétendue inatteignabilité du mismatch après T2 était fausse : int→float
+  reste rejeté. Manifeste T4 rectifié sans réécrire ses campagnes historiques.
+- Baux et chemins : C1083chemins longs dans les worktrees résolu par sortiecourte
+  dédiée sous out/mission-f7 du principal, sources isolées, pas subst ; vcvars
+  dans le même processus de build. Erreurs d'invocation horsRED conservées.
+- Providers : capacity_limit Cursor et clé opencode-go expirée étaient des
+  échecsinfra, jamais des livraisons ni RED. Révision native3 approuvée place
+  Solxhigh primaire strong ; aucun override/fallback automatique retenu.
+- TE a été livré par substitution cpp-engineer signalée, après sessions QA sans
+  message ; **cause du silence non démontrée** par transcript natif, ne pas en
+  déduire un défaut des permissions. Règles QA inchangées, aucun grant ajouté.
+
+Restent horscoupe : gatefp64 en production sans extension (les tests natifs
+détectent leurs capacités), VBOBinder nonlibéré, noms périmés au reload et
+publication Reader partielle, lifetimeGPUen vol, fragilités shuffle historiques,
+28spécialisationsF2 sans preuve drivernative. Aucune RAIIexhaustive/perf/image
+annoncée. Registre détaillé et limites :
+`.opencode/evidence/mission-f7/closure-findings-2026-10-18.md`.
 
 ## Règle de lecture
 

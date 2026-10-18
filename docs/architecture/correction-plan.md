@@ -5,7 +5,7 @@ tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
 status: proposed
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Plan de correction de l'existant
@@ -121,9 +121,11 @@ ces suites vertes. La suite recommandée par l'avis d'architecture —
 `PipelineContext::m_passes` en ownership unique, `forPass` par emprunt, contexte
 de `IPass` unique — est **réalisée et vérifiée le 2026-10-16**
 ([[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline]]) ;
-l'avis propose ensuite de durcir `UniformReader` lors de la tranche
-uniform/attribute, avec un test de concept négatif — les maps uniform/attribute
-restent partagées (F7, hors coupe à ce jour).
+la tranche [[architecture/missions/2026-10-18-f7-uniform-attribute|F7]] est désormais
+vérifiée à `6d6dcb7` (2026-10-18) : maps et contextes Uniform/Attribute propriétaires
+uniques, emprunts et concept négatif UniformReader, rejet des uploads arrays via
+set single-value.299natifs Windows Debug, ASan245historique T4 distinct. Les
+étapes proposées ci-dessous ne sont pas automatiquement adoptées par cette clôture.
 
 **Sortie** : baseline caractérisée, configurations valides/invalides, données et
 workload figés ; aucune performance inventée faute de mesure.

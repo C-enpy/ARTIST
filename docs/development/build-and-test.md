@@ -2,10 +2,10 @@
 title: Build et tests actuels
 category: development
 tags: [artist, build, testing, guide]
-summary: "Windows MSVC/Conan2 : amendement oracle b9c90fd vérifié sur176CPU normaux et176ASan, contrôles négatifs/positifs réels ; historique Pipeline215/198 conservé, fragilités de shuffle hors correction, aucune nouvelle preuve GPU."
+summary: "F7 final6d6dcb7 :299/299natifs Windows Debug (251CPU+48GL), ASan245historique T4 non requalifié ; commandes et limites distinctes, historiques conservés."
 status: verified-windows-debug
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 1.0
@@ -14,6 +14,23 @@ provenance:
 ---
 
 # Build et tests actuels
+
+## F7 — candidat final vérifié le2026-10-18
+
+`6d6dcb7` : **299/299** (251unit+48opengl), failure0/disabled0/skipped0,
+CTest exit0. Configure/re-glob et builds unjob des intégrations F2/F1 ont été
+exécutés avec vcvars14.44 dans le même processus ; run final :
+`ctest --preset windows-msvc-debug --no-tests=error --output-on-failure
+--output-junit C:/Users/djden/source/repos/ARTIST/out/mission-f7/final/native.xml`.
+Chemin absolu obligatoire pour éviter résolution relative sous l'arbre build.
+Identités/commandes : `_meta/session-2026-10-18-f7-final.json`.
+
+ASan **245/245historique T4** (223unit+22GL sélectionnés, canari0/86), avant
+TE et les corrections F2/F1 ; pas de runASanfinal. Les48GL natifs ne sont pas une
+sélectionASan48. Pas de preuve Release/CI/autresOS/image/performance.
+[[architecture/missions/2026-10-18-f7-uniform-attribute|Archive F7]] et
+[[development/known-incidents|limites/incidents]] ; les résultats ci-dessous
+restent des historiques datés.
 
 ## Amendement oracle Attribute — validation indépendante du 2026-10-17
 

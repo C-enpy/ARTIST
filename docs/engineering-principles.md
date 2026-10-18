@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, performance]
 summary: Philosophie multi-étapes, séparation préparation/exécution, choix de langage et limites des promesses de staticité.
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Cap technique d'ARTIST
@@ -91,16 +91,15 @@ Voir [[adr/0007-cpp23-et-cooker-independant|ADR-0007]].
    bibliothèque mature peut servir l'excellence ; la réécriture exhaustive n'est
    pas une preuve.
 
-## Photographie du code après la tranche Pipeline A1+A2
+## Photographie du code après Pipeline A1+A2 et F7
 
 À revérifier lors de chaque intervention : cette section n'impose pas de conserver
 les écarts constatés. La photographie détaillée, avec sa révision, est dans
 [[architecture/current-state|État réel d'ARTIST]].
-Le code moteur observé est celui de `f914d77` ; `95c2b9e` ne change que le
-harnais Python. L'amendement de l'oracle Attribute est intégré en `b9c90fd`
-(test seul, moteur inchangé), avec revue indépendante PASS et QA CPU/ASan
-conforme au périmètre. Les décomptes CTest historiques ne masquent pas le FAIL
-préexistant ; les fragilités de shuffle Loader/ShaderLoader restent consignées.
+Le code moteur observé est celui de `6d6dcb7`, F7 clôturée le2026-10-18 après
+intégration, RED/GREEN et revuesfresh.299natifs Windows Debug ; ASan245historique
+T4 non requalifié sur le final. Les décomptes historiques restent dans les archives ;
+les fragilités de shuffle Loader/ShaderLoader restent consignées.
 
 - `ARTIST/CMakeLists.txt` crée `ArtistLib` en `INTERFACE` : bibliothèque header-only.
 - `ARTIST/include/graphic/pipeline/Pipeline.hpp` combine `IPipeline` virtuel et
@@ -109,9 +108,11 @@ préexistant ; les fragilités de shuffle Loader/ShaderLoader restent consignée
   `vector<unique_ptr<IPass<API>>>` ; la collection demeure résolue à l'exécution
   et `forPass` l'emprunte. Les wrappers Pipeline et Pass possèdent aussi leur
   contexte de façon unique ; leurs accesseurs exposent des références empruntées.
-- `ARTIST/include/graphic/context/PassContext.hpp` possède ses shaders par
-  `unique_ptr`, mais conserve les uniforms/attributes partagés dans des maps
-  indexées par chaînes, hors de cette migration.
+- `ARTIST/include/graphic/context/PassContext.hpp` possède shaders, uniforms et
+  attributes par unique_ptr ; maps indexées par chaînes et accesseurs empruntés.
+  Les wrappers Uniform/Attribute possèdent leurs contextes, composants on(C&).
+  Réflexion UniformReader demeure runtime, uploads single-value refusent les arrays ;
+  cela n'adopte pas les bindings préparés de l'ADR-0004.
 - `ARTIST/include/graphic/context/AttributeContext.hpp` stocke une valeur dans
   `std::any`, puis récupère un `shared_ptr<T>` par cast runtime.
 - `ARTIST/include/graphic/opengl/` fournit le backend présent. Les noms d'autres

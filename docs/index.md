@@ -10,7 +10,7 @@ provenance:
   inferred: 0.0
   ambiguous: 0.0
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 qmd_collection: artist-wiki
 ---
 
@@ -37,13 +37,13 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[architecture/missions/2026-10-16-pipeline-ownership|Mission Pipeline archivée (2026-10-16)]] — ownership du Pipeline et de `IPass` (A1+A2/F6), curseur borné, F8-extraction, H-RESTORE/H-FIXTURE ; C++ `f914d77` : **215 normales** (176 unit + 39 GL) / **198 ASan** sélection (17 GL hors sélection) ; QA 24 critères (**14 PASS, 3 FAIL, 7 INCONCLUSIVE**), aucun PASS global, oracle GMock préexistant retenu FAIL ; contrat G-A/A2/F8 archivé intégralement.
 - [[architecture/missions/2026-10-15-f5-gl-diagnostics|Mission F5 archivée]] — diagnostics GL vides compilation/link bornés, RED causal et validation indépendante (143/143 distincts, 121 ASan distincts) dans le périmètre Windows Debug.
 - [[architecture/missions/2026-10-15-failure-contracts|Mission C archivée]] — bornage des contrats d'échec (Q1 et Q3 traités ; F4 pour l'accesseur ; F8 partiel ; F10 conservé), RED causal, 165/165 normaux et 143 ASan distincts dans le périmètre Windows Debug à `e736bba` ; `getStackTraceString` ouvert (retour par valeur depuis S-GSS, 2026-10-16).
-- [[architecture/next-mission|Fiche de sélection]] — Pipeline archivé et amendement GMock Attribute `b9c90fd` terminé au périmètre (revue indépendante PASS, QA176CPU/176ASan et contrôles appariés) ; **aucune nouvelle mission sélectionnée** ; fragilités de shuffle préexistantes conservées, ADR-0004 hors mission.
+- [[architecture/next-mission|Suite après F7]] — [[architecture/missions/2026-10-18-f7-uniform-attribute|F7 clôturée]] à `6d6dcb7`,299natifs (251CPU+48GL), ASan245historique T4 non requalifié ; findingsT1-1/F2/F1 corrigés/revus ; aucune mission suivante sélectionnée.
 - [[architecture/missions/2026-10-15-loaded-owner-move|Mission précédente archivée]] — loaded-owner move et ASan vérifiés dans leur périmètre, contrat préservé.
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
 
 > [!important] Statut des ADR initiaux
 > Cinq ADR restent **Proposed / not-started**. ADR-0003 est **Accepted / partial**
-> (Shader→Pass puis Pipeline A1–A2/F6 à C++ `f914d77` ; `Uniform`/`Attribute` restent partagés),
+> (Shader→Pass puis Pipeline A1–A2/F6 et F7 Uniform/Attribute à `6d6dcb7`),
 > ADR-0005 **Accepted / partial**, ADR-0008 **Accepted / verified**
 > pour sa baseline Windows Debug. La mission Pipeline s'ajoute au principal à
 > **215/215 normales** (176 unitaires + 39 OpenGL) et **198/198 ASan** sélection

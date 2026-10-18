@@ -5,7 +5,7 @@ tags: [artist, architecture, adr, index]
 aliases: [ADR ARTIST, Décisions ARTIST]
 summary: Registre des huit ADR, des propositions architecturales à la baseline Windows Conan 2 vérifiée.
 created: 2026-10-03
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Registre des décisions d'architecture
@@ -17,13 +17,14 @@ aucun autre backend n'est écrit et aucune génération de handles n'est créée
 ADR-0003 est
 **Accepted / partial** : la tranche Shader→Pass (2026-10-03) puis la tranche
 Pipeline A1–A2/F6 (2026-10-16, C++ `f914d77`) sont vérifiées au périmètre
-Windows Debug ; `Uniform`/`Attribute` (F7) restent hors coupe.
+Windows Debug ; la tranche F7 Uniform/Attribute, Reader et findings F2/F1 est
+vérifiée à `6d6dcb7` le2026-10-18 (299natifs, ASan final non exécuté).
 ADR-0005 est **Accepted / partial** ; ADR-0008 est **Accepted / verified** dans
 son périmètre Windows Debug. Voir les preuves propres à chaque décision.
 
 - [[adr/0001-resolution-multi-etapes|ADR-0001 — Résolution multi-étapes]] : spécialiser au moment où l'information est réellement connue.
 - [[adr/0002-preparation-et-execution-specialisee|ADR-0002 — Préparation et exécution spécialisée]] : séparer l'API flexible du chemin fin et migrer une tranche.
-- [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003 — Ownership et lifetime CPU/GPU]] : Shader→Pass puis Pipeline A1–A2/F6 vérifiées ; `Uniform`/`Attribute` (F7) restent hors coupe.
+- [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003 — Ownership et lifetime CPU/GPU]] : Shader→Pass, Pipeline A1–A2/F6 puis F7 vérifiées au périmètre Windows Debug ; reste Accepted/partial, pas de RAII exhaustive ou de retraite GPU démontrée.
 - [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004 — Layouts typés et données préparées]] : résoudre noms/types avant la boucle et valider l'invalidation.
 - [[adr/0005-build-reproductible-et-validation|ADR-0005 — Build reproductible et validation]] : restaurer une baseline propre avant les comparaisons.
 - [[adr/0006-preuves-performance-et-determinisme|ADR-0006 — Performance et déterminisme]] : protocole A/B, coût total et critères distincts CPU/GPU/image.
