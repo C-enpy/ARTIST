@@ -1,5 +1,10 @@
 # Attribute-GL — plan QA Q, restitution persistée par le lead
 
+> Révision renforcée en préparation dans attribute-oracles-a2.md. Rectification
+> vérifiée : GLSL3.30 révision6 §4.3.4 autorise les tableaux d'entrées vertex.
+> L'ancienne hypothèse de refus compilation ci-dessous est erronée ; elle reste
+> l'historique de Q, pas l'oracle à transmettre à l'auteur. Q2 doit la remplacer.
+
 ## Attribution et candidat
 
 Proposition : qa-planner / pool-2, tâche task_mvdqhtoe_001j_edgftw,
@@ -165,6 +170,13 @@ Ne pas réduire un item haut pour ajouter du moyen. ASan/lifetime VBO ou 12 capt
 complètes exigeraient un autre lot, pas une extension implicite de ce budget.
 
 ## Décisions humaines à obtenir, non approuvées par la seule politique modèles
+
+**Décision utilisateur à la reprise : « Renforcer avant l'auteur ».** Les limites
+DH2–DH4 proposées ci-dessous ne sont PAS acceptées. Ce plan committé constitue
+la baseline de proposition, pas l'autorisation de démarrer D. Préparer une
+révision des oracles, la faire passer par Q puis commiter le plan amendé avant
+tout worktree auteur. Aucune couverture native impossible ne sera simulée pour
+faire disparaître un gap. La politique modèles approuvée reste inchangée.
 
 DH1 : résultat des trois sondes avant shader auteur ; divergence => arbitrage.
 DH2 : si sonde tableau échoue, accepter preuve du drapeau tableau uniquement
