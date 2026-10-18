@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="17"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T15:28:19"
+	>
+	<testcase name="unit.AttributeBinderTests.BindAttributeTest_createBuffer" classname="unit.AttributeBinderTests.BindAttributeTest_createBuffer" time="0.0243573" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeBinderTests.BindAttributeTest_createBuffer
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeBinderTests
+[ RUN      ] AttributeBinderTests.BindAttributeTest_createBuffer
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glBindBuffer_mock(34962, 42)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+[       OK ] AttributeBinderTests.BindAttributeTest_createBuffer (0 ms)
+[----------] 1 test from AttributeBinderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeBinderTests.BindAttributeTest_bindBuffer" classname="unit.AttributeBinderTests.BindAttributeTest_bindBuffer" time="0.0183287" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeBinderTests.BindAttributeTest_bindBuffer
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeBinderTests
+[ RUN      ] AttributeBinderTests.BindAttributeTest_bindBuffer
+[       OK ] AttributeBinderTests.BindAttributeTest_bindBuffer (0 ms)
+[----------] 1 test from AttributeBinderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeBinderTests.BindAttributeTest_invalidContext" classname="unit.AttributeBinderTests.BindAttributeTest_invalidContext" time="0.0191757" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeBinderTests.BindAttributeTest_invalidContext
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeBinderTests
+[ RUN      ] AttributeBinderTests.BindAttributeTest_invalidContext
+[       OK ] AttributeBinderTests.BindAttributeTest_invalidContext (0 ms)
+[----------] 1 test from AttributeBinderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeSetterTests.SetAttributeTest_CallBufferData" classname="unit.AttributeSetterTests.SetAttributeTest_CallBufferData" time="0.0184783" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeSetterTests.SetAttributeTest_CallBufferData
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_CallBufferData
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glVertexAttribPointer_mock(0, 0, 0, '\0', 8, NULL)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+[       OK ] AttributeSetterTests.SetAttributeTest_CallBufferData (0 ms)
+[----------] 1 test from AttributeSetterTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer" classname="unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer" time="0.0181131" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glBufferData_mock(34962, 8, 000002320B63D830, 35044)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+[       OK ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer (0 ms)
+[----------] 1 test from AttributeSetterTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr" classname="unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr" time="0.0175144" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr
+[       OK ] AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr (0 ms)
+[----------] 1 test from AttributeSetterTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet" classname="unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet" time="0.0175196" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+[       OK ] AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet (0 ms)
+[----------] 1 test from AttributeSetterTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer" classname="unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer" time="0.0175746" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeUnbinderTests
+[ RUN      ] AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+[       OK ] AttributeUnbinderTests.BindAttributeTest_unbindBuffer (0 ms)
+[----------] 1 test from AttributeUnbinderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeUnbinderTests.BindAttributeTest_nullContext" classname="unit.AttributeUnbinderTests.BindAttributeTest_nullContext" time="0.0190946" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeUnbinderTests.BindAttributeTest_nullContext
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeUnbinderTests
+[ RUN      ] AttributeUnbinderTests.BindAttributeTest_nullContext
+[       OK ] AttributeUnbinderTests.BindAttributeTest_nullContext (0 ms)
+[----------] 1 test from AttributeUnbinderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID" classname="unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID" time="0.0179681" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeUnbinderTests.BindAttributeTest_defaultBindID
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeUnbinderTests
+[ RUN      ] AttributeUnbinderTests.BindAttributeTest_defaultBindID
+[       OK ] AttributeUnbinderTests.BindAttributeTest_defaultBindID (0 ms)
+[----------] 1 test from AttributeUnbinderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv" classname="unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv" time="0.0188984" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeReaderTests.ReadAttributes_CallGetProgramiv
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeReaderTests
+[ RUN      ] AttributeReaderTests.ReadAttributes_CallGetProgramiv
+[       OK ] AttributeReaderTests.ReadAttributes_CallGetProgramiv (0 ms)
+[----------] 1 test from AttributeReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation" classname="unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation" time="0.0192376" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeReaderTests
+[ RUN      ] AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+[       OK ] AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation (0 ms)
+[----------] 1 test from AttributeReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeReaderTests.ReadAttributes_InvalidPassID" classname="unit.AttributeReaderTests.ReadAttributes_InvalidPassID" time="0.0175323" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeReaderTests.ReadAttributes_InvalidPassID
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeReaderTests
+[ RUN      ] AttributeReaderTests.ReadAttributes_InvalidPassID
+[       OK ] AttributeReaderTests.ReadAttributes_InvalidPassID (0 ms)
+[----------] 1 test from AttributeReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeTest.BindTest" classname="unit.AttributeTest.BindTest" time="0.0180738" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.BindTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.BindTest
+[       OK ] AttributeTest.BindTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeTest.UnbindTest" classname="unit.AttributeTest.UnbindTest" time="0.017225" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.UnbindTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.UnbindTest
+[       OK ] AttributeTest.UnbindTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeTest.SetTest" classname="unit.AttributeTest.SetTest" time="0.0170873" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.SetTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.SetTest
+[       OK ] AttributeTest.SetTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeTest.GetContextTest" classname="unit.AttributeTest.GetContextTest" time="0.0170474" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.GetContextTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.GetContextTest
+[       OK ] AttributeTest.GetContextTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,44 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\cmake.EXE" --preset windows-msvc-debug -B out/b
+Preset CMake variables:
+
+  ARTIST_ENABLE_ASAN="OFF"
+  BUILD_TESTING="ON"
+  CMAKE_BUILD_TYPE="Debug"
+  CMAKE_INSTALL_PREFIX:PATH="C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/install/windows-msvc-debug"
+  CMAKE_TOOLCHAIN_FILE:FILEPATH="C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/build/windows-msvc-debug/conan_toolchain.cmake"
+  COVERAGE="OFF"
+  MOCK_GL="ON"
+
+-- Using Conan toolchain: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/build/windows-msvc-debug/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Configuring done (2.4s)
+CMake Warning in ARTIST/component-tests/CMakeLists.txt:
+  The object file directory
+
+    C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b/ARTIST/component-tests/CMakeFiles/ArtistLib_component_tests.dir/./
+
+  has 194 characters.  The maximum full path to an object file is 250
+  characters (see CMAKE_OBJECT_PATH_MAX).  Object file
+
+    src/graphic/pipeline/PipelineLifetimeComponentTests.cpp.obj
+
+  cannot be safely placed under this directory.  The build may not work
+  correctly.
+
+
+-- Generating done (0.2s)
+-- Build files have been written to: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+# exit=0 seconds=2.6

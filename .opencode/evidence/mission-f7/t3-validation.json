@@ -1,0 +1,47 @@
+{
+  "author": "t3-worker-3",
+  "base": "05fef285b7cfac98886b4358a93906ea78d950fd",
+  "branch": "ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3",
+  "g1": {
+    "deltaLines": 0,
+    "untracked": 0,
+    "readerSha256": "046d77c5d0d4eca47b590074ca78f8a5182e1984c70e99f42df86620764ec24f",
+    "conceptSha256": "564d8c68d4fa27d308ada6f0710b05bf226a5dbd9a5336a7f67596faf5b85cfa"
+  },
+  "g2": {
+    "sourceIdentityUnchangedBeforeAfterRuns": true,
+    "stagedCodeAndFixtureDeltaSha256": "ece7bb800b145091fb1bdef4e0cb7856931f0a9c5e3e5a2645c83f847313adcf",
+    "filesSha256": {
+      "ARTIST/include/graphic/opengl/validator/PassConcept.hpp": "0b79da2f795b605c9061bc2262b8c62339a6ba500ae5dd88c3d4b72fde8f8d9c",
+      "ARTIST/include/graphic/opengl/pipeline/component/pass/UniformReader.hpp": "f47caece8871dbbca15513652b470b5fa3ec45e4a64bc7451805ff6d56f194dc",
+      "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/UniformReaderTests.cpp": "37af0584837502f6499fb9bcb3b28f48bc9652bf68a66cce5ba52a105bf95beb",
+      "ARTIST/tests/src/graphic/pipeline/UniformReaderFlowContractTests.cpp": "f9d16007bfb38d9d8f69d3d29805da829cba278339f77433092231ca1223da3a",
+      "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp": "8e814d6513b9b3890d83edaafa2bbb29ad66246d15ee0da478f6946e5da6385e",
+      "ARTIST/component-tests/src/graphic/shader/UniformReaderComponentTests.cpp": "4643a357edd3ec3f723750574825a1a73da1e63908f81380c0ed55ead6ee0a28",
+      "test-datas/shaders/vertex/good/longUniform.vert": "0ffe2ba2c0f8b385013733cb16f9edc6c564678f79cd8ef27b34d6e01b891674"
+    }
+  },
+  "native": { "unit": 223, "opengl": 45, "total": 268, "failures": 0, "skips": 0, "junitEqualsDiscovery": true },
+  "asan": {
+    "total": 245, "unit": 223, "opengl": 22, "failures": 0, "skips": 0,
+    "excludedGl": 23, "canaryHealthyExit": 0, "canaryUafExit": 86,
+    "junitEqualsSelection": true,
+    "selectionDeclaredBeforeRun": true,
+    "selectionSha256": "2b1fd7b14574813d4cd4963cdd231f6c85a4df09510e09260b856196a4860b39",
+    "options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0"
+  },
+  "red": {
+    "conceptC2338ExpectedMotifs": 3,
+    "mockHardening": { "tests": 7, "failures": 4 },
+    "nativeLongName": { "tests": 2, "failures": 1, "observedMaxNameLength": 325 },
+    "malformedNames": { "tests": 5, "failures": 5 },
+    "reloadGuardRegression": { "tests": 2, "failures": 2 },
+    "sizeMetadata": { "tests": 3, "failures": 3 },
+    "firstFullNativeFailurePreserved": "unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders"
+  },
+  "artifactsRelativeToWorktree": "out/mission-f7/t3/",
+  "shortBuildRoot": "C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build",
+  "outputWitnessBytes": 65536,
+  "independentReview": "pending lead/T4; author self-review is not independent",
+  "dockerResourcesCreated": 0
+}

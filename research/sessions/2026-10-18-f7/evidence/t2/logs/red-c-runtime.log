@@ -1,0 +1,186 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp |  M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp | ?? ARTIST/tests/src/graphic/pipeline/AttributeOwnershipTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R AttributeOwner --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\out\mission-f7\t2\red-c-runtime.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+      Start  85: unit.AttributeOwnershipTests.NullContextIsRejected
+ 1/14 Test  #85: unit.AttributeOwnershipTests.NullContextIsRejected ............................................................................................***Failed    0.02 sec
+Note: Google Test filter = AttributeOwnershipTests.NullContextIsRejected
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeOwnershipTests
+[ RUN      ] AttributeOwnershipTests.NullContextIsRejected
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+[  FAILED  ] AttributeOwnershipTests.NullContextIsRejected (0 ms)
+[----------] 1 test from AttributeOwnershipTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeOwnershipTests.NullContextIsRejected
+
+ 1 FAILED TEST
+
+      Start  86: unit.AttributeOwnershipTests.PassContextRejectsNullAttribute
+ 2/14 Test  #86: unit.AttributeOwnershipTests.PassContextRejectsNullAttribute ..................................................................................***Failed    0.02 sec
+Note: Google Test filter = AttributeOwnershipTests.PassContextRejectsNullAttribute
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeOwnershipTests
+[ RUN      ] AttributeOwnershipTests.PassContextRejectsNullAttribute
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeOwnershipTests.cpp(168): error: Value of: context.getAttributes().contains("a")
+  Actual: true
+Expected: false
+
+[  FAILED  ] AttributeOwnershipTests.PassContextRejectsNullAttribute (0 ms)
+[----------] 1 test from AttributeOwnershipTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeOwnershipTests.PassContextRejectsNullAttribute
+
+ 1 FAILED TEST
+
+      Start 188: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+ 3/14 Test #188: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00> ..........   Passed    0.02 sec
+      Start 189: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00>
+ 4/14 Test #189: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00> ...........   Passed    0.02 sec
+      Start 190: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+ 5/14 Test #190: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> .......***Failed    0.02 sec
+Note: Google Test filter = OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests
+[ RUN      ] OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom, where GetParam() = 4-byte object <02-00 00-00> (0 ms)
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom, where GetParam() = 4-byte object <02-00 00-00>
+
+ 1 FAILED TEST
+
+      Start 191: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+ 6/14 Test #191: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ..........   Passed    0.02 sec
+      Start 192: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+ 7/14 Test #192: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ...........   Passed    0.02 sec
+      Start 193: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+ 8/14 Test #193: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> .......***Failed    0.02 sec
+Note: Google Test filter = OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests
+[ RUN      ] OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeOwnershipTests.cpp(98): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn((ptr = 00000217DE9D9F20, value = 776-byte object <C8-0D 14-54 F6-7F 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 ... 60-6A 9D-DE 17-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 80-72 9D-DE 17-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00>))
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom, where GetParam() = 4-byte object <02-00 00-00> (0 ms)
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom, where GetParam() = 4-byte object <02-00 00-00>
+
+ 1 FAILED TEST
+
+      Start 194: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+ 9/14 Test #194: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ......   Passed    0.02 sec
+      Start 195: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+10/14 Test #195: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> .......   Passed    0.02 sec
+      Start 196: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+11/14 Test #196: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ...***Failed    0.02 sec
+Note: Google Test filter = OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests
+[ RUN      ] OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeOwnershipTests.cpp(117): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn((ptr = 0000024708967890, value = 776-byte object <C8-0D 14-54 F6-7F 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 ... 50-23 96-08 47-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 10-27 96-08 47-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00>))
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom, where GetParam() = 4-byte object <02-00 00-00> (0 ms)
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom, where GetParam() = 4-byte object <02-00 00-00>
+
+ 1 FAILED TEST
+
+      Start 197: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+12/14 Test #197: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ...........   Passed    0.02 sec
+      Start 198: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+13/14 Test #198: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ............   Passed    0.02 sec
+      Start 199: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+14/14 Test #199: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ........***Failed    0.02 sec
+Note: Google Test filter = OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests
+[ RUN      ] OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeOwnershipTests.cpp(136): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn((ptr = 000001DFC294F750, value = 776-byte object <C8-0D 14-54 F6-7F 00-00 00-27 94-C2 DF-01 00-00 F0-26 94-C2 DF-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 B0-EB 13-54 F6-7F 00-00 ... 20-A5 94-C2 DF-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 D0-95 94-C2 DF-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00>))
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom, where GetParam() = 4-byte object <02-00 00-00> (0 ms)
+[----------] 1 test from OwnerStates/AttributeOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom, where GetParam() = 4-byte object <02-00 00-00>
+
+ 1 FAILED TEST
+
+
+57% tests passed, 6 tests failed out of 14
+
+Label Time Summary:
+unit    =   0.26 sec*proc (14 tests)
+
+Total Test time (real) =   0.28 sec
+
+The following tests FAILED:
+	 85 - unit.AttributeOwnershipTests.NullContextIsRejected (Failed) unit
+	 86 - unit.AttributeOwnershipTests.PassContextRejectsNullAttribute (Failed) unit
+	190 - unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> (Failed) unit
+	193 - unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> (Failed) unit
+	196 - unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> (Failed) unit
+	199 - unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> (Failed) unit
+Errors while running CTest
+# exit=8 seconds=0.3

@@ -1,0 +1,69 @@
+26: struct OpenGLUniformSetter<GLfloat>
+30: glUniform1f(uniform.getUniformID(), uniform.getValue<GLfloat>());
+40: struct OpenGLUniformSetter<GLint>
+44: glUniform1i(uniform.getUniformID(), uniform.getValue<GLint>());
+54: struct OpenGLUniformSetter<GLuint>
+58: glUniform1ui(uniform.getUniformID(), uniform.getValue<GLuint>());
+68: struct OpenGLUniformSetter<GLdouble>
+72: glUniform1d(uniform.getUniformID(), uniform.getValue<GLdouble>());
+82: struct OpenGLUniformSetter<glm::vec2>
+86: glUniform2fv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::vec2>()[0]);
+96: struct OpenGLUniformSetter<glm::vec3>
+100: glUniform3fv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::vec3>()[0]);
+110: struct OpenGLUniformSetter<glm::vec4>
+114: glUniform4fv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::vec4>()[0]);
+124: struct OpenGLUniformSetter<glm::dvec2>
+128: glUniform2dv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::dvec2>()[0]);
+138: struct OpenGLUniformSetter<glm::dvec3>
+142: glUniform3dv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::dvec3>()[0]);
+152: struct OpenGLUniformSetter<glm::dvec4>
+156: glUniform4dv(uniform.getUniformID(), uniform.getGLSize(), &uniform.getValue<glm::dvec4>()[0]);
+164: struct OpenGLUniformSetter<glm::ivec2>
+168: glUniform2iv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::ivec2>()));
+176: struct OpenGLUniformSetter<glm::ivec3>
+180: glUniform3iv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::ivec3>()));
+188: struct OpenGLUniformSetter<glm::ivec4>
+192: glUniform4iv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::ivec4>()));
+200: struct OpenGLUniformSetter<glm::uvec2>
+204: glUniform2uiv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::uvec2>()));
+212: struct OpenGLUniformSetter<glm::uvec3>
+216: glUniform3uiv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::uvec3>()));
+224: struct OpenGLUniformSetter<glm::uvec4>
+228: glUniform4uiv(uniform.getUniformID(), uniform.getGLSize(), glm::value_ptr(uniform.getValue<glm::uvec4>()));
+236: struct OpenGLUniformSetter<glm::mat2>
+240: glUniformMatrix2fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat2>()));
+248: struct OpenGLUniformSetter<glm::mat3>
+252: glUniformMatrix3fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat3>()));
+260: struct OpenGLUniformSetter<glm::mat4>
+264: glUniformMatrix4fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat4>()));
+272: struct OpenGLUniformSetter<glm::mat2x3>
+276: glUniformMatrix2x3fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat2x3>()));
+284: struct OpenGLUniformSetter<glm::mat3x2>
+288: glUniformMatrix3x2fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat3x2>()));
+296: struct OpenGLUniformSetter<glm::mat2x4>
+300: glUniformMatrix2x4fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat2x4>()));
+308: struct OpenGLUniformSetter<glm::mat4x2>
+312: glUniformMatrix4x2fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat4x2>()));
+320: struct OpenGLUniformSetter<glm::mat3x4>
+324: glUniformMatrix3x4fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat3x4>()));
+332: struct OpenGLUniformSetter<glm::mat4x3>
+336: glUniformMatrix4x3fv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::mat4x3>()));
+348: struct OpenGLUniformSetter<glm::dmat2>
+352: glUniformMatrix2dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat2>()));
+360: struct OpenGLUniformSetter<glm::dmat3>
+364: glUniformMatrix3dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat3>()));
+372: struct OpenGLUniformSetter<glm::dmat4>
+376: glUniformMatrix4dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat4>()));
+384: struct OpenGLUniformSetter<glm::dmat2x3>
+388: glUniformMatrix2x3dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat2x3>()));
+396: struct OpenGLUniformSetter<glm::dmat3x2>
+400: glUniformMatrix3x2dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat3x2>()));
+408: struct OpenGLUniformSetter<glm::dmat2x4>
+412: glUniformMatrix2x4dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat2x4>()));
+420: struct OpenGLUniformSetter<glm::dmat4x2>
+424: glUniformMatrix4x2dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat4x2>()));
+432: struct OpenGLUniformSetter<glm::dmat3x4>
+436: glUniformMatrix3x4dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat3x4>()));
+444: struct OpenGLUniformSetter<glm::dmat4x3>
+448: glUniformMatrix4x3dv(uniform.getUniformID(), uniform.getGLSize(), GL_FALSE, glm::value_ptr(uniform.getValue<glm::dmat4x3>()));
+specializations=34 calls=34 guards=0 literalCounts=0 reflectedCounts=30

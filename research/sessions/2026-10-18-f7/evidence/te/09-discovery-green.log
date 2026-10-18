@@ -1,0 +1,5 @@
+﻿COMMAND: ctest --test-dir 'C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build' -L unit --show-only=json-v1 | Out-File -Encoding utf8 'out/mission-f7/te/discovery-green.json'
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+JUNIT_WITNESS: CTEST_OUTPUT_SIZE_PASSED=65536 CTEST_OUTPUT_SIZE_FAILED=65536
+EXIT_CODE=0

@@ -1,0 +1,53 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/component-tests/src/graphic/shader/PassTests.cpp |  M ARTIST/include/graphic/context/PassContext.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Binder.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Unbinder.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/pass/AttributeReader.hpp |  M ARTIST/include/graphic/opengl/validator/AttributeConcept.hpp |  M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/include/graphic/pipeline/Pass.hpp |  M ARTIST/include/graphic/validator/ComponentConcept.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockBinder.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockSetter.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockUnbinder.hpp |  M ARTIST/tests/mock/graphic/pipeline/MockAttribute.hpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/BinderTests.cpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/UnbinderTests.cpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp |  M ARTIST/tests/src/graphic/pipeline/PassTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp | ?? ARTIST/tests/src/graphic/pipeline/AttributeContractTests.cpp | ?? ARTIST/tests/src/graphic/pipeline/AttributeOwnershipTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -N -L opengl
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+  Test #208: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+  Test #209: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+  Test #210: opengl.AttributeComponentTest.SetNullValueIsRejectedBeforeUpload
+  Test #211: opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked
+  Test #212: opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram
+  Test #213: opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying
+  Test #214: opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms
+  Test #215: opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity
+  Test #216: opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms
+  Test #217: opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched
+  Test #218: opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess
+  Test #219: opengl.PassTest.PassCreationTest
+  Test #220: opengl.PassTest.UniformManagementTest
+  Test #221: opengl.PassTest.InvalidUniformTest
+  Test #222: opengl.PassTest.ShaderAttachmentTest
+  Test #223: opengl.PassTest.UniformReadingTest
+  Test #224: opengl.PassTest.AttributeReadingTest
+  Test #225: opengl.PassTest.FreeResourcesTest
+  Test #226: opengl.PipelineTest.PipelineCreationTest
+  Test #227: opengl.PipelineTest.UsePassTest
+  Test #228: opengl.PipelineTest.UseNextPassTest
+  Test #229: opengl.PipelineTest.ResetPipelineTest
+  Test #230: opengl.PipelineTest.PassesCountTest
+  Test #231: opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver
+  Test #232: opengl.ShaderLifetimeComponentTests.MoveTransfersHandle
+  Test #233: opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext
+  Test #234: opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver
+  Test #235: opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver
+  Test #236: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination
+  Test #237: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination
+  Test #238: opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+  Test #239: opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound
+  Test #240: opengl.ShaderTest.CreateShaderVert
+  Test #241: opengl.ShaderTest.CreateShaderBadVert
+  Test #242: opengl.ShaderTest.CreateShaderFrag
+  Test #243: opengl.ShaderTest.CreateShaderBadFrag
+  Test #244: opengl.ShaderTest.CreateShaderGeom
+  Test #245: opengl.ShaderTest.CreateShaderBadGeom
+  Test #246: opengl.ShaderTest.CreateShaderTesselaionControl
+  Test #247: opengl.ShaderTest.CreateShaderBadTesselaionControl
+  Test #248: opengl.ShaderTest.CreateShaderCompute
+  Test #249: opengl.ShaderTest.CreateShaderBadCompute
+
+Total Tests: 42
+# exit=0 seconds=0.0

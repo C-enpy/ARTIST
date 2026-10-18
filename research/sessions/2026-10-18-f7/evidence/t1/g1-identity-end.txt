@@ -1,0 +1,38 @@
+﻿# G1 identity END (pool-5, T1) 2026-10-17T14:44:30.3589871+02:00
+HEAD 2cd38e8e5627fa54b2d7f9935f194bff12ccccdb
+base 4f64a2b87f5aa8c3590ded4596aca906b5d320dc
+branch ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5
+worktree-dirty-lines 0
+delta-vs-4f64a2b-files 17
+green-a-build-log-created 2026-10-17T14:37:41.0123596+02:00
+# sha256  raw-bytes-match-HEAD-blob  changed-vs-base  mtime-before-green-build  path
+f4846b263810a80902760971b3a9cbcb8ea0d904c01dfc1a69837a7331dffd7f  True  False  True  .opencode/evidence/mission-f7/preflight-P1-uniform.md
+ddb63fcdb5a68206f217db289fd7b4168b5444c38494fd55a9c832ab9cc07d2c  True  False  True  .opencode/evidence/mission-gpu-qa/f7-qa-plan.md
+f9cce42c45210aa2c2335e3527a048dfc943ac092ae78a9acc205806c15a9bbb  True  True  True  ARTIST/component-tests/src/graphic/shader/PassTests.cpp
+8462634a7c32592e09fde34fe740c1c0efaea82a8ecf10942d380498a59b7eb6  True  True  True  ARTIST/include/graphic/context/PassContext.hpp
+cc759d0a942456fedae5e4a911a9705408d9ccc34e23ea7d2aa1fea977299a90  True  True  True  ARTIST/include/graphic/context/UniformContext.hpp
+135bfa52c4ab85a16f12cb5fdf35770b548a085deab1e38dd88617f5d986c170  True  False  True  ARTIST/include/graphic/opengl/context/UniformContext.hpp
+8fd02225ebb3eed29b25520faa0744f8f82991caccd656af78b931e130fbe470  True  False  True  ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp
+046d77c5d0d4eca47b590074ca78f8a5182e1984c70e99f42df86620764ec24f  True  True  True  ARTIST/include/graphic/opengl/pipeline/component/pass/UniformReader.hpp
+dbd26d8c4b1b63cd411c173bae7ea1405c9f2b5476363ea196c53bada89c609c  True  True  True  ARTIST/include/graphic/opengl/pipeline/component/uniform/Setter.hpp
+2f66e298220cefa8488a46d81a3bafc5f844eead21d604464a7fffbdd83d9b3b  True  True  True  ARTIST/include/graphic/opengl/validator/UniformConcept.hpp
+1d061d7a27ced13bc1e0b46a393aee8699a905e0aa091f0d02e11c1f710bbba7  True  False  True  ARTIST/include/graphic/pipeline/Attribute.hpp
+6b422e7d47a117a45a0646bbcc53012ac9f418f864cb9438dda3edc3b0af4ee6  True  True  True  ARTIST/include/graphic/pipeline/Pass.hpp
+e6d4ec86b294990b584586a3eb6b6e92d0804a01f8204f0fb03ff01539c5f95b  True  True  True  ARTIST/include/graphic/pipeline/Uniform.hpp
+2aee4e491a9128974ff34c8feb547c97b1d5ed8322a711dfd816b4ce3e56c7e9  True  True  True  ARTIST/include/graphic/validator/ComponentConcept.hpp
+4820f580835c72a42dfcc4a30405accf702f4dfc203074669691ea9a8479ac66  True  False  True  ARTIST/tests/mock/graphic/opengl/context/MockUniformContext.hpp
+0b969eaaba0c769bad91f53289b44d6a6030b0ee13c59546deee657e92eb6245  True  True  True  ARTIST/tests/mock/graphic/opengl/pipeline/component/uniform/MockSetter.hpp
+1ad5be77c09d28d8b30ece8ea44e3e2d3292ee6879c8307e7a49babd2d476644  True  True  True  ARTIST/tests/mock/graphic/pipeline/MockPass.hpp
+a1aa2c9b24e15cf720cac5d700dc43b556d492928e39b1e56988171ae1f8f1f7  True  True  True  ARTIST/tests/mock/graphic/pipeline/MockUniform.hpp
+40ef5e3e4d4d586af5874ede88d45d9406cb8b97c0bfcaa6b63ae3ed10632c3b  True  False  True  ARTIST/tests/src/graphic/opengl/pipeline/component/pass/UniformReaderTests.cpp
+f3117e8fd9c44128cae327ad726da3e0c589e45bdafd9376e3fbc15ad95111ca  True  False  True  ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp
+5501d7930e0935da20aae43660af42f0e9cd7ae8747739f2f35236f804db87a3  True  True  True  ARTIST/tests/src/graphic/pipeline/PassTests.cpp
+01df27b6338f5552d7b8be6efaf8436da5f0126c165a42a145eaf23ce356e7db  True  True  True  ARTIST/tests/src/graphic/pipeline/UniformContractTests.cpp
+63b48cbcf2a490e75afaf7c3ae276fe9bd9ee0d79dfddde259336d548e27fa2d  True  True  True  ARTIST/tests/src/graphic/pipeline/UniformOwnershipTests.cpp
+302ef9b2212547432abe38e1bcea8bc2f47dc4c0219f8edcce33bc8fbe47f55c  True  True  True  ARTIST/tests/src/graphic/pipeline/UniformTests.cpp
+78306092c3dd145dcf3542657fe0d0b1ea6c771880f2ad1be075a4aa9a2a92aa  True  True  True  ARTIST/tests/src/graphic/pipeline/UniformValueTests.cpp
+5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e  True  False  True  CMakePresets.json
+1cbf0536bee3f7e18381170308499d307d36346c041d262e8c8aba087d25fadf  True  False  True  conanfile.txt
+d0f953e494b4cdc2e46a72f395c472ea186935b8e36f5d59da0cd7a8013db18a  True  False  True  docs/architecture/next-mission.md
+7ef220d8038b239748782304774787f7b7128064c4d40f62e943326c1cbbaafb  True  False  True  scripts/build-windows.ps1
+# anomalies 0

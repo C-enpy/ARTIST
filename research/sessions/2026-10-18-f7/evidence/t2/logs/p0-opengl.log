@@ -1,0 +1,94 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=clean
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -L opengl --output-on-failure --no-tests=error --output-junit C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/mission-f7/t2/p0-opengl.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+      Start 193: opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked
+ 1/39 Test #193: opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked ........................   Passed    0.53 sec
+      Start 194: opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram
+ 2/39 Test #194: opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram .....................................   Passed    0.41 sec
+      Start 195: opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying
+ 3/39 Test #195: opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying ...................   Passed    0.40 sec
+      Start 196: opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms
+ 4/39 Test #196: opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms ...................   Passed    0.40 sec
+      Start 197: opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity
+ 5/39 Test #197: opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity ...................   Passed    0.42 sec
+      Start 198: opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms
+ 6/39 Test #198: opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms .........................   Passed    0.39 sec
+      Start 199: opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched
+ 7/39 Test #199: opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched ............................   Passed    0.41 sec
+      Start 200: opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess
+ 8/39 Test #200: opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess ...................................   Passed    0.39 sec
+      Start 201: opengl.PassTest.PassCreationTest
+ 9/39 Test #201: opengl.PassTest.PassCreationTest .............................................................   Passed    0.39 sec
+      Start 202: opengl.PassTest.UniformManagementTest
+10/39 Test #202: opengl.PassTest.UniformManagementTest ........................................................   Passed    0.38 sec
+      Start 203: opengl.PassTest.InvalidUniformTest
+11/39 Test #203: opengl.PassTest.InvalidUniformTest ...........................................................   Passed    0.39 sec
+      Start 204: opengl.PassTest.ShaderAttachmentTest
+12/39 Test #204: opengl.PassTest.ShaderAttachmentTest .........................................................   Passed    0.39 sec
+      Start 205: opengl.PassTest.UniformReadingTest
+13/39 Test #205: opengl.PassTest.UniformReadingTest ...........................................................   Passed    0.39 sec
+      Start 206: opengl.PassTest.AttributeReadingTest
+14/39 Test #206: opengl.PassTest.AttributeReadingTest .........................................................   Passed    0.37 sec
+      Start 207: opengl.PassTest.FreeResourcesTest
+15/39 Test #207: opengl.PassTest.FreeResourcesTest ............................................................   Passed    0.39 sec
+      Start 208: opengl.PipelineTest.PipelineCreationTest
+16/39 Test #208: opengl.PipelineTest.PipelineCreationTest .....................................................   Passed    0.39 sec
+      Start 209: opengl.PipelineTest.UsePassTest
+17/39 Test #209: opengl.PipelineTest.UsePassTest ..............................................................   Passed    0.38 sec
+      Start 210: opengl.PipelineTest.UseNextPassTest
+18/39 Test #210: opengl.PipelineTest.UseNextPassTest ..........................................................   Passed    0.39 sec
+      Start 211: opengl.PipelineTest.ResetPipelineTest
+19/39 Test #211: opengl.PipelineTest.ResetPipelineTest ........................................................   Passed    0.39 sec
+      Start 212: opengl.PipelineTest.PassesCountTest
+20/39 Test #212: opengl.PipelineTest.PassesCountTest ..........................................................   Passed    0.39 sec
+      Start 213: opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver
+21/39 Test #213: opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver .........................   Passed    0.41 sec
+      Start 214: opengl.ShaderLifetimeComponentTests.MoveTransfersHandle
+22/39 Test #214: opengl.ShaderLifetimeComponentTests.MoveTransfersHandle ......................................   Passed    0.39 sec
+      Start 215: opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext
+23/39 Test #215: opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext .........................   Passed    0.42 sec
+      Start 216: opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver
+24/39 Test #216: opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver ....................   Passed    0.38 sec
+      Start 217: opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver
+25/39 Test #217: opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver ................................   Passed    0.44 sec
+      Start 218: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination
+26/39 Test #218: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination ................   Passed    0.41 sec
+      Start 219: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination
+27/39 Test #219: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination ..................   Passed    0.39 sec
+      Start 220: opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+28/39 Test #220: opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders ...   Passed    0.42 sec
+      Start 221: opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound
+29/39 Test #221: opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound ....   Passed    0.41 sec
+      Start 222: opengl.ShaderTest.CreateShaderVert
+30/39 Test #222: opengl.ShaderTest.CreateShaderVert ...........................................................   Passed    0.39 sec
+      Start 223: opengl.ShaderTest.CreateShaderBadVert
+31/39 Test #223: opengl.ShaderTest.CreateShaderBadVert ........................................................   Passed    0.41 sec
+      Start 224: opengl.ShaderTest.CreateShaderFrag
+32/39 Test #224: opengl.ShaderTest.CreateShaderFrag ...........................................................   Passed    0.39 sec
+      Start 225: opengl.ShaderTest.CreateShaderBadFrag
+33/39 Test #225: opengl.ShaderTest.CreateShaderBadFrag ........................................................   Passed    0.43 sec
+      Start 226: opengl.ShaderTest.CreateShaderGeom
+34/39 Test #226: opengl.ShaderTest.CreateShaderGeom ...........................................................   Passed    0.39 sec
+      Start 227: opengl.ShaderTest.CreateShaderBadGeom
+35/39 Test #227: opengl.ShaderTest.CreateShaderBadGeom ........................................................   Passed    0.41 sec
+      Start 228: opengl.ShaderTest.CreateShaderTesselaionControl
+36/39 Test #228: opengl.ShaderTest.CreateShaderTesselaionControl ..............................................   Passed    0.38 sec
+      Start 229: opengl.ShaderTest.CreateShaderBadTesselaionControl
+37/39 Test #229: opengl.ShaderTest.CreateShaderBadTesselaionControl ...........................................   Passed    0.46 sec
+      Start 230: opengl.ShaderTest.CreateShaderCompute
+38/39 Test #230: opengl.ShaderTest.CreateShaderCompute ........................................................   Passed    0.39 sec
+      Start 231: opengl.ShaderTest.CreateShaderBadCompute
+39/39 Test #231: opengl.ShaderTest.CreateShaderBadCompute .....................................................   Passed    0.41 sec
+
+100% tests passed, 0 tests failed out of 39
+
+Label Time Summary:
+opengl    =  15.70 sec*proc (39 tests)
+
+Total Test time (real) =  15.74 sec
+# exit=0 seconds=15.8

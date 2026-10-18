@@ -1,0 +1,76 @@
+# G2 identity (pool-6, T2) 2026-10-17T16:26:54.216238+02:00
+HEAD d30e69fc9059d9195f71ff4eb2436c14a9c99a1e
+branch-state ## ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+base cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+commits-since-base 1
+worktree-delta-vs-HEAD-files 0
+untracked 0
+# delta vs base (name-status, committed + working tree):
+  A	ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+  M	ARTIST/component-tests/src/graphic/shader/PassTests.cpp
+  M	ARTIST/include/graphic/context/PassContext.hpp
+  M	ARTIST/include/graphic/opengl/pipeline/component/attribute/Binder.hpp
+  M	ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp
+  M	ARTIST/include/graphic/opengl/pipeline/component/attribute/Unbinder.hpp
+  M	ARTIST/include/graphic/opengl/pipeline/component/pass/AttributeReader.hpp
+  M	ARTIST/include/graphic/opengl/validator/AttributeConcept.hpp
+  M	ARTIST/include/graphic/pipeline/Attribute.hpp
+  M	ARTIST/include/graphic/pipeline/Pass.hpp
+  M	ARTIST/include/graphic/validator/ComponentConcept.hpp
+  M	ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockBinder.hpp
+  M	ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockSetter.hpp
+  M	ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockUnbinder.hpp
+  M	ARTIST/tests/mock/graphic/pipeline/MockAttribute.hpp
+  M	ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/BinderTests.cpp
+  M	ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp
+  M	ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/UnbinderTests.cpp
+  A	ARTIST/tests/src/graphic/pipeline/AttributeContractTests.cpp
+  A	ARTIST/tests/src/graphic/pipeline/AttributeOwnershipTests.cpp
+  M	ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp
+  M	ARTIST/tests/src/graphic/pipeline/PassTests.cpp
+  M	docs/_meta/session-2026-10-17-attribute-oracle-plan.json
+  M	docs/_meta/session-2026-10-17-attribute-oracle-validation.json
+  M	docs/development/known-incidents.md
+# sha256  raw-bytes-match-HEAD-blob(git hash-object --no-filters)  path
+32dd2b46c05256d41abc71d5a6fa2dd04e32c878ae7df0811d38388e99e494d8  True  .opencode/evidence/mission-gpu-qa/f7-qa-plan.md
+f4846b263810a80902760971b3a9cbcb8ea0d904c01dfc1a69837a7331dffd7f  True  .opencode/evidence/mission-f7/preflight-P1-uniform.md
+bc840bf3d5093f3ec2ab1dcfc756cbb89784cace7fd346f6a1d964c30f0383d4  True  .opencode/evidence/mission-f7/preflight-P2-attribute.md
+bc4b9039122dfc6d75a56a7f66305ea2ddea1e2e9eb103e30beb80d522bb5f43  True  .opencode/evidence/mission-f7/preflight-P3-uniformreader.md
+d0f953e494b4cdc2e46a72f395c472ea186935b8e36f5d59da0cd7a8013db18a  True  docs/architecture/next-mission.md
+601d9e2719e398f700f88316faaca49db211e0013945628045f8d2286000e8c9  True  docs/development/known-incidents.md
+d924c46d517c43c33c8cc283aa79e673ceeff7a9f06737843031e27b5a2991c4  True  ARTIST/include/graphic/pipeline/Attribute.hpp
+4f650fe46fdc364a89bcd4fa70f6f9622f42f2292bfba01f21dc3995684ee24f  True  ARTIST/include/graphic/context/AttributeContext.hpp
+dd9e7c17c7cbd32f53dcb5340475e7daf5888d4f96e52bfb9bf44a99fbdbef58  True  ARTIST/include/graphic/opengl/context/AttributeContext.hpp
+5a10c37cf9bfb2c95bbf5955cf34c320fca36060e8c90e23a352b00d929376c6  True  ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp
+dbb15719f78747df1f0cb29283a82a0a7ce6f19c41d7b3648b59042a6ec07e56  True  ARTIST/include/graphic/opengl/pipeline/component/attribute/Binder.hpp
+f0717f9a120e18aa83ada484e09e39dca7df49f92da88e5d8919010ea879baaa  True  ARTIST/include/graphic/opengl/pipeline/component/attribute/Unbinder.hpp
+6aede89bdaf0a85c255acab6dca2e087e1ec29a06b7de57cb0074d840f4323d4  True  ARTIST/include/graphic/opengl/validator/AttributeConcept.hpp
+cd4c4384352416ed3caf8cb6526e1f1b9f198c7754582d3ce701cab126460cf6  True  ARTIST/include/graphic/validator/ComponentConcept.hpp
+8169662bbb64d0d2ecbea0f42899ed1a1221527713937d40a8d020f516677728  True  ARTIST/include/graphic/context/PassContext.hpp
+af7aa0e80c288102e8f1077077c127042b493cd159ccd1093c45b440769e7336  True  ARTIST/include/graphic/pipeline/Pass.hpp
+e6d4ec86b294990b584586a3eb6b6e92d0804a01f8204f0fb03ff01539c5f95b  True  ARTIST/include/graphic/pipeline/Uniform.hpp
+099edc0d63288934c9b8f9049609609f7b07dd03c2bfbb65c0536b5e5c435027  True  ARTIST/include/graphic/opengl/pipeline/component/pass/AttributeReader.hpp
+5bd6cb3cd98dd7b37102be3c1794422b9581be23253227bd2bb4b51678727730  True  ARTIST/tests/mock/graphic/pipeline/MockAttribute.hpp
+1ad5be77c09d28d8b30ece8ea44e3e2d3292ee6879c8307e7a49babd2d476644  True  ARTIST/tests/mock/graphic/pipeline/MockPass.hpp
+227f5e5f8947d1811164a013320586192bbf2cbe65f266ce6da2fbc8205eb054  True  ARTIST/tests/mock/graphic/opengl/context/MockAttributeContext.hpp
+0efe43b76d17e5abac6ba3208b179460383526fd9f9aa20422638cfa3f3def2e  True  ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockSetter.hpp
+107261f36c9cdbe8dfeb44dfba11d03d936009d394cf04e5d4825a9ed8e02a17  True  ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockBinder.hpp
+3f8fc5bcd85c6a761cb1feec21fbf0a3e56b2648282665887e19dda2208a003d  True  ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockUnbinder.hpp
+bc5d7b30c20e2fe1166242d72c2052c3d0018f6840672aebc8507b6427f7924c  True  ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp
+2e30e57a78ab4a8512eeb02e11815448a9a5ed4fd1711af40a742be223f0fb66  True  ARTIST/tests/src/graphic/pipeline/PassTests.cpp
+8a7ad26fafe5b5a8b24c24b4ec52853951fa19a51808693a3a49ec1c87f247b0  True  ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp
+e1233cd338937ffc049b5d9ac24694a2e95919181c487f65760498fcb23d2feb  True  ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/BinderTests.cpp
+10a43dcad8d3ec49b7c35f16a045d8686f8f7089740887b47f3e56afc9358d6b  True  ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/UnbinderTests.cpp
+d719701b93aff757393c053cf6ea1f0840b7d65dd01ab973819980a12a640789  True  ARTIST/tests/src/graphic/opengl/pipeline/component/pass/AttributeReaderTests.cpp
+42329300cb955d744a8529b22bceb2a5bef120bc49542910f1e17ad5a0ce1d41  True  ARTIST/component-tests/src/graphic/shader/PassTests.cpp
+e33219bc3fdc00e02ea15706d1863295ae751fcfc2e43deec66cf609441bae62  True  ARTIST/component-tests/include/OpenGLComponentTests.hpp
+02967208e3920e1e41aaf184b5e6d756174f3ce88c9408d0357713642ac02ba4  True  ARTIST/component-tests/CMakeLists.txt
+213b0662d6c6dd15190c1f20a0f5c9b378697a34b2871f6b063b3c50bcded574  True  ARTIST/tests/CMakeLists.txt
+7ef220d8038b239748782304774787f7b7128064c4d40f62e943326c1cbbaafb  True  scripts/build-windows.ps1
+5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e  True  CMakePresets.json
+1cbf0536bee3f7e18381170308499d307d36346c041d262e8c8aba087d25fadf  True  conanfile.txt
+6ad47f1dc16d2fe34d9548af42b4463c75656e8577de1e96f09f55cf20ea209c  True  ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+388e35b2ac3fca05380f5da8e42302a3dd899d2a5001ae7df1300897c6748408  True  ARTIST/tests/src/graphic/pipeline/AttributeContractTests.cpp
+e6950fb83312c364a3f6ad60a6a56bbaed10e4b547729801604e10f6b08741bb  True  ARTIST/tests/src/graphic/pipeline/AttributeOwnershipTests.cpp
+d266964b745c4e4a879c7f50046656dc8da4bc2ea88700c60c17e4b80c8d3398  True  docs/_meta/session-2026-10-17-attribute-oracle-plan.json
+ac65f709be897125c8fe396b6211cdabd4c9377cfd82e1d1b0c7150ff9078348  True  docs/_meta/session-2026-10-17-attribute-oracle-validation.json

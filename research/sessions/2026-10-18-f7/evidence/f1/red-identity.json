@@ -1,0 +1,20 @@
+﻿{
+    "phase":  "RED-before-production",
+    "utc":  "2026-10-18T09:41:51.5734043Z",
+    "head":  "113411d71cfef56737fb8992f34b70e4675d2118",
+    "delta":  [
+                  "?? ARTIST/tests/src/graphic/context/AttributeContextTests.cpp"
+              ],
+    "files":  [
+                  {
+                      "path":  "ARTIST/include/graphic/context/AttributeContext.hpp",
+                      "sha256":  "4F650FE46FDC364A89BCD4FA70F6F9622F42F2292BFBA01F21DC3995684EE24F"
+                  },
+                  {
+                      "path":  "ARTIST/tests/src/graphic/context/AttributeContextTests.cpp",
+                      "sha256":  "FDA116F444D08BFFA9EEF486F7464B6AEA7C1FA835900E9C99C324DE4DE62135"
+                  }
+              ],
+    "oracle":  "2 failures only wrong stored-type field: std::any instead of std::shared_ptr\u003cint\u003e; historical motif and first fields unchanged; payload42 and same-type reset43 preserved",
+    "expectedTargetedTests":  2
+}

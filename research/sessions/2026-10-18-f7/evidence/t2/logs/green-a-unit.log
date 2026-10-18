@@ -1,0 +1,54 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp |  M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R ^unit\.Attribute --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\out\mission-f7\t2\green-a-unit.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+      Start 21: unit.AttributeBinderTests.BindAttributeTest_createBuffer
+ 1/19 Test #21: unit.AttributeBinderTests.BindAttributeTest_createBuffer ...........................   Passed    0.02 sec
+      Start 22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer
+ 2/19 Test #22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer .............................   Passed    0.02 sec
+      Start 23: unit.AttributeBinderTests.BindAttributeTest_invalidContext
+ 3/19 Test #23: unit.AttributeBinderTests.BindAttributeTest_invalidContext .........................   Passed    0.02 sec
+      Start 24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData
+ 4/19 Test #24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData ..........................   Passed    0.02 sec
+      Start 25: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size
+ 5/19 Test #25: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size ..............   Passed    0.02 sec
+      Start 26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+ 6/19 Test #26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer .................   Passed    0.02 sec
+      Start 27: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride
+ 7/19 Test #27: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride ...   Passed    0.02 sec
+      Start 28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr
+ 8/19 Test #28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr ......   Passed    0.02 sec
+      Start 29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+ 9/19 Test #29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet ........   Passed    0.02 sec
+      Start 30: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+10/19 Test #30: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer .........................   Passed    0.02 sec
+      Start 31: unit.AttributeUnbinderTests.BindAttributeTest_nullContext
+11/19 Test #31: unit.AttributeUnbinderTests.BindAttributeTest_nullContext ..........................   Passed    0.02 sec
+      Start 32: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID
+12/19 Test #32: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID ........................   Passed    0.02 sec
+      Start 33: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv
+13/19 Test #33: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv ..........................   Passed    0.02 sec
+      Start 34: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+14/19 Test #34: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation ...   Passed    0.02 sec
+      Start 35: unit.AttributeReaderTests.ReadAttributes_InvalidPassID
+15/19 Test #35: unit.AttributeReaderTests.ReadAttributes_InvalidPassID .............................   Passed    0.02 sec
+      Start 85: unit.AttributeTest.BindTest
+16/19 Test #85: unit.AttributeTest.BindTest ........................................................   Passed    0.02 sec
+      Start 86: unit.AttributeTest.UnbindTest
+17/19 Test #86: unit.AttributeTest.UnbindTest ......................................................   Passed    0.02 sec
+      Start 87: unit.AttributeTest.SetTest
+18/19 Test #87: unit.AttributeTest.SetTest .........................................................   Passed    0.02 sec
+      Start 88: unit.AttributeTest.GetContextTest
+19/19 Test #88: unit.AttributeTest.GetContextTest ..................................................   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 19
+
+Label Time Summary:
+unit    =   0.36 sec*proc (19 tests)
+
+Total Test time (real) =   0.40 sec
+# exit=0 seconds=0.4

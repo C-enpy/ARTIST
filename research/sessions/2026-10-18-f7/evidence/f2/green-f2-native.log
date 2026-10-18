@@ -1,0 +1,16 @@
+COMMAND: ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/mission-f7/f2-build -j 1 -L opengl --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\out\mission-f7\f2/green-f2-native.xml --test-output-size-passed 65536 --test-output-size-failed 65536 -R UniformCardinalityComponentTest
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f2-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/f2-build
+    Start 292: opengl.UniformCardinalityComponentTest.ScalarVectorMatrixSingleValuesReadBack
+1/3 Test #292: opengl.UniformCardinalityComponentTest.ScalarVectorMatrixSingleValuesReadBack .........................   Passed    0.58 sec
+    Start 293: opengl.UniformCardinalityComponentTest.ReflectedArrayRejectsSingleValueWithoutChangingEitherElement
+2/3 Test #293: opengl.UniformCardinalityComponentTest.ReflectedArrayRejectsSingleValueWithoutChangingEitherElement ...   Passed    0.45 sec
+    Start 294: opengl.UniformCardinalityComponentTest.DoubleSingleValuesReadBackWhenFp64IsAvailable
+3/3 Test #294: opengl.UniformCardinalityComponentTest.DoubleSingleValuesReadBackWhenFp64IsAvailable ..................   Passed    0.44 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Label Time Summary:
+opengl    =   1.46 sec*proc (3 tests)
+
+Total Test time (real) =   1.48 sec

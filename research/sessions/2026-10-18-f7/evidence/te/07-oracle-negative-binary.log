@@ -1,0 +1,29 @@
+﻿COMMAND: & 'C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build/ARTIST/tests/ArtistLib_tests.exe' --gtest_filter=AttributeTest.SetFloatDispatchesByElementType
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+JUNIT_WITNESS: CTEST_OUTPUT_SIZE_PASSED=65536 CTEST_OUTPUT_SIZE_FAILED=65536
+Note: Google Test filter = AttributeTest.SetFloatDispatchesByElementType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.SetFloatDispatchesByElementType
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(105): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn(@000002AB82D296B0 776-byte object <B8-BD 9D-AB F7-7F 00-00 30-46 D1-82 AB-02 00-00 20-46 D1-82 AB-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 68-F9 97-AB F7-7F 00-00 ... 80-FC D1-82 AB-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 40-05 D2-82 AB-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00>)
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(106): error: Actual function call count doesn't match EXPECT_CALL(*mock::MockSetter<std::shared_ptr<float>>::instance(), mockOn(::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeTest.SetFloatDispatchesByElementType (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeTest.SetFloatDispatchesByElementType
+
+ 1 FAILED TEST
+EXIT_CODE=1

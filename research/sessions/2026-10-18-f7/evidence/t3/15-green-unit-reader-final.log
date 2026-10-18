@@ -1,0 +1,47 @@
+﻿COMMAND: ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build -L unit -R UniformReader --output-on-failure --no-tests=error --test-output-size-passed 65536 --test-output-size-failed 65536 --output-junit C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3/out/mission-f7/t3/green-unit-reader-final.xml
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+      Start  52: unit.UniformReaderTests.ReadUniforms_ValidContext
+ 1/17 Test  #52: unit.UniformReaderTests.ReadUniforms_ValidContext ......................................................   Passed    0.02 sec
+      Start  53: unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+ 2/17 Test  #53: unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated ............................................   Passed    0.02 sec
+      Start  54: unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+ 3/17 Test  #54: unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct .............................   Passed    0.02 sec
+      Start  55: unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+ 4/17 Test  #55: unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected .........................................   Passed    0.02 sec
+      Start  56: unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+ 5/17 Test  #56: unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement .........................   Passed    0.02 sec
+      Start  57: unit.UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration
+ 6/17 Test  #57: unit.UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration .........................   Passed    0.02 sec
+      Start  58: unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored
+ 7/17 Test  #58: unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored ........................................   Passed    0.02 sec
+      Start  59: unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL
+ 8/17 Test  #59: unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL ................................   Passed    0.02 sec
+      Start  60: unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing
+ 9/17 Test  #60: unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing ...........................................   Passed    0.02 sec
+      Start 170: unit.UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader
+10/17 Test #170: unit.UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader ..............................   Passed    0.02 sec
+      Start 191: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0
+11/17 Test #191: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0 ........   Passed    0.02 sec
+      Start 192: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1
+12/17 Test #192: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1 .......   Passed    0.02 sec
+      Start 193: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0
+13/17 Test #193: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0 ...   Passed    0.02 sec
+      Start 194: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1
+14/17 Test #194: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1 ...   Passed    0.02 sec
+      Start 195: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2
+15/17 Test #195: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2 ...   Passed    0.02 sec
+      Start 196: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3
+16/17 Test #196: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3 ...   Passed    0.02 sec
+      Start 197: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4
+17/17 Test #197: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4 ...   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 17
+
+Label Time Summary:
+unit    =   0.31 sec*proc (17 tests)
+
+Total Test time (real) =   0.34 sec
+EXIT_CODE=0

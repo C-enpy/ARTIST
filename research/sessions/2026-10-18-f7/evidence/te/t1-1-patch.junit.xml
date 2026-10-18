@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="1"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-18T10:05:05"
+	>
+	<testcase name="unit.UniformOwnershipTests.MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue" classname="unit.UniformOwnershipTests.MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue" time="0.0265036" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformOwnershipTests.MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformOwnershipTests
+[ RUN      ] UniformOwnershipTests.MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue
+C:\Users\djden\source\repos\ARTIST\ARTIST\tests\src\graphic\pipeline\UniformOwnershipTests.cpp(205): error: Expected equality of these values:
+  0
+  deaths
+    Which is: 1
+
+[  FAILED  ] UniformOwnershipTests.MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue (1 ms)
+[----------] 1 test from UniformOwnershipTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (2 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformOwnershipTests.MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+</testsuite>

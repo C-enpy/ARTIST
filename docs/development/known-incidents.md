@@ -38,9 +38,12 @@ périmètre `6d6dcb7` (299natifs Windows Debug, aucun runASanfinal).
 - Providers : capacity_limit Cursor et clé opencode-go expirée étaient des
   échecsinfra, jamais des livraisons ni RED. Révision native3 approuvée place
   Solxhigh primaire strong ; aucun override/fallback automatique retenu.
-- TE a été livré par substitution cpp-engineer signalée, après sessions QA sans
-  message ; **cause du silence non démontrée** par transcript natif, ne pas en
-  déduire un défaut des permissions. Règles QA inchangées, aucun grant ajouté.
+- TE a été livré par substitution cpp-engineer signalée. L'export public natif
+  ultérieur retrouve les deux réponses locales **BLOCKED** : les workers déclaraient
+  ne pouvoir utiliser execute/team_message ni satisfaire le mandat d'écriture.
+  L'absence de message reçu ne signifiait donc pas absence de tour. Métadonnées de
+  permissions ≠ enforcement démontré ; aucun nouveau test de refus natif exécuté,
+  aucune règle QA modifiée. Voir la [[references/session-2026-10-18-f7|session complète]].
 
 Restent horscoupe : gatefp64 en production sans extension (les tests natifs
 détectent leurs capacités), VBOBinder nonlibéré, noms périmés au reload et

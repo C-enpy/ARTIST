@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="4"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T15:26:06"
+	>
+	<testcase name="unit.AttributeTest.BindTest" classname="unit.AttributeTest.BindTest" time="0.0191649" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.BindTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.BindTest
+[       OK ] AttributeTest.BindTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeTest.UnbindTest" classname="unit.AttributeTest.UnbindTest" time="0.0172703" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.UnbindTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.UnbindTest
+[       OK ] AttributeTest.UnbindTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeTest.SetTest" classname="unit.AttributeTest.SetTest" time="0.0214809" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.SetTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.SetTest
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(84): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn((ptr = 00000267DC570CC0, value = 776-byte object &lt;08-80 94-DB F7-7F 00-00 40-C9 55-DC 67-02 00-00 30-C9 55-DC 67-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 B0-6E 94-DB F7-7F 00-00 ... 40-A2 56-DC 67-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 40-9D 56-DC 67-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00&gt;))
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(83): error: Actual function call count doesn't match EXPECT_CALL(*mock::MockSetter&lt;int&gt;::instance(), mockOn(attributeContext))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeTest.SetTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeTest.SetTest
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeTest.GetContextTest" classname="unit.AttributeTest.GetContextTest" time="0.0183738" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.GetContextTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.GetContextTest
+[       OK ] AttributeTest.GetContextTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

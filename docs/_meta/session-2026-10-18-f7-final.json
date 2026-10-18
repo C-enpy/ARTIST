@@ -58,7 +58,7 @@
     "No global RAII, in-flight GPU retirement, concurrent-use, image, performance, Release, remote CI or other-OS proof",
     "Reload retains absent old names and Reader publication may remain partial on failure",
     "Binder VBO cleanup and historical Loader/ShaderLoader shuffle issues not corrected",
-    "QA profile silence root cause not proven by native transcript; substitution explicitly reported and QA permission rules unchanged"
+    "Subsequent public session export found local BLOCKED reports from both test-engineer workers explaining inability to use execute/team_message; missing lead delivery did not mean no turn ran. Permission metadata is not native enforcement proof; substitution reported and QA rules unchanged"
   ],
   "adr_status": "0001/2/4/6/7 Proposed; 0003/5 Accepted partial; 0008 Windows Debug verified only; no0009 created",
   "next_mission": "NOT_SELECTED",

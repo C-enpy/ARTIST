@@ -1,0 +1,12 @@
+﻿commit bfd94a0b971fc39b52419584166aebda8fb7bfaa
+Author:     denne <djoe.denne@gmail.com>
+AuthorDate: Sun Oct 18 11:47:07 2026 +0200
+Commit:     denne <djoe.denne@gmail.com>
+CommitDate: Sun Oct 18 11:47:07 2026 +0200
+
+    Fix AttributeContext stored-type mismatch diagnostics
+
+ .opencode/evidence/mission-f7/f1-author-results.md | 131 +++++++++++++++++++++
+ .../include/graphic/context/AttributeContext.hpp   |   4 +-
+ .../src/graphic/context/AttributeContextTests.cpp  |  63 ++++++++++
+ 3 files changed, 196 insertions(+), 2 deletions(-)

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="3"
+	failures="3"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T18:57:27"
+	>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored" classname="unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored" time="0.0161288" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(160): error: Expected equality of these values:
+  passContext.getUniforms().at("arrayUniform[0]")-&gt;getContext().getGLSize()
+    Which is: 0
+  2u
+    Which is: 2
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0" classname="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0" time="0.0164245" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests
+[ RUN      ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(173): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0, where GetParam() = 0 (1 ms)
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0, where GetParam() = 0
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1" classname="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1" time="0.0168883" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/1
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests
+[ RUN      ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/1
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(173): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/1, where GetParam() = -1 (0 ms)
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/1, where GetParam() = -1
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+</testsuite>

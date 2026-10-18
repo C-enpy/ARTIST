@@ -1,0 +1,447 @@
+﻿COMMAND: cmake -S . -B C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build; if ($LASTEXITCODE -eq 0) { cmake --build C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build --target ArtistLib_tests --parallel 1 }; if ($LASTEXITCODE -eq 0) { ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build -L unit -R UniformReader --output-on-failure --no-tests=error --output-junit C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3/out/mission-f7/t3/red-mocks.xml }
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+-- Using Conan toolchain: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Configuring done (1.7s)
+-- Generating done (0.2s)
+-- Build files have been written to: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+[1/5] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(39): warning C4005: 'glUniform1f' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1959): note: voir la définition précédente de « glUniform1f »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(40): warning C4005: 'glUniform1d' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(5141): note: voir la définition précédente de « glUniform1d »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(41): warning C4005: 'glUniform1i' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1961): note: voir la définition précédente de « glUniform1i »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(42): warning C4005: 'glUniform1ui' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2262): note: voir la définition précédente de « glUniform1ui »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(43): warning C4005: 'glUniform2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1964): note: voir la définition précédente de « glUniform2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(44): warning C4005: 'glUniform3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1968): note: voir la définition précédente de « glUniform3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(45): warning C4005: 'glUniform4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1972): note: voir la définition précédente de « glUniform4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(46): warning C4005: 'glUniformMatrix2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1975): note: voir la définition précédente de « glUniformMatrix2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(47): warning C4005: 'glUniformMatrix3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1976): note: voir la définition précédente de « glUniformMatrix3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(48): warning C4005: 'glUniformMatrix4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1977): note: voir la définition précédente de « glUniformMatrix4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(49): warning C4005: 'glUseProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1978): note: voir la définition précédente de « glUseProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(50): warning C4005: 'glValidateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1979): note: voir la définition précédente de « glValidateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(51): warning C4005: 'glAttachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1924): note: voir la définition précédente de « glAttachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(52): warning C4005: 'glBindAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1925): note: voir la définition précédente de « glBindAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(53): warning C4005: 'glBlendEquationSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1926): note: voir la définition précédente de « glBlendEquationSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(54): warning C4005: 'glCompileShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1927): note: voir la définition précédente de « glCompileShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(55): warning C4005: 'glCreateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1928): note: voir la définition précédente de « glCreateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(56): warning C4005: 'glCreateShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1929): note: voir la définition précédente de « glCreateShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(57): warning C4005: 'glDeleteProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1930): note: voir la définition précédente de « glDeleteProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(58): warning C4005: 'glDeleteShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1931): note: voir la définition précédente de « glDeleteShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(59): warning C4005: 'glDetachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1932): note: voir la définition précédente de « glDetachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(60): warning C4005: 'glDisableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1933): note: voir la définition précédente de « glDisableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(61): warning C4005: 'glDrawBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1934): note: voir la définition précédente de « glDrawBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(62): warning C4005: 'glEnableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1935): note: voir la définition précédente de « glEnableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(63): warning C4005: 'glGetActiveAttrib' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1936): note: voir la définition précédente de « glGetActiveAttrib »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(64): warning C4005: 'glGetActiveUniform' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1937): note: voir la définition précédente de « glGetActiveUniform »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(65): warning C4005: 'glGetAttachedShaders' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1938): note: voir la définition précédente de « glGetAttachedShaders »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(66): warning C4005: 'glGetAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1939): note: voir la définition précédente de « glGetAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(67): warning C4005: 'glGetProgramInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1940): note: voir la définition précédente de « glGetProgramInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(68): warning C4005: 'glGetProgramiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1941): note: voir la définition précédente de « glGetProgramiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(69): warning C4005: 'glGetShaderInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1942): note: voir la définition précédente de « glGetShaderInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(70): warning C4005: 'glGetShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1943): note: voir la définition précédente de « glGetShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(71): warning C4005: 'glGetShaderiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1944): note: voir la définition précédente de « glGetShaderiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(72): warning C4005: 'glGetUniformLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1945): note: voir la définition précédente de « glGetUniformLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(73): warning C4005: 'glGetUniformfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1946): note: voir la définition précédente de « glGetUniformfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(74): warning C4005: 'glGetUniformiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1947): note: voir la définition précédente de « glGetUniformiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(75): warning C4005: 'glGetVertexAttribPointerv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1948): note: voir la définition précédente de « glGetVertexAttribPointerv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(76): warning C4005: 'glGetVertexAttribdv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1949): note: voir la définition précédente de « glGetVertexAttribdv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(77): warning C4005: 'glGetVertexAttribfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1950): note: voir la définition précédente de « glGetVertexAttribfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(78): warning C4005: 'glGetVertexAttribiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1951): note: voir la définition précédente de « glGetVertexAttribiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(79): warning C4005: 'glGenBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1723): note: voir la définition précédente de « glGenBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(80): warning C4005: 'glBindBuffer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1717): note: voir la définition précédente de « glBindBuffer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(81): warning C4005: 'glBufferData' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1718): note: voir la définition précédente de « glBufferData »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(82): warning C4005: 'glVertexAttribPointer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2016): note: voir la définition précédente de « glVertexAttribPointer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(83): warning C4005: 'glIsProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1952): note: voir la définition précédente de « glIsProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(84): warning C4005: 'glIsShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1953): note: voir la définition précédente de « glIsShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(85): warning C4005: 'glLinkProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1954): note: voir la définition précédente de « glLinkProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(86): warning C4005: 'glShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1955): note: voir la définition précédente de « glShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(87): warning C4005: 'glStencilFuncSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1956): note: voir la définition précédente de « glStencilFuncSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(88): warning C4005: 'glStencilMaskSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1957): note: voir la définition précédente de « glStencilMaskSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(89): warning C4005: 'glStencilOpSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1958): note: voir la définition précédente de « glStencilOpSeparate »
+[2/5] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\pipeline\UniformTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(39): warning C4005: 'glUniform1f' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1959): note: voir la définition précédente de « glUniform1f »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(40): warning C4005: 'glUniform1d' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(5141): note: voir la définition précédente de « glUniform1d »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(41): warning C4005: 'glUniform1i' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1961): note: voir la définition précédente de « glUniform1i »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(42): warning C4005: 'glUniform1ui' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2262): note: voir la définition précédente de « glUniform1ui »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(43): warning C4005: 'glUniform2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1964): note: voir la définition précédente de « glUniform2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(44): warning C4005: 'glUniform3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1968): note: voir la définition précédente de « glUniform3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(45): warning C4005: 'glUniform4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1972): note: voir la définition précédente de « glUniform4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(46): warning C4005: 'glUniformMatrix2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1975): note: voir la définition précédente de « glUniformMatrix2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(47): warning C4005: 'glUniformMatrix3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1976): note: voir la définition précédente de « glUniformMatrix3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(48): warning C4005: 'glUniformMatrix4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1977): note: voir la définition précédente de « glUniformMatrix4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(49): warning C4005: 'glUseProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1978): note: voir la définition précédente de « glUseProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(50): warning C4005: 'glValidateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1979): note: voir la définition précédente de « glValidateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(51): warning C4005: 'glAttachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1924): note: voir la définition précédente de « glAttachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(52): warning C4005: 'glBindAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1925): note: voir la définition précédente de « glBindAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(53): warning C4005: 'glBlendEquationSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1926): note: voir la définition précédente de « glBlendEquationSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(54): warning C4005: 'glCompileShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1927): note: voir la définition précédente de « glCompileShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(55): warning C4005: 'glCreateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1928): note: voir la définition précédente de « glCreateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(56): warning C4005: 'glCreateShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1929): note: voir la définition précédente de « glCreateShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(57): warning C4005: 'glDeleteProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1930): note: voir la définition précédente de « glDeleteProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(58): warning C4005: 'glDeleteShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1931): note: voir la définition précédente de « glDeleteShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(59): warning C4005: 'glDetachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1932): note: voir la définition précédente de « glDetachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(60): warning C4005: 'glDisableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1933): note: voir la définition précédente de « glDisableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(61): warning C4005: 'glDrawBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1934): note: voir la définition précédente de « glDrawBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(62): warning C4005: 'glEnableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1935): note: voir la définition précédente de « glEnableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(63): warning C4005: 'glGetActiveAttrib' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1936): note: voir la définition précédente de « glGetActiveAttrib »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(64): warning C4005: 'glGetActiveUniform' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1937): note: voir la définition précédente de « glGetActiveUniform »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(65): warning C4005: 'glGetAttachedShaders' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1938): note: voir la définition précédente de « glGetAttachedShaders »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(66): warning C4005: 'glGetAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1939): note: voir la définition précédente de « glGetAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(67): warning C4005: 'glGetProgramInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1940): note: voir la définition précédente de « glGetProgramInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(68): warning C4005: 'glGetProgramiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1941): note: voir la définition précédente de « glGetProgramiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(69): warning C4005: 'glGetShaderInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1942): note: voir la définition précédente de « glGetShaderInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(70): warning C4005: 'glGetShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1943): note: voir la définition précédente de « glGetShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(71): warning C4005: 'glGetShaderiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1944): note: voir la définition précédente de « glGetShaderiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(72): warning C4005: 'glGetUniformLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1945): note: voir la définition précédente de « glGetUniformLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(73): warning C4005: 'glGetUniformfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1946): note: voir la définition précédente de « glGetUniformfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(74): warning C4005: 'glGetUniformiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1947): note: voir la définition précédente de « glGetUniformiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(75): warning C4005: 'glGetVertexAttribPointerv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1948): note: voir la définition précédente de « glGetVertexAttribPointerv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(76): warning C4005: 'glGetVertexAttribdv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1949): note: voir la définition précédente de « glGetVertexAttribdv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(77): warning C4005: 'glGetVertexAttribfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1950): note: voir la définition précédente de « glGetVertexAttribfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(78): warning C4005: 'glGetVertexAttribiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1951): note: voir la définition précédente de « glGetVertexAttribiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(79): warning C4005: 'glGenBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1723): note: voir la définition précédente de « glGenBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(80): warning C4005: 'glBindBuffer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1717): note: voir la définition précédente de « glBindBuffer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(81): warning C4005: 'glBufferData' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1718): note: voir la définition précédente de « glBufferData »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(82): warning C4005: 'glVertexAttribPointer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2016): note: voir la définition précédente de « glVertexAttribPointer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(83): warning C4005: 'glIsProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1952): note: voir la définition précédente de « glIsProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(84): warning C4005: 'glIsShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1953): note: voir la définition précédente de « glIsShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(85): warning C4005: 'glLinkProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1954): note: voir la définition précédente de « glLinkProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(86): warning C4005: 'glShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1955): note: voir la définition précédente de « glShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(87): warning C4005: 'glStencilFuncSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1956): note: voir la définition précédente de « glStencilFuncSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(88): warning C4005: 'glStencilMaskSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1957): note: voir la définition précédente de « glStencilMaskSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(89): warning C4005: 'glStencilOpSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1958): note: voir la définition précédente de « glStencilOpSeparate »
+[3/5] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\pipeline\UniformValueTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(39): warning C4005: 'glUniform1f' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1959): note: voir la définition précédente de « glUniform1f »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(40): warning C4005: 'glUniform1d' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(5141): note: voir la définition précédente de « glUniform1d »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(41): warning C4005: 'glUniform1i' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1961): note: voir la définition précédente de « glUniform1i »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(42): warning C4005: 'glUniform1ui' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2262): note: voir la définition précédente de « glUniform1ui »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(43): warning C4005: 'glUniform2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1964): note: voir la définition précédente de « glUniform2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(44): warning C4005: 'glUniform3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1968): note: voir la définition précédente de « glUniform3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(45): warning C4005: 'glUniform4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1972): note: voir la définition précédente de « glUniform4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(46): warning C4005: 'glUniformMatrix2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1975): note: voir la définition précédente de « glUniformMatrix2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(47): warning C4005: 'glUniformMatrix3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1976): note: voir la définition précédente de « glUniformMatrix3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(48): warning C4005: 'glUniformMatrix4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1977): note: voir la définition précédente de « glUniformMatrix4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(49): warning C4005: 'glUseProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1978): note: voir la définition précédente de « glUseProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(50): warning C4005: 'glValidateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1979): note: voir la définition précédente de « glValidateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(51): warning C4005: 'glAttachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1924): note: voir la définition précédente de « glAttachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(52): warning C4005: 'glBindAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1925): note: voir la définition précédente de « glBindAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(53): warning C4005: 'glBlendEquationSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1926): note: voir la définition précédente de « glBlendEquationSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(54): warning C4005: 'glCompileShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1927): note: voir la définition précédente de « glCompileShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(55): warning C4005: 'glCreateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1928): note: voir la définition précédente de « glCreateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(56): warning C4005: 'glCreateShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1929): note: voir la définition précédente de « glCreateShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(57): warning C4005: 'glDeleteProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1930): note: voir la définition précédente de « glDeleteProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(58): warning C4005: 'glDeleteShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1931): note: voir la définition précédente de « glDeleteShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(59): warning C4005: 'glDetachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1932): note: voir la définition précédente de « glDetachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(60): warning C4005: 'glDisableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1933): note: voir la définition précédente de « glDisableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(61): warning C4005: 'glDrawBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1934): note: voir la définition précédente de « glDrawBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(62): warning C4005: 'glEnableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1935): note: voir la définition précédente de « glEnableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(63): warning C4005: 'glGetActiveAttrib' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1936): note: voir la définition précédente de « glGetActiveAttrib »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(64): warning C4005: 'glGetActiveUniform' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1937): note: voir la définition précédente de « glGetActiveUniform »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(65): warning C4005: 'glGetAttachedShaders' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1938): note: voir la définition précédente de « glGetAttachedShaders »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(66): warning C4005: 'glGetAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1939): note: voir la définition précédente de « glGetAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(67): warning C4005: 'glGetProgramInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1940): note: voir la définition précédente de « glGetProgramInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(68): warning C4005: 'glGetProgramiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1941): note: voir la définition précédente de « glGetProgramiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(69): warning C4005: 'glGetShaderInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1942): note: voir la définition précédente de « glGetShaderInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(70): warning C4005: 'glGetShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1943): note: voir la définition précédente de « glGetShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(71): warning C4005: 'glGetShaderiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1944): note: voir la définition précédente de « glGetShaderiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(72): warning C4005: 'glGetUniformLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1945): note: voir la définition précédente de « glGetUniformLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(73): warning C4005: 'glGetUniformfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1946): note: voir la définition précédente de « glGetUniformfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(74): warning C4005: 'glGetUniformiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1947): note: voir la définition précédente de « glGetUniformiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(75): warning C4005: 'glGetVertexAttribPointerv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1948): note: voir la définition précédente de « glGetVertexAttribPointerv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(76): warning C4005: 'glGetVertexAttribdv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1949): note: voir la définition précédente de « glGetVertexAttribdv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(77): warning C4005: 'glGetVertexAttribfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1950): note: voir la définition précédente de « glGetVertexAttribfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(78): warning C4005: 'glGetVertexAttribiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1951): note: voir la définition précédente de « glGetVertexAttribiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(79): warning C4005: 'glGenBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1723): note: voir la définition précédente de « glGenBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(80): warning C4005: 'glBindBuffer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1717): note: voir la définition précédente de « glBindBuffer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(81): warning C4005: 'glBufferData' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1718): note: voir la définition précédente de « glBufferData »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(82): warning C4005: 'glVertexAttribPointer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2016): note: voir la définition précédente de « glVertexAttribPointer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(83): warning C4005: 'glIsProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1952): note: voir la définition précédente de « glIsProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(84): warning C4005: 'glIsShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1953): note: voir la définition précédente de « glIsShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(85): warning C4005: 'glLinkProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1954): note: voir la définition précédente de « glLinkProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(86): warning C4005: 'glShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1955): note: voir la définition précédente de « glShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(87): warning C4005: 'glStencilFuncSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1956): note: voir la définition précédente de « glStencilFuncSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(88): warning C4005: 'glStencilMaskSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1957): note: voir la définition précédente de « glStencilMaskSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(89): warning C4005: 'glStencilOpSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1958): note: voir la définition précédente de « glStencilOpSeparate »
+[4/5] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\main.cpp.obj
+[5/5] Linking CXX executable ARTIST\tests\ArtistLib_tests.exe
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+    Start 52: unit.UniformReaderTests.ReadUniforms_ValidContext
+1/7 Test #52: unit.UniformReaderTests.ReadUniforms_ValidContext ................................   Passed    0.02 sec
+    Start 53: unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+2/7 Test #53: unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated ......................***Failed    0.02 sec
+Note: Google Test filter = UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(100): error: Value of: passContext.getUniforms().contains(name)
+  Actual: false
+Expected: true
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+
+ 1 FAILED TEST
+
+    Start 54: unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+3/7 Test #54: unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct .......***Failed    0.02 sec
+Note: Google Test filter = UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(113): error: Expected equality of these values:
+  passContext.getUniforms().size()
+    Which is: 1
+  2
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct (1 ms)
+[----------] 1 test from UniformReaderTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+
+ 1 FAILED TEST
+
+    Start 55: unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+4/7 Test #55: unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected ...................***Failed    0.02 sec
+Note: Google Test filter = UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(124): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+
+ 1 FAILED TEST
+
+    Start 56: unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+5/7 Test #56: unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement ...***Failed    0.02 sec
+Note: Google Test filter = UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+
+ 1 FAILED TEST
+
+    Start 57: unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL
+6/7 Test #57: unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL ..........   Passed    0.02 sec
+    Start 58: unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing
+7/7 Test #58: unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing .....................   Passed    0.01 sec
+
+43% tests passed, 4 tests failed out of 7
+
+Label Time Summary:
+unit    =   0.12 sec*proc (7 tests)
+
+Total Test time (real) =   0.16 sec
+
+The following tests FAILED:
+	 53 - unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated (Failed) unit
+	 54 - unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct (Failed) unit
+	 55 - unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected (Failed) unit
+	 56 - unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement (Failed) unit
+ctest : Errors while running CTest
+Au caractère Ligne:1 : 243
++ ... DE -eq 0) { ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/m ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Errors while running CTest:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+EXIT_CODE=8

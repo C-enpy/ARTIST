@@ -1,0 +1,45 @@
+Start testing: Oct 17 20:31 Paris, Madrid (heure d’été)
+----------------------------------------------------------
+98/227 Testing: unit.AttributeTest.SetFloatDispatchesByElementType
+98/227 Test: unit.AttributeTest.SetFloatDispatchesByElementType
+Command: "C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build/ARTIST/tests/ArtistLib_tests.exe" "--gtest_filter=AttributeTest.SetFloatDispatchesByElementType" "--gtest_also_run_disabled_tests"
+Directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst
+"unit.AttributeTest.SetFloatDispatchesByElementType" start time: Oct 17 20:31 Paris, Madrid (heure d’été)
+Output:
+----------------------------------------------------------
+Note: Google Test filter = AttributeTest.SetFloatDispatchesByElementType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.SetFloatDispatchesByElementType
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(105): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn(@0000019197D19D50 776-byte object <B8-BD 9D-AB F7-7F 00-00 90-65 D0-97 91-01 00-00 80-65 D0-97 91-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 68-F9 97-AB F7-7F 00-00 ... 20-F7 D0-97 91-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 B0-FD D0-97 91-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00>)
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(106): error: Actual function call count doesn't match EXPECT_CALL(*mock::MockSetter<std::shared_ptr<float>>::instance(), mockOn(::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeTest.SetFloatDispatchesByElementType (1 ms)
+[----------] 1 test from AttributeTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeTest.SetFloatDispatchesByElementType
+
+ 1 FAILED TEST
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Failed.
+"unit.AttributeTest.SetFloatDispatchesByElementType" end time: Oct 17 20:31 Paris, Madrid (heure d’été)
+"unit.AttributeTest.SetFloatDispatchesByElementType" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 17 20:31 Paris, Madrid (heure d’été)
+
+unit =   0.02 sec*proc
+

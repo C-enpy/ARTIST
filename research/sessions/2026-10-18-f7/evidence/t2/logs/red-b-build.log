@@ -1,0 +1,37 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\cmake.EXE" --build out/b --parallel 1
+[1/4] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\pipeline\AttributeTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\include\graphic/context/AttributeContext.hpp(42): warning C4834: abandon de la valeur de retour de la fonction avec l'attribut [[nodiscard]]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\include\graphic/context/AttributeContext.hpp(42): note: le contexte d'instanciation du modŠle (le plus ancien) est
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(87): note: voir la r‚f‚rence … l'instanciation de la fonction modŠle 'void artist::graphic::pipeline::IAttribute<API>::set<int>(std::shared_ptr<int>)' en cours de compilation
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(87): note: voir la premiŠre r‚f‚rence … ®ÿartist::graphic::pipeline::IAttribute<API>::setÿ¯ dans ®ÿAttributeTest_SetTest_Test::TestBodyÿ¯
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\include\graphic/pipeline/Attribute.hpp(86): note: voir la r‚f‚rence … l'instanciation de la fonction modŠle 'void artist::graphic::context::AttributeContext<artist::mock::graphic::api::MockOpenGL>::setValue<int>(std::shared_ptr<int>)' en cours de compilation
+[2/4] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\pipeline\AttributeComponentTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\include\graphic/context/AttributeContext.hpp(42): warning C4834: abandon de la valeur de retour de la fonction avec l'attribut [[nodiscard]]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\include\graphic/context/AttributeContext.hpp(42): note: le contexte d'instanciation du modŠle (le plus ancien) est
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(81): note: voir la r‚f‚rence … l'instanciation de la fonction modŠle 'void artist::graphic::pipeline::IAttribute<API>::set<int>(std::shared_ptr<int>)' en cours de compilation
+        with
+        [
+            API=artist::graphic::api::OpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(81): note: voir la premiŠre r‚f‚rence … ®ÿartist::graphic::pipeline::IAttribute<API>::setÿ¯ dans ®ÿAttributeComponentTest_SetIntUploadsOneIntWithoutGLError_Test::TestBodyÿ¯
+        with
+        [
+            API=artist::graphic::api::OpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\include\graphic/pipeline/Attribute.hpp(86): note: voir la r‚f‚rence … l'instanciation de la fonction modŠle 'void artist::graphic::context::AttributeContext<artist::graphic::api::OpenGL>::setValue<int>(std::shared_ptr<int>)' en cours de compilation
+[3/4] Linking CXX executable ARTIST\tests\ArtistLib_tests.exe
+[4/4] Linking CXX executable ARTIST\component-tests\ArtistLib_component_tests.exe
+# exit=0 seconds=6.1

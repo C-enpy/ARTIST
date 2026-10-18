@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-18",
+  "project": "ARTIST",
+  "vault_path": "docs",
+  "identity_source": ".wiki.json (canonical project override, no .env/credential store read)",
+  "request": "Archive this session, all subagents and evidence, update Obsidian, commit and push",
+  "source_head_before_ingestion": "d22cc334ba1cf433fb7ce3a280f100a8447c6599",
+  "code_candidate_unchanged": "6d6dcb7",
+  "session_capture": {
+    "method": "Installed OpenCodeV2 CLI2.0.32 official authenticated GET export endpoint; no service/database mutation",
+    "root_session": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+    "sessions": 29,
+    "subagents": 28,
+    "entries": 1965,
+    "pagination_complete": true,
+    "leaves_checked": 28,
+    "additional_descendants": 0,
+    "public_content_only": true,
+    "internal_reasoning_instructions_snapshots": "excluded; omission markers retained",
+    "credential_redactions": 2,
+    "manifest": "research/sessions/2026-10-18-f7/sessions-manifest.json",
+    "manifest_sha256": "a459deae727cbabc69f222d84f950195dc3ae44a9f827774fb706fda9b9fdd5c"
+  },
+  "evidence_capture": {
+    "files": 271,
+    "bytes": 17799656,
+    "credential_redactions": 0,
+    "legacy_log_encoding": "21 Windows ANSI/UTF16 logs initially classified incorrectly as binary were restored byte-identically; encoding recorded",
+    "excluded_executables": 7,
+    "excluded_executable_policy": "Hashes and sizes archived, original files retained locally; no executables/caches/build trees/serviceDB committed",
+    "manifest": "research/sessions/2026-10-18-f7/evidence-manifest.json",
+    "manifest_sha256": "5da529bb592a7801820c64f15d6e8dda11df5465b4c4ed4f392b47766a96351d"
+  },
+  "integrity_check": {
+    "session_gzip_and_json_hashes": "29/29 matched, IDs/counts recouped",
+    "archived_evidence_hashes": "271/271 matched, unique paths",
+    "staged_git_blobs": "300/300 SHA256 matched the session/evidence manifests after git add (byte preservation verified)",
+    "staged_executable_files": 0,
+    "credential_scan": "No remaining match for scanned key/token/bearer/private-key patterns in decompressed public exports and decoded evidence logs; not a claim of exhaustive secret detection",
+    "documentation_checks": "5 modified/new wiki notes YAML/tags/wikilinks and34JSON files parsed, zero error; historical C++ nodiscard literals unchanged",
+    "internal_reasoning_parts_remaining": 0,
+    "scope": "Finite captured snapshot; subsequent ingestion/push actions not recursively exported"
+  },
+  "wiki_tracking": {
+    "new_page": "references/session-2026-10-18-f7.md",
+    "backlinks": ["index.md", "architecture/missions/2026-10-18-f7-uniform-attribute.md", "development/known-incidents.md"],
+    "local_ledger": "docs/.manifest.json updated (ignored by repository policy)",
+    "new_source_entries": 302,
+    "total_ledger_sources": 317,
+    "wiki_markdown_pages": 37
+  },
+  "correction": "Native public exports show both test-engineer workers ended with local BLOCKED reports not delivered through team_results; pool-7 also performed reads. Idle/worktree-empty did not prove no turn ran. No native permission enforcement test performed.",
+  "limits": "No new engine run or broader GPU/ASan/Release/performance claim; existing final299native and historical245ASan scopes unchanged"
+}

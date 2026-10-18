@@ -1,0 +1,21 @@
+{
+  "asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+  "inherited_asan_options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+  "runs": [
+    {
+      "command": [
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\mission-f7\\t3-build\\asan\\artist_asan_probe.exe",
+        "healthy"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\djden\\source\\repos\\ARTIST\\out\\mission-f7\\t3-build\\asan\\artist_asan_probe.exe",
+        "use-after-free"
+      ],
+      "exit_code": 86
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,20 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp |  M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R ^opengl\.AttributeComponentTest\. --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\out\mission-f7\t2\green-a-opengl.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+    Start 195: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+1/2 Test #195: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError .....   Passed    0.47 sec
+    Start 196: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+2/2 Test #196: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError ...   Passed    0.39 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Label Time Summary:
+opengl    =   0.86 sec*proc (2 tests)
+
+Total Test time (real) =   0.88 sec
+# exit=0 seconds=0.9

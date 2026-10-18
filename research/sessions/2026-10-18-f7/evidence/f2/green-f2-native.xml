@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="3"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="1"
+	timestamp="2026-10-18T10:53:58"
+	>
+	<testcase name="opengl.UniformCardinalityComponentTest.ScalarVectorMatrixSingleValuesReadBack" classname="opengl.UniformCardinalityComponentTest.ScalarVectorMatrixSingleValuesReadBack" time="0.575165" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformCardinalityComponentTest.ScalarVectorMatrixSingleValuesReadBack
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformCardinalityComponentTest
+[ RUN      ] UniformCardinalityComponentTest.ScalarVectorMatrixSingleValuesReadBack
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[F2] requested=3.3 core obtained=3.3 profile=1 GLSL=3.30 NVIDIA via Cg compiler vertexUniformComponents=4096 fp64Extension=1 KHR_debug=1 current=0000026C448FF9F0 thread=15472 shareGroup=unshared(GLFW share=null)
+[       OK ] UniformCardinalityComponentTest.ScalarVectorMatrixSingleValuesReadBack (474 ms)
+[----------] 1 test from UniformCardinalityComponentTest (474 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (474 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.UniformCardinalityComponentTest.ReflectedArrayRejectsSingleValueWithoutChangingEitherElement" classname="opengl.UniformCardinalityComponentTest.ReflectedArrayRejectsSingleValueWithoutChangingEitherElement" time="0.445923" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformCardinalityComponentTest.ReflectedArrayRejectsSingleValueWithoutChangingEitherElement
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformCardinalityComponentTest
+[ RUN      ] UniformCardinalityComponentTest.ReflectedArrayRejectsSingleValueWithoutChangingEitherElement
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[F2] requested=3.3 core obtained=3.3 profile=1 GLSL=3.30 NVIDIA via Cg compiler vertexUniformComponents=4096 fp64Extension=1 KHR_debug=1 current=00000226FB715590 thread=9788 shareGroup=unshared(GLFW share=null)
+[       OK ] UniformCardinalityComponentTest.ReflectedArrayRejectsSingleValueWithoutChangingEitherElement (342 ms)
+[----------] 1 test from UniformCardinalityComponentTest (342 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (343 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.UniformCardinalityComponentTest.DoubleSingleValuesReadBackWhenFp64IsAvailable" classname="opengl.UniformCardinalityComponentTest.DoubleSingleValuesReadBackWhenFp64IsAvailable" time="0.437784" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformCardinalityComponentTest.DoubleSingleValuesReadBackWhenFp64IsAvailable
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformCardinalityComponentTest
+[ RUN      ] UniformCardinalityComponentTest.DoubleSingleValuesReadBackWhenFp64IsAvailable
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[F2] requested=3.3 core obtained=3.3 profile=1 GLSL=3.30 NVIDIA via Cg compiler vertexUniformComponents=4096 fp64Extension=1 KHR_debug=1 current=0000021D9E5CC620 thread=16560 shareGroup=unshared(GLFW share=null)
+[F2 fp64] Uniform1d=1 Uniform3dv=1 Matrix2dv=1 GetUniformdv=1
+[       OK ] UniformCardinalityComponentTest.DoubleSingleValuesReadBackWhenFp64IsAvailable (343 ms)
+[----------] 1 test from UniformCardinalityComponentTest (343 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (343 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

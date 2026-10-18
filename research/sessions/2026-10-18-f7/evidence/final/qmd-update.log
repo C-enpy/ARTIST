@@ -1,0 +1,10 @@
+{
+  "collection": "artist-wiki",
+  "collections": 1,
+  "indexed": 1,
+  "updated": 10,
+  "unchanged": 25,
+  "removed": 0,
+  "skipped": 0,
+  "needsEmbeddingGlobal": 11
+}

@@ -1,0 +1,29 @@
+﻿{
+    "phase":  "committed-G2",
+    "utc":  "2026-10-18T09:47:26.4416346Z",
+    "root":  "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author",
+    "head":  "bfd94a0b971fc39b52419584166aebda8fb7bfaa",
+    "parent":  "113411d71cfef56737fb8992f34b70e4675d2118",
+    "branch":  "ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author",
+    "delta":  [
+
+              ],
+    "testedSourceHashes":  [
+                               {
+                                   "path":  "ARTIST/include/graphic/context/AttributeContext.hpp",
+                                   "sha256":  "2A041B620BAF3F5ACF0AA85B28F3E7A8B7894B5554410F2A87C736A6931D7C86"
+                               },
+                               {
+                                   "path":  "ARTIST/tests/src/graphic/context/AttributeContextTests.cpp",
+                                   "sha256":  "FDA116F444D08BFFA9EEF486F7464B6AEA7C1FA835900E9C99C324DE4DE62135"
+                               }
+                           ],
+    "testedFilesUnchanged":  true,
+    "leasesReturned":  [
+                           "build f1-build",
+                           "cache out/conan2",
+                           "tooling out/tooling"
+                       ],
+    "runningBuildProcesses":  0,
+    "dockerResourcesCreated":  0
+}

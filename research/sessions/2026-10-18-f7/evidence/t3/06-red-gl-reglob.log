@@ -1,0 +1,84 @@
+﻿COMMAND: cmake -S . -B C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build; if ($LASTEXITCODE -eq 0) { cmake --build C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build --target ArtistLib_component_tests --parallel 1 }; if ($LASTEXITCODE -eq 0) { ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build -L opengl -R UniformReaderComponentTest --output-on-failure --no-tests=error --output-junit C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3/out/mission-f7/t3/red-gl.xml }
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+-- Using Conan toolchain: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Configuring done (2.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+[1/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\pipeline\AttributeComponentTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\include\graphic/context/AttributeContext.hpp(42): warning C4834: abandon de la valeur de retour de la fonction avec l'attribut [[nodiscard]]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\include\graphic/context/AttributeContext.hpp(42): note: le contexte d'instanciation du modèle (le plus ancien) est
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(86): note: voir la référence à l'instanciation de la fonction modèle 'void artist::graphic::pipeline::IAttribute<API>::set<int>(std::shared_ptr<int>)' en cours de compilation
+        with
+        [
+            API=artist::graphic::api::OpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(86): note: voir la première référence à « artist::graphic::pipeline::IAttribute<API>::set » dans « AttributeComponentTest_SetIntUploadsOneIntWithoutGLError_Test::TestBody »
+        with
+        [
+            API=artist::graphic::api::OpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\include\graphic/pipeline/Attribute.hpp(105): note: voir la référence à l'instanciation de la fonction modèle 'void artist::graphic::context::AttributeContext<artist::graphic::api::OpenGL>::setValue<int>(std::shared_ptr<int>)' en cours de compilation
+[2/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\pipeline\PipelineLifetimeComponentTests.cpp.obj
+[3/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\PassTests.cpp.obj
+[4/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\ProgramTests.cpp.obj
+[5/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\ShaderLifetimeComponentTests.cpp.obj
+[6/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\ShaderTests.cpp.obj
+[7/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\UniformReaderComponentTests.cpp.obj
+[8/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\main.cpp.obj
+[9/9] Linking CXX executable ARTIST\component-tests\ArtistLib_component_tests.exe
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+    Start 256: opengl.UniformReaderComponentTest.NominalUniformHasNativeLocationAndType
+1/2 Test #256: opengl.UniformReaderComponentTest.NominalUniformHasNativeLocationAndType ...   Passed    0.58 sec
+    Start 257: opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+2/2 Test #257: opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName ....***Failed    0.51 sec
+Note: Google Test filter = UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderComponentTest
+[ RUN      ] UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[UniformReader] GL_ACTIVE_UNIFORM_MAX_LENGTH=325
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\component-tests\src\graphic\shader\UniformReaderComponentTests.cpp(117): error: Value of: uniforms.contains(name)
+  Actual: false
+Expected: true
+
+[  FAILED  ] UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName (416 ms)
+[----------] 1 test from UniformReaderComponentTest (416 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (416 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+
+ 1 FAILED TEST
+
+
+50% tests passed, 1 tests failed out of 2
+
+Label Time Summary:
+opengl    =   1.09 sec*proc (2 tests)
+
+Total Test time (real) =   1.12 sec
+
+The following tests FAILED:
+	257 - opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName (Failed) opengl
+ctest : Errors while running CTest
+Au caractère Ligne:1 : 253
++ ... DE -eq 0) { ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/m ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Errors while running CTest:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+EXIT_CODE=8

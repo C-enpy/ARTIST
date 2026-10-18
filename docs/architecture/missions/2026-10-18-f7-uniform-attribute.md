@@ -74,6 +74,11 @@ de relance actuelles. Les observations désormais exécutées, changements de cl
 Setter<T>, décisions D1–D9 et politique v3 sont réconciliés ci-dessus et dans les
 preuves versionnées. Les scores/modèles initiaux décrivent l'intention à leur date.
 
+L'[[references/session-2026-10-18-f7|archive des échanges et des 28 sous-agents]]
+complète ces preuves :29exports publics et271fichiers de preuves dans research/,
+avec manifestes SHA256. Les restitutions locales BLOCKED des profils QA y sont
+retrouvées ; elles rectifient la déduction intermédiaire « aucun tour exécuté ».
+
 ### Sélection initiale : F7 Uniform/Attribute, option A
 
 L'opérateur a retenu l'option A le 2026-10-17 après l'avis PM/LLM du matin

@@ -38,6 +38,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[architecture/missions/2026-10-15-f5-gl-diagnostics|Mission F5 archivée]] — diagnostics GL vides compilation/link bornés, RED causal et validation indépendante (143/143 distincts, 121 ASan distincts) dans le périmètre Windows Debug.
 - [[architecture/missions/2026-10-15-failure-contracts|Mission C archivée]] — bornage des contrats d'échec (Q1 et Q3 traités ; F4 pour l'accesseur ; F8 partiel ; F10 conservé), RED causal, 165/165 normaux et 143 ASan distincts dans le périmètre Windows Debug à `e736bba` ; `getStackTraceString` ouvert (retour par valeur depuis S-GSS, 2026-10-16).
 - [[architecture/next-mission|Suite après F7]] — [[architecture/missions/2026-10-18-f7-uniform-attribute|F7 clôturée]] à `6d6dcb7`,299natifs (251CPU+48GL), ASan245historique T4 non requalifié ; findingsT1-1/F2/F1 corrigés/revus ; aucune mission suivante sélectionnée.
+- [[references/session-2026-10-18-f7|Session F7, preuves et 28 sous-agents]] — 29 exports publics, 271 fichiers de preuves versionnés et registre exhaustif ; les restitutions QA BLOCKED retrouvées corrigent le diagnostic initial de workers « inertes ».
 - [[architecture/missions/2026-10-15-loaded-owner-move|Mission précédente archivée]] — loaded-owner move et ASan vérifiés dans leur périmètre, contrat préservé.
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
 

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="7"
+	failures="4"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T18:49:36"
+	>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_ValidContext" classname="unit.UniformReaderTests.ReadUniforms_ValidContext" time="0.0166974" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_ValidContext
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_ValidContext
+[       OK ] UniformReaderTests.ReadUniforms_ValidContext (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated" classname="unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated" time="0.0153967" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(100): error: Value of: passContext.getUniforms().contains(name)
+  Actual: false
+Expected: true
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct" classname="unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct" time="0.0164681" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(113): error: Expected equality of these values:
+  passContext.getUniforms().size()
+    Which is: 1
+  2
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct (1 ms)
+[----------] 1 test from UniformReaderTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected" classname="unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected" time="0.0166993" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(124): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement" classname="unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement" time="0.0209167" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+[  FAILED  ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL" classname="unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL" time="0.0232007" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL
+[       OK ] UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing" classname="unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing" time="0.0147731" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing
+
+GMOCK WARNING:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(55): Too many actions specified in EXPECT_CALL(gl, glGetUniformLocation_mock(1, ::testing::_))...
+Expected to be never called, but has 0 WillOnce()s and a WillRepeatedly().[       OK ] UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="2"
+	failures="2"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T15:26:08"
+	>
+	<testcase name="opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError" classname="opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError" time="0.518782" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeComponentTest
+[ RUN      ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(81): error: Expected: attribute.set(std::make_shared&lt;int&gt;(7)) doesn't throw an exception.
+  Actual: it throws artist::common::exception::TraceableException&lt;class std::runtime_error&gt; with description "ERROR::ATTRIBUTE::SET::TYPE_MISMATCH: The type of the value (class std::shared_ptr&lt;int&gt;) does not match the type of the attribute variable (class std::any)".
+
+[  FAILED  ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError (421 ms)
+[----------] 1 test from AttributeComponentTest (421 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (421 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError" classname="opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError" time="0.39215" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeComponentTest
+[ RUN      ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(98): error: Expected: attribute.set(std::make_shared&lt;glm::vec3&gt;(1.0f, 2.0f, 3.0f)) doesn't throw an exception.
+  Actual: it throws artist::common::exception::TraceableException&lt;class std::runtime_error&gt; with description "ERROR::ATTRIBUTE::SET::TYPE_MISMATCH: The type of the value (class std::shared_ptr&lt;int&gt;) does not match the type of the attribute variable (class std::any)".
+
+[  FAILED  ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError (292 ms)
+[----------] 1 test from AttributeComponentTest (292 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (292 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+</testsuite>

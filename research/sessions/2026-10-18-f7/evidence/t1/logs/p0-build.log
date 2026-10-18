@@ -1,0 +1,11 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5
+# HEAD=4f64a2b87f5aa8c3590ded4596aca906b5d320dc
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\cmake.EXE" --build --preset windows-msvc-debug --parallel 1
+[1/48] Building CXX object _deps\googletest-build\googlemock\CMakeFiles\gmock_main.dir\2445d7dd715b624291fa02c992cf9959\gtest-all.cc.obj
+FAILED: [code=1] _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/2445d7dd715b624291fa02c992cf9959/gtest-all.cc.obj 
+C:\PROGRA~1\MICROS~1\18\COMMUN~1\VC\Tools\MSVC\1444~1.352\bin\Hostx64\x64\cl.exe  /nologo /TP  -IC:\Users\djden\source\repos\ARTIST\out\build\windows-msvc-debug\_deps\googletest-src\googlemock\include -IC:\Users\djden\source\repos\ARTIST\out\build\windows-msvc-debug\_deps\googletest-src\googlemock -IC:\Users\djden\source\repos\ARTIST\out\build\windows-msvc-debug\_deps\googletest-src\googletest\include -IC:\Users\djden\source\repos\ARTIST\out\build\windows-msvc-debug\_deps\googletest-src\googletest /DWIN32 /D_WINDOWS  /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi -GS -W4 -WX -wd4251 -wd4275 -nologo -J -D_UNICODE -DUNICODE -DWIN32 -D_WIN32 -DSTRICT -DWIN32_LEAN_AND_MEAN -wd4702 -utf-8 -DGTEST_HAS_PTHREAD=0 -EHsc -D_HAS_EXCEPTIONS=1 /showIncludes /Fo_deps\googletest-build\googlemock\CMakeFiles\gmock_main.dir\2445d7dd715b624291fa02c992cf9959\gtest-all.cc.obj /Fdlib\gmock_mainpdb_debug_postfix-NOTFOUND.pdb /FS -c C:\Users\djden\source\repos\ARTIST\out\build\windows-msvc-debug\_deps\googletest-src\googletest\src\gtest-all.cc
+C:\Users\djden\source\repos\ARTIST\out\build\windows-msvc-debug\_deps\googletest-src\googletest\src\gtest-all.cc : fatal error C1083: Impossible d'ouvrir le fichier g‚n‚r‚(e) par le compilateurÿ: ''ÿ: Invalid argument
+ninja: build stopped: subcommand failed.
+# exit=1 seconds=2.6

@@ -1,0 +1,244 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -N
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+  Test   #1: unit.TraceableExceptionTests.What_IsForwardedToTheBaseException
+  Test   #2: unit.TraceableExceptionTests.GetStackTraceString_ReadsTheReturnedValueSafely
+  Test   #3: unit.PassContextTests.GetShader_BorrowsFirstAndLastRegisteredShaders
+  Test   #4: unit.PassContextTests.GetShader_RejectsNegativeIndexWithRuledMessage
+  Test   #5: unit.PassContextTests.GetShader_RejectsIndexEqualToSize
+  Test   #6: unit.PassContextTests.GetShader_RejectsIndexBeyondVectorSize
+  Test   #7: unit.PassContextTests.GetShader_RejectsAccessOnEmptyContext
+  Test   #8: unit.PassContextTests.GetShader_RejectedAccessKeepsContextUnmutated
+  Test   #9: unit.PipelineContextTests.GetPass_ReturnsFirstAndLastRegisteredPasses
+  Test  #10: unit.PipelineContextTests.GetPass_RejectsNegativeIndexWithRuledMessage
+  Test  #11: unit.PipelineContextTests.GetPass_RejectsIndexEqualToSize
+  Test  #12: unit.PipelineContextTests.GetPass_RejectsIndexBeyondVectorSize
+  Test  #13: unit.PipelineContextTests.GetPass_RejectsAccessOnEmptyContext
+  Test  #14: unit.PipelineContextTests.GetPass_RejectedAccessKeepsContextUnmutated
+  Test  #15: unit.ShaderContextTests.SetAndGetShaderTypeforVertexShader
+  Test  #16: unit.ShaderContextTests.SetAndGetShaderTypeforFragmentShader
+  Test  #17: unit.ShaderContextTests.SetAndGetShaderTypeforGeometryShader
+  Test  #18: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationControlShader
+  Test  #19: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationEvaluationShader
+  Test  #20: unit.ShaderContextTests.SetAndGetShaderTypeforComputeShader
+  Test  #21: unit.AttributeBinderTests.BindAttributeTest_createBuffer
+  Test  #22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer
+  Test  #23: unit.AttributeBinderTests.BindAttributeTest_invalidContext
+  Test  #24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData
+  Test  #25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+  Test  #26: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr
+  Test  #27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+  Test  #28: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+  Test  #29: unit.AttributeUnbinderTests.BindAttributeTest_nullContext
+  Test  #30: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID
+  Test  #31: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv
+  Test  #32: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+  Test  #33: unit.AttributeReaderTests.ReadAttributes_InvalidPassID
+  Test  #34: unit.PassFreerTests.FreePassTest_validContext
+  Test  #35: unit.PassFreerTests.FreePassTest_noPassID
+  Test  #36: unit.PassFreerTests.FreePassTest_deletePipeline
+  Test  #37: unit.PassFreerTests.FreePassTest_noShaders
+  Test  #38: unit.PassFreerTests.FreePassTest_isIdempotent
+  Test  #39: unit.LoaderTests.LoadPassTest_validContext
+  Test  #40: unit.LoaderTests.LoadPassTest_createPipeline
+  Test  #41: unit.LoaderTests.LoadPassTest_linkPipeline
+  Test  #42: unit.LoaderTests.LoadPassTest_pipelineCreationFailed
+  Test  #43: unit.LoaderTests.LoadPassTest_linkFailed
+  Test  #44: unit.LoaderTests.LoadPassTest_linkSuccess
+  Test  #45: unit.LoaderTests.LoadPassTest_reloadRejectedBeforeAnyNativeCall
+  Test  #46: unit.LoaderTests.LoadPassTest_passIDPublishedOnlyAfterLinkSuccess
+  Test  #47: unit.LoaderTests.LoadPassTest_attacherFailureReleasesProgramOnce
+  Test  #48: unit.ShaderAttacherTests.AttachShaders_ValidContext
+  Test  #49: unit.ShaderAttacherTests.AttachShaders_InvalidPassID
+  Test  #50: unit.ShaderAttacherTests.AttachShaders_NoShaders
+  Test  #51: unit.UniformReaderTests.ReadUniforms_ValidContext
+  Test  #52: unit.UserTests.UsePass_ValidContext
+  Test  #53: unit.UserTests.UsePass_ZeroPassIDStillCallsGL
+  Test  #54: unit.ResetterTests.resetProgram_ValidContext
+  Test  #55: unit.ResetterTests.resetProgram_NullContext
+  Test  #56: unit.ResetterTests.BorrowedEntryPointResetsOnlyCursor
+  Test  #57: unit.ResetterTests.SharedFacadeDoesNotRetainContext
+  Test  #58: unit.PipelineUserTests.useProgram_ValidContext
+  Test  #59: unit.PipelineUserTests.useProgram_NullContext
+  Test  #60: unit.PipelineUserTests.BorrowedEntryPointUsesRegisteredPass
+  Test  #61: unit.PipelineUserTests.SharedFacadeDoesNotRetainContext
+  Test  #62: unit.FreerTests.FreeShader_freeOnGPU
+  Test  #63: unit.FreerTests.FreeShader_setShaderIDToZero
+  Test  #64: unit.FreerTests.FreeShader_doNothing_whenShaderIDIsZero
+  Test  #65: unit.ShaderLoaderTests.LoadShaderTest_callCreate
+  Test  #66: unit.ShaderLoaderTests.LoadShaderTest_callShaderSource
+  Test  #67: unit.ShaderLoaderTests.LoadShaderTest_callCompile
+  Test  #68: unit.ShaderLoaderTests.LoadShaderTest_callGetIv
+  Test  #69: unit.ShaderLoaderTests.LoadShaderTest_setContextShaderId
+  Test  #70: unit.ShaderLoaderTests.LoadShaderFailureTest
+  Test  #71: unit.ReaderTests.ReadShaderTest
+  Test  #72: unit.ReaderTests.ReadShaderTest_AbsentFileRejected
+  Test  #73: unit.ReaderTests.ReadShaderTest_EmptyReadableFileYieldsEmptyCode
+  Test  #74: unit.ReaderTests.ReadShaderTest_MultiBlockReadPreservesContent
+  Test  #75: unit.ReaderTests.ReadShaderTest_ExactlyOneBlockPreservesContent
+  Test  #76: unit.ReaderTests.AbsentPathSetup_RejectsUnremovableResidue
+  Test  #77: unit.ReaderTests.OwnedRootSetup_AcquiresDistinctRootsPerFixtureInstance
+  Test  #78: unit.ReaderTests.OwnedRootSetup_IsIsolatedFromLegacySharedParent
+  Test  #79: unit.ReaderTests.Cleanup_IsBoundedToOwnedRootAndPreservesNeighbor
+  Test  #80: unit.ReaderTests.ExtractionFailure_SentinelTranslatedWithExactMessage
+  Test  #81: unit.ReaderTests.ExtractionFailure_BadAllocStaysUntranslated
+  Test  #82: unit.ReaderTests.CloseHappensBeforePublication_ObservableThroughVirtualSetter
+  Test  #83: unit.AttributeTest.BindTest
+  Test  #84: unit.AttributeTest.UnbindTest
+  Test  #85: unit.AttributeTest.SetTest
+  Test  #86: unit.AttributeTest.GetContextTest
+  Test  #87: unit.PassTest.LoadPass
+  Test  #88: unit.PassTest.WithUniforms
+  Test  #89: unit.PassTest.WithUniforms_NoUniform
+  Test  #90: unit.PassTest.UsePass
+  Test  #91: unit.PassTest.FreePass
+  Test  #92: unit.PassTest.GetUniforms
+  Test  #93: unit.PassTest.GetAttributes
+  Test  #94: unit.PassTest.GetShader
+  Test  #95: unit.PassTest.GetContext
+  Test  #96: unit.PipelineBorrowedContractTests.FlowRequiresBorrowedVoidComponents
+  Test  #97: unit.PipelineBorrowedContractTests.RealComponentsOfferBorrowedEntryPoints
+  Test  #98: unit.PipelineCursorTests.AddNullPassRejectsBeforeInsertionAndKeepsCursor
+  Test  #99: unit.PipelineCursorTests.SetCurrentPassRejectsEveryInvalidValueBeforeMutation
+  Test #100: unit.PipelineCursorTests.CursorAcceptsOnlyInitialStateAndRegisteredIndices
+  Test #101: unit.PipelineCursorTests.InvalidUseNeverCallsUserOrMutatesCursor
+  Test #102: unit.PipelineCursorTests.ThrowingUserSeesCandidateThenRollsBackAndRethrowsSameException
+  Test #103: unit.PipelineCursorTests.EmptyUseNextResetsAndReturnsFalse
+  Test #104: unit.PipelineCursorTests.SingletonLastUsefulCallKeepsSelectionUntilExtraCall
+  Test #105: unit.PipelineCursorTests.TwoPassIterationPreservesOrderAndResetsOnlyAfterExhaustion
+  Test #106: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromInitialCursor
+  Test #107: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromSelectedCursor
+  Test #108: unit.PipelineCursorTests.AddingPassKeepsCursorAndExistingBorrowAcrossGrowth
+  Test #109: unit.PipelineCursorTests.ContextAndWrapperReturnPassBorrows
+  Test #110: unit.PipelineCursorTests.CardinalityGuardExercisesLimitWithoutAllocation
+  Test #111: unit.PipelineCursorTests.EmptyContextRejectsAllSelectionsExceptReset
+  Test #112: unit.PipelineCursorTests.ResetNeverActivatesOrDestroysPasses
+  Test #113: unit.PipelineOwnershipTests.WrapperAndContextAreNotCopyable
+  Test #114: unit.PipelineOwnershipTests.ConstAccessorBorrowsContext
+  Test #115: unit.PipelineOwnershipTests.MoveTransfersOwnershipWithoutCopyingBase
+  Test #116: unit.PipelineOwnershipTests.NullContextIsRejected
+  Test #117: unit.PipelineOwnershipTests.MoveAssignmentReleasesDestinationAndTransfersIdentity
+  Test #118: unit.PipelineOwnershipTests.SelfMoveIsStrictlyNoOp
+  Test #119: unit.PipelineOwnershipTests.MovedFromPublicAccessIsRejected
+  Test #120: unit.PipelineOwnershipTests.MoveAndSelfMoveKeepPassAddressesCountAndCursor
+  Test #121: unit.PipelineOwnershipTests.AssignmentDestroysOldPassesBeforeInstallingSource
+  Test #122: unit.PipelineOwnershipTests.NullPassInConstructorCleansConsumedOwners
+  Test #123: unit.PipelineTest.UseTest
+  Test #124: unit.PipelineTest.IteratePassesTest
+  Test #125: unit.PipelineTest.ResetPipelineTest
+  Test #126: unit.PipelineTest.GetContext
+  Test #127: unit.ShaderLifetimeTests.ShaderIsNotCopyable
+  Test #128: unit.ShaderLifetimeTests.MoveAssignmentTypeContract
+  Test #129: unit.ShaderLifetimeTests.FreeIsIdempotent
+  Test #130: unit.ShaderLifetimeTests.MovedFromShaderRejectsBorrow
+  Test #131: unit.ShaderLifetimeTests.MovedFromShaderBorrowThrows
+  Test #132: unit.ShaderLifetimeTests.MovedFromPassAccessThrows
+  Test #133: unit.ShaderLifetimeTests.MovedFromPassContextGetterThrows
+  Test #134: unit.ShaderLifetimeTests.ShaderReloadWithoutFreeRejected
+  Test #135: unit.ShaderLifetimeTests.PassReloadWithoutFreeRejected
+  Test #136: unit.ShaderLifetimeTests.PassAccessorsOnLiveObject
+  Test #137: unit.ShaderLifetimeTests.NullContextRejected
+  Test #138: unit.ShaderLifetimeTests.PassContextOwnsShadersUniquely
+  Test #139: unit.ShaderLifetimeTests.PassContextRejectsNullShader
+  Test #140: unit.ShaderLifetimeTests.NullPassContextRejected
+  Test #141: unit.ShaderLifetimeTests.PassFreeDetachesOnlyLiveShaders
+  Test #142: unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders
+  Test #143: unit.ShaderLifetimeTests.MoveAssignLoadedShaderReleasesDestination
+  Test #144: unit.ShaderLifetimeTests.MoveAssignLoadedPassReleasesDestinationBeforeShaders
+  Test #145: unit.ShaderLifetimeTests.ShaderMoveAssignmentStateMatrix
+  Test #146: unit.ShaderLifetimeTests.PassMoveAssignmentStateMatrix
+  Test #147: unit.ShaderLifetimeTests.ShaderSelfMoveIsStrictNoOpInEveryState
+  Test #148: unit.ShaderLifetimeTests.PassSelfMoveIsStrictNoOpInEveryState
+  Test #149: unit.ShaderLifetimeTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+  Test #150: unit.ShaderLifetimeTests.ShaderMoveCleanupFailureDoesNotConsumeSource
+  Test #151: unit.ShaderLifetimeTests.PassMoveCleanupFailureAfterDetachDoesNotConsumeSource
+  Test #152: unit.ShaderLifetimeTests.PassMoveCleanupFailureFromMovedShaderPreservesOwners
+  Test #153: unit.ShaderTest.CreateShader
+  Test #154: unit.ShaderTest.CreateShader_codeAlreadyRead
+  Test #155: unit.ShaderTest.Free
+  Test #156: unit.ShaderTest.DeleteMustFree
+  Test #157: unit.UniformOwnershipTests.NullContextIsRejected
+  Test #158: unit.UniformOwnershipTests.PassContextRejectsNullUniform
+  Test #159: unit.UniformTest.SetFloatUniform
+  Test #160: unit.UniformTest.SetDoubleUniform
+  Test #161: unit.UniformTest.SetIntUniform
+  Test #162: unit.UniformTest.SetUIntUniform
+  Test #163: unit.UniformTest.SetVec2Uniform
+  Test #164: unit.UniformTest.SetVec3Uniform
+  Test #165: unit.UniformTest.SetVec4Uniform
+  Test #166: unit.UniformTest.SetMat2Uniform
+  Test #167: unit.UniformTest.SetMat3Uniform
+  Test #168: unit.UniformTest.SetMat4Uniform
+  Test #169: unit.UniformValueTests.GetValueReturnsTheStoredValue
+  Test #170: unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch
+  Test #171: unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized
+  Test #172: unit.UniformValueTests.SetValueReplacesTheStoredType
+  Test #173: unit.UniformValueTests.FailedSetValueKeepsTheStoredValue
+  Test #174: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0
+  Test #175: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1
+  Test #176: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64
+  Test #177: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647
+  Test #178: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5
+  Test #179: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0
+  Test #180: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1
+  Test #181: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64
+  Test #182: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647
+  Test #183: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5
+  Test #184: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+  Test #185: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object <01-00 00-00>
+  Test #186: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+  Test #187: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+  Test #188: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00>
+  Test #189: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+  Test #190: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+  Test #191: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+  Test #192: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+  Test #193: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+  Test #194: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+  Test #195: opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked
+  Test #196: opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram
+  Test #197: opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying
+  Test #198: opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms
+  Test #199: opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity
+  Test #200: opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms
+  Test #201: opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched
+  Test #202: opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess
+  Test #203: opengl.PassTest.PassCreationTest
+  Test #204: opengl.PassTest.UniformManagementTest
+  Test #205: opengl.PassTest.InvalidUniformTest
+  Test #206: opengl.PassTest.ShaderAttachmentTest
+  Test #207: opengl.PassTest.UniformReadingTest
+  Test #208: opengl.PassTest.AttributeReadingTest
+  Test #209: opengl.PassTest.FreeResourcesTest
+  Test #210: opengl.PipelineTest.PipelineCreationTest
+  Test #211: opengl.PipelineTest.UsePassTest
+  Test #212: opengl.PipelineTest.UseNextPassTest
+  Test #213: opengl.PipelineTest.ResetPipelineTest
+  Test #214: opengl.PipelineTest.PassesCountTest
+  Test #215: opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver
+  Test #216: opengl.ShaderLifetimeComponentTests.MoveTransfersHandle
+  Test #217: opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext
+  Test #218: opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver
+  Test #219: opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver
+  Test #220: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination
+  Test #221: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination
+  Test #222: opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+  Test #223: opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound
+  Test #224: opengl.ShaderTest.CreateShaderVert
+  Test #225: opengl.ShaderTest.CreateShaderBadVert
+  Test #226: opengl.ShaderTest.CreateShaderFrag
+  Test #227: opengl.ShaderTest.CreateShaderBadFrag
+  Test #228: opengl.ShaderTest.CreateShaderGeom
+  Test #229: opengl.ShaderTest.CreateShaderBadGeom
+  Test #230: opengl.ShaderTest.CreateShaderTesselaionControl
+  Test #231: opengl.ShaderTest.CreateShaderBadTesselaionControl
+  Test #232: opengl.ShaderTest.CreateShaderCompute
+  Test #233: opengl.ShaderTest.CreateShaderBadCompute
+
+Total Tests: 233
+# exit=0 seconds=0.1

@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="42"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="16"
+	timestamp="2026-10-17T15:56:39"
+	>
+	<testcase name="opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError" classname="opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError" time="0.460596" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeComponentTest
+[ RUN      ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError (374 ms)
+[----------] 1 test from AttributeComponentTest (374 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (374 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError" classname="opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError" time="0.387509" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeComponentTest
+[ RUN      ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError (303 ms)
+[----------] 1 test from AttributeComponentTest (303 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (303 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.AttributeComponentTest.SetNullValueIsRejectedBeforeUpload" classname="opengl.AttributeComponentTest.SetNullValueIsRejectedBeforeUpload" time="0.40372" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeComponentTest.SetNullValueIsRejectedBeforeUpload
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeComponentTest
+[ RUN      ] AttributeComponentTest.SetNullValueIsRejectedBeforeUpload
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(125): error: Expected equality of these values:
+  boundArrayBufferSize()
+    Which is: 4
+  0
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(126): error: Expected equality of these values:
+  attributeStride(0)
+    Which is: 4
+  0
+
+[  FAILED  ] AttributeComponentTest.SetNullValueIsRejectedBeforeUpload (319 ms)
+[----------] 1 test from AttributeComponentTest (319 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (320 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeComponentTest.SetNullValueIsRejectedBeforeUpload
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked" classname="opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked" time="0.374015" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked (291 ms)
+[----------] 1 test from PipelineLifetimeTest (291 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (291 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram" classname="opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram" time="0.38809" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.UseSelectsTheExpectedProgram
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.UseSelectsTheExpectedProgram
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.UseSelectsTheExpectedProgram (301 ms)
+[----------] 1 test from PipelineLifetimeTest (301 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (301 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying" classname="opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying" time="0.388043" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying (307 ms)
+[----------] 1 test from PipelineLifetimeTest (308 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (308 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms" classname="opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms" time="0.397325" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms (302 ms)
+[----------] 1 test from PipelineLifetimeTest (302 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (302 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity" classname="opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity" time="0.408217" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity (311 ms)
+[----------] 1 test from PipelineLifetimeTest (311 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (312 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms" classname="opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms" time="0.41707" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms (320 ms)
+[----------] 1 test from PipelineLifetimeTest (320 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (320 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched" classname="opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched" time="0.390324" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched (301 ms)
+[----------] 1 test from PipelineLifetimeTest (301 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (301 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess" classname="opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess" time="0.389101" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineLifetimeTest.MovedFromPipelineRejectsAccess
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineLifetimeTest
+[ RUN      ] PipelineLifetimeTest.MovedFromPipelineRejectsAccess
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineLifetimeTest.MovedFromPipelineRejectsAccess (303 ms)
+[----------] 1 test from PipelineLifetimeTest (303 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (303 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PassTest.PassCreationTest" classname="opengl.PassTest.PassCreationTest" time="0.387541" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PassTest.PassCreationTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PassTest
+[ RUN      ] PassTest.PassCreationTest
+Current working directory: "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6"
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PassTest.PassCreationTest (294 ms)
+[----------] 1 test from PassTest (294 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (294 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PassTest.UniformManagementTest" classname="opengl.PassTest.UniformManagementTest" time="0.392795" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PassTest.UniformManagementTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PassTest
+[ RUN      ] PassTest.UniformManagementTest
+Current working directory: "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6"
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PassTest.UniformManagementTest (306 ms)
+[----------] 1 test from PassTest (306 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (306 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PassTest.InvalidUniformTest" classname="opengl.PassTest.InvalidUniformTest" time="0.389633" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PassTest.InvalidUniformTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PassTest
+[ RUN      ] PassTest.InvalidUniformTest
+Current working directory: "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6"
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PassTest.InvalidUniformTest (294 ms)
+[----------] 1 test from PassTest (294 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (294 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PassTest.ShaderAttachmentTest" classname="opengl.PassTest.ShaderAttachmentTest" time="0.391502" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PassTest.ShaderAttachmentTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PassTest
+[ RUN      ] PassTest.ShaderAttachmentTest
+Current working directory: "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6"
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PassTest.ShaderAttachmentTest (301 ms)
+[----------] 1 test from PassTest (301 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (301 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PassTest.UniformReadingTest" classname="opengl.PassTest.UniformReadingTest" time="0.39221" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PassTest.UniformReadingTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PassTest
+[ RUN      ] PassTest.UniformReadingTest
+Current working directory: "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6"
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PassTest.UniformReadingTest (303 ms)
+[----------] 1 test from PassTest (303 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (303 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PassTest.AttributeReadingTest" classname="opengl.PassTest.AttributeReadingTest" time="0.372805" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PassTest.AttributeReadingTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PassTest
+[ RUN      ] PassTest.AttributeReadingTest
+Current working directory: "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6"
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PassTest.AttributeReadingTest (293 ms)
+[----------] 1 test from PassTest (293 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (293 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PassTest.FreeResourcesTest" classname="opengl.PassTest.FreeResourcesTest" time="0.391284" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PassTest.FreeResourcesTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PassTest
+[ RUN      ] PassTest.FreeResourcesTest
+Current working directory: "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6"
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PassTest.FreeResourcesTest (297 ms)
+[----------] 1 test from PassTest (297 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (297 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineTest.PipelineCreationTest" classname="opengl.PipelineTest.PipelineCreationTest" time="0.406276" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineTest.PipelineCreationTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineTest
+[ RUN      ] PipelineTest.PipelineCreationTest
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineTest.PipelineCreationTest (316 ms)
+[----------] 1 test from PipelineTest (316 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (316 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineTest.UsePassTest" classname="opengl.PipelineTest.UsePassTest" time="0.38515" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineTest.UsePassTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineTest
+[ RUN      ] PipelineTest.UsePassTest
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineTest.UsePassTest (298 ms)
+[----------] 1 test from PipelineTest (298 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (298 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineTest.UseNextPassTest" classname="opengl.PipelineTest.UseNextPassTest" time="0.408319" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineTest.UseNextPassTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineTest
+[ RUN      ] PipelineTest.UseNextPassTest
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineTest.UseNextPassTest (315 ms)
+[----------] 1 test from PipelineTest (315 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (315 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineTest.ResetPipelineTest" classname="opengl.PipelineTest.ResetPipelineTest" time="0.386777" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineTest.ResetPipelineTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineTest
+[ RUN      ] PipelineTest.ResetPipelineTest
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineTest.ResetPipelineTest (303 ms)
+[----------] 1 test from PipelineTest (303 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (303 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.PipelineTest.PassesCountTest" classname="opengl.PipelineTest.PassesCountTest" time="0.391798" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = PipelineTest.PassesCountTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PipelineTest
+[ RUN      ] PipelineTest.PassesCountTest
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] PipelineTest.PassesCountTest (296 ms)
+[----------] 1 test from PipelineTest (296 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (297 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver" classname="opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver" time="0.387709" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver (301 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (301 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (301 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.MoveTransfersHandle" classname="opengl.ShaderLifetimeComponentTests.MoveTransfersHandle" time="0.386844" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.MoveTransfersHandle
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.MoveTransfersHandle
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.MoveTransfersHandle (294 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (294 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (294 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext" classname="opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext" time="0.437886" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+Shader compilation error: 0(6) : error C1503: undefined variable "aPo"
+
+[       OK ] ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext (346 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (346 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (346 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver" classname="opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver" time="0.389115" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver (299 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (299 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (299 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver" classname="opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver" time="0.375698" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.PassLifecycleOnRealDriver
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.PassLifecycleOnRealDriver
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.PassLifecycleOnRealDriver (295 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (295 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (295 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination" classname="opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination" time="0.390946" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination (299 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (299 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (299 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination" classname="opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination" time="0.422298" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination (329 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (329 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (329 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders" classname="opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders" time="0.405912" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders (310 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (310 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (310 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound" classname="opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound" time="0.391458" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeComponentTests
+[ RUN      ] ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound (305 ms)
+[----------] 1 test from ShaderLifetimeComponentTests (305 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (305 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderVert" classname="opengl.ShaderTest.CreateShaderVert" time="0.390463" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderVert
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderVert
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderTest.CreateShaderVert (309 ms)
+[----------] 1 test from ShaderTest (309 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (309 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderBadVert" classname="opengl.ShaderTest.CreateShaderBadVert" time="0.423866" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderBadVert
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderBadVert
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+Shader compilation error: 0(6) : error C1503: undefined variable "aPo"
+
+[       OK ] ShaderTest.CreateShaderBadVert (331 ms)
+[----------] 1 test from ShaderTest (331 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (331 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderFrag" classname="opengl.ShaderTest.CreateShaderFrag" time="0.39339" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderFrag
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderFrag
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderTest.CreateShaderFrag (296 ms)
+[----------] 1 test from ShaderTest (296 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (296 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderBadFrag" classname="opengl.ShaderTest.CreateShaderBadFrag" time="0.420974" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderBadFrag
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderBadFrag
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+Shader compilation error: 0(7) : error C0000: syntax error, unexpected '}', expecting ',' or ')' at token "}"
+
+[       OK ] ShaderTest.CreateShaderBadFrag (326 ms)
+[----------] 1 test from ShaderTest (326 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (326 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderGeom" classname="opengl.ShaderTest.CreateShaderGeom" time="0.377797" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderGeom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderGeom
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderTest.CreateShaderGeom (291 ms)
+[----------] 1 test from ShaderTest (292 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (292 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderBadGeom" classname="opengl.ShaderTest.CreateShaderBadGeom" time="0.406371" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderBadGeom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderBadGeom
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+Shader compilation error: 0(7) : error C0000: syntax error, unexpected '.', expecting "::" at token "."
+0(7) : error C0000: syntax error, unexpected ')', expecting ';' at token ")"
+0(10) : error C0000: syntax error, unexpected '}', expecting ')' at token "}"
+
+[       OK ] ShaderTest.CreateShaderBadGeom (314 ms)
+[----------] 1 test from ShaderTest (314 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (314 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderTesselaionControl" classname="opengl.ShaderTest.CreateShaderTesselaionControl" time="0.390831" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderTesselaionControl
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderTesselaionControl
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderTest.CreateShaderTesselaionControl (307 ms)
+[----------] 1 test from ShaderTest (307 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (307 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderBadTesselaionControl" classname="opengl.ShaderTest.CreateShaderBadTesselaionControl" time="0.39329" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderBadTesselaionControl
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderBadTesselaionControl
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+Shader compilation error: 0(6) : error C1503: undefined variable "gl_InvocatioID"
+
+[       OK ] ShaderTest.CreateShaderBadTesselaionControl (311 ms)
+[----------] 1 test from ShaderTest (311 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (311 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderCompute" classname="opengl.ShaderTest.CreateShaderCompute" time="0.403362" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderCompute
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderCompute
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] ShaderTest.CreateShaderCompute (308 ms)
+[----------] 1 test from ShaderTest (308 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (309 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.ShaderTest.CreateShaderBadCompute" classname="opengl.ShaderTest.CreateShaderBadCompute" time="0.407466" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = ShaderTest.CreateShaderBadCompute
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderTest
+[ RUN      ] ShaderTest.CreateShaderBadCompute
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+Shader compilation error: 0(2) : error C0000: syntax error, unexpected '(', expecting "::" at token "("
+
+[       OK ] ShaderTest.CreateShaderBadCompute (315 ms)
+[----------] 1 test from ShaderTest (315 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (315 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

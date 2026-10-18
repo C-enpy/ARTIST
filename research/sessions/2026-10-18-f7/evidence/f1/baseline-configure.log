@@ -1,0 +1,35 @@
+-- Using Conan toolchain: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- The C compiler identification is MSVC 19.44.35221.0
+-- The CXX compiler identification is MSVC 19.44.35221.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test ARTIST_CXX23_NATIVE
+-- Performing Test ARTIST_CXX23_NATIVE - Success
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Found Python3: C:/Python313/python.exe (found version "3.13.1") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE
+-- Configuring done (14.8s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build

@@ -1,0 +1,27 @@
+﻿{
+    "phase":  "G1",
+    "utc":  "2026-10-18T09:37:42.4467065Z",
+    "root":  "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author",
+    "head":  "113411d71cfef56737fb8992f34b70e4675d2118",
+    "branch":  "ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author",
+    "delta":  [
+
+              ],
+    "files":  [
+                  {
+                      "path":  "AGENTS.md",
+                      "sha256":  "CD5E23F76BAFFA1D285D41AE9AECAABE823FF61B9A848A7DC35E90FCD2E57C03"
+                  },
+                  {
+                      "path":  ".opencode/evidence/mission-f7/qa-plan-f1.md",
+                      "sha256":  "1D36D6BDD09F24F1E03A9163B37A29BDD48122022C6E84805672749CF4ADBD03"
+                  },
+                  {
+                      "path":  "ARTIST/include/graphic/context/AttributeContext.hpp",
+                      "sha256":  "4F650FE46FDC364A89BCD4FA70F6F9622F42F2292BFBA01F21DC3995684EE24F"
+                  }
+              ],
+    "build":  "C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build",
+    "leases":  "build/cache/tooling exclusive granted by lead; no GL",
+    "baselineExpectedUnit":  249
+}

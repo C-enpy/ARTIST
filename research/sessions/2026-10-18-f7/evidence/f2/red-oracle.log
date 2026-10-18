@@ -1,0 +1,233 @@
+COMMAND: ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/mission-f7/f2-build -j 1 -L unit --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\out\mission-f7\f2/red-oracle.xml --test-output-size-passed 65536 --test-output-size-failed 65536 -R unit.UniformTest.
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f2-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/f2-build
+      Start 196: unit.UniformTest.SetFloatUniform
+ 1/10 Test #196: unit.UniformTest.SetFloatUniform ....   Passed    0.02 sec
+      Start 197: unit.UniformTest.SetDoubleUniform
+ 2/10 Test #197: unit.UniformTest.SetDoubleUniform ...   Passed    0.02 sec
+      Start 198: unit.UniformTest.SetIntUniform
+ 3/10 Test #198: unit.UniformTest.SetIntUniform ......   Passed    0.02 sec
+      Start 199: unit.UniformTest.SetUIntUniform
+ 4/10 Test #199: unit.UniformTest.SetUIntUniform .....   Passed    0.02 sec
+      Start 200: unit.UniformTest.SetVec2Uniform
+ 5/10 Test #200: unit.UniformTest.SetVec2Uniform .....***Failed    0.02 sec
+Note: Google Test filter = UniformTest.SetVec2Uniform
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformTest
+[ RUN      ] UniformTest.SetVec2Uniform
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glUniform2fv_mock(42, 0, 000002790F5C1BE8)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(116): EXPECT_CALL(*mock::glFunctionMock::instance(), glUniform2fv_mock(location, 1, ::testing::_))...
+  Expected arg #1: is equal to 1
+           Actual: 0
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(116): error: Actual function call count doesn't match EXPECT_CALL(*mock::glFunctionMock::instance(), glUniform2fv_mock(location, 1, ::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] UniformTest.SetVec2Uniform (0 ms)
+[----------] 1 test from UniformTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformTest.SetVec2Uniform
+
+ 1 FAILED TEST
+
+      Start 201: unit.UniformTest.SetVec3Uniform
+ 6/10 Test #201: unit.UniformTest.SetVec3Uniform .....***Failed    0.03 sec
+Note: Google Test filter = UniformTest.SetVec3Uniform
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformTest
+[ RUN      ] UniformTest.SetVec3Uniform
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glUniform3fv_mock(42, 0, 000001E21A967C38)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(135): EXPECT_CALL(*mock::glFunctionMock::instance(), glUniform3fv_mock(location, 1, ::testing::_))...
+  Expected arg #1: is equal to 1
+           Actual: 0
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(135): error: Actual function call count doesn't match EXPECT_CALL(*mock::glFunctionMock::instance(), glUniform3fv_mock(location, 1, ::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] UniformTest.SetVec3Uniform (0 ms)
+[----------] 1 test from UniformTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformTest.SetVec3Uniform
+
+ 1 FAILED TEST
+
+      Start 202: unit.UniformTest.SetVec4Uniform
+ 7/10 Test #202: unit.UniformTest.SetVec4Uniform .....***Failed    0.02 sec
+Note: Google Test filter = UniformTest.SetVec4Uniform
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformTest
+[ RUN      ] UniformTest.SetVec4Uniform
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glUniform4fv_mock(42, 0, 000001C07F3FFE38)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(154): EXPECT_CALL(*mock::glFunctionMock::instance(), glUniform4fv_mock(location, 1, ::testing::_))...
+  Expected arg #1: is equal to 1
+           Actual: 0
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(154): error: Actual function call count doesn't match EXPECT_CALL(*mock::glFunctionMock::instance(), glUniform4fv_mock(location, 1, ::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] UniformTest.SetVec4Uniform (1 ms)
+[----------] 1 test from UniformTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformTest.SetVec4Uniform
+
+ 1 FAILED TEST
+
+      Start 203: unit.UniformTest.SetMat2Uniform
+ 8/10 Test #203: unit.UniformTest.SetMat2Uniform .....***Failed    0.02 sec
+Note: Google Test filter = UniformTest.SetMat2Uniform
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformTest
+[ RUN      ] UniformTest.SetMat2Uniform
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glUniformMatrix2fv_mock(42, 0, '\0', 000001907C8D1AB8)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(173): EXPECT_CALL(*mock::glFunctionMock::instance(), glUniformMatrix2fv_mock(location, 1, 0, ::testing::_))...
+  Expected arg #1: is equal to 1
+           Actual: 0
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(173): error: Actual function call count doesn't match EXPECT_CALL(*mock::glFunctionMock::instance(), glUniformMatrix2fv_mock(location, 1, 0, ::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] UniformTest.SetMat2Uniform (0 ms)
+[----------] 1 test from UniformTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformTest.SetMat2Uniform
+
+ 1 FAILED TEST
+
+      Start 204: unit.UniformTest.SetMat3Uniform
+ 9/10 Test #204: unit.UniformTest.SetMat3Uniform .....***Failed    0.02 sec
+Note: Google Test filter = UniformTest.SetMat3Uniform
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformTest
+[ RUN      ] UniformTest.SetMat3Uniform
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glUniformMatrix3fv_mock(42, 0, '\0', 00000272DE3C1C48)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(193): EXPECT_CALL(*mock::glFunctionMock::instance(), glUniformMatrix3fv_mock(location, 1, 0, ::testing::_))...
+  Expected arg #1: is equal to 1
+           Actual: 0
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(193): error: Actual function call count doesn't match EXPECT_CALL(*mock::glFunctionMock::instance(), glUniformMatrix3fv_mock(location, 1, 0, ::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] UniformTest.SetMat3Uniform (0 ms)
+[----------] 1 test from UniformTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformTest.SetMat3Uniform
+
+ 1 FAILED TEST
+
+      Start 205: unit.UniformTest.SetMat4Uniform
+10/10 Test #205: unit.UniformTest.SetMat4Uniform .....***Failed    0.02 sec
+Note: Google Test filter = UniformTest.SetMat4Uniform
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformTest
+[ RUN      ] UniformTest.SetMat4Uniform
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glUniformMatrix4fv_mock(42, 0, '\0', 000001D0796C0310)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(213): EXPECT_CALL(*mock::glFunctionMock::instance(), glUniformMatrix4fv_mock(location, 1, 0, ::testing::_))...
+  Expected arg #1: is equal to 1
+           Actual: 0
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp(213): error: Actual function call count doesn't match EXPECT_CALL(*mock::glFunctionMock::instance(), glUniformMatrix4fv_mock(location, 1, 0, ::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] UniformTest.SetMat4Uniform (0 ms)
+[----------] 1 test from UniformTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformTest.SetMat4Uniform
+
+ 1 FAILED TEST
+
+
+40% tests passed, 6 tests failed out of 10
+
+Label Time Summary:
+unit    =   0.17 sec*proc (10 tests)
+
+Total Test time (real) =   0.20 sec
+
+The following tests FAILED:
+	200 - unit.UniformTest.SetVec2Uniform (Failed)          unit
+	201 - unit.UniformTest.SetVec3Uniform (Failed)          unit
+	202 - unit.UniformTest.SetVec4Uniform (Failed)          unit
+	203 - unit.UniformTest.SetMat2Uniform (Failed)          unit
+	204 - unit.UniformTest.SetMat3Uniform (Failed)          unit
+	205 - unit.UniformTest.SetMat4Uniform (Failed)          unit
+Errors while running CTest
+ctest exit=8
+Au caract�re C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c
+7#eiyn0g-f2-opengl-author\out\mission-f7\f2\run.ps1:20 : 29
++     if($LASTEXITCODE -ne 0){throw "$Program exit=$LASTEXITCODE"}
++                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (ctest exit=8:String) [], RuntimeException
+    + FullyQualifiedErrorId : ctest exit=8
+ 

@@ -1,0 +1,60 @@
+﻿{
+    "phase":  "G2-post-GREEN",
+    "utc":  "2026-10-18T09:45:49.6846588Z",
+    "root":  "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author",
+    "head":  "113411d71cfef56737fb8992f34b70e4675d2118",
+    "branch":  "ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author",
+    "delta":  [
+                  " M ARTIST/include/graphic/context/AttributeContext.hpp",
+                  "?? ARTIST/tests/src/graphic/context/AttributeContextTests.cpp"
+              ],
+    "files":  [
+                  {
+                      "path":  "ARTIST/include/graphic/context/AttributeContext.hpp",
+                      "sha256":  "2A041B620BAF3F5ACF0AA85B28F3E7A8B7894B5554410F2A87C736A6931D7C86"
+                  },
+                  {
+                      "path":  "ARTIST/tests/src/graphic/context/AttributeContextTests.cpp",
+                      "sha256":  "FDA116F444D08BFFA9EEF486F7464B6AEA7C1FA835900E9C99C324DE4DE62135"
+                  },
+                  {
+                      "path":  "CMakeLists.txt",
+                      "sha256":  "59C42AA1DBC411F7F03ADAF18562D82C52BC4A3A4C874A37286DA19A97A10899"
+                  },
+                  {
+                      "path":  "ARTIST/tests/CMakeLists.txt",
+                      "sha256":  "213B0662D6C6DD15190C1F20A0F5C9B378697A34B2871F6B063B3C50BCDED574"
+                  },
+                  {
+                      "path":  "conanfile.txt",
+                      "sha256":  "1CBF0536BEE3F7E18381170308499D307D36346C041D262E8C8ABA087D25FADF"
+                  },
+                  {
+                      "path":  "conan/profiles/windows-msvc",
+                      "sha256":  "BBA034E6B0E81D8CFD5015955BDACE72C306B3B800FBD0043FD35BB557486839"
+                  },
+                  {
+                      "path":  "out/mission-f7/f1/red-junit.xml",
+                      "sha256":  "5EA1CF540628ED305C920A3E9FCB170D648E74FBC6B36AB3B84F275E2D686D42"
+                  },
+                  {
+                      "path":  "out/mission-f7/f1/green-targeted-junit.xml",
+                      "sha256":  "9165A8DC62484E4324335A42041E11C5B50A0F6FF0F9DE352912758BEA49C609"
+                  },
+                  {
+                      "path":  "out/mission-f7/f1/green-unit-junit.xml",
+                      "sha256":  "13C7B276E3C26DC6F370247E2BEE0DCAF74026016A299E6961630915BB816935"
+                  },
+                  {
+                      "path":  "out/mission-f7/f1/validation-summary.json",
+                      "sha256":  "502CC325E5FF24F534311A8BC0DB242EECFDFBFEE4CEB0D185CD50D052B47C57"
+                  }
+              ],
+    "binary":  {
+                   "path":  "C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build/ARTIST/tests/ArtistLib_tests.exe",
+                   "sha256":  "5F5F09F212DC0D5831E263B46C8DAA74CEAA2909484D61F620E4CC635B387872"
+               },
+    "validation":  "RED2/2fail -\u003e GREEN2/2pass and unit251/251pass; zero disabled/skips; names match discovery; tests identical RED/GREEN",
+    "leases":  "No commands remain; build/cache/tooling returned on final delivery",
+    "docker":  "No Docker resource created"
+}

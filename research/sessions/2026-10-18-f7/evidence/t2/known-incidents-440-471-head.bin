@@ -1,0 +1,32 @@
+### Oracle GMock Attribute — FAIL historique, corrigé et vérifié le 2026-10-17
+
+- Constat conservé : `AttributeTests.cpp:65` (`AttributeTest.SetTest`), diagnostic
+  `mockOn` attendu une fois / observé zéro **après summary** ; exit 0 du
+  processus et CTest passant malgré tout. Reproduit **directement** (toutes
+  suites) **et** sous CTest normal/ASan ; la revue l'a trouvé dans
+  `out/mission-a1a2/i0-verification/asan-last-test.log:2494-2501` avec filtre
+  individuel et « Test Passed ». Les sorties JUnit des campagnes tronquées à
+  1024 octets cachaient l'erreur ; un témoin à 65536 conserve le diagnostic dans
+  `normal-attribute-settest.xml` ; croisement `LastTest.log`.
+- Arbitrage historique : défaut d'oracle **préexistant hors périmètre A2**, pas
+  une régression A2 ; corrigé ensuite par amendement explicite, sans effacer le
+  FAIL initial. L'absence dans les JUnit tronqués ne prouve pas l'absence dans
+  les logs bruts.
+- **Interdits** : qualifier le défaut « direct-only », qualifier 215/198 comme
+  « tous les oracles valides » ou annoncer un PASS global ; ne pas transformer
+  un exit 0 en PASS sans réserve.
+- **Amendement oracle terminé au périmètre** : l'utilisateur a autorisé la
+  correction le 2026-10-17 (« Alors vas-y »). Checkpoint oracle-only
+  `d1a9ee1` : ancien test réellement RED (binaire1, CTest8, JUnit failure1 avant
+  résumé), binaire négatif préservé et recoupé. GREEN intégré `b9c90fd`, un seul
+  fichier test : TearDown vérifie/efface les quatre singletons sans court-circuit,
+  attente sur la spécialisation effective `MockSetter<shared_ptr<int>>`, Times(1)
+  conservé, contexte et valeur resserrés. Production et mocks inchangés.
+  Revue G2 **PASS sans finding** ; QA G3 indépendante **176 CPU + 176 CPU ASan**,
+  contrôles négatifs répétés1/8/failure1 et positifs0/0/failure0 sans diagnostic
+  tardif, 137 artefacts et 130 empreintes recoupés. TearDown après assertion
+  fatale vérifié statiquement dans GoogleTest v1.14.0, pas de scénario dédié
+  exécuté. Le FAIL historique n'est pas requalifié. Manifeste :
+  `_meta/session-2026-10-17-attribute-oracle-validation.json` ; contrat :
+  `_meta/session-2026-10-17-attribute-oracle-plan.json` ; fiche courte :
+  [[architecture/next-mission|next-mission]].

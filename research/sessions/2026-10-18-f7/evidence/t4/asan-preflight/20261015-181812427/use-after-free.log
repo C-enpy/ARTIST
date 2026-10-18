@@ -1,0 +1,68 @@
+=================================================================
+==46268==ERROR: AddressSanitizer: heap-use-after-free on address 0x115039aa0030 at pc 0x7ff7fc8c219d bp 0x0026c92ff650 sp 0x0026c92ff658
+READ of size 4 at 0x115039aa0030 thread T0
+    #0 0x7ff7fc8c219c in main C:\Users\djden\source\repos\ARTIST\cmake\probes\AddressSanitizer.cpp:47
+    #1 0x7ff7fc9875d8 in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff7fc987521 in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+    #3 0x7ff7fc9873dd in __scrt_common_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:330
+    #4 0x7ff7fc98764d in mainCRTStartup D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp:16
+    #5 0x7ff8058fdda6  (C:\WINDOWS\System32\KERNEL32.DLL+0x18002dda6)
+    #6 0x7ff80703ee4b  (C:\WINDOWS\SYSTEM32\ntdll.dll+0x18007ee4b)
+
+0x115039aa0030 is located 0 bytes inside of 4-byte region [0x115039aa0030,0x115039aa0034)
+freed by thread T0 here:
+    #0 0x7ff7fc986693 in operator delete(void *, unsigned __int64) D:\a\_work\1\s\src\vctools\asan\llvm\compiler-rt\lib\asan\asan_win_delete_scalar_size_thunk.cpp:41
+    #1 0x7ff7fc91ae06 in std::default_delete<int>::operator()(int *) const C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory:3309
+    #2 0x7ff7fc9317fd in std::unique_ptr<int, struct std::default_delete<int>>::reset(int *) C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory:3471
+    #3 0x7ff7fc8c2130 in main C:\Users\djden\source\repos\ARTIST\cmake\probes\AddressSanitizer.cpp:45
+    #4 0x7ff7fc9875d8 in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #5 0x7ff7fc987521 in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+    #6 0x7ff7fc9873dd in __scrt_common_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:330
+    #7 0x7ff7fc98764d in mainCRTStartup D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp:16
+    #8 0x7ff8058fdda6  (C:\WINDOWS\System32\KERNEL32.DLL+0x18002dda6)
+    #9 0x7ff80703ee4b  (C:\WINDOWS\SYSTEM32\ntdll.dll+0x18007ee4b)
+
+previously allocated by thread T0 here:
+    #0 0x7ff7fc986575 in operator new(unsigned __int64) D:\a\_work\1\s\src\vctools\asan\llvm\compiler-rt\lib\asan\asan_win_new_scalar_thunk.cpp:40
+    #1 0x7ff7fc903bab in std::make_unique<int, int, 0>(int &&) C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory:3630
+    #2 0x7ff7fc8c20f3 in main C:\Users\djden\source\repos\ARTIST\cmake\probes\AddressSanitizer.cpp:43
+    #3 0x7ff7fc9875d8 in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #4 0x7ff7fc987521 in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+    #5 0x7ff7fc9873dd in __scrt_common_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:330
+    #6 0x7ff7fc98764d in mainCRTStartup D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp:16
+    #7 0x7ff8058fdda6  (C:\WINDOWS\System32\KERNEL32.DLL+0x18002dda6)
+    #8 0x7ff80703ee4b  (C:\WINDOWS\SYSTEM32\ntdll.dll+0x18007ee4b)
+
+SUMMARY: AddressSanitizer: heap-use-after-free C:\Users\djden\source\repos\ARTIST\cmake\probes\AddressSanitizer.cpp:47 in main
+Shadow bytes around the buggy address:
+  0x115039a9fd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x115039a9fe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x115039a9fe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x115039a9ff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x115039a9ff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x115039aa0000: fa fa fd fd fa fa[fd]fa fa fa fd fd fa fa fd fd
+  0x115039aa0080: fa fa 00 00 fa fa fa fa fa fa fa fa fa fa fa fa
+  0x115039aa0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x115039aa0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x115039aa0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x115039aa0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==46268==ABORTING

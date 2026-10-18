@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="17"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T19:08:18"
+	>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_ValidContext" classname="unit.UniformReaderTests.ReadUniforms_ValidContext" time="0.0200142" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_ValidContext
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_ValidContext
+[       OK ] UniformReaderTests.ReadUniforms_ValidContext (0 ms)
+[----------] 1 test from UniformReaderTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated" classname="unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated" time="0.0178565" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+[       OK ] UniformReaderTests.ReadUniforms_LongNameIsNotTruncated (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct" classname="unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct" time="0.015724" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+[       OK ] UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected" classname="unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected" time="0.0155467" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+[       OK ] UniformReaderTests.ReadUniforms_MissingLocationIsRejected (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement" classname="unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement" time="0.0163365" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+[       OK ] UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration" classname="unit.UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration" time="0.0172543" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration
+[       OK ] UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration (1 ms)
+[----------] 1 test from UniformReaderTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored" classname="unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored" time="0.0166476" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored
+[       OK ] UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL" classname="unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL" time="0.0160852" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL
+[       OK ] UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing" classname="unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing" time="0.0245087" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderTests
+[ RUN      ] UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing
+
+GMOCK WARNING:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(38): Too many actions specified in EXPECT_CALL(gl, glGetProgramiv_mock(1, 0x8B87, ::testing::_))...
+Expected to be never called, but has 0 WillOnce()s and a WillRepeatedly().
+GMOCK WARNING:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(65): Too many actions specified in EXPECT_CALL(gl, glGetUniformLocation_mock(1, ::testing::_))...
+Expected to be never called, but has 0 WillOnce()s and a WillRepeatedly().[       OK ] UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing (0 ms)
+[----------] 1 test from UniformReaderTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader" classname="unit.UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader" time="0.0151066" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderFlowContractTests
+[ RUN      ] UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader
+[       OK ] UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader (0 ms)
+[----------] 1 test from UniformReaderFlowContractTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0" classname="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0" time="0.0157576" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests
+[ RUN      ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0
+
+GMOCK WARNING:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(65): Too many actions specified in EXPECT_CALL(gl, glGetUniformLocation_mock(1, ::testing::_))...
+Expected to be never called, but has 0 WillOnce()s and a WillRepeatedly().[       OK ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0 (0 ms)
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1" classname="unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1" time="0.0155066" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/1
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests
+[ RUN      ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/1
+
+GMOCK WARNING:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(65): Too many actions specified in EXPECT_CALL(gl, glGetUniformLocation_mock(1, ::testing::_))...
+Expected to be never called, but has 0 WillOnce()s and a WillRepeatedly().[       OK ] MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/1 (0 ms)
+[----------] 1 test from MalformedSizes/UniformReaderInvalidSizeTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0" time="0.0210144" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0
+[       OK ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0 (0 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1" time="0.0183833" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1
+[       OK ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1 (1 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2" time="0.0177795" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2
+[       OK ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2 (0 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3" time="0.0207949" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3
+[       OK ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3 (0 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4" time="0.0257204" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4
+[       OK ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4 (1 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,190 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5
+# HEAD=4f64a2b87f5aa8c3590ded4596aca906b5d320dc
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\cmake.EXE" --build out/b --parallel 1
+[1/3] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\pipeline\UniformOwnershipTests.cpp.obj
+FAILED: [code=2] ARTIST/tests/CMakeFiles/ArtistLib_tests.dir/src/graphic/pipeline/UniformOwnershipTests.cpp.obj 
+C:\PROGRA~1\MICROS~1\18\COMMUN~1\VC\Tools\MSVC\1444~1.352\bin\Hostx64\x64\cl.exe  /nologo /TP -DGLEW_STATIC -D__mock_gl__ -I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\..\tests-common\include" -I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\include" -I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock" -I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include" -external:I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\out\b\_deps\googletest-src\googlemock\include" -external:I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\out\b\_deps\googletest-src\googlemock" -external:I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\out\b\_deps\googletest-src\googletest\include" -external:I"C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\out\b\_deps\googletest-src\googletest" -external:IC:\Users\djden\source\repos\ARTIST\out\conan2\p\glmdf97922a12435\p\include -external:IC:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glfw5cb417c5ba313\p\include -external:IC:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include -external:IC:\Users\djden\source\repos\ARTIST\out\conan2\p\magiceb5d784f7e41c\p\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi /showIncludes /FoARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\pipeline\UniformOwnershipTests.cpp.obj /FdARTIST\tests\CMakeFiles\ArtistLib_tests.dir\ /FS -c C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\src\graphic\pipeline\UniformOwnershipTests.cpp
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(39): warning C4005: 'glUniform1f'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1959): note: voir la d‚finition pr‚c‚dente de ®ÿglUniform1fÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(40): warning C4005: 'glUniform1d'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(5141): note: voir la d‚finition pr‚c‚dente de ®ÿglUniform1dÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(41): warning C4005: 'glUniform1i'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1961): note: voir la d‚finition pr‚c‚dente de ®ÿglUniform1iÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(42): warning C4005: 'glUniform1ui'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2262): note: voir la d‚finition pr‚c‚dente de ®ÿglUniform1uiÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(43): warning C4005: 'glUniform2fv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1964): note: voir la d‚finition pr‚c‚dente de ®ÿglUniform2fvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(44): warning C4005: 'glUniform3fv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1968): note: voir la d‚finition pr‚c‚dente de ®ÿglUniform3fvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(45): warning C4005: 'glUniform4fv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1972): note: voir la d‚finition pr‚c‚dente de ®ÿglUniform4fvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(46): warning C4005: 'glUniformMatrix2fv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1975): note: voir la d‚finition pr‚c‚dente de ®ÿglUniformMatrix2fvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(47): warning C4005: 'glUniformMatrix3fv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1976): note: voir la d‚finition pr‚c‚dente de ®ÿglUniformMatrix3fvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(48): warning C4005: 'glUniformMatrix4fv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1977): note: voir la d‚finition pr‚c‚dente de ®ÿglUniformMatrix4fvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(49): warning C4005: 'glUseProgram'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1978): note: voir la d‚finition pr‚c‚dente de ®ÿglUseProgramÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(50): warning C4005: 'glValidateProgram'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1979): note: voir la d‚finition pr‚c‚dente de ®ÿglValidateProgramÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(51): warning C4005: 'glAttachShader'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1924): note: voir la d‚finition pr‚c‚dente de ®ÿglAttachShaderÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(52): warning C4005: 'glBindAttribLocation'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1925): note: voir la d‚finition pr‚c‚dente de ®ÿglBindAttribLocationÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(53): warning C4005: 'glBlendEquationSeparate'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1926): note: voir la d‚finition pr‚c‚dente de ®ÿglBlendEquationSeparateÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(54): warning C4005: 'glCompileShader'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1927): note: voir la d‚finition pr‚c‚dente de ®ÿglCompileShaderÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(55): warning C4005: 'glCreateProgram'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1928): note: voir la d‚finition pr‚c‚dente de ®ÿglCreateProgramÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(56): warning C4005: 'glCreateShader'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1929): note: voir la d‚finition pr‚c‚dente de ®ÿglCreateShaderÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(57): warning C4005: 'glDeleteProgram'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1930): note: voir la d‚finition pr‚c‚dente de ®ÿglDeleteProgramÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(58): warning C4005: 'glDeleteShader'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1931): note: voir la d‚finition pr‚c‚dente de ®ÿglDeleteShaderÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(59): warning C4005: 'glDetachShader'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1932): note: voir la d‚finition pr‚c‚dente de ®ÿglDetachShaderÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(60): warning C4005: 'glDisableVertexAttribArray'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1933): note: voir la d‚finition pr‚c‚dente de ®ÿglDisableVertexAttribArrayÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(61): warning C4005: 'glDrawBuffers'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1934): note: voir la d‚finition pr‚c‚dente de ®ÿglDrawBuffersÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(62): warning C4005: 'glEnableVertexAttribArray'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1935): note: voir la d‚finition pr‚c‚dente de ®ÿglEnableVertexAttribArrayÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(63): warning C4005: 'glGetActiveAttrib'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1936): note: voir la d‚finition pr‚c‚dente de ®ÿglGetActiveAttribÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(64): warning C4005: 'glGetActiveUniform'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1937): note: voir la d‚finition pr‚c‚dente de ®ÿglGetActiveUniformÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(65): warning C4005: 'glGetAttachedShaders'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1938): note: voir la d‚finition pr‚c‚dente de ®ÿglGetAttachedShadersÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(66): warning C4005: 'glGetAttribLocation'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1939): note: voir la d‚finition pr‚c‚dente de ®ÿglGetAttribLocationÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(67): warning C4005: 'glGetProgramInfoLog'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1940): note: voir la d‚finition pr‚c‚dente de ®ÿglGetProgramInfoLogÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(68): warning C4005: 'glGetProgramiv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1941): note: voir la d‚finition pr‚c‚dente de ®ÿglGetProgramivÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(69): warning C4005: 'glGetShaderInfoLog'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1942): note: voir la d‚finition pr‚c‚dente de ®ÿglGetShaderInfoLogÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(70): warning C4005: 'glGetShaderSource'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1943): note: voir la d‚finition pr‚c‚dente de ®ÿglGetShaderSourceÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(71): warning C4005: 'glGetShaderiv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1944): note: voir la d‚finition pr‚c‚dente de ®ÿglGetShaderivÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(72): warning C4005: 'glGetUniformLocation'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1945): note: voir la d‚finition pr‚c‚dente de ®ÿglGetUniformLocationÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(73): warning C4005: 'glGetUniformfv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1946): note: voir la d‚finition pr‚c‚dente de ®ÿglGetUniformfvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(74): warning C4005: 'glGetUniformiv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1947): note: voir la d‚finition pr‚c‚dente de ®ÿglGetUniformivÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(75): warning C4005: 'glGetVertexAttribPointerv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1948): note: voir la d‚finition pr‚c‚dente de ®ÿglGetVertexAttribPointervÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(76): warning C4005: 'glGetVertexAttribdv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1949): note: voir la d‚finition pr‚c‚dente de ®ÿglGetVertexAttribdvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(77): warning C4005: 'glGetVertexAttribfv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1950): note: voir la d‚finition pr‚c‚dente de ®ÿglGetVertexAttribfvÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(78): warning C4005: 'glGetVertexAttribiv'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1951): note: voir la d‚finition pr‚c‚dente de ®ÿglGetVertexAttribivÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(79): warning C4005: 'glGenBuffers'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1723): note: voir la d‚finition pr‚c‚dente de ®ÿglGenBuffersÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(80): warning C4005: 'glBindBuffer'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1717): note: voir la d‚finition pr‚c‚dente de ®ÿglBindBufferÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(81): warning C4005: 'glBufferData'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1718): note: voir la d‚finition pr‚c‚dente de ®ÿglBufferDataÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(82): warning C4005: 'glVertexAttribPointer'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2016): note: voir la d‚finition pr‚c‚dente de ®ÿglVertexAttribPointerÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(83): warning C4005: 'glIsProgram'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1952): note: voir la d‚finition pr‚c‚dente de ®ÿglIsProgramÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(84): warning C4005: 'glIsShader'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1953): note: voir la d‚finition pr‚c‚dente de ®ÿglIsShaderÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(85): warning C4005: 'glLinkProgram'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1954): note: voir la d‚finition pr‚c‚dente de ®ÿglLinkProgramÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(86): warning C4005: 'glShaderSource'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1955): note: voir la d‚finition pr‚c‚dente de ®ÿglShaderSourceÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(87): warning C4005: 'glStencilFuncSeparate'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1956): note: voir la d‚finition pr‚c‚dente de ®ÿglStencilFuncSeparateÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(88): warning C4005: 'glStencilMaskSeparate'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1957): note: voir la d‚finition pr‚c‚dente de ®ÿglStencilMaskSeparateÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\opengl/glFunctionMock.hpp(89): warning C4005: 'glStencilOpSeparate'ÿ: red‚finition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1958): note: voir la d‚finition pr‚c‚dente de ®ÿglStencilOpSeparateÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/context/UniformContext.hpp(24): warning C4834: abandon de la valeur de retour de la fonction avec l'attribut [[nodiscard]]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/context/UniformContext.hpp(24): note: le contexte d'instanciation du modŠle (le plus ancien) est
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/opengl/pipeline/component/uniform/Setter.hpp(30): note: voir la r‚f‚rence … l'instanciation de la fonction modŠle 'const T &artist::graphic::context::UniformContext<artist::graphic::api::OpenGL>::getValue<GLfloat>(void) const' en cours de compilation
+        with
+        [
+            T=GLfloat
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/opengl/pipeline/component/uniform/Setter.hpp(30): note: voir la premiŠre r‚f‚rence … ®ÿartist::graphic::context::UniformContext<artist::graphic::api::OpenGL>::getValueÿ¯ dans ®ÿartist::graphic::opengl::pipeline::component::uniform::OpenGLUniformSetter<GLfloat>::onÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/context/UniformContext.hpp(39): warning C4834: abandon de la valeur de retour de la fonction avec l'attribut [[nodiscard]]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/context/UniformContext.hpp(39): note: le contexte d'instanciation du modŠle (le plus ancien) est
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\src\graphic\pipeline\UniformOwnershipTests.cpp(36): note: voir la r‚f‚rence … l'instanciation de la fonction modŠle 'void artist::graphic::context::UniformContext<artist::mock::graphic::api::MockOpenGL>::setValue<float>(const T &)' en cours de compilation
+        with
+        [
+            T=float
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\src\graphic\pipeline\UniformOwnershipTests.cpp(36): note: voir la premiŠre r‚f‚rence … ®ÿartist::graphic::context::UniformContext<artist::mock::graphic::api::MockOpenGL>::setValueÿ¯ dans ®ÿ`anonymous-namespace'::makeUniformÿ¯
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/pipeline/Shader.hpp(102): error C2027: utilisation du type non d‚fini 'artist::mock::graphic::opengl::context::MockShaderContext'
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\graphic/MockApi.hpp(20): note: voir la d‚claration de 'artist::mock::graphic::opengl::context::MockShaderContext'
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/pipeline/Shader.hpp(102): note: le contexte d'instanciation du modŠle (le plus ancien) est
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\tests\mock\graphic/opengl/context/MockPassContext.hpp(19): note: voir la r‚f‚rence … l'instanciation classe modŠle 'artist::graphic::context::PassContext<artist::mock::graphic::api::MockOpenGL>' en cours de compilation
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/context/PassContext.hpp(153): note: voir la r‚f‚rence … l'instanciation classe modŠle 'std::vector<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>,std::allocator<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>>>' en cours de compilation
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\vector(2081): note: pendant la compilation de la fonction membre classe modŠle 'void std::vector<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>,std::allocator<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>>>::_Tidy(void) noexcept'
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\vector(830): note: voir la premiŠre r‚f‚rence … ®ÿstd::vector<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>,std::allocator<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>>>::_Tidyÿ¯ dans ®ÿstd::vector<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>,std::allocator<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>>>::~vectorÿ¯
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/context/PassContext.hpp(156): note: voir la premiŠre r‚f‚rence … ®ÿstd::vector<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>,std::allocator<std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>>>::~vectorÿ¯ dans ®ÿartist::graphic::context::PassContext<artist::mock::graphic::api::MockOpenGL>::PassContextÿ¯
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\vector(2093): note: voir la r‚f‚rence … l'instanciation classe modŠle 'std::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>' en cours de compilation
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory(3352): note: voir la r‚f‚rence … l'instanciation classe modŠle 'std::default_delete<artist::graphic::pipeline::IShader<API>>' en cours de compilation
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory(3307): note: pendant la compilation de la fonction membre classe modŠle 'void std::default_delete<artist::graphic::pipeline::IShader<API>>::operator ()(_Ty *) noexcept const'
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL,
+            _Ty=artist::graphic::pipeline::IShader<artist::mock::graphic::api::MockOpenGL>
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory(3427): note: voir la premiŠre r‚f‚rence … ®ÿstd::default_delete<artist::graphic::pipeline::IShader<API>>::operator ()ÿ¯ dans ®ÿstd::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>::~unique_ptrÿ¯
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory(3483): note: voir la premiŠre r‚f‚rence … ®ÿstd::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>::~unique_ptrÿ¯ dans ®ÿstd::unique_ptr<artist::graphic::pipeline::IShader<API>,std::default_delete<artist::graphic::pipeline::IShader<API>>>::~unique_ptrÿ¯
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory(3308): note: voir la r‚f‚rence … l'instanciation classe modŠle 'artist::graphic::pipeline::IShader<API>' en cours de compilation
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/pipeline/Shader.hpp(96): note: pendant la compilation de la fonction membre classe modŠle 'void artist::graphic::pipeline::IShader<API>::load(void)'
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\ARTIST\include\graphic/pipeline/Shader.hpp(102): error C2039: 'getShaderCode' n'est pas membre de 'std::unique_ptr<artist::mock::graphic::api::MockOpenGL::ShaderContext,std::default_delete<artist::mock::graphic::api::MockOpenGL::ShaderContext>>'
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\include\memory(3347): note: voir la d‚claration de 'std::unique_ptr<artist::mock::graphic::api::MockOpenGL::ShaderContext,std::default_delete<artist::mock::graphic::api::MockOpenGL::ShaderContext>>'
+ninja: build stopped: subcommand failed.
+# exit=2 seconds=5.0

@@ -1,0 +1,50 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R ^unit\.Attribute --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\out\mission-f7\t2\green-b-unit.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+      Start 21: unit.AttributeBinderTests.BindAttributeTest_createBuffer
+ 1/17 Test #21: unit.AttributeBinderTests.BindAttributeTest_createBuffer ...........................   Passed    0.02 sec
+      Start 22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer
+ 2/17 Test #22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer .............................   Passed    0.02 sec
+      Start 23: unit.AttributeBinderTests.BindAttributeTest_invalidContext
+ 3/17 Test #23: unit.AttributeBinderTests.BindAttributeTest_invalidContext .........................   Passed    0.02 sec
+      Start 24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData
+ 4/17 Test #24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData ..........................   Passed    0.02 sec
+      Start 25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+ 5/17 Test #25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer .................   Passed    0.02 sec
+      Start 26: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr
+ 6/17 Test #26: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr ......   Passed    0.02 sec
+      Start 27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+ 7/17 Test #27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet ........   Passed    0.02 sec
+      Start 28: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+ 8/17 Test #28: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer .........................   Passed    0.02 sec
+      Start 29: unit.AttributeUnbinderTests.BindAttributeTest_nullContext
+ 9/17 Test #29: unit.AttributeUnbinderTests.BindAttributeTest_nullContext ..........................   Passed    0.02 sec
+      Start 30: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID
+10/17 Test #30: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID ........................   Passed    0.02 sec
+      Start 31: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv
+11/17 Test #31: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv ..........................   Passed    0.02 sec
+      Start 32: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+12/17 Test #32: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation ...   Passed    0.02 sec
+      Start 33: unit.AttributeReaderTests.ReadAttributes_InvalidPassID
+13/17 Test #33: unit.AttributeReaderTests.ReadAttributes_InvalidPassID .............................   Passed    0.02 sec
+      Start 83: unit.AttributeTest.BindTest
+14/17 Test #83: unit.AttributeTest.BindTest ........................................................   Passed    0.02 sec
+      Start 84: unit.AttributeTest.UnbindTest
+15/17 Test #84: unit.AttributeTest.UnbindTest ......................................................   Passed    0.02 sec
+      Start 85: unit.AttributeTest.SetTest
+16/17 Test #85: unit.AttributeTest.SetTest .........................................................   Passed    0.02 sec
+      Start 86: unit.AttributeTest.GetContextTest
+17/17 Test #86: unit.AttributeTest.GetContextTest ..................................................   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 17
+
+Label Time Summary:
+unit    =   0.31 sec*proc (17 tests)
+
+Total Test time (real) =   0.35 sec
+# exit=0 seconds=0.4

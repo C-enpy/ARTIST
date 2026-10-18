@@ -1,0 +1,53 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R ^unit\.AttributeTest\. --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\out\mission-f7\t2\red-b-unit.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+    Start 83: unit.AttributeTest.BindTest
+1/4 Test #83: unit.AttributeTest.BindTest .........   Passed    0.02 sec
+    Start 84: unit.AttributeTest.UnbindTest
+2/4 Test #84: unit.AttributeTest.UnbindTest .......   Passed    0.02 sec
+    Start 85: unit.AttributeTest.SetTest
+3/4 Test #85: unit.AttributeTest.SetTest ..........***Failed    0.02 sec
+Note: Google Test filter = AttributeTest.SetTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.SetTest
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(84): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn((ptr = 00000267DC570CC0, value = 776-byte object <08-80 94-DB F7-7F 00-00 40-C9 55-DC 67-02 00-00 30-C9 55-DC 67-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 B0-6E 94-DB F7-7F 00-00 ... 40-A2 56-DC 67-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 40-9D 56-DC 67-02 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00>))
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(83): error: Actual function call count doesn't match EXPECT_CALL(*mock::MockSetter<int>::instance(), mockOn(attributeContext))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeTest.SetTest (0 ms)
+[----------] 1 test from AttributeTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeTest.SetTest
+
+ 1 FAILED TEST
+
+    Start 86: unit.AttributeTest.GetContextTest
+4/4 Test #86: unit.AttributeTest.GetContextTest ...   Passed    0.02 sec
+
+75% tests passed, 1 tests failed out of 4
+
+Label Time Summary:
+unit    =   0.08 sec*proc (4 tests)
+
+Total Test time (real) =   0.10 sec
+
+The following tests FAILED:
+	 85 - unit.AttributeTest.SetTest (Failed)               unit
+Errors while running CTest
+# exit=8 seconds=0.1

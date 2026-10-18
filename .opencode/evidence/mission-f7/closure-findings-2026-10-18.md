@@ -140,6 +140,16 @@ T1-1/F2/F1 traités et revus ; limites précédemment consignées conservées.
 Archive documentaire et manifeste : docs/architecture/missions/2026-10-18-f7-uniform-attribute.md
 et docs/_meta/session-2026-10-18-f7-final.json. Pas de nouvelle mission sélectionnée.
 
+## Addendum d'archivage de session demandé par l'opérateur
+
+Export public natif retrouvé après clôture : les deux test-engineer avaient
+terminé avec des réponses locales BLOCKED (contrat execute/team_message déclaré
+inaccessible), non reçues sur team_results. Le diagnostic « aucun tour exécuté »
+était trop fort ; pool-7 possède aussi des lectures natives. Aucun refus d'outil
+supplémentaire exécuté par l'archivage, pas de preuve sandbox ni de grant ajouté.
+Voir docs/references/session-2026-10-18-f7.md et les29exports/271preuves sous
+research/sessions/2026-10-18-f7/, manifestes SHA256 et exclusions explicites.
+
 ## Limites de preuve
 
 - Aucune nouvelle campagne ASan n'est revendiquée pour les tests TE/T1-1.

@@ -1,0 +1,399 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5
+# HEAD=4f64a2b87f5aa8c3590ded4596aca906b5d320dc
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -L unit --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5\out\mission-f7\t1\green-unit.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5/out/b
+        Start   1: unit.TraceableExceptionTests.What_IsForwardedToTheBaseException
+  1/192 Test   #1: unit.TraceableExceptionTests.What_IsForwardedToTheBaseException .........................................................................   Passed    0.01 sec
+        Start   2: unit.TraceableExceptionTests.GetStackTraceString_ReadsTheReturnedValueSafely
+  2/192 Test   #2: unit.TraceableExceptionTests.GetStackTraceString_ReadsTheReturnedValueSafely ............................................................   Passed    0.01 sec
+        Start   3: unit.PassContextTests.GetShader_BorrowsFirstAndLastRegisteredShaders
+  3/192 Test   #3: unit.PassContextTests.GetShader_BorrowsFirstAndLastRegisteredShaders ....................................................................   Passed    0.01 sec
+        Start   4: unit.PassContextTests.GetShader_RejectsNegativeIndexWithRuledMessage
+  4/192 Test   #4: unit.PassContextTests.GetShader_RejectsNegativeIndexWithRuledMessage ....................................................................   Passed    0.01 sec
+        Start   5: unit.PassContextTests.GetShader_RejectsIndexEqualToSize
+  5/192 Test   #5: unit.PassContextTests.GetShader_RejectsIndexEqualToSize .................................................................................   Passed    0.01 sec
+        Start   6: unit.PassContextTests.GetShader_RejectsIndexBeyondVectorSize
+  6/192 Test   #6: unit.PassContextTests.GetShader_RejectsIndexBeyondVectorSize ............................................................................   Passed    0.01 sec
+        Start   7: unit.PassContextTests.GetShader_RejectsAccessOnEmptyContext
+  7/192 Test   #7: unit.PassContextTests.GetShader_RejectsAccessOnEmptyContext .............................................................................   Passed    0.01 sec
+        Start   8: unit.PassContextTests.GetShader_RejectedAccessKeepsContextUnmutated
+  8/192 Test   #8: unit.PassContextTests.GetShader_RejectedAccessKeepsContextUnmutated .....................................................................   Passed    0.01 sec
+        Start   9: unit.PipelineContextTests.GetPass_ReturnsFirstAndLastRegisteredPasses
+  9/192 Test   #9: unit.PipelineContextTests.GetPass_ReturnsFirstAndLastRegisteredPasses ...................................................................   Passed    0.01 sec
+        Start  10: unit.PipelineContextTests.GetPass_RejectsNegativeIndexWithRuledMessage
+ 10/192 Test  #10: unit.PipelineContextTests.GetPass_RejectsNegativeIndexWithRuledMessage ..................................................................   Passed    0.01 sec
+        Start  11: unit.PipelineContextTests.GetPass_RejectsIndexEqualToSize
+ 11/192 Test  #11: unit.PipelineContextTests.GetPass_RejectsIndexEqualToSize ...............................................................................   Passed    0.01 sec
+        Start  12: unit.PipelineContextTests.GetPass_RejectsIndexBeyondVectorSize
+ 12/192 Test  #12: unit.PipelineContextTests.GetPass_RejectsIndexBeyondVectorSize ..........................................................................   Passed    0.01 sec
+        Start  13: unit.PipelineContextTests.GetPass_RejectsAccessOnEmptyContext
+ 13/192 Test  #13: unit.PipelineContextTests.GetPass_RejectsAccessOnEmptyContext ...........................................................................   Passed    0.01 sec
+        Start  14: unit.PipelineContextTests.GetPass_RejectedAccessKeepsContextUnmutated
+ 14/192 Test  #14: unit.PipelineContextTests.GetPass_RejectedAccessKeepsContextUnmutated ...................................................................   Passed    0.01 sec
+        Start  15: unit.ShaderContextTests.SetAndGetShaderTypeforVertexShader
+ 15/192 Test  #15: unit.ShaderContextTests.SetAndGetShaderTypeforVertexShader ..............................................................................   Passed    0.01 sec
+        Start  16: unit.ShaderContextTests.SetAndGetShaderTypeforFragmentShader
+ 16/192 Test  #16: unit.ShaderContextTests.SetAndGetShaderTypeforFragmentShader ............................................................................   Passed    0.01 sec
+        Start  17: unit.ShaderContextTests.SetAndGetShaderTypeforGeometryShader
+ 17/192 Test  #17: unit.ShaderContextTests.SetAndGetShaderTypeforGeometryShader ............................................................................   Passed    0.01 sec
+        Start  18: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationControlShader
+ 18/192 Test  #18: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationControlShader .................................................................   Passed    0.01 sec
+        Start  19: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationEvaluationShader
+ 19/192 Test  #19: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationEvaluationShader ..............................................................   Passed    0.01 sec
+        Start  20: unit.ShaderContextTests.SetAndGetShaderTypeforComputeShader
+ 20/192 Test  #20: unit.ShaderContextTests.SetAndGetShaderTypeforComputeShader .............................................................................   Passed    0.01 sec
+        Start  21: unit.AttributeBinderTests.BindAttributeTest_createBuffer
+ 21/192 Test  #21: unit.AttributeBinderTests.BindAttributeTest_createBuffer ................................................................................   Passed    0.01 sec
+        Start  22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer
+ 22/192 Test  #22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer ..................................................................................   Passed    0.02 sec
+        Start  23: unit.AttributeBinderTests.BindAttributeTest_invalidContext
+ 23/192 Test  #23: unit.AttributeBinderTests.BindAttributeTest_invalidContext ..............................................................................   Passed    0.01 sec
+        Start  24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData
+ 24/192 Test  #24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData ...............................................................................   Passed    0.02 sec
+        Start  25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+ 25/192 Test  #25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer ......................................................................   Passed    0.02 sec
+        Start  26: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr
+ 26/192 Test  #26: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr ...........................................................   Passed    0.02 sec
+        Start  27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+ 27/192 Test  #27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet .............................................................   Passed    0.01 sec
+        Start  28: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+ 28/192 Test  #28: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer ..............................................................................   Passed    0.01 sec
+        Start  29: unit.AttributeUnbinderTests.BindAttributeTest_nullContext
+ 29/192 Test  #29: unit.AttributeUnbinderTests.BindAttributeTest_nullContext ...............................................................................   Passed    0.02 sec
+        Start  30: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID
+ 30/192 Test  #30: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID .............................................................................   Passed    0.01 sec
+        Start  31: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv
+ 31/192 Test  #31: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv ...............................................................................   Passed    0.01 sec
+        Start  32: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+ 32/192 Test  #32: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation ........................................................   Passed    0.01 sec
+        Start  33: unit.AttributeReaderTests.ReadAttributes_InvalidPassID
+ 33/192 Test  #33: unit.AttributeReaderTests.ReadAttributes_InvalidPassID ..................................................................................   Passed    0.01 sec
+        Start  34: unit.PassFreerTests.FreePassTest_validContext
+ 34/192 Test  #34: unit.PassFreerTests.FreePassTest_validContext ...........................................................................................   Passed    0.03 sec
+        Start  35: unit.PassFreerTests.FreePassTest_noPassID
+ 35/192 Test  #35: unit.PassFreerTests.FreePassTest_noPassID ...............................................................................................   Passed    0.02 sec
+        Start  36: unit.PassFreerTests.FreePassTest_deletePipeline
+ 36/192 Test  #36: unit.PassFreerTests.FreePassTest_deletePipeline .........................................................................................   Passed    0.02 sec
+        Start  37: unit.PassFreerTests.FreePassTest_noShaders
+ 37/192 Test  #37: unit.PassFreerTests.FreePassTest_noShaders ..............................................................................................   Passed    0.02 sec
+        Start  38: unit.PassFreerTests.FreePassTest_isIdempotent
+ 38/192 Test  #38: unit.PassFreerTests.FreePassTest_isIdempotent ...........................................................................................   Passed    0.02 sec
+        Start  39: unit.LoaderTests.LoadPassTest_validContext
+ 39/192 Test  #39: unit.LoaderTests.LoadPassTest_validContext ..............................................................................................   Passed    0.02 sec
+        Start  40: unit.LoaderTests.LoadPassTest_createPipeline
+ 40/192 Test  #40: unit.LoaderTests.LoadPassTest_createPipeline ............................................................................................   Passed    0.01 sec
+        Start  41: unit.LoaderTests.LoadPassTest_linkPipeline
+ 41/192 Test  #41: unit.LoaderTests.LoadPassTest_linkPipeline ..............................................................................................   Passed    0.01 sec
+        Start  42: unit.LoaderTests.LoadPassTest_pipelineCreationFailed
+ 42/192 Test  #42: unit.LoaderTests.LoadPassTest_pipelineCreationFailed ....................................................................................   Passed    0.01 sec
+        Start  43: unit.LoaderTests.LoadPassTest_linkFailed
+ 43/192 Test  #43: unit.LoaderTests.LoadPassTest_linkFailed ................................................................................................   Passed    0.02 sec
+        Start  44: unit.LoaderTests.LoadPassTest_linkSuccess
+ 44/192 Test  #44: unit.LoaderTests.LoadPassTest_linkSuccess ...............................................................................................   Passed    0.01 sec
+        Start  45: unit.LoaderTests.LoadPassTest_reloadRejectedBeforeAnyNativeCall
+ 45/192 Test  #45: unit.LoaderTests.LoadPassTest_reloadRejectedBeforeAnyNativeCall .........................................................................   Passed    0.01 sec
+        Start  46: unit.LoaderTests.LoadPassTest_passIDPublishedOnlyAfterLinkSuccess
+ 46/192 Test  #46: unit.LoaderTests.LoadPassTest_passIDPublishedOnlyAfterLinkSuccess .......................................................................   Passed    0.01 sec
+        Start  47: unit.LoaderTests.LoadPassTest_attacherFailureReleasesProgramOnce
+ 47/192 Test  #47: unit.LoaderTests.LoadPassTest_attacherFailureReleasesProgramOnce ........................................................................   Passed    0.01 sec
+        Start  48: unit.ShaderAttacherTests.AttachShaders_ValidContext
+ 48/192 Test  #48: unit.ShaderAttacherTests.AttachShaders_ValidContext .....................................................................................   Passed    0.01 sec
+        Start  49: unit.ShaderAttacherTests.AttachShaders_InvalidPassID
+ 49/192 Test  #49: unit.ShaderAttacherTests.AttachShaders_InvalidPassID ....................................................................................   Passed    0.01 sec
+        Start  50: unit.ShaderAttacherTests.AttachShaders_NoShaders
+ 50/192 Test  #50: unit.ShaderAttacherTests.AttachShaders_NoShaders ........................................................................................   Passed    0.01 sec
+        Start  51: unit.UniformReaderTests.ReadUniforms_ValidContext
+ 51/192 Test  #51: unit.UniformReaderTests.ReadUniforms_ValidContext .......................................................................................   Passed    0.01 sec
+        Start  52: unit.UserTests.UsePass_ValidContext
+ 52/192 Test  #52: unit.UserTests.UsePass_ValidContext .....................................................................................................   Passed    0.01 sec
+        Start  53: unit.UserTests.UsePass_ZeroPassIDStillCallsGL
+ 53/192 Test  #53: unit.UserTests.UsePass_ZeroPassIDStillCallsGL ...........................................................................................   Passed    0.01 sec
+        Start  54: unit.ResetterTests.resetProgram_ValidContext
+ 54/192 Test  #54: unit.ResetterTests.resetProgram_ValidContext ............................................................................................   Passed    0.01 sec
+        Start  55: unit.ResetterTests.resetProgram_NullContext
+ 55/192 Test  #55: unit.ResetterTests.resetProgram_NullContext .............................................................................................   Passed    0.01 sec
+        Start  56: unit.ResetterTests.BorrowedEntryPointResetsOnlyCursor
+ 56/192 Test  #56: unit.ResetterTests.BorrowedEntryPointResetsOnlyCursor ...................................................................................   Passed    0.01 sec
+        Start  57: unit.ResetterTests.SharedFacadeDoesNotRetainContext
+ 57/192 Test  #57: unit.ResetterTests.SharedFacadeDoesNotRetainContext .....................................................................................   Passed    0.01 sec
+        Start  58: unit.PipelineUserTests.useProgram_ValidContext
+ 58/192 Test  #58: unit.PipelineUserTests.useProgram_ValidContext ..........................................................................................   Passed    0.01 sec
+        Start  59: unit.PipelineUserTests.useProgram_NullContext
+ 59/192 Test  #59: unit.PipelineUserTests.useProgram_NullContext ...........................................................................................   Passed    0.01 sec
+        Start  60: unit.PipelineUserTests.BorrowedEntryPointUsesRegisteredPass
+ 60/192 Test  #60: unit.PipelineUserTests.BorrowedEntryPointUsesRegisteredPass .............................................................................   Passed    0.01 sec
+        Start  61: unit.PipelineUserTests.SharedFacadeDoesNotRetainContext
+ 61/192 Test  #61: unit.PipelineUserTests.SharedFacadeDoesNotRetainContext .................................................................................   Passed    0.01 sec
+        Start  62: unit.FreerTests.FreeShader_freeOnGPU
+ 62/192 Test  #62: unit.FreerTests.FreeShader_freeOnGPU ....................................................................................................   Passed    0.01 sec
+        Start  63: unit.FreerTests.FreeShader_setShaderIDToZero
+ 63/192 Test  #63: unit.FreerTests.FreeShader_setShaderIDToZero ............................................................................................   Passed    0.01 sec
+        Start  64: unit.FreerTests.FreeShader_doNothing_whenShaderIDIsZero
+ 64/192 Test  #64: unit.FreerTests.FreeShader_doNothing_whenShaderIDIsZero .................................................................................   Passed    0.01 sec
+        Start  65: unit.ShaderLoaderTests.LoadShaderTest_callCreate
+ 65/192 Test  #65: unit.ShaderLoaderTests.LoadShaderTest_callCreate ........................................................................................   Passed    0.01 sec
+        Start  66: unit.ShaderLoaderTests.LoadShaderTest_callShaderSource
+ 66/192 Test  #66: unit.ShaderLoaderTests.LoadShaderTest_callShaderSource ..................................................................................   Passed    0.01 sec
+        Start  67: unit.ShaderLoaderTests.LoadShaderTest_callCompile
+ 67/192 Test  #67: unit.ShaderLoaderTests.LoadShaderTest_callCompile .......................................................................................   Passed    0.02 sec
+        Start  68: unit.ShaderLoaderTests.LoadShaderTest_callGetIv
+ 68/192 Test  #68: unit.ShaderLoaderTests.LoadShaderTest_callGetIv .........................................................................................   Passed    0.01 sec
+        Start  69: unit.ShaderLoaderTests.LoadShaderTest_setContextShaderId
+ 69/192 Test  #69: unit.ShaderLoaderTests.LoadShaderTest_setContextShaderId ................................................................................   Passed    0.01 sec
+        Start  70: unit.ShaderLoaderTests.LoadShaderFailureTest
+ 70/192 Test  #70: unit.ShaderLoaderTests.LoadShaderFailureTest ............................................................................................   Passed    0.01 sec
+        Start  71: unit.ReaderTests.ReadShaderTest
+ 71/192 Test  #71: unit.ReaderTests.ReadShaderTest .........................................................................................................   Passed    0.01 sec
+        Start  72: unit.ReaderTests.ReadShaderTest_AbsentFileRejected
+ 72/192 Test  #72: unit.ReaderTests.ReadShaderTest_AbsentFileRejected ......................................................................................   Passed    0.01 sec
+        Start  73: unit.ReaderTests.ReadShaderTest_EmptyReadableFileYieldsEmptyCode
+ 73/192 Test  #73: unit.ReaderTests.ReadShaderTest_EmptyReadableFileYieldsEmptyCode ........................................................................   Passed    0.02 sec
+        Start  74: unit.ReaderTests.ReadShaderTest_MultiBlockReadPreservesContent
+ 74/192 Test  #74: unit.ReaderTests.ReadShaderTest_MultiBlockReadPreservesContent ..........................................................................   Passed    0.03 sec
+        Start  75: unit.ReaderTests.ReadShaderTest_ExactlyOneBlockPreservesContent
+ 75/192 Test  #75: unit.ReaderTests.ReadShaderTest_ExactlyOneBlockPreservesContent .........................................................................   Passed    0.02 sec
+        Start  76: unit.ReaderTests.AbsentPathSetup_RejectsUnremovableResidue
+ 76/192 Test  #76: unit.ReaderTests.AbsentPathSetup_RejectsUnremovableResidue ..............................................................................   Passed    0.02 sec
+        Start  77: unit.ReaderTests.OwnedRootSetup_AcquiresDistinctRootsPerFixtureInstance
+ 77/192 Test  #77: unit.ReaderTests.OwnedRootSetup_AcquiresDistinctRootsPerFixtureInstance .................................................................   Passed    0.02 sec
+        Start  78: unit.ReaderTests.OwnedRootSetup_IsIsolatedFromLegacySharedParent
+ 78/192 Test  #78: unit.ReaderTests.OwnedRootSetup_IsIsolatedFromLegacySharedParent ........................................................................   Passed    0.01 sec
+        Start  79: unit.ReaderTests.Cleanup_IsBoundedToOwnedRootAndPreservesNeighbor
+ 79/192 Test  #79: unit.ReaderTests.Cleanup_IsBoundedToOwnedRootAndPreservesNeighbor .......................................................................   Passed    0.02 sec
+        Start  80: unit.ReaderTests.ExtractionFailure_SentinelTranslatedWithExactMessage
+ 80/192 Test  #80: unit.ReaderTests.ExtractionFailure_SentinelTranslatedWithExactMessage ...................................................................   Passed    0.02 sec
+        Start  81: unit.ReaderTests.ExtractionFailure_BadAllocStaysUntranslated
+ 81/192 Test  #81: unit.ReaderTests.ExtractionFailure_BadAllocStaysUntranslated ............................................................................   Passed    0.02 sec
+        Start  82: unit.ReaderTests.CloseHappensBeforePublication_ObservableThroughVirtualSetter
+ 82/192 Test  #82: unit.ReaderTests.CloseHappensBeforePublication_ObservableThroughVirtualSetter ...........................................................   Passed    0.03 sec
+        Start  83: unit.AttributeTest.BindTest
+ 83/192 Test  #83: unit.AttributeTest.BindTest .............................................................................................................   Passed    0.01 sec
+        Start  84: unit.AttributeTest.UnbindTest
+ 84/192 Test  #84: unit.AttributeTest.UnbindTest ...........................................................................................................   Passed    0.01 sec
+        Start  85: unit.AttributeTest.SetTest
+ 85/192 Test  #85: unit.AttributeTest.SetTest ..............................................................................................................   Passed    0.01 sec
+        Start  86: unit.AttributeTest.GetContextTest
+ 86/192 Test  #86: unit.AttributeTest.GetContextTest .......................................................................................................   Passed    0.01 sec
+        Start  87: unit.PassTest.LoadPass
+ 87/192 Test  #87: unit.PassTest.LoadPass ..................................................................................................................   Passed    0.01 sec
+        Start  88: unit.PassTest.WithUniforms
+ 88/192 Test  #88: unit.PassTest.WithUniforms ..............................................................................................................   Passed    0.02 sec
+        Start  89: unit.PassTest.WithUniforms_NoUniform
+ 89/192 Test  #89: unit.PassTest.WithUniforms_NoUniform ....................................................................................................   Passed    0.01 sec
+        Start  90: unit.PassTest.UsePass
+ 90/192 Test  #90: unit.PassTest.UsePass ...................................................................................................................   Passed    0.02 sec
+        Start  91: unit.PassTest.FreePass
+ 91/192 Test  #91: unit.PassTest.FreePass ..................................................................................................................   Passed    0.02 sec
+        Start  92: unit.PassTest.GetUniforms
+ 92/192 Test  #92: unit.PassTest.GetUniforms ...............................................................................................................   Passed    0.02 sec
+        Start  93: unit.PassTest.GetAttributes
+ 93/192 Test  #93: unit.PassTest.GetAttributes .............................................................................................................   Passed    0.02 sec
+        Start  94: unit.PassTest.GetShader
+ 94/192 Test  #94: unit.PassTest.GetShader .................................................................................................................   Passed    0.02 sec
+        Start  95: unit.PassTest.GetContext
+ 95/192 Test  #95: unit.PassTest.GetContext ................................................................................................................   Passed    0.02 sec
+        Start  96: unit.PipelineBorrowedContractTests.FlowRequiresBorrowedVoidComponents
+ 96/192 Test  #96: unit.PipelineBorrowedContractTests.FlowRequiresBorrowedVoidComponents ...................................................................   Passed    0.02 sec
+        Start  97: unit.PipelineBorrowedContractTests.RealComponentsOfferBorrowedEntryPoints
+ 97/192 Test  #97: unit.PipelineBorrowedContractTests.RealComponentsOfferBorrowedEntryPoints ...............................................................   Passed    0.02 sec
+        Start  98: unit.PipelineCursorTests.AddNullPassRejectsBeforeInsertionAndKeepsCursor
+ 98/192 Test  #98: unit.PipelineCursorTests.AddNullPassRejectsBeforeInsertionAndKeepsCursor ................................................................   Passed    0.01 sec
+        Start  99: unit.PipelineCursorTests.SetCurrentPassRejectsEveryInvalidValueBeforeMutation
+ 99/192 Test  #99: unit.PipelineCursorTests.SetCurrentPassRejectsEveryInvalidValueBeforeMutation ...........................................................   Passed    0.01 sec
+        Start 100: unit.PipelineCursorTests.CursorAcceptsOnlyInitialStateAndRegisteredIndices
+100/192 Test #100: unit.PipelineCursorTests.CursorAcceptsOnlyInitialStateAndRegisteredIndices ..............................................................   Passed    0.01 sec
+        Start 101: unit.PipelineCursorTests.InvalidUseNeverCallsUserOrMutatesCursor
+101/192 Test #101: unit.PipelineCursorTests.InvalidUseNeverCallsUserOrMutatesCursor ........................................................................   Passed    0.01 sec
+        Start 102: unit.PipelineCursorTests.ThrowingUserSeesCandidateThenRollsBackAndRethrowsSameException
+102/192 Test #102: unit.PipelineCursorTests.ThrowingUserSeesCandidateThenRollsBackAndRethrowsSameException .................................................   Passed    0.01 sec
+        Start 103: unit.PipelineCursorTests.EmptyUseNextResetsAndReturnsFalse
+103/192 Test #103: unit.PipelineCursorTests.EmptyUseNextResetsAndReturnsFalse ..............................................................................   Passed    0.01 sec
+        Start 104: unit.PipelineCursorTests.SingletonLastUsefulCallKeepsSelectionUntilExtraCall
+104/192 Test #104: unit.PipelineCursorTests.SingletonLastUsefulCallKeepsSelectionUntilExtraCall ............................................................   Passed    0.02 sec
+        Start 105: unit.PipelineCursorTests.TwoPassIterationPreservesOrderAndResetsOnlyAfterExhaustion
+105/192 Test #105: unit.PipelineCursorTests.TwoPassIterationPreservesOrderAndResetsOnlyAfterExhaustion .....................................................   Passed    0.01 sec
+        Start 106: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromInitialCursor
+106/192 Test #106: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromInitialCursor ..................................................................   Passed    0.02 sec
+        Start 107: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromSelectedCursor
+107/192 Test #107: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromSelectedCursor .................................................................   Passed    0.01 sec
+        Start 108: unit.PipelineCursorTests.AddingPassKeepsCursorAndExistingBorrowAcrossGrowth
+108/192 Test #108: unit.PipelineCursorTests.AddingPassKeepsCursorAndExistingBorrowAcrossGrowth .............................................................   Passed    0.02 sec
+        Start 109: unit.PipelineCursorTests.ContextAndWrapperReturnPassBorrows
+109/192 Test #109: unit.PipelineCursorTests.ContextAndWrapperReturnPassBorrows .............................................................................   Passed    0.01 sec
+        Start 110: unit.PipelineCursorTests.CardinalityGuardExercisesLimitWithoutAllocation
+110/192 Test #110: unit.PipelineCursorTests.CardinalityGuardExercisesLimitWithoutAllocation ................................................................   Passed    0.01 sec
+        Start 111: unit.PipelineCursorTests.EmptyContextRejectsAllSelectionsExceptReset
+111/192 Test #111: unit.PipelineCursorTests.EmptyContextRejectsAllSelectionsExceptReset ....................................................................   Passed    0.01 sec
+        Start 112: unit.PipelineCursorTests.ResetNeverActivatesOrDestroysPasses
+112/192 Test #112: unit.PipelineCursorTests.ResetNeverActivatesOrDestroysPasses ............................................................................   Passed    0.01 sec
+        Start 113: unit.PipelineOwnershipTests.WrapperAndContextAreNotCopyable
+113/192 Test #113: unit.PipelineOwnershipTests.WrapperAndContextAreNotCopyable .............................................................................   Passed    0.01 sec
+        Start 114: unit.PipelineOwnershipTests.ConstAccessorBorrowsContext
+114/192 Test #114: unit.PipelineOwnershipTests.ConstAccessorBorrowsContext .................................................................................   Passed    0.01 sec
+        Start 115: unit.PipelineOwnershipTests.MoveTransfersOwnershipWithoutCopyingBase
+115/192 Test #115: unit.PipelineOwnershipTests.MoveTransfersOwnershipWithoutCopyingBase ....................................................................   Passed    0.01 sec
+        Start 116: unit.PipelineOwnershipTests.NullContextIsRejected
+116/192 Test #116: unit.PipelineOwnershipTests.NullContextIsRejected .......................................................................................   Passed    0.01 sec
+        Start 117: unit.PipelineOwnershipTests.MoveAssignmentReleasesDestinationAndTransfersIdentity
+117/192 Test #117: unit.PipelineOwnershipTests.MoveAssignmentReleasesDestinationAndTransfersIdentity .......................................................   Passed    0.01 sec
+        Start 118: unit.PipelineOwnershipTests.SelfMoveIsStrictlyNoOp
+118/192 Test #118: unit.PipelineOwnershipTests.SelfMoveIsStrictlyNoOp ......................................................................................   Passed    0.01 sec
+        Start 119: unit.PipelineOwnershipTests.MovedFromPublicAccessIsRejected
+119/192 Test #119: unit.PipelineOwnershipTests.MovedFromPublicAccessIsRejected .............................................................................   Passed    0.01 sec
+        Start 120: unit.PipelineOwnershipTests.MoveAndSelfMoveKeepPassAddressesCountAndCursor
+120/192 Test #120: unit.PipelineOwnershipTests.MoveAndSelfMoveKeepPassAddressesCountAndCursor ..............................................................   Passed    0.01 sec
+        Start 121: unit.PipelineOwnershipTests.AssignmentDestroysOldPassesBeforeInstallingSource
+121/192 Test #121: unit.PipelineOwnershipTests.AssignmentDestroysOldPassesBeforeInstallingSource ...........................................................   Passed    0.01 sec
+        Start 122: unit.PipelineOwnershipTests.NullPassInConstructorCleansConsumedOwners
+122/192 Test #122: unit.PipelineOwnershipTests.NullPassInConstructorCleansConsumedOwners ...................................................................   Passed    0.02 sec
+        Start 123: unit.PipelineTest.UseTest
+123/192 Test #123: unit.PipelineTest.UseTest ...............................................................................................................   Passed    0.01 sec
+        Start 124: unit.PipelineTest.IteratePassesTest
+124/192 Test #124: unit.PipelineTest.IteratePassesTest .....................................................................................................   Passed    0.01 sec
+        Start 125: unit.PipelineTest.ResetPipelineTest
+125/192 Test #125: unit.PipelineTest.ResetPipelineTest .....................................................................................................   Passed    0.01 sec
+        Start 126: unit.PipelineTest.GetContext
+126/192 Test #126: unit.PipelineTest.GetContext ............................................................................................................   Passed    0.02 sec
+        Start 127: unit.ShaderLifetimeTests.ShaderIsNotCopyable
+127/192 Test #127: unit.ShaderLifetimeTests.ShaderIsNotCopyable ............................................................................................   Passed    0.01 sec
+        Start 128: unit.ShaderLifetimeTests.MoveAssignmentTypeContract
+128/192 Test #128: unit.ShaderLifetimeTests.MoveAssignmentTypeContract .....................................................................................   Passed    0.01 sec
+        Start 129: unit.ShaderLifetimeTests.FreeIsIdempotent
+129/192 Test #129: unit.ShaderLifetimeTests.FreeIsIdempotent ...............................................................................................   Passed    0.01 sec
+        Start 130: unit.ShaderLifetimeTests.MovedFromShaderRejectsBorrow
+130/192 Test #130: unit.ShaderLifetimeTests.MovedFromShaderRejectsBorrow ...................................................................................   Passed    0.01 sec
+        Start 131: unit.ShaderLifetimeTests.MovedFromShaderBorrowThrows
+131/192 Test #131: unit.ShaderLifetimeTests.MovedFromShaderBorrowThrows ....................................................................................   Passed    0.01 sec
+        Start 132: unit.ShaderLifetimeTests.MovedFromPassAccessThrows
+132/192 Test #132: unit.ShaderLifetimeTests.MovedFromPassAccessThrows ......................................................................................   Passed    0.01 sec
+        Start 133: unit.ShaderLifetimeTests.MovedFromPassContextGetterThrows
+133/192 Test #133: unit.ShaderLifetimeTests.MovedFromPassContextGetterThrows ...............................................................................   Passed    0.01 sec
+        Start 134: unit.ShaderLifetimeTests.ShaderReloadWithoutFreeRejected
+134/192 Test #134: unit.ShaderLifetimeTests.ShaderReloadWithoutFreeRejected ................................................................................   Passed    0.01 sec
+        Start 135: unit.ShaderLifetimeTests.PassReloadWithoutFreeRejected
+135/192 Test #135: unit.ShaderLifetimeTests.PassReloadWithoutFreeRejected ..................................................................................   Passed    0.02 sec
+        Start 136: unit.ShaderLifetimeTests.PassAccessorsOnLiveObject
+136/192 Test #136: unit.ShaderLifetimeTests.PassAccessorsOnLiveObject ......................................................................................   Passed    0.01 sec
+        Start 137: unit.ShaderLifetimeTests.NullContextRejected
+137/192 Test #137: unit.ShaderLifetimeTests.NullContextRejected ............................................................................................   Passed    0.01 sec
+        Start 138: unit.ShaderLifetimeTests.PassContextOwnsShadersUniquely
+138/192 Test #138: unit.ShaderLifetimeTests.PassContextOwnsShadersUniquely .................................................................................   Passed    0.01 sec
+        Start 139: unit.ShaderLifetimeTests.PassContextRejectsNullShader
+139/192 Test #139: unit.ShaderLifetimeTests.PassContextRejectsNullShader ...................................................................................   Passed    0.01 sec
+        Start 140: unit.ShaderLifetimeTests.NullPassContextRejected
+140/192 Test #140: unit.ShaderLifetimeTests.NullPassContextRejected ........................................................................................   Passed    0.01 sec
+        Start 141: unit.ShaderLifetimeTests.PassFreeDetachesOnlyLiveShaders
+141/192 Test #141: unit.ShaderLifetimeTests.PassFreeDetachesOnlyLiveShaders ................................................................................   Passed    0.01 sec
+        Start 142: unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders
+142/192 Test #142: unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders .......................................................................   Passed    0.02 sec
+        Start 143: unit.ShaderLifetimeTests.MoveAssignLoadedShaderReleasesDestination
+143/192 Test #143: unit.ShaderLifetimeTests.MoveAssignLoadedShaderReleasesDestination ......................................................................   Passed    0.01 sec
+        Start 144: unit.ShaderLifetimeTests.MoveAssignLoadedPassReleasesDestinationBeforeShaders
+144/192 Test #144: unit.ShaderLifetimeTests.MoveAssignLoadedPassReleasesDestinationBeforeShaders ...........................................................   Passed    0.01 sec
+        Start 145: unit.ShaderLifetimeTests.ShaderMoveAssignmentStateMatrix
+145/192 Test #145: unit.ShaderLifetimeTests.ShaderMoveAssignmentStateMatrix ................................................................................   Passed    0.01 sec
+        Start 146: unit.ShaderLifetimeTests.PassMoveAssignmentStateMatrix
+146/192 Test #146: unit.ShaderLifetimeTests.PassMoveAssignmentStateMatrix ..................................................................................   Passed    0.01 sec
+        Start 147: unit.ShaderLifetimeTests.ShaderSelfMoveIsStrictNoOpInEveryState
+147/192 Test #147: unit.ShaderLifetimeTests.ShaderSelfMoveIsStrictNoOpInEveryState .........................................................................   Passed    0.01 sec
+        Start 148: unit.ShaderLifetimeTests.PassSelfMoveIsStrictNoOpInEveryState
+148/192 Test #148: unit.ShaderLifetimeTests.PassSelfMoveIsStrictNoOpInEveryState ...........................................................................   Passed    0.01 sec
+        Start 149: unit.ShaderLifetimeTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+149/192 Test #149: unit.ShaderLifetimeTests.PassMoveAssignmentDestroysDestinationContextAndShaders .........................................................   Passed    0.01 sec
+        Start 150: unit.ShaderLifetimeTests.ShaderMoveCleanupFailureDoesNotConsumeSource
+150/192 Test #150: unit.ShaderLifetimeTests.ShaderMoveCleanupFailureDoesNotConsumeSource ...................................................................   Passed    0.01 sec
+        Start 151: unit.ShaderLifetimeTests.PassMoveCleanupFailureAfterDetachDoesNotConsumeSource
+151/192 Test #151: unit.ShaderLifetimeTests.PassMoveCleanupFailureAfterDetachDoesNotConsumeSource ..........................................................   Passed    0.01 sec
+        Start 152: unit.ShaderLifetimeTests.PassMoveCleanupFailureFromMovedShaderPreservesOwners
+152/192 Test #152: unit.ShaderLifetimeTests.PassMoveCleanupFailureFromMovedShaderPreservesOwners ...........................................................   Passed    0.01 sec
+        Start 153: unit.ShaderTest.CreateShader
+153/192 Test #153: unit.ShaderTest.CreateShader ............................................................................................................   Passed    0.01 sec
+        Start 154: unit.ShaderTest.CreateShader_codeAlreadyRead
+154/192 Test #154: unit.ShaderTest.CreateShader_codeAlreadyRead ............................................................................................   Passed    0.01 sec
+        Start 155: unit.ShaderTest.Free
+155/192 Test #155: unit.ShaderTest.Free ....................................................................................................................   Passed    0.01 sec
+        Start 156: unit.ShaderTest.DeleteMustFree
+156/192 Test #156: unit.ShaderTest.DeleteMustFree ..........................................................................................................   Passed    0.01 sec
+        Start 157: unit.UniformOwnershipTests.NullContextIsRejected
+157/192 Test #157: unit.UniformOwnershipTests.NullContextIsRejected ........................................................................................   Passed    0.01 sec
+        Start 158: unit.UniformOwnershipTests.PassContextRejectsNullUniform
+158/192 Test #158: unit.UniformOwnershipTests.PassContextRejectsNullUniform ................................................................................   Passed    0.01 sec
+        Start 159: unit.UniformTest.SetFloatUniform
+159/192 Test #159: unit.UniformTest.SetFloatUniform ........................................................................................................   Passed    0.01 sec
+        Start 160: unit.UniformTest.SetDoubleUniform
+160/192 Test #160: unit.UniformTest.SetDoubleUniform .......................................................................................................   Passed    0.01 sec
+        Start 161: unit.UniformTest.SetIntUniform
+161/192 Test #161: unit.UniformTest.SetIntUniform ..........................................................................................................   Passed    0.01 sec
+        Start 162: unit.UniformTest.SetUIntUniform
+162/192 Test #162: unit.UniformTest.SetUIntUniform .........................................................................................................   Passed    0.01 sec
+        Start 163: unit.UniformTest.SetVec2Uniform
+163/192 Test #163: unit.UniformTest.SetVec2Uniform .........................................................................................................   Passed    0.01 sec
+        Start 164: unit.UniformTest.SetVec3Uniform
+164/192 Test #164: unit.UniformTest.SetVec3Uniform .........................................................................................................   Passed    0.01 sec
+        Start 165: unit.UniformTest.SetVec4Uniform
+165/192 Test #165: unit.UniformTest.SetVec4Uniform .........................................................................................................   Passed    0.01 sec
+        Start 166: unit.UniformTest.SetMat2Uniform
+166/192 Test #166: unit.UniformTest.SetMat2Uniform .........................................................................................................   Passed    0.01 sec
+        Start 167: unit.UniformTest.SetMat3Uniform
+167/192 Test #167: unit.UniformTest.SetMat3Uniform .........................................................................................................   Passed    0.02 sec
+        Start 168: unit.UniformTest.SetMat4Uniform
+168/192 Test #168: unit.UniformTest.SetMat4Uniform .........................................................................................................   Passed    0.01 sec
+        Start 169: unit.UniformValueTests.GetValueReturnsTheStoredValue
+169/192 Test #169: unit.UniformValueTests.GetValueReturnsTheStoredValue ....................................................................................   Passed    0.01 sec
+        Start 170: unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch
+170/192 Test #170: unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch ..........................................................................   Passed    0.01 sec
+        Start 171: unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized
+171/192 Test #171: unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized ..........................................................................   Passed    0.01 sec
+        Start 172: unit.UniformValueTests.SetValueReplacesTheStoredType
+172/192 Test #172: unit.UniformValueTests.SetValueReplacesTheStoredType ....................................................................................   Passed    0.01 sec
+        Start 173: unit.UniformValueTests.FailedSetValueKeepsTheStoredValue
+173/192 Test #173: unit.UniformValueTests.FailedSetValueKeepsTheStoredValue ................................................................................   Passed    0.01 sec
+        Start 174: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0
+174/192 Test #174: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0 ..............................   Passed    0.01 sec
+        Start 175: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1
+175/192 Test #175: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1 ....................   Passed    0.01 sec
+        Start 176: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64
+176/192 Test #176: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64 ..........................   Passed    0.01 sec
+        Start 177: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647
+177/192 Test #177: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647 ...........   Passed    0.01 sec
+        Start 178: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5
+178/192 Test #178: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5 .........................   Passed    0.01 sec
+        Start 179: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0
+179/192 Test #179: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0 .........................   Passed    0.01 sec
+        Start 180: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1
+180/192 Test #180: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1 ...............   Passed    0.01 sec
+        Start 181: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64
+181/192 Test #181: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64 .....................   Passed    0.01 sec
+        Start 182: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647
+182/192 Test #182: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647 ......   Passed    0.01 sec
+        Start 183: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5
+183/192 Test #183: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5 ....................   Passed    0.01 sec
+        Start 184: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+184/192 Test #184: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object <00-00 00-00> .....................   Passed    0.01 sec
+        Start 185: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object <01-00 00-00>
+185/192 Test #185: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object <01-00 00-00> ......................   Passed    0.01 sec
+        Start 186: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+186/192 Test #186: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ..................   Passed    0.01 sec
+        Start 187: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+187/192 Test #187: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00> ......   Passed    0.01 sec
+        Start 188: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00>
+188/192 Test #188: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00> .......   Passed    0.02 sec
+        Start 189: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+189/192 Test #189: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ...   Passed    0.01 sec
+        Start 190: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+190/192 Test #190: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> .......   Passed    0.01 sec
+        Start 191: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+191/192 Test #191: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ........   Passed    0.01 sec
+        Start 192: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+192/192 Test #192: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ....   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 192
+
+Label Time Summary:
+unit    =   2.83 sec*proc (192 tests)
+
+Total Test time (real) =   2.99 sec
+# exit=0 seconds=3.0

@@ -1,0 +1,13 @@
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build
+    Start 3: unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType
+1/2 Test #3: unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType ...   Passed    0.02 sec
+    Start 4: unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType
+2/2 Test #4: unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType ...   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Label Time Summary:
+unit    =   0.05 sec*proc (2 tests)
+
+Total Test time (real) =   0.06 sec

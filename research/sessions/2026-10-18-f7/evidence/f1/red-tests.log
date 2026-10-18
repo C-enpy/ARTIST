@@ -1,0 +1,54 @@
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build
+    Start 3: unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType
+1/2 Test #3: unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType ...***Failed    0.02 sec
+Note: Google Test filter = AttributeContextTests.GetValue_MismatchReportsTheRealStoredType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeContextTests
+[ RUN      ] AttributeContextTests.GetValue_MismatchReportsTheRealStoredType
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author\ARTIST\tests-common\include\TestUtils.hpp(21): error: Expected: (errorMsg.find(expectedException.what())) != (std::string::npos), actual: 18446744073709551615 vs 18446744073709551615
+
+[  FAILED  ] AttributeContextTests.GetValue_MismatchReportsTheRealStoredType (0 ms)
+[----------] 1 test from AttributeContextTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeContextTests.GetValue_MismatchReportsTheRealStoredType
+
+ 1 FAILED TEST
+
+    Start 4: unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType
+2/2 Test #4: unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType ...***Failed    0.02 sec
+Note: Google Test filter = AttributeContextTests.SetValue_MismatchReportsTheRealStoredType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeContextTests
+[ RUN      ] AttributeContextTests.SetValue_MismatchReportsTheRealStoredType
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f1-cpp-author\ARTIST\tests-common\include\TestUtils.hpp(21): error: Expected: (errorMsg.find(expectedException.what())) != (std::string::npos), actual: 18446744073709551615 vs 18446744073709551615
+
+[  FAILED  ] AttributeContextTests.SetValue_MismatchReportsTheRealStoredType (0 ms)
+[----------] 1 test from AttributeContextTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeContextTests.SetValue_MismatchReportsTheRealStoredType
+
+ 1 FAILED TEST
+
+
+0% tests passed, 2 tests failed out of 2
+
+Label Time Summary:
+unit    =   0.04 sec*proc (2 tests)
+
+Total Test time (real) =   0.06 sec
+
+The following tests FAILED:
+	  3 - unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType (Failed) unit
+	  4 - unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType (Failed) unit
+Errors while running CTest

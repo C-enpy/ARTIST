@@ -1,0 +1,2 @@
+ARTIST_ASAN_HEALTHY value=42 trace=7 MSVC=194435221 STL=143 CXX=202400
+ARTIST_ASAN_RUNTIME C:\Users\djden\source\repos\ARTIST\out\build\windows-msvc-debug-asan\clang_rt.asan_dynamic-x86_64.dll

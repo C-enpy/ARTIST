@@ -1,0 +1,44 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/component-tests/src/graphic/shader/PassTests.cpp |  M ARTIST/include/graphic/context/PassContext.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Binder.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Unbinder.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/pass/AttributeReader.hpp |  M ARTIST/include/graphic/opengl/validator/AttributeConcept.hpp |  M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/include/graphic/pipeline/Pass.hpp |  M ARTIST/include/graphic/validator/ComponentConcept.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockBinder.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockSetter.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockUnbinder.hpp |  M ARTIST/tests/mock/graphic/pipeline/MockAttribute.hpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/BinderTests.cpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/UnbinderTests.cpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp |  M ARTIST/tests/src/graphic/pipeline/PassTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp | ?? ARTIST/tests/src/graphic/pipeline/AttributeContractTests.cpp | ?? ARTIST/tests/src/graphic/pipeline/AttributeOwnershipTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\cmake.EXE" --preset windows-msvc-debug -B out/b
+Preset CMake variables:
+
+  ARTIST_ENABLE_ASAN="OFF"
+  BUILD_TESTING="ON"
+  CMAKE_BUILD_TYPE="Debug"
+  CMAKE_INSTALL_PREFIX:PATH="C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/install/windows-msvc-debug"
+  CMAKE_TOOLCHAIN_FILE:FILEPATH="C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/build/windows-msvc-debug/conan_toolchain.cmake"
+  COVERAGE="OFF"
+  MOCK_GL="ON"
+
+-- Using Conan toolchain: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/build/windows-msvc-debug/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Configuring done (2.2s)
+CMake Warning in ARTIST/component-tests/CMakeLists.txt:
+  The object file directory
+
+    C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b/ARTIST/component-tests/CMakeFiles/ArtistLib_component_tests.dir/./
+
+  has 194 characters.  The maximum full path to an object file is 250
+  characters (see CMAKE_OBJECT_PATH_MAX).  Object file
+
+    src/graphic/pipeline/PipelineLifetimeComponentTests.cpp.obj
+
+  cannot be safely placed under this directory.  The build may not work
+  correctly.
+
+
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+# exit=0 seconds=2.4

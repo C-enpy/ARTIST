@@ -1,0 +1,13 @@
+-- Using Conan toolchain: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Configuring done (2.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: C:/Users/djden/source/repos/ARTIST/out/mission-f7/f1-build

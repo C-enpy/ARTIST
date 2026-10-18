@@ -1,0 +1,179 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R ^unit\.AttributeSetterTests\. --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\out\mission-f7\t2\red-a-unit.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+    Start 24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData
+1/6 Test #24: unit.AttributeSetterTests.SetAttributeTest_CallBufferData ..........................***Failed    0.02 sec
+Note: Google Test filter = AttributeSetterTests.SetAttributeTest_CallBufferData
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_CallBufferData
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glBufferData_mock(34962, 8, 000002B81D51D060, 35044)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(40): EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glBufferData_mock(0x8892, sizeof(float), attrValue.get(), 0x88E4))...
+  Expected arg #1: is equal to 4
+           Actual: 8
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glVertexAttribPointer_mock(0, 0, 0, '\0', 8, NULL)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(40): error: Actual function call count doesn't match EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glBufferData_mock(0x8892, sizeof(float), attrValue.get(), 0x88E4))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallBufferData (1 ms)
+[----------] 1 test from AttributeSetterTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallBufferData
+
+ 1 FAILED TEST
+
+    Start 25: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size
+2/6 Test #25: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size ..............***Failed    0.02 sec
+Note: Google Test filter = AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glBufferData_mock(34962, 8, 000001FC12D5D420, 35044)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(57): EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glBufferData_mock(0x8892, sizeof(glm::vec3), attrValue.get(), 0x88E4))...
+  Expected arg #1: is equal to 12
+           Actual: 8
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glVertexAttribPointer_mock(0, 0, 0, '\0', 8, NULL)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(57): error: Actual function call count doesn't match EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glBufferData_mock(0x8892, sizeof(glm::vec3), attrValue.get(), 0x88E4))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size (0 ms)
+[----------] 1 test from AttributeSetterTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size
+
+ 1 FAILED TEST
+
+    Start 26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+3/6 Test #26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer .................***Failed    0.02 sec
+Note: Google Test filter = AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glBufferData_mock(34962, 8, 000001F546E0CFD0, 35044)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glVertexAttribPointer_mock(1, 1, 5126, '\0', 8, NULL)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(77): EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glVertexAttribPointer_mock(1, 1, 0x1406, 0, sizeof(float), (void *)nullptr))...
+  Expected arg #4: is equal to 4
+           Actual: 8
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(77): error: Actual function call count doesn't match EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glVertexAttribPointer_mock(1, 1, 0x1406, 0, sizeof(float), (void *)nullptr))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer (1 ms)
+[----------] 1 test from AttributeSetterTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+
+ 1 FAILED TEST
+
+    Start 27: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride
+4/6 Test #27: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride ...***Failed    0.02 sec
+Note: Google Test filter = AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeSetterTests
+[ RUN      ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glBufferData_mock(34962, 8, 00000194491AB9D0, 35044)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+unknown file: error: 
+Unexpected mock function call - returning directly.
+    Function call: glVertexAttribPointer_mock(1, 3, 5126, '\0', 8, NULL)
+Google Mock tried the following 1 expectation, but it didn't match:
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(97): EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glVertexAttribPointer_mock(1, 3, 0x1406, 0, sizeof(glm::vec3), (void *)nullptr))...
+  Expected arg #4: is equal to 12
+           Actual: 8
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\tests\src\graphic\opengl\pipeline\component\attribute\SetterTests.cpp(97): error: Actual function call count doesn't match EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glVertexAttribPointer_mock(1, 3, 0x1406, 0, sizeof(glm::vec3), (void *)nullptr))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride (1 ms)
+[----------] 1 test from AttributeSetterTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride
+
+ 1 FAILED TEST
+
+    Start 28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr
+5/6 Test #28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenContextIsNullptr ......   Passed    0.02 sec
+    Start 29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+6/6 Test #29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet ........   Passed    0.02 sec
+
+33% tests passed, 4 tests failed out of 6
+
+Label Time Summary:
+unit    =   0.13 sec*proc (6 tests)
+
+Total Test time (real) =   0.15 sec
+
+The following tests FAILED:
+	 24 - unit.AttributeSetterTests.SetAttributeTest_CallBufferData (Failed) unit
+	 25 - unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size (Failed) unit
+	 26 - unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer (Failed) unit
+	 27 - unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride (Failed) unit
+Errors while running CTest
+# exit=8 seconds=0.2

@@ -1,0 +1,80 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/component-tests/src/graphic/shader/PassTests.cpp |  M ARTIST/include/graphic/context/PassContext.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Binder.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/attribute/Unbinder.hpp |  M ARTIST/include/graphic/opengl/pipeline/component/pass/AttributeReader.hpp |  M ARTIST/include/graphic/opengl/validator/AttributeConcept.hpp |  M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/include/graphic/pipeline/Pass.hpp |  M ARTIST/include/graphic/validator/ComponentConcept.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockBinder.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockSetter.hpp |  M ARTIST/tests/mock/graphic/opengl/pipeline/component/attribute/MockUnbinder.hpp |  M ARTIST/tests/mock/graphic/pipeline/MockAttribute.hpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/BinderTests.cpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/SetterTests.cpp |  M ARTIST/tests/src/graphic/opengl/pipeline/component/attribute/UnbinderTests.cpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp |  M ARTIST/tests/src/graphic/pipeline/PassTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp | ?? ARTIST/tests/src/graphic/pipeline/AttributeContractTests.cpp | ?? ARTIST/tests/src/graphic/pipeline/AttributeOwnershipTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R ^unit\.(Attribute|OwnerStates/AttributeOwnerStateTests) --output-on-failure --no-tests=error --output-junit C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/mission-f7/t2/green-n-unit.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+      Start  21: unit.AttributeBinderTests.BindAttributeTest_createBuffer
+ 1/32 Test  #21: unit.AttributeBinderTests.BindAttributeTest_createBuffer ......................................................................................   Passed    0.06 sec
+      Start  22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer
+ 2/32 Test  #22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer ........................................................................................   Passed    0.02 sec
+      Start  23: unit.AttributeSetterTests.SetAttributeTest_CallBufferData
+ 3/32 Test  #23: unit.AttributeSetterTests.SetAttributeTest_CallBufferData .....................................................................................   Passed    0.02 sec
+      Start  24: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size
+ 4/32 Test  #24: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size .........................................................................   Passed    0.02 sec
+      Start  25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+ 5/32 Test  #25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer ............................................................................   Passed    0.03 sec
+      Start  26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride
+ 6/32 Test  #26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride ..............................................................   Passed    0.03 sec
+      Start  27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+ 7/32 Test  #27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet ...................................................................   Passed    0.04 sec
+      Start  28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNull
+ 8/32 Test  #28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNull ......................................................................   Passed    0.02 sec
+      Start  29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNotSet
+ 9/32 Test  #29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNotSet ....................................................................   Passed    0.02 sec
+      Start  30: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+10/32 Test  #30: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer ....................................................................................   Passed    0.02 sec
+      Start  31: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID
+11/32 Test  #31: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID ...................................................................................   Passed    0.02 sec
+      Start  32: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv
+12/32 Test  #32: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv .....................................................................................   Passed    0.02 sec
+      Start  33: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+13/32 Test  #33: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation ..............................................................   Passed    0.02 sec
+      Start  34: unit.AttributeReaderTests.ReadAttributes_InvalidPassID
+14/32 Test  #34: unit.AttributeReaderTests.ReadAttributes_InvalidPassID ........................................................................................   Passed    0.02 sec
+      Start  84: unit.AttributeOwnershipTests.NullContextIsRejected
+15/32 Test  #84: unit.AttributeOwnershipTests.NullContextIsRejected ............................................................................................   Passed    0.02 sec
+      Start  85: unit.AttributeOwnershipTests.PassContextRejectsNullAttribute
+16/32 Test  #85: unit.AttributeOwnershipTests.PassContextRejectsNullAttribute ..................................................................................   Passed    0.02 sec
+      Start  86: unit.AttributeTest.BindTest
+17/32 Test  #86: unit.AttributeTest.BindTest ...................................................................................................................   Passed    0.02 sec
+      Start  87: unit.AttributeTest.UnbindTest
+18/32 Test  #87: unit.AttributeTest.UnbindTest .................................................................................................................   Passed    0.02 sec
+      Start  88: unit.AttributeTest.SetTest
+19/32 Test  #88: unit.AttributeTest.SetTest ....................................................................................................................   Passed    0.02 sec
+      Start  89: unit.AttributeTest.GetContextTest
+20/32 Test  #89: unit.AttributeTest.GetContextTest .............................................................................................................   Passed    0.03 sec
+      Start 187: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+21/32 Test #187: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00> ..........   Passed    0.03 sec
+      Start 188: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00>
+22/32 Test #188: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00> ...........   Passed    0.03 sec
+      Start 189: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+23/32 Test #189: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> .......   Passed    0.02 sec
+      Start 190: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+24/32 Test #190: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ..........   Passed    0.02 sec
+      Start 191: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+25/32 Test #191: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ...........   Passed    0.02 sec
+      Start 192: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+26/32 Test #192: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> .......   Passed    0.02 sec
+      Start 193: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+27/32 Test #193: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ......   Passed    0.03 sec
+      Start 194: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+28/32 Test #194: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> .......   Passed    0.02 sec
+      Start 195: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+29/32 Test #195: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ...   Passed    0.02 sec
+      Start 196: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+30/32 Test #196: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ...........   Passed    0.02 sec
+      Start 197: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+31/32 Test #197: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ............   Passed    0.02 sec
+      Start 198: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+32/32 Test #198: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ........   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 32
+
+Label Time Summary:
+unit    =   0.75 sec*proc (32 tests)
+
+Total Test time (real) =   0.83 sec
+# exit=0 seconds=0.9

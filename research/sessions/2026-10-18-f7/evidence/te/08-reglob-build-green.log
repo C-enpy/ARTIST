@@ -1,0 +1,33 @@
+﻿COMMAND: cmake -S . -B 'C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; cmake --build 'C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build' --target ArtistLib_tests --parallel 1
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+JUNIT_WITNESS: CTEST_OUTPUT_SIZE_PASSED=65536 CTEST_OUTPUT_SIZE_FAILED=65536
+-- Using Conan toolchain: C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Configuring done (1.8s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build
+[1/2] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\pipeline\AttributeTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\include\graphic/context/AttributeContext.hpp(42): warning C4834: abandon de la valeur de retour de la fonction avec l'attribut [[nodiscard]]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\include\graphic/context/AttributeContext.hpp(42): note: le contexte d'instanciation du modèle (le plus ancien) est
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(88): note: voir la référence à l'instanciation de la fonction modèle 'void artist::graphic::pipeline::IAttribute<API>::set<int>(std::shared_ptr<int>)' en cours de compilation
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(88): note: voir la première référence à « artist::graphic::pipeline::IAttribute<API>::set » dans « AttributeTest_SetTest_Test::TestBody »
+        with
+        [
+            API=artist::mock::graphic::api::MockOpenGL
+        ]
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\include\graphic/pipeline/Attribute.hpp(105): note: voir la référence à l'instanciation de la fonction modèle 'void artist::graphic::context::AttributeContext<artist::mock::graphic::api::MockOpenGL>::setValue<int>(std::shared_ptr<int>)' en cours de compilation
+[2/2] Linking CXX executable ARTIST\tests\ArtistLib_tests.exe
+EXIT_CODE=0

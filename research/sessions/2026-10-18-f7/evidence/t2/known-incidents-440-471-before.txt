@@ -1,0 +1,32 @@
+﻿### Oracle GMock Attribute â€” FAIL historique, corrigÃ© et vÃ©rifiÃ© le 2026-10-17
+
+- Constat conservÃ© : `AttributeTests.cpp:65` (`AttributeTest.SetTest`), diagnostic
+  `mockOn` attendu une fois / observÃ© zÃ©ro **aprÃ¨s summary** ; exit 0 du
+  processus et CTest passant malgrÃ© tout. Reproduit **directement** (toutes
+  suites) **et** sous CTest normal/ASan ; la revue l'a trouvÃ© dans
+  `out/mission-a1a2/i0-verification/asan-last-test.log:2494-2501` avec filtre
+  individuel et Â« Test Passed Â». Les sorties JUnit des campagnes tronquÃ©es Ã 
+  1024 octets cachaient l'erreur ; un tÃ©moin Ã  65536 conserve le diagnostic dans
+  `normal-attribute-settest.xml` ; croisement `LastTest.log`.
+- Arbitrage historique : dÃ©faut d'oracle **prÃ©existant hors pÃ©rimÃ¨tre A2**, pas
+  une rÃ©gression A2 ; corrigÃ© ensuite par amendement explicite, sans effacer le
+  FAIL initial. L'absence dans les JUnit tronquÃ©s ne prouve pas l'absence dans
+  les logs bruts.
+- **Interdits** : qualifier le dÃ©faut Â« direct-only Â», qualifier 215/198 comme
+  Â« tous les oracles valides Â» ou annoncer un PASS global ; ne pas transformer
+  un exit 0 en PASS sans rÃ©serve.
+- **Amendement oracle terminÃ© au pÃ©rimÃ¨tre** : l'utilisateur a autorisÃ© la
+  correction le 2026-10-17 (Â« Alors vas-y Â»). Checkpoint oracle-only
+  `d1a9ee1` : ancien test rÃ©ellement RED (binaire1, CTest8, JUnit failure1 avant
+  rÃ©sumÃ©), binaire nÃ©gatif prÃ©servÃ© et recoupÃ©. GREEN intÃ©grÃ© `b9c90fd`, un seul
+  fichier test : TearDown vÃ©rifie/efface les quatre singletons sans court-circuit,
+  attente sur la spÃ©cialisation effective `MockSetter<shared_ptr<int>>`, Times(1)
+  conservÃ©, contexte et valeur resserrÃ©s. Production et mocks inchangÃ©s.
+  Revue G2 **PASS sans finding** ; QA G3 indÃ©pendante **176 CPU + 176 CPU ASan**,
+  contrÃ´les nÃ©gatifs rÃ©pÃ©tÃ©s1/8/failure1 et positifs0/0/failure0 sans diagnostic
+  tardif, 137 artefacts et 130 empreintes recoupÃ©s. TearDown aprÃ¨s assertion
+  fatale vÃ©rifiÃ© statiquement dans GoogleTest v1.14.0, pas de scÃ©nario dÃ©diÃ©
+  exÃ©cutÃ©. Le FAIL historique n'est pas requalifiÃ©. Manifeste :
+  `_meta/session-2026-10-17-attribute-oracle-validation.json` ; contrat :
+  `_meta/session-2026-10-17-attribute-oracle-plan.json` ; fiche courte :
+  [[architecture/next-mission|next-mission]].

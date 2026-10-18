@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="2"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="1"
+	timestamp="2026-10-17T18:51:18"
+	>
+	<testcase name="opengl.UniformReaderComponentTest.NominalUniformHasNativeLocationAndType" classname="opengl.UniformReaderComponentTest.NominalUniformHasNativeLocationAndType" time="0.579283" status="run">
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderComponentTest.NominalUniformHasNativeLocationAndType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderComponentTest
+[ RUN      ] UniformReaderComponentTest.NominalUniformHasNativeLocationAndType
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[       OK ] UniformReaderComponentTest.NominalUniformHasNativeLocationAndType (480 ms)
+[----------] 1 test from UniformReaderComponentTest (480 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (480 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName" classname="opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName" time="0.514043" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="opengl"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformReaderComponentTest
+[ RUN      ] UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+[UniformReader] GL_ACTIVE_UNIFORM_MAX_LENGTH=325
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\component-tests\src\graphic\shader\UniformReaderComponentTests.cpp(117): error: Value of: uniforms.contains(name)
+  Actual: false
+Expected: true
+
+[  FAILED  ] UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName (416 ms)
+[----------] 1 test from UniformReaderComponentTest (416 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (416 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+</testsuite>

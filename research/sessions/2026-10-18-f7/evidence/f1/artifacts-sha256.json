@@ -1,0 +1,131 @@
+﻿{
+    "utc":  "2026-10-18T09:47:26.6013071Z",
+    "head":  "bfd94a0b971fc39b52419584166aebda8fb7bfaa",
+    "artifacts":  [
+                      {
+                          "file":  "analyze-evidence.py",
+                          "bytes":  3034,
+                          "sha256":  "C35D905A641BE829064FB5BE0100F0466845A0C4BBD5EB5E86DE9188FF3C451B"
+                      },
+                      {
+                          "file":  "baseline-build.log",
+                          "bytes":  411610,
+                          "sha256":  "68E6F91D32548CFC2F5950F06819C0DA6931CDA9982E8267AE62F875838E0F2B"
+                      },
+                      {
+                          "file":  "baseline-conan.log",
+                          "bytes":  3964,
+                          "sha256":  "1B84A017884242C3D22AA16D903BF4F635AAB9A6F020ACAE040EBAF958C94B54"
+                      },
+                      {
+                          "file":  "baseline-configure.log",
+                          "bytes":  1895,
+                          "sha256":  "E9A311EA806BF6EEC3CF06B2CC7562633813493DA37E302DCD8E68614590FAB4"
+                      },
+                      {
+                          "file":  "baseline-discovery.json",
+                          "bytes":  216741,
+                          "sha256":  "A40B7DCDD48D207C51745E751A1C1026E19D8609975AC6193A6D87CE95EB75D4"
+                      },
+                      {
+                          "file":  "commit.log",
+                          "bytes":  553,
+                          "sha256":  "A67A4E66F3C921E0B94BA2DC1257DE383EBC7057CEAF35E998D61C136640DF25"
+                      },
+                      {
+                          "file":  "committed-identity.json",
+                          "bytes":  1423,
+                          "sha256":  "3B5296C90094226B6DF6C6FEA0F89BE6A1DDA9BB68A9C196BD1F0FB75B2D969D"
+                      },
+                      {
+                          "file":  "environment.log",
+                          "bytes":  194,
+                          "sha256":  "C52C54169479303EBFB6F4570F095D53D94C076C87074A342684F9552CF8AF02"
+                      },
+                      {
+                          "file":  "g1.json",
+                          "bytes":  1279,
+                          "sha256":  "4D18FC44C8AC2B65121204810CCBC01E412DE195F46C8955C19404ABE2CD6B29"
+                      },
+                      {
+                          "file":  "g2.json",
+                          "bytes":  3300,
+                          "sha256":  "50CABD4E6ABFE1A363CE83A96708E6DFADDF9650614DB338D450BAB0050EDF26"
+                      },
+                      {
+                          "file":  "green-build.log",
+                          "bytes":  271508,
+                          "sha256":  "414829CA538861E6F5C87D6E1E7C189C25D02B5E3967168D662D6757C365CD52"
+                      },
+                      {
+                          "file":  "green-discovery.json",
+                          "bytes":  218495,
+                          "sha256":  "6D2C8C7390A106145BA90BA6766823E20DD59FAF8CB5157A03524AACE3DFA1B5"
+                      },
+                      {
+                          "file":  "green-identity.json",
+                          "bytes":  912,
+                          "sha256":  "C5D34A754F7D54AF73063B804CDB46351D03BEE54F5B1990E71C49A7C60CDB74"
+                      },
+                      {
+                          "file":  "green-targeted.log",
+                          "bytes":  687,
+                          "sha256":  "C0A7D75BFD2FA1FC7685CE8B190DABB829138B50AE967997CAFEF8DEF0C5755F"
+                      },
+                      {
+                          "file":  "green-targeted-junit.xml",
+                          "bytes":  2043,
+                          "sha256":  "9165A8DC62484E4324335A42041E11C5B50A0F6FF0F9DE352912758BEA49C609"
+                      },
+                      {
+                          "file":  "green-unit.log",
+                          "bytes":  68383,
+                          "sha256":  "B0A9B156F51715FDA18F20DDCD0D1B3847135ED01B86F082C9EFDF542690F08A"
+                      },
+                      {
+                          "file":  "green-unit-junit.xml",
+                          "bytes":  294134,
+                          "sha256":  "13C7B276E3C26DC6F370247E2BEE0DCAF74026016A299E6961630915BB816935"
+                      },
+                      {
+                          "file":  "red-build.log",
+                          "bytes":  1549,
+                          "sha256":  "6FD39199A575FF4A1149834BF23E3258BB933AB862E57C89D022909E6255A11F"
+                      },
+                      {
+                          "file":  "red-configure.log",
+                          "bytes":  699,
+                          "sha256":  "72FF45CDE6E04F1920CC2621451312D8000B14FC5B8C6230D29B4C9193965C3E"
+                      },
+                      {
+                          "file":  "red-discovery.json",
+                          "bytes":  218495,
+                          "sha256":  "6D2C8C7390A106145BA90BA6766823E20DD59FAF8CB5157A03524AACE3DFA1B5"
+                      },
+                      {
+                          "file":  "red-identity.json",
+                          "bytes":  1005,
+                          "sha256":  "D5FC04D4757D4DD870742C794E26843CC294EE7AFC55DD30D3A17EA4F54921A6"
+                      },
+                      {
+                          "file":  "red-junit.xml",
+                          "bytes":  3003,
+                          "sha256":  "5EA1CF540628ED305C920A3E9FCB170D648E74FBC6B36AB3B84F275E2D686D42"
+                      },
+                      {
+                          "file":  "red-tests.log",
+                          "bytes":  2959,
+                          "sha256":  "6647342A3B5723FC2E00EA6AB39976DB699666255F6A3FA2CC268AA03070CB6F"
+                      },
+                      {
+                          "file":  "run-validation.cmd",
+                          "bytes":  3526,
+                          "sha256":  "91323BBF68AEF5272D34F30472C5CDA71AF81F7407E76918611F07C29751CF7A"
+                      },
+                      {
+                          "file":  "validation-summary.json",
+                          "bytes":  1097,
+                          "sha256":  "502CC325E5FF24F534311A8BC0DB242EECFDFBFEE4CEB0D185CD50D052B47C57"
+                      }
+                  ]
+}

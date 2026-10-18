@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="16"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T14:40:01"
+	>
+	<testcase name="unit.UniformOwnershipTests.NullContextIsRejected" classname="unit.UniformOwnershipTests.NullContextIsRejected" time="0.01497" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformOwnershipTests.NullContextIsRejected
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformOwnershipTests
+[ RUN      ] UniformOwnershipTests.NullContextIsRejected
+[       OK ] UniformOwnershipTests.NullContextIsRejected (0 ms)
+[----------] 1 test from UniformOwnershipTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformOwnershipTests.PassContextRejectsNullUniform" classname="unit.UniformOwnershipTests.PassContextRejectsNullUniform" time="0.0135736" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformOwnershipTests.PassContextRejectsNullUniform
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformOwnershipTests
+[ RUN      ] UniformOwnershipTests.PassContextRejectsNullUniform
+[       OK ] UniformOwnershipTests.PassContextRejectsNullUniform (0 ms)
+[----------] 1 test from UniformOwnershipTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformValueTests.GetValueReturnsTheStoredValue" classname="unit.UniformValueTests.GetValueReturnsTheStoredValue" time="0.0134931" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformValueTests.GetValueReturnsTheStoredValue
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformValueTests
+[ RUN      ] UniformValueTests.GetValueReturnsTheStoredValue
+[       OK ] UniformValueTests.GetValueReturnsTheStoredValue (0 ms)
+[----------] 1 test from UniformValueTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch" classname="unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch" time="0.0141253" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformValueTests
+[ RUN      ] UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch
+[       OK ] UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch (0 ms)
+[----------] 1 test from UniformValueTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized" classname="unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized" time="0.0143285" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformValueTests.GetValueWithoutValueThrowsUninitialized
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformValueTests
+[ RUN      ] UniformValueTests.GetValueWithoutValueThrowsUninitialized
+[       OK ] UniformValueTests.GetValueWithoutValueThrowsUninitialized (0 ms)
+[----------] 1 test from UniformValueTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformValueTests.SetValueReplacesTheStoredType" classname="unit.UniformValueTests.SetValueReplacesTheStoredType" time="0.0136952" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformValueTests.SetValueReplacesTheStoredType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformValueTests
+[ RUN      ] UniformValueTests.SetValueReplacesTheStoredType
+[       OK ] UniformValueTests.SetValueReplacesTheStoredType (0 ms)
+[----------] 1 test from UniformValueTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.UniformValueTests.FailedSetValueKeepsTheStoredValue" classname="unit.UniformValueTests.FailedSetValueKeepsTheStoredValue" time="0.0132196" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = UniformValueTests.FailedSetValueKeepsTheStoredValue
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from UniformValueTests
+[ RUN      ] UniformValueTests.FailedSetValueKeepsTheStoredValue
+[       OK ] UniformValueTests.FailedSetValueKeepsTheStoredValue (0 ms)
+[----------] 1 test from UniformValueTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object &lt;00-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object &lt;00-00 00-00&gt;" time="0.0142206" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded
+[       OK ] OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object &lt;01-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object &lt;01-00 00-00&gt;" time="0.0137163" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty
+[       OK ] OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object &lt;02-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object &lt;02-00 00-00&gt;" time="0.0137496" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom
+[       OK ] OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object &lt;00-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object &lt;00-00 00-00&gt;" time="0.0149852" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded
+[       OK ] OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object &lt;01-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object &lt;01-00 00-00&gt;" time="0.014465" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty
+[       OK ] OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object &lt;02-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object &lt;02-00 00-00&gt;" time="0.0142199" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom
+[       OK ] OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object &lt;00-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object &lt;00-00 00-00&gt;" time="0.0137296" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded
+[       OK ] OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object &lt;01-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object &lt;01-00 00-00&gt;" time="0.0145981" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty
+[       OK ] OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object &lt;02-00 00-00&gt;" classname="unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object &lt;02-00 00-00&gt;" time="0.0136551" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from OwnerStates/UniformOwnerStateTests
+[ RUN      ] OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom
+[       OK ] OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom (0 ms)
+[----------] 1 test from OwnerStates/UniformOwnerStateTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

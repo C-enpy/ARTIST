@@ -1,0 +1,21 @@
+﻿{
+    "phase":  "GREEN-before-build",
+    "utc":  "2026-10-18T09:42:50.1741893Z",
+    "head":  "113411d71cfef56737fb8992f34b70e4675d2118",
+    "delta":  [
+                  " M ARTIST/include/graphic/context/AttributeContext.hpp",
+                  "?? ARTIST/tests/src/graphic/context/AttributeContextTests.cpp"
+              ],
+    "files":  [
+                  {
+                      "path":  "ARTIST/include/graphic/context/AttributeContext.hpp",
+                      "sha256":  "2A041B620BAF3F5ACF0AA85B28F3E7A8B7894B5554410F2A87C736A6931D7C86"
+                  },
+                  {
+                      "path":  "ARTIST/tests/src/graphic/context/AttributeContextTests.cpp",
+                      "sha256":  "FDA116F444D08BFFA9EEF486F7464B6AEA7C1FA835900E9C99C324DE4DE62135"
+                  }
+              ],
+    "expectedTargetedTests":  2,
+    "expectedUnitTests":  251
+}

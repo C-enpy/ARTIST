@@ -1,0 +1,575 @@
+﻿{
+    "head":  "d24340f7e129a03da2a7c74a25025526c9c3cd00",
+    "sources":  [
+                    {
+                        "sha256":  "380cdaab465d6c11495fc3d5ada5e5c0578afd2f0f4d76b76bf7eb310703a6cb",
+                        "path":  "ARTIST/include/graphic/opengl/context/UniformContext.hpp"
+                    },
+                    {
+                        "sha256":  "26ad921f403689f5f8ffff1cab61a2de74baf5c9a58842000ec64e4e7d8526dd",
+                        "path":  "ARTIST/include/graphic/opengl/pipeline/component/uniform/Setter.hpp"
+                    },
+                    {
+                        "sha256":  "b528cd7f8087a85c4970a5c4da86b76d3fc1a93936d048bae8d4eaf5a58c2246",
+                        "path":  "ARTIST/tests/src/graphic/pipeline/UniformTests.cpp"
+                    },
+                    {
+                        "sha256":  "6b82d168eef95786d5fbe4c6dc3e36608354b834da6cfa072e0ebbacf5bebc48",
+                        "path":  "ARTIST/tests/src/graphic/pipeline/UniformCardinalityTests.cpp"
+                    },
+                    {
+                        "sha256":  "e80b826c0a33479c05fa11b844178804c341646428fe25ebd13aef9f77f6924a",
+                        "path":  "ARTIST/component-tests/src/graphic/shader/UniformCardinalityComponentTests.cpp"
+                    },
+                    {
+                        "sha256":  "9edc5dbaad84917ccc2fcc0fd61113b30c3e8f8413dc94c9f51fad97b647c86e",
+                        "path":  "test-datas/shaders/vertex/good/f2-single-values.vert"
+                    },
+                    {
+                        "sha256":  "4dc08c977835e2cfcf57febaf1902eb9f03f37b5648ffdbab60b6132998e91a7",
+                        "path":  "test-datas/shaders/vertex/good/f2-fp64-single-values.vert"
+                    }
+                ],
+    "junit":  [
+                  {
+                      "failures":  0,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:54:08",
+                      "file":  "final-cpu.xml",
+                      "declaredTests":  "249",
+                      "skipped":  0,
+                      "declaredFailures":  "0",
+                      "tests":  249
+                  },
+                  {
+                      "failures":  0,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:54:14",
+                      "file":  "final-native.xml",
+                      "declaredTests":  "48",
+                      "skipped":  0,
+                      "declaredFailures":  "0",
+                      "tests":  48
+                  },
+                  {
+                      "failures":  0,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:52:02",
+                      "file":  "green-cpu.xml",
+                      "declaredTests":  "249",
+                      "skipped":  0,
+                      "declaredFailures":  "0",
+                      "tests":  249
+                  },
+                  {
+                      "failures":  0,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:53:58",
+                      "file":  "green-f2-native.xml",
+                      "declaredTests":  "3",
+                      "skipped":  0,
+                      "declaredFailures":  "0",
+                      "tests":  3
+                  },
+                  {
+                      "failures":  0,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:56:18",
+                      "file":  "ratified-cpu.xml",
+                      "declaredTests":  "249",
+                      "skipped":  0,
+                      "declaredFailures":  "0",
+                      "tests":  249
+                  },
+                  {
+                      "failures":  0,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:56:24",
+                      "file":  "ratified-native.xml",
+                      "declaredTests":  "48",
+                      "skipped":  0,
+                      "declaredFailures":  "0",
+                      "tests":  48
+                  },
+                  {
+                      "failures":  22,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:48:32",
+                      "file":  "red-cpu.xml",
+                      "declaredTests":  "248",
+                      "skipped":  0,
+                      "declaredFailures":  "22",
+                      "tests":  248
+                  },
+                  {
+                      "failures":  6,
+                      "errors":  0,
+                      "timestamp":  "2026-10-18T10:49:00",
+                      "file":  "red-oracle.xml",
+                      "declaredTests":  "10",
+                      "skipped":  0,
+                      "declaredFailures":  "6",
+                      "tests":  10
+                  }
+              ],
+    "artifacts":  [
+                      {
+                          "path":  "audit-final.log",
+                          "sha256":  "1799b05bd7cfd8868d37aabe6043343f642fc21388c9d5d17ff3afe8b91455e7",
+                          "modifiedUtc":  "2026-10-18T08:57:12.4685402Z",
+                          "bytes":  4947
+                      },
+                      {
+                          "path":  "audit.ps1",
+                          "sha256":  "1fac4c1a6233a401f173f6404879dfbfecd8c41164853fb3434affbbfcd0fac2",
+                          "modifiedUtc":  "2026-10-18T08:55:09.3612151Z",
+                          "bytes":  3517
+                      },
+                      {
+                          "path":  "build-final.log",
+                          "sha256":  "5925c51e8164a708ca16767dd5f3f3251fa174f7da58dd1ac0200bd98a77d45f",
+                          "modifiedUtc":  "2026-10-18T08:53:43.4926361Z",
+                          "bytes":  330
+                      },
+                      {
+                          "path":  "build-green.log",
+                          "sha256":  "29fcc7f2ca60e7d0f7cc0fa29276efcdbcdef2014db5ab734640485d22a1c076",
+                          "modifiedUtc":  "2026-10-18T08:52:00.3740196Z",
+                          "bytes":  281855
+                      },
+                      {
+                          "path":  "build-red-oracle.log",
+                          "sha256":  "7cab64992fae5171b86fd712d1f9b8979ef91bee3e713584e18c31baed39058c",
+                          "modifiedUtc":  "2026-10-18T08:48:58.2983372Z",
+                          "bytes":  21298
+                      },
+                      {
+                          "path":  "build-red.log",
+                          "sha256":  "62a0c7879b63e08b0ddb9b6b74339179faa799481d4413bfece478360a3da463",
+                          "modifiedUtc":  "2026-10-18T08:48:20.2474481Z",
+                          "bytes":  436984
+                      },
+                      {
+                          "path":  "configure-before.log",
+                          "sha256":  "dd0b5ea818e7158d8f7edcc5bca701127ac0c5bba7dfaa2f2df7652d34864eaa",
+                          "modifiedUtc":  "2026-10-18T08:45:08.8384035Z",
+                          "bytes":  7569
+                      },
+                      {
+                          "path":  "configure-final.log",
+                          "sha256":  "816ba4f7aa3dc841af52c67c1ec2f6c1909e6c392b31b6dc2cd6c2a98ed88547",
+                          "modifiedUtc":  "2026-10-18T08:53:37.9212812Z",
+                          "bytes":  6373
+                      },
+                      {
+                          "path":  "discovery-final.log",
+                          "sha256":  "a70f90c7210130c1efebdf00067e6f2008c4fe240c312daa70147b8d394b1439",
+                          "modifiedUtc":  "2026-10-18T08:53:45.5327634Z",
+                          "bytes":  265852
+                      },
+                      {
+                          "path":  "discovery-red.log",
+                          "sha256":  "da3231b2755250df2958ea719953072c38cdc122950839cd73f7210315838afd",
+                          "modifiedUtc":  "2026-10-18T08:48:30.8644514Z",
+                          "bytes":  261754
+                      },
+                      {
+                          "path":  "final-cpu.log",
+                          "sha256":  "e0fe2f7bab780aecbb089f9e129b673050db95c2b5b04e1e8c76fc8e5b34d2ef",
+                          "modifiedUtc":  "2026-10-18T08:54:12.6086661Z",
+                          "bytes":  68218
+                      },
+                      {
+                          "path":  "final-cpu.xml",
+                          "sha256":  "86b168c5db9ffabeee6ac09015d0e231babb2d4639cc3f66c5c809de9bfc3a3d",
+                          "modifiedUtc":  "2026-10-18T08:54:12.5842732Z",
+                          "bytes":  292414
+                      },
+                      {
+                          "path":  "final-native.log",
+                          "sha256":  "5d841f280d755dbb162cab8ab7bbd2c61c711b0d4bad822abf978c2d98f0bee6",
+                          "modifiedUtc":  "2026-10-18T08:54:34.9483013Z",
+                          "bytes":  11050
+                      },
+                      {
+                          "path":  "final-native.xml",
+                          "sha256":  "d8509c333c5f049b47a93a851059830c81a2a9ad4181e87f7393c7a80519afb8",
+                          "modifiedUtc":  "2026-10-18T08:54:34.9255942Z",
+                          "bytes":  47633
+                      },
+                      {
+                          "path":  "g2-after-final.log",
+                          "sha256":  "f602c2cc20758ac98eed7ae1f815974c4bf90dbcd0afeec46ddd4e9cc0f0f6c1",
+                          "modifiedUtc":  "2026-10-18T08:56:46.8491359Z",
+                          "bytes":  2994
+                      },
+                      {
+                          "path":  "g2-before-final.log",
+                          "sha256":  "f602c2cc20758ac98eed7ae1f815974c4bf90dbcd0afeec46ddd4e9cc0f0f6c1",
+                          "modifiedUtc":  "2026-10-18T08:56:16.8641582Z",
+                          "bytes":  2994
+                      },
+                      {
+                          "path":  "green-cpu.log",
+                          "sha256":  "fe89eab57f468582897bf668bf6e9da79c2aef98b90c099968f586f8c8d05361",
+                          "modifiedUtc":  "2026-10-18T08:52:06.7900441Z",
+                          "bytes":  68218
+                      },
+                      {
+                          "path":  "green-cpu.xml",
+                          "sha256":  "468641e1ddc71ae7c2741d3910be813830b1087bf71f44f2f25ae38ac4031947",
+                          "modifiedUtc":  "2026-10-18T08:52:06.7669259Z",
+                          "bytes":  292418
+                      },
+                      {
+                          "path":  "green-f2-native.log",
+                          "sha256":  "351a37033f9b9ca72eac27bc5107712397cfd1e349025befcc5f66b279e521b3",
+                          "modifiedUtc":  "2026-10-18T08:54:00.3227112Z",
+                          "bytes":  1461
+                      },
+                      {
+                          "path":  "green-f2-native.xml",
+                          "sha256":  "417d3a8e6f15eddce31a693b18d5e05b297b15e93639ab9d66fb71e072a5a012",
+                          "modifiedUtc":  "2026-10-18T08:54:00.3016809Z",
+                          "bytes":  4260
+                      },
+                      {
+                          "path":  "identity-before.log",
+                          "sha256":  "5e0fbb358ac08ced4e14a16f98863bc849e22029a5c5f2a3220f0c6c0392320b",
+                          "modifiedUtc":  "2026-10-18T08:44:52.7235781Z",
+                          "bytes":  1388
+                      },
+                      {
+                          "path":  "identity-tested.log",
+                          "sha256":  "eb1ae965bebd3842f93ab1dcf0fd6c22a15530142cb5cbf1e29556a9d39efb8d",
+                          "modifiedUtc":  "2026-10-18T08:53:47.6558795Z",
+                          "bytes":  2365
+                      },
+                      {
+                          "path":  "inventory-before.log",
+                          "sha256":  "d6c4e26ca794d062b845c9d19daf959047251f5be8584cb4fcac889ea92102fd",
+                          "modifiedUtc":  "2026-10-18T08:44:49.9604901Z",
+                          "bytes":  5522
+                      },
+                      {
+                          "path":  "inventory-final.log",
+                          "sha256":  "bf0101890a63b0c6cd6fc1fd12b4575acd6aa766754b1754da385848da01d3d7",
+                          "modifiedUtc":  "2026-10-18T08:59:01.6842338Z",
+                          "bytes":  4988
+                      },
+                      {
+                          "path":  "inventory-green.log",
+                          "sha256":  "10d5fc4cea2356e26593786a4623eff1813e7a6aa0f03ca3326800153037be3c",
+                          "modifiedUtc":  "2026-10-18T08:50:00.3292486Z",
+                          "bytes":  4986
+                      },
+                      {
+                          "path":  "ratified-cpu.log",
+                          "sha256":  "ba3f34bacb59746cf90ec0c15e8b0304bfbe7ad4d719f9c3fe3dc04e1ca50ba6",
+                          "modifiedUtc":  "2026-10-18T08:56:22.9720990Z",
+                          "bytes":  68221
+                      },
+                      {
+                          "path":  "ratified-cpu.xml",
+                          "sha256":  "c8b9950729c27ed19519764aa6bad2463830c743158d48e7b99c791b9da889c5",
+                          "modifiedUtc":  "2026-10-18T08:56:22.9510554Z",
+                          "bytes":  292418
+                      },
+                      {
+                          "path":  "ratified-native.log",
+                          "sha256":  "1656e6ef5360279a2d64834486ae8fcb3570821e165d245adfefc87b0fb434eb",
+                          "modifiedUtc":  "2026-10-18T08:56:44.7685411Z",
+                          "bytes":  11053
+                      },
+                      {
+                          "path":  "ratified-native.xml",
+                          "sha256":  "b23ed8b52b8b9bc05a09536c0862a33a198ee4ab8e16b6d99645ef9b0c26aba2",
+                          "modifiedUtc":  "2026-10-18T08:56:44.7462333Z",
+                          "bytes":  47632
+                      },
+                      {
+                          "path":  "red-cpu.log",
+                          "sha256":  "2e5d41aec2b1e98a34dbd2ebb81cd5ae411d26a60716981af4c1f2b2c3524ad4",
+                          "modifiedUtc":  "2026-10-18T08:48:37.5380196Z",
+                          "bytes":  103785
+                      },
+                      {
+                          "path":  "red-cpu.xml",
+                          "sha256":  "5101f33e9beb61c95cc86ff9d46adb3e4d33ad9b8dbbb0cf5f50d97d7f692d61",
+                          "modifiedUtc":  "2026-10-18T08:48:37.4622933Z",
+                          "bytes":  311863
+                      },
+                      {
+                          "path":  "red-oracle.log",
+                          "sha256":  "d85f261bed0a466ef2dd163cb6e877515aabb454d6855662e901e622f3516f02",
+                          "modifiedUtc":  "2026-10-18T08:49:00.5162434Z",
+                          "bytes":  12583
+                      },
+                      {
+                          "path":  "red-oracle.xml",
+                          "sha256":  "a0cde8d75dc2d6d0997820d4a37be0de3659dcb3f590f7ed2d3addbd6a39e2dd",
+                          "modifiedUtc":  "2026-10-18T08:49:00.4510415Z",
+                          "bytes":  14650
+                      },
+                      {
+                          "path":  "run.ps1",
+                          "sha256":  "8e4239a28b318f00187ecfc55532a3200ea4fdc5887b4eb8643af968552bf445",
+                          "modifiedUtc":  "2026-10-18T08:58:40.2072634Z",
+                          "bytes":  3870
+                      }
+                  ],
+    "utc":  "2026-10-18T08:59:02.2331901Z",
+    "inventory":  [
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  false,
+                          "gl":  "glUniform1f(uniform.getUniformID(), uniform.getValue\u003cGLfloat\u003e());",
+                          "type":  "GLfloat",
+                          "line":  42
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  false,
+                          "gl":  "glUniform1i(uniform.getUniformID(), uniform.getValue\u003cGLint\u003e());",
+                          "type":  "GLint",
+                          "line":  57
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  false,
+                          "gl":  "glUniform1ui(uniform.getUniformID(), uniform.getValue\u003cGLuint\u003e());",
+                          "type":  "GLuint",
+                          "line":  72
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  false,
+                          "gl":  "glUniform1d(uniform.getUniformID(), uniform.getValue\u003cGLdouble\u003e());",
+                          "type":  "GLdouble",
+                          "line":  87
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform2fv(uniform.getUniformID(), 1, \u0026uniform.getValue\u003cglm::vec2\u003e()[0]);",
+                          "type":  "glm::vec2",
+                          "line":  102
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform3fv(uniform.getUniformID(), 1, \u0026uniform.getValue\u003cglm::vec3\u003e()[0]);",
+                          "type":  "glm::vec3",
+                          "line":  117
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform4fv(uniform.getUniformID(), 1, \u0026uniform.getValue\u003cglm::vec4\u003e()[0]);",
+                          "type":  "glm::vec4",
+                          "line":  132
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform2dv(uniform.getUniformID(), 1, \u0026uniform.getValue\u003cglm::dvec2\u003e()[0]);",
+                          "type":  "glm::dvec2",
+                          "line":  147
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform3dv(uniform.getUniformID(), 1, \u0026uniform.getValue\u003cglm::dvec3\u003e()[0]);",
+                          "type":  "glm::dvec3",
+                          "line":  162
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform4dv(uniform.getUniformID(), 1, \u0026uniform.getValue\u003cglm::dvec4\u003e()[0]);",
+                          "type":  "glm::dvec4",
+                          "line":  177
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform2iv(uniform.getUniformID(), 1, glm::value_ptr(uniform.getValue\u003cglm::ivec2\u003e()));",
+                          "type":  "glm::ivec2",
+                          "line":  190
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform3iv(uniform.getUniformID(), 1, glm::value_ptr(uniform.getValue\u003cglm::ivec3\u003e()));",
+                          "type":  "glm::ivec3",
+                          "line":  203
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform4iv(uniform.getUniformID(), 1, glm::value_ptr(uniform.getValue\u003cglm::ivec4\u003e()));",
+                          "type":  "glm::ivec4",
+                          "line":  216
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform2uiv(uniform.getUniformID(), 1, glm::value_ptr(uniform.getValue\u003cglm::uvec2\u003e()));",
+                          "type":  "glm::uvec2",
+                          "line":  229
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform3uiv(uniform.getUniformID(), 1, glm::value_ptr(uniform.getValue\u003cglm::uvec3\u003e()));",
+                          "type":  "glm::uvec3",
+                          "line":  242
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniform4uiv(uniform.getUniformID(), 1, glm::value_ptr(uniform.getValue\u003cglm::uvec4\u003e()));",
+                          "type":  "glm::uvec4",
+                          "line":  255
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix2fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat2\u003e()));",
+                          "type":  "glm::mat2",
+                          "line":  268
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix3fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat3\u003e()));",
+                          "type":  "glm::mat3",
+                          "line":  281
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix4fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat4\u003e()));",
+                          "type":  "glm::mat4",
+                          "line":  294
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix2x3fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat2x3\u003e()));",
+                          "type":  "glm::mat2x3",
+                          "line":  307
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix3x2fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat3x2\u003e()));",
+                          "type":  "glm::mat3x2",
+                          "line":  320
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix2x4fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat2x4\u003e()));",
+                          "type":  "glm::mat2x4",
+                          "line":  333
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix4x2fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat4x2\u003e()));",
+                          "type":  "glm::mat4x2",
+                          "line":  346
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix3x4fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat3x4\u003e()));",
+                          "type":  "glm::mat3x4",
+                          "line":  359
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix4x3fv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::mat4x3\u003e()));",
+                          "type":  "glm::mat4x3",
+                          "line":  372
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix2dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat2\u003e()));",
+                          "type":  "glm::dmat2",
+                          "line":  389
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix3dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat3\u003e()));",
+                          "type":  "glm::dmat3",
+                          "line":  402
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix4dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat4\u003e()));",
+                          "type":  "glm::dmat4",
+                          "line":  415
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix2x3dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat2x3\u003e()));",
+                          "type":  "glm::dmat2x3",
+                          "line":  428
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix3x2dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat3x2\u003e()));",
+                          "type":  "glm::dmat3x2",
+                          "line":  441
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix2x4dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat2x4\u003e()));",
+                          "type":  "glm::dmat2x4",
+                          "line":  454
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix4x2dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat4x2\u003e()));",
+                          "type":  "glm::dmat4x2",
+                          "line":  467
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix3x4dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat3x4\u003e()));",
+                          "type":  "glm::dmat3x4",
+                          "line":  480
+                      },
+                      {
+                          "guardBeforeGL":  true,
+                          "literalCount1":  true,
+                          "gl":  "glUniformMatrix4x3dv(uniform.getUniformID(), 1, GL_FALSE, glm::value_ptr(uniform.getValue\u003cglm::dmat4x3\u003e()));",
+                          "type":  "glm::dmat4x3",
+                          "line":  493
+                      }
+                  ],
+    "root":  "C:\\Users\\djden\\.local\\share\\opencode\\worktree\\3a086c\\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-f2-opengl-author",
+    "discovery":  {
+                      "red":  {
+                                  "opengl":  45,
+                                  "unit":  248,
+                                  "total":  293
+                              },
+                      "final":  {
+                                    "opengl":  48,
+                                    "unit":  249,
+                                    "total":  297
+                                }
+                  }
+}

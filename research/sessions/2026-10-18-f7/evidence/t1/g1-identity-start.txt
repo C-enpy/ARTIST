@@ -1,0 +1,34 @@
+﻿# G1 identity (pool-5, T1) 2026-10-17T13:50:27.1849925+02:00
+HEAD 4f64a2b87f5aa8c3590ded4596aca906b5d320dc
+branch-state ## HEAD (no branch)
+worktree-delta-vs-4f64a2b-files 0
+untracked 0
+# sha256  raw-bytes-match-HEAD-blob(git hash-object --no-filters)  path
+ddb63fcdb5a68206f217db289fd7b4168b5444c38494fd55a9c832ab9cc07d2c  True  .opencode/evidence/mission-gpu-qa/f7-qa-plan.md
+f4846b263810a80902760971b3a9cbcb8ea0d904c01dfc1a69837a7331dffd7f  True  .opencode/evidence/mission-f7/preflight-P1-uniform.md
+d0f953e494b4cdc2e46a72f395c472ea186935b8e36f5d59da0cd7a8013db18a  True  docs/architecture/next-mission.md
+734fcf3feac284af80479a82866b7a8dc596ff2dc0ceb145e64e30d350971767  True  ARTIST/include/graphic/context/UniformContext.hpp
+eafd28da3895b9d0772087c3644603d5edf51f178d9a70091b77176779bc2ee5  True  ARTIST/include/graphic/pipeline/Uniform.hpp
+135bfa52c4ab85a16f12cb5fdf35770b548a085deab1e38dd88617f5d986c170  True  ARTIST/include/graphic/opengl/context/UniformContext.hpp
+454a46af4b05d7c2895cc3a8f46b2c22d203cb29e7b73d211117635494c410c8  True  ARTIST/include/graphic/opengl/validator/UniformConcept.hpp
+4e9f8bc9f1ceeaf28df5dd345f89dc3aaff91679b7905147f2636a242f0a0aec  True  ARTIST/include/graphic/opengl/pipeline/component/uniform/Setter.hpp
+091d780067b6503e6dcc8e03da0acbbdfb8a4598a353504cbe36671ef7bcf3dd  True  ARTIST/include/graphic/opengl/pipeline/component/pass/UniformReader.hpp
+2c97469458a01643f3fcee4a387fd7e1a526b7afdd2fc223239b9aedeff4ca2a  True  ARTIST/include/graphic/validator/ComponentConcept.hpp
+3365e70c4cbc2ce44eea7b5435fdd9412dc3f3f24b0e90f079a200ea777cba14  True  ARTIST/include/graphic/pipeline/Pass.hpp
+57c86819c987a2a6dabeb44cd900ecb4c602de032f878583177e34b5e01211e3  True  ARTIST/include/graphic/context/PassContext.hpp
+1d061d7a27ced13bc1e0b46a393aee8699a905e0aa091f0d02e11c1f710bbba7  True  ARTIST/include/graphic/pipeline/Attribute.hpp
+8fd02225ebb3eed29b25520faa0744f8f82991caccd656af78b931e130fbe470  True  ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp
+4820f580835c72a42dfcc4a30405accf702f4dfc203074669691ea9a8479ac66  True  ARTIST/tests/mock/graphic/opengl/context/MockUniformContext.hpp
+07c8dd7ef83cc1927ab7807697097ea61fe67c634512a3fbe0fc843489aa1bc4  True  ARTIST/tests/mock/graphic/opengl/pipeline/component/uniform/MockSetter.hpp
+de8ef1522607bb5d80117f258d4ee56dbe449fb76e0f74c7228ab56abfc9eafb  True  ARTIST/tests/mock/graphic/pipeline/MockUniform.hpp
+b1c8b849a1f4e2cbfecb70e9d4c84136ab48f7be00596134de3d0f8c82839e57  True  ARTIST/tests/mock/graphic/pipeline/MockPass.hpp
+c640179ac22a8fe5464311e07b75c7603ecd249733876d797dfb129e716991f4  True  ARTIST/tests/src/graphic/pipeline/UniformTests.cpp
+5f67f9b57e1468848c3c03c0231c617d6bb0a084bc32dcd3fd1a55f10495e706  True  ARTIST/tests/src/graphic/pipeline/UniformContractTests.cpp
+1dab06217d9093241934628066104f1b593a6bf326f4ae765b359ace066fd1bd  True  ARTIST/tests/src/graphic/pipeline/PassTests.cpp
+f3117e8fd9c44128cae327ad726da3e0c589e45bdafd9376e3fbc15ad95111ca  True  ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp
+40ef5e3e4d4d586af5874ede88d45d9406cb8b97c0bfcaa6b63ae3ed10632c3b  True  ARTIST/tests/src/graphic/opengl/pipeline/component/pass/UniformReaderTests.cpp
+5d30664d8fbe6ce4c40df8dbc31ec0fa9a2314fb8eda1497fea486275a689413  True  ARTIST/component-tests/src/graphic/shader/PassTests.cpp
+7ef220d8038b239748782304774787f7b7128064c4d40f62e943326c1cbbaafb  True  scripts/build-windows.ps1
+5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e  True  CMakePresets.json
+1cbf0536bee3f7e18381170308499d307d36346c041d262e8c8aba087d25fadf  True  conanfile.txt
+# note: conanfile.txt is stored with mixed EOL (i/mixed w/mixed); filtered hash-object differs, raw bytes identical; git diff --quiet HEAD exit 0

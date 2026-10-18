@@ -1,0 +1,51 @@
+d24340f7e129a03da2a7c74a25025526c9c3cd00
+ M ARTIST/include/graphic/opengl/context/UniformContext.hpp
+ M ARTIST/include/graphic/opengl/pipeline/component/uniform/Setter.hpp
+ M ARTIST/tests/src/graphic/pipeline/UniformTests.cpp
+?? ARTIST/component-tests/src/graphic/shader/UniformCardinalityComponentTests.cpp
+?? ARTIST/tests/src/graphic/pipeline/UniformCardinalityTests.cpp
+?? test-datas/shaders/vertex/good/f2-fp64-single-values.vert
+?? test-datas/shaders/vertex/good/f2-single-values.vert
+ .../graphic/opengl/context/UniformContext.hpp      |   8 +-
+ .../opengl/pipeline/component/uniform/Setter.hpp   | 110 +++++++++++++++------
+ ARTIST/tests/src/graphic/pipeline/UniformTests.cpp |  12 +--
+ 3 files changed, 90 insertions(+), 40 deletions(-)
+
+
+Algorithm : SHA256
+Hash      : 380CDAAB465D6C11495FC3D5ADA5E5C0578AFD2F0F4D76B76BF7EB310703A6CB
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\include\graphic\opengl\context\UniformContext.hpp
+
+Algorithm : SHA256
+Hash      : 26AD921F403689F5F8FFFF1CAB61A2DE74BAF5C9A58842000EC64E4E7D8526DD
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\include\graphic\opengl\pipeline\component\uniform\Setter.hpp
+
+Algorithm : SHA256
+Hash      : B528CD7F8087A85C4970A5C4DA86B76D3FC1A93936D048BAE8D4EAF5A58C2246
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp
+
+Algorithm : SHA256
+Hash      : E80B826C0A33479C05FA11B844178804C341646428FE25EBD13AEF9F77F6924A
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\component-tests\src\graphic\shader\UniformCardinalityComponentTests.cpp
+
+Algorithm : SHA256
+Hash      : 6B82D168EEF95786D5FBE4C6DC3E36608354B834DA6CFA072E0EBBACF5BEBC48
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformCardinalityTests.cpp
+
+Algorithm : SHA256
+Hash      : 9EDC5DBAAD84917CCC2FCC0FD61113B30C3E8F8413DC94C9F51FAD97B647C86E
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\test-datas\shaders\vertex\good\f2-single-values.vert
+
+Algorithm : SHA256
+Hash      : 4DC08C977835E2CFCF57FEBAF1902EB9F03F37B5648FFDBAB60B6132998E91A7
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\test-datas\shaders\vertex\good\f2-fp64-single-values.vert
+
+
+

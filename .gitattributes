@@ -1,0 +1,5 @@
+# Archived mission evidence must retain the exact bytes used by its SHA256 ledger.
+# Legacy Windows logs may be UTF-16 or ANSI; never normalize their line endings.
+research/sessions/2026-10-18-f7/** -text
+research/sessions/2026-10-18-f7/evidence/** -text -diff -whitespace
+research/sessions/2026-10-18-f7/sessions/*.json.gz binary

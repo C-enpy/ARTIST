@@ -1,0 +1,137 @@
+﻿COMMAND: conan install . -pr:h conan/profiles/windows-msvc -pr:b conan/profiles/windows-msvc -s:h build_type=Debug -s:b build_type=Debug -c:h tools.cmake.cmaketoolchain:user_presets= -of C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build --build=missing; if ($LASTEXITCODE -eq 0) { cmake -S . -B C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build -G Ninja -DCMAKE_TOOLCHAIN_FILE=C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DMOCK_GL=ON -DARTIST_ENABLE_ASAN=OFF }
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+conan : 
+Au caractère Ligne:1 : 1
++ conan install . -pr:h conan/profiles/windows-msvc -pr:b conan/profile ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+======== Input profiles ========
+Profile host:
+[settings]
+arch=x86_64
+build_type=Debug
+compiler=msvc
+compiler.cppstd=23
+compiler.runtime=dynamic
+compiler.runtime_type=Debug
+compiler.version=194
+os=Windows
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.cmake.cmaketoolchain:user_presets=
+tools.microsoft:msvc_update=4
+
+Profile build:
+[settings]
+arch=x86_64
+build_type=Debug
+compiler=msvc
+compiler.cppstd=23
+compiler.runtime=dynamic
+compiler.runtime_type=Debug
+compiler.version=194
+os=Windows
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.microsoft:msvc_update=4
+
+
+======== Computing dependency graph ========
+Graph root
+    conanfile.txt: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f
+43401c7#eiyn0g-t3-worker-3\conanfile.txt
+Requirements
+    glew/2.2.0#f95d83ad421bb2a8e7e486c841f7a2d1 - Cache
+    glfw/3.3.8#56dd8fa2a72771171337cd05fded7862 - Cache
+    glm/cci.20230113#c9c89bea128786a245028f0cb4c1936d - Cache
+    glu/system#5f205c4daa8fe4f820869771146885de - Cache
+    magic_enum/0.9.5#768c09bb424bda31d224304693b50fb3 - Cache
+    opengl/system#cfcf523b9d2bad75cbf377f56562634c - Cache
+
+======== Computing necessary packages ========
+Requirements
+    
+glew/2.2.0#f95d83ad421bb2a8e7e486c841f7a2d1:0ad5d2f6c18da8acde57023b45d648d24e0d499b#134778113be4dde397e8f0428105842b 
+- Cache
+    
+glfw/3.3.8#56dd8fa2a72771171337cd05fded7862:ee8ddfc1a6035d30dc67d6422a1a1c9220db1abc#398ee745a216edbbe5d71d0227ee5f29 
+- Cache
+    glm/cci.20230113#c9c89bea128786a245028f0cb4c1936d:da39a3ee5e6b4b0d3255bfef95601890afd80709#6e0f3e7e82ccc211e8cc3c01
+2d8c42ef - Cache
+    
+glu/system#5f205c4daa8fe4f820869771146885de:da39a3ee5e6b4b0d3255bfef95601890afd80709#0ba8627bd47edc3a501e8f0eb9a79e5e 
+- Cache
+    magic_enum/0.9.5#768c09bb424bda31d224304693b50fb3:da39a3ee5e6b4b0d3255bfef95601890afd80709#f9173d81294187c1cebdfcb1
+fcd8051c - Cache
+    opengl/system#cfcf523b9d2bad75cbf377f56562634c:da39a3ee5e6b4b0d3255bfef95601890afd80709#0ba8627bd47edc3a501e8f0eb9a
+79e5e - Cache
+
+======== Installing packages ========
+glm/cci.20230113: Already installed! (1 of 6)
+magic_enum/0.9.5: Already installed! (2 of 6)
+opengl/system: Already installed! (3 of 6)
+glfw/3.3.8: Already installed! (4 of 6)
+glu/system: Already installed! (5 of 6)
+glew/2.2.0: Already installed! (6 of 6)
+WARN: deprecated: Usage of deprecated Conan 1.X features that will be removed in Conan 2.X:
+WARN: deprecated:     'cpp_info.filenames' used in: opengl/system
+
+======== Finalizing install (deploy, generators) ========
+conanfile.txt: Writing generators to C:\Users\djden\source\repos\ARTIST\out\mission-f7\t3-build
+conanfile.txt: Generator 'CMakeDeps' calling 'generate()'
+conanfile.txt: CMakeDeps necessary find_package() and targets for your CMakeLists.txt
+    find_package(glm)
+    find_package(glfw3)
+    find_package(glew)
+    find_package(opengl_system)
+    find_package(magic_enum)
+    target_link_libraries(... glm::glm glfw GLEW::GLEW opengl::opengl magic_enum::magic_enum)
+conanfile.txt: Generator 'CMakeToolchain' calling 'generate()'
+conanfile.txt: CMakeToolchain generated: conan_toolchain.cmake
+conanfile.txt: CMakeToolchain: Preset 'conan-debug' added to CMakePresets.json.
+    (cmake>=3.23) cmake --preset conan-debug
+    (cmake<3.23) cmake <path> -G Ninja -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake  
+-DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=Debug
+conanfile.txt: CMakeToolchain generated: C:\Users\djden\source\repos\ARTIST\out\mission-f7\t3-build\CMakePresets.json
+conanfile.txt: Generating aggregated env files
+conanfile.txt: Generated aggregated env files: ['conanbuild.bat', 'conanrun.bat']
+Install finished successfully
+-- Using Conan toolchain: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- The C compiler identification is MSVC 19.44.35221.0
+-- The CXX compiler identification is MSVC 19.44.35221.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test ARTIST_CXX23_NATIVE
+-- Performing Test ARTIST_CXX23_NATIVE - Success
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Found Python3: C:/Python313/python.exe (found version "3.13.1") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE
+-- Configuring done (8.7s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+EXIT_CODE=0

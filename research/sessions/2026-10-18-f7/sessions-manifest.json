@@ -1,0 +1,570 @@
+{
+  "schema": "artist-f7-session-manifest-v1",
+  "capturedAt": "2026-10-18T10:13:25.214Z",
+  "rootSessionID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+  "scope": "This ARTIST Ensemble mission only: root and all direct child sessions (workers are leaves)",
+  "rootCount": 1,
+  "childCount": 28,
+  "nativeListPaginationComplete": true,
+  "credentialRedactions": 2,
+  "internalContentExcluded": true,
+  "records": [
+    {
+      "member": "coordinateur",
+      "sessionID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "parentID": null,
+      "agent": "orchestrator",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "medium"
+      },
+      "outcome": "succeeded",
+      "messages": 512,
+      "excludedInternalParts": 274,
+      "file": "sessions/coordinateur--ses_eb66fdd11ffdZ7VhFB2UyYldMP.json.gz",
+      "bytes": 407662,
+      "uncompressedBytes": 1953893,
+      "sha256": "f49197a842bb645b3a77637df6eb348a63b831fac2b9812f71f3218007453768",
+      "publicJsonSha256": "808db1fac51a28c22352c80758a77595a97b9ef7ca5929351d53196f42c8ee18"
+    },
+    {
+      "member": "f1-correctness-review",
+      "sessionID": "ses_eb193e7d7ffeucGxbJ6oZUiMmv",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "correctness-reviewer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 17,
+      "excludedInternalParts": 13,
+      "file": "sessions/f1-correctness-review--ses_eb193e7d7ffeucGxbJ6oZUiMmv.json.gz",
+      "bytes": 45390,
+      "uncompressedBytes": 169249,
+      "sha256": "5c0088496d7797e3d370693c33fbf614c698b7dd725ada0cb25e97652b75fb33",
+      "publicJsonSha256": "bb5bb7e4fe182b2a4ed9ad0a7596623c79283bf3be41fec58f5851bbf74a2e67"
+    },
+    {
+      "member": "f1-cpp-author",
+      "sessionID": "ses_eb1a23eaeffemeDhFJMJ1u6oEl",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "outcome": "succeeded",
+      "messages": 58,
+      "excludedInternalParts": 28,
+      "file": "sessions/f1-cpp-author--ses_eb1a23eaeffemeDhFJMJ1u6oEl.json.gz",
+      "bytes": 90125,
+      "uncompressedBytes": 394909,
+      "sha256": "ab188db006a6358418f9efc57917ace4c15ea9b8a897043d51a143673e691c25",
+      "publicJsonSha256": "a565b9a52efabc98bf86f793d29f7dc4426eafce794d4d1a326755cc42253f6a"
+    },
+    {
+      "member": "f1-qa-plan",
+      "sessionID": "ses_eb1ac3685ffeKW0TCRBOJHG2gR",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "qa-planner",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 15,
+      "excludedInternalParts": 9,
+      "file": "sessions/f1-qa-plan--ses_eb1ac3685ffeKW0TCRBOJHG2gR.json.gz",
+      "bytes": 27803,
+      "uncompressedBytes": 101525,
+      "sha256": "d074d47acfff92e1c8544f89d9799190c92fff81c0d2a8e72aebfbff833fc1ed",
+      "publicJsonSha256": "6ced8fcd1a1975c0ca1f4652fa4f107468cc39e2e9b5555d1ba5d7b8cb1318ab"
+    },
+    {
+      "member": "f2-correctness-review",
+      "sessionID": "ses_eb1bdc4a3ffe3rWhvhIkTZIAUx",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "correctness-reviewer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 42,
+      "excludedInternalParts": 37,
+      "file": "sessions/f2-correctness-review--ses_eb1bdc4a3ffe3rWhvhIkTZIAUx.json.gz",
+      "bytes": 86714,
+      "uncompressedBytes": 442127,
+      "sha256": "817f7c19fc286e52a6beea35602b73e98515ed4f0d8a1a8be72105b13ee95138",
+      "publicJsonSha256": "445c7956426e0c80353293c7f52dea5f63727dad213313afca875aba773b5b08"
+    },
+    {
+      "member": "f2-rendering-verifier",
+      "sessionID": "ses_eb1bd9051ffeJ2ic3KBCRmUESW",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "rendering-verifier",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 36,
+      "excludedInternalParts": 31,
+      "file": "sessions/f2-rendering-verifier--ses_eb1bd9051ffeJ2ic3KBCRmUESW.json.gz",
+      "bytes": 72943,
+      "uncompressedBytes": 352616,
+      "sha256": "ad20a98722bbc64553328ea8777cd14869721ecf4e1b4fe5d497bb2fe3ef99f9",
+      "publicJsonSha256": "7f288ec9c8e7f444d373e18032d27432bdbaed0709cd464848c552a5a107a8e0"
+    },
+    {
+      "member": "f2-opengl-author",
+      "sessionID": "ses_eb1d323f3ffep9kDFVIDRg67ua",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "gpu-engineer",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "outcome": "succeeded",
+      "messages": 74,
+      "excludedInternalParts": 43,
+      "file": "sessions/f2-opengl-author--ses_eb1d323f3ffep9kDFVIDRg67ua.json.gz",
+      "bytes": 102809,
+      "uncompressedBytes": 514224,
+      "sha256": "a042d62f30781d5e34c74252472b0a5a4dd6eca98b2262541a1aa4c9c15cc3cf",
+      "publicJsonSha256": "0b1a7160494a2e61ed7e33e611b753123c2f766cd886f5299352e6a9b3a11ebc"
+    },
+    {
+      "member": "f2-qa-plan",
+      "sessionID": "ses_eb1e08190ffe6Y3AX1i0mbEP93",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "qa-planner",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 27,
+      "excludedInternalParts": 23,
+      "file": "sessions/f2-qa-plan--ses_eb1e08190ffe6Y3AX1i0mbEP93.json.gz",
+      "bytes": 81984,
+      "uncompressedBytes": 342797,
+      "sha256": "669a358120ab48a5581bf7bfde862c572755b44241f867ff33d0e8cab68a1585",
+      "publicJsonSha256": "a53e1ff5a2b5471d224c6c55ae10e432390ce9e63314fe8c72bb3d78370dbdeb"
+    },
+    {
+      "member": "f2-architect",
+      "sessionID": "ses_eb1ee51f1ffewNRBtdeTC3e1yy",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "engine-architect",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 25,
+      "excludedInternalParts": 21,
+      "file": "sessions/f2-architect--ses_eb1ee51f1ffewNRBtdeTC3e1yy.json.gz",
+      "bytes": 76638,
+      "uncompressedBytes": 351724,
+      "sha256": "7a9919091523a0251c7bd1a25b3f25da2459c0a6b2c56f68d379b56adef17a11",
+      "publicJsonSha256": "352595dc87b03ece6a715162bf9907571ecef3431dd17593977ae8660f1bf1ff"
+    },
+    {
+      "member": "test-reviewer-offboard",
+      "sessionID": "ses_eb4d3fe00ffey03YQmsRUpSC7r",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "test-reviewer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 56,
+      "excludedInternalParts": 43,
+      "file": "sessions/test-reviewer-offboard--ses_eb4d3fe00ffey03YQmsRUpSC7r.json.gz",
+      "bytes": 91971,
+      "uncompressedBytes": 398902,
+      "sha256": "974aa21743e4cf606bbb5c703b852e323734996f5ee30765620523f270445380",
+      "publicJsonSha256": "b235b0e66998ae516500f82833576faede25e21733d11297fb6e9234205d6958"
+    },
+    {
+      "member": "te-cpp-subst",
+      "sessionID": "ses_eb4e58b47ffe5gT4AlznuiwOK4",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "outcome": "succeeded",
+      "messages": 81,
+      "excludedInternalParts": 38,
+      "file": "sessions/te-cpp-subst--ses_eb4e58b47ffe5gT4AlznuiwOK4.json.gz",
+      "bytes": 112960,
+      "uncompressedBytes": 516173,
+      "sha256": "181d897acb284969bb9ba042f46b870657396ca80fbdf9416d412998af3a0b3a",
+      "publicJsonSha256": "eb3d34861621a3ffff45123f9aa2548cd464b87cc44492aaa9d7b9e66c5354f0"
+    },
+    {
+      "member": "te-worker-2",
+      "sessionID": "ses_eb4ebdfbfffem51hh1nsOjXwJN",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "test-engineer",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "outcome": "succeeded",
+      "messages": 15,
+      "excludedInternalParts": 6,
+      "file": "sessions/te-worker-2--ses_eb4ebdfbfffem51hh1nsOjXwJN.json.gz",
+      "bytes": 14012,
+      "uncompressedBytes": 40810,
+      "sha256": "807962b7da0b7863f83f4e89a9a212c17d905d1a625ecd58d9ffd0104322980d",
+      "publicJsonSha256": "84512175552b93e78bcf4e20f4d455fab0f189d48cdfdfd01202689fe59dbaa4"
+    },
+    {
+      "member": "t6-verifier-2",
+      "sessionID": "ses_eb504ba97ffepv7XbvsgQVlPHC",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "rendering-verifier",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 29,
+      "excludedInternalParts": 24,
+      "file": "sessions/t6-verifier-2--ses_eb504ba97ffepv7XbvsgQVlPHC.json.gz",
+      "bytes": 94889,
+      "uncompressedBytes": 392294,
+      "sha256": "490578dca880171d4285a56e721563bd459192f53221626d99d35668a83c78a8",
+      "publicJsonSha256": "b46e64ca657f1c64b8800ff0d062262a1a2b80dbf121e87515e5d7b91e21c9eb"
+    },
+    {
+      "member": "t5-reviewer-3",
+      "sessionID": "ses_eb5058398ffedmCzh1HMQpfpyx",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "correctness-reviewer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 53,
+      "excludedInternalParts": 43,
+      "file": "sessions/t5-reviewer-3--ses_eb5058398ffedmCzh1HMQpfpyx.json.gz",
+      "bytes": 114052,
+      "uncompressedBytes": 578784,
+      "sha256": "65cf0b6a780bdf9d14cb1d940f39eacc4c60279b23423823201c5f8ed3deb3e5",
+      "publicJsonSha256": "a98122271d0226e22cb3bf9546f481cceb8a51fb01757a1d16a199e3d68fe17d"
+    },
+    {
+      "member": "te-worker",
+      "sessionID": "ses_eb5080ac6ffe9OZEUdm5l3qjVL",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "test-engineer",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "outcome": "succeeded",
+      "messages": 11,
+      "excludedInternalParts": 4,
+      "file": "sessions/te-worker--ses_eb5080ac6ffe9OZEUdm5l3qjVL.json.gz",
+      "bytes": 14534,
+      "uncompressedBytes": 40399,
+      "sha256": "91216953c1221d18ea52be93d8a5a35b3ad51c29fa1d7c17c1eed96fcfab81ed",
+      "publicJsonSha256": "95bba50715fbf1d8279328ee15747ac23ddf74f5c67627bbfd81fc26c70c3be1"
+    },
+    {
+      "member": "t6-verifier",
+      "sessionID": "ses_eb517c62bffeg2pBfjobHO9VNZ",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "rendering-verifier",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "failed",
+      "messages": 28,
+      "excludedInternalParts": 21,
+      "file": "sessions/t6-verifier--ses_eb517c62bffeg2pBfjobHO9VNZ.json.gz",
+      "bytes": 49619,
+      "uncompressedBytes": 254197,
+      "sha256": "92d3990bc1e23702b1b4228a56de730bcb186e43022a97fe17341b29f4da3f67",
+      "publicJsonSha256": "5f29af6a0d3700d655314080aa20cefa60840173bedafc717b98e7e4c23863d4"
+    },
+    {
+      "member": "t5-reviewer-2",
+      "sessionID": "ses_eb5181bc5ffeYZi2IxaOAlNuMq",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "correctness-reviewer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "failed",
+      "messages": 28,
+      "excludedInternalParts": 16,
+      "file": "sessions/t5-reviewer-2--ses_eb5181bc5ffeYZi2IxaOAlNuMq.json.gz",
+      "bytes": 53339,
+      "uncompressedBytes": 206948,
+      "sha256": "b59db030adb1e2e09ddeb0b8d1f2f99749ec49e7ff60b1650c9c67b8e2fb1c32",
+      "publicJsonSha256": "df8b1077d4a3f677bf6d87cc70b7b9d344c2559e2c62a143ba421cd8e247fb81"
+    },
+    {
+      "member": "t5-reviewer",
+      "sessionID": "ses_eb518f41affeBm7OD64mUQ2dyr",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "correctness-reviewer",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "outcome": "succeeded",
+      "messages": 10,
+      "excludedInternalParts": 2,
+      "file": "sessions/t5-reviewer--ses_eb518f41affeBm7OD64mUQ2dyr.json.gz",
+      "bytes": 25886,
+      "uncompressedBytes": 79060,
+      "sha256": "ff7e15d0ac2ff4624f136a9e22d05682dc86838b28f2468724735707b0541538",
+      "publicJsonSha256": "4edbb3724b39097de1913ff085abb11e35d73e5899f2cfa126dd0fe6f711ecaf"
+    },
+    {
+      "member": "t3-worker-3",
+      "sessionID": "ses_eb5458170ffegapJoT1rKWbWwB",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "outcome": "succeeded",
+      "messages": 124,
+      "excludedInternalParts": 80,
+      "file": "sessions/t3-worker-3--ses_eb5458170ffegapJoT1rKWbWwB.json.gz",
+      "bytes": 133680,
+      "uncompressedBytes": 720750,
+      "sha256": "6b2b2970a28d552c738e5fcc56f7837ab3053a1d128b89e53e2d93427a124f2b",
+      "publicJsonSha256": "e1e5cd0171e6d2fd5d0c6425d4a48acf29e4a2411325a8dba72885119995e550"
+    },
+    {
+      "member": "t3-worker-2",
+      "sessionID": "ses_eb54d2509ffezzUQ0jx0RFHRwd",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "claude-opus-5-5",
+        "providerID": "cursor",
+        "variant": "Claude Opus 5.5 Max"
+      },
+      "outcome": "failed",
+      "messages": 5,
+      "excludedInternalParts": 0,
+      "file": "sessions/t3-worker-2--ses_eb54d2509ffezzUQ0jx0RFHRwd.json.gz",
+      "bytes": 2969,
+      "uncompressedBytes": 9247,
+      "sha256": "df7f5f60436f7e04d75bc1af42c247607fc28f8ae72d6fe2e2f5eb16eb3a98c3",
+      "publicJsonSha256": "ecbdc27eb026635a4e4e39dd2537ee3a9098e2080eb99d8d98d0c01fbe1cc274"
+    },
+    {
+      "member": "t3-worker",
+      "sessionID": "ses_eb5935403ffeBmAIstwDiM63Ab",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "claude-opus-5-5",
+        "providerID": "cursor",
+        "variant": "Claude Opus 5.5 Max"
+      },
+      "outcome": "failed",
+      "messages": 11,
+      "excludedInternalParts": 0,
+      "file": "sessions/t3-worker--ses_eb5935403ffeBmAIstwDiM63Ab.json.gz",
+      "bytes": 3251,
+      "uncompressedBytes": 11273,
+      "sha256": "e105f996ca89795d3372fe67b2a482d23bc865ecc9e07dc2eb8f6ec31db87111",
+      "publicJsonSha256": "cf2de137ecc3716a73e5721444ee16850665253fb363c7ae8ff3570394e67ec8"
+    },
+    {
+      "member": "pool-8",
+      "sessionID": "ses_eb598074cffebWbP1D61ug9ogT",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "claude-opus-5-5",
+        "providerID": "cursor",
+        "variant": "Claude Opus 5.5 Max"
+      },
+      "outcome": "failed",
+      "messages": 8,
+      "excludedInternalParts": 0,
+      "file": "sessions/pool-8--ses_eb598074cffebWbP1D61ug9ogT.json.gz",
+      "bytes": 5554,
+      "uncompressedBytes": 14878,
+      "sha256": "d889616054917bc87fc25c2909ec728f41cbad449e5da9830fcb6267b2957c7a",
+      "publicJsonSha256": "6b1aeb6afefbd0b32ade19a70a2e803c9901fb82b98d555827506fa3044cef62"
+    },
+    {
+      "member": "pool-7",
+      "sessionID": "ses_eb5b74b6fffe6KiLHzIToTMGxy",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "claude-opus-5-5",
+        "providerID": "cursor",
+        "variant": "Claude Opus 5.5 Max"
+      },
+      "outcome": "failed",
+      "messages": 53,
+      "excludedInternalParts": 23,
+      "file": "sessions/pool-7--ses_eb5b74b6fffe6KiLHzIToTMGxy.json.gz",
+      "bytes": 96860,
+      "uncompressedBytes": 424688,
+      "sha256": "75a3fbb73b81be2a4fb3dfecd9226ab1f42b7d63c39e1748c7bc027c0630135f",
+      "publicJsonSha256": "797801b18c2645a9418438874f093b29b12d20e30f82959fab3d6c9369f7fa59"
+    },
+    {
+      "member": "pool-6",
+      "sessionID": "ses_eb614f27bffeDrRHmDvln16Eo4",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "claude-opus-5-5",
+        "providerID": "cursor",
+        "variant": "Claude Opus 5.5 Max"
+      },
+      "outcome": "succeeded",
+      "messages": 333,
+      "excludedInternalParts": 193,
+      "file": "sessions/pool-6--ses_eb614f27bffeDrRHmDvln16Eo4.json.gz",
+      "bytes": 469654,
+      "uncompressedBytes": 2525302,
+      "sha256": "fad4070467c00e2c6d498126b894cf5f0b49e55a97a21c7f945c5c094a2977bc",
+      "publicJsonSha256": "60e3ca47d5fcf3fb25dfcf839b17adbbe7b9e9f16bd3ccfea7f15c45c96b1cc5"
+    },
+    {
+      "member": "pool-5",
+      "sessionID": "ses_eb652575affeWuGj93B7HF9yTT",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "claude-opus-5-5",
+        "providerID": "cursor",
+        "variant": "Claude Opus 5.5 Max"
+      },
+      "outcome": "succeeded",
+      "messages": 227,
+      "excludedInternalParts": 138,
+      "file": "sessions/pool-5--ses_eb652575affeWuGj93B7HF9yTT.json.gz",
+      "bytes": 306627,
+      "uncompressedBytes": 1820746,
+      "sha256": "44e65831c1a66ec6ad9d4f3d349e69b3eff7db61e1f3105cedb96037deafd633",
+      "publicJsonSha256": "ded3f5d43025e50368ec27c504450ded77fdb4209e8bafc9953ae62d8ac6e63c"
+    },
+    {
+      "member": "pool-4",
+      "sessionID": "ses_eb656f009ffeHna2P0JGdr49zL",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "gpu-engineer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 30,
+      "excludedInternalParts": 26,
+      "file": "sessions/pool-4--ses_eb656f009ffeHna2P0JGdr49zL.json.gz",
+      "bytes": 76914,
+      "uncompressedBytes": 376416,
+      "sha256": "774accc9955543554ea3469b92f30f85bfb2b2cca4b224659e614d3ae6c8ad0e",
+      "publicJsonSha256": "650d2c0552d17382f194a6c3e93f745e947ef9c63d7bfa947d9ef8785c31f982"
+    },
+    {
+      "member": "pool-3",
+      "sessionID": "ses_eb65de3e4ffes4Jp0KCE270mHZ",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 21,
+      "excludedInternalParts": 17,
+      "file": "sessions/pool-3--ses_eb65de3e4ffes4Jp0KCE270mHZ.json.gz",
+      "bytes": 45968,
+      "uncompressedBytes": 197421,
+      "sha256": "2ccbbb2063d80bba18a0ff6e99ccf4217f9296f558b3a3b25bd6fcd8f6a34d7d",
+      "publicJsonSha256": "6ec9665e61e056c7ab3b9610532252e41df513051e9ed5f2420ac4ec3235f3de"
+    },
+    {
+      "member": "pool-1",
+      "sessionID": "ses_eb6635031ffeBofCpu5eHj64F0",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "qa-planner",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 19,
+      "excludedInternalParts": 14,
+      "file": "sessions/pool-1--ses_eb6635031ffeBofCpu5eHj64F0.json.gz",
+      "bytes": 84811,
+      "uncompressedBytes": 329158,
+      "sha256": "3cd4746c9fd93bd9c813f7e455f7e580b2b1e4f6d209d159b9c11de7046b3ef9",
+      "publicJsonSha256": "9ff06116a2e04f9ee0e1d23c8fe6bcbfc9efdeb1d544f1f13349cfa2b57d09a1"
+    },
+    {
+      "member": "pool-2",
+      "sessionID": "ses_eb6634edbffeXw6s7LR1cXK3Zi",
+      "parentID": "ses_eb66fdd11ffdZ7VhFB2UyYldMP",
+      "agent": "cpp-engineer",
+      "model": {
+        "id": "glm-5.3-flash",
+        "providerID": "opencode-go",
+        "variant": "max"
+      },
+      "outcome": "succeeded",
+      "messages": 17,
+      "excludedInternalParts": 12,
+      "file": "sessions/pool-2--ses_eb6634edbffeXw6s7LR1cXK3Zi.json.gz",
+      "bytes": 33797,
+      "uncompressedBytes": 147565,
+      "sha256": "e39b697ff61f1723c997f14b4bdfb0594a800430528fa6abd06d7a085579f305",
+      "publicJsonSha256": "0a5fd87edf977a80e21768a694ce61f4ec69d538411475538edba3d8c841a411"
+    }
+  ],
+  "leafVerification": {
+    "checkedChildSessions": 28,
+    "additionalDescendantsFound": [],
+    "checkedAt": "2026-10-18T10:16:44.619Z"
+  },
+  "totalMessages": 1965
+}

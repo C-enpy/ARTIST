@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="1"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T20:31:25"
+	>
+	<testcase name="unit.AttributeTest.SetFloatDispatchesByElementType" classname="unit.AttributeTest.SetFloatDispatchesByElementType" time="0.0247037" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeTest.SetFloatDispatchesByElementType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeTest
+[ RUN      ] AttributeTest.SetFloatDispatchesByElementType
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(105): error: Mock function called more times than expected - returning directly.
+    Function call: mockOn(@0000019197D19D50 776-byte object &lt;B8-BD 9D-AB F7-7F 00-00 90-65 D0-97 91-01 00-00 80-65 D0-97 91-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 68-F9 97-AB F7-7F 00-00 ... 20-F7 D0-97 91-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 B0-FD D0-97 91-01 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00 00-00&gt;)
+         Expected: to be never called
+           Actual: called once - over-saturated and active
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst\ARTIST\tests\src\graphic\pipeline\AttributeTests.cpp(106): error: Actual function call count doesn't match EXPECT_CALL(*mock::MockSetter&lt;std::shared_ptr&lt;float&gt;&gt;::instance(), mockOn(::testing::_))...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active
+
+[  FAILED  ] AttributeTest.SetFloatDispatchesByElementType (1 ms)
+[----------] 1 test from AttributeTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeTest.SetFloatDispatchesByElementType
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+</testsuite>

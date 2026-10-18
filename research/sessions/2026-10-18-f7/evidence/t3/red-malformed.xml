@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="5"
+	failures="5"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-17T18:52:21"
+	>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0" time="0.0246889" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(184): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0, where GetParam() = 0 (1 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0, where GetParam() = 0
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1" time="0.023392" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(184): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1, where GetParam() = 1 (1 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1, where GetParam() = 1
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2" time="0.0258852" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(184): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2, where GetParam() = 2 (1 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2, where GetParam() = 2
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3" time="0.02617" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(184): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3, where GetParam() = 3 (1 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (2 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3, where GetParam() = 3
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+	<testcase name="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4" classname="unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4" time="0.0255275" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests
+[ RUN      ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests-common\include\TestUtils.hpp(16): error: Failed
+Expected an exception to be thrown
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp(184): error: Value of: passContext.getUniforms().empty()
+  Actual: false
+Expected: true
+
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4, where GetParam() = 4 (1 ms)
+[----------] 1 test from MalformedNames/UniformReaderInvalidNameTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4, where GetParam() = 4
+
+ 1 FAILED TEST
+</system-out>
+	</testcase>
+</testsuite>

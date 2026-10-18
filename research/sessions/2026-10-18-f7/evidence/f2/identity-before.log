@@ -1,0 +1,26 @@
+d24340f7e129a03da2a7c74a25025526c9c3cd00
+?? ARTIST/tests/src/graphic/pipeline/UniformCardinalityTests.cpp
+
+
+Algorithm : SHA256
+Hash      : 135BFA52C4AB85A16F12CB5FDF35770B548A085DEAB1E38DD88617F5D986C170
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\include\graphic\opengl\context\UniformContext.hpp
+
+Algorithm : SHA256
+Hash      : DBD26D8C4B1B63CD411C173BAE7EA1405C9F2B5476363EA196C53BADA89C609C
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\include\graphic\opengl\pipeline\component\uniform\Setter.hpp
+
+Algorithm : SHA256
+Hash      : 302EF9B2212547432ABE38E1BCEA8BC2F47DC4C0219F8EDCCE33BC8FBE47F55C
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformTests.cpp
+
+Algorithm : SHA256
+Hash      : EF1D397FF0995C51B425AEFB6881EF2C4B530624B73FBE10CFA8B05970E54EBA
+Path      : C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7
+            #eiyn0g-f2-opengl-author\ARTIST\tests\src\graphic\pipeline\UniformCardinalityTests.cpp
+
+
+

@@ -1,0 +1,38 @@
+{
+  "baseline_discovered": 249,
+  "red_discovered": 251,
+  "green_discovered": 251,
+  "added_names": [
+    "unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType",
+    "unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType"
+  ],
+  "red": {
+    "tests": 2,
+    "failures": 2,
+    "skipped": 0,
+    "disabled": 0,
+    "names": [
+      "unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType",
+      "unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType"
+    ]
+  },
+  "green_targeted": {
+    "tests": 2,
+    "failures": 0,
+    "skipped": 0,
+    "disabled": 0,
+    "names": [
+      "unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType",
+      "unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType"
+    ]
+  },
+  "green_unit": {
+    "tests": 251,
+    "failures": 0,
+    "skipped": 0,
+    "disabled": 0
+  },
+  "test_unchanged_between_red_and_green": true,
+  "tested_files_match_current_files": true,
+  "native_config": "Windows x64 Debug MSVC 14.44; no GL/ASan campaign"
+}

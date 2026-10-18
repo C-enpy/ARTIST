@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="2"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="DESKTOP-S232DQI"
+	time="0"
+	timestamp="2026-10-18T11:44:54"
+	>
+	<testcase name="unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType" classname="unit.AttributeContextTests.GetValue_MismatchReportsTheRealStoredType" time="0.0221786" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeContextTests.GetValue_MismatchReportsTheRealStoredType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeContextTests
+[ RUN      ] AttributeContextTests.GetValue_MismatchReportsTheRealStoredType
+[       OK ] AttributeContextTests.GetValue_MismatchReportsTheRealStoredType (0 ms)
+[----------] 1 test from AttributeContextTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+	<testcase name="unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType" classname="unit.AttributeContextTests.SetValue_MismatchReportsTheRealStoredType" time="0.0230877" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit"/>
+		</properties>
+		<system-out>Note: Google Test filter = AttributeContextTests.SetValue_MismatchReportsTheRealStoredType
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeContextTests
+[ RUN      ] AttributeContextTests.SetValue_MismatchReportsTheRealStoredType
+[       OK ] AttributeContextTests.SetValue_MismatchReportsTheRealStoredType (0 ms)
+[----------] 1 test from AttributeContextTests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+</system-out>
+	</testcase>
+</testsuite>

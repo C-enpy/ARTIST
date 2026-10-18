@@ -1,0 +1,72 @@
+{
+  "red-mocks.xml": {
+    "tests": 7,
+    "failures": 4,
+    "skips": 0,
+    "failed_names": [
+      "unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated",
+      "unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct",
+      "unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected",
+      "unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement"
+    ]
+  },
+  "red-gl.xml": {
+    "tests": 2,
+    "failures": 1,
+    "skips": 0,
+    "failed_names": [
+      "opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName"
+    ]
+  },
+  "red-malformed.xml": {
+    "tests": 5,
+    "failures": 5,
+    "skips": 0,
+    "failed_names": [
+      "unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0",
+      "unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1",
+      "unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2",
+      "unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3",
+      "unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4"
+    ]
+  },
+  "red-reload.xml": {
+    "tests": 2,
+    "failures": 2,
+    "skips": 0,
+    "failed_names": [
+      "unit.UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration",
+      "opengl.UniformReaderComponentTest.ExplicitFreeThenReloadReflectsTheNewProgram"
+    ]
+  },
+  "red-size.xml": {
+    "tests": 3,
+    "failures": 3,
+    "skips": 0,
+    "failed_names": [
+      "unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored",
+      "unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0",
+      "unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1"
+    ]
+  },
+  "green-native.xml": {
+    "tests": 268,
+    "failures": 1,
+    "skips": 0,
+    "failed_names": [
+      "unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders"
+    ]
+  },
+  "green-native-final.xml": {
+    "tests": 268,
+    "failures": 0,
+    "skips": 0,
+    "failed_names": []
+  },
+  "green-asan.xml": {
+    "tests": 245,
+    "failures": 0,
+    "skips": 0,
+    "failed_names": []
+  }
+}

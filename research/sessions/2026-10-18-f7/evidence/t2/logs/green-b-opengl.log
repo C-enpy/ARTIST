@@ -1,0 +1,83 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6
+# HEAD=cb9f2688dcb268a430c37cb66de3bd3aa31dd843
+# worktree-status=M ARTIST/include/graphic/pipeline/Attribute.hpp |  M ARTIST/tests/src/graphic/pipeline/AttributeTests.cpp | ?? ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -R ^opengl\.AttributeComponentTest\. --output-on-failure --no-tests=error --output-junit C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\out\mission-f7\t2\green-b-opengl.junit.xml --test-output-size-passed 65536 --test-output-size-failed 65536
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6/out/b
+    Start 193: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+1/2 Test #193: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError .....***Failed    0.48 sec
+Note: Google Test filter = AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeComponentTest
+[ RUN      ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(84): error: Expected equality of these values:
+  boundArrayBufferSize()
+    Which is: 8
+  static_cast<GLint>(sizeof(int))
+    Which is: 4
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(85): error: Expected equality of these values:
+  attributeStride(0)
+    Which is: 8
+  static_cast<GLint>(sizeof(int))
+    Which is: 4
+
+[  FAILED  ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError (390 ms)
+[----------] 1 test from AttributeComponentTest (390 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (390 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+
+ 1 FAILED TEST
+
+    Start 194: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+2/2 Test #194: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError ...***Failed    0.39 sec
+Note: Google Test filter = AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AttributeComponentTest
+[ RUN      ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+[OpenGL] NVIDIA Corporation | NVIDIA GeForce RTX 3090/PCIe/SSE2 | 3.3.0 NVIDIA 617.42
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(101): error: Expected equality of these values:
+  boundArrayBufferSize()
+    Which is: 8
+  static_cast<GLint>(sizeof(glm::vec3))
+    Which is: 12
+
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-6\ARTIST\component-tests\src\graphic\pipeline\AttributeComponentTests.cpp(102): error: Expected equality of these values:
+  attributeStride(0)
+    Which is: 8
+  static_cast<GLint>(sizeof(glm::vec3))
+    Which is: 12
+
+[  FAILED  ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError (294 ms)
+[----------] 1 test from AttributeComponentTest (294 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (294 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+
+ 1 FAILED TEST
+
+
+0% tests passed, 2 tests failed out of 2
+
+Label Time Summary:
+opengl    =   0.88 sec*proc (2 tests)
+
+Total Test time (real) =   0.89 sec
+
+The following tests FAILED:
+	193 - opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError (Failed) opengl
+	194 - opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError (Failed) opengl
+Errors while running CTest
+# exit=8 seconds=0.9

@@ -1,0 +1,44 @@
+{
+  "task": "task_mvco4dky_000w_30m1nv",
+  "author": "te-cpp-subst",
+  "substitution": "cpp-engineer fulfills test-engineer contract, explicitly approved by lead",
+  "base": "17019e42ae4e3065651fc09c1dc544ac3f66e316",
+  "branch": "ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst",
+  "g1": {
+    "clean": true,
+    "untracked": 0,
+    "source_test_files": 121,
+    "source_test_sha256": "d63d34af77ea1ce74d8f575af9f7e3f48b616725b68ae90e7851401a609f6c74"
+  },
+  "g2": {
+    "source_test_files": 121,
+    "source_test_sha256": "a55bd8fdc02f575151353116a4d10d3400ab410b529f73d35cdd115a44818a09",
+    "production_mock_cmake_fixture_delta": [],
+    "final_binary_sha256": "1625c3795e62042fee3154197e72c98202c98b4ddd1f9b9483eba5464c264391"
+  },
+  "proof_scope": "Windows x64 MSVC 14.44 Debug CPU, MOCK_GL ON, ASAN OFF",
+  "artifact_root": "out/mission-f7/te",
+  "build_root": "C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build",
+  "discovered_unit": 226,
+  "campaigns": {
+    "negative_oracle_only": {
+      "cases": 1, "distinct": 1, "failures": 1, "skips": 0,
+      "binary_exit": 1, "ctest_exit": 8,
+      "junit_sha256": "49d749bf5a593841bf91c613163ad445552b8036a31da790d6232d12e8850b24"
+    },
+    "final_selected": {
+      "cases": 3, "distinct": 3, "failures": 0, "skips": 0, "ctest_exit": 0,
+      "junit_sha256": "cc524e2a5171cb3f219a6d2204abeb425b960a7a78abf09bd3e409c6d6d69d94"
+    },
+    "final_unit": {
+      "cases": 226, "distinct": 226, "failures": 0, "skips": 0, "ctest_exit": 0,
+      "junit_sha256": "538121e06d9487e0e96d7d09c70730e58a6c2916cbc443a4d3a92dacf8fda6ab",
+      "names_equal_fresh_discovery": true
+    }
+  },
+  "ctest_output_limits": {"passed": 65536, "failed": 65536},
+  "native_gl_executed": 0,
+  "asan_executed": 0,
+  "decisions": {"T1": "KEEP", "T2": "MODIFY", "T3": "KEEP characterization, not atomicity adoption"},
+  "integration_and_fresh_test_review_pending": true
+}

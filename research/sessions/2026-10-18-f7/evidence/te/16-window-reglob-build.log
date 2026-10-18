@@ -1,0 +1,18 @@
+﻿COMMAND: cmake -S . -B 'C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build'; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; cmake --build 'C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build' --target ArtistLib_tests --parallel 1
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-te-cpp-subst
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+-- Using Conan toolchain: C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_MSVC_RUNTIME_LIBRARY=$<$<CONFIG:Debug>:MultiThreadedDebugDLL>
+-- Conan toolchain: C++ Standard 23 with extensions OFF
+-- Conan: Target declared 'glm::glm'
+-- Conan: Target declared 'glfw'
+-- Conan: Target declared 'opengl::opengl'
+-- Conan: Component target declared 'GLEW::glew_s'
+-- Conan: Target declared 'GLEW::GLEW'
+-- Conan: Target declared 'glu::glu'
+-- Conan: Target declared 'magic_enum::magic_enum'
+-- Configuring done (1.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/djden/source/repos/ARTIST/out/mission-f7/te-build
+ninja: no work to do.
+EXIT_CODE=0

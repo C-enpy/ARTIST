@@ -1,0 +1,856 @@
+﻿COMMAND: cmake --build C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build --parallel 1; if ($LASTEXITCODE -eq 0) { ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build --show-only=json-v1 | Out-File -Encoding utf8 C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3/out/mission-f7/t3/native-discovery.json; ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build --output-on-failure --no-tests=error --test-output-size-passed 65536 --test-output-size-failed 65536 --output-junit C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3/out/mission-f7/t3/green-native.xml }
+CWD: C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3
+MSVC: 14.44.35207 SDK: 10.0.26100.0\
+[1/9] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\opengl\pipeline\component\pass\UniformReaderTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(39): warning C4005: 'glUniform1f' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1959): note: voir la définition précédente de « glUniform1f »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(40): warning C4005: 'glUniform1d' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(5141): note: voir la définition précédente de « glUniform1d »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(41): warning C4005: 'glUniform1i' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1961): note: voir la définition précédente de « glUniform1i »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(42): warning C4005: 'glUniform1ui' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2262): note: voir la définition précédente de « glUniform1ui »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(43): warning C4005: 'glUniform2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1964): note: voir la définition précédente de « glUniform2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(44): warning C4005: 'glUniform3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1968): note: voir la définition précédente de « glUniform3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(45): warning C4005: 'glUniform4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1972): note: voir la définition précédente de « glUniform4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(46): warning C4005: 'glUniformMatrix2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1975): note: voir la définition précédente de « glUniformMatrix2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(47): warning C4005: 'glUniformMatrix3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1976): note: voir la définition précédente de « glUniformMatrix3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(48): warning C4005: 'glUniformMatrix4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1977): note: voir la définition précédente de « glUniformMatrix4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(49): warning C4005: 'glUseProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1978): note: voir la définition précédente de « glUseProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(50): warning C4005: 'glValidateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1979): note: voir la définition précédente de « glValidateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(51): warning C4005: 'glAttachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1924): note: voir la définition précédente de « glAttachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(52): warning C4005: 'glBindAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1925): note: voir la définition précédente de « glBindAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(53): warning C4005: 'glBlendEquationSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1926): note: voir la définition précédente de « glBlendEquationSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(54): warning C4005: 'glCompileShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1927): note: voir la définition précédente de « glCompileShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(55): warning C4005: 'glCreateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1928): note: voir la définition précédente de « glCreateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(56): warning C4005: 'glCreateShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1929): note: voir la définition précédente de « glCreateShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(57): warning C4005: 'glDeleteProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1930): note: voir la définition précédente de « glDeleteProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(58): warning C4005: 'glDeleteShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1931): note: voir la définition précédente de « glDeleteShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(59): warning C4005: 'glDetachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1932): note: voir la définition précédente de « glDetachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(60): warning C4005: 'glDisableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1933): note: voir la définition précédente de « glDisableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(61): warning C4005: 'glDrawBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1934): note: voir la définition précédente de « glDrawBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(62): warning C4005: 'glEnableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1935): note: voir la définition précédente de « glEnableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(63): warning C4005: 'glGetActiveAttrib' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1936): note: voir la définition précédente de « glGetActiveAttrib »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(64): warning C4005: 'glGetActiveUniform' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1937): note: voir la définition précédente de « glGetActiveUniform »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(65): warning C4005: 'glGetAttachedShaders' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1938): note: voir la définition précédente de « glGetAttachedShaders »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(66): warning C4005: 'glGetAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1939): note: voir la définition précédente de « glGetAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(67): warning C4005: 'glGetProgramInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1940): note: voir la définition précédente de « glGetProgramInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(68): warning C4005: 'glGetProgramiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1941): note: voir la définition précédente de « glGetProgramiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(69): warning C4005: 'glGetShaderInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1942): note: voir la définition précédente de « glGetShaderInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(70): warning C4005: 'glGetShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1943): note: voir la définition précédente de « glGetShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(71): warning C4005: 'glGetShaderiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1944): note: voir la définition précédente de « glGetShaderiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(72): warning C4005: 'glGetUniformLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1945): note: voir la définition précédente de « glGetUniformLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(73): warning C4005: 'glGetUniformfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1946): note: voir la définition précédente de « glGetUniformfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(74): warning C4005: 'glGetUniformiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1947): note: voir la définition précédente de « glGetUniformiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(75): warning C4005: 'glGetVertexAttribPointerv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1948): note: voir la définition précédente de « glGetVertexAttribPointerv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(76): warning C4005: 'glGetVertexAttribdv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1949): note: voir la définition précédente de « glGetVertexAttribdv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(77): warning C4005: 'glGetVertexAttribfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1950): note: voir la définition précédente de « glGetVertexAttribfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(78): warning C4005: 'glGetVertexAttribiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1951): note: voir la définition précédente de « glGetVertexAttribiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(79): warning C4005: 'glGenBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1723): note: voir la définition précédente de « glGenBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(80): warning C4005: 'glBindBuffer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1717): note: voir la définition précédente de « glBindBuffer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(81): warning C4005: 'glBufferData' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1718): note: voir la définition précédente de « glBufferData »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(82): warning C4005: 'glVertexAttribPointer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2016): note: voir la définition précédente de « glVertexAttribPointer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(83): warning C4005: 'glIsProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1952): note: voir la définition précédente de « glIsProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(84): warning C4005: 'glIsShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1953): note: voir la définition précédente de « glIsShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(85): warning C4005: 'glLinkProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1954): note: voir la définition précédente de « glLinkProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(86): warning C4005: 'glShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1955): note: voir la définition précédente de « glShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(87): warning C4005: 'glStencilFuncSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1956): note: voir la définition précédente de « glStencilFuncSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(88): warning C4005: 'glStencilMaskSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1957): note: voir la définition précédente de « glStencilMaskSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(89): warning C4005: 'glStencilOpSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1958): note: voir la définition précédente de « glStencilOpSeparate »
+[2/9] Building CXX object ARTIST\tests\CMakeFiles\ArtistLib_tests.dir\src\graphic\pipeline\ShaderLifetimeTests.cpp.obj
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(39): warning C4005: 'glUniform1f' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1959): note: voir la définition précédente de « glUniform1f »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(40): warning C4005: 'glUniform1d' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(5141): note: voir la définition précédente de « glUniform1d »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(41): warning C4005: 'glUniform1i' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1961): note: voir la définition précédente de « glUniform1i »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(42): warning C4005: 'glUniform1ui' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2262): note: voir la définition précédente de « glUniform1ui »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(43): warning C4005: 'glUniform2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1964): note: voir la définition précédente de « glUniform2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(44): warning C4005: 'glUniform3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1968): note: voir la définition précédente de « glUniform3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(45): warning C4005: 'glUniform4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1972): note: voir la définition précédente de « glUniform4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(46): warning C4005: 'glUniformMatrix2fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1975): note: voir la définition précédente de « glUniformMatrix2fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(47): warning C4005: 'glUniformMatrix3fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1976): note: voir la définition précédente de « glUniformMatrix3fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(48): warning C4005: 'glUniformMatrix4fv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1977): note: voir la définition précédente de « glUniformMatrix4fv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(49): warning C4005: 'glUseProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1978): note: voir la définition précédente de « glUseProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(50): warning C4005: 'glValidateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1979): note: voir la définition précédente de « glValidateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(51): warning C4005: 'glAttachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1924): note: voir la définition précédente de « glAttachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(52): warning C4005: 'glBindAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1925): note: voir la définition précédente de « glBindAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(53): warning C4005: 'glBlendEquationSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1926): note: voir la définition précédente de « glBlendEquationSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(54): warning C4005: 'glCompileShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1927): note: voir la définition précédente de « glCompileShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(55): warning C4005: 'glCreateProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1928): note: voir la définition précédente de « glCreateProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(56): warning C4005: 'glCreateShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1929): note: voir la définition précédente de « glCreateShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(57): warning C4005: 'glDeleteProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1930): note: voir la définition précédente de « glDeleteProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(58): warning C4005: 'glDeleteShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1931): note: voir la définition précédente de « glDeleteShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(59): warning C4005: 'glDetachShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1932): note: voir la définition précédente de « glDetachShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(60): warning C4005: 'glDisableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1933): note: voir la définition précédente de « glDisableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(61): warning C4005: 'glDrawBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1934): note: voir la définition précédente de « glDrawBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(62): warning C4005: 'glEnableVertexAttribArray' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1935): note: voir la définition précédente de « glEnableVertexAttribArray »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(63): warning C4005: 'glGetActiveAttrib' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1936): note: voir la définition précédente de « glGetActiveAttrib »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(64): warning C4005: 'glGetActiveUniform' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1937): note: voir la définition précédente de « glGetActiveUniform »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(65): warning C4005: 'glGetAttachedShaders' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1938): note: voir la définition précédente de « glGetAttachedShaders »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(66): warning C4005: 'glGetAttribLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1939): note: voir la définition précédente de « glGetAttribLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(67): warning C4005: 'glGetProgramInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1940): note: voir la définition précédente de « glGetProgramInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(68): warning C4005: 'glGetProgramiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1941): note: voir la définition précédente de « glGetProgramiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(69): warning C4005: 'glGetShaderInfoLog' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1942): note: voir la définition précédente de « glGetShaderInfoLog »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(70): warning C4005: 'glGetShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1943): note: voir la définition précédente de « glGetShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(71): warning C4005: 'glGetShaderiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1944): note: voir la définition précédente de « glGetShaderiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(72): warning C4005: 'glGetUniformLocation' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1945): note: voir la définition précédente de « glGetUniformLocation »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(73): warning C4005: 'glGetUniformfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1946): note: voir la définition précédente de « glGetUniformfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(74): warning C4005: 'glGetUniformiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1947): note: voir la définition précédente de « glGetUniformiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(75): warning C4005: 'glGetVertexAttribPointerv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1948): note: voir la définition précédente de « glGetVertexAttribPointerv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(76): warning C4005: 'glGetVertexAttribdv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1949): note: voir la définition précédente de « glGetVertexAttribdv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(77): warning C4005: 'glGetVertexAttribfv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1950): note: voir la définition précédente de « glGetVertexAttribfv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(78): warning C4005: 'glGetVertexAttribiv' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1951): note: voir la définition précédente de « glGetVertexAttribiv »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(79): warning C4005: 'glGenBuffers' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1723): note: voir la définition précédente de « glGenBuffers »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(80): warning C4005: 'glBindBuffer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1717): note: voir la définition précédente de « glBindBuffer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(81): warning C4005: 'glBufferData' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1718): note: voir la définition précédente de « glBufferData »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(82): warning C4005: 'glVertexAttribPointer' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(2016): note: voir la définition précédente de « glVertexAttribPointer »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(83): warning C4005: 'glIsProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1952): note: voir la définition précédente de « glIsProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(84): warning C4005: 'glIsShader' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1953): note: voir la définition précédente de « glIsShader »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(85): warning C4005: 'glLinkProgram' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1954): note: voir la définition précédente de « glLinkProgram »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(86): warning C4005: 'glShaderSource' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1955): note: voir la définition précédente de « glShaderSource »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(87): warning C4005: 'glStencilFuncSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1956): note: voir la définition précédente de « glStencilFuncSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(88): warning C4005: 'glStencilMaskSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1957): note: voir la définition précédente de « glStencilMaskSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(89): warning C4005: 'glStencilOpSeparate' : redéfinition de macro
+C:\Users\djden\source\repos\ARTIST\out\conan2\p\b\glew15bda264c9bea\p\include\GL/glew.h(1958): note: voir la définition précédente de « glStencilOpSeparate »
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\pipeline\ShaderLifetimeTests.cpp(194): warning C4834: abandon de la valeur de retour de la fonction avec l'attribut [[nodiscard]]
+[3/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\pipeline\PipelineLifetimeComponentTests.cpp.obj
+[4/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\PassTests.cpp.obj
+[5/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\ProgramTests.cpp.obj
+[6/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\ShaderLifetimeComponentTests.cpp.obj
+[7/9] Building CXX object ARTIST\component-tests\CMakeFiles\ArtistLib_component_tests.dir\src\graphic\shader\UniformReaderComponentTests.cpp.obj
+[8/9] Linking CXX executable ARTIST\tests\ArtistLib_tests.exe
+[9/9] Linking CXX executable ARTIST\component-tests\ArtistLib_component_tests.exe
+Internal ctest changing into directory: C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+Test project C:/Users/djden/source/repos/ARTIST/out/mission-f7/t3-build
+        Start   1: unit.TraceableExceptionTests.What_IsForwardedToTheBaseException
+  1/268 Test   #1: unit.TraceableExceptionTests.What_IsForwardedToTheBaseException ...............................................................................   Passed    0.02 sec
+        Start   2: unit.TraceableExceptionTests.GetStackTraceString_ReadsTheReturnedValueSafely
+  2/268 Test   #2: unit.TraceableExceptionTests.GetStackTraceString_ReadsTheReturnedValueSafely ..................................................................   Passed    0.02 sec
+        Start   3: unit.PassContextTests.GetShader_BorrowsFirstAndLastRegisteredShaders
+  3/268 Test   #3: unit.PassContextTests.GetShader_BorrowsFirstAndLastRegisteredShaders ..........................................................................   Passed    0.02 sec
+        Start   4: unit.PassContextTests.GetShader_RejectsNegativeIndexWithRuledMessage
+  4/268 Test   #4: unit.PassContextTests.GetShader_RejectsNegativeIndexWithRuledMessage ..........................................................................   Passed    0.02 sec
+        Start   5: unit.PassContextTests.GetShader_RejectsIndexEqualToSize
+  5/268 Test   #5: unit.PassContextTests.GetShader_RejectsIndexEqualToSize .......................................................................................   Passed    0.01 sec
+        Start   6: unit.PassContextTests.GetShader_RejectsIndexBeyondVectorSize
+  6/268 Test   #6: unit.PassContextTests.GetShader_RejectsIndexBeyondVectorSize ..................................................................................   Passed    0.01 sec
+        Start   7: unit.PassContextTests.GetShader_RejectsAccessOnEmptyContext
+  7/268 Test   #7: unit.PassContextTests.GetShader_RejectsAccessOnEmptyContext ...................................................................................   Passed    0.01 sec
+        Start   8: unit.PassContextTests.GetShader_RejectedAccessKeepsContextUnmutated
+  8/268 Test   #8: unit.PassContextTests.GetShader_RejectedAccessKeepsContextUnmutated ...........................................................................   Passed    0.01 sec
+        Start   9: unit.PipelineContextTests.GetPass_ReturnsFirstAndLastRegisteredPasses
+  9/268 Test   #9: unit.PipelineContextTests.GetPass_ReturnsFirstAndLastRegisteredPasses .........................................................................   Passed    0.01 sec
+        Start  10: unit.PipelineContextTests.GetPass_RejectsNegativeIndexWithRuledMessage
+ 10/268 Test  #10: unit.PipelineContextTests.GetPass_RejectsNegativeIndexWithRuledMessage ........................................................................   Passed    0.01 sec
+        Start  11: unit.PipelineContextTests.GetPass_RejectsIndexEqualToSize
+ 11/268 Test  #11: unit.PipelineContextTests.GetPass_RejectsIndexEqualToSize .....................................................................................   Passed    0.02 sec
+        Start  12: unit.PipelineContextTests.GetPass_RejectsIndexBeyondVectorSize
+ 12/268 Test  #12: unit.PipelineContextTests.GetPass_RejectsIndexBeyondVectorSize ................................................................................   Passed    0.02 sec
+        Start  13: unit.PipelineContextTests.GetPass_RejectsAccessOnEmptyContext
+ 13/268 Test  #13: unit.PipelineContextTests.GetPass_RejectsAccessOnEmptyContext .................................................................................   Passed    0.01 sec
+        Start  14: unit.PipelineContextTests.GetPass_RejectedAccessKeepsContextUnmutated
+ 14/268 Test  #14: unit.PipelineContextTests.GetPass_RejectedAccessKeepsContextUnmutated .........................................................................   Passed    0.02 sec
+        Start  15: unit.ShaderContextTests.SetAndGetShaderTypeforVertexShader
+ 15/268 Test  #15: unit.ShaderContextTests.SetAndGetShaderTypeforVertexShader ....................................................................................   Passed    0.02 sec
+        Start  16: unit.ShaderContextTests.SetAndGetShaderTypeforFragmentShader
+ 16/268 Test  #16: unit.ShaderContextTests.SetAndGetShaderTypeforFragmentShader ..................................................................................   Passed    0.02 sec
+        Start  17: unit.ShaderContextTests.SetAndGetShaderTypeforGeometryShader
+ 17/268 Test  #17: unit.ShaderContextTests.SetAndGetShaderTypeforGeometryShader ..................................................................................   Passed    0.01 sec
+        Start  18: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationControlShader
+ 18/268 Test  #18: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationControlShader .......................................................................   Passed    0.02 sec
+        Start  19: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationEvaluationShader
+ 19/268 Test  #19: unit.ShaderContextTests.SetAndGetShaderTypeforTessellationEvaluationShader ....................................................................   Passed    0.02 sec
+        Start  20: unit.ShaderContextTests.SetAndGetShaderTypeforComputeShader
+ 20/268 Test  #20: unit.ShaderContextTests.SetAndGetShaderTypeforComputeShader ...................................................................................   Passed    0.02 sec
+        Start  21: unit.AttributeBinderTests.BindAttributeTest_createBuffer
+ 21/268 Test  #21: unit.AttributeBinderTests.BindAttributeTest_createBuffer ......................................................................................   Passed    0.02 sec
+        Start  22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer
+ 22/268 Test  #22: unit.AttributeBinderTests.BindAttributeTest_bindBuffer ........................................................................................   Passed    0.02 sec
+        Start  23: unit.AttributeSetterTests.SetAttributeTest_CallBufferData
+ 23/268 Test  #23: unit.AttributeSetterTests.SetAttributeTest_CallBufferData .....................................................................................   Passed    0.01 sec
+        Start  24: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size
+ 24/268 Test  #24: unit.AttributeSetterTests.SetAttributeTest_CallBufferDataWithVec3Size .........................................................................   Passed    0.01 sec
+        Start  25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer
+ 25/268 Test  #25: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointer ............................................................................   Passed    0.02 sec
+        Start  26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride
+ 26/268 Test  #26: unit.AttributeSetterTests.SetAttributeTest_CallVertexAttribPointerWithVec3Stride ..............................................................   Passed    0.02 sec
+        Start  27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet
+ 27/268 Test  #27: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenBufferIsNotSet ...................................................................   Passed    0.01 sec
+        Start  28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNull
+ 28/268 Test  #28: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNull ......................................................................   Passed    0.02 sec
+        Start  29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNotSet
+ 29/268 Test  #29: unit.AttributeSetterTests.SetAttributeTest_ThrowExceptionWhenValueIsNotSet ....................................................................   Passed    0.01 sec
+        Start  30: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer
+ 30/268 Test  #30: unit.AttributeUnbinderTests.BindAttributeTest_unbindBuffer ....................................................................................   Passed    0.02 sec
+        Start  31: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID
+ 31/268 Test  #31: unit.AttributeUnbinderTests.BindAttributeTest_defaultBindID ...................................................................................   Passed    0.02 sec
+        Start  32: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv
+ 32/268 Test  #32: unit.AttributeReaderTests.ReadAttributes_CallGetProgramiv .....................................................................................   Passed    0.01 sec
+        Start  33: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation
+ 33/268 Test  #33: unit.AttributeReaderTests.ReadAttributes_CallGetActiveAttribAndGetAttribLocation ..............................................................   Passed    0.02 sec
+        Start  34: unit.AttributeReaderTests.ReadAttributes_InvalidPassID
+ 34/268 Test  #34: unit.AttributeReaderTests.ReadAttributes_InvalidPassID ........................................................................................   Passed    0.02 sec
+        Start  35: unit.PassFreerTests.FreePassTest_validContext
+ 35/268 Test  #35: unit.PassFreerTests.FreePassTest_validContext .................................................................................................   Passed    0.01 sec
+        Start  36: unit.PassFreerTests.FreePassTest_noPassID
+ 36/268 Test  #36: unit.PassFreerTests.FreePassTest_noPassID .....................................................................................................   Passed    0.01 sec
+        Start  37: unit.PassFreerTests.FreePassTest_deletePipeline
+ 37/268 Test  #37: unit.PassFreerTests.FreePassTest_deletePipeline ...............................................................................................   Passed    0.02 sec
+        Start  38: unit.PassFreerTests.FreePassTest_noShaders
+ 38/268 Test  #38: unit.PassFreerTests.FreePassTest_noShaders ....................................................................................................   Passed    0.01 sec
+        Start  39: unit.PassFreerTests.FreePassTest_isIdempotent
+ 39/268 Test  #39: unit.PassFreerTests.FreePassTest_isIdempotent .................................................................................................   Passed    0.01 sec
+        Start  40: unit.LoaderTests.LoadPassTest_validContext
+ 40/268 Test  #40: unit.LoaderTests.LoadPassTest_validContext ....................................................................................................   Passed    0.01 sec
+        Start  41: unit.LoaderTests.LoadPassTest_createPipeline
+ 41/268 Test  #41: unit.LoaderTests.LoadPassTest_createPipeline ..................................................................................................   Passed    0.01 sec
+        Start  42: unit.LoaderTests.LoadPassTest_linkPipeline
+ 42/268 Test  #42: unit.LoaderTests.LoadPassTest_linkPipeline ....................................................................................................   Passed    0.01 sec
+        Start  43: unit.LoaderTests.LoadPassTest_pipelineCreationFailed
+ 43/268 Test  #43: unit.LoaderTests.LoadPassTest_pipelineCreationFailed ..........................................................................................   Passed    0.02 sec
+        Start  44: unit.LoaderTests.LoadPassTest_linkFailed
+ 44/268 Test  #44: unit.LoaderTests.LoadPassTest_linkFailed ......................................................................................................   Passed    0.02 sec
+        Start  45: unit.LoaderTests.LoadPassTest_linkSuccess
+ 45/268 Test  #45: unit.LoaderTests.LoadPassTest_linkSuccess .....................................................................................................   Passed    0.01 sec
+        Start  46: unit.LoaderTests.LoadPassTest_reloadRejectedBeforeAnyNativeCall
+ 46/268 Test  #46: unit.LoaderTests.LoadPassTest_reloadRejectedBeforeAnyNativeCall ...............................................................................   Passed    0.02 sec
+        Start  47: unit.LoaderTests.LoadPassTest_passIDPublishedOnlyAfterLinkSuccess
+ 47/268 Test  #47: unit.LoaderTests.LoadPassTest_passIDPublishedOnlyAfterLinkSuccess .............................................................................   Passed    0.02 sec
+        Start  48: unit.LoaderTests.LoadPassTest_attacherFailureReleasesProgramOnce
+ 48/268 Test  #48: unit.LoaderTests.LoadPassTest_attacherFailureReleasesProgramOnce ..............................................................................   Passed    0.02 sec
+        Start  49: unit.ShaderAttacherTests.AttachShaders_ValidContext
+ 49/268 Test  #49: unit.ShaderAttacherTests.AttachShaders_ValidContext ...........................................................................................   Passed    0.02 sec
+        Start  50: unit.ShaderAttacherTests.AttachShaders_InvalidPassID
+ 50/268 Test  #50: unit.ShaderAttacherTests.AttachShaders_InvalidPassID ..........................................................................................   Passed    0.02 sec
+        Start  51: unit.ShaderAttacherTests.AttachShaders_NoShaders
+ 51/268 Test  #51: unit.ShaderAttacherTests.AttachShaders_NoShaders ..............................................................................................   Passed    0.02 sec
+        Start  52: unit.UniformReaderTests.ReadUniforms_ValidContext
+ 52/268 Test  #52: unit.UniformReaderTests.ReadUniforms_ValidContext .............................................................................................   Passed    0.02 sec
+        Start  53: unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated
+ 53/268 Test  #53: unit.UniformReaderTests.ReadUniforms_LongNameIsNotTruncated ...................................................................................   Passed    0.02 sec
+        Start  54: unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct
+ 54/268 Test  #54: unit.UniformReaderTests.ReadUniforms_LongNamesWithCommonPrefixStayDistinct ....................................................................   Passed    0.02 sec
+        Start  55: unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected
+ 55/268 Test  #55: unit.UniformReaderTests.ReadUniforms_MissingLocationIsRejected ................................................................................   Passed    0.02 sec
+        Start  56: unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement
+ 56/268 Test  #56: unit.UniformReaderTests.ReadUniforms_DuplicateNameIsRejectedWithoutReplacement ................................................................   Passed    0.02 sec
+        Start  57: unit.UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration
+ 57/268 Test  #57: unit.UniformReaderTests.ReadUniforms_NewReflectionMayReplacePreviousGeneration ................................................................   Passed    0.02 sec
+        Start  58: unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored
+ 58/268 Test  #58: unit.UniformReaderTests.ReadUniforms_ReflectedArraySizeIsStored ...............................................................................   Passed    0.02 sec
+        Start  59: unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL
+ 59/268 Test  #59: unit.UniformReaderTests.ReadUniforms_InvalidProgramIDIsRejectedBeforeGL .......................................................................   Passed    0.01 sec
+        Start  60: unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing
+ 60/268 Test  #60: unit.UniformReaderTests.ReadUniforms_EmptyProgramAddsNothing ..................................................................................   Passed    0.02 sec
+        Start  61: unit.UserTests.UsePass_ValidContext
+ 61/268 Test  #61: unit.UserTests.UsePass_ValidContext ...........................................................................................................   Passed    0.01 sec
+        Start  62: unit.UserTests.UsePass_ZeroPassIDStillCallsGL
+ 62/268 Test  #62: unit.UserTests.UsePass_ZeroPassIDStillCallsGL .................................................................................................   Passed    0.02 sec
+        Start  63: unit.ResetterTests.resetProgram_ValidContext
+ 63/268 Test  #63: unit.ResetterTests.resetProgram_ValidContext ..................................................................................................   Passed    0.02 sec
+        Start  64: unit.ResetterTests.resetProgram_NullContext
+ 64/268 Test  #64: unit.ResetterTests.resetProgram_NullContext ...................................................................................................   Passed    0.02 sec
+        Start  65: unit.ResetterTests.BorrowedEntryPointResetsOnlyCursor
+ 65/268 Test  #65: unit.ResetterTests.BorrowedEntryPointResetsOnlyCursor .........................................................................................   Passed    0.02 sec
+        Start  66: unit.ResetterTests.SharedFacadeDoesNotRetainContext
+ 66/268 Test  #66: unit.ResetterTests.SharedFacadeDoesNotRetainContext ...........................................................................................   Passed    0.02 sec
+        Start  67: unit.PipelineUserTests.useProgram_ValidContext
+ 67/268 Test  #67: unit.PipelineUserTests.useProgram_ValidContext ................................................................................................   Passed    0.02 sec
+        Start  68: unit.PipelineUserTests.useProgram_NullContext
+ 68/268 Test  #68: unit.PipelineUserTests.useProgram_NullContext .................................................................................................   Passed    0.02 sec
+        Start  69: unit.PipelineUserTests.BorrowedEntryPointUsesRegisteredPass
+ 69/268 Test  #69: unit.PipelineUserTests.BorrowedEntryPointUsesRegisteredPass ...................................................................................   Passed    0.02 sec
+        Start  70: unit.PipelineUserTests.SharedFacadeDoesNotRetainContext
+ 70/268 Test  #70: unit.PipelineUserTests.SharedFacadeDoesNotRetainContext .......................................................................................   Passed    0.02 sec
+        Start  71: unit.FreerTests.FreeShader_freeOnGPU
+ 71/268 Test  #71: unit.FreerTests.FreeShader_freeOnGPU ..........................................................................................................   Passed    0.02 sec
+        Start  72: unit.FreerTests.FreeShader_setShaderIDToZero
+ 72/268 Test  #72: unit.FreerTests.FreeShader_setShaderIDToZero ..................................................................................................   Passed    0.01 sec
+        Start  73: unit.FreerTests.FreeShader_doNothing_whenShaderIDIsZero
+ 73/268 Test  #73: unit.FreerTests.FreeShader_doNothing_whenShaderIDIsZero .......................................................................................   Passed    0.02 sec
+        Start  74: unit.ShaderLoaderTests.LoadShaderTest_callCreate
+ 74/268 Test  #74: unit.ShaderLoaderTests.LoadShaderTest_callCreate ..............................................................................................   Passed    0.02 sec
+        Start  75: unit.ShaderLoaderTests.LoadShaderTest_callShaderSource
+ 75/268 Test  #75: unit.ShaderLoaderTests.LoadShaderTest_callShaderSource ........................................................................................   Passed    0.02 sec
+        Start  76: unit.ShaderLoaderTests.LoadShaderTest_callCompile
+ 76/268 Test  #76: unit.ShaderLoaderTests.LoadShaderTest_callCompile .............................................................................................   Passed    0.02 sec
+        Start  77: unit.ShaderLoaderTests.LoadShaderTest_callGetIv
+ 77/268 Test  #77: unit.ShaderLoaderTests.LoadShaderTest_callGetIv ...............................................................................................   Passed    0.02 sec
+        Start  78: unit.ShaderLoaderTests.LoadShaderTest_setContextShaderId
+ 78/268 Test  #78: unit.ShaderLoaderTests.LoadShaderTest_setContextShaderId ......................................................................................   Passed    0.01 sec
+        Start  79: unit.ShaderLoaderTests.LoadShaderFailureTest
+ 79/268 Test  #79: unit.ShaderLoaderTests.LoadShaderFailureTest ..................................................................................................   Passed    0.02 sec
+        Start  80: unit.ReaderTests.ReadShaderTest
+ 80/268 Test  #80: unit.ReaderTests.ReadShaderTest ...............................................................................................................   Passed    0.02 sec
+        Start  81: unit.ReaderTests.ReadShaderTest_AbsentFileRejected
+ 81/268 Test  #81: unit.ReaderTests.ReadShaderTest_AbsentFileRejected ............................................................................................   Passed    0.02 sec
+        Start  82: unit.ReaderTests.ReadShaderTest_EmptyReadableFileYieldsEmptyCode
+ 82/268 Test  #82: unit.ReaderTests.ReadShaderTest_EmptyReadableFileYieldsEmptyCode ..............................................................................   Passed    0.02 sec
+        Start  83: unit.ReaderTests.ReadShaderTest_MultiBlockReadPreservesContent
+ 83/268 Test  #83: unit.ReaderTests.ReadShaderTest_MultiBlockReadPreservesContent ................................................................................   Passed    0.03 sec
+        Start  84: unit.ReaderTests.ReadShaderTest_ExactlyOneBlockPreservesContent
+ 84/268 Test  #84: unit.ReaderTests.ReadShaderTest_ExactlyOneBlockPreservesContent ...............................................................................   Passed    0.03 sec
+        Start  85: unit.ReaderTests.AbsentPathSetup_RejectsUnremovableResidue
+ 85/268 Test  #85: unit.ReaderTests.AbsentPathSetup_RejectsUnremovableResidue ....................................................................................   Passed    0.02 sec
+        Start  86: unit.ReaderTests.OwnedRootSetup_AcquiresDistinctRootsPerFixtureInstance
+ 86/268 Test  #86: unit.ReaderTests.OwnedRootSetup_AcquiresDistinctRootsPerFixtureInstance .......................................................................   Passed    0.02 sec
+        Start  87: unit.ReaderTests.OwnedRootSetup_IsIsolatedFromLegacySharedParent
+ 87/268 Test  #87: unit.ReaderTests.OwnedRootSetup_IsIsolatedFromLegacySharedParent ..............................................................................   Passed    0.02 sec
+        Start  88: unit.ReaderTests.Cleanup_IsBoundedToOwnedRootAndPreservesNeighbor
+ 88/268 Test  #88: unit.ReaderTests.Cleanup_IsBoundedToOwnedRootAndPreservesNeighbor .............................................................................   Passed    0.02 sec
+        Start  89: unit.ReaderTests.ExtractionFailure_SentinelTranslatedWithExactMessage
+ 89/268 Test  #89: unit.ReaderTests.ExtractionFailure_SentinelTranslatedWithExactMessage .........................................................................   Passed    0.03 sec
+        Start  90: unit.ReaderTests.ExtractionFailure_BadAllocStaysUntranslated
+ 90/268 Test  #90: unit.ReaderTests.ExtractionFailure_BadAllocStaysUntranslated ..................................................................................   Passed    0.02 sec
+        Start  91: unit.ReaderTests.CloseHappensBeforePublication_ObservableThroughVirtualSetter
+ 91/268 Test  #91: unit.ReaderTests.CloseHappensBeforePublication_ObservableThroughVirtualSetter .................................................................   Passed    0.03 sec
+        Start  92: unit.AttributeOwnershipTests.NullContextIsRejected
+ 92/268 Test  #92: unit.AttributeOwnershipTests.NullContextIsRejected ............................................................................................   Passed    0.01 sec
+        Start  93: unit.AttributeOwnershipTests.PassContextRejectsNullAttribute
+ 93/268 Test  #93: unit.AttributeOwnershipTests.PassContextRejectsNullAttribute ..................................................................................   Passed    0.01 sec
+        Start  94: unit.AttributeTest.BindTest
+ 94/268 Test  #94: unit.AttributeTest.BindTest ...................................................................................................................   Passed    0.02 sec
+        Start  95: unit.AttributeTest.UnbindTest
+ 95/268 Test  #95: unit.AttributeTest.UnbindTest .................................................................................................................   Passed    0.01 sec
+        Start  96: unit.AttributeTest.SetTest
+ 96/268 Test  #96: unit.AttributeTest.SetTest ....................................................................................................................   Passed    0.01 sec
+        Start  97: unit.AttributeTest.GetContextTest
+ 97/268 Test  #97: unit.AttributeTest.GetContextTest .............................................................................................................   Passed    0.01 sec
+        Start  98: unit.PassTest.LoadPass
+ 98/268 Test  #98: unit.PassTest.LoadPass ........................................................................................................................   Passed    0.02 sec
+        Start  99: unit.PassTest.WithUniforms
+ 99/268 Test  #99: unit.PassTest.WithUniforms ....................................................................................................................   Passed    0.02 sec
+        Start 100: unit.PassTest.WithUniforms_NoUniform
+100/268 Test #100: unit.PassTest.WithUniforms_NoUniform ..........................................................................................................   Passed    0.02 sec
+        Start 101: unit.PassTest.UsePass
+101/268 Test #101: unit.PassTest.UsePass .........................................................................................................................   Passed    0.02 sec
+        Start 102: unit.PassTest.FreePass
+102/268 Test #102: unit.PassTest.FreePass ........................................................................................................................   Passed    0.01 sec
+        Start 103: unit.PassTest.GetUniforms
+103/268 Test #103: unit.PassTest.GetUniforms .....................................................................................................................   Passed    0.02 sec
+        Start 104: unit.PassTest.GetAttributes
+104/268 Test #104: unit.PassTest.GetAttributes ...................................................................................................................   Passed    0.02 sec
+        Start 105: unit.PassTest.GetShader
+105/268 Test #105: unit.PassTest.GetShader .......................................................................................................................   Passed    0.02 sec
+        Start 106: unit.PassTest.GetContext
+106/268 Test #106: unit.PassTest.GetContext ......................................................................................................................   Passed    0.02 sec
+        Start 107: unit.PipelineBorrowedContractTests.FlowRequiresBorrowedVoidComponents
+107/268 Test #107: unit.PipelineBorrowedContractTests.FlowRequiresBorrowedVoidComponents .........................................................................   Passed    0.02 sec
+        Start 108: unit.PipelineBorrowedContractTests.RealComponentsOfferBorrowedEntryPoints
+108/268 Test #108: unit.PipelineBorrowedContractTests.RealComponentsOfferBorrowedEntryPoints .....................................................................   Passed    0.01 sec
+        Start 109: unit.PipelineCursorTests.AddNullPassRejectsBeforeInsertionAndKeepsCursor
+109/268 Test #109: unit.PipelineCursorTests.AddNullPassRejectsBeforeInsertionAndKeepsCursor ......................................................................   Passed    0.01 sec
+        Start 110: unit.PipelineCursorTests.SetCurrentPassRejectsEveryInvalidValueBeforeMutation
+110/268 Test #110: unit.PipelineCursorTests.SetCurrentPassRejectsEveryInvalidValueBeforeMutation .................................................................   Passed    0.02 sec
+        Start 111: unit.PipelineCursorTests.CursorAcceptsOnlyInitialStateAndRegisteredIndices
+111/268 Test #111: unit.PipelineCursorTests.CursorAcceptsOnlyInitialStateAndRegisteredIndices ....................................................................   Passed    0.02 sec
+        Start 112: unit.PipelineCursorTests.InvalidUseNeverCallsUserOrMutatesCursor
+112/268 Test #112: unit.PipelineCursorTests.InvalidUseNeverCallsUserOrMutatesCursor ..............................................................................   Passed    0.01 sec
+        Start 113: unit.PipelineCursorTests.ThrowingUserSeesCandidateThenRollsBackAndRethrowsSameException
+113/268 Test #113: unit.PipelineCursorTests.ThrowingUserSeesCandidateThenRollsBackAndRethrowsSameException .......................................................   Passed    0.01 sec
+        Start 114: unit.PipelineCursorTests.EmptyUseNextResetsAndReturnsFalse
+114/268 Test #114: unit.PipelineCursorTests.EmptyUseNextResetsAndReturnsFalse ....................................................................................   Passed    0.01 sec
+        Start 115: unit.PipelineCursorTests.SingletonLastUsefulCallKeepsSelectionUntilExtraCall
+115/268 Test #115: unit.PipelineCursorTests.SingletonLastUsefulCallKeepsSelectionUntilExtraCall ..................................................................   Passed    0.02 sec
+        Start 116: unit.PipelineCursorTests.TwoPassIterationPreservesOrderAndResetsOnlyAfterExhaustion
+116/268 Test #116: unit.PipelineCursorTests.TwoPassIterationPreservesOrderAndResetsOnlyAfterExhaustion ...........................................................   Passed    0.02 sec
+        Start 117: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromInitialCursor
+117/268 Test #117: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromInitialCursor ........................................................................   Passed    0.02 sec
+        Start 118: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromSelectedCursor
+118/268 Test #118: unit.PipelineCursorTests.ThrowingPassRollsBackUseNextFromSelectedCursor .......................................................................   Passed    0.02 sec
+        Start 119: unit.PipelineCursorTests.AddingPassKeepsCursorAndExistingBorrowAcrossGrowth
+119/268 Test #119: unit.PipelineCursorTests.AddingPassKeepsCursorAndExistingBorrowAcrossGrowth ...................................................................   Passed    0.02 sec
+        Start 120: unit.PipelineCursorTests.ContextAndWrapperReturnPassBorrows
+120/268 Test #120: unit.PipelineCursorTests.ContextAndWrapperReturnPassBorrows ...................................................................................   Passed    0.02 sec
+        Start 121: unit.PipelineCursorTests.CardinalityGuardExercisesLimitWithoutAllocation
+121/268 Test #121: unit.PipelineCursorTests.CardinalityGuardExercisesLimitWithoutAllocation ......................................................................   Passed    0.01 sec
+        Start 122: unit.PipelineCursorTests.EmptyContextRejectsAllSelectionsExceptReset
+122/268 Test #122: unit.PipelineCursorTests.EmptyContextRejectsAllSelectionsExceptReset ..........................................................................   Passed    0.01 sec
+        Start 123: unit.PipelineCursorTests.ResetNeverActivatesOrDestroysPasses
+123/268 Test #123: unit.PipelineCursorTests.ResetNeverActivatesOrDestroysPasses ..................................................................................   Passed    0.01 sec
+        Start 124: unit.PipelineOwnershipTests.WrapperAndContextAreNotCopyable
+124/268 Test #124: unit.PipelineOwnershipTests.WrapperAndContextAreNotCopyable ...................................................................................   Passed    0.01 sec
+        Start 125: unit.PipelineOwnershipTests.ConstAccessorBorrowsContext
+125/268 Test #125: unit.PipelineOwnershipTests.ConstAccessorBorrowsContext .......................................................................................   Passed    0.01 sec
+        Start 126: unit.PipelineOwnershipTests.MoveTransfersOwnershipWithoutCopyingBase
+126/268 Test #126: unit.PipelineOwnershipTests.MoveTransfersOwnershipWithoutCopyingBase ..........................................................................   Passed    0.01 sec
+        Start 127: unit.PipelineOwnershipTests.NullContextIsRejected
+127/268 Test #127: unit.PipelineOwnershipTests.NullContextIsRejected .............................................................................................   Passed    0.01 sec
+        Start 128: unit.PipelineOwnershipTests.MoveAssignmentReleasesDestinationAndTransfersIdentity
+128/268 Test #128: unit.PipelineOwnershipTests.MoveAssignmentReleasesDestinationAndTransfersIdentity .............................................................   Passed    0.01 sec
+        Start 129: unit.PipelineOwnershipTests.SelfMoveIsStrictlyNoOp
+129/268 Test #129: unit.PipelineOwnershipTests.SelfMoveIsStrictlyNoOp ............................................................................................   Passed    0.02 sec
+        Start 130: unit.PipelineOwnershipTests.MovedFromPublicAccessIsRejected
+130/268 Test #130: unit.PipelineOwnershipTests.MovedFromPublicAccessIsRejected ...................................................................................   Passed    0.01 sec
+        Start 131: unit.PipelineOwnershipTests.MoveAndSelfMoveKeepPassAddressesCountAndCursor
+131/268 Test #131: unit.PipelineOwnershipTests.MoveAndSelfMoveKeepPassAddressesCountAndCursor ....................................................................   Passed    0.02 sec
+        Start 132: unit.PipelineOwnershipTests.AssignmentDestroysOldPassesBeforeInstallingSource
+132/268 Test #132: unit.PipelineOwnershipTests.AssignmentDestroysOldPassesBeforeInstallingSource .................................................................   Passed    0.02 sec
+        Start 133: unit.PipelineOwnershipTests.NullPassInConstructorCleansConsumedOwners
+133/268 Test #133: unit.PipelineOwnershipTests.NullPassInConstructorCleansConsumedOwners .........................................................................   Passed    0.02 sec
+        Start 134: unit.PipelineTest.UseTest
+134/268 Test #134: unit.PipelineTest.UseTest .....................................................................................................................   Passed    0.01 sec
+        Start 135: unit.PipelineTest.IteratePassesTest
+135/268 Test #135: unit.PipelineTest.IteratePassesTest ...........................................................................................................   Passed    0.02 sec
+        Start 136: unit.PipelineTest.ResetPipelineTest
+136/268 Test #136: unit.PipelineTest.ResetPipelineTest ...........................................................................................................   Passed    0.01 sec
+        Start 137: unit.PipelineTest.GetContext
+137/268 Test #137: unit.PipelineTest.GetContext ..................................................................................................................   Passed    0.01 sec
+        Start 138: unit.ShaderLifetimeTests.ShaderIsNotCopyable
+138/268 Test #138: unit.ShaderLifetimeTests.ShaderIsNotCopyable ..................................................................................................   Passed    0.02 sec
+        Start 139: unit.ShaderLifetimeTests.MoveAssignmentTypeContract
+139/268 Test #139: unit.ShaderLifetimeTests.MoveAssignmentTypeContract ...........................................................................................   Passed    0.01 sec
+        Start 140: unit.ShaderLifetimeTests.FreeIsIdempotent
+140/268 Test #140: unit.ShaderLifetimeTests.FreeIsIdempotent .....................................................................................................   Passed    0.02 sec
+        Start 141: unit.ShaderLifetimeTests.MovedFromShaderRejectsBorrow
+141/268 Test #141: unit.ShaderLifetimeTests.MovedFromShaderRejectsBorrow .........................................................................................   Passed    0.02 sec
+        Start 142: unit.ShaderLifetimeTests.MovedFromShaderBorrowThrows
+142/268 Test #142: unit.ShaderLifetimeTests.MovedFromShaderBorrowThrows ..........................................................................................   Passed    0.01 sec
+        Start 143: unit.ShaderLifetimeTests.MovedFromPassAccessThrows
+143/268 Test #143: unit.ShaderLifetimeTests.MovedFromPassAccessThrows ............................................................................................   Passed    0.02 sec
+        Start 144: unit.ShaderLifetimeTests.MovedFromPassContextGetterThrows
+144/268 Test #144: unit.ShaderLifetimeTests.MovedFromPassContextGetterThrows .....................................................................................   Passed    0.02 sec
+        Start 145: unit.ShaderLifetimeTests.ShaderReloadWithoutFreeRejected
+145/268 Test #145: unit.ShaderLifetimeTests.ShaderReloadWithoutFreeRejected ......................................................................................   Passed    0.02 sec
+        Start 146: unit.ShaderLifetimeTests.PassReloadWithoutFreeRejected
+146/268 Test #146: unit.ShaderLifetimeTests.PassReloadWithoutFreeRejected ........................................................................................   Passed    0.02 sec
+        Start 147: unit.ShaderLifetimeTests.PassAccessorsOnLiveObject
+147/268 Test #147: unit.ShaderLifetimeTests.PassAccessorsOnLiveObject ............................................................................................   Passed    0.02 sec
+        Start 148: unit.ShaderLifetimeTests.NullContextRejected
+148/268 Test #148: unit.ShaderLifetimeTests.NullContextRejected ..................................................................................................   Passed    0.02 sec
+        Start 149: unit.ShaderLifetimeTests.PassContextOwnsShadersUniquely
+149/268 Test #149: unit.ShaderLifetimeTests.PassContextOwnsShadersUniquely .......................................................................................   Passed    0.02 sec
+        Start 150: unit.ShaderLifetimeTests.PassContextRejectsNullShader
+150/268 Test #150: unit.ShaderLifetimeTests.PassContextRejectsNullShader .........................................................................................   Passed    0.02 sec
+        Start 151: unit.ShaderLifetimeTests.NullPassContextRejected
+151/268 Test #151: unit.ShaderLifetimeTests.NullPassContextRejected ..............................................................................................   Passed    0.01 sec
+        Start 152: unit.ShaderLifetimeTests.PassFreeDetachesOnlyLiveShaders
+152/268 Test #152: unit.ShaderLifetimeTests.PassFreeDetachesOnlyLiveShaders ......................................................................................   Passed    0.02 sec
+        Start 153: unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders
+153/268 Test #153: unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders .............................................................................***Failed    0.02 sec
+Note: Google Test filter = ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ShaderLifetimeTests
+[ RUN      ] ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders
+
+GMOCK WARNING:
+Uninteresting mock function call - taking default action specified at:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\pipeline\ShaderLifetimeTests.cpp(359):
+    Function call: glCreateShader_mock(35633)
+          Returns: 8
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glShaderSource_mock(8, 1, 000000ED68AFECA8, NULL)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glCompileShader_mock(8)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - taking default action specified at:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(114):
+    Function call: glGetShaderiv_mock(8, 35713, 000000ED68AFEAB4)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - taking default action specified at:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\src\graphic\pipeline\ShaderLifetimeTests.cpp(360):
+    Function call: glCreateProgram_mock()
+          Returns: 5
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glAttachShader_mock(5, 8)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - returning directly.
+    Function call: glLinkProgram_mock(5)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - taking default action specified at:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(111):
+    Function call: glGetProgramiv_mock(5, 35714, 000000ED68AFEB54)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - taking default action specified at:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(111):
+    Function call: glGetProgramiv_mock(5, 35718, 000000ED68AFE9F4)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - taking default action specified at:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(111):
+    Function call: glGetProgramiv_mock(5, 35719, 000000ED68AFEA14)
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+
+GMOCK WARNING:
+Uninteresting mock function call - taking default action specified at:
+C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-t3-worker-3\ARTIST\tests\mock\opengl/glFunctionMock.hpp(135):
+    Function call: glGetActiveUniform_mock(5, 0, 1, 000000ED68AFEAE4, 000000ED68AFEB04, 000000ED68AFEB24, 000002021D263260 pointing to "")
+NOTE: You can safely ignore the above warning unless this call should not happen.  Do not suppress it by blindly adding an EXPECT_CALL() if you don't mean to enforce the call.  See https://github.com/google/googletest/blob/main/docs/gmock_cook_book.md#knowing-when-to-expect-useoncall for details.
+unknown file: error: C++ exception with description "ERROR::PASS::UNIFORM::INVALID_NAME" thrown in the test body.
+
+[  FAILED  ] ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders (1 ms)
+[----------] 1 test from ShaderLifetimeTests (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders
+
+ 1 FAILED TEST
+
+        Start 154: unit.ShaderLifetimeTests.MoveAssignLoadedShaderReleasesDestination
+154/268 Test #154: unit.ShaderLifetimeTests.MoveAssignLoadedShaderReleasesDestination ............................................................................   Passed    0.01 sec
+        Start 155: unit.ShaderLifetimeTests.MoveAssignLoadedPassReleasesDestinationBeforeShaders
+155/268 Test #155: unit.ShaderLifetimeTests.MoveAssignLoadedPassReleasesDestinationBeforeShaders .................................................................   Passed    0.02 sec
+        Start 156: unit.ShaderLifetimeTests.ShaderMoveAssignmentStateMatrix
+156/268 Test #156: unit.ShaderLifetimeTests.ShaderMoveAssignmentStateMatrix ......................................................................................   Passed    0.02 sec
+        Start 157: unit.ShaderLifetimeTests.PassMoveAssignmentStateMatrix
+157/268 Test #157: unit.ShaderLifetimeTests.PassMoveAssignmentStateMatrix ........................................................................................   Passed    0.02 sec
+        Start 158: unit.ShaderLifetimeTests.ShaderSelfMoveIsStrictNoOpInEveryState
+158/268 Test #158: unit.ShaderLifetimeTests.ShaderSelfMoveIsStrictNoOpInEveryState ...............................................................................   Passed    0.01 sec
+        Start 159: unit.ShaderLifetimeTests.PassSelfMoveIsStrictNoOpInEveryState
+159/268 Test #159: unit.ShaderLifetimeTests.PassSelfMoveIsStrictNoOpInEveryState .................................................................................   Passed    0.02 sec
+        Start 160: unit.ShaderLifetimeTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+160/268 Test #160: unit.ShaderLifetimeTests.PassMoveAssignmentDestroysDestinationContextAndShaders ...............................................................   Passed    0.02 sec
+        Start 161: unit.ShaderLifetimeTests.ShaderMoveCleanupFailureDoesNotConsumeSource
+161/268 Test #161: unit.ShaderLifetimeTests.ShaderMoveCleanupFailureDoesNotConsumeSource .........................................................................   Passed    0.02 sec
+        Start 162: unit.ShaderLifetimeTests.PassMoveCleanupFailureAfterDetachDoesNotConsumeSource
+162/268 Test #162: unit.ShaderLifetimeTests.PassMoveCleanupFailureAfterDetachDoesNotConsumeSource ................................................................   Passed    0.02 sec
+        Start 163: unit.ShaderLifetimeTests.PassMoveCleanupFailureFromMovedShaderPreservesOwners
+163/268 Test #163: unit.ShaderLifetimeTests.PassMoveCleanupFailureFromMovedShaderPreservesOwners .................................................................   Passed    0.02 sec
+        Start 164: unit.ShaderTest.CreateShader
+164/268 Test #164: unit.ShaderTest.CreateShader ..................................................................................................................   Passed    0.02 sec
+        Start 165: unit.ShaderTest.CreateShader_codeAlreadyRead
+165/268 Test #165: unit.ShaderTest.CreateShader_codeAlreadyRead ..................................................................................................   Passed    0.02 sec
+        Start 166: unit.ShaderTest.Free
+166/268 Test #166: unit.ShaderTest.Free ..........................................................................................................................   Passed    0.02 sec
+        Start 167: unit.ShaderTest.DeleteMustFree
+167/268 Test #167: unit.ShaderTest.DeleteMustFree ................................................................................................................   Passed    0.02 sec
+        Start 168: unit.UniformOwnershipTests.NullContextIsRejected
+168/268 Test #168: unit.UniformOwnershipTests.NullContextIsRejected ..............................................................................................   Passed    0.02 sec
+        Start 169: unit.UniformOwnershipTests.PassContextRejectsNullUniform
+169/268 Test #169: unit.UniformOwnershipTests.PassContextRejectsNullUniform ......................................................................................   Passed    0.02 sec
+        Start 170: unit.UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader
+170/268 Test #170: unit.UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader .....................................................................   Passed    0.02 sec
+        Start 171: unit.UniformTest.SetFloatUniform
+171/268 Test #171: unit.UniformTest.SetFloatUniform ..............................................................................................................   Passed    0.01 sec
+        Start 172: unit.UniformTest.SetDoubleUniform
+172/268 Test #172: unit.UniformTest.SetDoubleUniform .............................................................................................................   Passed    0.02 sec
+        Start 173: unit.UniformTest.SetIntUniform
+173/268 Test #173: unit.UniformTest.SetIntUniform ................................................................................................................   Passed    0.02 sec
+        Start 174: unit.UniformTest.SetUIntUniform
+174/268 Test #174: unit.UniformTest.SetUIntUniform ...............................................................................................................   Passed    0.02 sec
+        Start 175: unit.UniformTest.SetVec2Uniform
+175/268 Test #175: unit.UniformTest.SetVec2Uniform ...............................................................................................................   Passed    0.01 sec
+        Start 176: unit.UniformTest.SetVec3Uniform
+176/268 Test #176: unit.UniformTest.SetVec3Uniform ...............................................................................................................   Passed    0.02 sec
+        Start 177: unit.UniformTest.SetVec4Uniform
+177/268 Test #177: unit.UniformTest.SetVec4Uniform ...............................................................................................................   Passed    0.02 sec
+        Start 178: unit.UniformTest.SetMat2Uniform
+178/268 Test #178: unit.UniformTest.SetMat2Uniform ...............................................................................................................   Passed    0.01 sec
+        Start 179: unit.UniformTest.SetMat3Uniform
+179/268 Test #179: unit.UniformTest.SetMat3Uniform ...............................................................................................................   Passed    0.02 sec
+        Start 180: unit.UniformTest.SetMat4Uniform
+180/268 Test #180: unit.UniformTest.SetMat4Uniform ...............................................................................................................   Passed    0.02 sec
+        Start 181: unit.UniformValueTests.GetValueReturnsTheStoredValue
+181/268 Test #181: unit.UniformValueTests.GetValueReturnsTheStoredValue ..........................................................................................   Passed    0.02 sec
+        Start 182: unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch
+182/268 Test #182: unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch ................................................................................   Passed    0.01 sec
+        Start 183: unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized
+183/268 Test #183: unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized ................................................................................   Passed    0.01 sec
+        Start 184: unit.UniformValueTests.SetValueReplacesTheStoredType
+184/268 Test #184: unit.UniformValueTests.SetValueReplacesTheStoredType ..........................................................................................   Passed    0.01 sec
+        Start 185: unit.UniformValueTests.FailedSetValueKeepsTheStoredValue
+185/268 Test #185: unit.UniformValueTests.FailedSetValueKeepsTheStoredValue ......................................................................................   Passed    0.01 sec
+        Start 186: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0
+186/268 Test #186: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0 ....................................   Passed    0.02 sec
+        Start 187: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1
+187/268 Test #187: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1 ..........................   Passed    0.02 sec
+        Start 188: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64
+188/268 Test #188: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64 ................................   Passed    0.02 sec
+        Start 189: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647
+189/268 Test #189: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647 .................   Passed    0.02 sec
+        Start 190: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5
+190/268 Test #190: unit.InfoLogLengths/PassLoaderDiagnosticsTests.LinkFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5 ...............................   Passed    0.02 sec
+        Start 191: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0
+191/268 Test #191: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/0 ...............................................   Passed    0.02 sec
+        Start 192: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1
+192/268 Test #192: unit.MalformedSizes/UniformReaderInvalidSizeTests.InvalidArraySizeIsRejectedBeforePublication/-1 ..............................................   Passed    0.02 sec
+        Start 193: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0
+193/268 Test #193: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/0 ..........................................   Passed    0.02 sec
+        Start 194: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1
+194/268 Test #194: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/1 ..........................................   Passed    0.02 sec
+        Start 195: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2
+195/268 Test #195: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/2 ..........................................   Passed    0.02 sec
+        Start 196: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3
+196/268 Test #196: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/3 ..........................................   Passed    0.02 sec
+        Start 197: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4
+197/268 Test #197: unit.MalformedNames/UniformReaderInvalidNameTests.InvalidReflectionNameIsRejectedBeforePublication/4 ..........................................   Passed    0.02 sec
+        Start 198: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0
+198/268 Test #198: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Zero  # GetParam() = 0 ...............................   Passed    0.02 sec
+        Start 199: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1
+199/268 Test #199: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/TerminatorOnly  # GetParam() = 1 .....................   Passed    0.02 sec
+        Start 200: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64
+200/268 Test #200: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Message  # GetParam() = 64 ...........................   Passed    0.02 sec
+        Start 201: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647
+201/268 Test #201: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/AberrantLength  # GetParam() = 2147483647 ............   Passed    0.02 sec
+        Start 202: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5
+202/268 Test #202: unit.InfoLogLengths/ShaderLoaderDiagnosticsTests.CompileFailurePreservesErrorAndCleansUp/Negative  # GetParam() = -5 ..........................   Passed    0.02 sec
+        Start 203: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+203/268 Test #203: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00> ..........   Passed    0.01 sec
+        Start 204: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00>
+204/268 Test #204: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00> ...........   Passed    0.01 sec
+        Start 205: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+205/268 Test #205: unit.OwnerStates/AttributeOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> .......   Passed    0.01 sec
+        Start 206: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+206/268 Test #206: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ..........   Passed    0.02 sec
+        Start 207: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+207/268 Test #207: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ...........   Passed    0.01 sec
+        Start 208: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+208/268 Test #208: unit.OwnerStates/AttributeOwnerStateTests.BindRunsTheBinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> .......   Passed    0.01 sec
+        Start 209: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+209/268 Test #209: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ......   Passed    0.02 sec
+        Start 210: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+210/268 Test #210: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> .......   Passed    0.01 sec
+        Start 211: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+211/268 Test #211: unit.OwnerStates/AttributeOwnerStateTests.UnbindRunsTheUnbinderOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ...   Passed    0.01 sec
+        Start 212: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+212/268 Test #212: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> ...........   Passed    0.02 sec
+        Start 213: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+213/268 Test #213: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ............   Passed    0.02 sec
+        Start 214: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+214/268 Test #214: unit.OwnerStates/AttributeOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ........   Passed    0.02 sec
+        Start 215: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+215/268 Test #215: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object <00-00 00-00> ...........................   Passed    0.01 sec
+        Start 216: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object <01-00 00-00>
+216/268 Test #216: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object <01-00 00-00> ............................   Passed    0.02 sec
+        Start 217: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+217/268 Test #217: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ........................   Passed    0.01 sec
+        Start 218: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+218/268 Test #218: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00> ............   Passed    0.01 sec
+        Start 219: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00>
+219/268 Test #219: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00> .............   Passed    0.01 sec
+        Start 220: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+220/268 Test #220: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> .........   Passed    0.02 sec
+        Start 221: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+221/268 Test #221: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00> .............   Passed    0.02 sec
+        Start 222: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+222/268 Test #222: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00> ..............   Passed    0.02 sec
+        Start 223: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+223/268 Test #223: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00> ..........   Passed    0.02 sec
+        Start 224: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError
+224/268 Test #224: opengl.AttributeComponentTest.SetIntUploadsOneIntWithoutGLError ...............................................................................   Passed    0.53 sec
+        Start 225: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError
+225/268 Test #225: opengl.AttributeComponentTest.SetVec3UploadsOneVec3WithoutGLError .............................................................................   Passed    0.42 sec
+        Start 226: opengl.AttributeComponentTest.SetNullValueIsRejectedBeforeUpload
+226/268 Test #226: opengl.AttributeComponentTest.SetNullValueIsRejectedBeforeUpload ..............................................................................   Passed    0.42 sec
+        Start 227: opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked
+227/268 Test #227: opengl.PipelineLifetimeTest.LoadedPipelineProgramsAreCreatedAndLinked .........................................................................   Passed    0.42 sec
+        Start 228: opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram
+228/268 Test #228: opengl.PipelineLifetimeTest.UseSelectsTheExpectedProgram ......................................................................................   Passed    0.42 sec
+        Start 229: opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying
+229/268 Test #229: opengl.PipelineLifetimeTest.ResetRewindsCursorWithoutUnbindingOrDestroying ....................................................................   Passed    0.42 sec
+        Start 230: opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms
+230/268 Test #230: opengl.PipelineLifetimeTest.ExplicitUnbindBeforeDestructionRetiresPrograms ....................................................................   Passed    0.42 sec
+        Start 231: opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity
+231/268 Test #231: opengl.PipelineLifetimeTest.MoveConstructorTransfersLoadedPipelineIdentity ....................................................................   Passed    0.44 sec
+        Start 232: opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms
+232/268 Test #232: opengl.PipelineLifetimeTest.MoveAssignmentRetiresDestinationPrograms ..........................................................................   Passed    0.43 sec
+        Start 233: opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched
+233/268 Test #233: opengl.PipelineLifetimeTest.SelfMoveLeavesLoadedPipelineUntouched .............................................................................   Passed    0.43 sec
+        Start 234: opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess
+234/268 Test #234: opengl.PipelineLifetimeTest.MovedFromPipelineRejectsAccess ....................................................................................   Passed    0.45 sec
+        Start 235: opengl.PassTest.PassCreationTest
+235/268 Test #235: opengl.PassTest.PassCreationTest ..............................................................................................................   Passed    0.44 sec
+        Start 236: opengl.PassTest.UniformManagementTest
+236/268 Test #236: opengl.PassTest.UniformManagementTest .........................................................................................................   Passed    0.48 sec
+        Start 237: opengl.PassTest.InvalidUniformTest
+237/268 Test #237: opengl.PassTest.InvalidUniformTest ............................................................................................................   Passed    0.42 sec
+        Start 238: opengl.PassTest.ShaderAttachmentTest
+238/268 Test #238: opengl.PassTest.ShaderAttachmentTest ..........................................................................................................   Passed    0.43 sec
+        Start 239: opengl.PassTest.UniformReadingTest
+239/268 Test #239: opengl.PassTest.UniformReadingTest ............................................................................................................   Passed    0.42 sec
+        Start 240: opengl.PassTest.AttributeReadingTest
+240/268 Test #240: opengl.PassTest.AttributeReadingTest ..........................................................................................................   Passed    0.43 sec
+        Start 241: opengl.PassTest.FreeResourcesTest
+241/268 Test #241: opengl.PassTest.FreeResourcesTest .............................................................................................................   Passed    0.42 sec
+        Start 242: opengl.PipelineTest.PipelineCreationTest
+242/268 Test #242: opengl.PipelineTest.PipelineCreationTest ......................................................................................................   Passed    0.42 sec
+        Start 243: opengl.PipelineTest.UsePassTest
+243/268 Test #243: opengl.PipelineTest.UsePassTest ...............................................................................................................   Passed    0.42 sec
+        Start 244: opengl.PipelineTest.UseNextPassTest
+244/268 Test #244: opengl.PipelineTest.UseNextPassTest ...........................................................................................................   Passed    0.41 sec
+        Start 245: opengl.PipelineTest.ResetPipelineTest
+245/268 Test #245: opengl.PipelineTest.ResetPipelineTest .........................................................................................................   Passed    0.42 sec
+        Start 246: opengl.PipelineTest.PassesCountTest
+246/268 Test #246: opengl.PipelineTest.PassesCountTest ...........................................................................................................   Passed    0.42 sec
+        Start 247: opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver
+247/268 Test #247: opengl.ShaderLifetimeComponentTests.LoadFreeIsIdempotentOnRealDriver ..........................................................................   Passed    0.42 sec
+        Start 248: opengl.ShaderLifetimeComponentTests.MoveTransfersHandle
+248/268 Test #248: opengl.ShaderLifetimeComponentTests.MoveTransfersHandle .......................................................................................   Passed    0.44 sec
+        Start 249: opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext
+249/268 Test #249: opengl.ShaderLifetimeComponentTests.FailedCompileLeavesUsableContext ..........................................................................   Passed    0.45 sec
+        Start 250: opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver
+250/268 Test #250: opengl.ShaderLifetimeComponentTests.ReloadWithoutFreeRejectedOnRealDriver .....................................................................   Passed    0.43 sec
+        Start 251: opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver
+251/268 Test #251: opengl.ShaderLifetimeComponentTests.PassLifecycleOnRealDriver .................................................................................   Passed    0.41 sec
+        Start 252: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination
+252/268 Test #252: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedShaderReleasesDestination .................................................................   Passed    0.44 sec
+        Start 253: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination
+253/268 Test #253: opengl.ShaderLifetimeComponentTests.MoveAssignLoadedPassReleasesDestination ...................................................................   Passed    0.43 sec
+        Start 254: opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders
+254/268 Test #254: opengl.ShaderLifetimeComponentTests.PassMoveAssignmentDestroysDestinationContextAndShaders ....................................................   Passed    0.42 sec
+        Start 255: opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound
+255/268 Test #255: opengl.ShaderLifetimeComponentTests.MoveAssignCurrentPassDefersNativeDeletionUntilUnbound .....................................................   Passed    0.45 sec
+        Start 256: opengl.ShaderTest.CreateShaderVert
+256/268 Test #256: opengl.ShaderTest.CreateShaderVert ............................................................................................................   Passed    0.41 sec
+        Start 257: opengl.ShaderTest.CreateShaderBadVert
+257/268 Test #257: opengl.ShaderTest.CreateShaderBadVert .........................................................................................................   Passed    0.44 sec
+        Start 258: opengl.ShaderTest.CreateShaderFrag
+258/268 Test #258: opengl.ShaderTest.CreateShaderFrag ............................................................................................................   Passed    0.42 sec
+        Start 259: opengl.ShaderTest.CreateShaderBadFrag
+259/268 Test #259: opengl.ShaderTest.CreateShaderBadFrag .........................................................................................................   Passed    0.44 sec
+        Start 260: opengl.ShaderTest.CreateShaderGeom
+260/268 Test #260: opengl.ShaderTest.CreateShaderGeom ............................................................................................................   Passed    0.43 sec
+        Start 261: opengl.ShaderTest.CreateShaderBadGeom
+261/268 Test #261: opengl.ShaderTest.CreateShaderBadGeom .........................................................................................................   Passed    0.47 sec
+        Start 262: opengl.ShaderTest.CreateShaderTesselaionControl
+262/268 Test #262: opengl.ShaderTest.CreateShaderTesselaionControl ...............................................................................................   Passed    0.43 sec
+        Start 263: opengl.ShaderTest.CreateShaderBadTesselaionControl
+263/268 Test #263: opengl.ShaderTest.CreateShaderBadTesselaionControl ............................................................................................   Passed    0.48 sec
+        Start 264: opengl.ShaderTest.CreateShaderCompute
+264/268 Test #264: opengl.ShaderTest.CreateShaderCompute .........................................................................................................   Passed    0.42 sec
+        Start 265: opengl.ShaderTest.CreateShaderBadCompute
+265/268 Test #265: opengl.ShaderTest.CreateShaderBadCompute ......................................................................................................   Passed    0.43 sec
+        Start 266: opengl.UniformReaderComponentTest.NominalUniformHasNativeLocationAndType
+266/268 Test #266: opengl.UniformReaderComponentTest.NominalUniformHasNativeLocationAndType ......................................................................   Passed    0.43 sec
+        Start 267: opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName
+267/268 Test #267: opengl.UniformReaderComponentTest.LongActiveUniformKeepsItsCompleteName .......................................................................   Passed    0.42 sec
+        Start 268: opengl.UniformReaderComponentTest.ExplicitFreeThenReloadReflectsTheNewProgram
+268/268 Test #268: opengl.UniformReaderComponentTest.ExplicitFreeThenReloadReflectsTheNewProgram .................................................................   Passed    0.42 sec
+
+99% tests passed, 1 tests failed out of 268
+
+Label Time Summary:
+opengl    =  19.44 sec*proc (45 tests)
+unit      =   3.57 sec*proc (223 tests)
+
+Total Test time (real) =  23.22 sec
+
+The following tests FAILED:
+	153 - unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders (Failed) unit
+ctest : Errors while running CTest
+Au caractère Ligne:1 : 405
++ ... overy.json; ctest --test-dir C:/Users/djden/source/repos/ARTIST/out/m ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Errors while running CTest:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+EXIT_CODE=8

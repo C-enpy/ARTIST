@@ -1,0 +1,26 @@
+# cwd=C:\Users\djden\.local\share\opencode\worktree\3a086c\ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5
+# HEAD=4f64a2b87f5aa8c3590ded4596aca906b5d320dc
+# CONAN_HOME=C:\Users\djden\source\repos\ARTIST\out\conan2
+# VCToolsVersion=14.44.35207 WindowsSDKVersion=10.0.26100.0\
+# command="C:\Program Files\CMake\bin\ctest.EXE" --test-dir out/b -N -R UniformValueTests|UniformOwner
+Internal ctest changing into directory: C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5/out/b
+Test project C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-artist-mcp-lifecycle-mission-5caa4a18f43401c7#eiyn0g-pool-5/out/b
+  Test #157: unit.UniformOwnershipTests.NullContextIsRejected
+  Test #158: unit.UniformOwnershipTests.PassContextRejectsNullUniform
+  Test #169: unit.UniformValueTests.GetValueReturnsTheStoredValue
+  Test #170: unit.UniformValueTests.GetValueOfAnotherTypeThrowsTypeMismatch
+  Test #171: unit.UniformValueTests.GetValueWithoutValueThrowsUninitialized
+  Test #172: unit.UniformValueTests.SetValueReplacesTheStoredType
+  Test #173: unit.UniformValueTests.FailedSetValueKeepsTheStoredValue
+  Test #184: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+  Test #185: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/Empty  # GetParam() = 4-byte object <01-00 00-00>
+  Test #186: unit.OwnerStates/UniformOwnerStateTests.GetReadsOnlyAnOwnedValue/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+  Test #187: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+  Test #188: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/Empty  # GetParam() = 4-byte object <01-00 00-00>
+  Test #189: unit.OwnerStates/UniformOwnerStateTests.ContextBorrowIsRefusedOnlyWhenMovedFrom/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+  Test #190: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Loaded  # GetParam() = 4-byte object <00-00 00-00>
+  Test #191: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/Empty  # GetParam() = 4-byte object <01-00 00-00>
+  Test #192: unit.OwnerStates/UniformOwnerStateTests.SetRunsTheSetterOnlyWithAnOwnedContext/MovedFrom  # GetParam() = 4-byte object <02-00 00-00>
+
+Total Tests: 16
+# exit=0 seconds=0.0
