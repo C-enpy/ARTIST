@@ -102,3 +102,37 @@ Ce mandat n'autorise ni support des structs par le moteur,ni suppression de la
 fermeture des types C++,ni nouvelle dérogation pour bool/dvec3 ou autre condition.
 Après bool conforme et autrespréflights satisfaits,D peut poursuivre son cycle
 RED/GREEN/REFACTOR selon les contrats intégrés ; toute autre divergence=>arrêt.
+
+## Reprise contrôlée et recoupement lead
+
+Nom annoncé avant run :
+`opengl.AttributeQaDriverConformanceTest.StructVertexInputIsRejected`.
+Regex exacte de sélection/exclusion :
+`^opengl[.]AttributeQaDriverConformanceTest[.]StructVertexInputIsRejected$`.
+Pas d'exclusion d'un autre échec moteur.
+
+Préflight fonctionnel repris :1test,0failure/skip/disabled,JUnit relu par lead.
+Le JUnit tronque les sorties de succès à1024octets ; son compteur seul ne
+permet pas de relire le refusbool. Le lead a copié byteàbyte les artefacts
+achevés depuis le Temp approuvé vers le répertoire canonique,out/attribute-gl/
+checkpoints/preflight-approved-struct-gap/,puis a vérifié l'égalité des SHA256.
+Cet échange d'artefacts autorisés n'accède pas au log long de worktree refusé.
+
+Conservation et empreintes vérifiées par lead :
+- preflight-bool-functional.log :
+  041a3d9f1acb410494ebcc9010d95629f2ff100f7b673ba4f4a7e017df34f250 ;
+- preflight-bool-functional.xml :
+  4138f2ceef95eb286afe50c2510286b175c780ab647ac199889f9718ed5d2d89 ;
+- preflight-struct-conformance.xml :
+  818f769e3aa684231279a608e5939169c09eeb74a2974ba98de28800d7f9c2e4.
+
+Analyse du log79lignes via Context Mode dans la racine canonique :bool compile0,
+C7514 «OpenGL does not allow varying of type bool» ; dvec3 compile0,C7532,
+préflight fonctionnel1/1PASS. Conformitéstruct isolée :JUnit1/1FAIL,compile1/link1,
+même attendu de refus non affaibli,0skip. Log conformité SHA transmis par D :
+2ed7e57e3f31e8fff3cac5e6100a20f1e916d877a89372cd5044a6fb09a07461.
+
+Les préconditions définies sont satisfaites sous arbitrage explicite de l'écart
+struct. D poursuit son cycle TDD,mais ce checkpoint ne prouve encore aucune des
+12captures via Setter corrigé et n'établit aucun RED/GREEN fonctionnel.
+Verdicts séparés :préflight fonctionnelPASS,conformitédriverstructFAIL conservé.
