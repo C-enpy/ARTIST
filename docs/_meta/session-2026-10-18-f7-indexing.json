@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-18",
+  "documentation_commit": "bea7953",
+  "code_candidate": "6d6dcb7",
+  "documentation_checks": {
+    "yaml_pages_checked": 11,
+    "json": "parsed",
+    "tag_limit": "at most5 per modified note",
+    "wikilinks": "no unresolved target in modified notes after excluding code spans/blocks and two unchanged historical C++ nodiscard literals in append-only log",
+    "git_diff_check": "PASS"
+  },
+  "update": {
+    "command": "node .opencode/scripts/update-wiki.mjs",
+    "exit": 0,
+    "collection": "artist-wiki",
+    "collections": 1,
+    "indexed": 1,
+    "updated": 10,
+    "unchanged": 25,
+    "removed": 0,
+    "skipped": 0,
+    "log": "out/mission-f7/final/qmd-update.log"
+  },
+  "embedding": {
+    "command": "qmd embed -c artist-wiki",
+    "exit": 0,
+    "documents": 11,
+    "chunks": 99,
+    "log": "out/mission-f7/final/qmd-embed.log"
+  },
+  "retrieval": {
+    "method": "MCP query lex299+F7 scoped artist-wiki, explicit intent, then multi_get next-mission",
+    "verified": "completed/verified, candidate6d6dcb7,299native251CPU48GL,ASan245historical not final,no next mission selected",
+    "note": "architecture/next-mission.md"
+  },
+  "limits": "No other collection indexed; this JSON evidence note is not part of markdown embedding; no global engine PASS"
+}
