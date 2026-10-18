@@ -52,9 +52,9 @@ namespace artist::graphic
             }
 
         private:
-            GLuint m_uniformId; ///< OpenGL shader ID
-            GLuint m_size;      ///< The size of the uniform variable.
-            GLenum m_type;      ///< The type of the uniform variable.
+            GLuint m_uniformId = 0; ///< OpenGL uniform location; not validated here.
+            GLuint m_size = 1;      ///< Single-value default; reflection may report arrays.
+            GLenum m_type = 0;      ///< The type of the uniform variable.
         };
     }
 }
