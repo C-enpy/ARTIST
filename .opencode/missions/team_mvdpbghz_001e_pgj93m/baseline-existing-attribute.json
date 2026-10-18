@@ -1,0 +1,43 @@
+{
+  "kind": "executed-existing-binary-baseline",
+  "runner": "lead",
+  "proposal": "lead preflight independent of A2 read-only investigation",
+  "head": "4a6276a54fd3007f73dfcf16c240bf42789f54fd",
+  "startedUTC": "2026-10-18T13:59:32.405Z",
+  "endedUTC": "2026-10-18T13:59:35.178Z",
+  "command": "ctest --test-dir out/build/windows-msvc-debug -R Attribute --output-on-failure --no-tests=error --parallel 1 --timeout 60 --output-junit C:/Users/djden/source/repos/ARTIST/out/attribute-gl/baseline-existing-attribute.xml --output-log C:/Users/djden/source/repos/ARTIST/out/attribute-gl/baseline-existing-attribute.log",
+  "discoveryCommand": "ctest --test-dir out/build/windows-msvc-debug -N -R Attribute",
+  "discoveryExit": 0,
+  "exit": 0,
+  "discovered": 40,
+  "executed": 40,
+  "passed": 40,
+  "failed": 0,
+  "skipped": 0,
+  "disabled": 0,
+  "unit": 36,
+  "opengl": 4,
+  "junit": "out/attribute-gl/baseline-existing-attribute.xml",
+  "junitSHA256": "f792498eb3d3f1abc40c745276775078186cf66ad5dbe37f2b51841b6419d1b1",
+  "log": "out/attribute-gl/baseline-existing-attribute.log",
+  "binaries": [
+    {
+      "path": "out/build/windows-msvc-debug/ARTIST/tests/ArtistLib_tests.exe",
+      "sha256": "fc12eb02d1aa8b61cd8496c1138a3c0b33aa93f2bf5972747739dc15731363b9"
+    },
+    {
+      "path": "out/build/windows-msvc-debug/ARTIST/component-tests/ArtistLib_component_tests.exe",
+      "sha256": "45808ee25bbb9944a4f43b1f1e37eaeac589d6ec31002d406f75e4554e145826"
+    }
+  ],
+  "environment": "Windows, existing windows-msvc-debug build, serial CTest; no rebuild in this step",
+  "verdict": "PASS only for the 40 selected existing-binary tests",
+  "limitations": [
+    "Not a RED or GREEN of the future Attribute-GL correction",
+    "No fresh configure, compilation or source-to-binary provenance established by this step",
+    "Existing integer GL_NO_ERROR tests do not prove IPointer or exact integer consumption",
+    "No twelve-form native matrix, strengthened Reader negatives or new shader capture exercised",
+    "No shader-legality probe executed",
+    "No general suite, ASan, image or performance verdict"
+  ]
+}

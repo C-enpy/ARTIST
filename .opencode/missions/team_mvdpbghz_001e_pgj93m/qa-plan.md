@@ -275,6 +275,18 @@ separate,injections/nonrégression. PasASan/autreAPI/campagneentièrehorslot ajo
 
 ## Décisions humaines résiduelles, aucune GAP-accept implicite
 
+**Décision utilisateur après intégration de Q2 : « Valider cette séparation ».**
+Le lead a présenté explicitement les trois gardes Reader (location utilisateur
+active négative, doublon d'attribut actif, longueur/NUL incohérents). L'utilisateur
+autorise les injections CPU étiquetées pour ces gardes, complétées par les sondes
+GL réelles, sans les compter comme preuve GPU de ces erreurs. DH-LOC/DH-DUP/
+DH-TRUNC sont donc arbitrés pour ce lot : obligations de robustesse conservées,
+oracles CPU_FAULT_INJECTION assumés et distincts des sorties driver.
+Cela n'accepte ni l'ancien tableau mock-only de DH2, ni le report de captures
+entières de DH4 :12 captures natives typées exactes/noms naturels restent requis.
+Les autres arrêts conditionnels (spelling,nom,limites,contexte,alias/refus shader)
+restent actifs. D est autorisable après commit de cette décision et du plan.
+
 Utilisateur a refuséDH2–DH4Q1. Renforcement ne choisit pas spelling/noms/erreursnatives.
 - DH-ARR-SPELL :arraycompile/linkoumetadataautrequeexact[0]/size1/type=>arrêt,
   observationpuisdécisionsuroracleoupreuveCPU ; pasnormalisationdriverimprovisée.
