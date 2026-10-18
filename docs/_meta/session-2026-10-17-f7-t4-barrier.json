@@ -45,7 +45,7 @@
     "T3": "PassConcept.hpp (UniformReader presence + borrowed-on void), UniformReader.hpp (driver-sized buffer, typed INVALID_NAME/DUPLICATE_NAME-intra-reflection/INVALID_SIZE/INVALID_LOCATION, setSize after positive validation, early return numUniforms<=0), contexts/Pass.hpp dispatch/Shader/Loader/Freer/glFunctionMock untouched — conform contract"
   },
   "out_of_mission_adjacent_defects_consigned": [
-    "C4834 dead catch + misleading SET label + typeid(std::any) in AttributeContext mismatch (unreachable in production after T2 key fix)",
+    "Corrected 2026-10-18 after fresh review F1: AttributeContext TYPE_MISMATCH diagnostics print typeid(std::any), not the stored type. The SET mismatch remains reachable when IAttribute::set changes the stored element type (int then float); only the erroneous nominal mismatch caused by the old dispatch key was removed by T2. Diagnostic code remains unchanged in this historical T4 candidate.",
     "VBO created by OpenGLBinder never freed (inherited GPU lifetime scope)",
     "docs/architecture/current-state.md:141-142 describes shared_ptr maps (updates at DOC-F closure)",
     "move-assign proven statically only (T1 reserve); no unit dispatch set<float> case (T2 reserve); generation/publication atomicity left out of tranches (T3 reserve)"
