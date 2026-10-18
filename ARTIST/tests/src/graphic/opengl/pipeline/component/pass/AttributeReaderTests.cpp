@@ -96,9 +96,10 @@ namespace
     void reflectedInput(const std::string& name, GLint size = 1, GLint location = 0, GLenum type = GL_FLOAT_VEC3, GLint count = 1)
     {
         auto& gl = *mock::opengl::glFunctionMock::instance();
-        EXPECT_CALL(gl, glGetProgramiv_mock(1, ::testing::_, ::testing::_))
-            .Times(::testing::Between(1, 2))
-            .WillRepeatedly([=](GLuint, GLenum pname, GLint* out) { *out = pname == GL_ACTIVE_ATTRIBUTES ? count : static_cast<GLint>(name.size() + 1); });
+        EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_ATTRIBUTES, ::testing::_))
+            .WillOnce(::testing::SetArgPointee<2>(count));
+        EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, ::testing::_))
+            .WillOnce(::testing::SetArgPointee<2>(static_cast<GLint>(name.size() + 1)));
         EXPECT_CALL(gl, glGetActiveAttrib_mock(1, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_))
             .Times(count).WillRepeatedly([=](GLuint, GLuint, GLsizei capacity, GLsizei* length, GLint* cardinality, GLenum* glType, GLchar* out) {
                 *length = static_cast<GLsizei>(std::min(name.size(), static_cast<std::size_t>(capacity - 1)));
@@ -131,6 +132,11 @@ TEST_F(AttributeReaderTests, FaultInjection_DuplicateNameDoesNotReplaceFirstBorr
 {
     openglContext->setPassID(1);
     reflectedInput("duplicate", 1, 0, GL_FLOAT_VEC3, 2);
+    auto& gl = *mock::opengl::glFunctionMock::instance();
+    EXPECT_CALL(gl, glGetAttribLocation_mock(1, ::testing::_))
+        .Times(::testing::Between(1, 2))
+        .WillOnce(::testing::Return(0))
+        .WillRepeatedly(::testing::Return(2));
     expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
         artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::DUPLICATE_NAME"));
     ASSERT_EQ(openglContext->getAttributes().size(), 1u);
@@ -167,7 +173,7 @@ TEST_F(AttributeReaderTests, FaultInjection_InvalidSize)
 TEST_F(AttributeReaderTests, FaultInjection_InvalidLengthAndTerminator)
 {
     // CPU_FAULT_INJECTION only: none of these is reported as native GL output.
-    for (int fault = 0; fault < 6; ++fault)
+    for (int fault = 0; fault < 7; ++fault)
     {
         SCOPED_TRACE(fault);
         openglContext = std::make_shared<context::OpenGLPassContext>(); openglContext->setPassID(1);
@@ -180,6 +186,7 @@ TEST_F(AttributeReaderTests, FaultInjection_InvalidLengthAndTerminator)
                 *length = fault == 2 ? -1 : (fault == 3 ? capacity : 3);
                 if (fault != 4 && capacity > 3) name[3] = '\0'; // fault4: missing terminator
                 if (fault == 5) name[1] = '\0'; // embedded NUL inconsistent with length
+                if (fault == 6) { *length = 0; name[0] = '\0'; } // empty name
             });
         EXPECT_CALL(gl, glGetAttribLocation_mock(1, ::testing::_)).Times(::testing::AnyNumber()).WillRepeatedly(::testing::Return(0));
         expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
