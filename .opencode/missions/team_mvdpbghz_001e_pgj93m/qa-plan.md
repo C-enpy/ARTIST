@@ -1,213 +1,322 @@
-# Attribute-GL — plan QA Q, restitution persistée par le lead
+# Attribute-GL — plan QA Q2 renforcé
 
-> Révision renforcée en préparation dans attribute-oracles-a2.md. Rectification
-> vérifiée : GLSL3.30 révision6 §4.3.4 autorise les tableaux d'entrées vertex.
-> L'ancienne hypothèse de refus compilation ci-dessous est erronée ; elle reste
-> l'historique de Q, pas l'oracle à transmettre à l'auteur. Q2 doit la remplacer.
+## Attribution, intégration et autorité
 
-## Attribution et candidat
+Proposition qa-planner/pool-4, tâche task_mvdwt1px_000h_ffpre5, C61/R66 PM/LLM,
+fresh, lecture seule. Synthèse intégrée par le lead du candidat natif
+result_mvdxkbzg_000p_jx1oqi, session ses_eb0a06dffffe2UlQEIFPkqRfsB,
+message msg_14f68878c001i1e54sCJzsLyJP. Le texte natif complet reste disponible.
+Ce fichier remplace le plan Q1 actif, archivé dans git (4a6276a/ece666c).
+Q2 n'a écrit ni exécuté de test. Le lead persiste/relit/commit avant worktree D.
 
-Proposition : qa-planner / pool-2, tâche task_mvdqhtoe_001j_edgftw,
-contexte fresh, C46/R52, grille approuvée v1. Synthèse fidèle par le lead des
-réponses finales natives, sans exécution par la QA :
-- ses_eb1423176ffeiluzzxpHDO6TeQ, msg_14ecc836a001ntwPgJ0voVwcDF ;
-  SHA256 texte 30a80ea78c282c8ba6d08931921a9f31a9d8905186f6e0478092b53ec5f23776 ;
-- complément msg_14ed646e4001X4QKwJz3l6EDTj ;
-  SHA256 texte 1256465a52d7f1cfd64b3336b3417457c9a16be5620c30c733ad4f14b4f6ec23.
+Entrées : attribute-contract.md, attribute-oracles-a2.md intégrés ece666c,
+pm2-plan.md intégré6b2488c, décisions utilisateur « Renforcer avant l'auteur ».
+Producteurs A2 task_mvdvuv25_0009_lutmr8 et Q task_mvdqhtoe_001j_edgftw clos,
+sans branches à merger. Moteur déclaré identique à4a9b722. Diff externe harness,
+profils,AGENTS.md,.grepai/config.yaml préservé hors périmètre et hors commit.
 
-Textes complets conservés dans la session native ; les empreintes portent sur
-ses parties textuelles concaténées par LF, pas sur cette synthèse.
-Base : HEAD 4a9b722a8f1b64470172686aee961221fa6384c0 et diff de cadrage partagé.
-Reprise : HEAD observé 230c551dd05a4fdbeff0a8cce3b78bc39e734688. Comparaison
-git 4a9b722..HEAD sur ARTIST/, scripts/, cmake/, CMakeLists.txt,
-CMakePresets.json et conanfile.txt : aucun changement ; même constat du diff
-non commité sur ces chemins. Les modifications externes du harness restent
-hors de ce commit de plan. La vérification d'absence de delta moteur n'est pas
-une nouvelle exécution des tests historiques.
-Entrées : attribute-contract.md, docs/architecture/next-mission.md,
-AGENTS.md, engineering-principles, ADR et build-and-test. `.grepai/config.yaml`
-hors périmètre. Plan à commiter par le lead avant tout worktree auteur.
+Pin observé : profils datés2026-10-16/e4b0aa7, skill40a7cc3, candidat moteur plus
+récent. Q2 n'avait ni shell ni execute et n'a pas revérifié les SHA par git.
+Le lead recoupe l'identité réelle avant auteur. Schéma JSON version1 distinct
+de l'approbation mission v2. Aucun changement des scores/grille/provider.
 
-Pin observé : profil au 2026-10-16/e4b0aa7, candidat réel plus récent. Ne pas
-réécrire le profil pour masquer cet écart. ADR0003/5 Accepted/partial,
-0008 vérifié Windows Debug seulement ; 0001/2/4/6/7 Proposed.
-Historique 299/299 sur 6d6dcb7 : périmé pour le nouveau contrat, pas un GREEN.
+ADR0003/5 Accepted/partial ;0008 Accepted/verified Windows Debug seulement ;
+0001/2/4/6/7 Proposed/not-started. Pas de nouveau backend,lifetime VBO,RAII globale,
+ASan,perf,image,Release,autreOS/mesh ou deuxième lecture Reader imposée.
 
-## Exigences explicites et intent
+## État observé et preuves disponibles
 
-Les exigences sont celles du contrat A ; elles ne prouvent pas encore le moteur.
+Static-presence Q2 : Setter garde buffer0/null puis BufferData sur buffer courant
+et Pointer avec GLSize/GLType ; Reader char[256], pas de MAX_LENGTH, conversion
+location non signée, pas de flag array ; addAttribute remplace une clé.
+HasComponent vérifie seulement un alias de type, Setter primaire a on : la branche
+UNSUPPORTED_TYPE peut être inatteignable sur OpenGL. Contexte sans initialiseurs
+GL ; setGLUsage possède déjà une garde. Loader n'a pas de crochet TF.
+Mock IPointer absent, GetProgramiv écrit1 pour tout pname ; nom court injecté.
+PassTest aPos ne vérifie que clé/type. Tests GL lient leur propre VBO avant set,
+pas de leurre et entier jugé seulement GL_NO_ERROR/taille ; cleanup à renforcer.
 
-E1 : famille fermée des 12 types packed float/int32/uint32, scalaire et vec2–4.
-E2 : sizeof/alignof et offsets vérifiés ; is_same des alias, pas une 13e forme.
-E3 : types exclus sans on, set hors famille => UNSUPPORTED_TYPE, sans mutation GL.
-E4 : Reader conserve enum GLSL brut et cardinalité distincts, type non supporté publié.
-E5 : taille buffer de nom liée à GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, nom exact/NUL valide.
-E6 : INVALID_NAME/DUPLICATE_NAME/INVALID_LOCATION/INVALID_SIZE avant publication invalide.
-E7 : location0 valide, -1 refusée avant cast GLuint.
-E8 : flag tableau sur suffixe exact [0], y compris size1, pas uniquement size>1.
-E9 : état initial déterministe zéro, array false.
-E10 : refus Setter ordonnés buffer, valeur, array/size, type, usage.
-E11 : refus => zéro appel GL, y compris BindBuffer, BufferData, Pointer/IPointer.
-E12 : float Pointer avec scalaire GL_FLOAT, composantes CPU, normalized false, stride sizeof(T).
-E13 : entiers IPointer, scalar GL_INT/GL_UNSIGNED_INT ; jamais Pointer.
-E14 : succès bind explicitement le VBO propre avant upload ; binding cible après succès.
-E15 : leurre et son contenu intacts après liaison intercalée, succès et refus atteignables.
-E16 : freeze/shared_ptr stocké avant refus conservés, pas rollback CPU implicite.
-E17 : ownership unique/emprunts F7 conservés, pas nouveau lifetime/destructeur VBO.
-E18 : Binder/Unbinder et diagnostics existants non concernés conservés.
-E19 : 12 formes réellement interrogées sur GL natif ; consommation de trois domaines.
-E20 : fixtures nettoient VAO/VBO/programmes même après ASSERT fatal.
-E21 : RED causal avant production puis GREEN minimal et non-régression intégrée.
-E22 : oracles futurs attribués, commandes/comptages/skips et candidat conservés.
-E23 : aPos/GL_FLOAT_VEC3/location0/size1/arrayfalse dans PassTest reste valide.
+Seule exécution de mission disponible : baseline lead anciens binaires40/40,
+36unit/4opengl,0fail/skip/disabled, sans rebuild, du2026-10-18T13:59:32.405Z
+au13:59:35.178Z ; HEAD4a6276a54fd3007f73dfcf16c240bf42789f54fd.
+Commande complète/empreintes : baseline-existing-attribute.json.
+JUnit out/attribute-gl/baseline-existing-attribute.xml,
+SHA256 f792498eb3d3f1abc40c745276775078186cf66ad5dbe37f2b51841b6419d1b1.
+Log homonyme .log. Les tests OpenGL ont été relancés via leur fixture réelle ;
+aucune identité driver/capacité pour les nouveaux oracles n'a été relevée ici.
+Ce PASS porte seulement sur les40 anciens tests, pas sur le contrat nouveau.
+Historique299/299 et baselines87+22/109/122 restent périmés pour ce contrat.
+Q2 :0découvert pour run,0exécuté,0échec,0skip ; aucune mesure/performance.
 
-Intent : séparer interface shader et layout CPU, refuser avant effets driver,
-empêcher upload sur buffer tiers ; pas performance, image ou RAII exhaustive.
+## Rectifications de Q1 et stratégie renforcée
 
-## Exigences inférées — propositions de méthode, pas extension du contrat
+Source primaire vérifiée par lead : GLSLangSpec3.30,révision6,11-Mar-2010,
+§4.3.4,p29/PDF35 : les entrées vertex peuvent former des tableaux de ces types,
+mais pas des structures. URI et copie locale dans attribute-oracles-a2.md.
+L'échec attendu d'array[1] dans Q1 est FAUX ; sa sonde attend désormais compile/link
+succès et relève la réflexion réelle. Refus arrays à l'utilisation reste le contrat.
 
-F1 : glEnableVertexAttribArray dans la fixture après set, jamais ajouté au Setter
-pour faire passer le draw ; vérifier ARRAY_ENABLED au point de consommation.
-F2 : transform feedback 3.3 d'un out vec4 ; entrées vec3(0.25,0.5,0.75), int -7,
-uint42, sortie attendue (0.25,0.5,-7,42), valeurs exactement représentables float32.
-F3 : avant capture, interroger INTEGER/TYPE ; erreur acquise si voie entière fausse.
-F4 : 12 entrées actives dans un vrai programme #version330, locations explicites ;
-second programme vec3+mat4 pour décrire la matrice puis la refuser à l'utilisation.
-F5 : les métadonnées injectées CPU restent cohérentes avec réflexion, pas size3/GL_FLOAT
-pour un vec3 réussi. Les mocks glGetProgramiv distinguent les pnames.
-F6 : observation octets/taille du leurre et du VBO cible, pas seulement GL_NO_ERROR.
-F7 : ordre et combinaisons d'erreurs testés, premier diagnostic gagne ; usage initial0
-couvert sans appeler setGLUsage (qui peut avoir ses propres gardes).
-F8 : deux set du même T observent le second payload ; autre T reste TYPE_MISMATCH.
-F9 : suffixes foo[1], foo[00], foo[0]bar ne sont pas [0].
-F10 : sondes de légalité séparées du RED comportemental, pas une fixture illégale
-placée dans shaders/vertex/good pour prétendre prouver un refus Setter.
+Ancienne capture d'un out vec4 converti float retirée :12sorties identité typées,
+interleaved120octets + separate4buffers. Pas de report des entiers hors float32.
+DH2/DH3/DH4 de Q1 ne sont pas des dérogations acceptées. Les états impossibles
+restent gardes du produit avec preuve CPU étiquetée et décision explicite ; pas
+couverture native inventée. L'exhaustivité de tous les entiers n'est pas revendiquée.
 
-## Légalité et préflight natif — DH1
+## Classes exclusives de preuves
 
-Inférence QA de GLSL3.30 §4.3.4, pas encore testée : entrée vertex tableau/struct
-interdite ; double sans extension non admis. Une erreur shader est une
-précondition négative attendue, pas un RED Setter. Pas de #version430 dans ce lot.
-Runner lead, contexte 3.3 core, avant toute fixture shader de l'auteur :
-1. #version330 core, in vec3 qaArray1[1] utilisé par gl_Position + fragment minimal :
-   échec compilation attendu, aucun programme lié, donc aucune réflexion attribut.
-2. #version330 core, in dvec3 qaDouble utilisé : même attente.
-3. Programme vec3 et mat4 légaux et tous deux utilisés : link réussi attendu,
-   matrice publiée GL_FLOAT_MAT4/size1/nom sans suffixe tableau.
+- COMPILE_TIME : layouts/is_same/présence ou absence de on.
+- NATIVE_STATE : requêtes après set sur programme/VAO/driver réels.
+- NATIVE_TF_INTERLEAVED et NATIVE_TF_SEPARATE : octets capturés typés sans cast.
+- NATIVE_READER : réflexion réelle puis OpenGLPassAttributeReader.
+- NATIVE_API_PROBE : appel GL direct hors Reader (exemple bufSize4).
+- COMPILE_REFUSAL et LINK_REFUSAL : shader/programme refusés, Reader non appelé.
+- CPU_FAULT_INJECTION : métadonnées injectées, symbole contenant FaultInjection.
 
-Si 1/2 lie ou 3 diverge, enregistrer compilation/link/log et nom/length/size/type/
-location réellement observés, puis arrêt pour arbitrage ; ne pas adapter l'oracle.
-Un contexte absent ne produit ni résultat de sonde ni RED.
-Matrice et tableaux mockés prouvent les gardes, pas leur atteignabilité native.
+Un mock/interpose n'est jamais une sortie GPU. Absence d'observation native =>
+GAP/blocked/INCONCLUSIVE, pas COVERED par analogie ou par zéro GL_NO_ERROR.
 
-## Plan nominal/négatif et registre bidirectionnel
+## Obligations explicites E1–E23 et intent
 
-Toutes les nouvelles preuves restent GAP ; aucune ligne COVERED ou executed.
-Les noms ci-dessous sont des symboles proposés, pas des tests déjà présents.
+E1 : float/vec2/3/4,int32/ivec2/3/4,uint32/uvec2/3/4 canoniques packed seulement.
+E2 : tailles/alignements4/4,8/4,12/4,16/4 ; offsets i*4,stride sizeof(T),is_same
+des alias A. Aucun treizième type ou qualifier alternatif implicite.
+E3 : hors famille set compile mais lève UNSUPPORTED_TYPE sans GL.
+E4 : enum GLSL brut/cardinalité séparés ; type non supporté décrit sans rejeter Pass.
+E5 : nom dimensionné MAX_LENGTH,NUL/length cohérents,pas clé tronquée.
+E6 : INVALID_NAME,DUPLICATE_NAME,INVALID_LOCATION,INVALID_SIZE avant publication
+de l'attribut invalide ; INVALID_PROGRAM_ID inchangé.
+E7 : GLint location contrôlé avant conversion ;0valide,-1refusé.
+E8 : setGLArray/isGLArray défautfalse,suffixe exact[0] même size1,pas size>1 seul.
+E9 : buffer/id/type/size/usage0,arrayfalse ; id0n'est pas sentinelle invalide.
+E10 : ordre Setter buffer0,valeur absente,array/size,enum,usage,puis GL.
+E11 : au refus zéro BindBuffer,BufferData,Pointer,IPointer.
+E12 : float Pointer(location,N,GL_FLOAT,GL_FALSE,sizeof(T),nullptr).
+E13 : entiers IPointer avec GL_INT/GL_UNSIGNED_INT,jamais Pointer.
+E14 : bind VBO propre avant upload ; GL_ARRAY_BUFFER reste cette cible au succès.
+E15 : leurre taille/octets intacts après succès et refus.
+E16 : payload stocké avant Setter reste au refus ; TYPE_MISMATCH/messages inchangés.
+E17 : ownership unique/emprunts F7 inchangés,pas destructor/delete VBO production.
+E18 : Binder/Unbinder et UNBIND::BUFFER_ID_NOT_SET inchangés.
+E19 :12formes interrogées et consommées dans leur type sur vrai GL3.3core.
+E20 : cleanup fixtures courant avant destroyWindow/terminate,même ASSERT fatal.
+E21 : RED causal sur setup fonctionnel,GREEN minimal,refactor/nonrégression intégrée.
+E22 : identité candidat,commandes,comptages/skips,classe/oracle/artefacts.
+E23 : aPos/GL_FLOAT_VEC3/location0/size1/arrayfalse sur minimal.vert.
 
-- E1–E3 <-> AttributeContractTests : static_assert 12 layouts/is_same ; négatifs
-  qualifiers non canoniques, vec1 (extension dans ce TU), dvec3, mat4, structs et
-  conteneurs ; IAttribute::setUnsupportedType pour exception sans GL.
-- E4–E8 <-> AttributeReaderTests : vrai MAX_LENGTH mocké, exact long nom, NUL
-  absent/interne et troncation refusés sans clé, doublon, location-1/0,
-  size<=0 et suffixes, mat4 publié sans rejeter Pass.
-  ReadAttributes_InvalidPassID ne prouve que l'ancien INVALID_PROGRAM_ID.
-- E9/E16 <-> AttributeContextTests : zéros/array false, payload après refus,
-  changement T freeze et messages existants inchangés.
-- E10–E15 <-> AttributeSetterTests : bind puis BufferData puis Pointer/IPointer,
-  12 mappings, toutes les erreurs et leur priorité, strict zéro appel GL au refus,
-  y compris BindBuffer ; nouveau symbole mock IPointer fait partie du setup.
-- E17/E18 <-> AttributeOwnershipTests + tests Unbinder existants : caractérisation
-  et non-régression, pas preuve RAII globale.
-- E19/E20 + F1–F4 <-> AttributeComponentTests.TwelveFormsNativeQueries,
-  .ShaderConsumption, .DecoyBuffer : chaque forme SIZE/TYPE/STRIDE/BUFFER_SIZE,
-  float NORMALIZED false, entiers INTEGER true, source VBO du VAO, leurre intact,
-  capture représentative des trois domaines, cleanup même après ASSERT.
-- E4/E19 <-> AttributeComponentTests.MatrixReflectedThenRejected : vrai programme
-  mat4 publié puis rejet par Setter avec leurre inchangé.
-- E23 <-> PassTest.AttributeReadingTest : renforcement aPos complet sur minimal.vert.
-- E21/E22 <-> registre RED/GREEN et JUnit du lead sur candidat final, non vide.
+Intent : contrat interface shader/layoutCPU distinct,correction avant vitesse,
+validation avant driver et isolation du VBO tiers ; aucun lifetime global ajouté.
 
-Sens inverse : chaque test proposé référence son groupe ci-dessus ; tests sans
-obligation discriminante => orphelins à revoir. Rien ajouté => aucun nouvel
-orphelin exécuté ; les anciens succès size3/GL_FLOAT et SetIntUploadsOneIntWithoutGLError
-sont des preuves faibles/périmées pour la réflexion et IPointer. Ne pas les compter
-comme preuve du nouveau contrat. Commandes historiques et comptages ne sont pas
-rejoués par cette proposition.
+## Inférences F — propositions locales, pas nouvelles obligations de production
 
-## Top 3 risques : I et P sur 1–5, distincts des scores PM
+F1 : primaire sans on,12spécialisations ; gate de IAttribute::set sur on réellement
+emprunté (HasBorrowedOnMethod proposé),pas refonte globale de HasComponent partagé.
+L'auteur vérifie le concept réel et préserve les autres backends/composants.
+F2 : size/location testées sur GLint avant setters non signés.
+F3 : doublon détecté Reader,addAttribute reste remplacement ; premier objet jamais
+remplacé par le doublon rejeté,pas rollback de toute map imposé.
+F4 : EnableVertexAttribArray dans fixture après set,jamais Setter ; mock zéro enable.
+F5 : programme TF fixture,varyings avant link,Reader invoqué sur contexte du vrai
+programme ; un owner du programme,pas hook TF ajouté à Loader/Pass public.
+F6 :12VBO d'entrée/12set,120octets de capture (pas VBOmesh unique),pas struct C++
+susceptible de padder vec3 pour comparer l'image.
+F7 : mock GetProgramiv par pname,nom succès NUL dans bufSize,pname inattendu échoue.
+F8 : usage0 initial testé sans setGLUsage ; garde existante de ce dernier conservée.
+F9 : fixtures a0..a11,b0..b11,locations0..11 ; autres aPos/qaArray/qaArray2.
+Pas enable production,backdoor usage illégal,second read obligatoire,flat ajouté
+sans comprendre le log,ou sous-ensemble annoncé comme12.
 
-R1 I5×P4=20 : shader tableau illégal pris pour oracle. Déclencheur : fixture
-négative avant préflight. Blast radius Reader/Setter et validité de la campagne.
-Détection actuelle : statique seulement, aucune sonde. Mitigation : isoler trois
-sondes et exiger arbitrage en divergence. Gap : atteignabilité native du flag
-tableau non établie, DH1/DH2 bloquants.
+## Préflight natif bloquant
 
-R2 I4×P4=16 : Pointer reste utilisé pour entier tout en ayant GL_NO_ERROR.
-Déclencheur : reprendre oracle taille/absence d'erreur. Blast radius huit formes
-entières. Détection actuelle insuffisante, mock IPointer absent. Mitigation
-planifiée : mock et INTEGER/TYPE avant capture. Gap : RED causal à établir sur
-toolchain fonctionnelle ; symbole mock non linké n'est pas RED comportemental.
+Runner lead,GL3.3core ; une purge GLEW connue puis GL_NO_ERROR,pas purge des erreurs
+scénario. Enregistrer vendor/renderer/version/GLSL/profil.
+Minimums lus :MAX_VERTEX_ATTRIBS>=16,VERTEX_OUTPUT_COMPONENTS>=64,
+TF_INTERLEAVED_COMPONENTS>=64,TF_SEPARATE_ATTRIBS>=4,TF_SEPARATE_COMPONENTS>=4.
+Lire MAX_VARYING_COMPONENTS ; sortie planifiée30+gl_Position4=34composantes.
+Une limite insuffisante pour son usage ou link12échoué => arrêt,sans retirer sortie.
 
-R3 I4×P3=12 : mauvais VBO touché au succès/refus. Déclencheur : liaison intercalée
-ou validations tardives. Blast radius buffer tiers et VAO. Détection actuelle
-ne couvre pas leurre, BindBuffer ni IPointer au refus. Mitigation existante
-limitée buffer0/null ; ajouter leurre et séquence stricte. Gap : tests absents,
-ordre des cinq diagnostics à vérifier.
+Sondes sous test-datas/shaders/qa-attribute,refus en littéraux hors vertex/good :
+- qaArray[1] utilisé : compile/link succès,nombre/nom/length/size/type/location réels.
+- qaArray2[2],deux éléments actifs ; entrée active unique size2 valide à enregistrer.
+- dvec3 sans extension,struct,bool : refus compile/link attendu,logs,Reader non appelé.
+- vec3+mat4 légaux et utilisés : link attendu,puis Reader/mismatch.
+- identifier300lettres puis256 si nécessaire ; succès=>oracle naturel de longueur.
+- API directe bufSize4 sur nom plus long : troncature API,pas throw Reader production.
 
-Autres risques : grand entier converti en float32 non exact (DH4), NUL/strncpy,
-flags GLM, cleanup ASSERT. Réévaluer après intégration et surprises ; ne pas
-faire passer des preuves CPU pour GPU. Zéro test/skip requis => INCONCLUSIVE.
+Preuve flag natif size1 seulement si qaArray[0]/size1/GL_FLOAT_VEC3,length exacte
+et name[length]==NUL réellement observés. Nom nu/autre spelling ne sont pas réparés
+pour coller à l'oracle : arrêter la prétention native et arbitrer.
 
-## Budget
+## Mapping, payloads et captures exactes
 
-Total100 : setup28, puis planifié54 et buffer18 (75/25 du reste72).
-Setup : sondes8 ; mocks/RAII de fixtures14 ; préconditions layouts/alias6.
-Planifié : layouts5 ; exclus3 ; Reader8 ; Setter12 ; 12 natifs14 ; leurre4 ;
-capture6 ; non-régression2. Haut risque et faible coût en premier.
-Buffer : driver inattendu, mat4 size, NUL, link TF, ré-audit RED, contexte absent.
-Ne pas réduire un item haut pour ajouter du moyen. ASan/lifetime VBO ou 12 captures
-complètes exigeraient un autre lot, pas une extension implicite de ce budget.
+Entrées/sorties de même type,identité sans cast. Offsets octets de capture :
+- a0 float0.5 ->GL_FLOAT,N1,Pointer GL_FLOAT,@0.
+- a1 vec2(16777216,16777218) ->GL_FLOAT_VEC2,N2,Pointer GL_FLOAT,@4.
+- a2 vec3(-1,0.25,0.75) ->GL_FLOAT_VEC3,N3,Pointer GL_FLOAT,@12.
+- a3 vec4(1,-2,0.5,16777216) ->GL_FLOAT_VEC4,N4,Pointer GL_FLOAT,@24.
+- a4 int16777217 ->GL_INT,N1,IPointer GL_INT,@40.
+- a5 ivec2(INT_MIN,INT_MAX) ->GL_INT_VEC2,N2,IPointer GL_INT,@44.
+- a6 ivec3(-1,16777217,16777216) ->GL_INT_VEC3,N3,IPointer GL_INT,@52.
+- a7 ivec4(INT_MIN,-16777217,16777217,INT_MAX) ->GL_INT_VEC4,N4,IPointer GL_INT,@64.
+- a8 uintUINT_MAX ->GL_UNSIGNED_INT,N1,IPointer GL_UNSIGNED_INT,@80.
+- a9 uvec2(0,16777217) ->GL_UNSIGNED_INT_VEC2,N2,IPointer GL_UNSIGNED_INT,@84.
+- a10 uvec3(1,16777216,16777217) ->GL_UNSIGNED_INT_VEC3,N3,IPointer GL_UNSIGNED_INT,@92.
+- a11 uvec4(UINT_MAX,16777217,2,2147483648u) ->GL_UNSIGNED_INT_VEC4,N4,
+  IPointer GL_UNSIGNED_INT,@104. Fin120,vec3contigu12,pas paddingstd140.
 
-## Décisions humaines à obtenir, non approuvées par la seule politique modèles
+Avant feedback,pour chaque index : binding après set=VBOpropre ; rebinding leurre
+ne modifie pas ARRAY_BUFFER_BINDING capturé dans VAO ; taille/octetVBO=payload,
+STRIDE=sizeof(T),SIZE=N,TYPE=scalaire,NORMALIZED=false float,INTEGER=true entier
+et falsefloat,ENABLE après fixture,DIVISOR0 selon A2 ; leurre inchangé.
+INTEGER/TYPE entier faux => échec immédiat,sans BeginTF ni draw indéfini.
 
-**Décision utilisateur à la reprise : « Renforcer avant l'auteur ».** Les limites
-DH2–DH4 proposées ci-dessous ne sont PAS acceptées. Ce plan committé constitue
-la baseline de proposition, pas l'autorisation de démarrer D. Préparer une
-révision des oracles, la faire passer par Q puis commiter le plan amendé avant
-tout worktree auteur. Aucune couverture native impossible ne sera simulée pour
-faire disparaître un gap. La politique modèles approuvée reste inchangée.
+Programme fragment minimal sans entrée entière,gl_Position=vec4(0)noncapturé.
+Varyings b0..b11 avant link,RASTERIZER_DISCARD,POINTS(0,1),query PRIMITIVES_WRITTEN1.
+Readback GetBufferSubData après EndTF ; pas glFinish requis. Comparer120octets
+bitàbit à concaténation payloads,sentinelle0xA5 dès120 intacte.
+Separate :second programme float,int,uint,vec4,valeurs a0/a4/a8/a3,4buffers,
+GL_SEPARATE_ATTRIBS. Pas gl_SkipComponents/gl_NextBuffer/xfb plus récents.
+2^24+1 et -16777217,INT_MAX,UINT_MAX discriminent pertefloat32. INT_MIN et
+2147483648u sont eux représentables,mêmes bits possibles,donc TYPE distingue
+signed/unsigned. Ne pas revendiquer exhaustivité de toute la plage d'entiers.
 
-DH1 : résultat des trois sondes avant shader auteur ; divergence => arbitrage.
-DH2 : si sonde tableau échoue, accepter preuve du drapeau tableau uniquement
-mockée pour ce lot ; aucune réflexion native tableau prétendue COVERED.
-DH3 : accepter mock seul pour INVALID_LOCATION, DUPLICATE_NAME et nom tronqué,
-avec nominal réel des noms/locations sur 12 formes et aPos.
-DH4 : reporter la consommation d'entiers hors plage exacte float32 ; lead à F,
-impact : pas de preuve de toute la plage int/uint, INTEGER/TYPE restent obligatoires.
-DH5 : alias mediump identique au canonique, vec3 aligné !=4 ou mat4 size inattendue
-=> arrêt, pas treizième forme ou affaiblissement d'oracle.
-Recommandations QA pour DH2–DH4, pas décisions utilisateur déjà obtenues.
+## Refus, état et RED causaux
 
-## Sortie, ressources et commandes proposées
+CPU parseur foo[0]/size1 ->arraytrue,SetterARRAY_NOT_SUPPORTED ; suffixes foo[1],
+foo[00],foo[0]bar nonmatch. Natif12clés/enums/locations,size1,arrayfalse,NUL cohérent.
+Mat4 publié GL_FLOAT_MAT4/size1,Pass vivant ; set<vec4> mismatch expectedvec4/actualmat4,
+leurre intact,zéroGL ; set<mat4> UNSUPPORTED_TYPE.
+Chaque rang Setter combiné aux fautes ultérieures : buffer0 puisnull puisarray/size
+puisenum puisusage0,premier diagnosticgagne,zéroBind/Data/Pointer/IPointer.
+Conserver texte DRAWING_MODE_NOT_SUPPORTED et TYPE_MISMATCH existants.
+Injections nommées FaultInjection :location-1,doublon,size0,countpositif/maxLength<=0,
+lengthtropgrande,NULabsent/interne. ExceptionsE6,clé invalideabsente,aucun0xFFFFFFFF.
+APIbufSize4 prouve seulement API. MêmeT secondset=>secondpayload ; autreT=>freeze,
+premierpayload conservé,Setter nonrappelé.
 
-Plan et contrat committés avant worktree auteur ; arbitrages bloquants résolus.
-Auteur TDD : setup fonctionnel, RED causal, GREEN minimal, refactoring et
-non-régression sur diff intégré. G/R après intégration réelle ; T fresh hors board.
-Un écrivain par fichier, un compilateur par sortie, contexte/fixtures GL exclusifs,
-verrou CTest artist_opengl. Lead runner pour propositions QA, QA aucun test.
+RED anciencode attendu : leurreécrasé ; vec3enum/cardinalité GLSL transmisPointer
+incorrects ; entierINTEGERfalse (sansTF) ; mockPointerau lieuIPointer une fois
+symbole disponible ; nomlong tronqué si shader lié ; flagarray manque si[0]observé ;
+injections sans exception. Floatscalaire mappingdéjàcorrect=>REDparleurre.
+Mock manquant,include manquant,shaderillégal,contexteabsent/zérotest ne sont pas RED.
+Setup mocks et sondes fonctionnels avant interprétation d'un échec.
 
-Commandes proposées par Q, à vérifier contre script réel avant exécution :
-- powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -TestLabel unit -Jobs 1
-- ctest --test-dir out/build/windows-msvc-debug -N
-- ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error
-- ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error --parallel 1
+## Registre bidirectionnel : obligation -> symbole, nominal et négatif
 
-Conserver HEAD/delta/empreintes binaires, commandes exactes/runner, environnement,
-attendu/observé, découverte/exécution/échecs/skips et JUnit. Toute case non native
-non exécutée reste INCONCLUSIVE ; DH2–DH4 acceptés/reportés écrits, jamais couverts
-par analogie. Ni ASan, image, perf, Release ou autre OS déduits.
+État nouveau partout GAP,ou blocked sur précondition indiquée. Aucun COVERED.
+- O1/E1–3 AttributeContractTests :12layouts/is_same,négatifs famille/on ;
+  SetterTests.UnsupportedType_ThrowsWithoutGL (aucunGL).
+- O2/E9 SetterTests.InitialGlMetadata_IsDeterministic :objet sans value-init,
+  tout0/arrayfalse ; détecte ancienindéterminé par initialiseurs/asserts.
+- O3/E4,12,13 SetterTests.TwelveForms_BindUploadAndTypedPointer :12mappings,
+  voieopposée0appels,ordrebind/upload/pointer.
+- O4/E10,11 SetterTests.RefusalOrder_* :succèsO3,cinqrefus/combinations,zéroGL.
+- O5/E14,15 leurre dans TwelveForms_NativeCapture :cible/VAOcorrects,leurreintact
+  au succès/refus ; blocked sanscontexte.
+- O6/E19 AttributeComponentTests.TwelveForms_NativeCapture :120octets,query1,
+  sentinelle,refusdrawsiINTEGER/TYPEfaux ; blockedlimites/link12.
+- O7 SeparateCapture_FourBuffers :4valeurs exactes,pasfloat32arrondi ; blockedlimites.
+- O8/E8 AttributeReaderTests.SuffixParser_* :foo[0]vrai et suffixesnonmatches.
+- O9/E8 ArrayInputs_RecordSpelling :exact[0]réelouarrêt ; blockedsonde.
+- O10/E5 LongName_NativeReader :nomnaturelretenuexact,aucunmockfallback ; blockedlinknom.
+- O11 ApiProbe_BufSize4 :troncatureAPIdirecte,pasthrowproduction ; GAPnativeprobe.
+- O12/E6,7 AttributeReaderTests.FaultInjection_* :injections/diagnostics/cléabsente,
+  GAPCPU,jamaisGPU.
+- O13 MatrixPublishedThenSetterRefuses :publié/mismatch/leurre ; aprèslinklégal.
+- O14/E23 PassTest.AttributeReadingTest renforcé :aPos/type/location0/size1/arrayfalse.
+  Ancienpartielclé/type n'est pas preuve renforcée.
+- O15 IllegalVertexInputs_DoNotLink :dvec3/struct/bool/logs ; linkréussi=>DH-REFUS.
+- O16/E16 AttributeContextTests+Setter :secondpayload,messagesfreeze,autreTpasSetter.
+- O17/E17,18,20 ownership/unbinderexistants+RAIIfixture :moved-fromFREED_CONTEXT,
+  cleanupavantterminate mêmeASSERT ; ancienneownership n'est pas lifetimeGPU.
+- O18/F4 requêteARRAY_ENABLED+mockzéroenableSetter :enablefixture seulement.
+- O19/E21,22 registreRED/GREENrunner,candidat/hashes,compte>0/skips ; blockedrunner.
 
-État de cette restitution : aucun test exécuté (0/0/0/0), pas GREEN. Autonomie
-d'écriture et enforcement QA non prouvés. Le plan est une proposition persistée
-par le lead ; son commit et les arbitrages seront enregistrés séparément.
+Sens inverse :toutnouveautest se rattache àO1–O19,sinonorphelinàrevoir.
+Anciensexécutés40 :messagesGetValue/SetValue_MismatchReportsTheRealStoredType,
+ownership/null/movedfrom,AttributeTestdispatchCPU,Binder/Unbinder,ReaderInvalidPassID,
+contratsownership/formeon(C&),Passclé/type ; seulementanciencomportement.
+Preuvesfaibles/périmées :SetIntUploadsOneIntWithoutGLError,SetVec3UploadsOneVec3WithoutGLError,
+SetAttributeTest_CallVertexAttribPointer/WithVec3Stride,ReadAttributes_CallGetProgramiv/
+CallGetActiveAttribAndGetAttribLocation. Ils ne prouvent ni IPointer ni noms longs,
+ni leurre ni12formes ni matrice/tableau. Aucunnouvelorphelinexécuté,Q2n'écritpas.
+
+## Registre risques : I/P distincts des scores PM
+
+R-TF I5×P4=20 :sousensemble/GL_NO_ERROR/taille pris pour12captures,entiersPointer.
+Déclencheurlink12échoué/limiteinsuffisante/ancienoracle ; blast radius3domaines et
+verdictlot ; détection4anciensGLverts insuffisante ; mitigationcodeaucune ; gap
+RED/limites/IPointerabsents. Prévuqueriesavantdraw et12TFexactes obligatoires.
+R-ARR I4×P4=16 :flagdéclarénatifsans[0]ouancienrefuscompilationréutilisé.
+Déclencheurspelling/repriseQ1 ; blastflag/parseur/fauxRED ; détectionspecvérifiée,
+aucunesondedriver ; mitigationReaderaucune ; gapspellingnatifàobserver.
+R-VBO I4×P4=16 :uploadbufferliépartiers ; déclencheurleurreintercalé ; blastVBO/VAO ;
+détectionanciensfixtureslientbonVBO ; mitigationBinderseulement ; gapleurre/bindSetter.
+R-GATE I4×P3=12 :horsfamilleatteintdriver viaHasComponent ; déclencheurpremiersetmat4/
+dvec3 ; blasttype/étatGL ; détectionstatique ; mitigationbrancheUNSUPPORTED_TYPEmorte ;
+gapREDruntimeetfermetureàétablir.
+R-PNAME I3×P4=12 :MAX_LENGTHsurmockrenvoyant1/NULomis ; déclencheurReaderneuf ;
+blastfauxGREENnom ; détectionON_CALLlu ; mitigationaucune ; gapmockparpname ensetup.
+Tous>=10 :nominal/négatif automatisés ; R-PNAME traité avant interpréterlesnoms.
+Buffer/hautrisque/TF jamais sacrifiés pour un itemmoyen. Réévalueràintégration.
+
+## Budget retenu lead après recoupement PM2/Q2
+
+Unités abstraites156=setup36+planifié90+buffer30. Setup23.1%total ; reste120,
+planifié75%,buffer25%. Pas doublecompte. DifférencePM153 :+3bufferjustifiéparQ2.
+Setup36 :limites/driver/purge6 ; sondeslégalité10 ; préflightnom300/256 6 ; mocks/RAII14.
+Planifié90 :layouts4,exclus3,Reader8,oracleReadernom6,array8,mat4 4,Setter10,
+erreurs8,leurre6,TFinterleaved14,separate8,injections6,nonrégression5.
+Préflightnom=link,paslectureReader (postenomdistinct). Leurre/TFpartagentprogramme,
+coûtsoracle distincts,pasdeuxlinksobligatoires. AucunposteTFcoupé.
+Buffer30 :spelling/arbitrage6,aucunnomlong4,link12/varying6,purgeGLEW3,
+GLM/mat4 3,NULdriver3,contexte/REDcausedifférente5.
+Ordre :mocks/sondes,exclus/layouts,priorité/leurre,mapping,Reader,TFinterleaved,
+separate,injections/nonrégression. PasASan/autreAPI/campagneentièrehorslot ajouté.
+
+## Décisions humaines résiduelles, aucune GAP-accept implicite
+
+Utilisateur a refuséDH2–DH4Q1. Renforcement ne choisit pas spelling/noms/erreursnatives.
+- DH-ARR-SPELL :arraycompile/linkoumetadataautrequeexact[0]/size1/type=>arrêt,
+  observationpuisdécisionsuroracleoupreuveCPU ; pasnormalisationdriverimprovisée.
+- DH-NAME :ni300ni256lié=>INCONCLUSIVE,déciderautrelongueurnaturelleouhorslot.
+- DH-REFUS :dvec3/struct/boollié=>log,Readernonappelé,décision surpréconditiondriver.
+- DH-LOC :sanslocationnégativenaturellemêmebuilt-ins,INVALID_LOCATIONnatif
+  inatteignable ; décisionexplicitesurpreuveCPUuniquedelagarde.
+- DH-DUP :homonymes/location0activesrefusésavantReader ; décisionexplicitegarde
+  DUPLICATE_NAMEuniquementCPU_FAULT_INJECTION,pasdriverfictif.
+- DH-TRUNC :MAX_LENGTHconformeempêchetroncature ; bufSize4horsReaderprouveAPI,
+  NULinterne/lengthincohérenteinjectés ; décisionsurthrowproductionnonatteignablenatif.
+- DH-GLM :aliasdivergent,mediumpidentiquecanonique,vec3non12/4=>arrêt,pas13eforme.
+- DH-LIMIT :deviceinsuffisant/link12échoué=>arrêt,pasdesousensemble ; device/lotàdécider.
+- DH-CTX :contexteabsent=>aucunREDnatif,INCONCLUSIVEjusqu'àpréconditionfournie.
+
+Ces règles définissent des arrêts conditionnels,pas des acceptations anticipées.
+DH-LOC/DUP/TRUNC nécessitent clarification avant autorisation du consommateur D
+si l'utilisateur exige une preuve GPU de chaque throw. Ne pas relire le refus
+humain comme permission implicite d'enlever les gardes de production.
+
+## Sortie, runner et ressources
+
+Q2 sort avec proposition complète,persistée/committée parlead puisacceptationnative.
+D nonpublié tantqueplancommité/décisionsbloquantesnonrésolues. Un auteur TDD,
+uncompilerparsortie,unbailartist_opengl ; Q/generator/reviewer ne sontpasrunner.
+AprèsD shutdown/merge/diff, G||R ; intégration avantT,préparationF||T,
+verdictFaprèsnonnregression/candidatfinal,puisdocsL. Consumers restenthorsboard
+jusqu'àentréesréelles. Productioncorrigée=>revues/preuvesaffectéesinvalidees.
+
+Plus tard pour sortie lot :sondes/driver/logs/spellingexact ; tousDHrestantsnonacceptés
+laissentcasesblocked ; REDcausauxpuisGREEN ;12image+4separate/sentinelle/query ;
+nonrégressionTYPE_MISMATCH/INVALID_PROGRAM_ID/ownershipF7/Unbinder/aPos ;
+comptagesdécouverts/exécutés/échecs/skips,candidat/delta/hashesbinaires/JUnit.
+Zérotest/skiprequis=>INCONCLUSIVE ; ancien40/40nesatisfaitpasnouveaucontrat.
+
+Commandes proposées, vérifiéesparlecture,pasexécutéesparQ2 :
+`powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -TestLabel unit -Jobs 1`
+Le script faitfresh/rebuild/ctestpreset ; compléter explicitement :
+`ctest --test-dir out/build/windows-msvc-debug -N`
+`ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error`
+`ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error --parallel 1`
+Puis famille-RAttribute surbinairefraîchementcompilé,JUnitsousout/attribute-gl/.
+Adapterracineauworktree,pasderéutilisationcacheautreracine. Conan2,CMakeDeps/
+CMakeToolchain,Windowsx64Debug/MSVC14.44,MOCK_GLunitaireseulement,GLnatifdistinct.
+Écritureautonome/enforcementQArestentnonprouvés,nouveautransportnatif≠sandbox.

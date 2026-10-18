@@ -45,7 +45,10 @@ Planifié90 = layouts4 + exclus3 + Reader8 + nom6 + array8 + mat4 4 + Setter10
 Buffer27, soit total153. Après setup :90/117=76.9%,27/117=23.1%.
 L'ancien total140 sous-comptait10 ; le garder avec planifié90 laisserait
 buffer14, ratio86.5/13.5 non conforme. Alternative150=36+90+24 ->78.9/21.1.
-Lead retient153 comme proposition de référence, attend convergence Q2.
+Lead retenait153 comme proposition de référence avant Q2. Après réception de Q2,
+le budget retenu est156=36+90+30 : trois unités de buffer supplémentaires pour
+les aléas natifs détaillés dans qa-plan.md, ratio75/25 après setup. Aucun poste
+de preuve haut risque ni score de routage n'est réduit.
 Noms6 de setup (préflight link) et nom6 planifié (oracle Reader) doivent rester
 distincts ; si doublon réel, corriger le calcul, pas couper TF/injections haut risque.
 
