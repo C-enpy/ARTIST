@@ -60,6 +60,22 @@ elle n'est ni RED ni panne d'infrastructure.
 Pas de mutation fautive de production exécutée, pas de nouveau run GPU/ASan pour
 v3. Ré-audit requis sur ce candidat ; aucun verdict global.
 
+### Ré-audit final v3 — KEEP au périmètre
+
+Rapport fresh `test-reviewer-offboard`, candidat `1db306a` : les deux compteurs
+distincts et les ASSERT avant lecture sont vérifiés ligne par ligne, après move
+et après destruction de la source. Le mutant combiné fuite17+destruction23
+déclenche l'ASSERT sur transferredDeaths avant toute lecture du payload.
+Le précédent KEEP v2 du reviewer est explicitement invalidé et remplacé par ce
+verdict v3. Findings T1-1 clos : CPU mock Windows Debug, cas Loaded→Loaded.
+
+Le reviewer a recoupé les logs et JUnit 1/1 et 226/226, zéro failure/disabled/skip.
+Les hashes restent recalculés par le lead, pas par le reviewer. Analyse des
+mutants par lecture seulement ; aucun mutant exécuté, aucun nouveau run GPU/ASan.
+Un crash secondaire pendant l'unwind d'une implémentation mutante invalide reste
+possible ; le test ne promet pas une exécution sûre d'un double-free volontaire.
+Cette clôture ne ferme ni F1 (message C++) ni F2 (cardinalité d'upload).
+
 ## Limites de preuve
 
 - Aucune nouvelle campagne ASan n'est revendiquée pour les tests TE/T1-1.
