@@ -76,6 +76,45 @@ Un crash secondaire pendant l'unwind d'une implémentation mutante invalide rest
 possible ; le test ne promet pas une exécution sûre d'un double-free volontaire.
 Cette clôture ne ferme ni F1 (message C++) ni F2 (cardinalité d'upload).
 
+## F2 — clôture après correction et deux revues indépendantes
+
+Candidat corrigé et intégré `1690bac` (base d24340f). Production : garde
+single-value aux34 setters OpenGL, count littéral1 aux30 sites vector/matrix,
+init déterministe size1/id0/type0. Aucun Reader/Pass/Attribute/T1-1/mock modifié.
+Contrat/QA commités avant worktree auteur ; RED CPU sûrs22échecs puis six oracles
+count1 échouant avant patch. Aucun driver OOB volontaire. Revalidation lead
+après merge :297/297 =249unit+48GL, failures0/disabled0/skipped0.
+
+Revues fresh lecture seule `f2-correctness-review` et `f2-rendering-verifier` :
+aucun FAIL du contrat F2. Sept sources/fixtures et34artefacts re-hashés et
+recoupés, manifeste40d30bb9…, identité auteur/intégré inchangée. Helper placé
+avant GL vérifié dans les34spécialisations,30counts littéraux1, aucun count
+réfléchi résiduel. Réflexion conserve tailles arrays, stockage avant dispatch
+conservé (GPU non-altération, pas rollback CPU promis).
+
+Readbacks natifs : scalar float/vec3/mat3, tableauvec3[2] actif avec seed six
+floats valide et lecture séparée des deux locations avant/après rejet ; doubles
+double/dvec3/dmat2 sur extension fp64 ET entrées observées. Zéro skip observé,
+28autres spécialisations INCONCLUSIVE driver (revue statique, pas couverture
+native exhaustive). RTX3090, GL3.3 core/NVIDIA617.42 ; aucune portabilité fp64
+générale affirmée. Pas de nouveauASan/performance/image/Release/autreOS.
+
+Hashes du run intégré recoupés par le verifier :
+- lead-integrated-native.xml : `6d989440fb57a5c1829b5180c6124594ecb43581798d7fdf6f51be2c9cab5ea0`.
+- lead-integrated-native.log : `f42b191f0cfcc96e5c4ae7d519e32b55bd621685ac2af7d0b95243c56bf0b9e0`.
+
+Nuances de preuve : ancien résumé inventory-green comptait2occurrences getGLSize
+(garde/diagnostic), pas deux countsGL ; inventaire final et source=0count réfléchi.
+Le nom UniformContractTests désigne les static_asserts du fichier, pas un cas
+CTest de ce nom. Init directe testée après fix pour ne pas lire un indéterminé
+au RED. Les revues n'ont pas réexécuté : elles recoupent les campagnes auteur et
+lead distinctes. Finding F2 clos à ce périmètre, pas de PASS global de mission.
+
+Questions préexistantes distinctes conservées : gate fp64 en production absent
+sur appareil sans extension (gate actuel dans les tests seulement) ; types
+unsupported rejetés à la compilation selon HasComponent ; stockages CPU conservés
+après exception du Setter. Aucun de ces points n'est présenté comme corrigé.
+
 ## Limites de preuve
 
 - Aucune nouvelle campagne ASan n'est revendiquée pour les tests TE/T1-1.
