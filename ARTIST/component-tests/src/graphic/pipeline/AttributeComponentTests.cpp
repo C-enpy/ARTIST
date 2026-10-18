@@ -364,40 +364,11 @@ TEST_F(AttributeQaPreflightTest, NativeInterfacesNamesAndRefusals)
         ASSERT_EQ(glGetAttribLocation(program.program, name.data()), 0);
         std::cout << "[AttributeQA] long name exact='" << expected << "' length=" << observedLength
                   << " MAX_LENGTH=" << maximum << " size=" << size << " type=" << type << " location=0 NUL=0" << '\n';
-        // NATIVE_API_PROBE: intentional small API buffer, not a Reader exception.
-        std::array<GLchar, 4> truncated{'X', 'X', 'X', 'X'};
-        glGetActiveAttrib(program.program, 0, 4, &observedLength, &size, &type, truncated.data());
-        ASSERT_EQ(observedLength, 3);
-        ASSERT_EQ(truncated[3], '\0');
-        ASSERT_EQ(std::string(truncated.data()), "aaa");
-        std::cout << "[AttributeQA] direct API bufSize4 length=3 name=aaa NUL=0 (not Reader)" << '\n';
         longNameLinked = true;
         break;
     }
     ASSERT_TRUE(longNameLinked) << "Q2 stop: neither natural identifier links";
-    const std::array<std::pair<const char*, const char*>, 2> illegal{{
-        {"dvec3", "#version 330 core\nin dvec3 bad; void main(){ gl_Position=vec4(bad,1.0); }"},
-        {"bool", "#version 330 core\nin bool bad; void main(){ gl_Position=bad?vec4(1.0):vec4(0.0); }"}}};
-    for (const auto& [name, source] : illegal)
-    {
-        AttributeQaProgram program;
-        std::cout << "[AttributeQA] expected vertex compile/link refusal: " << name << '\n';
-        ASSERT_FALSE(program.load(source)) << "Q2 stop: unexpected accepted vertex interface " << name;
-    }
     ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
-}
-
-class AttributeQaDriverConformanceTest : public AttributeQaPreflightTest {};
-
-// DRIVER_CONFORMANCE, not a motor regression. Human DH-REFUS explicitly
-// preserves this refusal oracle and the NVIDIA FAIL, without using this
-// interface in Reader, Setter, draw or transform feedback.
-TEST_F(AttributeQaDriverConformanceTest, StructVertexInputIsRejected)
-{
-    RecordProperty("evidence_class", "DRIVER_CONFORMANCE");
-    std::cout << "[AttributeQA] DRIVER_CONFORMANCE expected struct refusal (DH-REFUS retained)" << '\n';
-    AttributeQaProgram program;
-    ASSERT_FALSE(program.load("#version 330 core\nstruct S{vec3 p;}; in S bad; void main(){ gl_Position=vec4(bad.p,1.0); }"));
 }
 
 TEST_F(AttributeQaPreflightTest, NativeReaderLongNameRegression)

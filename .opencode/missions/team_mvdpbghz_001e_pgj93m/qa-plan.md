@@ -1,5 +1,12 @@
 # Attribute-GL — plan QA Q2 renforcé
 
+> Décision utilisateur ultérieure, appliquée par Q3 : les sondes de conformité
+> driver ne font plus partie de l'acceptation ARTIST. Le refus GLSL brut de
+> struct/bool/dvec3 et la troncature API bufSize4 ont été retirés des tests,
+> sans toucher aux préconditions des preuves moteur ni aux refus ARTIST.
+> Le plan Q2 ci-dessous reste la trace du contrat antérieur ; pour ce point,
+> q3-driver-probes-plan.md et q3-driver-probes-result.md font désormais foi.
+
 ## Attribution, intégration et autorité
 
 Proposition qa-planner/pool-4, tâche task_mvdwt1px_000h_ffpre5, C61/R66 PM/LLM,
