@@ -80,6 +80,8 @@
 #define glBindBuffer artist::mock::opengl::glFunctionMock::instance()->glBindBuffer_mock
 #define glBufferData artist::mock::opengl::glFunctionMock::instance()->glBufferData_mock
 #define glVertexAttribPointer artist::mock::opengl::glFunctionMock::instance()->glVertexAttribPointer_mock
+#undef glVertexAttribIPointer
+#define glVertexAttribIPointer artist::mock::opengl::glFunctionMock::instance()->glVertexAttribIPointer_mock
 #define glIsProgram artist::mock::opengl::glFunctionMock::instance()->glIsProgram_mock
 #define glIsShader artist::mock::opengl::glFunctionMock::instance()->glIsShader_mock
 #define glLinkProgram artist::mock::opengl::glFunctionMock::instance()->glLinkProgram_mock
@@ -109,7 +111,17 @@ namespace artist::mock::opengl
         glFunctionMock()
         {
             ON_CALL(*this, glGetProgramiv_mock).WillByDefault([this](GLuint program, GLenum pname, GLint *params)
-                                                              { (*params) = 1; });
+                                                              {
+                                                                  switch (pname) {
+                                                                  case GL_ACTIVE_ATTRIBUTE_MAX_LENGTH: *params = sizeof(ATTRIBUTE_NAME); break;
+                                                                  case GL_ACTIVE_UNIFORM_MAX_LENGTH: *params = sizeof(UNIFORM_NAME); break;
+                                                                  case GL_ACTIVE_ATTRIBUTES:
+                                                                  case GL_ACTIVE_UNIFORMS:
+                                                                  case GL_LINK_STATUS:
+                                                                  case GL_INFO_LOG_LENGTH: *params = 1; break;
+                                                                  default: ADD_FAILURE() << "Unexpected glGetProgramiv pname=" << pname; *params = 0; break;
+                                                                  }
+                                                              });
 
             ON_CALL(*this, glGetShaderiv_mock).WillByDefault([this](GLuint shader, GLenum pname, GLint *params)
                                                              { (*params) = 1; });
@@ -205,6 +217,7 @@ namespace artist::mock::opengl
         MOCK_METHOD(void, glBindBuffer_mock, (GLenum, GLuint), ());
         MOCK_METHOD(void, glBufferData_mock, (GLenum, GLsizeiptr, const GLvoid *, GLenum), ());
         MOCK_METHOD(void, glVertexAttribPointer_mock, (GLuint, GLint, GLenum, GLboolean, GLsizei, const GLvoid *), ());
+        MOCK_METHOD(void, glVertexAttribIPointer_mock, (GLuint, GLint, GLenum, GLsizei, const GLvoid *), ());
         MOCK_METHOD(GLboolean, glIsProgram_mock, (GLuint), ());
         MOCK_METHOD(GLboolean, glIsShader_mock, (GLuint), ());
         MOCK_METHOD(void, glLinkProgram_mock, (GLuint), ());

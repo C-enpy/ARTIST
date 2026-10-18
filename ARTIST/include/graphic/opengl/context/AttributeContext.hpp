@@ -83,12 +83,23 @@ namespace artist::graphic
                 return m_usage;
             }
 
+            void setGLArray(bool array)
+            {
+                m_array = array;
+            }
+
+            bool isGLArray() const
+            {
+                return m_array;
+            }
+
         private:
-            GLuint m_attributeId; ///< OpenGL attribute ID
-            GLuint m_size;        ///< The size of the attribute variable.
-            GLenum m_type;        ///< The type of the attribute variable.
-            GLuint m_bufferId;    ///< OpenGL VBO buffer ID
-            GLenum m_usage;       ///< The drawing mode of the attribute variable.
+            GLuint m_attributeId = 0; ///< Location zero is valid, not an invalid sentinel.
+            GLuint m_size = 0;        ///< Reflected GLSL array cardinality, not vector width.
+            GLenum m_type = 0;        ///< Reflected GLSL enum, not memory scalar format.
+            GLuint m_bufferId = 0;
+            GLenum m_usage = 0;
+            bool m_array = false;
         };
     }
 }

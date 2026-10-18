@@ -121,6 +121,9 @@ TEST_F(PassTest, AttributeReadingTest)
     ASSERT_NE(attribute, nullptr);
     ASSERT_NO_THROW((void)attribute->getContext());
     ASSERT_EQ(attribute->getContext().getGLType(), GL_FLOAT_VEC3);
+    ASSERT_EQ(attribute->getContext().getAttributeID(), 0u);
+    ASSERT_EQ(attribute->getContext().getGLSize(), 1u);
+    ASSERT_FALSE(attribute->getContext().isGLArray());
 }
 
 TEST_F(PassTest, FreeResourcesTest)

@@ -104,7 +104,7 @@ namespace artist::graphic::pipeline
             auto &context = ctx();
             context.template setValue<T>(value);
 
-            if constexpr (graphic::validator::HasComponent<typename API::AttributeContext::template Setter<T>>)
+            if constexpr (graphic::validator::HasBorrowedOnMethod<typename API::AttributeContext::template Setter<T>, typename API::AttributeContext>)
             {
                 API::AttributeContext::template Setter<T>::on(context);
             }
