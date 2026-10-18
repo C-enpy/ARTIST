@@ -124,6 +124,17 @@ Les skills n’accordent aucune capacité. Le rapport d’équipe est un transpo
 éprouver ; à défaut réponse finale textuelle à relever par le lead, pas d’ouverture
 d’execute ou de `team_*` pour la transmettre.
 
+### Fin de tour sans transport autorisé
+
+La demande générique de rapport/clôture d'Ensemble n'ajoute aucune permission.
+Si le transport est inaccessible, remettre une seule réponse finale autonome
+avec statut du livrable, candidat, décisions ouvertes et limites. La relève,
+persistance et clôture du board appartiennent alors au lead ; ne pas annoncer
+avoir envoyé un rapport d'équipe ou terminé la tâche sur le board.
+Un rappel automatique après cette réponse ne justifie ni contournement ni
+régénération intégrale : signaler seulement le blocage de transport et les IDs
+de réponse s'ils sont connus. Ne pas boucler sur les mêmes outils interdits.
+
 ### Generator : compléter, pas remplacer le TDD
 
 Les auteurs conservent leur TDD RED → GREEN → REFACTOR, par tranche observable ;
