@@ -176,22 +176,26 @@ TEST_F(UniformOwnershipTests, NullContextIsRejected)
 TEST_F(UniformOwnershipTests, MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue)
 {
     int copies = 0; // Outlives the values stored in both contexts.
-    int deaths = 0; // Destructions of stored LifeProbe payloads.
+    int oldDeaths = 0;
+    int transferredDeaths = 0; // Both counters outlive the stored payloads.
     Uniform destination;
-    destination.getContext().setValue(LifeProbe(17, copies, deaths));
+    destination.getContext().setValue(LifeProbe(17, copies, oldDeaths));
     Context *transferredContext = nullptr;
 
     {
         Uniform source;
-        source.getContext().setValue(LifeProbe(23, copies, deaths));
+        source.getContext().setValue(LifeProbe(23, copies, transferredDeaths));
         transferredContext = &source.getContext();
         ASSERT_NE(transferredContext, &destination.getContext());
         ASSERT_GT(copies, 0); // The probe observes real copies into the base std::any.
         copies = 0;
-        deaths = 0;
+        oldDeaths = 0;
+        transferredDeaths = 0;
 
         destination = std::move(source);
 
+        ASSERT_EQ(0, transferredDeaths); // Stop before reading a destroyed payload.
+        ASSERT_EQ(1, oldDeaths);
         EXPECT_EQ(transferredContext, &destination.getContext());
         EXPECT_EQ(23, destination.get<LifeProbe>().value);
         EXPECT_EQ(0, copies);
@@ -200,11 +204,10 @@ TEST_F(UniformOwnershipTests, MoveAssignmentTransfersLoadedContextWithoutCopying
                             TraceableException<std::runtime_error>("ERROR::UNIFORM::FREED_CONTEXT"));
     }
 
-    // Destroying the moved-from wrapper must not destroy the transferred context:
-    // exactly ONE payload death is contractual at move assignment (the old
-    // destination value 17, destroyed before the transfer), while the transferred
-    // value 23 survives (checked below even after the source is destroyed).
-    EXPECT_EQ(1, deaths);
+    // Separate counters prevent a leaked old payload and a destroyed transferred
+    // payload from cancelling each other in an aggregate destruction count.
+    ASSERT_EQ(0, transferredDeaths);
+    ASSERT_EQ(1, oldDeaths);
     EXPECT_EQ(transferredContext, &destination.getContext());
     EXPECT_EQ(23, destination.get<LifeProbe>().value);
     EXPECT_EQ(0, copies);

@@ -37,6 +37,29 @@ pour le mutant combinant fuite ancien payload et destruction du transféré, et
 pour l'absence d'accès après détection d'un lifetime invalide (ASSERT avant lecture).
 Option soumise au reviewer : compteurs séparés pour les deux payloads.
 
+### Correction v3 exécutée par le lead
+
+Le reviewer a invalidé son KEEP v2 après examen du mutant combiné : fuite17 et
+destruction23 peuvent satisfaire le total 1. Proposition texte corrigée appliquée
+par le lead : oldDeaths/transferredDeaths séparés, ASSERT avant les lectures
+post-move et post-destruction de la source. Production inchangée. Le patch garde
+les contrôles identité, copies, valeur et source FREED_CONTEXT.
+
+Commandes via Context Mode, logs complets sous `out/mission-f7/te/` :
+chargement `out/tooling/load-msvc.cmd` puis build preset windows-msvc-debug
+`--parallel 1` (exit0), CTest ciblé `-R MoveAssignmentTransfersLoadedContextWithoutCopyingBaseValue`
+et suite `-L unit`, tous avec `--no-tests=error --output-on-failure` et JUnit absolus.
+Résultats : 1/1 ciblé, 226/226 unit, zéro failure/disabled/skip, exit0.
+Une erreur de syntaxe initiale du script Context Mode a été corrigée avant build ;
+elle n'est ni RED ni panne d'infrastructure.
+
+- TU testé SHA256 : `c89b9e93eb5d00b518244648b2882b8ae6bf171f7a140ed3ff898ab3b1bcad2a`.
+- JUnit ciblé `t11-v3-selected.xml` : `cfebf8f8a9d85b00a401f13070fd48ac7f3de55d2c28bdb568a6d7cffde33bc7`.
+- JUnit unit `t11-v3-unit.xml` : `040ed492bce8a00d6409a3a8aeea3c8cdd402206be0230271254df04511b3d7d`.
+
+Pas de mutation fautive de production exécutée, pas de nouveau run GPU/ASan pour
+v3. Ré-audit requis sur ce candidat ; aucun verdict global.
+
 ## Limites de preuve
 
 - Aucune nouvelle campagne ASan n'est revendiquée pour les tests TE/T1-1.
