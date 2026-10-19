@@ -232,6 +232,7 @@ TEST_F(UniformReaderTests, ReadUniforms_SuccessRetiresMissingNamesAndOldValues)
     auto value = std::make_shared<GLint>(37);
     std::weak_ptr<GLint> oldValue = value;
     passContext.getUniform("reloaded")->getContext().setValue(value);
+    const auto *retainedBorrow = passContext.getUniform("reloaded");
     value.reset();
     mock::opengl::glFunctionMock::reset();
 
@@ -241,6 +242,8 @@ TEST_F(UniformReaderTests, ReadUniforms_SuccessRetiresMissingNamesAndOldValues)
     EXPECT_EQ(passContext.getUniform("obsolete"), nullptr);
     EXPECT_TRUE(oldValue.expired());
     ASSERT_NE(passContext.getUniform("reloaded"), nullptr);
+    // K2: succès = remplace toute la map ; borrow retenu invalidé au commit.
+    EXPECT_NE(passContext.getUniform("reloaded"), retainedBorrow);
     EXPECT_EQ(passContext.getUniform("reloaded")->getContext().getGLSize(), 3u);
     EXPECT_EQ(passContext.getUniform("reloaded")->getContext().getProgramID(), 1u);
 }

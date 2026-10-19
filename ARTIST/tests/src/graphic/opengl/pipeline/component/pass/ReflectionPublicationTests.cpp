@@ -116,12 +116,15 @@ namespace
         context.setPassID(1);
         context.addAttribute("obsolete", ownedAttribute(71));
         context.addAttribute("reloaded", ownedAttribute(72));
+        auto *retainedBorrow = context.getAttribute("reloaded");
         reflectAttributes({"reloaded"});
         ASSERT_NO_THROW(AttributeReader::on(context));
         EXPECT_EQ(deletedNames(), (std::vector<GLuint>{71, 72}));
         EXPECT_EQ(context.getAttribute("obsolete"), nullptr);
         ASSERT_EQ(context.getAttributes().size(), 1u);
         EXPECT_EQ(context.getAttribute("reloaded")->getContext().getBufferID(), 0u);
+        // K2: commit réussi invalide les borrows anciens, nom retenu inclus.
+        EXPECT_NE(context.getAttribute("reloaded"), retainedBorrow);
     }
 
     TEST_F(ReflectionPublicationTests, EmptyReaderCommitRetiresAllOldVbosBeforeReturn)
