@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-19",
+  "head": "cd1b598c77bc22ae876543bea6e0aae104792649",
+  "scope": "Baseline exécutée pour la mission lifetime OpenGL (K5) — preuve fraîche du candidat, distincte du comptage historique f7bb171",
+  "environment": {
+    "os": "Windows x64",
+    "compiler": "MSVC 14.44.35207",
+    "windows_sdk": "10.0.26100.0",
+    "conan": "2.12.2",
+    "ninja": "1.13.0",
+    "generator": "Ninja",
+    "build_dir": "out/build/windows-msvc-debug"
+  },
+  "commands": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -TestLabel unit -Jobs 1",
+    "ctest -N -C Debug --show-only=json-v1",
+    "ctest -C Debug -L unit --no-tests=error --output-on-failure --parallel 1",
+    "ctest -C Debug -L opengl --no-tests=error --output-on-failure --parallel 1"
+  ],
+  "results": {
+    "discovery": "non nulle ; labels unit/opengl distincts vérifiés",
+    "unit": { "passed": 266, "failed": 0, "skipped": 0, "time_sec": 5.62 },
+    "opengl": { "passed": 60, "failed": 0, "skipped": 0, "time_sec": 30.28 },
+    "total": { "passed": 326, "failed": 0 }
+  },
+  "evidence": {
+    "unit_log": { "path": "out/baseline-unit-2026-10-19.log", "sha256": "185ad86f547a94cf18a700807406f8070bf72138781ffa31a294044e452c1727", "lines": 695 },
+    "opengl_log": { "path": "out/baseline-opengl-2026-10-19.log", "sha256": "70fbe1089a1f39104348ca05840af9b9a848de4bfc8a57a9ed854bffe79703ef", "lines": 129 },
+    "binary_unit": { "path": "out/build/windows-msvc-debug/ARTIST/tests/ArtistLib_tests.exe", "sha256": "0e9cde86e8abbae0bf8e784d3875fbd90cdfe8630f61ff0100b29813f30fc404", "size": 7915008 },
+    "binary_opengl": { "path": "out/build/windows-msvc-debug/ARTIST/component-tests/ArtistLib_component_tests.exe", "sha256": "11d620d05b9e6dda8832707725548de7ae49c0c861bd5d8f45642d90db6fc564", "size": 4560384 }
+  },
+  "corrections": [
+    "Premier essai de build via pipeline PowerShell (2>&1 | Out-String) a produit un log vide — piège NativeCommandError PS 5.1 ; relance conforme (-File, sans pipeline enveloppant), flux runner complet copié comme preuve. Ancien log vide SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 (vide).",
+    "Le total 326/326 reproduit le comptage f7bb171 comme preuve fraîche sur le candidat courant ; il n'est pas un héritage."
+  ],
+  "limits": [
+    "Windows Debug uniquement ; Release, autres plateformes et ASan non validés par ce run.",
+    "Aucune mesure de performance, aucune capture GPU.",
+    "Les logs résident sous out/ (non versionné) ; ce manifeste porte les hashes."
+  ],
+  "attribution": "Exécution lead-runner ; recoupement lecture seule par pool-2 (K-dev), qui a signalé le log vide initial",
+  "related": [
+    "docs/architecture/next-mission.md",
+    "docs/_meta/session-2026-10-03-validation.json"
+  ]
+}
