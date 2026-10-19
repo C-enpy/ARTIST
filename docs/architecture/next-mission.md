@@ -1,241 +1,291 @@
 ---
-title: "Prochaine mission — contrat Attribute réfléchi OpenGL"
+title: "Prochaine mission — fiabilité et lifetime des ressources OpenGL"
 category: architecture
 tags: [artist, architecture, rendering, testing]
 aliases: [next-mission]
-summary: "Périmètre proposé après F7 : chaîne Attribute réfléchie OpenGL, 12 formes CPU canoniques, validation avant mutation GL et VBO correctement ciblé ; lifetime VBO séparé."
+summary: "Proposition long run : VBO Attribute, publication de réflexion, refus Uniform et fixtures Loader, en branches parallèles après contrats et QA."
 status: proposed
 implementation: not-started
-source_revision: 4a9b722a8f1b64470172686aee961221fa6384c0
+source_revision: 070e20d9157b9d90978e51053a59f843c0e93250
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-19
+sources:
+  - "opencode:ses_eacf31fbaffeam2skOnm89Pi66"
+  - "opencode:ses_eacf2ea5affeBDZfFmS3E05oRl"
+  - "references/session-2026-10-18-attribute-gl.md"
+provenance:
+  extracted: 0.5
+  inferred: 0.5
+  ambiguous: 0.0
 ---
 
-# Prochaine mission — contrat Attribute réfléchi OpenGL
+# Prochaine mission — fiabilité et lifetime des ressources OpenGL
 
-> [!important] Préparation seulement
-> Cadrage architecte/PM intégré. Aucune tâche d'implémentation publiée, aucun test
-> RED exécuté, aucune nouvelle politique de modèles approuvée. Le périmètre
-> recommandé ci-dessous est prêt pour préparation native, pas pour exécution.
+> [!important] Proposition, pas exécution
+> Mission relativement large, prévue pour une exécution autonome **long_run**
+> après préparation et approbation natives. Aucun auteur, test RED, build ou
+> changement moteur lancé pour ce cadrage. Les décisions ouvertes ci-dessous
+> empêchent encore de publier les tâches d'implémentation.
 
-## État de départ et sauvegarde
+## Origine et état réel
 
-L'ancien pointeur est conservé **à l'identique** dans
-[[architecture/missions/2026-10-18-next-mission-f7-closed|la sauvegarde F7 clôturée]].
-Son propriétaire est le coordinateur ; ce fichier non suivi n'est pas un travail
-inconnu d'un auteur. La [[architecture/missions/2026-10-18-f7-uniform-attribute|mission F7]]
-et la [[references/session-2026-10-18-f7|session avec ses 28 sous-agents]] restent
-les archives techniques et opérationnelles.
+L'[[architecture/missions/2026-10-19-attribute-session-ingestion|ingestion de
+session Attribute-GL est archivée]]. Elle n'a pas adopté de garde-fous ni fermé
+le chantier moteur. La [[references/session-2026-10-18-attribute-gl|rétrospective]]
+conserve les décisions et rectifications, dont le retrait des sondes purement
+driver. Ne pas reproposer l'implémentation Attribute-GL déjà intégrée.
 
-HEAD inspecté : `4a9b722`. Code moteur inchangé depuis `6d6dcb7`, candidat des
-**299/299 tests natifs Windows Debug** (251 CPU + 48 OpenGL). Ces résultats sont
-historiques : aucune nouvelle campagne exécutée pour ce cadrage. ASan 245 reste
-l'historique T4, pas une preuve ASan finale. `.grepai/config.yaml` est hors périmètre.
+Les deux PM ont enquêté en lecture seule sur `070e20d`. Leurs avis ne comportent
+aucun nouveau run :326PASS Windows Debug (266CPU+60GL) est une preuve historique
+du retrait Q3 àf7bb171, pas la baseline exécutée de cette future mission.
+Le pointeur Attribute antérieur, y compris son diff documentaire préexistant,
+est conservé intégralement dans Git :
+`28395ff16f9026522f593a012396bfe915264971:docs/architecture/next-mission.md`.
+Ne pas le lire comme une description actuelle des défauts à corriger.
 
-## Pourquoi cette tranche
+Dirty AGENTS/profils/harness/index/log/correction-plan/.grepai et politiques
+externes préservés. L'autorisation présente porte sur ce pointeur et l'archive,
+pas sur ces autres fichiers. Un futur worktree ne reçoit pas le dirty implicitement.
 
-Constats statiques, **pas encore des bugs reproduits** :
+## Résultat attendu et bornage
 
-- `ARTIST/include/graphic/opengl/pipeline/component/pass/AttributeReader.hpp`
-  conserve directement la taille et le type retournés par `glGetActiveAttrib`.
-- `ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp`
-  utilise les métadonnées du contexte pour `glVertexAttribPointer`.
-- La cardinalité réfléchie d'une variable GLSL n'est pas le nombre de composantes
-  d'un élément mémoire ; un enum GLSL vectoriel n'est pas un type scalaire GL.
-- Les tests GL `ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp`
-  préparent ces champs manuellement. Leur succès ne démontre pas la chaîne issue
-  de la réflexion d'un shader lié.
-- Le Binder crée un VBO ; aucun `glDeleteBuffers` n'a été trouvé dans
-  `ARTIST/include`. Cela ouvre une question de lifetime distincte, sans établir
-  à lui seul le propriétaire ni le point correct de suppression.
+**Rendre déterministes les frontières de création, remplacement, refus et
+libération des ressources OpenGL existantes**, sans reconstruire le moteur.
+Quatre branches d'auteur fournissent une enveloppe long run significative :
 
-Ces écarts concernent la correction du chemin CPU/driver avant une optimisation.
-La tranche s'inscrit dans l'étape 1 du
-[[architecture/correction-plan|plan de correction]], pas dans une adoption globale
-des layouts préparés d'ADR-0004.
+1. Fermer le cycle des VBO créés pour Attribute, selon un contrat de contexte
+   courant et d'ownership explicitement adopté.
+2. Définir puis respecter la frontière de publication de la réflexion Pass :
+   succès, échec tardif, remplacement, noms disparus et emprunts invalidés.
+3. Définir puis respecter les refus Uniform et l'état CPU observable après refus,
+   sans inventer une compatibilité GLSL universelle.
+4. Requalifier et, si nécessaire, isoler les fixtures Loader/ShaderLoader sous
+   permutations, sans masquer les erreurs de production.
 
-## Périmètre recommandé — Attribute-GL
+La largeur vient de frontières testables et de fichiers disjoints, pas de l'ajout
+de fonctionnalités sans oracle. Chaque branche peut aboutir à un constat sans
+patch si sa suspicion ne se reproduit pas. Ne pas fabriquer un RED pour remplir
+le budget ni présenter la publication partielle historique comme un bug adopté.
 
-Une seule chaîne verticale : **réflexion du programme lié → description validée
-de l'attribut → configuration OpenGL → preuve native**.
+### Observations statiques transmises par les PM
 
-1. Séparer explicitement les informations réfléchies GLSL et les paramètres
-   décrivant la mémoire CPU. Ne pas transporter un champ ambigu jusqu'au driver.
-2. Supporter une famille fermée de 12 formes CPU canoniques : `float`, entier
-   signé et non signé 32 bits, chacun scalaire ou vecteur de 2 à 4 composantes.
-   Vérifier la correspondance exacte entre valeur C++ et interface GLSL.
-3. Définir les erreurs nominales/négatives et leur moment de validation. Une entrée
-   refusée ne doit pas produire une configuration GL invalide.
-4. Conserver l'ownership unique et les emprunts F7, ainsi que le comportement de
-   freeze hors modification expressément justifiée par le contrat.
-5. Ajouter une preuve de bout en bout avec un vrai programme lié, pas seulement
-   des métadonnées préparées à la main ou un mock des arguments GL.
+- `ARTIST/include/graphic/opengl/pipeline/component/attribute/Binder.hpp` crée et
+  publie un VBO ; aucun glDeleteBuffers n'a été trouvé dans ARTIST/include lors
+  de leur enquête. Attribute a destructeur/moves par défaut. Ce constat ne décide
+  pas encore qui doit supprimer le nom, quand ni sous quel contexte.
+- Les Readers `pass/AttributeReader.hpp` et `pass/UniformReader.hpp` publient dans
+  leur boucle ; `PassContext::addAttribute/addUniform` remplace immédiatement
+  l'owner. Une publication partielle est déjà caractérisée par des tests.
+- `Uniform::set` stocke la valeur avant le Setter ; un refus de cardinalité peut
+  suivre. Le contrat ne promet actuellement pas partout un rollback CPU. Les
+  compatibilités ne se réduisent pas à l'égalité naïve de deux enums.
+- Les incidents shuffle Loader/ShaderLoader sont historiques, non reproduits sur
+  ce candidat pendant le cadrage. La lecture fichier Shader a déjà été corrigée :
+  ne pas la reproposer comme neuve.
 
-### Contrat de données et d'exécution
-
-- **Réflexion** : conserver type GLSL et cardinalité séparément ; location signée
-  validée avant conversion, `-1` refusé. Les noms doivent être restitués exactement,
-  ou refusés sans publication tronquée ; le buffer fixe de 256 octets ne constitue
-  pas une garantie. La réflexion décrit le programme réellement lié.
-- **Mémoire CPU** : traits fermés de `T` donnant composantes, scalaire GL et stride
-  vérifiés sur le layout. La liste canonique des alias GLM par défaut est figée
-  dans le contrat QA avant auteur ; variantes alignées/qualifiers alternatives
-  exclues tant que leur layout n'est pas prouvé. Ne pas accepter tout `T` arbitraire.
-- **Appels** : float → `glVertexAttribPointer` avec normalisation désactivée ;
-  entier signé/non signé → `glVertexAttribIPointer`. L'enum GLSL réfléchi ne passe
-  jamais directement comme type scalaire. La cardinalité shader n'est jamais le
-  nombre de composantes mémoire. Exemple : `(1, GL_FLOAT_VEC3)` → `(3, GL_FLOAT)`.
-- **Refus explicites** : matrices, arrays d'attributs, doubles, conteneurs,
-  structures arbitraires, conversions implicites/normalisées et mismatch CPU/GLSL.
-  Les tableaux réels restent refusés même si leur cardinalité active vaut 1 ;
-  l'oracle ne doit pas supposer que `size > 1` suffit à les identifier.
-- **Moment du refus** : un type C++ hors famille est rejeté au compile-time si le
-  contrat public le permet ; incompatibilité avec réflexion/type shader non
-  supporté refusée avant upload/configuration. Le Reader conserve la description
-  des formes shader non supportées ; on ne rejette pas le Pass entier pour cela.
-- **État initial** : ID buffer nul, métadonnées invalides tant que non préparées,
-  usage déterministe et documenté. Pas de lecture de membres indéterminés.
-- **Cible d'upload** : `set` cible explicitement le VBO enregistré par l'Attribute,
-  même si un autre VBO est lié depuis `bind`. Toutes les validations précèdent
-  cette mutation GL ; après succès, `GL_ARRAY_BUFFER` désigne le VBO cible. Pas de
-  gestionnaire global d'état ni de restauration implicite promise.
-- **Préconditions** : contexte OpenGL approprié et VAO valide courants, VBO cible
-  vivant. La preuve native doit respecter ces préconditions. Aucun lifetime du nom
-  natif ni emprunt après remplacement/relink n'est prolongé par cette correction.
-- **Stockage CPU** : `shared_ptr<T>` et freeze existants conservés ; la garantie
-  « pas de mutation GL au refus » n'invente pas de rollback transactionnel du
-  payload CPU déjà stocké par l'API. Toute modification de ce comportement exige
-  amendement et oracle dédiés.
-
-La proposition float seule a été écartée pour le cadrage : elle casserait les
-usages entiers existants au lieu de leur donner la voie GL correcte. Les choix
-ci-dessus sont soumis à l'approbation de la future mission, pas adoptés par ADR.
-
-### Binding times
-
-Traits/types/layout et sélection Pointer/IPointer au compile-time ; pas de nouvelle
-obligation C++ link-time. Réflexion et validation d'interface à la préparation
-runtime après link GLSL (distinct de l'édition de liens C++). VAO, buffer courant
-et données à uploader restent runtime. Aucun format cook ni asset dans un type.
+Ces constats sont des pistes à contractualiser, **pas des bugs reproduits par
+cette préparation**. GrepAI et Serena ont aidé les PM ; une recherche symbolique
+Loader vide a été complétée textuellement. La fiabilité exhaustive de leur analyse
+C++ sans base de compilation complète n'est pas démontrée.
 
 ### Hors périmètre
 
-- Correction lifetime VBO : investigation indépendante possible, pas de destructor
-  GL ajouté sans contrat de contexte courant, propriétaire et références VAO.
-- Support générique matrices/arrays/doubles ou variantes mémoire non prouvées ;
-  nouveaux backends, GL avancé ou refonte de tous les layouts/handles.
-- Reload atomique, handles générationnels, retirement GPU en vol, RAII exhaustive.
-- Gate fp64 Uniform sur appareils incompatibles, bugs Shuffle Loader/ShaderLoader.
-- Optimisation, benchmark, image de référence, Release et portage multi-OS.
-- Réparation générale du harness QA. La capacité de restitution reste toutefois
-  une précondition de départ, jamais une hypothèse tirée du nom d'un profil.
+Nouveaux backends, render graph, assets/cooker, handles générationnels, gestionnaire
+global de contexte, retraite GPU générale, RAII exhaustive, refonte de Pass::load
+implicitement transactionnel, support générique des types, perf/zero-cost, image
+de référence, portage OS et réparation générale du harness agentique.
+Pas de glFinish par Attribute pour masquer un contrat de complétion absent.
+Le nettoyage Shader avant publication, autre suggestion PM, reste une tranche
+distincte à préparer seulement si un RED causal est établi ; il n'est pas ajouté
+comme cinquième branche pour gonfler artificiellement le parallélisme.
 
-### Suite distincte à préparer après cette chaîne
+## K — Décisions à fermer avant auteurs
 
-Le VBO est le prochain sujet local de lifetime, pas un correctif concurrent.
-Son cadrage devra décider owner du nom natif, adoption/emprunt, release idempotent,
-move chargé→chargé et remplacement en map, contexte courant pendant teardown,
-références VAO et limites de suppression physique GPU. Si le teardown courant
-n'est pas garanti, concevoir la destruction différée séparément ; aucun `glFinish`
-par Attribute ni destructor GL improvisé. Les mêmes contextes/fixtures imposent
-une intégration séquentielle, sans bloquer la présente correction de données.
+Principal `engine-architect` ; renfort ressources seulement pour le ledger natif.
+Le spécialiste OpenGL reste `gpu-engineer` pour l'implémentation du backend.
 
-## Graphe d'exécution proposé — non publié
+1. **VBO :** owner/adoption/emprunt de setBufferID, rebind, release explicite ou
+   automatique, exact-once, move chargé→chargé, destruction/remplacement en map,
+   état moved-from, contexte/thread et cas sans contexte. Références VAO et
+   suppression logique ne prouvent pas une retraite physique GPU générale.
+2. **Réflexion :** atomicité par Reader ou Pass complet, ancien état conservé ou
+   effacé en échec, collection vide/noms disparus et moment d'invalidation des
+   emprunts. Tout changement de garantie publique requiert décision et oracle.
+3. **Uniform :** état CPU après rejet, matrice CPU/GLSL admise (bool/samplers/
+   entiers inclus), programme courant et doubles/extensions. Aucun élargissement
+   ni retrait silencieux du contrat existant.
+4. **Interactions :** responsabilité de PassContext lors du remplacement d'un
+   Attribute désormais owner VBO ; interfaces de métadonnées stables entre B/C.
+   Séparer les fichiers auteur, ou sérialiser la frontière si elle ne se ferme pas.
+5. **Dette Attribute-GL :** relever l'audit final encore ouvert ; établir avant
+   mutation un candidat et une baseline courants. Tout FAIL causal dans les mêmes
+   frontières est traité ou arbitré avant consommation, jamais absorbé par326PASS.
 
-Évaluation **PM/LLM**, scores sur 100, validés par le coordinateur. La complexité
-retenue de tout développement est `max(70, brute)` ; le risque reste distinct,
-jamais une probabilité de succès. Les lettres sont des repères locaux, pas des
-IDs Ensemble. Aucun choix de modèle imposé par ce plan. Le lead affine D après
-avis architecte ; les autres estimations PM sont conservées. Incertitudes : coût
-de migration des fixtures publiques et détection des formes réfléchies refusées.
+Le lead persiste les options et la décision humaine préalable sur ces garanties.
+Si elles imposent une architecture globale, K s'arrête et rend le problème au
+lead : long_run n'autorise pas une refonte silencieuse ni une décision produit.
 
-- **A — contrat** : `engine-architect`, complexité brute/retenue **58/58**, risque
-  **62**. Lecture seule, contexte fresh, sans worktree. Avis demandé pendant ce
-  cadrage ; avis reçu et intégré. Avant auteur, figer alias exacts et diagnostics
-  publics dans le contrat, sans réouvrir silencieusement les frontières retenues.
-- **V — investigation VBO distincte** : spécialiste ressources ou correctness,
-  **55/55**, risque **64**, lecture seule. Optionnelle ; peut être parallèle à A.
-  Aucun correctif ne rejoint cette mission sans nécessité causale et réévaluation.
-- **Q — plan QA** après A : `qa-planner`, **46/46**, risque **52**. Proposition
-  texte seulement, persistée et **committée par le lead avant worktree auteur**.
-- **D — auteur vertical TDD** après Q et barrière : `gpu-engineer` (OpenGL),
-  PM initial **68/70**, risque **71** ; réévaluation lead PM/LLM brute/retenue
-  **78/78**, risque **76**, pour les 12 formes, voie entière, validation Reader et
-  protection du buffer leurre désormais explicites. Un seul auteur pour Reader,
-  Setter, contexte concerné et tests ; contexte fresh, worktree isolé.
-- **G — generator de gaps** après intégration réelle de D : `test-engineer`,
-  **54/70**, risque **55**. Propositions tests uniquement ; production interdite,
-  persistance et exécution attribuées au lead. KEEP/MODIFY/REJECT/DEFER avec oracle.
-- **R — revue indépendante** après intégration de D : `correctness-reviewer`,
-  **57/57**, risque **65**, fresh, lecture seule ; parallèle à G.
-- **T — audit tests hors board d'implémentation** après intégration de G et des
-  corrections : `test-reviewer`, **53/53**, risque **60**, fresh ; scénario
-  discriminant avant finding haut, puis correction par propriétaire et ré-audit.
-- **F — vérification et clôture** : `rendering-verifier`, **56/56**, risque **64**,
-  fresh. Le coordinateur persiste la documentation et exécute les propositions QA.
+### Binding times
 
-Chemin critique : **A → Q → contrat/QA committés → D → intégration → G →
-intégration/corrections → T → clôture F**. R avance avec G ; après le candidat
-final, lecture de T et préparation de F peuvent être parallèles. Toute correction
-production invalide les conclusions affectées et exige requalification.
+Traits/layouts/dispatch connus par les types : compile-time. Réflexion et
+validation du programme réellement lié : préparation runtime après link GLSL.
+Identités GL, contexte/thread, valeurs, borrows et transitions d'owner : runtime.
+Aucun nouveau contrat cook ou link-time C++ n'est présumé.
 
-Un écrivain pour la chaîne couplée, un build par sortie, bail GPU exclusif pour
-les exécutions GL. Les lecteurs peuvent travailler en parallèle, pas deux builds
-ou runs partageant le contexte/fixtures. Les consommateurs de branches isolées
-restent dans le plan jusqu'au shutdown/merge, diff contrôlé et preuves accessibles.
+## Graphe exécutable à préparer, non publié
+
+Évaluation PM/LLM : **C brute→retenue / R** sur100, heuristiques indépendantes.
+Développement, code de tests et harness : C retenue=max(70,brute). Risque jamais
+modifié pour obtenir un modèle. Contexte fresh pour chaque fiche ; lecteurs RO
+sans worktree, auteurs isolés. Aucun modèle/provider/variante imposé par ce plan.
+Les références ci-dessous ne sont pas des IDs Ensemble.
+
+- **P — entrée documentaire**, lead, **30→30/35**. Archive réalisée et pointeur
+  proposé ; pas de scope moteur commencé. Docs canoniques hors ownership restent
+  intactes. Le HEAD intégré sera transmis à K/Q.
+- **K — contrats**, engine-architect RO, **76→76/78**. Ledger, états, erreurs,
+  alternatives et décisions ci-dessus, sans source modifiée. Puis validation lead/
+  humaine. Un contrat incompatible avec l'autonomie bloque les auteurs.
+- **Q — plan QA**, qa-planner RO, après K validé, **60→60/62**. Exigences
+  explicites/inférées, nominal/négatif, invariants, top3 risques, preuve↔obligation
+  et orphelins ; QA I×P(1–5), champs déclencheur/blast radius/détection/mitigation/
+  gap pour tout produit≥10. Lead persiste et commit avant TOUT auteur.
+- **M — éventuelles entrées mock communes**, cpp-engineer, **45→70/58**
+  (provision lead pour résoudre un conflit d'ownership détecté entre les plans).
+  Seulement après K/Q committés ; propriétaire unique de
+  `ARTIST/tests/mock/opengl/glFunctionMock.hpp` si une extension est nécessaire.
+  RED/GREEN local au double, comportements historiques préservés ; pas le RED
+  métier des auteurs. Borner/réévaluer cette fiche après K ; si inutile, pas de
+  tâche factice. Intégrer M avant ses consommateurs, pas en parallèle avec eux.
+- **A — cycle VBO**, gpu-engineer, **82→82/86**. Seul propriétaire de
+  `graphic/pipeline/Attribute.hpp`, contexte Attribute, composants `attribute/`,
+  tests Attribute associés et nouveau fichier GL lifetime. Pas de PassContext,
+  Uniform, Readers ou mock commun. RED exact-once/move/rebind/release selon K,
+  GREEN minimal et régression des12formes/Pointer/IPointer/VBO propre.
+- **B — publication réflexion**, cpp-engineer distinct, **78→78/80**. Seul
+  propriétaire de `context/PassContext.hpp`, Readers `pass/AttributeReader.hpp`
+  et `pass/UniformReader.hpp`, tests Readers et fichier d'intégration dédié.
+  Pas de contexte Attribute/Uniform ni de mock commun. RED première entrée valide
+  puis seconde invalide avec ancien état identifiable ; succès/échec/vide/noms
+  disparus selon K. Ne pas affaiblir le test de publication historique : tout
+  changement est un amendement explicite de contrat.
+- **C — refus Uniform**, autre cpp-engineer, **68→70/72**. Seul propriétaire de
+  `pipeline/Uniform.hpp`, contexte Uniform, `uniform/Setter.hpp`, tests de valeurs/
+  cardinalité/compatibilité et nouveau fichier GL dédié. Pas de Reader ni de mock
+  commun. RED via API publique, ancienne valeur observée selon la garantie K,
+  zéro upload au refus ; succès par famille réellement autorisée.
+- **H — isolation fixtures**, build-engineer, **56→70/55**. Seulement les deux
+  `ARTIST/tests/src/graphic/opengl/pipeline/component/pass/LoaderTests.cpp` et
+  `ARTIST/tests/src/graphic/opengl/pipeline/component/shader/LoaderTests.cpp`,
+  et helper neuf local si nécessaire. Chemins confirmés sur disque pendant ce
+  cadrage. Pas de Loader production, CMake ou
+  mock global. Seeds historiques et permutations inversées sur candidat identifié,
+  contrôle négatif conservé ; sinon caractérisation sans patch artificiel.
+- **I — intégration et interactions**, lead avec propriétaires, **64→70/76**.
+  A/B/C/H réellement shutdown/merge, diff relu puis tests croisés remplacement
+  VBO/réflexion et Uniform réfléchi/upload. Tout code de résolution retourne à son
+  owner ; toute nouvelle fixture ou adaptation reçoit ownership et tranche TDD.
+- **G — gaps**, test-engineer RO, après I, **58→58/60**. Propositions texte avec
+  oracles et KEEP/MODIFY/REJECT/DEFER ; pas de production ni runner autonome.
+  Il complète les auteurs, ne fournit pas leur RED. Le lead persiste et exécute.
+- **F — correction des gaps acceptés**, provision **62→70/65** pour code de test.
+  Ne pas publier une tâche générique : chemins, owner et scores réévalués sur les
+  vrais gaps de G ; correction production renvoyée à A/B/C/H. Nouvelle intégration.
+- **R — revue lifetime**, correctness-reviewer fresh RO, après I,
+  **66→66/78** (estimation PM indépendant). Parallèle à G ; findings corrigés par
+  propriétaires, invalidation des conclusions affectées après mutation.
+- **V — audit final**, test-reviewer fresh HORS board d'implémentation,
+  **70→70/77**. Candidat final intégré, contrat et preuves seulement, pas les
+  justifications auteur. Scénario discriminant avant finding haut, puis retour
+  propriétaire/réintégration/ré-audit. Rendering-verifier en renfort si une preuve
+  GPU reste ambiguë ; pas de nouveau coordinateur.
+
+```text
+P → K → décisions → Q → commit contrats/QA → [M intégré si nécessaire]
+                                           ↓
+                                     A || B || C || H
+                                           ↓
+                                   I → G || R → corrections bornées
+                                           ↓
+                                  candidat final intégré → V fresh
+                                           ↓
+                                  validation lead → documentation
+```
+
+La rédaction P est indépendante des investigations K. A/B/C/H sont parallèles
+seulement après gel des interfaces et intégration des entrées communes. Si le
+contrat révèle un fichier commun restant, un seul owner et une nouvelle barrière.
+Le lead garde les consommateurs hors board jusqu'aux vraies intégrations ; pas
+de tâche factice d'intégration, pas de dépendance sur la simple fin d'auteur.
+
+## Exécution autonome et ressources
+
+Une fois les contrats, QA et politique approuvés, le coordinateur peut enchaîner
+les tâches prêtes, corrections bornées et validations sans redemander chaque
+détail local. Escalade obligatoire pour contrat/portée ouverts, accès manquant,
+préférence modèle différente, FAIL critique ou deux essais sans information
+nouvelle. Healer QA au plus deux réparations ; bug production reste rouge.
+Une pause opérateur exige son GO distinct ; long_run n'autorise pas à la lever.
+
+Un écrivain par fichier. Les écritures A/B/C/H sont parallèles ; les builds sont
+sérialisés par arbre de sortie, même si les auteurs sont indépendants. Un seul
+bail GPU/campagne GL ; processus partageant fixtures/singleton mock sérialisés.
+Un indexeur QMD canonique, lead runner pour les propositions QA. Pas de mélange
+des preuves de branches ni d'arrêt d'une ressource externe au lot.
 
 ## Preuves et conditions de sortie
 
-- Plan QA obligatoire (comportement sous contrat et risque PM ≥ 50) : exigences
-  explicites/inférées, nominal/négatif, invariants, top 3 risques, registre
-  exigences ↔ preuves, setup puis 70–80 % planifiés et 20–30 % buffer.
-- Risque QA = impact × probabilité (1–5) ; pour chaque produit ≥ 10 : déclencheur,
-  blast radius, détection, mitigation et gap. Ce produit ne modifie pas la grille PM.
-- RED causal avant production sur toolchain/contexte fonctionnels ; absence de
-  contexte ou zéro test découvert = INCONCLUSIVE, jamais RED.
-- GREEN minimal puis refactoring/non-régression sur le diff intégré. Tests CPU
-  des arguments/rejets et preuve GL réelle du contrat retenu ; mocks ≠ rendu.
-- Oracles indispensables : vraie réflexion `vec3` → composantes/type corrects ;
-  signed/unsigned → IPointer ; mismatch et formes refusées sans appel d'upload/
-  configuration ; location invalide et nom non tronqué ; VBO leurre intact malgré
-  liaison intercalée. Vérifier le VAO et une valeur réellement consommée par un
-  shader (readback ou capture numérique contrôlée), pas seulement `GL_NO_ERROR`.
-- Matrice des 12 formes : oracles CPU exhaustifs et cas natifs couvrant chaque
-  forme retenue. Toute case native non exécutée reste INCONCLUSIVE, pas couverte
-  par analogie avec `vec3`. Fixtures RAII de test nettoyant VAO/VBO même après ASSERT.
-- Identité candidat, commandes, comptages, skips, erreurs GL et artefacts conservés.
-  Suite native finale non vide, findings résolus ou explicitement arbitrés.
-- ASan à définir séparément avec préflight et périmètre ; aucun héritage du PASS
-  historique. Pas de performance ni d'équivalence visuelle déduite des tests CPU.
+Avant tests, charger artist-build-validation et vérifier les préconditions réelles.
+Commandes futures à adapter au build identifié, non exécutées pour ce cadrage :
 
-## Préconditions humaines et documentaires
+```text
+scripts/build-windows.ps1 -Configuration Debug -TestLabel unit -Jobs 1
+ctest --test-dir <build> -C Debug -N --show-only=json-v1
+ctest --test-dir <build> -C Debug -L unit --no-tests=error --output-on-failure --parallel 1
+ctest --test-dir <build> -C Debug -L opengl --no-tests=error --output-on-failure --parallel 1
+```
 
-1. Présenter les choix de contrat ci-dessus (12 formes, rejet à l'utilisation,
-   setter autonome ciblant son VBO) et figer diagnostics/alias dans le plan QA.
-   Si la migration devient une refonte large, revenir à une révision du périmètre,
-   pas ajouter implicitement une seconde mission au correctif.
-2. Vérifier un canal de restitution QA autorisé. Un texte local BLOCKED non livré
-   au lead n'est pas un livrable ; ne pas contourner les permissions par execute.
-3. Préparer une **nouvelle mission native**, présenter sa politique avec
-   `/ensemble-mission config`, puis attendre `/ensemble-mission start` de
-   l'utilisateur. La politique F7 v3 n'est pas automatiquement celle de la suivante.
-4. Avant publication future : contexte explicite, deux scores, affinités et vrais
-   IDs des producteurs intégrés. Aucun travail auteur pendant ce cadrage.
+Reconfigurer après ajout de sources, vérifier découverte non nulle et nouveaux
+tests présents ; shuffle sur le binaire unit identifié. ASan seulement après
+préflight, arbre séparé, canari et sélection documentés ; absence de preuve reste
+INCONCLUSIVE, sans héritage du résultat historique. Ne pas supprimer une erreur
+de production en corrigeant une fixture ni ajouter de sonde de conformité driver.
 
-Statuts conservés : ADR-0003 **Accepted/partial**, ADR-0005 **Accepted/partial**,
-ADR-0008 vérifié Windows Debug seulement ; ADR-0001/0002/0004/0006/0007 **Proposed**.
-Aucun ADR-0009 créé. Voir [[adr/README|le registre]].
+RED causal de chaque branche avant implémentation, GREEN minimal puis refactor/
+non-régression ; environnement indisponible et zéro test ne sont jamais RED/PASS.
+Mocks prouvent arguments/absence d'appels ; GL réel prouve les obligations natives
+retenues. glIsBuffer seul ne prouve ni ownership exact-once ni retraite physique.
+Tous les cas création/release/move/remplacement, échec tardif de réflexion et refus
+Uniform du contrat K/Q ont un verdict attribué au candidat final. Rapport : HEAD,
+delta/hashes, commandes, environnement, comptages, skips et limites. Aucun PASS
+global tant qu'un critère requis est FAIL ou INCONCLUSIVE.
 
-## Sources et limites de l'enquête
+### Budget proposé, pas durée promise
 
-QMD limité à `artist-wiki` avec intent explicite ; notes récupérées après recherche.
-GrepAI utilisé pour localiser création/destruction VBO et chemin Attribute/Uniform ;
-Serena initialisé sur la racine ARTIST pour inspecter symboles et stockage.
-Les aperçus de templates ne suffisent pas : des lectures ciblées ont complété
-les résultats. Une trace vide n'est pas une preuve d'absence de consommateur.
-Les limites d'analyse C++ sans base de compilation fiable restent applicables.
+PM principal : setup5–9 h-personnes ; travail productif32–50 h-personnes ;
+buffer11–17 h supplémentaires, soit environ75% planifié/25% buffer après setup.
+Ces nombres ne sont ni un SLA ni une durée murale ; les runs GPU/build et le
+chemin K→Q→A/B→I limitent le gain du parallélisme. Réévaluer après K et M ;
+ne pas consommer le buffer pour élargir la portée. Couper le confort avant un
+oracle haut risque et ne jamais financer une branche sans cause établie.
 
-Rapport préparatoire PM : session `ses_eb1699079ffei4DLWxA1yJbmZa` ; architecte :
-`ses_eb169af2fffe3mnb4B0YRJVBSd`. Deux analyses en lecture seule, sans tests ni
-modification. Le coordinateur retient une seule des deux tranches architecte
-pour la mission immédiate, conformément au bornage PM ; le lifetime VBO est séparé.
+## Adoption et démarrage futurs
+
+Le lead retient ce candidat large du PM principal. L'avis indépendant privilégiait
+un lot VBO+nettoyage Shader plus étroit ; sa réserve est conservée : si K ne peut
+fermer réflexion/Uniform sans refonte globale, réduire au cycle VBO et rendre les
+autres garanties au décideur, plutôt que poursuivre implicitement.
+
+La présente demande autorise **la préparation documentaire seulement**. Préparer
+une nouvelle mission native avec cet objectif, puis demander à l'utilisateur :
+`/ensemble-mission config --mission-mode long_run`, présentation config de la
+politique complète et `/ensemble-mission start`. Ne pas invoquer start à sa place,
+réutiliser l'approbation de l'ingestion ou choisir des modèles hors grille.
+Avant publication future : require_context, deux scores, affinités et vrais IDs
+des producteurs intégrés ; aucune classification JEV sans choix explicite.
+
+ADR0003/0005 Accepted/partial,0008 Windows Debug seulement ;0001/2/4/6/7 Proposed.
+K doit adopter explicitement toute garantie nouvelle sans promouvoir les ADR
+globaux par accident. Voir [[adr/README|le registre]] et
+[[architecture/correction-plan|l'ordre de correction]], dont le pointeur Attribute
+antérieur reste un état documentaire historique, non corrigé dans un dirty externe.
