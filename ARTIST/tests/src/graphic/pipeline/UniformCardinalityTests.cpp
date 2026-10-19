@@ -18,7 +18,19 @@ namespace
     class UniformCardinalityTest : public ::testing::Test
     {
     protected:
-        void TearDown() override { Mock::reset(); }
+        void SetUp() override
+        {
+            auto &gl = *Mock::instance();
+            gl.resetContractState();
+            gl.configureCurrentContext(reinterpret_cast<GLFWwindow *>(this));
+            gl.configureCurrentProgram(7);
+            gl.configureFp64(true, false, true);
+        }
+        void TearDown() override
+        {
+            Mock::reset();
+            Mock::instance()->resetContractState();
+        }
     };
 
     template <typename T>

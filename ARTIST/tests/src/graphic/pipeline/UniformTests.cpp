@@ -18,9 +18,19 @@ namespace mock = artist::mock::opengl;
 class UniformTest : public ::testing::Test
 {
 public:
+    void SetUp() override
+    {
+        auto &gl = *mock::glFunctionMock::instance();
+        gl.resetContractState();
+        gl.configureCurrentContext(reinterpret_cast<GLFWwindow *>(this));
+        gl.configureCurrentProgram(7);
+        gl.configureFp64(true, false, true);
+    }
+
     void TearDown() override
     {
         mock::glFunctionMock::reset();
+        mock::glFunctionMock::instance()->resetContractState();
     }
 };
 

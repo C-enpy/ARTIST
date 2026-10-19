@@ -31,6 +31,18 @@ namespace artist::graphic
                 return m_uniformId;
             }
 
+            // Borrowed program name, not ownership. Zero keeps the manual path;
+            // reflected bindings must be replaced when their program is reloaded.
+            void setProgramID(GLuint programId)
+            {
+                m_programId = programId;
+            }
+
+            GLuint getProgramID() const
+            {
+                return m_programId;
+            }
+
             void setGLType(GLenum type)
             {
                 m_type = type;
@@ -53,6 +65,7 @@ namespace artist::graphic
 
         private:
             GLuint m_uniformId = 0; ///< OpenGL uniform location; not validated here.
+            GLuint m_programId = 0; ///< Known owner program, or zero for manual bindings.
             GLuint m_size = 1;      ///< Single-value default; reflection may report arrays.
             GLenum m_type = 0;      ///< The type of the uniform variable.
         };

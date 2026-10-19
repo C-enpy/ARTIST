@@ -87,11 +87,22 @@ namespace artist::graphic::pipeline
         template <typename T>
         void set(const T &value)
         {
-            if constexpr (graphic::validator::HasComponent<typename API::UniformContext::template Setter<T>>)
+            using Context = typename API::UniformContext;
+            using Setter = typename Context::template Setter<T>;
+            if constexpr (graphic::validator::HasBorrowedOnMethod<Setter, Context>)
             {
                 auto &context = ctx();
+                // API-specific deterministic refusals precede the CPU commit.
+                // Components without a prevalidation hook retain their existing
+                // borrowed on(C&) contract (e.g. the ownership-only mock API).
+                if constexpr (requires { { Setter::validate(context) } -> std::same_as<void>; })
+                {
+                    Setter::validate(context);
+                }
                 context.template setValue<T>(value);
-                API::UniformContext::template Setter<T>::on(context);
+                // on remains defensive for direct callers. OpenGL therefore
+                // repeats its guards; no unchecked upload entry point is exposed.
+                Setter::on(context);
             }
             else
             {
@@ -106,7 +117,9 @@ namespace artist::graphic::pipeline
          * by the API-specific Uniform class, which provides the necessary context for
          * getting the value.
          *
-         * @return The value of the uniform variable.
+         * @return A borrowed value. A successful set or replacement/destruction
+         * of the context invalidates this reference. OpenGL's prevalidated
+         * deterministic refusals leave it intact.
          */
         template <typename T>
         const T &get() const

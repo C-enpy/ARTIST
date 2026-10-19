@@ -68,10 +68,21 @@ TEST_F(PassTest, PassCreationTest)
 
 TEST_F(PassTest, UniformManagementTest)
 {
+    // GLEW initialization is outside this operation's error interval.
+    while (glGetError() != GL_NO_ERROR) {}
     auto pass = makeClassicPass(std::move(vertexShader), std::move(fragmentShader));
     pass.load();
+    struct UnbindProgram
+    {
+        ~UnbindProgram() { glUseProgram(0); }
+    } unbind;
+    pass.use();
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    ASSERT_EQ(static_cast<GLuint>(current), pass.getContext().getPassID());
+    ASSERT_EQ(glGetError(), GL_NO_ERROR);
 
-    float testValue = 5.0f;
+    GLint testValue = 5;
 
     ASSERT_NO_THROW(pass.withUniform("testUniform", testValue));
 
@@ -79,7 +90,14 @@ TEST_F(PassTest, UniformManagementTest)
     ASSERT_TRUE(uniforms.contains("testUniform"));
     const auto &uniform = uniforms.at("testUniform");
     ASSERT_NE(uniform, nullptr);
-    ASSERT_EQ(uniform->get<float>(), testValue);
+    ASSERT_EQ(uniform->getContext().getGLType(), GL_INT);
+    ASSERT_EQ(uniform->get<GLint>(), testValue);
+    const GLint location = glGetUniformLocation(pass.getContext().getPassID(), "testUniform");
+    ASSERT_GE(location, 0);
+    GLint actual = 0;
+    glGetUniformiv(pass.getContext().getPassID(), location, &actual);
+    EXPECT_EQ(actual, testValue);
+    EXPECT_EQ(glGetError(), GL_NO_ERROR);
 }
 
 TEST_F(PassTest, InvalidUniformTest)

@@ -173,7 +173,16 @@ TEST_F(UniformCardinalityComponentTest, ReflectedArrayRejectsSingleValueWithoutC
         EXPECT_NE(message.find("ERROR::UNIFORM::SET::ARRAY_NOT_SUPPORTED"), std::string::npos);
         EXPECT_NE(message.find("size=2"), std::string::npos);
     }
-    // GPU non-alteration only: Uniform::set still stores its std::any before dispatch.
+    // The rejected public set must not publish a CPU value either.
+    try
+    {
+        (void)pass.getUniforms().at("f2Array[0]")->get<glm::vec3>();
+        FAIL() << "expected uninitialized CPU value after array rejection";
+    }
+    catch (const TraceableException<std::runtime_error> &error)
+    {
+        EXPECT_NE(std::string(error.what()).find("UNINITIALIZED"), std::string::npos);
+    }
     readBoth();
 }
 
@@ -183,7 +192,7 @@ TEST_F(UniformCardinalityComponentTest, DoubleSingleValuesReadBackWhenFp64IsAvai
     std::cout << "[F2 fp64] Uniform1d=" << bool(glUniform1d)
         << " Uniform3dv=" << bool(glUniform3dv) << " Matrix2dv=" << bool(glUniformMatrix2dv)
         << " GetUniformdv=" << bool(glGetUniformdv) << '\n';
-    if (!GLEW_ARB_gpu_shader_fp64 || !glUniform1d || !glUniform3dv || !glUniformMatrix2dv || !glGetUniformdv)
+    if (!(GLEW_VERSION_4_0 || GLEW_ARB_gpu_shader_fp64) || !glUniform1d || !glUniform3dv || !glUniformMatrix2dv || !glGetUniformdv)
         GTEST_SKIP() << "INCONCLUSIVE native fp64: extension/entry points unavailable";
     ContextWitness witness{window};
     auto pass = loadedPass("test-datas/shaders/vertex/good/f2-fp64-single-values.vert");
