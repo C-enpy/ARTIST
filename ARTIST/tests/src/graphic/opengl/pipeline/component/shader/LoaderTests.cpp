@@ -124,10 +124,13 @@ TEST_F(ShaderLoaderTests, LoadShaderFailureTest)
     auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
     shaderContext->setShaderType(artist::graphic::context::ShaderType::VERTEX);
 
-    // Set mock behavior for shader compilation failure
-    ON_CALL(*mock::opengl::glFunctionMock::instance(), glGetShaderiv_mock(1, GL_COMPILE_STATUS, ::testing::_))
-        .WillByDefault(::testing::Invoke([](GLuint shader, GLenum pname, GLint *params)
-                                         { *params = GL_FALSE; }));
+    // Keep the forced failure local to this test; reset() clears expectations only.
+    EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glGetShaderiv_mock(1, GL_COMPILE_STATUS, ::testing::_))
+        .Times(1)
+        .WillOnce(::testing::SetArgPointee<2>(GL_FALSE));
+    EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glGetShaderiv_mock(1, GL_INFO_LOG_LENGTH, ::testing::_))
+        .Times(1)
+        .WillOnce(::testing::SetArgPointee<2>(1));
 
     // Expect calls with failure behavior
     EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glGetShaderInfoLog_mock(1, ::testing::_, ::testing::_, ::testing::_)).Times(1);
