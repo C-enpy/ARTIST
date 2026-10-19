@@ -139,8 +139,95 @@ TEST_F(AttributeReaderTests, FaultInjection_DuplicateNameDoesNotReplaceFirstBorr
         .WillRepeatedly(::testing::Return(2));
     expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
         artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::DUPLICATE_NAME"));
+    EXPECT_TRUE(openglContext->getAttributes().empty());
+}
+
+TEST_F(AttributeReaderTests, FaultInjection_DuplicateNamePreservesPreviousGeneration)
+{
+    openglContext->setPassID(1);
+    reflectedInput("duplicate", 2, 7, GL_INT);
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    auto *old = openglContext->getAttribute("duplicate");
+    const auto value = std::make_shared<GLint>(42);
+    old->getContext().setValue(value);
+    mock::opengl::glFunctionMock::reset();
+
+    reflectedInput("duplicate", 3, 2, GL_FLOAT, 2);
+    expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::DUPLICATE_NAME"));
     ASSERT_EQ(openglContext->getAttributes().size(), 1u);
-    EXPECT_EQ(openglContext->getAttribute("duplicate")->getContext().getAttributeID(), 0u);
+    ASSERT_EQ(openglContext->getAttribute("duplicate"), old);
+    EXPECT_EQ(old->getContext().getAttributeID(), 7u);
+    EXPECT_EQ(old->getContext().getGLSize(), 2u);
+    EXPECT_EQ(old->getContext().getGLType(), static_cast<GLenum>(GL_INT));
+    EXPECT_EQ(old->getContext().getValue<GLint>(), value);
+}
+
+TEST_F(AttributeReaderTests, ReadAttributes_LateInvalidLocationKeepsPreviousBorrow)
+{
+    openglContext->setPassID(1);
+    reflectedInput("old", 1, 7, GL_INT);
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    auto *old = openglContext->getAttribute("old");
+    mock::opengl::glFunctionMock::reset();
+
+    reflectedInput("new", 1, 0, GL_FLOAT, 2);
+    EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glGetAttribLocation_mock(1, ::testing::_))
+        .WillOnce(::testing::Return(0)).WillOnce(::testing::Return(-1));
+    expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_LOCATION"));
+    ASSERT_EQ(openglContext->getAttributes().size(), 1u);
+    EXPECT_EQ(openglContext->getAttribute("old"), old);
+    EXPECT_EQ(openglContext->getAttribute("new"), nullptr);
+}
+
+TEST_F(AttributeReaderTests, ReadAttributes_SuccessRetiresMissingNamesAndOldValues)
+{
+    openglContext->setPassID(1);
+    reflectedInput("obsolete");
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    auto value = std::make_shared<GLint>(37);
+    std::weak_ptr<GLint> oldValue = value;
+    openglContext->getAttribute("obsolete")->getContext().setValue(value);
+    value.reset();
+    mock::opengl::glFunctionMock::reset();
+    reflectedInput("new", 1, 2);
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    ASSERT_EQ(openglContext->getAttributes().size(), 1u);
+    EXPECT_EQ(openglContext->getAttribute("obsolete"), nullptr);
+    ASSERT_NE(openglContext->getAttribute("new"), nullptr);
+    EXPECT_EQ(openglContext->getAttribute("new")->getContext().getAttributeID(), 2u);
+    EXPECT_TRUE(oldValue.expired());
+}
+
+TEST_F(AttributeReaderTests, ReadAttributes_ZeroCountCommitsEmptyGeneration)
+{
+    openglContext->setPassID(1);
+    reflectedInput("obsolete");
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    mock::opengl::glFunctionMock::reset();
+    EXPECT_CALL(*mock::opengl::glFunctionMock::instance(), glGetProgramiv_mock(1, GL_ACTIVE_ATTRIBUTES, ::testing::_))
+        .WillOnce(::testing::SetArgPointee<2>(0));
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    EXPECT_TRUE(openglContext->getAttributes().empty());
+}
+
+TEST_F(AttributeReaderTests, ReadAttributes_NegativeCountRejectsBeforeNameQueryAndKeepsBorrow)
+{
+    openglContext->setPassID(1);
+    reflectedInput("old");
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    auto *old = openglContext->getAttribute("old");
+    mock::opengl::glFunctionMock::reset();
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_ATTRIBUTES, ::testing::_))
+        .WillOnce(::testing::SetArgPointee<2>(-1));
+    EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, ::testing::_)).Times(0);
+    EXPECT_CALL(gl, glGetActiveAttrib_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+    expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_COUNT"));
+    ASSERT_EQ(openglContext->getAttributes().size(), 1u);
+    EXPECT_EQ(openglContext->getAttribute("old"), old);
 }
 
 TEST_F(AttributeReaderTests, NewReflectionInvocationMayReplaceExistingName)

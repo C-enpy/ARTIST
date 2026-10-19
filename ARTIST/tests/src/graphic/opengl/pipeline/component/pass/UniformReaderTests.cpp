@@ -143,8 +143,30 @@ TEST_F(UniformReaderTests, ReadUniforms_DuplicateNameIsRejectedWithoutReplacemen
     reflect({"duplicateUniform", "duplicateUniform"});
     expectSpecificError([&] { pass::OpenGLPassUniformReader<Classic>::on(passContext); },
         artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::DUPLICATE_NAME"));
-    ASSERT_EQ(passContext.getUniforms().size(), 1);
-    EXPECT_EQ(passContext.getUniforms().at("duplicateUniform")->getContext().getUniformID(), 7u);
+    EXPECT_TRUE(passContext.getUniforms().empty());
+}
+
+TEST_F(UniformReaderTests, ReadUniforms_DuplicateNamePreservesPreviousGeneration)
+{
+    context::OpenGLPassContext passContext;
+    passContext.setPassID(1);
+    reflect({"duplicateUniform", "oldUniform"}, false, 2);
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
+    auto *old = passContext.getUniform("duplicateUniform");
+    auto *other = passContext.getUniform("oldUniform");
+    const auto value = std::make_shared<GLint>(42);
+    old->getContext().setValue(value);
+    mock::opengl::glFunctionMock::reset();
+
+    reflect({"duplicateUniform", "duplicateUniform"}, false, 3);
+    expectSpecificError([&] { pass::OpenGLPassUniformReader<Classic>::on(passContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::DUPLICATE_NAME"));
+    ASSERT_EQ(passContext.getUniforms().size(), 2u);
+    ASSERT_EQ(passContext.getUniform("duplicateUniform"), old);
+    EXPECT_EQ(passContext.getUniform("oldUniform"), other);
+    EXPECT_EQ(old->getContext().getGLSize(), 2u);
+    EXPECT_EQ(old->getContext().getGLType(), static_cast<GLenum>(GL_INT));
+    EXPECT_EQ(old->getContext().getValue<std::shared_ptr<GLint>>(), value);
 }
 
 TEST_F(UniformReaderTests, ReadUniforms_NewReflectionMayReplacePreviousGeneration)
@@ -170,7 +192,7 @@ TEST_F(UniformReaderTests, ReadUniforms_ReflectedArraySizeIsStored)
     EXPECT_EQ(passContext.getUniforms().at("arrayUniform[0]")->getContext().getGLSize(), 2u);
 }
 
-/// Characterization only: a failed reflection is not an atomic generation swap.
+/// K2 supersedes the historical prefix-publication characterization.
 TEST_F(UniformReaderTests, ReadUniforms_LateFailureKeepsPublishedPrefixAndPreviousEntries)
 {
     context::OpenGLPassContext passContext;
@@ -179,6 +201,9 @@ TEST_F(UniformReaderTests, ReadUniforms_LateFailureKeepsPublishedPrefixAndPrevio
     ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
     ASSERT_EQ(2u, passContext.getUniforms().size());
     const auto *staleUniform = passContext.getUniforms().at("staleUniform").get();
+    const auto *reloadedUniform = passContext.getUniform("reloadedUniform");
+    const auto value = std::make_shared<GLint>(19);
+    reloadedUniform->getContext().setValue(value);
     ASSERT_EQ(2u, passContext.getUniforms().at("reloadedUniform")->getContext().getGLSize());
     mock::opengl::glFunctionMock::reset();
 
@@ -192,7 +217,63 @@ TEST_F(UniformReaderTests, ReadUniforms_LateFailureKeepsPublishedPrefixAndPrevio
     ASSERT_TRUE(passContext.getUniforms().contains("reloadedUniform"));
     EXPECT_EQ(staleUniform, passContext.getUniforms().at("staleUniform").get());
     EXPECT_EQ(2u, passContext.getUniforms().at("staleUniform")->getContext().getGLSize());
-    EXPECT_EQ(3u, passContext.getUniforms().at("reloadedUniform")->getContext().getGLSize());
+    ASSERT_EQ(reloadedUniform, passContext.getUniform("reloadedUniform"));
+    EXPECT_EQ(2u, reloadedUniform->getContext().getGLSize());
+    EXPECT_EQ(reloadedUniform->getContext().getGLType(), static_cast<GLenum>(GL_INT));
+    EXPECT_EQ(reloadedUniform->getContext().getValue<std::shared_ptr<GLint>>(), value);
+}
+
+TEST_F(UniformReaderTests, ReadUniforms_SuccessRetiresMissingNamesAndOldValues)
+{
+    context::OpenGLPassContext passContext;
+    passContext.setPassID(1);
+    reflect({"obsolete", "reloaded"});
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
+    auto value = std::make_shared<GLint>(37);
+    std::weak_ptr<GLint> oldValue = value;
+    passContext.getUniform("reloaded")->getContext().setValue(value);
+    value.reset();
+    mock::opengl::glFunctionMock::reset();
+
+    reflect({"reloaded"}, false, 3);
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
+    ASSERT_EQ(passContext.getUniforms().size(), 1u);
+    EXPECT_EQ(passContext.getUniform("obsolete"), nullptr);
+    EXPECT_TRUE(oldValue.expired());
+    ASSERT_NE(passContext.getUniform("reloaded"), nullptr);
+    EXPECT_EQ(passContext.getUniform("reloaded")->getContext().getGLSize(), 3u);
+    EXPECT_EQ(passContext.getUniform("reloaded")->getContext().getProgramID(), 1u);
+}
+
+TEST_F(UniformReaderTests, ReadUniforms_ZeroCountCommitsEmptyGeneration)
+{
+    context::OpenGLPassContext passContext;
+    passContext.setPassID(1);
+    reflect({"obsolete"});
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
+    mock::opengl::glFunctionMock::reset();
+    reflect({});
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
+    EXPECT_TRUE(passContext.getUniforms().empty());
+}
+
+TEST_F(UniformReaderTests, ReadUniforms_NegativeCountRejectsBeforeNameQueryAndKeepsBorrow)
+{
+    context::OpenGLPassContext passContext;
+    passContext.setPassID(1);
+    reflect({"old"});
+    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
+    auto *old = passContext.getUniform("old");
+    mock::opengl::glFunctionMock::reset();
+    auto &gl = *mock::opengl::glFunctionMock::instance();
+    EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_UNIFORMS, ::testing::_))
+        .WillOnce(::testing::SetArgPointee<2>(-1));
+    EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_UNIFORM_MAX_LENGTH, ::testing::_)).Times(0);
+    EXPECT_CALL(gl, glGetActiveUniform_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+    expectSpecificError([&] { pass::OpenGLPassUniformReader<Classic>::on(passContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::INVALID_COUNT"));
+    ASSERT_EQ(passContext.getUniforms().size(), 1u);
+    EXPECT_EQ(passContext.getUniform("old"), old);
 }
 
 class UniformReaderInvalidSizeTests : public UniformReaderTests,
