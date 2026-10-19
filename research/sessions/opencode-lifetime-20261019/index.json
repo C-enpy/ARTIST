@@ -1,0 +1,317 @@
+{
+  "exported": "2026-10-19T11:41:56.591Z",
+  "source_db": "opencode.db (copie du 2026-10-19T11:41:56.591Z)",
+  "main_session": "ses_eace2b30bffd3si1XqGDa0rysS",
+  "sessions": [
+    {
+      "session": "ses_eacea7ee9ffdJ6glP3t5iNOc95",
+      "title": "Préparer mission ARTIST selon le cycle Ensemble natif",
+      "agent": "orchestrator",
+      "messages": 10,
+      "bytes": 104250,
+      "file": "eacea7ee-Préparer mission ARTIST selon le cycle Ensemble natif.md",
+      "parent": "",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eace9372affeVmG65TfK8MtKUE",
+      "title": "Valider le plan mission OpenGL",
+      "agent": "project-manager",
+      "messages": 10,
+      "bytes": 137197,
+      "file": "eace9372-Valider le plan mission OpenGL.md",
+      "parent": "ses_eacea7ee9ffdJ6glP3t5iNOc95",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eacf31fbaffeam2skOnm89Pi66",
+      "title": "Cadrer mission long run",
+      "agent": "project-manager",
+      "messages": 48,
+      "bytes": 283164,
+      "file": "eacf31fb-Cadrer mission long run.md",
+      "parent": "ses_eafec5e55ffeHMWez0TpwA43NM",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eacf2ea5affeBDZfFmS3E05oRl",
+      "title": "Évaluer alternatives parallélisables",
+      "agent": "project-manager",
+      "messages": 22,
+      "bytes": 224853,
+      "file": "eacf2ea5-Évaluer alternatives parallélisables.md",
+      "parent": "ses_eafec5e55ffeHMWez0TpwA43NM",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "title": "OpenGL resource lifetime mission policy and plan review",
+      "agent": "orchestrator",
+      "messages": 507,
+      "bytes": 1953010,
+      "file": "eace2b30-OpenGL resource lifetime mission policy and plan review.md",
+      "parent": "",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eaccbff05ffeEN7c45Ef7ZU3Vs",
+      "title": "pool-1 (@engine-architect teammate)",
+      "agent": "engine-architect",
+      "messages": 54,
+      "bytes": 325948,
+      "file": "eaccbff0-pool-1 (@engine-architect teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eacb5bce3ffeXdUjqB7nRoNzC8",
+      "title": "pool-3 (@qa-planner teammate)",
+      "agent": "qa-planner",
+      "messages": 13,
+      "bytes": 255882,
+      "file": "eacb5bce-pool-3 (@qa-planner teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eacb1caa6ffeigcPcNnPxY2VPH",
+      "title": "pool-4 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 41,
+      "bytes": 206024,
+      "file": "eacb1caa-pool-4 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac9c8159ffeUPUYptBQ4ObHNE",
+      "title": "pool-6 (@gpu-engineer teammate)",
+      "agent": "gpu-engineer",
+      "messages": 41,
+      "bytes": 223093,
+      "file": "eac9c815-pool-6 (@gpu-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac9c7f16ffeQYaX9Bcy5DaYYt",
+      "title": "pool-7 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 36,
+      "bytes": 313118,
+      "file": "eac9c7f1-pool-7 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac9c7d68ffeOghNdG9VFPwOrr",
+      "title": "pool-8 (@build-engineer teammate)",
+      "agent": "build-engineer",
+      "messages": 37,
+      "bytes": 190630,
+      "file": "eac9c7d6-pool-8 (@build-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac817717ffe59RS0za3aqzn8F",
+      "title": "pool-12 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 36,
+      "bytes": 173049,
+      "file": "eac81771-pool-12 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac6687e7ffeCQeUwAv1YQKoDP",
+      "title": "pool-14 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 25,
+      "bytes": 135082,
+      "file": "eac6687e-pool-14 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac593e54ffesuMCB6VmI2t7Vo",
+      "title": "pool-16 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 38,
+      "bytes": 186356,
+      "file": "eac593e5-pool-16 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac4f0ff5ffeeErV1wQ6miNWx8",
+      "title": "pool-18 (@test-engineer teammate)",
+      "agent": "test-engineer",
+      "messages": 52,
+      "bytes": 714985,
+      "file": "eac4f0ff-pool-18 (@test-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac42b9aeffeZQmGT5WrdS0LFI",
+      "title": "pool-19 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 25,
+      "bytes": 207703,
+      "file": "eac42b9a-pool-19 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac373a89ffefcztSamGgHODIl",
+      "title": "pool-21 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 25,
+      "bytes": 159222,
+      "file": "eac373a8-pool-21 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac2feb98ffeH0AdrTFbFfWb6L",
+      "title": "pool-22 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 35,
+      "bytes": 131983,
+      "file": "eac2feb9-pool-22 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eac165f38ffecuL0Mo4WZnroYj",
+      "title": "pool-25 (@cpp-engineer teammate)",
+      "agent": "cpp-engineer",
+      "messages": 19,
+      "bytes": 177555,
+      "file": "eac165f3-pool-25 (@cpp-engineer teammate).md",
+      "parent": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "fork_of": ""
+    },
+    {
+      "session": "ses_eacc59811ffepcZr1QoG3IMZr3",
+      "title": "pool-1 (@engine-architect teammate) (fork #1)",
+      "agent": "engine-architect",
+      "messages": 107,
+      "bytes": 608424,
+      "file": "eacc5981-pool-1 (@engine-architect teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eaccbff05ffeEN7c45Ef7ZU3Vs"
+    },
+    {
+      "session": "ses_eacac17d3ffeNiBoJePwl36VYk",
+      "title": "pool-4 (@cpp-engineer teammate) (fork #1)",
+      "agent": "cpp-engineer",
+      "messages": 62,
+      "bytes": 332484,
+      "file": "eacac17d-pool-4 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eacb1caa6ffeigcPcNnPxY2VPH"
+    },
+    {
+      "session": "ses_eac9871aaffewFjThkqOaTVra0",
+      "title": "pool-6 (@gpu-engineer teammate) (fork #1)",
+      "agent": "gpu-engineer",
+      "messages": 80,
+      "bytes": 384360,
+      "file": "eac9871a-pool-6 (@gpu-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac9c8159ffeUPUYptBQ4ObHNE"
+    },
+    {
+      "session": "ses_eac986f93ffeCWaG123GE5kcdT",
+      "title": "pool-7 (@cpp-engineer teammate) (fork #1)",
+      "agent": "cpp-engineer",
+      "messages": 99,
+      "bytes": 556935,
+      "file": "eac986f9-pool-7 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac9c7f16ffeQYaX9Bcy5DaYYt"
+    },
+    {
+      "session": "ses_eac986dacffe6UvBKX0MDx4Iu4",
+      "title": "pool-8 (@build-engineer teammate) (fork #1)",
+      "agent": "build-engineer",
+      "messages": 87,
+      "bytes": 321402,
+      "file": "eac986da-pool-8 (@build-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac9c7d68ffeOghNdG9VFPwOrr"
+    },
+    {
+      "session": "ses_eac7e9a7effe90o9I51PddgWTZ",
+      "title": "pool-12 (@cpp-engineer teammate) (fork #1)",
+      "agent": "cpp-engineer",
+      "messages": 109,
+      "bytes": 441559,
+      "file": "eac7e9a7-pool-12 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac817717ffe59RS0za3aqzn8F"
+    },
+    {
+      "session": "ses_eac64342fffepX3XVJ41bZNSx0",
+      "title": "pool-14 (@cpp-engineer teammate) (fork #1)",
+      "agent": "cpp-engineer",
+      "messages": 44,
+      "bytes": 173469,
+      "file": "eac64342-pool-14 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac6687e7ffeCQeUwAv1YQKoDP"
+    },
+    {
+      "session": "ses_eac55fad7ffedyzBXzhhCAhSz5",
+      "title": "pool-16 (@cpp-engineer teammate) (fork #1)",
+      "agent": "cpp-engineer",
+      "messages": 58,
+      "bytes": 268305,
+      "file": "eac55fad-pool-16 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac593e54ffesuMCB6VmI2t7Vo"
+    },
+    {
+      "session": "ses_eac3f9094ffeWimbSwEOHHLHnY",
+      "title": "pool-19 (@cpp-engineer teammate) (fork #1)",
+      "agent": "correctness-reviewer",
+      "messages": 62,
+      "bytes": 490597,
+      "file": "eac3f909-pool-19 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac42b9aeffeZQmGT5WrdS0LFI"
+    },
+    {
+      "session": "ses_eac212e13ffelEUtqBuzfTtzSE",
+      "title": "pool-21 (@cpp-engineer teammate) (fork #1)",
+      "agent": "cpp-engineer",
+      "messages": 54,
+      "bytes": 254332,
+      "file": "eac212e1-pool-21 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac373a89ffefcztSamGgHODIl"
+    },
+    {
+      "session": "ses_eac2bacd7ffeaQPMlHQIGJjfCb",
+      "title": "pool-22 (@cpp-engineer teammate) (fork #1)",
+      "agent": "cpp-engineer",
+      "messages": 67,
+      "bytes": 221600,
+      "file": "eac2bacd-pool-22 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac2feb98ffeH0AdrTFbFfWb6L"
+    },
+    {
+      "session": "ses_eac13149bffeGZlfxc6nQ0sv3f",
+      "title": "pool-25 (@cpp-engineer teammate) (fork #1)",
+      "agent": "test-reviewer",
+      "messages": 36,
+      "bytes": 289440,
+      "file": "eac13149-pool-25 (@cpp-engineer teammate) (fork #1).md",
+      "parent": "",
+      "fork_of": "ses_eac165f38ffecuL0Mo4WZnroYj"
+    }
+  ]
+}
