@@ -26,9 +26,16 @@ namespace artist::graphic::opengl::pipeline::component::attribute
         {
             if (attribute.getBufferID() == 0)
             {
-                unsigned int VBO;
+                opengl::detail::currentAttributeContext(); // Refuse before any GL call.
+                GLuint VBO = 0;
                 glGenBuffers(1, &VBO);
+                if (VBO == 0)
+                    throw common::exception::TraceableException<std::runtime_error>("ERROR::ATTRIBUTE::BUFFER_CREATION_FAILED");
                 attribute.setBufferID(VBO);
+            }
+            else
+            {
+                attribute.validateDestructionContext();
             }
             glBindBuffer(GL_ARRAY_BUFFER, attribute.getBufferID());
         }

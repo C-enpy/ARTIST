@@ -16,8 +16,11 @@
 
 #include <memory>
 #include <utility>
+#include <cstdio>
+#include <exception>
 #include <graphic/Api.hpp>
 #include <graphic/context/AttributeContext.hpp>
+#include <graphic/opengl/context/AttributeContext.hpp>
 #include <graphic/validator/ComponentConcept.hpp>
 #include <common/exception/TraceableException.hpp>
 
@@ -37,7 +40,25 @@ namespace artist::graphic::pipeline
     class IAttribute
     {
     public:
-        virtual ~IAttribute() = default;
+        virtual ~IAttribute()
+        {
+            if (!m_context) return;
+            try
+            {
+                m_context->validateDestructionContext();
+                m_context->releaseNativeResources();
+            }
+            catch (const std::exception &error)
+            {
+                std::fprintf(stderr, "%s\n", error.what());
+                std::terminate();
+            }
+            catch (...)
+            {
+                std::fputs("ERROR::ATTRIBUTE::DESTRUCTION_FAILED\n", stderr);
+                std::terminate();
+            }
+        }
 
         /**
          * @brief Takes unique ownership of an API-specific attribute context.
@@ -60,8 +81,23 @@ namespace artist::graphic::pipeline
         IAttribute &operator=(const IAttribute &) = delete;
 
         /// The source becomes moved-from: any further access throws ERROR::ATTRIBUTE::FREED_CONTEXT.
-        IAttribute(IAttribute &&) = default;
-        IAttribute &operator=(IAttribute &&) = default;
+        IAttribute(IAttribute &&other) noexcept : m_context(std::move(other.m_context)) {}
+        IAttribute &operator=(IAttribute &&other)
+        {
+            if (this != &other)
+            {
+                free(); // Rejection leaves both unique owners untouched.
+                m_context = std::move(other.m_context);
+            }
+            return *this;
+        }
+
+        /// Retires the native resource, preserving CPU value and reflection metadata.
+        /// Empty and moved-from owners require no native context; bind may recreate.
+        void free()
+        {
+            if (m_context) m_context->releaseNativeResources();
+        }
 
         /**
          * @brief Binds the attribute.

@@ -28,6 +28,7 @@ namespace artist::graphic::opengl::pipeline::component::attribute
             {
                 throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::UNBIND::BUFFER_ID_NOT_SET"));
             }
+            attribute.validateDestructionContext();
             glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
     };

@@ -15,6 +15,11 @@ namespace artist::graphic::context
     public:
         virtual ~AttributeContext() = default;
 
+        // Native backends may require a current context before retiring an owner.
+        // CPU-only contexts have no native resource or destruction precondition.
+        virtual void validateDestructionContext() const {}
+        virtual void releaseNativeResources() {}
+
         template <typename T>
         std::shared_ptr<T> getValue() const
         {

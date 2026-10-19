@@ -70,13 +70,19 @@ namespace
         glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &buffer);
         return buffer;
     }
+
+    template <typename Owner>
+    void releaseAttribute(Owner &owner)
+    {
+        if constexpr (requires { owner.free(); }) owner.free();
+        else ADD_FAILURE() << "K1 requires public Attribute::free()";
+    }
 }
 
 class AttributeComponentTest : public OpenGLComponentTest
 {
 protected:
     GLuint vertexArray = 0;
-    std::vector<GLuint> buffers;
 
     void SetUp() override
     {
@@ -92,11 +98,36 @@ protected:
 
     void TearDown() override
     {
-        if (!buffers.empty()) glDeleteBuffers(static_cast<GLsizei>(buffers.size()), buffers.data());
         if (vertexArray) glDeleteVertexArrays(1, &vertexArray);
         OpenGLComponentTest::TearDown();
     }
 };
+
+TEST_F(AttributeComponentTest, NativeOwnerUploadFreeRecreateAndDestructorRetireNames)
+{
+    GLuint first = 0, second = 0;
+    {
+        Attribute owner(makeContext(1, GL_FLOAT));
+        auto value = std::make_shared<float>(7.25f);
+        owner.bind(); first = owner.getContext().getBufferID();
+        ASSERT_NE(first, 0u);
+        owner.set(value);
+        float actual = 0;
+        glGetBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(actual), &actual);
+        ASSERT_EQ(actual, *value);
+        ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
+        releaseAttribute(owner); releaseAttribute(owner);
+        EXPECT_EQ(owner.getContext().getBufferID(), 0u);
+        EXPECT_EQ(owner.getContext().getValue<float>(), value);
+        EXPECT_EQ(glIsBuffer(first), GL_FALSE);
+        owner.bind(); second = owner.getContext().getBufferID();
+        ASSERT_NE(second, 0u);
+        EXPECT_EQ(glIsBuffer(second), GL_TRUE);
+        owner.set(value);
+    }
+    EXPECT_EQ(glIsBuffer(second), GL_FALSE);
+    EXPECT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
+}
 
 /// A5: bind, set<int> and unbind on a real context upload exactly one int.
 TEST_F(AttributeComponentTest, SetIntUploadsOneIntWithoutGLError)
@@ -104,7 +135,6 @@ TEST_F(AttributeComponentTest, SetIntUploadsOneIntWithoutGLError)
     Attribute attribute(makeContext(1, GL_INT));
 
     ASSERT_NO_THROW(attribute.bind());
-    buffers.push_back(attribute.getContext().getBufferID());
     ASSERT_NO_THROW(attribute.set(std::make_shared<int>(7)));
 
     EXPECT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
@@ -122,7 +152,6 @@ TEST_F(AttributeComponentTest, SetVec3UploadsOneVec3WithoutGLError)
     Attribute attribute(makeContext(1, GL_FLOAT_VEC3));
 
     ASSERT_NO_THROW(attribute.bind());
-    buffers.push_back(attribute.getContext().getBufferID());
     ASSERT_NO_THROW(attribute.set(std::make_shared<glm::vec3>(1.0f, 2.0f, 3.0f)));
 
     EXPECT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
@@ -140,7 +169,6 @@ TEST_F(AttributeComponentTest, SetNullValueIsRejectedBeforeUpload)
     Attribute attribute(makeContext(1, GL_INT));
 
     ASSERT_NO_THROW(attribute.bind());
-    buffers.push_back(attribute.getContext().getBufferID());
     expectSpecificError([&attribute]
                         { attribute.set(std::shared_ptr<int>{}); },
                         TraceableException<std::runtime_error>("ERROR::ATTRIBUTE::SET::NULL_VALUE"));
@@ -406,7 +434,9 @@ class AttributeQaRenderTest : public AttributeQaPreflightTest
 protected:
     GLuint vao = 0;
     bool glReady = false;
-    std::vector<GLuint> buffers;
+    // Only decoys and transform-feedback outputs belong to the fixture.
+    // Attribute VBO names are borrowed and retired by their own local owners.
+    std::vector<GLuint> fixtureBuffers;
     std::vector<GLuint> queries;
     void SetUp() override
     {
@@ -417,9 +447,8 @@ protected:
     }
     GLuint buffer()
     {
-        GLuint id = 0; glGenBuffers(1, &id); buffers.push_back(id); return id;
+        GLuint id = 0; glGenBuffers(1, &id); fixtureBuffers.push_back(id); return id;
     }
-    void own(const Attribute& a) { buffers.push_back(a.getContext().getBufferID()); }
     GLuint decoy()
     {
         const auto id = buffer();
@@ -446,7 +475,7 @@ protected:
         ASSERT_EQ(c.getAttributeID(), static_cast<GLuint>(index));
         ASSERT_EQ(c.getGLType(), shader); ASSERT_EQ(c.getGLSize(), 1u); ASSERT_FALSE(c.isGLArray());
         ASSERT_EQ(c.getBufferID(), 0u); ASSERT_EQ(c.getGLUsage(), 0u);
-        c.setGLUsage(GL_STATIC_DRAW); a->bind(); buffers.push_back(c.getBufferID());
+        c.setGLUsage(GL_STATIC_DRAW); a->bind();
         const auto target = c.getBufferID();
         glBindBuffer(GL_ARRAY_BUFFER, decoyId);
         a->set(std::make_shared<T>(value));
@@ -535,7 +564,7 @@ protected:
         {
             glUseProgram(0); glDisable(GL_RASTERIZER_DISCARD);
             if (!queries.empty()) glDeleteQueries(static_cast<GLsizei>(queries.size()), queries.data());
-            if (!buffers.empty()) glDeleteBuffers(static_cast<GLsizei>(buffers.size()), buffers.data());
+            if (!fixtureBuffers.empty()) glDeleteBuffers(static_cast<GLsizei>(fixtureBuffers.size()), fixtureBuffers.data());
             if (vao) glDeleteVertexArrays(1, &vao);
         }
         AttributeQaPreflightTest::TearDown();
@@ -544,7 +573,7 @@ protected:
 
 TEST_F(AttributeQaRenderTest, NativeTargetBindingRegression)
 {
-    Attribute a(makeContext(1, GL_FLOAT)); a.bind(); own(a);
+    Attribute a(makeContext(1, GL_FLOAT)); a.bind();
     const auto target = a.getContext().getBufferID();
     const auto decoy = buffer();
     const std::array<unsigned char, 16> original{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
@@ -560,7 +589,7 @@ TEST_F(AttributeQaRenderTest, NativeTargetBindingRegression)
 
 TEST_F(AttributeQaRenderTest, NativeIntegerInterfaceRegression)
 {
-    Attribute a(makeContext(1, GL_INT)); a.bind(); own(a); a.set(std::make_shared<std::int32_t>(16777217));
+    Attribute a(makeContext(1, GL_INT)); a.bind(); a.set(std::make_shared<std::int32_t>(16777217));
     GLint integer = -1, type = 0;
     glGetVertexAttribiv(0, GL_VERTEX_ATTRIB_ARRAY_INTEGER, &integer);
     glGetVertexAttribiv(0, GL_VERTEX_ATTRIB_ARRAY_TYPE, &type);
@@ -571,7 +600,7 @@ TEST_F(AttributeQaRenderTest, NativeIntegerInterfaceRegression)
 
 TEST_F(AttributeQaRenderTest, NativeVec3MappingRegression)
 {
-    Attribute a(makeContext(1, GL_FLOAT_VEC3)); a.bind(); own(a); a.set(std::make_shared<glm::vec3>(1, 2, 3));
+    Attribute a(makeContext(1, GL_FLOAT_VEC3)); a.bind(); a.set(std::make_shared<glm::vec3>(1, 2, 3));
     GLint size = 0, type = 0;
     glGetVertexAttribiv(0, GL_VERTEX_ATTRIB_ARRAY_SIZE, &size);
     glGetVertexAttribiv(0, GL_VERTEX_ATTRIB_ARRAY_TYPE, &type);
@@ -638,7 +667,7 @@ TEST_F(AttributeQaRenderTest, NativeArraysDescribeThenRefuseWithoutTouchingDecoy
         auto* a = pass.getAttribute(name); ASSERT_NE(a, nullptr);
         ASSERT_TRUE(a->getContext().isGLArray()); ASSERT_EQ(a->getContext().getGLSize(), size);
         ASSERT_EQ(a->getContext().getGLType(), static_cast<GLenum>(GL_FLOAT_VEC3));
-        a->getContext().setGLUsage(GL_STATIC_DRAW); a->bind(); buffers.push_back(a->getContext().getBufferID());
+        a->getContext().setGLUsage(GL_STATIC_DRAW); a->bind();
         const auto lure = decoy();
         expectSpecificError([&] { a->set(std::make_shared<glm::vec3>(1)); }, TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::SET::ARRAY_NOT_SUPPORTED size={}", size)));
         EXPECT_EQ(boundArrayBuffer(), static_cast<GLint>(lure)); verifyDecoy(lure);
@@ -657,7 +686,7 @@ TEST_F(AttributeQaRenderTest, MatrixPublishedThenSetterRefuses)
         auto* a = pass.getAttribute("qaMatrix"); ASSERT_NE(a, nullptr);
         ASSERT_EQ(a->getContext().getGLType(), static_cast<GLenum>(GL_FLOAT_MAT4)); ASSERT_EQ(a->getContext().getGLSize(), 1u);
         ASSERT_FALSE(a->getContext().isGLArray());
-        a->getContext().setGLUsage(GL_STATIC_DRAW); a->bind(); buffers.push_back(a->getContext().getBufferID());
+        a->getContext().setGLUsage(GL_STATIC_DRAW); a->bind();
         const auto lure = decoy();
         if (unsupported)
             expectSpecificError([&] { a->set(std::make_shared<glm::mat4>(1)); }, TraceableException<std::runtime_error>("ERROR::ATTRIBUTE::UNSUPPORTED_TYPE"));
@@ -670,7 +699,7 @@ TEST_F(AttributeQaRenderTest, MatrixPublishedThenSetterRefuses)
 
 TEST_F(AttributeQaRenderTest, SameTypeSecondPayloadAndDifferentTypeFreeze)
 {
-    Attribute a(makeContext(1, GL_FLOAT)); a.bind(); own(a);
+    Attribute a(makeContext(1, GL_FLOAT)); a.bind();
     a.set(std::make_shared<float>(0.5f));
     auto second = std::make_shared<float>(1.5f); a.set(second);
     float value = 0; glGetBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(value), &value);
