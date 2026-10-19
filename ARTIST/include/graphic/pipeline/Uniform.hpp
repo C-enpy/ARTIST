@@ -89,9 +89,9 @@ namespace artist::graphic::pipeline
         {
             using Context = typename API::UniformContext;
             using Setter = typename Context::template Setter<T>;
+            auto &context = ctx();
             if constexpr (graphic::validator::HasBorrowedOnMethod<Setter, Context>)
             {
-                auto &context = ctx();
                 // API-specific deterministic refusals precede the CPU commit.
                 // Components without a prevalidation hook retain their existing
                 // borrowed on(C&) contract (e.g. the ownership-only mock API).
