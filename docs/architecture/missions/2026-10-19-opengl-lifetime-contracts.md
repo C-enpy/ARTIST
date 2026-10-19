@@ -66,6 +66,11 @@ nul).
   fail-fast **sans aucun appel GL**. Release explicite, move-assignment et
   adoption en mauvais contexte : rejet avant suppression/transfert, owners
   inchangés. `Empty`/moved-from ne demandent pas de contexte.
+- **Extension ratifiée (gate du 2026-10-19, R-Q1)** : `Attribute::set` prévalide
+  le contexte **avant toute mutation CPU** (parité K3) — sous mauvais/absent
+  contexte, `set(valueB)` rejette sans upload **et sans remplacer** `valueA` ;
+  zéro appel GL ; ancienne valeur CPU et ID conservés. (Le comportement
+  historique stockait la CPU avant le garde du Setter.)
 - Move : ctor du wrapper transfère le pointeur sans GL ; move chargé→chargé
   prévalide puis retire la destination avant transfert, sans copie CPU ;
   self-move = no-op ; contextes natifs non copiables, leur move éventuel
