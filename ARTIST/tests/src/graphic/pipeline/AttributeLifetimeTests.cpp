@@ -16,6 +16,7 @@
 #include <graphic/opengl/pipeline/component/attribute/Setter.hpp>
 #include <graphic/opengl/pipeline/component/attribute/Unbinder.hpp>
 #include <graphic/pipeline/Attribute.hpp>
+#include <TestUtils.hpp>
 
 namespace
 {
@@ -246,6 +247,54 @@ namespace
             EXPECT_EQ(source.getContext().getBufferID(), 121u);
             EXPECT_EQ(Mock::instance()->glCalls().size(), calls);
         }
+    }
+
+    TEST_F(AttributeLifetimeTests, WrongOrMissingContextRejectsSetBeforeCpuMutationOrGL)
+    {
+        Attribute owner;
+        auto &context = owner.getContext();
+        context.setBufferID(141);
+        context.setAttributeID(7);
+        context.setGLType(GL_FLOAT);
+        context.setGLSize(1);
+        context.setGLUsage(GL_STATIC_DRAW);
+        const auto valueA = std::make_shared<float>(3.0f);
+        const auto valueB = std::make_shared<float>(4.0f);
+        context.setValue(valueA);
+        ASSERT_TRUE(Mock::instance()->glCalls().empty());
+
+        struct RejectedContext
+        {
+            GLFWwindow *current;
+            const char *error;
+        };
+        const RejectedContext rejectedContexts[] = {
+            {contextB(), "ERROR::ATTRIBUTE::CONTEXT_MISMATCH"},
+            {nullptr, "ERROR::ATTRIBUTE::NO_CURRENT_CONTEXT"}};
+
+        for (const auto &rejected : rejectedContexts)
+        {
+            SCOPED_TRACE(rejected.error);
+            // Restore the owning context before either the next attempt or destruction.
+            OtherCurrentContext other(rejected.current);
+            artist::test::utils::expectSpecificError(
+                [&] { owner.set(valueB); },
+                artist::common::exception::TraceableException<std::runtime_error>(rejected.error));
+            EXPECT_EQ(context.getValue<float>(), valueA);
+            EXPECT_NE(context.getValue<float>(), valueB);
+            EXPECT_EQ(context.getBufferID(), 141u);
+            EXPECT_EQ(context.getAttributeID(), 7u);
+            EXPECT_TRUE(Mock::instance()->glCalls().empty());
+        }
+
+        // The same public operation must still replace and upload under its owner context.
+        EXPECT_CALL(*Mock::instance(), glBindBuffer_mock(GL_ARRAY_BUFFER, 141)).Times(1);
+        EXPECT_CALL(*Mock::instance(), glBufferData_mock(GL_ARRAY_BUFFER, sizeof(float), valueB.get(), GL_STATIC_DRAW)).Times(1);
+        EXPECT_CALL(*Mock::instance(), glVertexAttribPointer_mock(7, 1, GL_FLOAT, GL_FALSE, sizeof(float), nullptr)).Times(1);
+        ASSERT_NO_THROW(owner.set(valueB));
+        EXPECT_EQ(context.getValue<float>(), valueB);
+        EXPECT_EQ(context.getBufferID(), 141u);
+        EXPECT_EQ(Mock::instance()->glCalls(), (std::vector<std::string>{"glBindBuffer", "glBufferData", "glVertexAttribPointer"}));
     }
 
     TEST_F(AttributeLifetimeTests, EmptyAndMovedFromReleaseNeedNoCurrentContext)

@@ -138,6 +138,7 @@ namespace artist::graphic::pipeline
         void set(std::shared_ptr<T> value)
         {
             auto &context = ctx();
+            context.validateDestructionContext();
             context.template setValue<T>(value);
 
             if constexpr (graphic::validator::HasBorrowedOnMethod<typename API::AttributeContext::template Setter<T>, typename API::AttributeContext>)
