@@ -127,6 +127,19 @@ uniques, emprunts et concept négatif UniformReader, rejet des uploads arrays vi
 set single-value.299natifs Windows Debug, ASan245historique T4 distinct. Les
 étapes proposées ci-dessous ne sont pas automatiquement adoptées par cette clôture.
 
+**Cadrage après F7, 2026-10-18** : la [[architecture/next-mission|prochaine mission
+proposée]] ferme le contrat local réflexion/configuration Attribute OpenGL
+(12 formes CPU canoniques, validation et cible d'upload). Le lifetime VBO reste
+une tranche distincte. Analyses architecte/PM seulement, aucun RED nouveau ni
+autorisation d'exécution ; ADR-0004 reste Proposed. L'ancien pointeur est
+[[architecture/missions/2026-10-18-next-mission-f7-closed|sauvegardé à l'identique]].
+
+**Lifetime OpenGL, 2026-10-19** : cette tranche distincte est exécutée et close
+au périmètre Windows Debug sur `71dacbb` (466/466 unit + 64/64 OpenGL, audit V
+borné COVERED). ADR-0003 reste Accepted/partial. Aucune mission suivante n'est
+sélectionnée. Voir [[references/session-2026-10-19-opengl-lifetime|la session]]
+et [[architecture/missions/2026-10-19-opengl-lifetime-audit-v|l'audit V]].
+
 **Sortie** : baseline caractérisée, configurations valides/invalides, données et
 workload figés ; aucune performance inventée faute de mesure.
 

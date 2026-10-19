@@ -4,7 +4,7 @@ category: development
 tags: [artist, tooling, testing, rendering, guide]
 summary: Raccordement documentaire des expertises GPU et du runner QA séparé ; preuves statiques distinctes du routage et des permissions natifs.
 created: 2026-10-16
-updated: 2026-10-17
+updated: 2026-10-18
 ---
 
 # Catalogue GPU et boucle QA
@@ -63,18 +63,36 @@ les deux évaluations, aucune probabilité de succès déduite du score PM.
 
 ### Runner séparé — autonomie dégradée assumée
 
-Les trois nouveaux QA restent deny-all/read-glob-skill, 27 règles exactes,
-edit/shell/execute/subagent fermés. Ils proposent texte/patch ; **le lead mandaté
-distinct persiste, relit et exécute**, avec attribution réelle. Aucun grant natif
-par lot vérifié. Execute fermé rend les MCP uniquement Code Mode indisponibles :
-le lead digère les longues données ; pas de contournement. La voie de restitution
-texte doit elle-même être vérifiée, pas remplacée par un allow team_* général.
+Révision utilisateur du **2026-10-18** : les trois QA conservent le deny-all et
+27 règles locales ; `execute`, `shell` et `subagent` passent à allow, tandis que
+`edit`, les exclusions de lecture des secrets et `external_directory` restent
+deny. Les consignes bornent l'usage à Context Mode/analyse et au transport Ensemble
+autorisé, pas à une sous-délégation ni aux tests moteur. Ils proposent texte/patch ;
+**le lead mandaté distinct persiste, relit et exécute les tests**, avec attribution.
 
-Le validateur reconnaît « template déclaré reconnu », forme B/static-presence.
-Cela ne démontre ni sandbox, ni isolation filesystem, ni refus natif. Les limites
-d'autonomie ne sont pas masquées par les tests locaux.
+L'ouverture d'execute n'accorde aucun droit général aux outils imbriqués. Aucun
+allow MCP/`team_*` ajouté : leurs propres règles restent applicables. Si le transport
+ou l'analyse est inaccessible, le lead relève la réponse finale ou fournit les
+digestions. `edit deny` ne confine pas les effets d'un shell/exécuteur autorisé :
+ni sandbox ni isolation filesystem ne sont démontrées.
 
-## Preuves et reprise
+Vérification locale, OpenCode **2.0.32** / Node **24.11.1** : les trois profils sont
+découverts avec les nouvelles règles et consignes, **32 règles résolues chacun**
+(dont un refus browser ajouté après les règles locales). Trois sessions QA ont
+réussi un calcul mémoire par execute ; leurs recherches n'exposent ni Context Mode,
+ni les outils de transport Ensemble demandés, ni le mutateur Serena recherché.
+**Absence du catalogue, pas refus natif observé** : aucun appel MCP imbriqué réussi
+ou refusé, aucun shell/sous-agent/mutateur exécuté par les QA. Enforcement complet
+et transport réel restent **INCONCLUSIVE / NOT_RUN**.
+
+Le validateur historique et l'oracle T05 décrivent encore le template fermé v1.
+Contrôle T05 du 2026-10-18 : **55/58 PASS, 3 FAIL, zéro skip** sur les contrats des
+trois profils révisés ; l'oracle historique n'a pas été modifié pour les verdir.
+Ce résultat ne remplace pas la clôture historique ci-dessous et interdit un PASS
+global actuel. Plan préalable commité `230c551`, contrôles/empreintes/probes et revue
+attribués : `.opencode/evidence/qa-tools-policy-2026-10-18/validation.md`.
+
+## Preuves et reprise — historique du 2026-10-17
 
 La baseline intégrée **1821af6** a été fournie à T13, avec base opérateur importée
 séparément **82edafe** ; aucune copie du canonique dirty. Le rapport candidat

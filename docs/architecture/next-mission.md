@@ -3,10 +3,10 @@ title: "Prochaine mission — fiabilité et lifetime des ressources OpenGL"
 category: architecture
 tags: [artist, architecture, rendering, testing]
 aliases: [next-mission]
-summary: "Proposition long run : VBO Attribute, publication de réflexion, refus Uniform et fixtures Loader, en branches parallèles après contrats et QA."
-status: proposed
-implementation: not-started
-source_revision: 070e20d9157b9d90978e51053a59f843c0e93250
+summary: "Mission lifetime OpenGL clôturée au périmètre Windows Debug : audit V borné COVERED, 466/466 unit et 64/64 OpenGL sur 71dacbb. Aucune mission suivante sélectionnée."
+status: completed
+implementation: verified
+source_revision: 71dacbb40ad8746fce5e57cd3cbecc2e1fa8a493
 created: 2026-10-18
 updated: 2026-10-19
 sources:
@@ -19,13 +19,17 @@ provenance:
   ambiguous: 0.0
 ---
 
-# Prochaine mission — fiabilité et lifetime des ressources OpenGL
+# Mission lifetime OpenGL — clôturée au périmètre
 
-> [!important] Proposition, pas exécution
-> Mission relativement large, prévue pour une exécution autonome **long_run**
-> après préparation et approbation natives. Aucun auteur, test RED, build ou
-> changement moteur lancé pour ce cadrage. Les décisions ouvertes ci-dessous
-> empêchent encore de publier les tâches d'implémentation.
+> [!important] Exécutée puis close le 2026-10-19
+> Candidat moteur `71dacbb`. Attestation fraîche : **466/466** unitaires et
+> **64/64** OpenGL, Windows x64 Debug, binaire unitaire `0a952ff3…`.
+> Audit V : PASS borné, registre COVERED. Aucune mission suivante n'est
+> sélectionnée. ADR-0003 reste Accepted/partial. Le texte sous cette note est
+> le cadrage d'origine, pas l'état ouvert du chantier.
+>
+> Preuves : [[references/session-2026-10-19-opengl-lifetime|la session]] et
+> [[architecture/missions/2026-10-19-opengl-lifetime-audit-v|l'audit V]].
 
 ## Origine et état réel
 

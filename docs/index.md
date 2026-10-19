@@ -37,7 +37,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[architecture/missions/2026-10-16-pipeline-ownership|Mission Pipeline archivée (2026-10-16)]] — ownership du Pipeline et de `IPass` (A1+A2/F6), curseur borné, F8-extraction, H-RESTORE/H-FIXTURE ; C++ `f914d77` : **215 normales** (176 unit + 39 GL) / **198 ASan** sélection (17 GL hors sélection) ; QA 24 critères (**14 PASS, 3 FAIL, 7 INCONCLUSIVE**), aucun PASS global, oracle GMock préexistant retenu FAIL ; contrat G-A/A2/F8 archivé intégralement.
 - [[architecture/missions/2026-10-15-f5-gl-diagnostics|Mission F5 archivée]] — diagnostics GL vides compilation/link bornés, RED causal et validation indépendante (143/143 distincts, 121 ASan distincts) dans le périmètre Windows Debug.
 - [[architecture/missions/2026-10-15-failure-contracts|Mission C archivée]] — bornage des contrats d'échec (Q1 et Q3 traités ; F4 pour l'accesseur ; F8 partiel ; F10 conservé), RED causal, 165/165 normaux et 143 ASan distincts dans le périmètre Windows Debug à `e736bba` ; `getStackTraceString` ouvert (retour par valeur depuis S-GSS, 2026-10-16).
-- [[architecture/next-mission|Prochaine mission proposée : Attribute-GL]] — réflexion → validation → configuration native, 12 formes CPU canoniques et VBO correctement ciblé ; préparation seulement, lifetime VBO séparé. [[architecture/missions/2026-10-18-next-mission-f7-closed|Ancien pointeur F7 sauvegardé]] ; preuves F7 inchangées.
+- [[architecture/next-mission|Mission lifetime OpenGL clôturée]] — VBO Attribute, réflexion, refus Uniform et fixtures Loader sur `71dacbb` ; 466/466 unit + 64/64 OpenGL, audit V borné COVERED. Aucune mission suivante sélectionnée. [[architecture/missions/2026-10-18-next-mission-f7-closed|Ancien pointeur F7 sauvegardé]] ; preuves F7 inchangées.
 - [[references/session-2026-10-18-f7|Session F7, preuves et 28 sous-agents]] — 29 exports publics, 271 fichiers de preuves versionnés et registre exhaustif ; les restitutions QA BLOCKED retrouvées corrigent le diagnostic initial de workers « inertes ».
 - [[architecture/missions/2026-10-15-loaded-owner-move|Mission précédente archivée]] — loaded-owner move et ASan vérifiés dans leur périmètre, contrat préservé.
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
@@ -75,7 +75,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[log|Journal]] — opérations documentaires.
 - [[references/session-2026-10-03-shader-pass|Session Shader→Pass]] — décisions utilisateur, travaux des sous-agents, preuves et reprise.
 - [[references/session-2026-10-15-loaded-owner-move|Session loaded-owner move, sous-agents inclus]] — décisions, rapports archivés, TDD/QA et clarification du périmètre ASan (22 GL non sélectionnés, pas abandonnés).
-- [[references/session-2026-10-19-opengl-lifetime|Session lifetime OpenGL, 31 sous-sessions]] — contrats K ratifiés, preflightGate, exécution TDD des 4 branches, revue lifetime, correctifs R-F1/R-Q1 ; transcripts verbatim sous `research/sessions/opencode-lifetime-20261019/`.
+- [[references/session-2026-10-19-opengl-lifetime|Session lifetime OpenGL, 31 sous-sessions]] — contrats K ratifiés, preflightGate, exécution TDD, correctifs R-F1/R-Q1, audit V borné ; transcripts verbatim sous `research/sessions/opencode-lifetime-20261019/`, racine et audit réexportés à la clôture.
 
 Les sources brutes sont dans `research/`, hors de cette collection. Les sources
 de code citées sont des chemins **relatifs à la racine du dépôt**, pas au vault.

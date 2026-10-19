@@ -189,33 +189,6 @@ restitution autorisée manque, signaler blocked, ne pas élargir team_* ou les M
 Séparer présence statique, découverte, appels skill, refus natifs et preuve GPU.
 Sans trace/environnement : NOT_RUN/INCONCLUSIVE ; FAIL prioritaire s'il existe.
 
-### Relève des QA sans transport d'équipe
-
-`in_progress` décrit le board, pas l'activité native. À une demande de statut,
-un wake ou un incident de restitution, croiser une fois `team_status`, le résultat
-disponible et la session résolue par `team_view`, sans boucle de polling. Un QA
-`idle`/`ready` n'est pas « toujours en cours » sur le seul état de sa tâche.
-
-Le prompt générique d'Ensemble peut exiger `team_message`/`team_tasks_complete`
-alors que ces profils ne peuvent pas atteindre ce transport. Ce rappel n'est pas
-un grant. Avant de lancer un QA, prévoir une voie de relève de sa réponse finale
-par le lead. Si un accès natif de lecture est disponible et autorisé, relever
-seulement les parties textuelles finales du livrable, jamais les blocs de
-raisonnement ; conserver session, message IDs et identité du candidat. Ne pas
-modifier la session, ses permissions ou la base pour récupérer un rapport.
-
-Si le livrable existe : le relever, le relire et le persister avec attribution
-avant de clôturer la tâche au nom du lead. Arrêter le worker idle après relève,
-sans lui demander de régénérer le même travail ni d'appeler un outil interdit.
-Le plan QA doit toujours être commité avant le worktree auteur ; ses arbitrages
-humains restent ouverts tant qu'ils ne sont pas décidés. Une tâche de planification
-terminée n'autorise pas implicitement son consommateur ni un PASS de validation.
-
-Si la voie native manque ou si le rapport est incomplet, annoncer BLOCKED et
-la précondition exacte. Ne pas confondre ce blocage avec un worker actif ; ne pas
-relancer à l'identique ou promettre une reprise automatique non observée.
-Le relais lead ne prouve pas que le plugin a une clôture autonome compatible QA.
-
 Sources et limites : `docs/agentic/gpu-qa-harness.md`,
 `.opencode/evidence/mission-gpu-qa/t03-contract.md` et
 `.opencode/evidence/mission-gpu-qa/qa-policy-boundary.md`.

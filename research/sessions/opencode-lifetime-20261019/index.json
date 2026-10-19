@@ -47,11 +47,12 @@
       "session": "ses_eace2b30bffd3si1XqGDa0rysS",
       "title": "OpenGL resource lifetime mission policy and plan review",
       "agent": "orchestrator",
-      "messages": 507,
-      "bytes": 1953010,
+      "messages": 654,
+      "bytes": 3242306,
       "file": "eace2b30-OpenGL resource lifetime mission policy and plan review.md",
       "parent": "",
-      "fork_of": ""
+      "fork_of": "",
+      "refreshed": "2026-10-19T13:02:34.984Z"
     },
     {
       "session": "ses_eaccbff05ffeEN7c45Ef7ZU3Vs",
@@ -307,11 +308,27 @@
       "session": "ses_eac13149bffeGZlfxc6nQ0sv3f",
       "title": "pool-25 (@cpp-engineer teammate) (fork #1)",
       "agent": "test-reviewer",
-      "messages": 36,
-      "bytes": 289440,
+      "messages": 87,
+      "bytes": 835738,
       "file": "eac13149-pool-25 (@cpp-engineer teammate) (fork #1).md",
       "parent": "",
-      "fork_of": "ses_eac165f38ffecuL0Mo4WZnroYj"
+      "fork_of": "ses_eac165f38ffecuL0Mo4WZnroYj",
+      "refreshed": "2026-10-19T13:02:34.984Z"
+    }
+  ],
+  "refreshed": "2026-10-19T13:02:34.984Z",
+  "refresh": [
+    {
+      "session": "ses_eace2b30bffd3si1XqGDa0rysS",
+      "file": "eace2b30-OpenGL resource lifetime mission policy and plan review.md",
+      "messages": 654,
+      "bytes": 3242306
+    },
+    {
+      "session": "ses_eac13149bffeGZlfxc6nQ0sv3f",
+      "file": "eac13149-pool-25 (@cpp-engineer teammate) (fork #1).md",
+      "messages": 87,
+      "bytes": 835738
     }
   ]
 }

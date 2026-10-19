@@ -106,11 +106,11 @@ avant `test-engineer` (generator de gaps, pas substitut au RED) ; `test-reviewer
 fresh hors board d'implémentation, puis correction/ré-audit. Contrat détaillé dans
 `.opencode/agents/orchestrator.md`. Risque PM 0–100 distinct de QA I×P 1–5 → 1–25 ;
 QA >= 10 exige déclencheur/blast radius/détection/mitigation/gap, sans changer la grille.
-Runner séparé : les trois QA proposent texte/patch ; le lead mandaté persiste,
-relit et exécute, attribution réelle et autonomie dégradée explicites. Pas de grant
-natif par lot démontré ; deny-all/read-glob-skill inchangés, edit/shell/execute/
-subagent fermés. MCP accessibles seulement par Code Mode donc indisponibles à ces
-QA : le lead digère les longues sorties. Présence statique ≠ routage/enforcement.
+Runner séparé : Les trois QA peuvent utiliser execute pour Context Mode et le transport
+Ensemble. écriture restent interdits.
+Ensemble. écriture restent interdits.
+Les tests restent exécutés par le lead, avec attribution explicite.
+L’autorisation d’execute ne vaut pas autorisation générale des outils appelés.
 
 Pour une mission Ensemble, charger `opencode-ensemble` avant la coordination.
 Faire préparer le plan par `project-manager` ; pour une petite intervention

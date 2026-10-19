@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-18",
+  "kind": "planning-only",
+  "head": "4a9b722a8f1b64470172686aee961221fa6384c0",
+  "historical_tested_code": "6d6dcb79ef7d249dd1061e09f20e5514268fad9f",
+  "historical_tests": "299 native Windows Debug =251CPU+48OpenGL; not rerun for planning; final ASan NOT_RUN",
+  "old_pointer_archive": "docs/architecture/missions/2026-10-18-next-mission-f7-closed.md",
+  "archive_validation": {"byte_identical_to_head_pointer": true, "bytes": 1364, "owner": "lead"},
+  "proposal": "docs/architecture/next-mission.md",
+  "selected_scope": "Attribute-GL reflection to validated format to upload and VAO configuration; 12 canonical CPU forms; exact float/int32/uint32 compatibility, no implicit conversion; setter targets its own VBO",
+  "excluded": ["VBO release/destruction deferred to separate lifetime scope", "global ADR0004 layouts", "fp64 Uniform capability gating", "Loader/ShaderLoader shuffle fixes except separately authorized prerequisite if RED unreliable", "performance", "Release and other OS", "new backends"],
+  "evidence_level": "Static source observations and planning, not newly reproduced failures",
+  "code_paths_recouped": [
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/AttributeReader.hpp:49-65",
+    "ARTIST/include/graphic/opengl/context/AttributeContext.hpp:32-91",
+    "ARTIST/include/graphic/opengl/pipeline/component/attribute/Setter.hpp:22-32",
+    "ARTIST/include/graphic/opengl/pipeline/component/attribute/Binder.hpp:25-33",
+    "ARTIST/include/graphic/pipeline/Attribute.hpp",
+    "ARTIST/component-tests/src/graphic/pipeline/AttributeComponentTests.cpp"
+  ],
+  "tools": {
+    "qmd": "Scoped artist-wiki search with explicit intent, followed by retrieval of correction-plan, ADR and mission notes",
+    "grepai": "Semantic Attribute buffer ownership and uniform capability searches; successful explicit ARTIST-root queries; glGenBuffers caller trace not treated as exhaustive",
+    "serena": "initial_instructions and get_current_config confirmed ARTIST root; symbol overviews and targeted definitions; direct reads supplemented shallow template/specialization coverage",
+    "cpp_limit": "No new reliable compilation database or complete template callgraph claimed"
+  },
+  "read_only_consultations": {
+    "project_manager": "ses_eb1699079ffei4DLWxA1yJbmZa",
+    "engine_architect": "ses_eb169af2fffe3mnb4B0YRJVBSd",
+    "parallelism": "Independent contract analysis and executable graph planning; no implementation or test execution",
+    "arbitration": "Architect proposed two sequential local slices. Lead retains only reflection/configuration slice for immediate mission per PM bound; VBO release remains distinct. Chooses12forms over float-only to preserve integer usages; unsupported shader forms described then rejected at use, not whole-Pass rejection. Autonomous setter targets recorded VBO. All are proposed mission choices, not adopted ADRs."
+  },
+  "evaluation": {
+    "method": "PM/LLM",
+    "jev_calls": 0,
+    "score_scale": "0-100; complexity and risk distinct, not success probabilities",
+    "development_floor": 70,
+    "tasks": [
+      {"ref":"A","agent":"engine-architect","raw":58,"retained":58,"risk":62},
+      {"ref":"V","agent":"gpu-resource-engineer or correctness-reviewer","raw":55,"retained":55,"risk":64,"optional":true,"scope":"read-only investigation, no release implementation in this mission"},
+      {"ref":"Q","agent":"qa-planner","raw":46,"retained":46,"risk":52},
+      {"ref":"D","agent":"gpu-engineer","pm_initial_raw":68,"pm_initial_retained":70,"pm_initial_risk":71,"raw":78,"retained":78,"risk":76,"refined_by":"lead PM/LLM after architect:12forms, IPointer, Reader validation and decoy buffer oracles explicit"},
+      {"ref":"G","agent":"test-engineer","raw":54,"retained":70,"risk":55,"runner":"lead only"},
+      {"ref":"R","agent":"correctness-reviewer","raw":57,"retained":57,"risk":65},
+      {"ref":"T","agent":"test-reviewer","raw":53,"retained":53,"risk":60,"off_implementation_board":true},
+      {"ref":"F","agent":"rendering-verifier","raw":56,"retained":56,"risk":64}
+    ],
+    "lead_validation": "Accepted with D refinement; no model override, provider policy change or task admission"
+  },
+  "future_gates": [
+    "Native new mission preparation/config then user start; F7 policy not implicitly reused",
+    "Authorized QA reporting channel verified; no execute permission bypass",
+    "Exact canonical aliases, diagnostics, oracles and QA plan committed before author worktree",
+    "RED causal before implementation, minimal GREEN, refactor and final integrated non-regression",
+    "Producer actually integrated before generator or downstream branch publication",
+    "Fresh independent correctness review and offboard test audit, corrections then reaudit"
+  ],
+  "adr_status_changes": false,
+  "implementation_tasks_published": 0,
+  "new_engine_tests_run": 0,
+  "red": "NOT_RUN - planning only",
+  "green": "NOT_RUN - planning only",
+  "documentary_validation": {
+    "python_checks": "5 notes: YAML required properties, tags <=5 and wikilinks; planning JSON parsed, development floor checked; zero errors",
+    "archive_byte_exact": true,
+    "git_diff_check": "exit0",
+    "engine_tests": "NOT_RUN, no implementation change",
+    "qmd_update": {"command":"node .opencode/scripts/update-wiki.mjs","exit":0,"indexed":1,"updated":4,"unchanged":33,"removed":0,"skipped":0},
+    "qmd_embed": {"command":"qmd embed -c artist-wiki","exit":0,"documents":4,"chunks":29},
+    "retrieval": "Scoped lex réflexion+Attribute returned architecture/next-mission.md as first result (#6f3b43); multi_get confirmed proposed/not-started and12forms. Exact compound-token Attribute-GL search was empty, not interpreted as missing index.",
+    "logs": "out/next-mission-planning/update.log and embed.log"
+  },
+  "unrelated_diff_preserved": ".grepai/config.yaml",
+  "commit_or_push": "Not requested for this planning step; no commit or push performed"
+}

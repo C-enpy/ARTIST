@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "lastEvaluatedAt": null,
+  "lastSyncedAt": null,
+  "knownNativeCandidates": [],
+  "discoveries": [],
+  "targetedChanges": [
+    {
+      "date": "2026-10-18",
+      "kind": "project-connection-authorization",
+      "id": "openai/gpt-6-luna",
+      "reasoningEffort": "high",
+      "decision": "approved",
+      "authorization": "User explicitly approved the project-local Ensemble catalogue repair; this is not mission start approval.",
+      "basis": "Native OpenCode model inventory lists openai/gpt-6-luna with high. Existing user catalogue opencode-go/gpt-6-luna high supplies unchanged model/effort metrics 33 and 0.03; no interpolation, effort substitution or fresh benchmark is claimed.",
+      "sourceCatalogueSha256": "ca7e0fd838f0d03dded1747731da64ee5948d6f2129ff9496f658caedd2eedc1",
+      "preservation": "52 original catalogue entries deeply equal to the inherited snapshot; one exact connection/effort added. Global file, scheduling, beta, intelligenceRange, costMode and pausedTeams unchanged.",
+      "costCaveat": "0.03 is inherited catalogue/benchmark metadata, not verified OpenAI connection billing; accessMode unknown, no effectiveCostPerTask or amortizedCostPerTask inferred.",
+      "structuredOutputCaveat": "Existing model-level declaration retained with its original source/date and strictVerification unverified; not a new native structured-output test.",
+      "validation": "Bundled plugin configuration validator and operator-selection predicate evaluated in isolation. Before: exact light pair rejected; after: light, standard and strong pass the operator catalogue check; Luna max still rejected. Representative normalized routing winners and thresholds unchanged at 0/0, 50/50 and 100/100.",
+      "limits": "No complete catalogue refresh, no measured provider execution, no mission start, no assertion of live host reload. Project models array replaces inheritance: later global catalogue changes require deliberate reconciliation.",
+      "evidence": ".opencode/missions/team_mve3tz7l_000i_xtayy5/catalogue-authorization-repair.md"
+    }
+  ]
+}

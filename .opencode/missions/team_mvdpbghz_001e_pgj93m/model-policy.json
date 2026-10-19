@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "providers": [
+    "cursor",
+    "openai",
+    "opencode",
+    "opencode-go",
+    "zai-coding-plan"
+  ],
+  "assessment": {
+    "complexity": [
+      "Low: local, clear requirements and established patterns.",
+      "High: ambiguous contracts, interacting components or difficult reconstruction."
+    ],
+    "risk": [
+      "Low: isolated, reversible failure with limited impact.",
+      "High: security, persisted data, compatibility or critical correctness is at stake."
+    ]
+  },
+  "complexityBands": [
+    0,
+    34,
+    67,
+    101
+  ],
+  "riskBands": [
+    0,
+    34,
+    67,
+    101
+  ],
+  "groups": {
+    "light": [
+      {
+        "id": "opencode-go/gpt-6-luna",
+        "variant": "none"
+      }
+    ],
+    "standard": [
+      {
+        "id": "opencode-go/glm-5.3-flash",
+        "variant": "max"
+      }
+    ],
+    "grok": [
+      {
+        "id": "cursor/grok-4.7",
+        "variant": "Grok 4.7 Extra High"
+      }
+    ],
+    "sol-medium": [
+      {
+        "id": "openai/gpt-6.1-sol",
+        "variant": "medium"
+      }
+    ],
+    "sol-high": [
+      {
+        "id": "openai/gpt-6.1-sol",
+        "variant": "high"
+      }
+    ],
+    "sol-xhigh": [
+      {
+        "id": "openai/gpt-6.1-sol",
+        "variant": "xhigh"
+      }
+    ]
+  },
+  "matrix": [
+    [
+      "light",
+      "standard",
+      "grok"
+    ],
+    [
+      "standard",
+      "grok",
+      "sol-medium"
+    ],
+    [
+      "sol-medium",
+      "sol-high",
+      "sol-xhigh"
+    ]
+  ]
+}

@@ -2,7 +2,7 @@
 title: "Session lifetime OpenGL — politique, exécution et enseignements"
 category: reference
 tags: [artist, rendering, testing, reference, architecture]
-summary: "Session root ses_eace2b30 et 30 descendants : contrats K ratifiés, preflightGate, exécution TDD des 4 branches, revue lifetime, correctifs R-F1/R-Q1, préflight d'audit."
+summary: "Session root ses_eace2b30 et 30 descendants : contrats K ratifiés, preflightGate, exécution TDD, correctifs R-F1/R-Q1, audit V borné COVERED sur 71dacbb."
 created: 2026-10-19
 updated: 2026-10-19
 source_revision: 71dacbb40ad8746fce5e57cd3cbecc2e1fa8a493
@@ -21,14 +21,18 @@ provenance:
 ## Périmètre de l'ingestion
 
 La session racine `ses_eace2b30bffd3si1XqGDa0rysS` (« OpenGL resource lifetime
-mission policy and plan review », orchestrator, 507 entrées natives) et **30
-descendants accessibles** (15 pools + 11 forks + 4 sessions de préparation du
-jour) sont exportés verbatim sous
-[[research-sessions-opencode-lifetime|`research/sessions/opencode-lifetime-20261019/`]]
-— ~7,5 Mo, manifeste `index.json` avec parents/forks/agents/tailles. Les entrées
-comprennent idle/synthetic/compaction projetée : pas un verbatim complet du
-service. L'audit final V (`ses_eac13149b`, test-reviewer fresh hors board) est
-**en cours** à l'heure de l'export — son verdict n'est pas dans cette page.
+mission policy and plan review », orchestrator) et **30 descendants
+accessibles** (15 pools + 11 forks + 4 sessions de préparation du jour) sont
+exportés verbatim sous
+[[research-sessions-opencode-lifetime|`research/sessions/opencode-lifetime-20261019/`]].
+Le premier export (2026-10-19T11:41Z) est conservé pour les 29 sessions dont le
+compte de messages n'a pas bougé. La racine et `ses_eac13149b` (fichier encore
+nommé pool-25 fork, agent devenu test-reviewer, audit V) sont réexportées
+intégralement à la clôture ; le compte et l'horodatage sont dans `index.json`
+(`refreshed`). Les entrées comprennent idle, synthetic et compaction : ce n'est
+pas un verbatim du service hors de ces sessions. Audit V clos : PASS borné,
+registre COVERED, candidat `result_mvf8gjec_008t_9t7qc0`. Détail :
+[[architecture/missions/2026-10-19-opengl-lifetime-audit-v|l'audit V]].
 
 Chaîne de préparation incluse : orchestration native
 (`ses_eacea7ee`/`ses_eace9372`) et les deux PM en lecture seule
@@ -111,8 +115,11 @@ Deux décisions complémentaires marquantes de la session :
   MC (précédence → 463/463), RQ1 (CPU mutée → 464/464), RF1 (2/2 → 466/466) ;
 - **Croisée B→C native : PASS** (test #500, `ReflectedProgramGuardCrossTest`) —
   programID réfléchi → garde → refus au mismatch → reprise au rebinding ;
-- **Contiguïté** : paires seeds 1/3 et shuffles complets 61219/7 verts dans la
-  campagne finale (`shuffle-*-rf1.log`, 466/466).
+- **Contiguïté** : les logs `shuffle-*-rf1.log` et `pair-seed*-rf1.log` sont
+  verts, mais l'audit ne les requalifie pas seuls par le hash du binaire. Bornes
+  H acceptées, même exe `0a952ff3…`, 2026-10-19T14:24–14:25 : graines 1 et 3
+  échec→création 2/2, graine 4 création→échec 2/2, `LoadShaderFailureTest`
+  isolé 1/1, shuffles 7 et 61219 466/466.
 
 ## Enseignements harness
 
