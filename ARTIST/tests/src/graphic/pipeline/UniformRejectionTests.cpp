@@ -6,6 +6,7 @@
 #include <memory>
 #include <stdexcept>
 #include <type_traits>
+#include <utility>
 #include <opengl/glFunctionMock.hpp>
 #include <graphic/pipeline/Uniform.hpp>
 
@@ -355,6 +356,30 @@ namespace
         rejectAndKeep(uniform, true, "UNSUPPORTED_TYPE");
         rejectAndKeep(uniform, glm::bvec3(true), "UNSUPPORTED_TYPE");
         rejectAndKeep(uniform, std::string("unsupported"), "UNSUPPORTED_TYPE");
+        EXPECT_TRUE(mock.glCalls().empty());
+    }
+
+    TEST_F(UniformRejectionTest, MovedFromUnsupportedTypeRejectsBeforeDispatchAndPreservesDestination)
+    {
+        auto source = make(GL_INT);
+        source.getContext().setValue<GLint>(101);
+        const auto *context = &source.getContext();
+        const auto *value = &source.get<GLint>();
+        Uniform destination(std::move(source));
+
+        try { source.set<bool>(true); FAIL() << "expected moved-from rejection"; }
+        catch (const Error &error)
+        {
+            EXPECT_THAT(error.what(), ::testing::HasSubstr("ERROR::UNIFORM::FREED_CONTEXT"));
+            EXPECT_THAT(error.what(), ::testing::Not(::testing::HasSubstr("UNSUPPORTED_TYPE")));
+        }
+
+        EXPECT_TRUE(mock.glCalls().empty());
+        EXPECT_TRUE(mock.uniformCalls().empty());
+        EXPECT_EQ(&destination.getContext(), context);
+        ASSERT_NO_THROW((void)destination.get<GLint>());
+        EXPECT_EQ(&destination.get<GLint>(), value);
+        EXPECT_EQ(destination.get<GLint>(), 101);
     }
 
     TEST_F(UniformRejectionTest, DirectSetterStillChecksMetadataAndNativePreconditions)
