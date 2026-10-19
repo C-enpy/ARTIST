@@ -4,7 +4,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <unordered_set>
 #include <graphic/Api.hpp>
 #include <graphic/opengl/context/PassContext.hpp>
 #include <common/exception/TraceableException.hpp>
@@ -45,7 +44,16 @@ namespace artist::graphic::opengl::pipeline::component::pass
 
             GLint numAttributes = 0;
             glGetProgramiv(passID, GL_ACTIVE_ATTRIBUTES, &numAttributes);
-            if (numAttributes == 0) return;
+            if (numAttributes < 0)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_COUNT");
+            }
+            graphic::api::OpenGL::PassContext::AttributeMap attributes;
+            if (numAttributes == 0)
+            {
+                openglContext.replaceAttributes(std::move(attributes));
+                return;
+            }
             GLint maxNameLength = 0;
             glGetProgramiv(passID, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxNameLength);
             if (maxNameLength <= 0)
@@ -53,9 +61,8 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_NAME");
             }
 
-            // Duplicate reflection entries are invalid within this invocation.
-            // A later explicit reload still replaces existing map entries.
-            std::unordered_set<std::string> reflectedNames;
+            // Staging owns this Reader's entire next generation. A failure
+            // destroys only the candidate and preserves all published borrows.
             for (GLint i = 0; i < numAttributes; ++i)
             {
                 // Non-NUL fill makes a missing terminator observable, instead of
@@ -83,12 +90,12 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 {
                     throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_LOCATION");
                 }
-                if (!reflectedNames.insert(name).second)
+                if (attributes.contains(name))
                 {
                     throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::DUPLICATE_NAME");
                 }
 
-                // Create an Attribute object and store it in the context
+                // New reflected attributes have no native VBO to retire.
                 auto attributeContext = std::make_unique<graphic::api::OpenGL::AttributeContext>();
                 attributeContext->setAttributeID(static_cast<GLuint>(location));
                 attributeContext->setGLSize(static_cast<GLuint>(size));
@@ -97,8 +104,9 @@ namespace artist::graphic::opengl::pipeline::component::pass
 
                 // Known limitation of OpenGL: Attributes profile are driven by Pass profile
                 auto attribute = std::make_unique<graphic::pipeline::Attribute<graphic::api::OpenGL, graphic::opengl::profile::Attribute::Classic>>(std::move(attributeContext));
-                openglContext.addAttribute(name, std::move(attribute));
+                attributes.emplace(name, std::move(attribute));
             }
+            openglContext.replaceAttributes(std::move(attributes));
         }
     };
 }

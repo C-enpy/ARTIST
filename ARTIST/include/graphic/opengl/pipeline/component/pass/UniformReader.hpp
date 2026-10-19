@@ -3,7 +3,6 @@
 #include <GL/glew.h>
 #include <memory>
 #include <string>
-#include <unordered_set>
 #include <vector>
 #include <graphic/Api.hpp>
 #include <graphic/opengl/context/PassContext.hpp>
@@ -42,7 +41,16 @@ namespace artist::graphic::opengl::pipeline::component::pass
 
             GLint numUniforms = 0;
             glGetProgramiv(passID, GL_ACTIVE_UNIFORMS, &numUniforms);
-            if (numUniforms <= 0) return;
+            if (numUniforms < 0)
+            {
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::INVALID_COUNT");
+            }
+            graphic::api::OpenGL::PassContext::UniformMap uniforms;
+            if (numUniforms == 0)
+            {
+                openglContext.replaceUniforms(std::move(uniforms));
+                return;
+            }
 
             GLint maximumNameLength = 0;
             glGetProgramiv(passID, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maximumNameLength);
@@ -53,9 +61,8 @@ namespace artist::graphic::opengl::pipeline::component::pass
             // The driver reports the capacity including the terminating NUL.
             // Names are runtime reflection data, not bounded by a C++ type.
             std::vector<GLchar> uniformName(static_cast<std::size_t>(maximumNameLength));
-            // Only duplicates within this reflection are invalid. A later
-            // explicit free/load may replace metadata from the old program.
-            std::unordered_set<std::string> reflectedNames;
+            // The local candidate owns all allocations until the whole Reader
+            // succeeds. Existing names in the published map are not duplicates.
 
             for (GLint i = 0; i < numUniforms; ++i)
             {
@@ -72,7 +79,7 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 {
                     throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::INVALID_NAME");
                 }
-                if (!reflectedNames.insert(name).second)
+                if (uniforms.contains(name))
                 {
                     throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::DUPLICATE_NAME");
                 }
@@ -87,15 +94,17 @@ namespace artist::graphic::opengl::pipeline::component::pass
                     throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::INVALID_LOCATION");
                 }
 
-                // Create a Uniform object and store it in the map
+                // Build metadata without touching the published generation.
                 auto uniformContext = std::make_unique<graphic::api::OpenGL::UniformContext>();
                 uniformContext->setUniformID(static_cast<GLuint>(location));
                 uniformContext->setGLType(type);
                 uniformContext->setSize(static_cast<GLuint>(size));
+                uniformContext->setProgramID(passID);
                 // Known limitation of OpenGL: Uniforms profile are driven by Pass profile
                 auto uniform = std::make_unique<graphic::pipeline::Uniform<graphic::api::OpenGL>>(std::move(uniformContext));
-                openglContext.addUniform(name, std::move(uniform));
+                uniforms.emplace(name, std::move(uniform));
             }
+            openglContext.replaceUniforms(std::move(uniforms));
         }
     };
 }
