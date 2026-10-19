@@ -9,6 +9,7 @@
 #include <exception>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 #include <opengl/glFunctionMock.hpp>
 #include <graphic/opengl/validator/Validator.hpp>
@@ -137,6 +138,48 @@ namespace
         ASSERT_NO_THROW(AttributeReader::on(context));
         EXPECT_TRUE(context.getAttributes().empty());
         EXPECT_EQ(deletedNames(), (std::vector<GLuint>{73, 74}));
+    }
+
+    TEST_F(ReflectionPublicationTests, EmptyCommitRetiresMovedFromWrapperWithoutCurrentContext)
+    {
+        auto movedFrom = std::make_unique<Attribute>();
+        Attribute destination(std::move(*movedFrom));
+        expectSpecificError([&] { (void)movedFrom->getContext(); }, Error("ERROR::ATTRIBUTE::FREED_CONTEXT"));
+
+        GL::PassContext context;
+        auto *old = movedFrom.get();
+        ASSERT_NO_THROW(context.addAttribute("old", std::move(movedFrom)));
+        ASSERT_EQ(context.getAttribute("old"), old);
+        Mock::instance()->configureCurrentContext(nullptr);
+
+        EXPECT_NO_THROW(context.replaceAttributes({}));
+        EXPECT_TRUE(context.getAttributes().empty());
+        EXPECT_EQ(context.getAttribute("old"), nullptr);
+        EXPECT_TRUE(Mock::instance()->glCalls().empty());
+        EXPECT_TRUE(Mock::instance()->deleteBufferCalls().empty());
+        EXPECT_EQ(Mock::instance()->contextQueryCount(), 0u);
+    }
+
+    TEST_F(ReflectionPublicationTests, PointReplacementPublishesNewAttributeOverMovedFromWrapperWithoutCurrentContext)
+    {
+        auto movedFrom = std::make_unique<Attribute>();
+        Attribute destination(std::move(*movedFrom));
+        expectSpecificError([&] { (void)movedFrom->getContext(); }, Error("ERROR::ATTRIBUTE::FREED_CONTEXT"));
+
+        GL::PassContext context;
+        auto *old = movedFrom.get();
+        ASSERT_NO_THROW(context.addAttribute("old", std::move(movedFrom)));
+        ASSERT_EQ(context.getAttribute("old"), old);
+        auto replacement = std::make_unique<Attribute>();
+        auto *published = replacement.get();
+        Mock::instance()->configureCurrentContext(nullptr);
+
+        ASSERT_NO_THROW(context.addAttribute("old", std::move(replacement)));
+        EXPECT_EQ(context.getAttributes().size(), 1u);
+        EXPECT_EQ(context.getAttribute("old"), published);
+        EXPECT_TRUE(Mock::instance()->glCalls().empty());
+        EXPECT_TRUE(Mock::instance()->deleteBufferCalls().empty());
+        EXPECT_EQ(Mock::instance()->contextQueryCount(), 0u);
     }
 
     TEST_F(ReflectionPublicationTests, LateReaderFailureKeepsOldVboAndPublishesNoPrefix)

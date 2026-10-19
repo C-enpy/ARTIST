@@ -78,7 +78,10 @@ namespace artist::graphic::context
             const auto old = m_attributes.find(name);
             if (old != m_attributes.end())
             {
-                old->second->getContext().validateDestructionContext();
+                if (!old->second->isMovedFrom())
+                {
+                    old->second->getContext().validateDestructionContext();
+                }
                 old->second = std::move(attribute);
             }
             else
@@ -133,7 +136,10 @@ namespace artist::graphic::context
             }
             for (const auto &entry : m_attributes)
             {
-                entry.second->getContext().validateDestructionContext();
+                if (!entry.second->isMovedFrom())
+                {
+                    entry.second->getContext().validateDestructionContext();
+                }
             }
             static_assert(noexcept(m_attributes.swap(attributes)), "Attribute publication must not throw");
             m_attributes.swap(attributes);

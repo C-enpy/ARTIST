@@ -80,7 +80,7 @@ namespace artist::graphic::pipeline
         IAttribute(const IAttribute &) = delete;
         IAttribute &operator=(const IAttribute &) = delete;
 
-        /// The source becomes moved-from: any further access throws ERROR::ATTRIBUTE::FREED_CONTEXT.
+        /// The source becomes moved-from: context access throws ERROR::ATTRIBUTE::FREED_CONTEXT.
         IAttribute(IAttribute &&other) noexcept : m_context(std::move(other.m_context)) {}
         IAttribute &operator=(IAttribute &&other)
         {
@@ -90,6 +90,12 @@ namespace artist::graphic::pipeline
                 m_context = std::move(other.m_context);
             }
             return *this;
+        }
+
+        /// Observes the wrapper state without requiring a context or touching the graphics API.
+        [[nodiscard]] bool isMovedFrom() const
+        {
+            return !m_context;
         }
 
         /// Retires the native resource, preserving CPU value and reflection metadata.
