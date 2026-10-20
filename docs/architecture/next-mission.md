@@ -1,50 +1,49 @@
 ---
-title: "Prochaine mission — chemin d'exécution Pipeline"
+title: "Prochaine mission — pointeur entre missions"
 category: architecture
 tags: [artist, architecture, rendering, cpp]
 aliases: [next-mission]
-summary: "Mission proposée : chemin d'exécution concret pour la chaîne OpenGL Classic à deux passes, en coexistence avec IPipeline. Non démarrée. ADR-0002 reste Proposed."
-status: proposed
+summary: "La mission chemin d'exécution Pipeline est exécutée et close au périmètre Windows Debug (fdbce15). L'étape 3 (ADR-0004) est candidate, non sélectionnée : décision humaine requise."
+status: pointer
 implementation: not-started
-source_revision: 8f4c81599b089cca6b38b553873783e609986627
+source_revision: fdbce15dcc05663cc58618a844d931b07b84750f
 created: 2026-10-19
-updated: 2026-10-19
+updated: 2026-10-20
 sources:
   - "architecture/missions/2026-10-19-pipeline-execution-path.md"
   - "architecture/correction-plan.md"
 provenance:
-  extracted: 0.7
-  inferred: 0.3
+  extracted: 0.8
+  inferred: 0.2
   ambiguous: 0.0
 ---
 
-# Prochaine mission — chemin d'exécution Pipeline
+# Prochaine mission — pointeur entre missions
 
-> [!important] Proposée le 2026-10-19, non démarrée
-> L'ordre complet est
-> [[architecture/missions/2026-10-19-pipeline-execution-path|la fiche Pipeline]].
-> Préparation documentaire seulement : pas de worker, pas de modification de
-> `ARTIST/`, pas de `/ensemble-mission start`. ADR-0002, ADR-0004 et ADR-0006
-> restent Proposed. ADR-0003 reste Accepted/partial.
+> [!important] Mission Pipeline exécutée et close le 2026-10-20
+> Le chemin d'exécution spécialisé est livré : type fermé `ClosedExecution<API>`
+> N=2 en coexistence avec `IPipeline`, **546/546 natifs** Windows Debug
+> (477 unitaires + 69 OpenGL), RED→GREEN tracé, revue et audits indépendants
+> PASS. Preuves : [[references/session-2026-10-20-pipeline-execution-path|session]]
+> et [[architecture/missions/2026-10-19-pipeline-execution-path|la fiche]].
+> ADR-0002/0004/0006 restent **Proposed** ; ADR-0003 reste Accepted/partial.
 
-La lifetime OpenGL est close. Son pointeur est archivé :
-[[architecture/missions/2026-10-19-next-mission-lifetime-closed|mission lifetime]].
-La tranche suivante du [[architecture/correction-plan|plan de correction]] est
-le chemin d'exécution spécialisé.
+## Candidat suivant — non sélectionné
 
-**Résultat attendu.** Un type d'exécution fermé, à côté de `IPipeline`, pour
-les deux passes déjà exercées par `PipelineTest` (OpenGL Classic). Même ordre
-de programmes GL que `use` / `useNext`. Même règle `reset` ≠ unbind. Le
-curseur et les erreurs actuelles restent ceux déjà testés.
+La [[architecture/correction-plan|tranche 3]] du plan (préparation des données
+et bindings, [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]]) est la
+suite naturelle : elle exige une **adoption explicite** d'ADR-0004, qui n'est
+pas donnée ici. Aucune mission n'est sélectionnée automatiquement ; le choix
+revient à une décision humaine via une nouvelle fiche de mission.
 
-**Contrainte.** La topologie et la forme de coexistence sont figées par
-`engine-architect` puis par une décision humaine avant tout auteur. Si la
-forme correcte est une refonte du dispatch, la mission s'arrête.
+## Restes ouverts consignés (non bloquants)
 
-**Preuve.** Readback `GL_CURRENT_PROGRAM` aligné sur `UsePassTest`,
-`UseNextPassTest` et `ResetPipelineTest`, plus les suites `unit` et `opengl`
-du candidat Windows Debug. Pas de gain de performance revendiqué.
-
-Le graphe, les scores PM/LLM, le registre QA et les commandes sont dans la
-fiche. Le démarrage ultérieur passe par `/ensemble-mission`, `config`, puis
-le `start` de l'utilisateur.
+- Pattern d'unbind skippable par `ASSERT_*` dans les trois tests préexistants
+  (`UsePassTest`, `UseNextPassTest`, `ResetPipelineTest`) — registre GAP-defer,
+  mission harnais ultérieure.
+- Consolidation optionnelle des helpers d'erreur (`expectExactError` vs
+  `TestUtils::expectSpecificError`) — ne pas affaiblir vers le pattern
+  sous-chaîne.
+- Panne du transport de membre Ensemble (`final_response` non capturé, 6/6)
+  — incident infrastructure consigné dans la session ; les transports sous-agents
+  directs ont fonctionné en substitution signalée.

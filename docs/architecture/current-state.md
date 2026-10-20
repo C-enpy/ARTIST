@@ -3,24 +3,26 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Photographie F7 clôturée à6d6dcb7 : Uniform/Attribute et maps possédés en unique_ptr, composants empruntés, Reader durci, uploads single-value ;299natifs Windows Debug, ASan245 historique non requalifié."
+summary: "Photographie clôturée à fdbce15 : chemin d'exécution fermé N=2 (ClosedExecution) en coexistence avec IPipeline ; ownership A1/A2/F7 conservé ; 546/546 natifs Windows Debug (477 unit + 69 OpenGL)."
 status: observed
-source_revision: 6d6dcb79ef7d249dd1061e09f20e5514268fad9f
+source_revision: fdbce15dcc05663cc58618a844d931b07b84750f
 created: 2026-10-03
-updated: 2026-10-19
+updated: 2026-10-20
 ---
 
 # État réel d'ARTIST
 
 > [!info] Portée de cette photographie
-> Candidat `6d6dcb7`, vérifié le2026-10-18 : **299/299 natifs** (251CPU+48OpenGL),
-> zéro skip. F7 ajoute ownership unique Uniform/Attribute/maps et emprunts,
-> UniformReader durci, uploads single-value bornés et diagnostics corrigés.
-> Les garanties Pipeline A1+A2 restent en place. **ASan245 appartient à T4**,
-> avant TE/F2/F1, pas au candidat final. ADR-0003 reste **Accepted/partial**.
-> Voir [[architecture/missions/2026-10-18-f7-uniform-attribute|archive F7]],
-> `_meta/session-2026-10-18-f7-final.json` et l'archive Pipeline pour les historiques.
-> **Aucune performance ni équivalence d'image mesurée.**
+> Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +
+> 69 OpenGL), zéro échec/skip rapporté par CTest. Le chemin d'exécution fermé
+> N=2 (`ClosedExecution`) est intégré **en coexistence** avec `IPipeline`
+> ([[architecture/missions/2026-10-19-pipeline-execution-path|fiche de mission]]) ;
+> les garanties ownership Pipeline A1+A2, IPass A2/F6 et F7 restent en place.
+> **Aucune performance ni équivalence d'image mesurée** ; le virtuel `IPass::use`
+> demeure (coût constaté, jamais revendiqué comme gain). ASan, Release et autres
+> plateformes restent hors périmètre. Preuves :
+> [[references/session-2026-10-20-pipeline-execution-path|session de mission]] et
+> `_meta/session-2026-10-20-pipeline-execution-path.json`.
 
 ## Ce qui est présent
 
@@ -167,22 +169,38 @@ graphique, ni l'image produite.
   membre non `const` — inatteignable sous MSVC sur cette baseline, coupe
   séparée avant toute exposition GCC.
 
+## Chemin d'exécution fermé N=2 (X, 2026-10-20)
+
+- `graphic/pipeline/ClosedExecution.hpp` : `ClosedExecution<API>` — deux emprunts
+  `IPass<API>&` stockés dans l'ordre d'activation, `run()` = séquence littérale
+  `first.use(); second.use();` ; échec à l'étape k ⇒ étape k+1 jamais lancée,
+  exception propagée **identique** (aucun try/catch/wrap). Ne lit ni n'écrit le
+  curseur, aucun cache de handle, aucun ownership, pas de paramètre `PROFILE`,
+  indépendant d'`IPipeline` : **coexistence** (`Pipeline<API, PROFILE>` non
+  remplacé, aucun consumer migré). ADR-0002 reste **Proposed** — période de
+  coexistence tolérée, pas la cible terminale (tuple/concrets, hors mission).
+- Effets GL exactement ceux d'`IPass::use()` : l'unique site `glUseProgram` du
+  moteur reste `component/pass/User.hpp:33` ; `reset` ≠ unbind inchangé (F10).
+- Tests : 10 unitaires (`ClosedExecutionTests` + `ClosedExecutionPassTests` —
+  ordre `InSequence` par invocation, curseur pré-états −1/0/1, échecs k=1/k=2,
+  restart après échec, moved-from réel ×2, chaînes croisées anti-mémoïsation,
+  destructeur sans `free()`) et 5 OpenGL (`PipelineTest.ClosedExecution*` —
+  readback `GL_CURRENT_PROGRAM`, interaction reset/F10, `passID=0` sans
+  exception, garde RAII `ProgramUnbinder`, asserts `glIsProgram` pré-run).
+
 ## Ce qui est vérifié en exécution (et ce qui ne l'est pas)
 
-- Suites à `f914d77` : **215/215 normales** (176 unitaires + 39 OpenGL) et
-  **198/198 ASan** sélection déclarée avant run (176 + 22 GL) ; zéro
-  échec/skip **rapporté par CTest** — ce n'est **pas** une conformité de tous
-  les oracles. Bilan QA indépendant : **24 critères — 14 PASS, 3 FAIL,
-  7 INCONCLUSIVE**, 85/85 artefacts recoupés : l'oracle GMock préexistant
-  (`AttributeTest.SetTest`), le FAIL du protocole RED A1c et le FAIL historique
-  d'environnement appelant (corrigé par H-RESTORE sans effacer la preuve)
-  restent retenus. L'état du harnais à `95c2b9e` est vérifié séparément
-  (quatorze contrôles harnais **séparés**, cinq binaires identiques, aucun
-  rerun moteur).
+- Suites à `fdbce15` : **546/546 natifs** (477 unitaires + 69 OpenGL), zéro
+  échec/skip rapporté par CTest. Preuve RED→GREEN tracée : commit `36c6a13`
+  (tests seuls, sans le type) → `fatal error C1083` attendu reproduit, puis
+  `ac692db` (le type) → vert ; rounds F (P1/P2/R-1/R-2, `6273698`) et F1
+  (`fdbce15`) vérifiés par le lead (runner), JUnit recoupés, empreintes des
+  cinq fichiers gelés consignées (`_meta/session-2026-10-20-pipeline-execution-path.json`).
 - Les comptages historiques datés restent exacts : baseline Shader→Pass
   **122/122** (95 + 27), loaded-owner **137/137** (106 + 31, ASan 106 + 9),
   F5 **143/143** + 121 ASan, mission C `e736bba` **165/165** + 143 ASan,
-  I0 `18edc72` 214 + 197.
+  I0 `18edc72` 214 + 197, mission Pipeline `f914d77` 215/215 + 198 ASan
+  (bilan QA : 14 PASS, 3 FAIL, 7 INCONCLUSIVE, archivé).
 - **Non vérifié** : les 17 autres GL sous ASan (sélection, pas abandon),
   une absence exhaustive d'UB ou de fuite driver, Release, Linux, CI distante,
   UBSan/TSan, couverture, équivalence d'image, performance, coût machine et

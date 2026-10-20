@@ -3,12 +3,12 @@ title: "Ordre de mission — chemin d'exécution Pipeline"
 category: architecture
 tags: [artist, architecture, rendering, cpp]
 aliases: [pipeline-execution-path, mission-execution]
-summary: "Proposition : un chemin d'exécution concret pour la chaîne OpenGL Classic à deux passes, en coexistence avec IPipeline. ADR-0002 reste Proposed. Préparation seulement."
-status: proposed
-implementation: not-started
+summary: "EXÉCUTÉE et close le 2026-10-20 au périmètre Windows Debug : type fermé ClosedExecution N=2 en coexistence avec IPipeline, 546/546 natifs (fdbce15). ADR-0002 reste Proposed."
+status: closed
+implementation: done-perimeter
 source_revision: 8f4c81599b089cca6b38b553873783e609986627
 created: 2026-10-19
-updated: 2026-10-19
+updated: 2026-10-20
 sources:
   - "architecture/correction-plan.md"
   - "adr/0002-preparation-et-execution-specialisee.md"
@@ -23,14 +23,21 @@ provenance:
 
 # Ordre de mission — chemin d'exécution Pipeline
 
-> [!important] Proposition documentaire, pas un démarrage
-> Écrite le 2026-10-19 contre HEAD `8f4c815`. Le comportement moteur de
-> référence reste l'attestation lifetime sur `71dacbb` (466/466 unitaires,
-> 64/64 OpenGL, Windows x64 Debug). Aucun nouveau run. Aucun worker, aucun
-> worktree, aucune modification de `ARTIST/`. ADR-0002, ADR-0004 et ADR-0006
-> restent **Proposed**. ADR-0003 reste **Accepted/partial**.
+> [!important] EXÉCUTÉE et close le 2026-10-20
+> Cette fiche a été exécutée au périmètre Windows x64 Debug et close : type
+> fermé `ClosedExecution<API>` (52 lignes) + 15 tests (10 unitaires, 5 OpenGL),
+> **546/546 natifs** à `fdbce15` (477 unit + 69 OpenGL), RED→GREEN tracé
+> (`36c6a13` → `ac692db`), revue R PASS (aucun bloquant), audit V « suite
+> discriminante ». Décisions humaines du 2026-10-20 : topologie et forme
+> approuvées, obligation (d) endossée, placement durci, O14 acceptée,
+> GAP-accept I-A endossé, P1/P2/F1 acceptés. Preuves :
+> [[references/session-2026-10-20-pipeline-execution-path|session de mission]],
+> évidence sous `.opencode/evidence/mission-pipeline-execution-path/`.
+> ADR-0002, ADR-0004 et ADR-0006 restent **Proposed** ; ADR-0003 reste
+> **Accepted/partial**.
 >
-> Pointeur vivant : [[architecture/next-mission]]. Pointeur lifetime archivé :
+> Pointeur vivant : [[architecture/next-mission]] (candidat étape 3,
+> non sélectionné). Pointeur lifetime archivé :
 > [[architecture/missions/2026-10-19-next-mission-lifetime-closed]].
 
 ## Résultat attendu

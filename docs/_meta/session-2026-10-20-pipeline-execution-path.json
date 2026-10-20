@@ -1,0 +1,53 @@
+{
+  "session": "2026-10-20-pipeline-execution-path",
+  "created": "2026-10-20",
+  "mission": "chemin d'exécution Pipeline (fiche docs/architecture/missions/2026-10-19-pipeline-execution-path.md)",
+  "candidate_final": {
+    "sha": "fdbce15dcc05663cc58618a844d931b07b84750f",
+    "suites": "546/546 (477 unit + 69 opengl), 0 FAIL, 0 skip",
+    "log": "out/mission-x/green-f1.log"
+  },
+  "runs": [
+    { "step": "baseline", "sha": "e47c92042296f5a55629035b5625fc17d5f4b51c", "counts": "530/530 (466+64)", "log": "out/baseline-x-2026-10-20.log", "sha256_16": "ABC2E29537BCEBEC" },
+    { "step": "X author commits", "sha": "36c6a13 x-red (tests seuls) → ac692db x-green (type)", "branch": "ensemble-35541b43-7e32-41a6-a12c-962d7d846ba5", "author": "cpp-x (cpp-engineer)", "worktree": "C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-2dc31e0a-xl23p5-cpp-x" },
+    { "step": "RED reproduced (lead)", "sha": "état x-red sans header", "result": "exit 1 — fatal error C1083 'graphic/pipeline/ClosedExecution.hpp' à ClosedExecutionTests.cpp(20)", "log": "out/mission-x/red-repro-build.log", "sha256_16": "C552758E9885FC27" },
+    { "step": "X integrated", "sha": "ef009fa150ee69fb6fbf4d8644528e8713e1cbc7", "counts": "543/543 (474+69)", "log": "out/mission-x/green-integration.log", "sha256_16": "9C6F5403384F3FE0", "junit": "junit-unit-cpp-x-run.xml (474/0), junit-opengl-cpp-x-run.xml (69/0) — runs auteur worktree" },
+    { "step": "F round (P1/P2/R-1/R-2)", "sha": "6273698", "counts": "545/545 (476+69)", "log": "out/mission-x/green-f-round.log", "sha256_16": "5C12B7BA75BAB070" },
+    { "step": "F1 (destructeur)", "sha": "fdbce15dcc05663cc58618a844d931b07b84750f", "counts": "546/546 (477+69)", "log": "out/mission-x/green-f1.log" }
+  ],
+  "frozen_files_sha256_16": {
+    "ARTIST/include/graphic/pipeline/Pipeline.hpp": "7237E7C05EC09BA1",
+    "ARTIST/include/graphic/pipeline/Pass.hpp": "AF7AA0E80C288102",
+    "ARTIST/include/graphic/context/PipelineContext.hpp": "9D6A3A878D0635DE",
+    "ARTIST/include/graphic/opengl/pipeline/component/pipeline/User.hpp": "6CEA8B5DD55790DE",
+    "ARTIST/include/graphic/opengl/pipeline/component/pipeline/Resetter.hpp": "096C42C8DE4D2183"
+  },
+  "human_decisions": {
+    "date": "2026-10-20",
+    "topology_form": "approved (ledger K décisions 1–2, VER-K corrigé)",
+    "obligation_d_V5": "endossée",
+    "placement": "durci include/graphic/pipeline/",
+    "O14": "acceptée",
+    "GAP-accept_I-A": "endossé",
+    "P1_P2_F1": "acceptés",
+    "R-1_R-2": "appliqués",
+    "deferred": "pattern unbind ASSERT_* des 3 tests préexistants (UsePassTest/UseNextPassTest/ResetPipelineTest) — mission harnais ultérieure"
+  },
+  "independent_reviews": {
+    "K_ledger": "sous-agent direct engine-architect ses_ea74e12adffeJNOKHg61zS4peS",
+    "VER-K": "sous-agent direct engine-architect ses_ea72fc374ffewhmoQT9BlZlHsH (C1–C9 : 1 sous-détail REFUTED corrigé, comptage C6 corrigé)",
+    "Q_plan": "sous-agent direct qa-planner ses_ea70618b5ffeacB8J6s9aZ3xmM",
+    "R": "sous-agent direct correctness-reviewer ses_ea6ccc341ffe7FrgTtYiyluflc — A–I PASS, 0 bloquant",
+    "G": "sous-agent direct test-engineer ses_ea6ccc341ffdlU1cmQWcca4GwP — 0 orphelin/doublon/péremption",
+    "V": "sous-agent direct test-reviewer ses_ea697aa90ffeRYnMX04aiFB8ss — suite discriminante, F1 mineur (traité)"
+  },
+  "transport_incident": {
+    "summary": "runtime de membre Ensemble : 6/6 échecs (4 engine-architect, 1 qa-planner, 1 cpp-engineer) à travers cursor/openai et deux révisions de politique ; le membre travaille mais la final_response n'est jamais capturée et le runtime ne commite pas",
+    "profile_file_unchanged": true,
+    "user_fix_applied": "blocs ensemble-report + glob ADR sur 23 profils (arbre, non commité)",
+    "fix_effect": "aucun — la panne persiste après le fix",
+    "substitution": "sous-agents directs (même profil, fresh) : K, VER-K, Q, R, G, F, V — 7/7 complétés, signalés à chaque fois",
+    "diagnosis_limit": "état de session dans opencode.db (opaque), aucune trace filesystem"
+  },
+  "adr_status_after": { "0001": "Proposed", "0002": "Proposed", "0003": "Accepted/partial", "0004": "Proposed (candidate étape 3, non sélectionnée)", "0005": "Accepted/partial", "0006": "Proposed", "0007": "Proposed", "0008": "Accepted/verified Windows Debug only" }
+}

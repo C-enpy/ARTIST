@@ -4,10 +4,12 @@ category: journal
 tags: [artist, documentation]
 summary: Historique append-only des transformations et mises à jour de la documentation ARTIST.
 created: 2026-10-03
-updated: 2026-10-19
+updated: 2026-10-20
 ---
 
 # Journal documentaire
+
+- [2026-10-20] MISSION_DONE mission="chemin d'exécution Pipeline" candidate="fdbce15" suites="546/546 (477 unit + 69 OpenGL), 0 FAIL, 0 skip" red="36c6a13 sans type → C1083 reproduit" green="ac692db → type" rounds="F (P1/P2/R-1/R-2, 6273698) + F1" review="R PASS (0 bloquant), V suite discriminante" adr="0002/0004/0006 Proposed inchangés" human="topologie+forme approuvées, placement durci, O14/F1 acceptés" evidence=".opencode/evidence/mission-pipeline-execution-path/" incident="transport membre final_response non capturé 6/6, substitution sous-agents directs signalée" details="_meta/session-2026-10-20-pipeline-execution-path.json".
 
 - [2026-10-03] INIT vault_path="docs" collection="artist-wiki" config=".wiki.json".
 - [2026-10-03] SOURCES preserved=4 location="research" hashes="_meta/research-sources.json".

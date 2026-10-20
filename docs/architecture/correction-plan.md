@@ -141,11 +141,18 @@ borné COVERED). ADR-0003 reste Accepted/partial. Le pointeur clos est
 Voir [[references/session-2026-10-19-opengl-lifetime|la session]] et
 [[architecture/missions/2026-10-19-opengl-lifetime-audit-v|l'audit V]].
 
-**Chemin d'exécution, 2026-10-19** : [[architecture/next-mission|la prochaine
-mission]] propose l'étape 2, un chemin concret pour la chaîne OpenGL Classic
-à deux passes, en coexistence avec `IPipeline`. Ordre :
-[[architecture/missions/2026-10-19-pipeline-execution-path|fiche]].
-Proposition seulement, aucun RED, ADR-0002/0004/0006 restent Proposed.
+**Chemin d'exécution, 2026-10-20 — exécuté et close au périmètre** :
+[[architecture/missions/2026-10-19-pipeline-execution-path|la mission de l'étape 2]],
+un chemin concret pour la chaîne OpenGL Classic à deux passes en coexistence avec
+`IPipeline`, est livrée : type fermé `ClosedExecution<API>`, **546/546 natifs**
+Windows Debug à `fdbce15` (477 unit + 69 OpenGL), RED→GREEN tracé, revue R et
+audits G/V indépendants PASS, décision humaine sur topologie/coexistence
+enregistrée. ADR-0002/0004/0006 restent **Proposed** ; adoption d'ADR-0002/0004
+non demandée par la tranche. Preuves :
+[[references/session-2026-10-20-pipeline-execution-path|session]].
+
+**Étape 3 (ADR-0004) : candidate, NON sélectionnée** — adoption explicite
+requise, décision humaine.
 
 **Sortie** : baseline caractérisée, configurations valides/invalides, données et
 workload figés ; aucune performance inventée faute de mesure.
