@@ -74,6 +74,21 @@ namespace
     private:
         const bool *m_contextAlive;
     };
+
+    /// Scope guard unbinding the current program at scope exit. Declared
+    /// immediately before run(), it is the last RAII local of the test and
+    /// runs FIRST at return — including through an ASSERT_* early return —
+    /// so no path leaves a program bound while the GPU owners are destroyed.
+    /// glUseProgram(0) is idempotent.
+    class ProgramUnbinder
+    {
+    public:
+        ProgramUnbinder() = default;
+        ProgramUnbinder(const ProgramUnbinder &) = delete;
+        ProgramUnbinder &operator=(const ProgramUnbinder &) = delete;
+
+        ~ProgramUnbinder() { glUseProgram(0); }
+    };
 }
 
 /// A1c: every GPU owner lives in the test body — created after SetUp(),
@@ -81,7 +96,8 @@ namespace
 /// are loaded before their transfer to the Pipeline; the tests keep GL handles
 /// copied by value for observation, never owners, and no living PassContext
 /// alias (F6 stays out of scope). Tests that bind a program unbind explicitly
-/// before their owners are destroyed.
+/// before their owners are destroyed: the ClosedExecution tests declare a
+/// ProgramUnbinder guard before run(), firing on every return path.
 class PipelineTest : public OpenGLComponentTest
 {
 protected:
@@ -237,6 +253,7 @@ TEST_F(PipelineTest, ClosedExecutionBindsProgram1AndLeavesInitialCursor)
     ASSERT_EQ(loaded.pipeline.getContext().getCurrentPass(), -1);
 
     pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ProgramUnbinder unbind; // destroyed first, before the owners, on every path
     ASSERT_NO_THROW(chain.run());
 
     GLint current = 0;
@@ -245,7 +262,6 @@ TEST_F(PipelineTest, ClosedExecutionBindsProgram1AndLeavesInitialCursor)
     EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), -1);
     EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
     EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
-    glUseProgram(0);
 }
 
 TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtZeroWhileBindingProgram1)
@@ -253,9 +269,13 @@ TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtZeroWhileBindingProgram1)
     GlLeaseWitness lease(glContextAlive);
     auto loaded = makeLoadedPipeline();
     ASSERT_NE(loaded.program1, 0);
+    ASSERT_NE(loaded.program0, 0);
+    ASSERT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    ASSERT_EQ(glIsProgram(loaded.program1), GL_TRUE);
     loaded.pipeline.getContext().setCurrentPass(0);
 
     pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ProgramUnbinder unbind; // destroyed first, before the owners, on every path
     ASSERT_NO_THROW(chain.run());
 
     GLint current = 0;
@@ -264,7 +284,6 @@ TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtZeroWhileBindingProgram1)
     EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), 0);
     EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
     EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
-    glUseProgram(0);
 }
 
 TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtOneWhileBindingProgram1)
@@ -272,9 +291,13 @@ TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtOneWhileBindingProgram1)
     GlLeaseWitness lease(glContextAlive);
     auto loaded = makeLoadedPipeline();
     ASSERT_NE(loaded.program1, 0);
+    ASSERT_NE(loaded.program0, 0);
+    ASSERT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    ASSERT_EQ(glIsProgram(loaded.program1), GL_TRUE);
     loaded.pipeline.getContext().setCurrentPass(1);
 
     pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ProgramUnbinder unbind; // destroyed first, before the owners, on every path
     ASSERT_NO_THROW(chain.run());
 
     GLint current = 0;
@@ -283,7 +306,6 @@ TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtOneWhileBindingProgram1)
     EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), 1);
     EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
     EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
-    glUseProgram(0);
 }
 
 TEST_F(PipelineTest, ClosedExecutionThenResetRewindsCursorAndKeepsProgram1)
@@ -291,9 +313,13 @@ TEST_F(PipelineTest, ClosedExecutionThenResetRewindsCursorAndKeepsProgram1)
     GlLeaseWitness lease(glContextAlive);
     auto loaded = makeLoadedPipeline();
     ASSERT_NE(loaded.program1, 0);
+    ASSERT_NE(loaded.program0, 0);
+    ASSERT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    ASSERT_EQ(glIsProgram(loaded.program1), GL_TRUE);
     loaded.pipeline.getContext().setCurrentPass(0);
 
     pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ProgramUnbinder unbind; // destroyed first, before the owners, on every path
     ASSERT_NO_THROW(chain.run());
     GLint current = 0;
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
@@ -306,7 +332,6 @@ TEST_F(PipelineTest, ClosedExecutionThenResetRewindsCursorAndKeepsProgram1)
     EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
     EXPECT_EQ(static_cast<GLuint>(current), loaded.program1);
-    glUseProgram(0);
 }
 
 TEST_F(PipelineTest, ClosedExecutionUnloadedSecondPassBindsZeroWithoutThrowing)
@@ -321,11 +346,11 @@ TEST_F(PipelineTest, ClosedExecutionUnloadedSecondPassBindsZeroWithoutThrowing)
     ASSERT_EQ(glIsProgram(program0), GL_TRUE);
 
     pipeline::ClosedExecution<api::OpenGL> chain(first, second);
+    ProgramUnbinder unbind; // destroyed first, before the owners, on every path
     ASSERT_NO_THROW(chain.run());
 
     GLint current = 0;
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
     EXPECT_EQ(current, 0);
     EXPECT_EQ(glIsProgram(program0), GL_TRUE);
-    glUseProgram(0);
 }

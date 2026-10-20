@@ -84,6 +84,18 @@ namespace
         return chain;
     }
 
+    /// Same silent-construction contract as makeSilentChain, for a chain
+    /// borrowing the passes in an explicit (possibly crossed) order.
+    Chain makeSilentChain(Pipeline &pipeline, MockPass &first, MockPass &second, const int firstIndex, const int secondIndex)
+    {
+        EXPECT_CALL(first, use()).Times(0);
+        EXPECT_CALL(second, use()).Times(0);
+        Chain chain(pipeline.forPass(firstIndex), pipeline.forPass(secondIndex));
+        EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(&first));
+        EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(&second));
+        return chain;
+    }
+
     template <typename F, typename E>
     void expectExactError(F &&operation, const E &expected)
     {
@@ -166,6 +178,26 @@ TEST(ClosedExecutionTests, SecondRunRepeatsOrderWithoutCursorReset)
     EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 1);
 }
 
+TEST(ClosedExecutionTests, RunOnCrossedChainsOverTheSamePassesReplaysFreshly)
+{
+    auto owned = makeOwnedPasses();
+    owned.pipeline.getContext().setCurrentPass(0);
+    Chain chain01 = makeSilentChain(owned.pipeline, *owned.first, *owned.second, 0, 1);
+    Chain chain10 = makeSilentChain(owned.pipeline, *owned.first, *owned.second, 1, 0);
+
+    // Invocation-ordered across both chains over the same passes: chain01
+    // activates first then second, chain10 second then first. Memoizing by
+    // pass identity or static state leaves the second chain at zero calls.
+    ::testing::InSequence order;
+    EXPECT_CALL(*owned.first, use()).Times(1);
+    EXPECT_CALL(*owned.second, use()).Times(1);
+    EXPECT_CALL(*owned.second, use()).Times(1);
+    EXPECT_CALL(*owned.first, use()).Times(1);
+    chain01.run();
+    chain10.run();
+    EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 0);
+}
+
 TEST(ClosedExecutionTests, FirstPassFailureSkipsSecondAndPropagates)
 {
     auto owned = makeOwnedPasses();
@@ -176,6 +208,32 @@ TEST(ClosedExecutionTests, FirstPassFailureSkipsSecondAndPropagates)
     EXPECT_CALL(*owned.second, use()).Times(0);
 
     expectExactError([&] { chain.run(); }, failure);
+    EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 0);
+}
+
+TEST(ClosedExecutionTests, RunAfterFirstPassFailureRestartsCleanly)
+{
+    auto owned = makeOwnedPasses();
+    owned.pipeline.getContext().setCurrentPass(0);
+    Chain chain = makeSilentChain(owned.pipeline, *owned.first, *owned.second);
+    const StepFailure failure("closed-execution-restart");
+
+    // Phase 1: the first pass fails and the second is never activated. The
+    // phase-scoped expectations (including Times(0)) are verified and cleared
+    // so phase 2 starts with no leftover cardinality.
+    EXPECT_CALL(*owned.first, use()).WillOnce(::testing::Throw(failure));
+    EXPECT_CALL(*owned.second, use()).Times(0);
+    expectExactError([&] { chain.run(); }, failure);
+    EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 0);
+    EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(owned.first));
+    EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(owned.second));
+
+    // Phase 2: the same chain restarts from the first pass with no persistent
+    // failure state, no one-shot latch, no spurious exception.
+    ::testing::InSequence order;
+    EXPECT_CALL(*owned.first, use()).Times(1);
+    EXPECT_CALL(*owned.second, use()).Times(1);
+    EXPECT_NO_THROW(chain.run());
     EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 0);
 }
 
