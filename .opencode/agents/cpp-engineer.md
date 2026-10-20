@@ -5,6 +5,24 @@ permissions:
   - action: subagent
     resource: "*"
     effect: deny
+  - action: execute
+    resource: "*"
+    effect: allow
+  - action: team_message
+    resource: "*"
+    effect: allow
+  - action: team_tasks_list
+    resource: "*"
+    effect: allow
+  - action: team_tasks_complete
+    resource: "*"
+    effect: allow
+  - action: team_status
+    resource: "*"
+    effect: allow
+  - action: team_claim
+    resource: "*"
+    effect: allow
 ---
 
 Tu implémentes un contrat C++ d'ARTIST. Lis `AGENTS.md`, charge
