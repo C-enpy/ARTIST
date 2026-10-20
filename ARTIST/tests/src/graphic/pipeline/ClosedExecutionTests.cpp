@@ -237,6 +237,26 @@ TEST(ClosedExecutionTests, RunAfterFirstPassFailureRestartsCleanly)
     EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 0);
 }
 
+TEST(ClosedExecutionTests, DestructionDoesNotFreeTheBorrowedPasses)
+{
+    auto owned = makeOwnedPasses();
+    {
+        Chain chain = makeSilentChain(owned.pipeline, *owned.first, *owned.second);
+        ::testing::InSequence order;
+        EXPECT_CALL(*owned.first, use()).Times(1);
+        EXPECT_CALL(*owned.second, use()).Times(1);
+        EXPECT_CALL(*owned.first, free()).Times(0);
+        EXPECT_CALL(*owned.second, free()).Times(0);
+        chain.run();
+    } // the chain is destroyed here: neither borrow may be freed
+
+    // The passes stay owned by the caller: destroying the chain must not free
+    // either of them. The phase-scoped Times(0) expectations are verified
+    // after the destructor has run.
+    EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(owned.first));
+    EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(owned.second));
+}
+
 TEST(ClosedExecutionTests, SecondPassFailurePropagatesAfterFirstActivated)
 {
     auto owned = makeOwnedPasses();
