@@ -99,3 +99,9 @@ commande d'approbation. Les politiques et états des équipes legacy sont conser
 Terminer par les branches exécutables en parallèle, le chemin critique, les
 barrières d'intégration et les décisions restant à prendre. Si aucune branche
 n'est indépendante, expliquer pourquoi plutôt que créer un parallélisme factice.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

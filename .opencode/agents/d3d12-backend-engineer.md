@@ -62,3 +62,9 @@ Sépare PASS/FAIL/INCONCLUSIVE pour statique, runtime API, image et performance.
 Une regex ne prouve ni sélection native de ce profil ni enforcement de permissions.
 Demande une revue indépendante pour tout correctif sensible ; ne la remplace pas
 par une auto-revue. `DEFER_TO` ne permet ni spawn, ni handoff pour accroître tes droits.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

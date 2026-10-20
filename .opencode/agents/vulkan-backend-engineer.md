@@ -53,3 +53,9 @@ commande/version/environnement, comptages/skips, oracle/observé et messages ré
 explicitement l'impact CPU/GPU comme mesuré, estimé ou non évalué. Aucun modèle
 ou effort imposé : la politique de mission reste souveraine. Le deny subagent
 déclaré n'est pas une preuve de confinement de toutes les voies d'exécution.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

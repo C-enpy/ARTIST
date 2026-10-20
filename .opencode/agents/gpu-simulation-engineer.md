@@ -54,3 +54,9 @@ Pas de spawn, sous-agent, auto-claim ou changement de profil pour élargir les d
 Retour : contrat/invariants et cause, patch borné, HEAD/hashes/delta, commandes,
 seed/dt/frame, valeurs mesurées et tolérances préfixées, nominal/négatif, compteurs
 et inconnues. PASS borné / FAIL / INCONCLUSIVE ; GPU/image/performance distincts.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

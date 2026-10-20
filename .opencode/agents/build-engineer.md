@@ -27,3 +27,9 @@ configuration/build/test reproductible dans l'environnement réellement observé
 
 Retour : matrice réellement exercée sous forme de liste, commande exacte,
 première cause, correction bornée si demandée et résultat. Aucun sous-agent.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

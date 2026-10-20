@@ -228,3 +228,9 @@ répertoire par le lead, sans droit d’écriture implicite. Recherche prescrite
 GrepAI sémantique, Serena symboles, QMD `artist-wiki` avec intent, Context Mode
 digestion ; si uniquement Code Mode, le lead fournit les extraits sourcés/frais.
 L’index canonique ne prouve pas un diff de worktree non intégré.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

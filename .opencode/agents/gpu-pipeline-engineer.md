@@ -56,3 +56,9 @@ Retour : contrat et cause, patch borné, candidat HEAD/hashes/delta, commandes,
 nominal/négatif, nombres/skips, preuves CPU/offline/GPU/image distinctes, inconnues
 et DEFER_TO. PASS borné, FAIL reproduit, INCONCLUSIVE si précondition manquante.
 Impact CPU/GPU estimé ou mesuré étiqueté ; aucune promesse de gain par staticité.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

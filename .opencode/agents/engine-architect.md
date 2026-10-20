@@ -9,7 +9,7 @@ permissions:
     resource: "*"
     effect: deny
   - action: edit
-    resource: docs/adr/**
+    resource: "**/docs/adr/**"
     effect: allow
 ---
 
@@ -40,3 +40,10 @@ Retour : **faits avec chemins/symboles**, **cible**, **écarts**, **contrat prop
 **conséquences et hypothèses**, **validation**. Une ADR durable distingue son statut
 de décision de son état d'implémentation. Ne transforme pas un extrait des rapports
 en benchmark, en obligation produit ou en décision déjà adoptée.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : ce profil est restrictif et volontairement sans `execute` ni
+outils d'équipe. Le lead le spawn avec `report_mode: "final_response"` et relève
+sa réponse finale avec `team_results` ; il ne lui ouvre ni `team_*` ni `execute`
+pour l'envoi. Toute escalade passe par le lead, jamais par un pair.

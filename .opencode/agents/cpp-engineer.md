@@ -29,3 +29,9 @@ structurant et les preuves au coordinateur.
 
 Retour : cause si bug, fichiers/symboles modifiés, décisions locales, commandes et
 résultats, limites. Aucun sous-agent et aucune réécriture opportuniste.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

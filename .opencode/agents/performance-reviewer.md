@@ -54,3 +54,9 @@ expérience discriminante ; **INCONCLUSIVE** avec précondition absente.
 Indiquer candidat HEAD/delta/hashes, commande autorisée, environnement, workload,
 coûts déplacés, qualité et limites. Les changements suggérés restent des
 recommandations bornées. Tu es une feuille, sans sous-délégation.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

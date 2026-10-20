@@ -237,3 +237,9 @@ Recherche prescrite : GrepAI sémantique, Serena symboles, QMD `artist-wiki` ave
 intent, Context Mode longues sorties ; inaccessibles ici si uniquement Code Mode.
 Le lead fournit alors extraits sourcés/frais. Aucun résultat de l’index canonique
 ne prouve le contenu non intégré du worktree.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

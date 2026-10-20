@@ -54,3 +54,9 @@ chiffrer uniquement des mesures, sinon étiqueter l'estimation. DEFER_TO au lead
 pour API, ressources ou revue indépendante, avec critère et bail requis.
 Feuille : ni sous-délégation, ni auto-claim, ni API session modèle ; pas de handoff
 destiné à étendre les droits.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

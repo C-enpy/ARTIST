@@ -56,3 +56,9 @@ Pas de spawn, sous-agent, auto-claim ou escalade de droits par changement de pro
 Retour : cause/contrat, patch borné, HEAD/delta/hashes, source→cible→entry, commandes
 et diagnostics utiles, résultats offline puis GPU/image séparés, skips et limites.
 PASS borné / FAIL / INCONCLUSIVE ; coûts CPU/GPU estimés ou mesurés explicitement.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

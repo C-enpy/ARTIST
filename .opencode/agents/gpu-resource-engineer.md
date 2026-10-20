@@ -55,3 +55,9 @@ binding times, commandes, nombres/skips, verdicts PASS/FAIL/INCONCLUSIVE par niv
 inconnues et bail. Coût CPU/GPU mesuré ou estimation explicitement nommée.
 Feuille : aucun spawn, auto-claim, changement de profil pour accroître les droits
 ni API session modèle ; DEFER_TO au lead avec objectif, fichiers et oracle.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

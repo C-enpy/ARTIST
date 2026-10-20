@@ -227,3 +227,9 @@ Navigation prescrite : GrepAI sémantique, Serena symboles, QMD collection
 `artist-wiki` avec intent, Context Mode logs ; demande les digestions sourcées au
 lead si leur seule route est Code Mode. L’index canonique ne contient pas forcément
 ton diff isolé ; ne le prends pas pour preuve du candidat.
+
+<!-- ensemble-report: final_response -->
+
+Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
+le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
+`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.
