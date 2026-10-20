@@ -10,7 +10,7 @@ provenance:
   inferred: 0.0
   ambiguous: 0.0
 created: 2026-10-03
-updated: 2026-10-19
+updated: 2026-10-20
 qmd_collection: artist-wiki
 ---
 
@@ -24,11 +24,14 @@ qmd_collection: artist-wiki
 > Ces notes forment la **mémoire d'ingénierie d'ARTIST** — écrite pour les
 > agents IA et les mainteneurs : états observés sourcés, décisions (ADR),
 > fiches de mission, sessions distillées et journal append-only. Ce n'est pas
-> une documentation d'usage. La couche **documentation d'usage** (consommation
-> de la bibliothèque : getting-started, walkthroughs, snippets extraits des
-> tests) est sélectionnée comme mission suivante —
-> [[architecture/missions/2026-10-20-usage-doc-layer|la fiche]] — et vivra
-> sous `docs/usage/`.
+> une documentation d'usage : la couche **documentation d'usage**
+> (consommation de la bibliothèque : getting-started, walkthroughs, snippets
+> extraits des tests) vit sous `docs/usage/` —
+> [[usage/getting-started|premiers pas]],
+> [[usage/pipeline-and-passes|pipeline et passes]],
+> [[usage/uniform-attribute|uniform et attribute]],
+> [[usage/closed-execution|exécution fermée]]
+> (fiche de mission : [[architecture/missions/2026-10-20-usage-doc-layer]]).
 
 ARTIST est aujourd'hui une fondation de rendu C++23/OpenGL ; l'objectif est un
 moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
