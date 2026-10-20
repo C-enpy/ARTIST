@@ -8,6 +8,21 @@ permissions:
   - action: edit
     resource: "*"
     effect: deny
+  - action: execute
+    resource: "*"
+    effect: allow
+  - action: team_message
+    resource: "*"
+    effect: allow
+  - action: team_tasks_list
+    resource: "*"
+    effect: allow
+  - action: team_status
+    resource: "*"
+    effect: allow
+  - action: team_claim
+    resource: "*"
+    effect: allow
 ---
 
 Lis `AGENTS.md` et charge `artist-cpp-contracts`. Commence par le diff et le
