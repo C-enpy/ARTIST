@@ -3,6 +3,7 @@
 #include <utility>
 #include <vector>
 #include <graphic/pipeline/Pipeline.hpp>
+#include <graphic/pipeline/ClosedExecution.hpp>
 
 #include <graphic/opengl/profile/Pass.hpp>
 #include <graphic/opengl/profile/Shader.hpp>
@@ -223,4 +224,108 @@ TEST_F(PipelineTest, PassesCountTest)
     EXPECT_EQ(loaded.pipeline.getPassesCount(), 2);
     EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
     EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
+}
+
+TEST_F(PipelineTest, ClosedExecutionBindsProgram1AndLeavesInitialCursor)
+{
+    GlLeaseWitness lease(glContextAlive);
+    auto loaded = makeLoadedPipeline();
+    ASSERT_NE(loaded.program0, 0);
+    ASSERT_NE(loaded.program1, 0);
+    ASSERT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    ASSERT_EQ(glIsProgram(loaded.program1), GL_TRUE);
+    ASSERT_EQ(loaded.pipeline.getContext().getCurrentPass(), -1);
+
+    pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ASSERT_NO_THROW(chain.run());
+
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    EXPECT_EQ(static_cast<GLuint>(current), loaded.program1);
+    EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), -1);
+    EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
+    glUseProgram(0);
+}
+
+TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtZeroWhileBindingProgram1)
+{
+    GlLeaseWitness lease(glContextAlive);
+    auto loaded = makeLoadedPipeline();
+    ASSERT_NE(loaded.program1, 0);
+    loaded.pipeline.getContext().setCurrentPass(0);
+
+    pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ASSERT_NO_THROW(chain.run());
+
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    EXPECT_EQ(static_cast<GLuint>(current), loaded.program1);
+    EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), 0);
+    EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
+    glUseProgram(0);
+}
+
+TEST_F(PipelineTest, ClosedExecutionLeavesCursorAtOneWhileBindingProgram1)
+{
+    GlLeaseWitness lease(glContextAlive);
+    auto loaded = makeLoadedPipeline();
+    ASSERT_NE(loaded.program1, 0);
+    loaded.pipeline.getContext().setCurrentPass(1);
+
+    pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ASSERT_NO_THROW(chain.run());
+
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    EXPECT_EQ(static_cast<GLuint>(current), loaded.program1);
+    EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), 1);
+    EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
+    glUseProgram(0);
+}
+
+TEST_F(PipelineTest, ClosedExecutionThenResetRewindsCursorAndKeepsProgram1)
+{
+    GlLeaseWitness lease(glContextAlive);
+    auto loaded = makeLoadedPipeline();
+    ASSERT_NE(loaded.program1, 0);
+    loaded.pipeline.getContext().setCurrentPass(0);
+
+    pipeline::ClosedExecution<api::OpenGL> chain(loaded.pipeline.forPass(0), loaded.pipeline.forPass(1));
+    ASSERT_NO_THROW(chain.run());
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    ASSERT_EQ(static_cast<GLuint>(current), loaded.program1);
+    ASSERT_EQ(loaded.pipeline.getContext().getCurrentPass(), 0);
+
+    ASSERT_NO_THROW(loaded.pipeline.reset());
+    EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), -1);
+    EXPECT_EQ(glIsProgram(loaded.program0), GL_TRUE);
+    EXPECT_EQ(glIsProgram(loaded.program1), GL_TRUE);
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    EXPECT_EQ(static_cast<GLuint>(current), loaded.program1);
+    glUseProgram(0);
+}
+
+TEST_F(PipelineTest, ClosedExecutionUnloadedSecondPassBindsZeroWithoutThrowing)
+{
+    GlLeaseWitness lease(glContextAlive);
+    ClassicPass first = makeClassicPass();
+    ClassicPass second = makeClassicPass();
+    ASSERT_NO_THROW(first.load());
+    const GLuint program0 = first.getContext().getPassID();
+    ASSERT_NE(program0, 0u);
+    ASSERT_EQ(second.getContext().getPassID(), 0u);
+    ASSERT_EQ(glIsProgram(program0), GL_TRUE);
+
+    pipeline::ClosedExecution<api::OpenGL> chain(first, second);
+    ASSERT_NO_THROW(chain.run());
+
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    EXPECT_EQ(current, 0);
+    EXPECT_EQ(glIsProgram(program0), GL_TRUE);
+    glUseProgram(0);
 }
