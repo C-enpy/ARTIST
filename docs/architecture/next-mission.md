@@ -28,13 +28,21 @@ provenance:
 > et [[architecture/missions/2026-10-19-pipeline-execution-path|la fiche]].
 > ADR-0002/0004/0006 restent **Proposed** ; ADR-0003 reste Accepted/partial.
 
-## Candidat suivant — non sélectionné
+## Session suivante — sélectionnée par l'opérateur le 2026-10-20
+
+La mission **couche documentation d'usage** est retenue pour la prochaine
+session : [[architecture/missions/2026-10-20-usage-doc-layer|la fiche]].
+Motivation : l'audit d'audience du vault — la mémoire d'ingénierie est à jour,
+la couche consommation de la bibliothèque est absente et les touchpoints face
+utilisateur (Readme, build-and-test) ont dérivé de deux à cinq missions.
+
+## Candidat d'après — non sélectionné
 
 La [[architecture/correction-plan|tranche 3]] du plan (préparation des données
-et bindings, [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]]) est la
-suite naturelle : elle exige une **adoption explicite** d'ADR-0004, qui n'est
-pas donnée ici. Aucune mission n'est sélectionnée automatiquement ; le choix
-revient à une décision humaine via une nouvelle fiche de mission.
+et bindings, [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]]) reste la
+suite naturelle **ensuite** : elle exige une **adoption explicite** d'ADR-0004,
+qui n'est pas donnée ici. Le choix revient à une décision humaine via une
+nouvelle fiche de mission.
 
 ## Restes ouverts consignés (non bloquants)
 

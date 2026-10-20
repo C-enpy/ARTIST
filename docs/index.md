@@ -20,6 +20,16 @@ qmd_collection: artist-wiki
 > Vault : `docs/` du dépôt ARTIST. Collection QMD : **`artist-wiki`**.
 > Identité portable : `.wiki.json` à la racine du dépôt.
 
+> [!info] Audience de cette documentation
+> Ces notes forment la **mémoire d'ingénierie d'ARTIST** — écrite pour les
+> agents IA et les mainteneurs : états observés sourcés, décisions (ADR),
+> fiches de mission, sessions distillées et journal append-only. Ce n'est pas
+> une documentation d'usage. La couche **documentation d'usage** (consommation
+> de la bibliothèque : getting-started, walkthroughs, snippets extraits des
+> tests) est sélectionnée comme mission suivante —
+> [[architecture/missions/2026-10-20-usage-doc-layer|la fiche]] — et vivra
+> sous `docs/usage/`.
+
 ARTIST est aujourd'hui une fondation de rendu C++23/OpenGL ; l'objectif est un
 moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 **l'observation du code**, **la cible proposée** et **les preuves d'exécution**.

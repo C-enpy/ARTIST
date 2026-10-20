@@ -26,6 +26,9 @@ note, en minuscules ; les propriétés `status` et `implementation` portent les
 - `assets` : formats, cooker, données préparées et streaming.
 - `build` : CMake, Conan, toolchains et configuration.
 - `testing` : preuves CPU/GPU, erreurs, images et déterminisme.
+- `usage` : documentation de consommation de la bibliothèque — getting-started,
+  walkthroughs et snippets sourcés des tests ; distincte de la mémoire
+  d'ingénierie.
 - `performance` : workloads, mesures et budgets.
 - `tooling` : OpenCode, MCP, Obsidian et QMD.
 - `documentation` : organisation, provenance et maintenance du vault.

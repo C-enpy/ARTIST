@@ -154,6 +154,12 @@ non demandée par la tranche. Preuves :
 **Étape 3 (ADR-0004) : candidate, NON sélectionnée** — adoption explicite
 requise, décision humaine.
 
+**Sélection du 2026-10-20** : la mission **couche documentation d'usage** est
+retenue pour la session suivante
+([[architecture/missions/2026-10-20-usage-doc-layer|fiche]]) — audit d'audience
+du vault : mémoire d'ingénierie à jour, couche consommation absente, touchpoints
+dérivés. La tranche 3 reste candidate d'après.
+
 **Sortie** : baseline caractérisée, configurations valides/invalides, données et
 workload figés ; aucune performance inventée faute de mesure.
 
