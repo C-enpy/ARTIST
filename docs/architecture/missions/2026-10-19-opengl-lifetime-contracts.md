@@ -21,7 +21,7 @@ provenance:
 # Contrats lifetime OpenGL — mission 2026-10-19 (K)
 
 > [!important] Portée et autorité
-> Contrats adoptés pour la mission [[architecture/next-mission|lifetime OpenGL]],
+> Contrats adoptés pour la mission [[architecture/missions/2026-10-19-next-mission-lifetime-closed|lifetime OpenGL]],
 > valables pour elle. **Aucune promotion d'ADR** : 0001/2/4/6/7 restent
 > Proposed, 0003/5 Accepted partial, 0008 vérifié Windows Debug seul.
 > Implémentation non commencée au moment de l'adoption.

@@ -135,4 +135,4 @@ Deux décisions complémentaires marquantes de la session :
   avant la liaison du fork) fonctionne pour passer un brief à l'exécution
   forkée.
 
-Voir [[architecture/next-mission|la mission]], [[architecture/missions/2026-10-19-opengl-lifetime-qa-plan|le plan QA]] et [[architecture/missions/2026-10-19-attribute-session-ingestion|l'ingestion précédente]] pour le contexte.
+Voir [[architecture/missions/2026-10-19-next-mission-lifetime-closed|la mission archivée]], [[architecture/missions/2026-10-19-opengl-lifetime-qa-plan|le plan QA]] et [[architecture/missions/2026-10-19-attribute-session-ingestion|l'ingestion précédente]] pour le contexte.

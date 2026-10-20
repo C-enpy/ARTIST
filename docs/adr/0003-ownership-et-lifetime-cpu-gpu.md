@@ -9,7 +9,7 @@ implementation: partial
 decision_origin: Analyse des contexts partagés et recommandation commune des rapports ; adoption explicite par l'utilisateur le 2026-10-03 avec une migration franche (rien n'est en production).
 summary: Séparer propriétaires et emprunts du chemin d'appel, définir invalidation et libération conforme aux règles du backend.
 created: 2026-10-03
-updated: 2026-10-18
+updated: 2026-10-19
 ---
 
 # ADR-0003 — Ownership et lifetime CPU/GPU
@@ -297,7 +297,7 @@ restent exacts à leur date.
   `b9c90fd`, revue indépendante PASS et QA176CPU/176ASan avec contrôles appariés
   négatifs/positifs. Ce changement de test ne résout pas F7 et n'efface pas les
   FAIL historiques ni les fragilités de shuffle hors périmètre — voir
-  [[architecture/next-mission|la fiche courte]].
+  [[architecture/missions/2026-10-18-f7-uniform-attribute|l'archive F7]].
 
 ## Références
 

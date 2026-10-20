@@ -80,6 +80,6 @@ prouvés par cette ingestion. Les garde-fous restent proposés, non adoptés.
 
 Les [[adr/README|statuts ADR]] ne changent pas :0003/0005 Accepted/partial,
 0008 Windows Debug seulement,0001/0002/0004/0006/0007 Proposed.
-La [[architecture/next-mission|prochaine mission]] doit partir de ces limites
-et du code courant, pas de l'ancien pointeur proposant encore d'implémenter
-Attribute-GL comme une fonctionnalité nouvelle.
+La mission lifetime, depuis close, est partie de ces limites et du code
+courant. Le pointeur suivant est [[architecture/next-mission|le chemin
+d'exécution]], pas une reprise d'Attribute-GL.

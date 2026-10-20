@@ -5,7 +5,7 @@ tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
 status: proposed
 created: 2026-10-03
-updated: 2026-10-18
+updated: 2026-10-19
 ---
 
 # Plan de correction de l'existant
@@ -60,7 +60,7 @@ ownership du Pipeline, curseur et contexte unique — contrat préalable G-A de 
 215 normales (176 unit + 39 GL) / 198 ASan sélection), H-RESTORE `1a75c75` et H-FIXTURE `95c2b9e`
 vérifiés indépendamment ; QA indépendante 24 critères — 14 PASS, 3 FAIL, 7 INCONCLUSIVE, aucun PASS
 global (oracle GMock préexistant reten FAIL). ADR-0003 reste Accepted / partial ;
-[[architecture/next-mission|la fiche courte]] ne sélectionne **aucune nouvelle mission** et pointe
+La fiche courte d'alors ne sélectionnait aucune nouvelle mission et pointait
 seulement l'amendement GMock Attribute terminé au périmètre, autorisé par
 l'utilisateur le 2026-10-17 : `b9c90fd`, RED causal et contrôle négatif préservés,
 revue fresh PASS, QA176CPU/176ASan indépendante conforme. La fragilité d'ordre
@@ -127,8 +127,8 @@ uniques, emprunts et concept négatif UniformReader, rejet des uploads arrays vi
 set single-value.299natifs Windows Debug, ASan245historique T4 distinct. Les
 étapes proposées ci-dessous ne sont pas automatiquement adoptées par cette clôture.
 
-**Cadrage après F7, 2026-10-18** : la [[architecture/next-mission|prochaine mission
-proposée]] ferme le contrat local réflexion/configuration Attribute OpenGL
+**Cadrage après F7, 2026-10-18** : la mission alors proposée, conservée dans
+[[references/session-2026-10-18-attribute-gl|la rétrospective Attribute-GL]], fermait le contrat local réflexion/configuration Attribute OpenGL
 (12 formes CPU canoniques, validation et cible d'upload). Le lifetime VBO reste
 une tranche distincte. Analyses architecte/PM seulement, aucun RED nouveau ni
 autorisation d'exécution ; ADR-0004 reste Proposed. L'ancien pointeur est
@@ -136,9 +136,16 @@ autorisation d'exécution ; ADR-0004 reste Proposed. L'ancien pointeur est
 
 **Lifetime OpenGL, 2026-10-19** : cette tranche distincte est exécutée et close
 au périmètre Windows Debug sur `71dacbb` (466/466 unit + 64/64 OpenGL, audit V
-borné COVERED). ADR-0003 reste Accepted/partial. Aucune mission suivante n'est
-sélectionnée. Voir [[references/session-2026-10-19-opengl-lifetime|la session]]
-et [[architecture/missions/2026-10-19-opengl-lifetime-audit-v|l'audit V]].
+borné COVERED). ADR-0003 reste Accepted/partial. Le pointeur clos est
+[[architecture/missions/2026-10-19-next-mission-lifetime-closed|archivé]].
+Voir [[references/session-2026-10-19-opengl-lifetime|la session]] et
+[[architecture/missions/2026-10-19-opengl-lifetime-audit-v|l'audit V]].
+
+**Chemin d'exécution, 2026-10-19** : [[architecture/next-mission|la prochaine
+mission]] propose l'étape 2, un chemin concret pour la chaîne OpenGL Classic
+à deux passes, en coexistence avec `IPipeline`. Ordre :
+[[architecture/missions/2026-10-19-pipeline-execution-path|fiche]].
+Proposition seulement, aucun RED, ADR-0002/0004/0006 restent Proposed.
 
 **Sortie** : baseline caractérisée, configurations valides/invalides, données et
 workload figés ; aucune performance inventée faute de mesure.

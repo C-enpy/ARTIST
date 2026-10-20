@@ -4,7 +4,7 @@ category: development
 tags: [artist, cpp, ownership, testing, tooling]
 summary: "Incidents Shader→Pass/Pipeline et harnais, oracle Attribute corrigé b9c90fd, fragilités de shuffle Loader/ShaderLoader préexistantes conservées ; preuves historiques et chemins encore non couverts distingués."
 created: 2026-10-03
-updated: 2026-10-18
+updated: 2026-10-19
 sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 0.96
@@ -505,8 +505,8 @@ test** et **ne réexécute rien** ; les statuts ci-dessous complètent, sans
   fatale vérifié statiquement dans GoogleTest v1.14.0, pas de scénario dédié
   exécuté. Le FAIL historique n'est pas requalifié. Manifeste :
   `_meta/session-2026-10-17-attribute-oracle-validation.json` ; contrat :
-  `_meta/session-2026-10-17-attribute-oracle-plan.json` ; fiche courte :
-  [[architecture/next-mission|next-mission]].
+  `_meta/session-2026-10-17-attribute-oracle-plan.json`. La fiche courte du
+  jour a depuis été remplacée.
 
 #### Addendum F7 T2 (2026-10-17) — oracle `SetTest` réaligné sur `Setter<T>`
 

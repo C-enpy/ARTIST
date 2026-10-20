@@ -7,7 +7,7 @@ summary: "Photographie F7 clôturée à6d6dcb7 : Uniform/Attribute et maps poss�
 status: observed
 source_revision: 6d6dcb79ef7d249dd1061e09f20e5514268fad9f
 created: 2026-10-03
-updated: 2026-10-18
+updated: 2026-10-19
 ---
 
 # État réel d'ARTIST
@@ -239,8 +239,8 @@ revue PASS de lecture avec réserves α–δ et QA 12 PASS / 2 INCONCLUSIVE sur
 ## Amendement oracle Attribute — terminé et vérifié le 2026-10-17
 
 La [[architecture/missions/2026-10-16-pipeline-ownership|mission Pipeline]] est
-terminée et archivée intégralement ; la [[architecture/next-mission|fiche
-courte]] ne sélectionne **aucune nouvelle mission** et pointe seulement
+terminée et archivée intégralement ; la fiche courte d'alors ne sélectionnait
+aucune nouvelle mission et pointait seulement
 l'**amendement oracle terminé au périmètre** : correction de l'oracle GMock préexistant
 (`AttributeTests.cpp:65`, `AttributeTest.SetTest`, diagnostic après summary,
 exit 0), autorisée par l'utilisateur le 2026-10-17. Le plan PM est validé et

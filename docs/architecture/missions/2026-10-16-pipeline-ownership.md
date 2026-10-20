@@ -8,7 +8,7 @@ status: completed
 implementation: verified
 source_revision: f914d77b17b1c3013bf06679c0f94537ee7ba24a
 created: 2026-10-16
-updated: 2026-10-17
+updated: 2026-10-19
 sources: [docs/architecture/next-mission.md, docs/adr/0003-ownership-et-lifetime-cpu-gpu.md, docs/development/known-incidents.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/correction-plan.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 ---
 
@@ -94,7 +94,7 @@ aucune nouvelle mission.
 > Les échecs de shuffle Loader/ShaderLoader sont reproduits à l'identique sur le
 > vrai pré-G1 et le GREEN sous deux seeds, conservés séparément sans élargissement.
 > Manifeste : `_meta/session-2026-10-17-attribute-oracle-validation.json`.
-> [[architecture/next-mission|La fiche courte]] ne choisit aucune nouvelle mission.
+> La fiche courte d'alors ne choisissait aucune nouvelle mission.
 > ADR-0004 reste `Proposed / not-started`, hors mission.
 
 ## Chaîne d'intégration réelle
