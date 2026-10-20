@@ -38,11 +38,19 @@ portable est dans [`.wiki.json`](.wiki.json) et son usage dans
 [`AGENTS.md`](AGENTS.md). Les quatre rapports sources sont conservés dans
 `research/`, avec leur provenance documentée dans le vault.
 
+## Documentation d'usage
+
+- [Premiers pas](docs/usage/getting-started.md) : build et chaîne Classic.
+- [Pipeline et passes](docs/usage/pipeline-and-passes.md) : ownership, curseur et erreurs.
+- [Uniform et Attribute](docs/usage/uniform-attribute.md).
+- [Exécution fermée](docs/usage/closed-execution.md).
+
 ## Compilation
 
 Baseline vérifiée sous **Windows x64, MSVC 19.44, C++23, CMake 3.31.7,
-Ninja 1.13.0 et Conan 2.12.2** : build complet et **109/109 tests réussis**,
-dont 22 tests sur un contexte OpenGL NVIDIA réel.
+Ninja 1.13.0 et Conan 2.12.2**. Dernière vérification tracée Windows Debug :
+**546/546 tests réussis** (477 unitaires + 69 OpenGL), au SHA
+`fdbce15dcc05663cc58618a844d931b07b84750f` ; pas une relance au HEAD documentaire.
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1

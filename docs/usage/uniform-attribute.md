@@ -1,56 +1,63 @@
 ---
-title: "Utiliser les uniforms et attributs réfléchis"
+title: "Utiliser les uniforms et attributes réfléchis"
 category: usage
-tags: [artist, documentation, cpp, ownership]
-summary: "Lire les maps possédées, emprunter leurs entrées et respecter le contrat single-value des uniforms."
+tags: [artist, guide, cpp, ownership]
+aliases: [Usage Uniform Attribute]
+summary: "Consommer les maps possédées par une passe, écrire une valeur uniforme et reconnaître les rejets de réflexion."
+status: observed
+source_revision: 1005dff0804e18c412129843e944d7f1f55a0f48
 created: 2026-10-20
 updated: 2026-10-20
-source_revision: ec9a9a641eef92c690d8ff97b94f81211da92ded
 sources:
+  - "ARTIST/component-tests/src/graphic/shader/UniformReaderComponentTests.cpp"
+  - "ARTIST/tests/src/graphic/pipeline/UniformTests.cpp"
+  - "ARTIST/tests/src/graphic/pipeline/UniformReaderFlowContractTests.cpp"
   - "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/UniformReaderTests.cpp"
   - "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/AttributeReaderTests.cpp"
   - "ARTIST/tests/src/graphic/pipeline/UniformCardinalityTests.cpp"
-  - "ARTIST/tests/src/graphic/pipeline/UniformReaderFlowContractTests.cpp"
 provenance:
   extracted: 0.9
   inferred: 0.1
   ambiguous: 0.0
 ---
 
-# Utiliser les uniforms et attributs réfléchis
+# Utiliser les uniforms et attributes réfléchis
 
-Après le chargement d'une passe, son contexte expose `getUniforms()` et
-`getAttributes()` : des maps indexées par **nom réfléchi**, dont les entrées
-sont possédées par `unique_ptr`. Ne pas transférer ces owners pour lire une
-entrée : `at(name)->getContext()` accède au contexte par emprunt ;
-`getUniform(name)` / `getAttribute(name)` donnent un pointeur emprunté
-(absent : `nullptr`). Voir [[usage/pipeline-and-passes]] pour obtenir une
-passe, et [[usage/getting-started]] pour le harnais Windows.
+Retour : [[index]] · Préparation : [[usage/getting-started]] et
+[[usage/pipeline-and-passes]].
 
-## Retrouver un nom sans le tronquer
+## Lire la réflexion, sans reprendre la propriété
 
-Extrait contigu 1:1 de
-`ARTIST/tests/src/graphic/opengl/pipeline/component/pass/UniformReaderTests.cpp`,
-test `UniformReaderTests.ReadUniforms_LongNameIsNotTruncated`, lignes 107–114.
-Il dépend des alias `context`, `pass`, du profil `Classic` et du helper de
-fixture `reflect` (réflexion GL mockée) du fichier ; ce n'est pas un programme
-autonome.
+Après le chargement de la passe, `getUniforms()` et `getAttributes()` exposent
+les maps dont les entrées sont possédées en `unique_ptr`. Le nom réfléchi sert
+de clé ; `at` ne transfère pas cette propriété. Les références vers wrappers
+et contexts sont des **emprunts**, pas des handles propriétaires.
+
+Extrait contigu exact de
+`ARTIST/component-tests/src/graphic/shader/UniformReaderComponentTests.cpp`,
+`UniformReaderComponentTest.NominalUniformHasNativeLocationAndType`
+(lignes 90–97 ; `pass` est créé et chargé par la fixture juste avant) :
 
 ```cpp
-    context::OpenGLPassContext passContext;
-    passContext.setPassID(1);
-    const std::string name = "uniform_" + std::string(300, 'a');
-    reflect({name});
-    ASSERT_NO_THROW(pass::OpenGLPassUniformReader<Classic>::on(passContext));
-    ASSERT_TRUE(passContext.getUniforms().contains(name));
-    EXPECT_EQ(passContext.getUniforms().size(), 1);
-    EXPECT_EQ(passContext.getUniforms().at(name)->getContext().getUniformID(), 7u);
+    const auto &uniforms = pass.getUniforms();
+    ASSERT_TRUE(uniforms.contains("testUniform"));
+    const auto &uniform = uniforms.at("testUniform")->getContext();
+    EXPECT_NE(uniform.getUniformID(), GLuint(-1));
+    EXPECT_EQ(uniform.getGLType(), GL_INT);
+    EXPECT_EQ(uniform.getGLSize(), 1u);
+    EXPECT_EQ(glGetUniformLocation(pass.getContext().getPassID(), "testUniform"),
+        static_cast<GLint>(uniform.getUniformID()));
 ```
 
-Pour les attributs, même accès par nom ; extrait contigu 1:1 de
+Ce bloc vérifie une location native, un type et une cardinalité ; il ne dessine
+pas une image. Les noms longs sont aussi couverts par
+`LongActiveUniformKeepsItsCompleteName` dans le même fichier. Ne pas tronquer
+les clés ni supposer que tout nom écrit dans un shader est actif.
+
+Pour les attributes, extrait contigu exact de
 `ARTIST/tests/src/graphic/opengl/pipeline/component/pass/AttributeReaderTests.cpp`,
-`AttributeReaderTests.ExactNaturalLongNameContract`, lignes 114–119.
-`openglContext` et `reflectedInput` appartiennent à la fixture du fichier.
+`AttributeReaderTests.ExactNaturalLongNameContract` (lignes 114–119 ;
+`openglContext` et `reflectedInput` appartiennent à la fixture mockée) :
 
 ```cpp
     openglContext->setPassID(1);
@@ -61,79 +68,89 @@ Pour les attributs, même accès par nom ; extrait contigu 1:1 de
     EXPECT_EQ(openglContext->getAttribute(name)->getContext().getAttributeID(), 0u);
 ```
 
-Une nouvelle réflexion réussie remplace la génération : reprendre les emprunts
-après cette opération, sans réutiliser les anciennes adresses. Une réflexion
-échouée conserve au contraire la génération précédente, y compris les valeurs
-et adresses, comme vérifié par `ReadUniforms_DuplicateNamePreservesPreviousGeneration`
-et `FaultInjection_DuplicateNamePreservesPreviousGeneration` dans ces fichiers.
-La destruction de l'owner invalide aussi les emprunts ; un pointeur ne prolonge
-aucune durée de vie. Aucune synchronisation inter-thread n'est fournie ici.
+## Écrire une valeur uniforme
 
-## Envoyer une seule valeur d'uniform
+Le wrapper `Uniform::set` stocke une valeur puis appelle le setter. L'accès
+par la map conserve le même wrapper ; ne pas déplacer son `unique_ptr` pour
+écrire une valeur. Le programme et le contexte OpenGL appropriés doivent être
+actifs : la réflexion seule ne constitue pas une activation.
 
-`set(value)` n'est pas une API d'upload de tableau. Une valeur `glm::vec3`
-est un seul élément, pas trois éléments. Extrait contigu 1:1 de
-`ARTIST/tests/src/graphic/pipeline/UniformCardinalityTests.cpp`,
-`UniformCardinalityTest.DefaultContextUploadsExactlyOneVec3`, lignes 100–111.
-Les alias `Context`, `Uniform`, `Mock`, les includes et le contexte courant
-simulé sont ceux de la fixture : cet extrait montre le contrat d'appel, pas
-une initialisation OpenGL réelle.
+Extrait contigu exact de `ARTIST/tests/src/graphic/pipeline/UniformTests.cpp`,
+`UniformTest.SetFloatUniform` (lignes 39–53) :
 
 ```cpp
-        auto context = std::make_unique<Context>();
-        context->setUniformID(42);
-        Uniform uniform(std::move(context));
-        const glm::vec3 value(2.0f, 3.0f, 5.0f);
-        EXPECT_CALL(*Mock::instance(), glUniform3fv_mock(42, 1, ::testing::_))
-            .WillOnce([&](GLint, GLsizei, const GLfloat *data)
-            {
-                EXPECT_EQ(data[0], value.x);
-                EXPECT_EQ(data[1], value.y);
-                EXPECT_EQ(data[2], value.z);
-            });
-        ASSERT_NO_THROW(uniform.set(value));
+    // Arrange
+    GLuint location = 42;
+    GLfloat value = 3.14f;
+    auto uniformContext = std::make_unique<api::OpenGL::UniformContext>();
+    uniformContext->setUniformID(location);
+    uniformContext->setValue(1.0f);
+
+    pipeline::Uniform<api::OpenGL> uniform(std::move(uniformContext));
+
+    // Expected call
+    EXPECT_CALL(*mock::glFunctionMock::instance(), glUniform1f_mock(location, value))
+        .Times(1);
+
+    // Act
+    ASSERT_NO_THROW(uniform.set(value));
 ```
 
-En usage réel, activer le programme propriétaire et conserver son contexte
-OpenGL courant sur le thread d'appel. La réflexion ne remplace pas cette
-activation. Le scope C++ ne prouve pas que les travaux GPU sont terminés :
-ces extraits CPU ne constituent pas un protocole de retrait GPU.
+C'est un **test mocké**, pas une recette de création manuelle d'une location
+réelle : la fixture configure le contexte courant et le programme 7. Le bloc
+montre le transfert unique du context et l'appel single-value ; il n'est pas
+un programme autonome. Les includes et alias restent dans le fichier cité.
 
-`Uniform::get<T>()` emprunte la valeur : un `set` réussi ou le remplacement /
-la destruction du contexte invalide cette référence. Dans `Uniform.hpp`, les
-refus OpenGL déterministes sont prévalidés avant le commit CPU ; le setter
-est ensuite exécuté après ce commit. Ne pas en déduire un rollback général
-si une erreur survient après celui-ci, ni une garantie pour tout composant
-personnalisé.
+`Attribute` n'est pas un second setter d'uniform : ses opérations
+`bind`/`set`/`unbind` concernent un buffer de données de sommets. La map
+d'attributes réfléchis fournit les noms et métadonnées ; elle ne remplace pas
+le contrat de layout, de VAO courant et de durée de vie des données d'upload.
 
-## Rejets à traiter, pas à contourner
+## Rejets à prévoir
 
-- **Cardinalité single-value** : taille réfléchie 0 ou 2 rejetée avant tout
-  appel GL avec `ERROR::UNIFORM::SET::ARRAY_NOT_SUPPORTED` (taille incluse).
-  Les tests typés `ArraySizeTwoIsRejectedBeforeGL` et
-  `SizeZeroIsRejectedBeforeGL` couvrent scalaires, vecteurs et matrices dans
-  `UniformCardinalityTests.cpp`. Une réflexion de tableau n'autorise donc pas
-  son écriture par `set(value)`.
-- **Location absente** : location GL négative rejetée avant conversion non
-  signée (`ERROR::PASS::UNIFORM::INVALID_LOCATION` ou
-  `ERROR::PASS::ATTRIBUTE::INVALID_LOCATION`).
-- **Nom dupliqué** : rejet sans remplacement partiel
-  (`ERROR::PASS::UNIFORM::DUPLICATE_NAME` ou
-  `ERROR::PASS::ATTRIBUTE::DUPLICATE_NAME`). Les tests de réflexion ci-dessus
-  vérifient aussi la conservation de la génération précédente sur échec.
-- **Extension du flow** : `UniformReader` est obligatoire, appelé par emprunt
-  de contexte avec retour `void`. Dans `UniformReaderFlowContractTests.cpp`,
-  les `static_assert` et `FlowRequiresBorrowedVoidUniformReader` acceptent
-  le composant emprunté et rejettent composant absent, signature shared-only
-  et retour non-void. Ne pas recopier l'ancien contrat shared-only.
+- **Uniform arrays** : conserver la taille réfléchie ne signifie pas que le
+  setter single-value accepte un tableau. `UniformCardinalityRejectionTest`
+  (`ArraySizeTwoIsRejectedBeforeGL`, `SizeZeroIsRejectedBeforeGL`) vérifie le
+  rejet avant GL : `ERROR::UNIFORM::SET::ARRAY_NOT_SUPPORTED`.
+- **UniformReader obligatoire** :
+  `UniformReaderFlowContractTests.FlowRequiresBorrowedVoidUniformReader`
+  exige un reader prenant le context par emprunt et retournant `void` ;
+  absence, interface shared-only et retour non-void sont rejetés par concept
+  (avec `static_assert` négatifs dans le fichier source).
+- **Locations** : une location négative est refusée avant conversion non
+  signée, avec `ERROR::PASS::UNIFORM::INVALID_LOCATION` ou
+  `ERROR::PASS::ATTRIBUTE::INVALID_LOCATION`.
+- **Doublons dans une réflexion** : rejet
+  `ERROR::PASS::UNIFORM::DUPLICATE_NAME` ou
+  `ERROR::PASS::ATTRIBUTE::DUPLICATE_NAME`, sans écraser l'ancienne génération.
+  Ce n'est pas l'interdiction de retrouver un même nom lors d'une nouvelle
+  réflexion réussie.
 
-## Portée des preuves
+Les deux derniers contrats sont couverts dans les suites `UniformReaderTests`
+et `AttributeReaderTests` citées en sources : tests de location invalide,
+doublons, conservation de génération et remplacement lors d'une nouvelle
+invocation. Ces injections mockées ne prétendent pas forcer un driver réel à
+produire des métadonnées invalides.
 
-Extraits recoupés contre le SHA `ec9a9a641eef92c690d8ff97b94f81211da92ded`.
-La [[references/session-2026-10-20-pipeline-execution-path|session de référence]]
-rapporte 546/546 tests **Windows x64 Debug**, au candidat `fdbce15` ; ce n'est
-pas un nouveau run au SHA documentaire. Les exemples de cette page sont des
-tests unitaires mockés : ni rendu, ni image, ni performance prouvés ici.
-Release, ASan et autres plateformes ne sont pas couverts.
+## Emprunts, erreurs et limites
 
-Suite : [[usage/closed-execution]] ; retour [[index|accueil du vault]].
+Une réflexion réussie publie une nouvelle génération : les anciens wrappers,
+valeurs et noms absents peuvent disparaître. Ne garder aucun emprunt à travers
+un reload ; libérer explicitement avant rechargement selon le contrat de passe
+(`UniformReaderComponentTest.ExplicitFreeThenReloadReflectsTheNewProgram`).
+Une réflexion en échec conserve la génération précédente ; cela ne promet pas
+un rollback général des effets GPU d'un chargement.
+
+Ni les maps ni leurs références ne synchronisent des threads ou n'allongent
+la vie du contexte GPU. Le propriétaire doit garder les ressources et le
+contexte utilisables pendant les opérations natives ; fin du scope C++ et fin
+d'utilisation GPU ne sont pas équivalentes.
+
+**Preuve** : extraits recoupés 1:1 au `source_revision` ci-dessus ; aucun
+nouveau build exécuté pour cette page. La preuve d'exécution historique est
+Windows x64 Debug, `fdbce15`, 546/546 (477 unitaires, 69 OpenGL), consignée dans
+[[references/session-2026-10-20-pipeline-execution-path]]. Elle n'est pas un
+nouveau résultat au HEAD documentaire. Release, ASan, autres OS et qualité
+d'image ne sont pas validés ici.
+Le contrôle `git diff --stat fdbce15 HEAD -- ARTIST/` est vide à cette
+révision : les sources moteur/tests de cette preuve sont inchangées.

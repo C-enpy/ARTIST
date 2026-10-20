@@ -1,11 +1,13 @@
 ---
 title: Build et tests actuels
 category: development
+aliases: [build-and-test]
+source_revision: 1005dff0804e18c412129843e944d7f1f55a0f48
 tags: [artist, build, testing, guide]
-summary: "F7 final6d6dcb7 :299/299natifs Windows Debug (251CPU+48GL), ASan245historique T4 non requalifié ; commandes et limites distinctes, historiques conservés."
+summary: "Dernière vérification tracée fdbce15 : 546/546 Windows Debug (477 unitaires + 69 OpenGL) ; historiques et limites conservés."
 status: verified-windows-debug
 created: 2026-10-03
-updated: 2026-10-18
+updated: 2026-10-20
 sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 1.0
@@ -14,6 +16,20 @@ provenance:
 ---
 
 # Build et tests actuels
+
+## Résumé courant — Windows x64 Debug
+
+Dernière vérification tracée : **546/546** (477 unitaires + 69 OpenGL), au SHA
+`fdbce15dcc05663cc58618a844d931b07b84750f`. Ce comptage n'est pas une relance
+au HEAD documentaire et ne requalifie ni ASan, ni Release, ni les autres OS,
+ni l'image ou la performance. Les sections datées ci-dessous restent historiques.
+
+Pour commencer : [[usage/getting-started|guide d'usage]] et
+[[usage/pipeline-and-passes|contrats Pipeline/IPass]]. Commande canonique :
+`powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1` :
+Debug, un job, tous les tests par défaut ; preset `windows-msvc-debug`.
+Prérequis : MSVC 19.44 / toolset 14.44 et SDK Windows, Python, CMake ≥ 3.25,
+Conan 2 et Ninja ; GLFW/GLEW sont les dépendances du contexte OpenGL réel.
 
 ## F7 — candidat final vérifié le2026-10-18
 
