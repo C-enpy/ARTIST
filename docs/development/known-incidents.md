@@ -2,9 +2,9 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Incidents Shader→Pass/Pipeline et harnais, oracle Attribute corrigé b9c90fd, fragilités de shuffle Loader/ShaderLoader préexistantes conservées ; preuves historiques et chemins encore non couverts distingués."
+summary: "Incidents Shader→Pass/Pipeline, harnais et transport Ensemble ; oracle Attribute corrigé b9c90fd ; fragilités shuffle préexistantes conservées ; preuves historiques et chemins non couverts distingués."
 created: 2026-10-03
-updated: 2026-10-19
+updated: 2026-10-20
 sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 0.96
@@ -13,6 +13,34 @@ provenance:
 ---
 
 # Incidents, diagnostics et suivi
+
+## Incident transport Ensemble — `final_response` jamais capturé — 2026-10-20
+
+- **Symptôme** : 6/6 spawns de membres (`engine-architect` ×4, `qa-planner` ×1,
+  `cpp-engineer` ×1) à travers cursor/openai et deux révisions de politique
+  reviennent « inactive, no completed final response could be recovered », sans
+  tâche complétée. Le membre **travaille réellement** (l'écrivain a produit le
+  type + les tests dans son worktree) mais la réponse finale n'est jamais
+  capturée et le runtime ne commit rien. Les messages système précisent que le
+  worker n'a pas demandé d'outils indisponibles.
+- **Non causes établies** : le contenu du profil (fichier inchangé entre
+  échecs et succès) ; le provider (cursor ET openai échouent) ; le modèle
+  (deux strong différents) ; la demande d'outils indisponibles. Le correctif
+  utilisateur (blocs `ensemble-report: final_response` sur 23 profils + glob
+  ADR) n'a pas résolu la panne.
+- **Contournement validé** (7/7 complétés) : sous-agents **directs** — même
+  fichier de profil, contexte frais, brief complet, substitution signalée à
+  chaque usage ; exécution et intégration restent au lead (runner séparé).
+- **Récupération d'un travail d'écrivain** : le worktree survit à la panne ;
+  un message du lead **réactive** le membre (état `off` → `ready`), qui peut
+  alors committer (`x-red`/`x-green`) — récupéré ensuite par merge/contrôle de
+  diff. Pour un lecteur (RO, sans fichiers), tout est perdu : refaire en
+  sous-agent direct.
+- **Limite de diagnostic** : l'état de session est dans `opencode.db`
+  (opaque), aucune trace filesystem ; les sondes nudge automatiques ne
+  relancent pas un membre mort. Diagnostic harnais à mener par l'opérateur.
+- Preuves : [[references/session-2026-10-20-pipeline-execution-path|session]] et
+  `docs/_meta/session-2026-10-20-pipeline-execution-path.json` (§transport_incident).
 
 ## Clôture F7 et findings — 2026-10-18
 

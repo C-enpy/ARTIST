@@ -10,6 +10,7 @@ updated: 2026-10-20
 # Journal documentaire
 
 - [2026-10-20] MISSION_DONE mission="chemin d'exécution Pipeline" candidate="fdbce15" suites="546/546 (477 unit + 69 OpenGL), 0 FAIL, 0 skip" red="36c6a13 sans type → C1083 reproduit" green="ac692db → type" rounds="F (P1/P2/R-1/R-2, 6273698) + F1" review="R PASS (0 bloquant), V suite discriminante" adr="0002/0004/0006 Proposed inchangés" human="topologie+forme approuvées, placement durci, O14/F1 acceptés" evidence=".opencode/evidence/mission-pipeline-execution-path/" incident="transport membre final_response non capturé 6/6, substitution sous-agents directs signalée" details="_meta/session-2026-10-20-pipeline-execution-path.json".
+- [2026-10-20] WIKI_DISTILL session="2026-10-20-pipeline-execution-path" created=2 pages="development/testing-oracle-constraints, architecture/closed-execution-pattern" updated=3 pages="known-incidents (incident transport Ensemble), index, log" sources=".opencode/evidence/mission-pipeline-execution-path/ + session doc" provenance="extracted 0.7 / inferred 0.3".
 - [2026-10-20] QMD_REINDEX collection="artist-wiki" indexed=1 updated=5 unchanged=42 needsEmbedding=6 result="PASS"; QMD_EMBED collection="artist-wiki" embedded="40 chunks / 6 documents" result="PASS".
 
 - [2026-10-03] INIT vault_path="docs" collection="artist-wiki" config=".wiki.json".
