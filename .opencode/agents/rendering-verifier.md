@@ -65,8 +65,3 @@ précondition toolchain. Transmettre symptômes, expériences, état du candidat
 oracles, limites et prochain test discriminant. Pas de spawn/handoff pour gagner
 des droits ; une auto-revue n'est pas une vérification indépendante.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

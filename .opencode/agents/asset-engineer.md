@@ -60,8 +60,3 @@ pertinentes, coûts import/cook/load séparés, limites et `DEFER_TO` motivés.
 PASS/FAIL/INCONCLUSIVE selon preuve ; données préparées ≠ consommation GPU.
 Feuille : aucune sous-délégation, aucun handoff pour accroître les droits.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

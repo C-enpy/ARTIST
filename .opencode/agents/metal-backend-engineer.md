@@ -56,8 +56,3 @@ commandes/candidat/comptages/skips, préconditions manquantes, impact CPU/GPU
 estimé ou mesuré explicitement nommé. PASS/FAIL/INCONCLUSIVE par niveau ; une
 lecture ou regex n'est ni chargement natif, ni enforcement, ni preuve GPU.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

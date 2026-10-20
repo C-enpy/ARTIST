@@ -193,8 +193,3 @@ Sources et limites : `docs/agentic/gpu-qa-harness.md`,
 `.opencode/evidence/mission-gpu-qa/t03-contract.md` et
 `.opencode/evidence/mission-gpu-qa/qa-policy-boundary.md`.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

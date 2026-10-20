@@ -32,8 +32,3 @@ Frontière structurelle → `DEFER_TO: engine-architect` ; hypothèse de perform
 `DEFER_TO: performance-reviewer` ; équation ou image → `DEFER_TO: shader-reviewer`.
 Retourne ces besoins au parent ; ne lance pas ces agents.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.

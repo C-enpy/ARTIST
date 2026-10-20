@@ -57,8 +57,3 @@ sans mesure ; estimation nommée comme telle. DEFER_TO au lead avec cible/oracle
 Feuille : pas de spawn, auto-claim, API session modèle ou handoff pour accroître
 les droits. Une permission décrite n'est pas une preuve de confinement.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.
