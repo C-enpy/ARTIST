@@ -28,13 +28,14 @@ provenance:
 > et [[architecture/missions/2026-10-19-pipeline-execution-path|la fiche]].
 > ADR-0002/0004/0006 restent **Proposed** ; ADR-0003 reste Accepted/partial.
 
-## Session suivante — sélectionnée par l'opérateur le 2026-10-20
+## Session suivante — exécutée et close le 2026-10-20
 
-La mission **couche documentation d'usage** est retenue pour la prochaine
-session : [[architecture/missions/2026-10-20-usage-doc-layer|la fiche]].
-Motivation : l'audit d'audience du vault — la mémoire d'ingénierie est à jour,
-la couche consommation de la bibliothèque est absente et les touchpoints face
-utilisateur (Readme, build-and-test) ont dérivé de deux à cinq missions.
+La mission **couche documentation d'usage** est **exécutée et close** :
+[[architecture/missions/2026-10-20-usage-doc-layer|la fiche]]. Quatre pages
+`docs/usage/` + touchpoints `Readme.md` et `build-and-test.md`, 11 extraits
+C++ 1:1 des tests, double revue fresh indépendante PASS, aucun changement
+`ARTIST/`. La couche consommation n'est plus absente ; les touchpoints face
+utilisateur portent des comptages datés (`fdbce15`).
 
 ## Candidat d'après — non sélectionné
 

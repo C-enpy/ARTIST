@@ -46,7 +46,7 @@ Ils s'utilisent dans le harnais GoogleTest existant, pas comme un `main`
 autonome : la fixture `OpenGLComponentTest` initialise GLFW/GLEW et le
 contexte ; les chemins `test-datas/` sont ceux des tests. Les includes et
 alias complets restent dans le fichier source. Types et fabrique utilisés
-par les tests `PipelineTest` :
+par les tests `PipelineTest` (`ProgramTests.cpp` lignes 40–50) :
 
 ```cpp
     using ClassicPass = pipeline::Pass<api::OpenGL, profile::Pass::Classic>;
@@ -63,7 +63,8 @@ par les tests `PipelineTest` :
 ```
 
 `PipelineTest::makeLoadedPipeline` charge avant transfert ; `LoadedPipeline`
-contient le pipeline et deux handles copiés pour observation, jamais owners :
+contient le pipeline et deux handles copiés pour observation, jamais owners
+(`ProgramTests.cpp` lignes 129–138) :
 
 ```cpp
     LoadedPipeline makeLoadedPipeline()
@@ -78,7 +79,8 @@ contient le pipeline et deux handles copiés pour observation, jamais owners :
     }
 ```
 
-`PipelineTest::makePassVector` effectue le transfert :
+`PipelineTest::makePassVector` effectue le transfert (`ProgramTests.cpp`
+lignes 141–147) :
 
 ```cpp
     static std::vector<std::unique_ptr<pipeline::IPass<api::OpenGL>>> makePassVector(ClassicPass first, ClassicPass second)
@@ -90,7 +92,8 @@ contient le pipeline et deux handles copiés pour observation, jamais owners :
     }
 ```
 
-`PipelineTest.UsePassTest` observe le programme réellement lié :
+`PipelineTest.UsePassTest` observe le programme réellement lié
+(`ProgramTests.cpp` lignes 175–186) :
 
 ```cpp
     ASSERT_NO_THROW(loaded.pipeline.use(0));
@@ -108,7 +111,7 @@ contient le pipeline et deux handles copiés pour observation, jamais owners :
 ```
 
 `PipelineTest.UseNextPassTest` montre que `false` peut signifier « dernière
-passe exécutée », non « rien exécuté » :
+passe exécutée », non « rien exécuté » (`ProgramTests.cpp` lignes 196–208) :
 
 ```cpp
     ASSERT_TRUE(loaded.pipeline.hasNext());
@@ -126,7 +129,8 @@ passe exécutée », non « rien exécuté » :
     glUseProgram(0);
 ```
 
-`PipelineTest.ResetPipelineTest`, après `use(0)`, distingue reset et unbind :
+`PipelineTest.ResetPipelineTest`, après `use(0)`, distingue reset et unbind
+(`ProgramTests.cpp` lignes 222–230) :
 
 ```cpp
     ASSERT_NO_THROW(loaded.pipeline.reset());

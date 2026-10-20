@@ -3,9 +3,9 @@ title: "Ordre de mission — couche documentation d'usage"
 category: architecture
 tags: [artist, documentation, rendering, cpp]
 aliases: [usage-doc-layer, mission-usage-doc]
-summary: "Proposition sélectionnée par l'opérateur le 2026-10-20 : une couche documentation d'usage (getting-started, walkthroughs, snippets sourcés des tests) ajoutée à la mémoire d'ingénierie existante, sans la réécrire. Non démarrée."
-status: proposed
-implementation: not-started
+summary: "EXÉCUTÉE et close le 2026-10-20 : quatre pages docs/usage/ + touchpoints Readme/build-and-test, 11 extraits 1:1 des tests, double revue fresh indépendante PASS (0 finding), aucun changement ARTIST/."
+status: closed
+implementation: done-perimeter
 source_revision: e43504a337cab6aadfc73e0eb836670db2d91bd1
 created: 2026-10-20
 updated: 2026-10-20
@@ -24,11 +24,25 @@ provenance:
 
 # Ordre de mission — couche documentation d'usage
 
-> [!important] Proposition documentaire, pas un démarrage
+> [!important] EXÉCUTÉE et close le 2026-10-20
+> Couche usage livrée : `docs/usage/` (getting-started, pipeline-and-passes,
+> uniform-attribute, closed-execution) + touchpoints `Readme.md` et
+> `docs/development/build-and-test.md`, navigation réciproque depuis
+> `docs/index.md`. **11 extraits C++ contigus 1:1** des tests au HEAD
+> (ProgramTests 6, Uniform/Attribute 3, ClosedExecutionTests 2), comptages
+> 546/546 datés `fdbce15`, `git diff fdbce15..HEAD -- ARTIST/` vide.
+> Double revue fresh indépendante **PASS** (pool-3 et rd-reviewer, verdicts
+> convergents, 0 finding) ; wiki-lint 0 lien brisé ; reindex QMD PASS.
+> Intégration : `8b5495f` (U1+U2), `b60d589` (index), plages de lignes et
+> clôture en suivi. Écart assumé : uniform-attribute et closed-execution
+> **révisées** (pages préexistantes au commit `165fa02`, hors mission),
+> pas créées. Aucune promotion d'ADR, aucun run natif (règle 1:1).
+
+> [!note]- Historique de la proposition
 > Écrite le 2026-10-20 contre HEAD `e43504a`, à la demande de l'opérateur
 > (audit d'audience du vault). Sélectionnée pour la **session suivante** ;
-> le démarrage passera par `/ensemble-mission`, `config`, puis le `start`
-> de l'utilisateur. Cette fiche ne lance aucune commande.
+> le démarrage est passé par `/ensemble-mission`, `config`, puis le `start`
+> de l'utilisateur (politique révision 1, méthode manual).
 
 ## Contexte — l'audit qui motive la mission
 
