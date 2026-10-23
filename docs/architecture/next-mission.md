@@ -6,10 +6,12 @@ aliases: [next-mission]
 summary: "Mission usage-doc close (2026-10-20) ; la dette QA/harnais consolidée est sélectionnée pour la session suivante (2026-10-23). L'étape 3 (ADR-0004) suit : adoption explicite requise."
 status: pointer
 implementation: not-started
-source_revision: b368a359cbc996c66613f03884948b81447caa39
+source_revision: 7c65d4bebefa560dae3f37c25071409f415885ed
 created: 2026-10-19
 updated: 2026-10-23
 sources:
+  - "architecture/missions/2026-10-23-qa-harness-debt-batch.md"
+  - "architecture/missions/2026-10-20-usage-doc-layer.md"
   - "architecture/missions/2026-10-19-pipeline-execution-path.md"
   - "architecture/correction-plan.md"
 provenance:
@@ -20,13 +22,17 @@ provenance:
 
 # Prochaine mission — pointeur entre missions
 
-> [!important] Mission Pipeline exécutée et close le 2026-10-20
-> Le chemin d'exécution spécialisé est livré : type fermé `ClosedExecution<API>`
-> N=2 en coexistence avec `IPipeline`, **546/546 natifs** Windows Debug
-> (477 unitaires + 69 OpenGL), RED→GREEN tracé, revue et audits indépendants
-> PASS. Preuves : [[references/session-2026-10-20-pipeline-execution-path|session]]
-> et [[architecture/missions/2026-10-19-pipeline-execution-path|la fiche]].
-> ADR-0002/0004/0006 restent **Proposed** ; ADR-0003 reste Accepted/partial.
+> [!important] Session suivante sélectionnée le 2026-10-23
+> **Dette QA/harnais consolidée** : six findings conservés instruits **avant**
+> le churn de l'étape 3 —
+> [[architecture/missions/2026-10-23-qa-harness-debt-batch|la fiche]]. Arbitrage
+> de l'opérateur : **B puis A**, pas de session totale combinée. Deux missions
+> closes précédemment : chemin d'exécution Pipeline (`fdbce15`,
+> [[architecture/missions/2026-10-19-pipeline-execution-path|fiche]]) et couche
+> documentation d'usage (`6a8925f`, quatre pages sous `docs/usage/`,
+> [[architecture/missions/2026-10-20-usage-doc-layer|fiche]]).
+> ADR-0002 passe à **Proposed/partial** ; ADR-0003 Accepted/partial inchangé ;
+> ADR-0004/0006 toujours Proposed/not-started.
 
 ## Sessions — la dernière close, la suivante sélectionnée
 
@@ -60,6 +66,8 @@ K. Le choix revient à une décision humaine via une nouvelle fiche de mission.
 - Consolidation optionnelle des helpers d'erreur (`expectExactError` vs
   `TestUtils::expectSpecificError`) — ne pas affaiblir vers le pattern
   sous-chaîne.
-- Panne du transport de membre Ensemble (`final_response` non capturé, 6/6)
-  — incident infrastructure consigné dans la session ; les transports sous-agents
-  directs ont fonctionné en substitution signalée.
+- Panne du transport de membre Ensemble (`final_response` non capturé, 6/6 au
+  2026-10-20) — **fix partiel** `ac5e0f5` : allow explicite transport/execute
+  pour `correctness-reviewer` ; la capture des autres profils reste non prouvée,
+  repli sous-agents directs signalé à chaque admission. Incident consigné dans
+  la session du 2026-10-20.
