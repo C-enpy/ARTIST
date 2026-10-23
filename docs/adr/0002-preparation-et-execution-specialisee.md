@@ -5,11 +5,15 @@ category: adr
 tags: [artist, architecture, rendering, adr]
 aliases: [ADR-0002]
 status: Proposed
-implementation: not-started
+implementation: partial
+implementation_note: >-
+  Tranche d'exécution fermée N=2 livrée et vérifiée le 2026-10-20 (ClosedExecution,
+  coexistence, fdbce15) ; la cible terminale (types concrets + tuple) reste
+  non implémentée. Champ mis à jour le 2026-10-23 pour le périmètre prouvé.
 decision_origin: Traduction des quatre rapports et de la hiérarchie Pipeline/Pass observée.
 summary: Garder une API de préparation flexible et introduire un chemin d'exécution concret, dense, spécialisé et sélectionné à granularité de lot.
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-23
 ---
 
 # ADR-0002 — Préparation et exécution spécialisée
@@ -73,7 +77,17 @@ inspection du stockage et du dispatch du chemin migré, image équivalente sur l
 contexte cible. Si gain revendiqué : comparaison ancien/runtime par lots/statique,
 y compris taille du code et coût de build.
 
-**Preuves actuelles** : le chemin spécialisé décrit ici n'est pas implémenté.
+**Preuves actuelles (addendum 2026-10-23)** : la migration 1–2 de cette ADR
+est **réalisée et vérifiée au périmètre Windows Debug** — caractérisation
+(ledger K du 2026-10-20, recoupée) puis chemin concret `ClosedExecution<API>`
+N=2 en coexistence avec `IPipeline`, sans consumer migré (`fdbce15`, 546/546
+natifs). La cible terminale (types de passes concrets, composition tuple) et
+la préparation des bindings (étape 3, ADR-0004) restent **non implémentées**.
+Preuves : [[../references/session-2026-10-20-pipeline-execution-path|session]]
+et [[../architecture/missions/2026-10-19-pipeline-execution-path|fiche close]].
+Le stockage des passes cité plus haut (2026-10-03, `vector<shared_ptr>`) a
+migré en `vector<unique_ptr>` le 2026-10-03 puis le 2026-10-16 — la section
+contexte décrit l'état de décision, pas l'état actuel.
 
 ## Références
 

@@ -9,6 +9,7 @@ updated: 2026-10-20
 
 # Journal documentaire
 
+- [2026-10-23] MISSION_SELECTED mission="dette QA/harnais consolidée" fiche="architecture/missions/2026-10-23-qa-harness-debt-batch.md" status="proposed, not-started" branches="B1 shuffle, B2 asan final+17GL, B3 F8 réel, B4 unbind+consolidation, B5 C2, B6 getStackTraceString" arbitrage="B puis A, pas de session totale" doc_refresh="ADR-0002 partial+addendum, README, ADR-0003 addendum (D-min en préparation)" next="session suivante via /ensemble-mission, config, start".
 - [2026-10-20] AUDIENCE_DECLARED vault="docs" audience="mémoire d'ingénierie (agents IA + mainteneurs)" callout="index.md" domain_added="usage (taxonomy.md)".
 - [2026-10-20] MISSION_SELECTED mission="couche documentation d'usage" fiche="architecture/missions/2026-10-20-usage-doc-layer.md" status="proposed, not-started" next="session suivante via /ensemble-mission, config, start".
 - [2026-10-20] MISSION_DONE mission="chemin d'exécution Pipeline" candidate="fdbce15" suites="546/546 (477 unit + 69 OpenGL), 0 FAIL, 0 skip" red="36c6a13 sans type → C1083 reproduit" green="ac692db → type" rounds="F (P1/P2/R-1/R-2, 6273698) + F1" review="R PASS (0 bloquant), V suite discriminante" adr="0002/0004/0006 Proposed inchangés" human="topologie+forme approuvées, placement durci, O14/F1 acceptés" evidence=".opencode/evidence/mission-pipeline-execution-path/" incident="transport membre final_response non capturé 6/6, substitution sous-agents directs signalée" details="_meta/session-2026-10-20-pipeline-execution-path.json".

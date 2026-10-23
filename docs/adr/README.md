@@ -5,16 +5,19 @@ tags: [artist, architecture, adr, index]
 aliases: [ADR ARTIST, Décisions ARTIST]
 summary: Registre des huit ADR, des propositions architecturales à la baseline Windows Conan 2 vérifiée.
 created: 2026-10-03
-updated: 2026-10-18
+updated: 2026-10-23
 ---
 
 # Registre des décisions d'architecture
 
 ## Premiers contrats de correction
 
-Les ADR-0001, 0002, 0004, 0006 et 0007 restent **Proposed / not-started** :
-aucun autre backend n'est écrit et aucune génération de handles n'est créée.
-ADR-0003 est
+Les ADR-0001, 0004, 0006 et 0007 restent **Proposed / not-started** : aucun
+autre backend n'est écrit et aucune génération de handles n'est créée.
+ADR-0002 reste **Proposed** mais son champ `implementation` doit être relu :
+la tranche d'exécution fermée du 2026-10-20 (`ClosedExecution<API>`, coexistence,
+`fdbce15`) est livrée et vérifiée, sans adopter la cible terminale (tuple,
+passes concrètes). ADR-0003 est
 **Accepted / partial** : la tranche Shader→Pass (2026-10-03) puis la tranche
 Pipeline A1–A2/F6 (2026-10-16, C++ `f914d77`) sont vérifiées au périmètre
 Windows Debug ; la tranche F7 Uniform/Attribute, Reader et findings F2/F1 est

@@ -32,6 +32,18 @@ Pas de nouvelle garantie concurrence, purge/atomicité au reload, retirementGPU,
 RAIIexhaustive, images/performance ou plateformes supplémentaires. ADR0004 reste
 Proposed ; aucune ADR0009 créée pour ces corrections locales.
 
+## Addendum tranche d'exécution fermée — 2026-10-23
+
+La tranche du 2026-10-20 (`ClosedExecution<API>` N=2, coexistence avec
+`IPipeline`, `fdbce15`, 546/546 natifs) applique ce contrat au nouveau type :
+emprunts `IPass&` non-owning documentés « les owners doivent survivre »,
+aucun hook de base appelé par un destructeur, moved-from des passes qui
+échoue dans son propre `use()`, échec k ⇒ k+1 jamais lancé, exceptions
+propagées identiques. Le périmètre de cette décision reste Accepted/partial :
+pas de retraite GPU différée, pas de RAII exhaustive, pas de concurrence
+nouvelle. Voir [[../references/session-2026-10-20-pipeline-execution-path|la
+session]].
+
 ## Contexte et faits
 
 Au commit de départ `887548b`, les contexts de `Pipeline`, `Pass`, `Shader`, `Uniform` et `Attribute`, dans
