@@ -25,7 +25,7 @@ framework_processing:
             enabled: false
 watch:
     debounce_ms: 500
-    last_index_time: 2026-10-20T11:36:12.8721223+02:00
+    last_index_time: 2026-10-22T20:18:17.347574+02:00
     rpg_persist_interval_ms: 1000
     rpg_derived_debounce_ms: 300
     rpg_full_reconcile_interval_sec: 300
@@ -33,7 +33,7 @@ watch:
     discover_worktrees: false
 search:
     boost:
-        enabled: true
+        enabled: false
         penalties:
             - pattern: /mock/
               factor: 0.6
@@ -43,10 +43,10 @@ search:
             - pattern: /include/graphic/
               factor: 1.15
     hybrid:
-        enabled: false
-        k: 0
+        enabled: true
+        k: 60
     dedup:
-        enabled: false
+        enabled: true
 trace:
     mode: fast
     enabled_languages:
@@ -58,13 +58,15 @@ trace:
         - .cxx
     exclude_patterns: []
 rpg:
-    enabled: false
-    feature_mode: local
+    enabled: true
+    feature_mode: hybrid
     drift_threshold: 0.35
     max_traversal_depth: 3
-    llm_provider: ollama
-    llm_endpoint: http://localhost:11434/v1
-    llm_timeout_ms: 8000
+    llm_provider: openai
+    llm_model: openai/gpt-6-luna#xhigh
+    llm_endpoint: http://127.0.0.1:48765/artist/v1
+    llm_api_key: ${GREPAI_RPG_BRIDGE_TOKEN}
+    llm_timeout_ms: 125000
     feature_group_strategy: sample
 update:
     check_on_startup: false
