@@ -1,4 +1,31 @@
 {
+  "businessProfiles": {
+    "byAgent": {
+      "asset-engineer": "developer",
+      "build-engineer": "developer",
+      "correctness-reviewer": "reviewer",
+      "cpp-engineer": "developer",
+      "d3d12-backend-engineer": "developer",
+      "engine-architect": "architect",
+      "gpu-engineer": "developer",
+      "gpu-pipeline-engineer": "developer",
+      "gpu-portability-engineer": "qa",
+      "gpu-resource-engineer": "developer",
+      "gpu-simulation-engineer": "developer",
+      "metal-backend-engineer": "developer",
+      "orchestrator": "supervisor",
+      "performance-reviewer": "reviewer",
+      "project-manager": "pm",
+      "qa-planner": "qa",
+      "render-graph-engineer": "architect",
+      "rendering-verifier": "qa",
+      "shader-engineer": "developer",
+      "shader-reviewer": "reviewer",
+      "test-engineer": "qa",
+      "test-reviewer": "reviewer",
+      "vulkan-backend-engineer": "developer"
+    }
+  },
   "autoDispatch": true,
   "autoScale": true,
   "modelRouting": {
