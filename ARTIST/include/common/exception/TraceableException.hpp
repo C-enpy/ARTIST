@@ -34,7 +34,7 @@ namespace artist::common::exception
     private:
         std::stacktrace stackTrace;
 
-        std::string format_stacktrace(const std::stacktrace &st)
+        std::string format_stacktrace(const std::stacktrace &st) const
         {
             std::ostringstream oss;
             for (const auto &entry : st)
