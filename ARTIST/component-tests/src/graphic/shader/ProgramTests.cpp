@@ -1,4 +1,6 @@
 #include <gtest/gtest.h>
+#include <gtest/gtest-spi.h>
+#include <string>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -165,12 +167,121 @@ TEST_F(PipelineTest, PipelineCreationTest)
     EXPECT_EQ(current, 0);
 }
 
+TEST_F(PipelineTest, TerminalUnbindIsSkippedOnFatalReturn)
+{
+    GlLeaseWitness lease(glContextAlive);
+    GLuint program0 = 0;
+    GLuint program1 = 0;
+    {
+        auto loaded = makeLoadedPipeline();
+        ProgramUnbinder safetyUnbind; // after the oracle, before owner destruction
+        program0 = loaded.program0;
+        program1 = loaded.program1;
+        ASSERT_NE(program0, 0u);
+        ASSERT_NE(program1, 0u);
+        ASSERT_NE(glfwGetCurrentContext(), nullptr);
+        ASSERT_EQ(glGetError(), GL_NO_ERROR);
+        ::testing::TestPartResultArray failures;
+        bool reachedTerminalUnbind = false;
+        [&]() {
+            ASSERT_NO_THROW(loaded.pipeline.use(0));
+            GLint bound = 0;
+            glGetIntegerv(GL_CURRENT_PROGRAM, &bound);
+            ASSERT_EQ(static_cast<GLuint>(bound), program0);
+            ASSERT_EQ(glGetError(), GL_NO_ERROR);
+            {
+                ::testing::ScopedFakeTestPartResultReporter reporter(
+                    ::testing::ScopedFakeTestPartResultReporter::INTERCEPT_ONLY_CURRENT_THREAD,
+                    &failures);
+                FAIL() << "B4-U deliberate early return";
+                reachedTerminalUnbind = true;
+                glUseProgram(0);
+            }
+        }();
+        ASSERT_EQ(failures.size(), 1);
+        EXPECT_EQ(failures.GetTestPartResult(0).type(), ::testing::TestPartResult::kFatalFailure);
+        EXPECT_EQ(std::string(failures.GetTestPartResult(0).message()),
+                  "Failed\nB4-U deliberate early return\n");
+        EXPECT_FALSE(reachedTerminalUnbind);
+        ASSERT_NE(glfwGetCurrentContext(), nullptr);
+        GLint current = 0;
+        glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+        EXPECT_EQ(static_cast<GLuint>(current), program0);
+        EXPECT_EQ(glIsProgram(program0), GL_TRUE);
+        EXPECT_EQ(glIsProgram(program1), GL_TRUE);
+        EXPECT_EQ(glGetError(), GL_NO_ERROR);
+    }
+    // Safety unbinding and owners have now run, while the fixture still lives.
+    ASSERT_NE(glfwGetCurrentContext(), nullptr);
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    EXPECT_EQ(current, 0);
+    EXPECT_EQ(glIsProgram(program0), GL_FALSE);
+    EXPECT_EQ(glIsProgram(program1), GL_FALSE);
+    EXPECT_EQ(glGetError(), GL_NO_ERROR);
+}
+
+TEST_F(PipelineTest, ProgramUnbinderUnbindsOnFatalReturnBeforeOwnerCleanup)
+{
+    GlLeaseWitness lease(glContextAlive);
+    GLuint program0 = 0;
+    GLuint program1 = 0;
+    {
+        auto loaded = makeLoadedPipeline();
+        ProgramUnbinder safetyUnbind; // cannot affect the inner-scope oracle
+        program0 = loaded.program0;
+        program1 = loaded.program1;
+        ASSERT_NE(program0, 0u);
+        ASSERT_NE(program1, 0u);
+        ASSERT_NE(glfwGetCurrentContext(), nullptr);
+        ASSERT_EQ(glGetError(), GL_NO_ERROR);
+        ::testing::TestPartResultArray failures;
+        bool reachedTerminalUnbind = false;
+        [&]() {
+            ProgramUnbinder unbind; // before binding, destroyed on the fatal return
+            ASSERT_NO_THROW(loaded.pipeline.use(0));
+            GLint bound = 0;
+            glGetIntegerv(GL_CURRENT_PROGRAM, &bound);
+            ASSERT_EQ(static_cast<GLuint>(bound), program0);
+            ASSERT_EQ(glGetError(), GL_NO_ERROR);
+            {
+                ::testing::ScopedFakeTestPartResultReporter reporter(
+                    ::testing::ScopedFakeTestPartResultReporter::INTERCEPT_ONLY_CURRENT_THREAD,
+                    &failures);
+                FAIL() << "B4-U deliberate early return";
+                reachedTerminalUnbind = true;
+                glUseProgram(0);
+            }
+        }();
+        ASSERT_EQ(failures.size(), 1);
+        EXPECT_EQ(failures.GetTestPartResult(0).type(), ::testing::TestPartResult::kFatalFailure);
+        EXPECT_EQ(std::string(failures.GetTestPartResult(0).message()),
+                  "Failed\nB4-U deliberate early return\n");
+        EXPECT_FALSE(reachedTerminalUnbind);
+        ASSERT_NE(glfwGetCurrentContext(), nullptr);
+        GLint current = 0;
+        glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+        EXPECT_EQ(current, 0);
+        EXPECT_EQ(glIsProgram(program0), GL_TRUE);
+        EXPECT_EQ(glIsProgram(program1), GL_TRUE);
+        EXPECT_EQ(glGetError(), GL_NO_ERROR);
+    }
+    ASSERT_NE(glfwGetCurrentContext(), nullptr);
+    GLint current = 0;
+    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
+    EXPECT_EQ(current, 0);
+    EXPECT_EQ(glIsProgram(program0), GL_FALSE);
+    EXPECT_EQ(glIsProgram(program1), GL_FALSE);
+    EXPECT_EQ(glGetError(), GL_NO_ERROR);
+}
+
 TEST_F(PipelineTest, UsePassTest)
 {
     GlLeaseWitness lease(glContextAlive);
     auto loaded = makeLoadedPipeline();
     ASSERT_NE(loaded.program0, 0);
     ASSERT_NE(loaded.program1, 0);
+    ProgramUnbinder unbind; // destroyed before loaded, including on ASSERT return
 
     ASSERT_NO_THROW(loaded.pipeline.use(0));
     GLint current = 0;
@@ -183,7 +294,6 @@ TEST_F(PipelineTest, UsePassTest)
     EXPECT_EQ(static_cast<GLuint>(current), loaded.program1);
     EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), 1);
 
-    glUseProgram(0); // the test unbinds before its owners are destroyed
 }
 
 TEST_F(PipelineTest, UseNextPassTest)
@@ -192,6 +302,7 @@ TEST_F(PipelineTest, UseNextPassTest)
     auto loaded = makeLoadedPipeline();
     ASSERT_NE(loaded.program0, 0);
     ASSERT_NE(loaded.program1, 0);
+    ProgramUnbinder unbind; // destroyed before loaded, including on ASSERT return
 
     ASSERT_TRUE(loaded.pipeline.hasNext());
     ASSERT_TRUE(loaded.pipeline.useNext());
@@ -205,7 +316,6 @@ TEST_F(PipelineTest, UseNextPassTest)
     EXPECT_EQ(static_cast<GLuint>(current), loaded.program1);
     EXPECT_EQ(loaded.pipeline.getContext().getCurrentPass(), 1);
 
-    glUseProgram(0);
 }
 
 TEST_F(PipelineTest, ResetPipelineTest)
@@ -213,6 +323,7 @@ TEST_F(PipelineTest, ResetPipelineTest)
     GlLeaseWitness lease(glContextAlive);
     auto loaded = makeLoadedPipeline();
     ASSERT_NE(loaded.program0, 0);
+    ProgramUnbinder unbind; // destroyed before loaded, including on ASSERT return
 
     ASSERT_NO_THROW(loaded.pipeline.use(0));
     GLint current = 0;
@@ -227,7 +338,6 @@ TEST_F(PipelineTest, ResetPipelineTest)
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
     EXPECT_EQ(static_cast<GLuint>(current), loaded.program0);
 
-    glUseProgram(0); // the test unbinds explicitly before destruction
 }
 
 TEST_F(PipelineTest, PassesCountTest)
