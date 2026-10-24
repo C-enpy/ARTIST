@@ -106,11 +106,31 @@ avant `test-engineer` (generator de gaps, pas substitut au RED) ; `test-reviewer
 fresh hors board d'implémentation, puis correction/ré-audit. Contrat détaillé dans
 `.opencode/agents/orchestrator.md`. Risque PM 0–100 distinct de QA I×P 1–5 → 1–25 ;
 QA >= 10 exige déclencheur/blast radius/détection/mitigation/gap, sans changer la grille.
-Runner séparé : Les trois QA peuvent utiliser execute pour Context Mode et le transport
-Ensemble. écriture restent interdits.
-Ensemble. écriture restent interdits.
-Les tests restent exécutés par le lead, avec attribution explicite.
-L’autorisation d’execute ne vaut pas autorisation générale des outils appelés.
+Runner séparé : les trois QA conservent deny-all + read/glob/skill et leurs
+27 règles exactes ; edit/shell/execute/subagent restent fermés. Le lead fournit
+les digestions QMD/Context Mode et exécute les tests, avec attribution explicite.
+Une règle MCP imbriquée ne rend pas Code Mode accessible. Restitution finale
+textuelle native si le transport est indisponible ; si cette voie est elle-même
+refusée, BLOCKED, sans boucle ni élargissement implicite des permissions.
+
+### Admission et accès : contrôle avant départ
+
+- Avant publication/import exécutable, vérifier les champs effectifs profil/agent,
+  contexte, worktree, dépendances et restitution ; les décrire seulement dans le
+  texte de la tâche ne configure pas le dispatcher. Une importation perdant ces
+  champs doit être corrigée par une voie native avant admission, sinon bloquée.
+- Pour un profil restrictif, le lead fournit les données et extraits nécessaires
+  dans le brief ou dans des fichiers locaux autorisés. Ne pas lui demander une
+  commande, un MCP via execute ou un chemin externe que son profil interdit.
+- Un refus identifié donne une restitution unique (action/ressource/refus,
+  sections réalisables, limites), pas un bootstrap répété ni une demande de grant.
+  Une modification sur disque ne prouve pas le rechargement du profil actif.
+- Une tâche remplacée ou bloquée ne doit pas repartir sur un profil générique.
+  Ne pas répéter shutdown/réadmission si cela recrée le doublon : conserver
+  l'affectation inactive et demander une mise en attente native si nécessaire.
+  Ne jamais marquer completed sans livrable intégré pour arrêter l'auto-dispatch.
+- Les appels et refus observés sont les preuves ; ces consignes ne sont ni un
+  verrou runtime, ni une garantie d'absence de récidive du plugin.
 
 Pour une mission Ensemble, charger `opencode-ensemble` avant la coordination.
 Faire préparer le plan par `project-manager` ; pour une petite intervention

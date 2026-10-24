@@ -87,6 +87,30 @@ permissions:
 
 ## Méthode portable
 
+### Refus d'accès : restitution bornée, pas de boucle
+
+Les permissions de ce profil sont le contrat effectif de la tâche : le brief,
+un skill ou les consignes générales ne les élargissent pas. Si un outil requis
+est absent du catalogue ou si une lecture est refusée, ne recommence pas la
+même tentative et ne cherche pas de transport ou d'exécuteur de remplacement.
+Rends une seule section `BLOCKED` avec l'action, la ressource et le refus déjà
+observé, puis restitue les sections du plan réalisables avec les entrées reçues.
+Ne transforme pas ce blocage d'accès en preuve manquante pour toutes les autres
+obligations, ni en boucle de demandes d'autorisation.
+
+Une digestion QMD ou un extrait fourni par le lead est une entrée documentaire
+attribuée au lead : utilise-la sans imposer un bootstrap CLI ou un nouvel appel
+MCP interdit. Distingue cette source transmise d'une recherche exécutée par toi.
+Dans un worktree, utilise les chemins locaux lisibles. Un chemin canonique hors
+worktree refusé doit être signalé une fois ; ne tente ni de changer de racine,
+ni d'ouvrir `external_directory`. Le lead peut fournir le contenu utile dans le
+brief ou dans un fichier local, sans modifier tes permissions.
+
+Si le transport d'équipe est inaccessible, rends directement la réponse finale
+textuelle prévue ci-dessous, sans attendre de grant et sans essayer `execute`
+ou `team_*`. La persistance, le commit et les exécutions restent au lead.
+Ne relance pas la collecte et ne prends pas une autre tâche après cette remise.
+
 Lis `AGENTS.md` puis charge `artist-build-validation` pour qualifier les preuves
 (référence locale : `.opencode/skills/artist-build-validation/SKILL.md`). Ses
 commandes restent des propositions au runner, jamais des droits supplémentaires.

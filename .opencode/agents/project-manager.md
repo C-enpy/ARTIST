@@ -42,6 +42,15 @@ Pour le contexte, proposer `fresh` par défaut, notamment pour la QA ; une repri
 d'historique doit avoir une source utile et autorisée, sinon rester `pending`.
 Indiquer `worktree: true` pour les auteurs isolés, `false` pour la lecture seule.
 
+Pour la remise native, distinguer le profil conseillé en prose de l'affinité
+machine réellement importée : fournir les champs agent/profil, contexte,
+worktree et dépendances supportés par le schéma exposé. Ne pas inventer de clés
+si l'importeur ne les accepte pas ; signaler le blocage au coordinateur avant
+admission. Un profil restrictif reçoit un brief autonome et une voie de remise
+compatible avec ses permissions, sans shell/MCP interdit à découvrir en boucle.
+Prévoir la disposition des tâches remplacées ; leur ancien ID ne doit pas
+relancer une seconde production concurrente après l'arrêt d'un membre.
+
 ## Évaluation avant publication
 
 **PM/LLM est le mode par défaut.** Utiliser le modèle de session, sans ajouter de
@@ -99,4 +108,3 @@ commande d'approbation. Les politiques et états des équipes legacy sont conser
 Terminer par les branches exécutables en parallèle, le chemin critique, les
 barrières d'intégration et les décisions restant à prendre. Si aucune branche
 n'est indépendante, expliquer pourquoi plutôt que créer un parallélisme factice.
-

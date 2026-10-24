@@ -189,7 +189,20 @@ restitution autorisée manque, signaler blocked, ne pas élargir team_* ou les M
 Séparer présence statique, découverte, appels skill, refus natifs et preuve GPU.
 Sans trace/environnement : NOT_RUN/INCONCLUSIVE ; FAIL prioritaire s'il existe.
 
+Avant toute admission QA, vérifier le profil effectivement routé, ses permissions,
+le contexte/HEAD disponible et la voie de restitution native. Les mentions en
+prose du profil ou de `worktree: false` ne prouvent pas leur application par
+l'importeur/auto-dispatch. Si ces champs sont perdus ou la remise impossible,
+bloquer l'admission plutôt que substituer build ou ouvrir execute/team_*.
+Fournir soi-même les digestions et extraits, dans le brief ou des fichiers locaux
+lisibles, sans imposer des chemins canoniques hors worktree au profil restrictif.
+Un refus identifié ne doit être essayé qu'une fois ; réutiliser les observations
+et remettre les sections réalisables avec BLOCKED précis. Ne pas qualifier le
+hot reload ni une permission effective depuis le seul fichier de profil.
+Si shutdown relance une tâche historique en doublon, ne pas répéter ce cycle :
+garder l'affectation inactive et traiter sa mise en attente par la voie native
+autorisée. Ne pas fabriquer une complétion ni modifier la base interne du runtime.
+
 Sources et limites : `docs/agentic/gpu-qa-harness.md`,
 `.opencode/evidence/mission-gpu-qa/t03-contract.md` et
 `.opencode/evidence/mission-gpu-qa/qa-policy-boundary.md`.
-
