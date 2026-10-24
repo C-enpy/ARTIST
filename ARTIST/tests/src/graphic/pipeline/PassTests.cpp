@@ -105,7 +105,7 @@ TEST_F(PassTest, WithUniforms_NoUniform)
     // Act
     expectSpecificError([&pass]()
                         { pass.withUniform("test", 1.0f); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::UNIFORM_NOT_FOUND"));
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::UNIFORM_NOT_FOUND\nUniform test not found"));
 }
 
 TEST_F(PassTest, UsePass)

@@ -18,11 +18,11 @@ namespace artist::test::utils
         catch (const ExceptionType &e)
         {
             std::string errorMsg = e.what();
-            EXPECT_NE(errorMsg.find(expectedException.what()), std::string::npos);
+            EXPECT_EQ(errorMsg, expectedException.what());
         }
         catch (...)
         {
-            FAIL() << "Expected std::runtime_error to be thrown";
+            FAIL() << "Unexpected exception category";
         }
     }
 }

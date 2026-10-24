@@ -23,17 +23,7 @@ namespace
     using Pipeline = artist::graphic::pipeline::Pipeline<API, artist::graphic::opengl::profile::Pipeline::Classic>;
     using artist::common::exception::TraceableException;
 
-    template <typename F, typename E>
-    void expectExactPipelineError(F &&operation, const E &expected)
-    {
-        try
-        {
-            std::forward<F>(operation)();
-            FAIL() << "Expected the ruled pipeline exception";
-        }
-        catch (const E &actual) { EXPECT_STREQ(actual.what(), expected.what()); }
-        catch (...) { FAIL() << "Unexpected exception category"; }
-    }
+    using artist::test::utils::expectSpecificError;
 
     struct CursorHookFailure {};
 
@@ -85,7 +75,7 @@ namespace
 
     void expectIndexError(auto &&operation, int index, unsigned int count)
     {
-        expectExactPipelineError(std::forward<decltype(operation)>(operation),
+        expectSpecificError(std::forward<decltype(operation)>(operation),
             TraceableException<std::out_of_range>(std::format(
                 "ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE\nPass index {} out of range (size {})", index, count)));
     }
@@ -98,7 +88,7 @@ TEST(PipelineCursorTests, AddNullPassRejectsBeforeInsertionAndKeepsCursor)
     auto *identity = first.get();
     context.addPass(std::move(first));
     context.setCurrentPass(0);
-    expectExactPipelineError([&] { context.addPass(nullptr); },
+    expectSpecificError([&] { context.addPass(nullptr); },
         TraceableException<std::invalid_argument>("ERROR::PIPELINE::NULL_PASS"));
     EXPECT_EQ(context.getPassesCount(), 1u);
     EXPECT_EQ(context.getCurrentPass(), 0);
@@ -254,7 +244,7 @@ TEST(PipelineCursorTests, CardinalityGuardExercisesLimitWithoutAllocation)
     EXPECT_NO_THROW(Context::validatePassCountForAddition(limit - 1));
     for (auto count : {limit, limit + 1, std::numeric_limits<std::size_t>::max()})
     {
-        expectExactPipelineError([&] { Context::validatePassCountForAddition(count); },
+        expectSpecificError([&] { Context::validatePassCountForAddition(count); },
             TraceableException<std::length_error>(std::format(
                 "ERROR::PIPELINE::PASS_COUNT_LIMIT_EXCEEDED\nPass count cannot exceed {}", std::numeric_limits<int>::max())));
     }

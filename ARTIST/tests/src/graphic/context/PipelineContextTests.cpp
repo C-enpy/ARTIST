@@ -126,7 +126,8 @@ TEST_F(PipelineContextTests, GetPass_RejectedAccessKeepsContextUnmutated)
             [&pipelineContext, rejectedIndex]()
             { pipelineContext->getPass(rejectedIndex); },
             TraceableException<std::out_of_range>(
-                std::string("ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE\n")));
+                std::string("ERROR::PIPELINE::PASS_INDEX_OUT_OF_RANGE\nPass index ") +
+                std::to_string(rejectedIndex) + " out of range (size 1)"));
     }
 
     // Assert: the rejection left ownership, count and borrows unchanged.

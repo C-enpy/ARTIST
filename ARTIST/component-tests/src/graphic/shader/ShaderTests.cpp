@@ -50,7 +50,7 @@ TEST_F(ShaderTest, CreateShaderBadVert)
     // Act
     expectSpecificError([&shader]()
                         { shader.load(); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED\n"));
     // Assert
     EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::VERTEX);
 
@@ -80,7 +80,7 @@ TEST_F(ShaderTest, CreateShaderBadFrag)
     // Act
     expectSpecificError([&shader]()
                         { shader.load(); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED\n"));
     // Assert
     EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::FRAGMENT);
 
@@ -110,7 +110,7 @@ TEST_F(ShaderTest, CreateShaderBadGeom)
     // Act
     expectSpecificError([&shader]()
                         { shader.load(); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED\n"));
     // Assert
     EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::GEOMETRY);
 
@@ -140,7 +140,7 @@ TEST_F(ShaderTest, CreateShaderBadTesselaionControl)
     // Act
     expectSpecificError([&shader]()
                         { shader.load(); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED\n"));
     // Assert
     EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::TESS_CONTROL);
 
@@ -170,7 +170,7 @@ TEST_F(ShaderTest, CreateShaderBadCompute)
     // Act
     expectSpecificError([&shader]()
                         { shader.load(); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED\n"));
     // Assert
     EXPECT_EQ(shader.getContext().getShaderType(), context::ShaderType::COMPUTE);
 

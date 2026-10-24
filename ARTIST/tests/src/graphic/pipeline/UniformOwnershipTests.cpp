@@ -105,7 +105,7 @@ TEST_P(UniformOwnerStateTests, GetReadsOnlyAnOwnedValue)
     case OwnerState::Empty:
         expectSpecificError([&uniform]
                             { (void)copyValue(uniform); },
-                            TraceableException<std::runtime_error>("ERROR::UNIFORM::GET::UNINITIALIZED"));
+                             TraceableException<std::runtime_error>(std::string("ERROR::UNIFORM::GET::UNINITIALIZED: No value was set for the uniform variable (requested type ") + typeid(float).name() + ")"));
         break;
     case OwnerState::MovedFrom:
         expectSpecificError([&uniform]

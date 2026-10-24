@@ -139,7 +139,7 @@ TEST_F(ShaderLoaderTests, LoadShaderFailureTest)
     // Act & Assert
     expectSpecificError([&shaderContext]()
                         { shader::OpenGLShaderLoader<Classic>::on(*shaderContext); },
-                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+                        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED\n"));
 }
 
 class ShaderLoaderDiagnosticsTests : public ShaderLoaderTests, public ::testing::WithParamInterface<GLint>
@@ -210,7 +210,7 @@ TEST_P(ShaderLoaderDiagnosticsTests, CompileFailurePreservesErrorAndCleansUp)
     EXPECT_CALL(*gl, glDeleteShader_mock(7)).Times(1);
 
     expectSpecificError([&]() { shader::OpenGLShaderLoader<Classic>::on(shaderContext); },
-        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED"));
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::SHADER::COMPILATION_FAILED\n"));
     EXPECT_EQ(shaderContext.getShaderID(), 0);
     EXPECT_EQ(diagnostics.str(), "Shader compilation error: " + message + "\n");
 }

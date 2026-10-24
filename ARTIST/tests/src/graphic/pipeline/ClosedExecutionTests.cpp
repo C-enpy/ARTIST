@@ -96,27 +96,7 @@ namespace
         return chain;
     }
 
-    template <typename F, typename E>
-    void expectExactError(F &&operation, const E &expected)
-    {
-        try
-        {
-            std::forward<F>(operation)();
-            FAIL() << "Expected the closed-execution exception";
-        }
-        catch (const E &actual)
-        {
-            EXPECT_STREQ(actual.what(), expected.what());
-        }
-        catch (const std::exception &actual)
-        {
-            FAIL() << "Exception was wrapped or retargeted: " << actual.what();
-        }
-        catch (...)
-        {
-            FAIL() << "Exception category changed";
-        }
-    }
+    using artist::test::utils::expectSpecificError;
 }
 
 TEST(ClosedExecutionTests, RunActivatesFirstThenSecondOnce)
@@ -207,7 +187,7 @@ TEST(ClosedExecutionTests, FirstPassFailureSkipsSecondAndPropagates)
     EXPECT_CALL(*owned.first, use()).WillOnce(::testing::Throw(failure));
     EXPECT_CALL(*owned.second, use()).Times(0);
 
-    expectExactError([&] { chain.run(); }, failure);
+    expectSpecificError([&] { chain.run(); }, failure);
     EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 0);
 }
 
@@ -223,7 +203,7 @@ TEST(ClosedExecutionTests, RunAfterFirstPassFailureRestartsCleanly)
     // so phase 2 starts with no leftover cardinality.
     EXPECT_CALL(*owned.first, use()).WillOnce(::testing::Throw(failure));
     EXPECT_CALL(*owned.second, use()).Times(0);
-    expectExactError([&] { chain.run(); }, failure);
+    expectSpecificError([&] { chain.run(); }, failure);
     EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 0);
     EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(owned.first));
     EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(owned.second));
@@ -267,7 +247,7 @@ TEST(ClosedExecutionTests, SecondPassFailurePropagatesAfterFirstActivated)
     EXPECT_CALL(*owned.first, use()).Times(1);
     EXPECT_CALL(*owned.second, use()).WillOnce(::testing::Throw(failure));
 
-    expectExactError([&] { chain.run(); }, failure);
+    expectSpecificError([&] { chain.run(); }, failure);
     EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), 1);
 }
 
@@ -305,7 +285,7 @@ TEST_F(ClosedExecutionPassTests, MovedFromFirstPassFailsOnRunAndSkipsSecond)
     EXPECT_CALL(gl, glUseProgram_mock(::testing::_)).Times(0);
     EXPECT_CALL(gl, glDeleteProgram_mock(::testing::_)).Times(0);
     EXPECT_CALL(*owned.second, use()).Times(0);
-    expectExactError([&] { chain.run(); },
+    expectSpecificError([&] { chain.run(); },
                      TraceableException<std::runtime_error>("ERROR::PASS::FREED_CONTEXT"));
     EXPECT_EQ(owned.pipeline.getContext().getCurrentPass(), -1);
 }
@@ -324,7 +304,7 @@ TEST_F(ClosedExecutionPassTests, MovedFromSecondPassUsesFirstThenFails)
 
     EXPECT_CALL(gl, glUseProgram_mock(0)).Times(1);
     EXPECT_CALL(gl, glDeleteProgram_mock(::testing::_)).Times(0);
-    expectExactError([&] { chain.run(); },
+    expectSpecificError([&] { chain.run(); },
                      TraceableException<std::runtime_error>("ERROR::PASS::FREED_CONTEXT"));
 }
 

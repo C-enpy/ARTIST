@@ -122,7 +122,8 @@ TEST_F(PassContextTests, GetShader_RejectedAccessKeepsContextUnmutated)
             [&passContext, rejectedIndex]()
             { passContext->getShader(rejectedIndex); },
             TraceableException<std::out_of_range>(
-                std::string("ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE\n")));
+                std::string("ERROR::PASS::SHADER_INDEX_OUT_OF_RANGE\nShader index ") +
+                std::to_string(rejectedIndex) + " out of range (size 1)"));
     }
 
     // Assert: the rejection left ownership, count and borrows unchanged.

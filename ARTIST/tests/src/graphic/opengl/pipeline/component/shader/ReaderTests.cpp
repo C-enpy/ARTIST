@@ -397,7 +397,7 @@ TEST_F(ReaderTests, ReadShaderTest_AbsentFileRejected)
     expectSpecificError(
         [&shaderContext]()
         { shader::OpenGLShaderReader<Classic>::on(*shaderContext); },
-        TraceableException<std::runtime_error>("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ"));
+        TraceableException<std::runtime_error>("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ\nReading stopped without reaching end-of-file."));
 
     // The failed read must not leave anything to compile.
     ASSERT_TRUE(shaderContext->getShaderCode().empty());
