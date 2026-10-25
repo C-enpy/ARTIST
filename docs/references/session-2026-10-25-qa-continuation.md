@@ -1,14 +1,15 @@
 ---
-title: Continuation QA ARTIST — preuves acquises et clôture native bloquée
+title: Continuation QA ARTIST — preuves acquises et board réconcilié
 category: reference
 tags: [artist, testing, tooling, reference]
-summary: "Audit indépendant accepté et ASan555 vérifié ; livrables bornés terminés, clôture native bloquée par le graphe hérité, dettes F8/C2/B1/GCC conservées."
+summary: "Audit accepté et ASan555 vérifié ; board réconcilié7/7 sous verrou natif, équipe conservée et dettes F8/C2/B1/GCC ouvertes."
 created: 2026-10-25
 updated: 2026-10-25
 source_revision: 82bf52d52e594fae02593866669a1af715127d1f
 sources:
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md
+  - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md
 provenance:
   extracted: 0.95
   inferred: 0.05
@@ -20,9 +21,10 @@ provenance:
 ## Deux états qui ne se confondent pas
 
 Les **livrables de continuation sont terminés à leur portée**, avec audit final
-indépendant reçu et accepté. **La mission native n'est pas clôturée** : son graphe
-importé conserve des dépendances obsolètes. Cette différence ne constitue ni un
-FAIL des tests ni une permission de fabriquer des statuts completed.
+indépendant reçu et accepté. Le graphe natif initialement bloqué a ensuite été
+**réconcilié7/7completed sous verrou d'admission**, sur choix explicite opérateur.
+L'équipe/worktrees restent conservés, non archivés ; politique temporairement
+non approuvée, aucun start exécuté par le lead. Aucun FAIL technique n'a été effacé.
 
 La [[architecture/current-state|photographie source]] reste `82bf52d` ;
 la documentation/audit a été intégrée à `fc830a7`, puis le bilan de dette native
@@ -53,11 +55,11 @@ analyse. L'adaptation approuvée autorise une tâche dédiée et un worktree RO 
 ne prouve ni invisibilité technique du board ni sandbox. Les pins anciens du
 profil/skill n'ont pas été appliqués au candidat courant.
 
-## Dette du graphe natif
+## Dette du graphe natif — historique et résolution
 
-La tâche d'audit dédiée est réellement completed après intégration. Cependant,
-l'ancienne tâche ASAN reste in_progress/inactive, l'ancien AUDIT est blocked par
-ASAN, puis CLOTURE est blocked par AUDIT. La tentative de compléter CLOTURE a
+La tâche d'audit dédiée était réellement completed après intégration. Cependant,
+l'ancienne tâche ASAN restait in_progress/inactive, l'ancien AUDIT était blocked par
+ASAN, puis CLOTURE était blocked par AUDIT. La tentative de compléter CLOTURE a
 été refusée pour dépendances non résolues. Le nouvel audit intégré n'a pas
 remplacé automatiquement l'ancien nœud.
 
@@ -65,6 +67,15 @@ Libérer ASAN avec auto-dispatch actif risque de relancer l'ancien audit sur une
 fiche/routage obsolètes. La voie exposée ne permettait pas de remplacer/mettre en
 attente ces tâches ni de retargeter leurs dépendances. Aucune modification de base
 interne, réadmission en boucle ou fausse complétion n'a été effectuée.
+
+Après enquête complémentaire et choix opérateur A, le lead a ouvert le config
+natif **sans changer le fichier de politique**, vérifié le verrou, puis acté
+ASAN→ancien AUDIT→CLOTURE dans l'ordre. Chaque résultat était déjà intégré.
+Contrôle final :7/7completed, mêmes quatre membres idle, aucun nouvel audit.
+Le verrou a empêché l'auto-admission des tâches déverrouillées. Le SHA256 de la
+politique est resté identique ; long_run/manual/calls0 conservés. Preuve native :
+rapport25 cité dans les sources. Le blocage de statut est résolu, pas les dettes
+techniques ; aucune réparation runtime n'a été nécessaire.
 
 La réussite d'un livrable et la transition de son graphe d'orchestration demandent
 donc des preuves distinctes ; un résultat reçu n'est pas nécessairement un

@@ -6,8 +6,13 @@
   "vault": "docs",
   "collection": "artist-wiki",
   "basisHead": "c840a64",
-  "scope": "Distilled final audit and native-board debt; not a full session export or new engine validation",
+  "scope": "Distilled final audit, historical native-board debt and subsequent verified reconciliation; not a full session export or new engine validation",
   "sources": [
+    {
+      "path": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md",
+      "size_bytes": 3118,
+      "content_hash": "sha256:9e6254701381f8aa89fc3db7c5bbc778205a47623bd5c528cd797a63986ef12b"
+    },
     {
       "path": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md",
       "size_bytes": 3254,
@@ -21,7 +26,8 @@
   ],
   "pages_created": ["references/session-2026-10-25-qa-continuation.md"],
   "pages_updated": ["architecture/current-state.md", "architecture/correction-plan.md", "development/build-and-test.md", "development/known-incidents.md", "index.md", "log.md"],
-  "manifest": ".manifest.json local ignored; two new entries by SHA256; 352 sources and 57 markdown pages",
+  "manifest": ".manifest.json local ignored; three new entries by SHA256; 353 sources and 57 markdown pages",
   "configResolution": "Project .wiki.json identifies ARTIST/docs; global wiki config belongs to a different project and was not modified",
-  "limits": ["native mission not closed", "no new tests or builds", "F8/C2/B1/GCC unchanged", "concurrent diffs excluded from commit"]
+  "nativeResolution": "Task board reconciled7/7 under operator-authorized config gate; team retained/not archived, policy draft/notapproved, no lead start",
+  "limits": ["no native team archival", "no new tests or builds", "F8/C2/B1/GCC unchanged", "concurrent diffs excluded from commit"]
 }

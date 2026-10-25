@@ -4,11 +4,11 @@ category: development
 aliases: [build-and-test]
 source_revision: 82bf52d52e594fae02593866669a1af715127d1f
 tags: [artist, build, testing, guide]
-summary: "Windows Debug82bf52d : ASan555, CPU484 et71GL normaux réutilisés ; audit final accepté, livrables terminés mais clôture native bloquée."
+summary: "Windows Debug82bf52d : ASan555, CPU484 et71GL normaux réutilisés ; audit final accepté, board réconcilié7/7, dettes conservées."
 status: verified-windows-debug
 created: 2026-10-03
 updated: 2026-10-25
-sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md]
+sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -31,9 +31,10 @@ Profil, lectures canoniques, contexte et transport de l'audit vérifiés ; adapt
 native dédiée approuvée, worktree RO toléré sans garantie de sandbox/invisibilité
 du board. Assertions relues et mutants mentaux, aucune nouvelle exécution reviewer.
 
-La clôture native reste distincte et **bloquée par le graphe hérité**, malgré ces
-livrables acceptés : [[references/session-2026-10-25-qa-continuation|synthèse sourcée]].
-Cette dette de statut ne justifie pas une nouvelle campagne ni un audit doublon.
+Le graphe natif hérité a ensuite été **réconcilié7/7 sous verrou d'admission**,
+sans nouvelle campagne ni audit doublon. Équipe non archivée, politique
+temporairement non approuvée, dettes techniques inchangées :
+[[references/session-2026-10-25-qa-continuation|synthèse sourcée]].
 
 Correction du seul test ShaderLifetimeTests, sans patch moteur : voir
 [[development/known-incidents#Continuation QA — débordement du diagnostic mock — 2026-10-25|incident et limites]].

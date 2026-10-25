@@ -64,7 +64,19 @@
     "integrationHeadReviewed": "582b156cbde1390060a749ba215ce4d21835768e"
   },
   "harness": "local static diagnosis delivered; concurrent profile/oracle changes not integrated, no Node suite run",
-  "mission": "BOUNDED_DELIVERABLES_COMPLETED; historical debts and concurrent harness excluded; native board reconciliation recorded separately",
+  "mission": "BOUNDED_LOT_COMPLETED; native task board reconciled7/7; team retained, not archived; technical debts unchanged",
+  "nativeBoard": {
+    "completed": 7,
+    "blocked": 0,
+    "inProgress": 0,
+    "reconciliation": "operator option A: native config gate then complete ASAN, old AUDIT and CLOTURE using integrated deliverables",
+    "teamRetained": true,
+    "missionModeState": "long_run/running",
+    "policyApprovalState": "draft/not approved after deliberate native config gate; no start invoked by lead",
+    "policyFileUnchanged": true,
+    "newWorkers": 0,
+    "evidence": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md"
+  },
   "limits": ["F8 catch INCONCLUSIVE", "F8 close DEFER", "C2 OPEN/INCONCLUSIVE", "B1 historical unresolved", "native GCC/libstdc++ unvalidated", "Linux/Release/image/performance unvalidated"],
   "evidenceReports": [
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/09-asan-final-fail-et-decision.md",
@@ -74,6 +86,7 @@
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/13-diagnostic-qa-windows-linux.md",
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/19-admission-audit-verifiee.md",
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/20-audit-final-remise-partielle.md",
-    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md"
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md"
   ]
 }

@@ -3,7 +3,7 @@ title: Plan de correction de l'existant
 category: architecture
 tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
-sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md]
+sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -45,10 +45,11 @@ DEFER, C2 OPEN/INCONCLUSIVE, B1 historique et GCC natif non résolus. ADR0001/2/
 Proposed,0003/5 Accepted/partial,0008 Windows Debug seulement ; pas de nouveau
 backend, RAII exhaustive ou gain mesuré. Les historiques ci-dessous restent datés.
 
-La fin des livrables n'est **pas la clôture native** : dépendances importées
-ASAN→AUDIT→CLOTURE encore bloquantes, réconciliation refusée et ancien audit non
-relancé. Voir [[references/session-2026-10-25-qa-continuation|synthèse de continuation]]
-pour la distinction entre preuves, audit accepté et dette d'orchestration.
+Après un refus initial, les dépendances importées ASAN→AUDIT→CLOTURE ont été
+réconciliées sous verrou natif sur choix opérateur : **7/7completed**, aucun audit
+relancé. Équipe conservée/non archivée, politique non approuvée sous verrou.
+Voir [[references/session-2026-10-25-qa-continuation|synthèse de continuation]] pour
+les preuves, la résolution du statut et les dettes techniques toujours ouvertes.
 
 ## Mission F5 du 2026-10-15 — terminée dans son périmètre
 

@@ -4,7 +4,7 @@ category: index
 tags: [artist, documentation, index]
 aliases: [ARTIST, Accueil ARTIST]
 summary: Entrée du vault ARTIST, état actuel, cap technique, ADR de correction et procédures de développement.
-sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md]
+sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -45,7 +45,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 
 ## Corriger
 
-- [[references/session-2026-10-25-qa-continuation|Continuation QA du25octobre]] — audit indépendant accepté, ASan555/555 ; livrables terminés à leur portée, clôture native bloquée par le graphe hérité. F8/C2/B1/GCC restent ouverts, aucun PASS global.
+- [[references/session-2026-10-25-qa-continuation|Continuation QA du25octobre]] — audit indépendant accepté, ASan555/555 ; livrables terminés et board réconcilié7/7 sous verrou natif. Équipe conservée, F8/C2/B1/GCC ouverts, aucun PASS global.
 - [[adr/README|Registre des ADR]] — huit contrats avec statuts, périmètres et preuves.
 - [[architecture/correction-plan|Ordre de correction]] — build reproductible, ownership, exécution, bindings, mesures.
 - [[architecture/missions/2026-10-16-pipeline-ownership|Mission Pipeline archivée (2026-10-16)]] — ownership du Pipeline et de `IPass` (A1+A2/F6), curseur borné, F8-extraction, H-RESTORE/H-FIXTURE ; C++ `f914d77` : **215 normales** (176 unit + 39 GL) / **198 ASan** sélection (17 GL hors sélection) ; QA 24 critères (**14 PASS, 3 FAIL, 7 INCONCLUSIVE**), aucun PASS global, oracle GMock préexistant retenu FAIL ; contrat G-A/A2/F8 archivé intégralement.

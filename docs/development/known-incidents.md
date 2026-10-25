@@ -2,7 +2,7 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Correctif mock82bf52d, ASan555 et audit final acceptés ; clôture native bloquée et dettes F8/C2/B1/GCC conservées, sans PASS global."
+summary: "Correctif mock82bf52d, ASan555 et audit final acceptés ; blocage du board résolu7/7, dettes F8/C2/B1/GCC conservées sans PASS global."
 created: 2026-10-03
 updated: 2026-10-25
 sources:
@@ -23,6 +23,7 @@ sources:
   - docs/_meta/session-2026-10-16-asan-caller-restoration.json
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md
+  - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -64,12 +65,16 @@ provenance:
   OPEN/INCONCLUSIVE ; B1 historique non résolu ; GCC/libstdc++ natif non validé.
   Un comptage PASS d'une autre population ne clôt jamais ces incidents.
 
-### Dette native après audit accepté
+### Dette native après audit accepté — résolue
 
-Le graphe importé ASAN→AUDIT→CLOTURE n'a pas été réconcilié automatiquement avec
+Le graphe importé ASAN→AUDIT→CLOTURE n'avait pas été réconcilié automatiquement avec
 le nouvel audit dédié completed. Compléter CLOTURE a été refusé pour dépendances
-non résolues ; libérer ASAN pourrait relancer l'ancien audit sur une fiche obsolète.
-La **clôture native est donc bloquée**, pas les preuves déjà acceptées. Aucun faux
+non résolues ; libérer ASAN risquait de relancer l'ancien audit sur une fiche obsolète.
+Après enquête et choix opérateur, le config natif a verrouillé les admissions,
+puis les trois tâches ont été complétées sur leurs livrables déjà intégrés :
+**7/7completed, aucun nouveau worker/audit**, politique fichier inchangée. L'arrêt
+du lead avait été prématuré ; pas de nouveau bug runtime démontré. L'équipe reste
+non archivée et la politique temporairement non approuvée sous verrou. Aucun faux
 completed ni modification de base interne. Détails et provenance :
 [[references/session-2026-10-25-qa-continuation|synthèse de continuation]].
 

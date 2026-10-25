@@ -3,8 +3,8 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Source82bf52d : ASan555 et audit final acceptés ; livrables bornés terminés, clôture native bloquée, dettes F8/C2/B1/GCC conservées."
-sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md]
+summary: "Source82bf52d : ASan555 et audit final acceptés, board réconcilié7/7 ; équipe conservée et dettes F8/C2/B1/GCC ouvertes."
+sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -30,10 +30,11 @@ updated: 2026-10-25
 > [[development/build-and-test|commandes et portée]]. F8/C2/B1/GCC restent ouverts ;
 > les ADR ne sont pas promus et aucune performance/image/Linux n'est validée.
 
-La **clôture native reste bloquée** par le graphe importé ASAN→AUDIT→CLOTURE,
-malgré l'audit dédié completed et les livrables intégrés. Ne pas relancer l'ancien
-audit ni déduire la fin native du PASS :
-[[references/session-2026-10-25-qa-continuation|synthèse sourcée et dette de statut]].
+Le graphe importé ASAN→AUDIT→CLOTURE a été **réconcilié7/7completed sous verrou
+natif**, sur choix opérateur, sans nouveau worker/audit ni changement de politique.
+Équipe/worktrees conservés, non archivés ; politique non approuvée par effet du
+verrou, sans start du lead. Les dettes techniques ne sont pas fermées :
+[[references/session-2026-10-25-qa-continuation|synthèse sourcée et résolution du statut]].
 
 > [!info] Photographie historique — 2026-10-20
 > Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +
