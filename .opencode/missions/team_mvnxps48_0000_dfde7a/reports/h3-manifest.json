@@ -1,0 +1,42 @@
+{
+  "label": "H3",
+  "sourceHead": "318bf7a0e5da2a65cc437ccc29baa92418822bc4",
+  "checkedAt": "2026-10-25T16:13:40.945Z",
+  "sourceRoot": "C:/Users/djden/source/repos/ARTIST",
+  "artistTrackedDelta": "none",
+  "generatorDisposition": "accepted complete report39, KEEP E5/E6, no patch",
+  "normalEvidence": {
+    "archive": "out/qa-helpers/nonreg-20261024-02",
+    "reusedNotRerun": true,
+    "discovered": 555,
+    "executed": 555,
+    "sameUniqueNames": true,
+    "unit": 484,
+    "opengl": 71,
+    "failure": 0,
+    "error": 0,
+    "skipped": 0,
+    "discoverySha256": "9a6032493f1075c2e8c117ce5159e2afc339bc0b7badc87e3955e1235bf4bc60",
+    "junitSha256": "564f12b7238b9934962878ed417a5fffdb5f10969b0023714127ec16b71f064d"
+  },
+  "sha256": {
+    "ARTIST/tests-common/include/TestUtils.hpp": "13cfc1b5904a27511e6a8f9c4475151631f7100f72093540b47e7df14f4bd31f",
+    "ARTIST/tests/src/common/TestUtilsTests.cpp": "7ccd2757dfdad90be465af9e1bea71f4c8d5a59db0d8bcc057b843c68b456c88",
+    "out/build/windows-msvc-debug/ARTIST/tests/ArtistLib_tests.exe": "ef552933dcbc16e10f338e72ed375f85a0de971340b18c8d0d62df3bb244d44a",
+    "out/build/windows-msvc-debug/ARTIST/component-tests/ArtistLib_component_tests.exe": "14c94bae6ccf0ccb672de8a5b741b776e8506aae48685b73caf2c0a61fc16793",
+    "out/build/windows-msvc-debug-asan/ARTIST/tests/ArtistLib_tests.exe": "1472f35dd312dd369a8b80b637648a418706e8ce405ce21cd9a294eec361cd7a",
+    "out/build/windows-msvc-debug-asan/ARTIST/component-tests/ArtistLib_component_tests.exe": "b2bd0125d7ae8cc872c4a9a8a5d208377f19a3afd4a4ee6f330e6fd20dc63d0c",
+    "out/build/windows-msvc-debug-asan/artist_asan_probe.exe": "14064d5b22846746d23794b4bb181c3e1b28cf0275eefcc1a50b73c2a941bfee",
+    "out/qa-b2-h3/asan-canary/summary.json": "3ccd0ae07aff52087a5cff2f11813bffd93a0ff7de701bc7f198fd1885024b7d",
+    "CMakeLists.txt": "59c42aa1dbc411f7f03adaf18562d82c52bc4a3a4c874a37286da19a97a10899",
+    "CMakePresets.json": "5a9860646ecc7dbcc68af0cb38b119dfa4cf30e2b985c83ecd197bbba837fd7e",
+    "cmake/AddressSanitizer.cmake": "ff8913d0365e472f1be820365c75ca1801764861546fa98f3846f0ba5ca30736",
+    "cmake/CheckCxx23.cmake": "f12eb7191e6a9e7c19a93d36f490d97ed9d439941d844f87be6bffa575a89af2",
+    "out/build/windows-msvc-debug-asan/CMakeCache.txt": "f8f470e944dfe918b05173ff2bc4df2aefd66b5dc341d4a5184b2a0db2f0b1a8",
+    "out/build/windows-msvc-debug-asan/build.ninja": "76ca20f919d4dfd2801b7094c5f4d5e1fc2efb099d86cc1af230b8626fb55614"
+  },
+  "asanFinal": "NOT_RUN at H3 freeze; campaign evidence must be recorded separately",
+  "audit": "NOT_RUN; native admission gate unverified",
+  "harness": "concurrent diff not covered by normal C++ evidence",
+  "openLimits": ["F8 catch INCONCLUSIVE", "F8 close DEFER", "C2 OPEN/INCONCLUSIVE", "B1 historical unresolved", "native GCC unvalidated", "Linux/Release/image/performance unvalidated"]
+}
