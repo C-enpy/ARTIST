@@ -4,7 +4,7 @@ category: development
 aliases: [build-and-test]
 source_revision: 82bf52d52e594fae02593866669a1af715127d1f
 tags: [artist, build, testing, guide]
-summary: "Windows Debug82bf52d : ASan555/555, CPU normal484/484 et71GL normaux réutilisés par identité ; audit final non exécuté, historiques et limites conservés."
+summary: "Windows Debug82bf52d : ASan555/555, CPU normal484/484 et71GL normaux réutilisés ; audit final indépendant accepté, continuation bornée terminée avec dettes conservées."
 status: verified-windows-debug
 created: 2026-10-03
 updated: 2026-10-25
@@ -25,7 +25,11 @@ chacun une fois, mêmes noms découverte/sélection/exécution/JUnit et diagnost
 tardifs contrôlés. CPU normal **484/484 nouvellement exécutés** ;71GL normaux
 antérieurs réutilisés par identité source/binaire, pas une nouvelle campagne
 normale555. Revue statique indépendante du petit correctif test reçue ; **audit
-final test-reviewer non exécuté, mission de continuation non close**.
+final test-reviewer fresh accepté, PASS borné obligations1–6 sans finding bloquant**.
+Continuation terminée dans ce périmètre, pas de PASS global moteur/harness.
+Profil, lectures canoniques, contexte et transport de l'audit vérifiés ; adaptation
+native dédiée approuvée, worktree RO toléré sans garantie de sandbox/invisibilité
+du board. Assertions relues et mutants mentaux, aucune nouvelle exécution reviewer.
 
 Correction du seul test ShaderLifetimeTests, sans patch moteur : voir
 [[development/known-incidents#Continuation QA — débordement du diagnostic mock — 2026-10-25|incident et limites]].

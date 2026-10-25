@@ -2,7 +2,7 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Incidents moteur/harness et limites conservées ; débordement du diagnostic mock corrigé à82bf52d, ASan555 vérifié ; audit final de continuation encore non exécuté."
+summary: "Continuation bornée vérifiée : correctif mock82bf52d, ASan555 et audit final indépendant reçus ; dettes moteur/harness et limites conservées."
 created: 2026-10-03
 updated: 2026-10-25
 sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
@@ -34,8 +34,13 @@ provenance:
   `out/qa-b2-h3/final-h4-20261025-01/` conservées ; preuve portable :
   `_meta/session-2026-10-25-qa-continuation.json` et
   [[development/build-and-test|validation et commandes]].
-- **Mission non close** : audit final test-reviewer hors board non exécuté,
-  admission native incompatible/non démontrée. Le diagnostic harness constate
+- **Continuation terminée à sa portée bornée** : audit final test-reviewer fresh
+  reçu et accepté, PASS obligations1–6 sans finding bloquant démontré. Admission
+  native dédiée adaptée et approuvée : profil restrictif, lectures canoniques,
+  contexte et transport vérifiés ; worktree RO toléré, sans garantie de sandbox
+  ou d'invisibilité technique du board. Analyse statique/mutants mentaux seulement,
+  exécutions attribuées au lead ; rapport21 référencé au manifeste.
+  Le diagnostic harness constate
   encore un oracle communicationv2 réservé au planner alors que les trois profils
   portent cette politique ; aucune correction des diffs concurrents intégrée.
 - **Dettes inchangées** : F8 catch INCONCLUSIVE, close DEFER ; C2

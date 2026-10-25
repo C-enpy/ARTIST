@@ -3,7 +3,7 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Photographie82bf52d : production inchangée dans la continuation, correctif mock local et ASan555 vérifiés ; CPU normal484, audit final non exécuté et mission non close."
+summary: "Photographie82bf52d : production inchangée, correctif mock et ASan555 vérifiés ; CPU normal484, audit final indépendant accepté et continuation bornée terminée, dettes conservées."
 status: observed
 source_revision: 82bf52d52e594fae02593866669a1af715127d1f
 created: 2026-10-03
@@ -12,13 +12,15 @@ updated: 2026-10-25
 
 # État réel d'ARTIST
 
-> [!info] Photographie provisoire vérifiée — 2026-10-25
+> [!info] Photographie finale de la continuation bornée — 2026-10-25
 > Candidat C++82bf52d : correction de8lignes dans un seul test lifetime mocké,
 > aucune production modifiée par cette continuation. **ASan555/555**
 > (484CPU+71OpenGL), zéro failure/error/skip,17historiques chacun une fois ;
 > **484CPU normaux réexécutés**,71GL normaux antérieurs réutilisés par identité.
-> Revue statique indépendante du diff reçue, mais **audit final test-reviewer
-> non exécuté et mission non close**. Archives rouge/verte et manifestes conservés :
+> Revue statique indépendante du diff et **audit final test-reviewer fresh reçus,
+> PASS borné O1–6 sans finding bloquant ; continuation terminée à cette portée**.
+> Audit statique, pas de tests exécutés par reviewer ni PASS global moteur/harness.
+> Archives rouge/verte et manifestes conservés :
 > `_meta/session-2026-10-25-qa-continuation.json` et
 > [[development/build-and-test|commandes et portée]]. F8/C2/B1/GCC restent ouverts ;
 > les ADR ne sont pas promus et aucune performance/image/Linux n'est validée.

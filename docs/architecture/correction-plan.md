@@ -14,7 +14,7 @@ Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier
 de livraison. Les durées et pourcentages des rapports ne sont pas des budgets ratifiés.
 
-## Continuation QA — 2026-10-25, vérification acquise mais mission non close
+## Continuation QA — 2026-10-25, terminée à sa portée bornée
 
 Remise generator39 acceptée sans nouveau patch ; source H3 initiale318bf7a,
 intégration documentaire849e6d5. La campagne ASan initiale555 a donné un FAIL
@@ -30,8 +30,12 @@ Voir [[development/known-incidents|incidents]],
 Le diagnostic QA Windows/Linux est livré en analyse locale : l'oracle du harness
 reste incohérent avec les trois profils communicationv2 ; les diffs concurrents
 ne sont pas corrigés/intégrés par cette continuation. Linux n'est pas exécuté.
-**Audit final test-reviewer hors board encore non admis : gate de clôture ouvert.**
-Cette photographie intermédiaire ne clôt pas le lot. F8 catch INCONCLUSIVE/close
+**Audit final test-reviewer fresh reçu et accepté : PASS borné O1–6, aucun finding
+bloquant démontré.** Admission native dédiée selon adaptation opérateur approuvée,
+profil/lectures/contexte/transport vérifiés ; worktree RO toléré, sans garantie de
+sandbox ou d'invisibilité technique du board. Audit statique/mutants mentaux,
+exécutions runner lead conservées sans nouvelle campagne. Le lot de continuation
+est terminé à cette portée, sans clôture globale moteur/harness. F8 catch INCONCLUSIVE/close
 DEFER, C2 OPEN/INCONCLUSIVE, B1 historique et GCC natif non résolus. ADR0001/2/4/6/7
 Proposed,0003/5 Accepted/partial,0008 Windows Debug seulement ; pas de nouveau
 backend, RAII exhaustive ou gain mesuré. Les historiques ci-dessous restent datés.

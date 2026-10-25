@@ -1,6 +1,6 @@
 {
   "date": "2026-10-25",
-  "kind": "interim-validation-not-mission-closure",
+  "kind": "bounded-continuation-completed-with-open-debts",
   "sourceHead": "82bf52d52e594fae02593866669a1af715127d1f",
   "productionDeltaDuringContinuation": "none",
   "changedCppFiles": ["ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp"],
@@ -56,16 +56,24 @@
     "correctness": "fresh independent static review of delta accepted, no demonstrated blocking defect",
     "nativeMember": "pool-3",
     "profile": "correctness-reviewer",
-    "testReviewerFinal": "NOT_RUN; native off-board admission not established"
+    "testReviewerFinal": "PASS bounded obligations1-6; no demonstrated blocking finding; static review and mental mutants, archived executions attributed to lead",
+    "testReviewerMember": "pool-4",
+    "testReviewerSession": "ses_e8be04f64ffeJHjS8tUr1lJgi3",
+    "testReviewerTask": "task_mvo3w8yq_000b_5nrkp7",
+    "admission": "native test-reviewer; fresh context observed; canonical reads and team_message verified; isolated read-only worktree tolerated by approved adaptation, no claim of board invisibility or sandbox",
+    "integrationHeadReviewed": "582b156cbde1390060a749ba215ce4d21835768e"
   },
   "harness": "local static diagnosis delivered; concurrent profile/oracle changes not integrated, no Node suite run",
-  "mission": "NOT_CLOSED",
+  "mission": "BOUNDED_DELIVERABLES_COMPLETED; historical debts and concurrent harness excluded; native board reconciliation recorded separately",
   "limits": ["F8 catch INCONCLUSIVE", "F8 close DEFER", "C2 OPEN/INCONCLUSIVE", "B1 historical unresolved", "native GCC/libstdc++ unvalidated", "Linux/Release/image/performance unvalidated"],
   "evidenceReports": [
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/09-asan-final-fail-et-decision.md",
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/10-contrat-correction-asan-tests.md",
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/11-correction-test-red-green.md",
     ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/12-h4-asan-pass-et-revue.md",
-    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/13-diagnostic-qa-windows-linux.md"
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/13-diagnostic-qa-windows-linux.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/19-admission-audit-verifiee.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/20-audit-final-remise-partielle.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md"
   ]
 }
