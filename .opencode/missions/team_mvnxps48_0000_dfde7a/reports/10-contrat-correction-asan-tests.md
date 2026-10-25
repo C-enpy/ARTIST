@@ -41,3 +41,9 @@ Non-régression : unit normal/ASan affectés par la mutation ; réutiliser les p
 Registre preuves : rapport09/archive final-20261025-01 ↔ défaut initial ; futures archives ciblées ↔ hypothèse/RED/GREEN ; nouveau manifeste ↔ campagne finale. Toute preuve non reliée garde sa portée d'origine. Budget qualitatif : setup puis75%cycle prévu/25%buffer ; pas de boucle de seeds ou de build propre inutile.
 
 Sortie : patch minimal + preuves causales et non-régression ; sinon FAIL/INCONCLUSIVE précis et restitution au lead. Audit natif indépendant et QA-PORTABILITE restent des livrables distincts, pas automatiquement clôturés par ce correctif.
+
+## Résultat pré-édition et ajustement discriminant
+
+Même binaire ASan, test filtré : **exit86 et même heap-buffer-overflow** (`out/logs/h4-focused-red-20261025-01.log`). Contrôle CLI quiet : également86 (`h4-focused-quiet-control-20261025-01.log`), donc pas de PASS de contrôle. Lecture de tests/src/main.cpp : seul InitGoogleTest est appelé ; les macros du gmock-port.h lié initialisent directement les flags, sans reprise environnement. Le flag CLI GoogleMock n'est donc pas un contrôle calibré dans ce runner. Aucun changement de main/flag pour réparer artificiellement l'expérience.
+
+La nouvelle expérience reste dans le contrat : le diff minimal de l'attente locale est la seule variable, les actions ON_CALL et diagnostics par défaut restant identiques. Le RED valide avant édition est acquis ; GREEN avec ce seul delta vérifiera le chemin intéressant/non intéressant et l'exécution de la même action. La preuve n'utilisera jamais un flag silencieux. Cette note remplace la condition « contrôle quiet0 » par cette comparaison source minimale ; pas de répétition du contrôle CLI invalide ni de nouveau périmètre.
