@@ -358,6 +358,14 @@ TEST_F(ShaderLifetimeTests, PassDestructorReleasesProgramThenShaders)
     EXPECT_CALL(gl, glCreateShader_mock(::testing::_)).Times(1).WillOnce(::testing::Return(8u));
     EXPECT_CALL(gl, glCreateProgram_mock()).Times(1).WillOnce(::testing::Return(5u));
 
+    // This is an output buffer, not a C string until the default action fills it.
+    // An uninteresting-call diagnostic would print its non-NUL staging contents.
+    EXPECT_CALL(gl, glGetActiveAttrib_mock(5, 0,
+                                          static_cast<GLsizei>(sizeof(mock::opengl::glFunctionMock::ATTRIBUTE_NAME)),
+                                          ::testing::NotNull(), ::testing::NotNull(),
+                                          ::testing::NotNull(), ::testing::NotNull()))
+        .Times(1);
+
     {
         testing::InSequence sequence;
         EXPECT_CALL(gl, glDetachShader_mock(5, 8)).Times(1);
