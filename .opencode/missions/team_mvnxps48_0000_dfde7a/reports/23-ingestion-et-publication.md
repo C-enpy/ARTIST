@@ -19,3 +19,7 @@ Contrôle Python/PyYAML réellement exécuté sur7pages : frontmatter requis, su
 `git fetch origin` exit0 ; divergence origin/main...HEAD=0/19 : pas de commit distant manquant ni besoin de rebase/force. `git diff --check -- docs` exit0 (avertissement normalisation CRLF du journal conservé). `git check-ignore docs/.manifest.json` confirme ledger ignoré, non forcé en publication. Rename GrepAI toujours seul staged.
 
 QMD ciblé : update-wiki exit0,1note créée/6actualisées/50inchangées,0removed/skipped ; embed artist-wiki exit0,91chunks/7documents. Requête MCP lex+vec avec collection/intent puis get de la synthèse56–83 : dette native et limites retrouvées, provenance inférée marquée. Aucun build/CTest/QA exécutable ajouté ou lancé. Commit ciblé puis push standard autorisés par la demande utilisateur ; preuve du push à rapporter depuis le retour Git, pas supposée ici.
+
+## Publication effectivement vérifiée
+
+Commit d'ingestion **2512930ad7be6a41220b59d7e62f2427690eb2c4**,9fichiers nommés uniquement. `git push origin HEAD:main` : exit0,989cb99→2512930 sur GitHub ARTIST. `git ls-remote origin refs/heads/main` a retourné ce SHA exact ; `origin/main...HEAD`=0/0 après push. Docs propres ; seul rename GrepAI préexistant toujours staged, non embarqué. Le ledger .manifest.json reste local ignoré, sa preuve portable est publiée. Les19ancêtres de continuation ont été publiés avec ce commit, sans force/rebase ni nettoyage. Cette attestation documentaire ne change ni les preuves moteur ni la clôture native toujours bloquée.
