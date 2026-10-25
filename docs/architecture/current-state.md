@@ -3,7 +3,7 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Source82bf52d : ASan555 et audit final acceptés, board réconcilié7/7 ; équipe conservée et dettes F8/C2/B1/GCC ouvertes."
+summary: "Source82bf52d : ASan555 acquis ; scope initial B1/B3/B5 repris, deux causesB1 vérifiées, contratB3 proposé et décisionC2 attendue."
 sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
@@ -35,6 +35,14 @@ natif**, sur choix opérateur, sans nouveau worker/audit ni changement de politi
 Équipe/worktrees conservés, non archivés ; politique non approuvée par effet du
 verrou, sans start du lead. Les dettes techniques ne sont pas fermées :
 [[references/session-2026-10-25-qa-continuation|synthèse sourcée et résolution du statut]].
+
+**Étape ultérieure du25octobre : scope initial restauré sous révision3.** Les
+anciennes7tâches restent acquises ; trois enquêtes nouvelles B1/B3/B5 ont été
+lancées. B1 dispose maintenant de deux témoins causaux négatifs historiques
+(1et2échecs) et de nominaux actuels verts (4et6RUN,5cas uniques), sans nouveau
+correctif. `_meta/session-2026-10-25-b1-causal-validation.json` conserve preuves
+et limites. Contrat Reader/F8 seulement proposé, C2 en décision motivée : **la
+reprise du scope initial n'est pas terminée**, et7/7ne désigne pas ce nouveau lot.
 
 > [!info] Photographie historique — 2026-10-20
 > Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +

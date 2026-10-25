@@ -51,6 +51,15 @@ relancé. Équipe conservée/non archivée, politique non approuvée sous verrou
 Voir [[references/session-2026-10-25-qa-continuation|synthèse de continuation]] pour
 les preuves, la résolution du statut et les dettes techniques toujours ouvertes.
 
+**Reprise initiale B1/B3/B5 ensuite approuvée (révision3,25octobre)** : enquêtes
+parallèles nouvelles, anciennes tâches non rouvertes. B1 : deux contaminations
+ON_CALL historiques isolées, tests réduits négatifs puis nominaux actuels verts,
+sans nouveau correctif ; preuve `_meta/session-2026-10-25-b1-causal-validation.json`.
+B3 : contrat transactionnel stdio proposé mais non adopté, calibration/modes et
+catch/close à arbitrer ; B5 : provenance native du défaut de fixture retrouvée,
+fermeture motivée encore soumise à l'opérateur. Le scope initial reste en cours,
+sans transfert automatique des preuves ASan555 sur un futur nouveau diff.
+
 ## Mission F5 du 2026-10-15 — terminée dans son périmètre
 
 [[architecture/missions/2026-10-15-f5-gl-diagnostics|Diagnostics GL vides et

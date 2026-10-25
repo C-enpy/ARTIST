@@ -24,6 +24,7 @@ sources:
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md
+  - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/30-b1-causes-reproduites-et-actuel-vert.md
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -633,7 +634,7 @@ avant T3.
   décrits dans `out/mission-f7/t2/t2-slice-note.md`. Manifeste : clé
   `f7_t2_followup` de `_meta/session-2026-10-17-attribute-oracle-validation.json`.
 
-### Ordre des fixtures Loader/ShaderLoader — FAIL préexistant, non corrigé
+### Ordre des fixtures Loader/ShaderLoader — FAIL historique, causes isolées le25octobre
 
 L'essai G1 de shuffle du binaire CPU complet révèle neuf cas Loader/ShaderLoader
 en échec sous seed20261017 (effectif61219), et `LoadShaderTest_callCreate` sous
@@ -648,6 +649,23 @@ autoriser séparément. Aucun correctif ou nouveau chantier implicite. Preuves :
 `out/mission-a1a2/gmock-amendment/qa/shuffle-tripartite-results.json`.
 La suite en ordre par défaut et la fixture Attribute corrigée restent conformes
 dans les campagnes déclarées ; **pas de PASS global toutes configurations**.
+
+**Reprise du scope initial,25octobre : causes désormais reproduites isolément.**
+Sur PRE_G1 identifié par SHA3d4fb31e…, deux processus de réduction avec repeat2
+montrent la persistance des ON_CALL : compileFalse de LoadShaderFailureTest
+contamine le callCreate suivant ; shader8/program5 du test lifetime contaminent
+les observers attendant1. H échoue avec1puis2échecs attendus. Sur le binaire normal
+actuel1b0fc029…/source82bf52d, mêmes sélections :4puis6exécutions vertes,5cas uniques
+au total,0skip et aucun diagnostic stdout après dernier PASSED. Les trois sites
+sont déjà EXPECT_CALL/WillOnce ; aucun nouveau correctif/build/sweep. Le reset
+VerifyAndClearExpectations du singleton ne supprimait pas les ON_CALL.
+
+Runner lead, protocole29 avant run, stdout/stderr/XML et identités avant/après
+archivés dans out/qa-b1/causal-20261025-01. XML dernière itération seulement,
+pas10nouveaux tests uniques. B1 causalement instruit au périmètre de ces deux
+mécanismes, revue finale encore attendue ; anciens FAIL176 conservés, aucune
+garantie toutes permutations. Preuve portable :
+`_meta/session-2026-10-25-b1-causal-validation.json`. F8/B3 et C2/B5 restent distincts.
 
 ### Clôtures des correctifs harnais
 
