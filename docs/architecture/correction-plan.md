@@ -5,7 +5,7 @@ tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
 status: proposed
 created: 2026-10-03
-updated: 2026-10-19
+updated: 2026-10-25
 ---
 
 # Plan de correction de l'existant
@@ -13,6 +13,28 @@ updated: 2026-10-19
 Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier
 de livraison. Les durées et pourcentages des rapports ne sont pas des budgets ratifiés.
+
+## Continuation QA — 2026-10-25, vérification acquise mais mission non close
+
+Remise generator39 acceptée sans nouveau patch ; source H3 initiale318bf7a,
+intégration documentaire849e6d5. La campagne ASan initiale555 a donné un FAIL
+réel dans le diagnostic mock de ShaderLifetimeTests ; archive rouge conservée.
+Correctif local test **82bf52d**, contrat/QA avant édition, RED86 puis GREEN1/1,
+revue statique correctness-reviewer fresh reçue sans défaut bloquant démontré.
+**ASan final555/555 =484CPU+71GL**,0failure/error/skip,17historiques chacun une
+fois ; CPU normal484/484 réexécuté et71GL normaux antérieurs réutilisés par identité.
+Voir [[development/known-incidents|incidents]],
+[[development/build-and-test|preuves exécutées]] et
+`_meta/session-2026-10-25-qa-continuation.json`.
+
+Le diagnostic QA Windows/Linux est livré en analyse locale : l'oracle du harness
+reste incohérent avec les trois profils communicationv2 ; les diffs concurrents
+ne sont pas corrigés/intégrés par cette continuation. Linux n'est pas exécuté.
+**Audit final test-reviewer hors board encore non admis : gate de clôture ouvert.**
+Cette photographie intermédiaire ne clôt pas le lot. F8 catch INCONCLUSIVE/close
+DEFER, C2 OPEN/INCONCLUSIVE, B1 historique et GCC natif non résolus. ADR0001/2/4/6/7
+Proposed,0003/5 Accepted/partial,0008 Windows Debug seulement ; pas de nouveau
+backend, RAII exhaustive ou gain mesuré. Les historiques ci-dessous restent datés.
 
 ## Mission F5 du 2026-10-15 — terminée dans son périmètre
 

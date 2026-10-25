@@ -2,12 +2,12 @@
 title: Build et tests actuels
 category: development
 aliases: [build-and-test]
-source_revision: 1005dff0804e18c412129843e944d7f1f55a0f48
+source_revision: 82bf52d52e594fae02593866669a1af715127d1f
 tags: [artist, build, testing, guide]
-summary: "Dernière vérification tracée fdbce15 : 546/546 Windows Debug (477 unitaires + 69 OpenGL) ; historiques et limites conservés."
+summary: "Windows Debug82bf52d : ASan555/555, CPU normal484/484 et71GL normaux réutilisés par identité ; audit final non exécuté, historiques et limites conservés."
 status: verified-windows-debug
 created: 2026-10-03
-updated: 2026-10-20
+updated: 2026-10-25
 sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 1.0
@@ -19,10 +19,40 @@ provenance:
 
 ## Résumé courant — Windows x64 Debug
 
-Dernière vérification tracée : **546/546** (477 unitaires + 69 OpenGL), au SHA
-`fdbce15dcc05663cc58618a844d931b07b84750f`. Ce comptage n'est pas une relance
-au HEAD documentaire et ne requalifie ni ASan, ni Release, ni les autres OS,
-ni l'image ou la performance. Les sections datées ci-dessous restent historiques.
+Dernier candidat C++ vérifié : **82bf52d52e594fae02593866669a1af715127d1f**,
+le2026-10-25. **ASan555/555** (484CPU+71OpenGL),0failure/error/skip,17historiques
+chacun une fois, mêmes noms découverte/sélection/exécution/JUnit et diagnostics
+tardifs contrôlés. CPU normal **484/484 nouvellement exécutés** ;71GL normaux
+antérieurs réutilisés par identité source/binaire, pas une nouvelle campagne
+normale555. Revue statique indépendante du petit correctif test reçue ; **audit
+final test-reviewer non exécuté, mission de continuation non close**.
+
+Correction du seul test ShaderLifetimeTests, sans patch moteur : voir
+[[development/known-incidents#Continuation QA — débordement du diagnostic mock — 2026-10-25|incident et limites]].
+Manifeste : `_meta/session-2026-10-25-qa-continuation.json` ; archives complètes
+`out/qa-b2-h3/final-h4-20261025-01/`, archive rouge précédente conservée.
+
+Runner lead via wrapper existant out/tooling/run-build.py ; commande ASan réelle :
+
+```text
+ctest --preset windows-msvc-debug-asan --tests-from-file C:/Users/djden/source/repos/ARTIST/out/qa-b2-h3/final-h4-20261025-01/selected-names.txt --parallel 1 --no-tests=error --output-on-failure --test-output-size-passed 65536 --test-output-size-failed 65536 --output-junit C:/Users/djden/source/repos/ARTIST/out/qa-b2-h3/final-h4-20261025-01/asan-selected.xml
+```
+
+Sélection/manifeste figés avant run ; bail interprocessus coopératif, un seul
+runner. ASAN_OPTIONS canonique, ASAN_ACTIVATION_OPTIONS absente, /RTC1, -MDd et
+assertions Debug conservés. Build incrémental unit seulement après modification
+du TU ; component/probe inchangés ; préflight0/86+diagnostic réutilisé après contrôle
+d'identité. Aucun clean, bootstrap, dépendance ou installation nouvelle.
+
+L'appel parent de la non-régression CPU normale a émis une erreur de préambule
+PowerShell (option ExecutionPolicy mal orthographiée) ; build/CTest et JUnit484
+ont réellement été exécutés et recoupés. Aucun rerun pour effacer cette trace.
+Pas de validation Linux/GCC, Release, image/performance ni déduction de PASS
+harness depuis les tests C++. F8/C2/B1 restent ouverts.
+
+Historique du2026-10-20 : **546/546** (477 unitaires+69OpenGL), SHA
+`fdbce15dcc05663cc58618a844d931b07b84750f`. Ce comptage garde sa révision et ne
+requalifie pas les autres campagnes. Les sections datées ci-dessous sont historiques.
 
 Pour commencer : [[usage/getting-started|guide d'usage]] et
 [[usage/pipeline-and-passes|contrats Pipeline/IPass]]. Commande canonique :

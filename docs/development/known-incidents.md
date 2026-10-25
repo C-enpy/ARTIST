@@ -2,9 +2,9 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Incidents Shader→Pass/Pipeline, harnais et transport Ensemble ; oracle Attribute corrigé b9c90fd ; fragilités shuffle préexistantes conservées ; preuves historiques et chemins non couverts distingués."
+summary: "Incidents moteur/harness et limites conservées ; débordement du diagnostic mock corrigé à82bf52d, ASan555 vérifié ; audit final de continuation encore non exécuté."
 created: 2026-10-03
-updated: 2026-10-20
+updated: 2026-10-25
 sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
 provenance:
   extracted: 0.96
@@ -13,6 +13,34 @@ provenance:
 ---
 
 # Incidents, diagnostics et suivi
+
+## Continuation QA — débordement du diagnostic mock — 2026-10-25
+
+- Campagne ASan initiale H3, source318bf7a : **554/555,1FAIL,0error/skip**.
+  `ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders` déclenche un
+  heap-buffer-overflow dans le pretty-printer GoogleMock d'un `GLchar*` de sortie,
+  via glGetActiveAttrib_mock. Le buffer de staging de production n'est pas encore
+  une chaîne NUL terminée au moment de ce diagnostic.
+- Correctif **82bf52d** : attente locale précise de cet appel dans ce seul test,
+  avec cardinalité1 et sorties non nulles ; action nominale ON_CALL, assertions
+  handles et ordre detach/program/shader inchangés. Aucun changement de production,
+  zéro-remplissage, NiceMock ou suppression globale des diagnostics.
+- RED ciblé exit86, GREEN ciblé1/1 avec diagnostics default ; CPU normal **484/484**
+  réexécuté. Puis ASan final **555/555 =484CPU+71OpenGL**,0failure/error/skip,
+  sélection et exécution identiques,17historiques chacun une fois ; logs tardifs
+  contrôlés. Revue statique correctness-reviewer fresh : aucun défaut bloquant
+  démontré au delta. Ce correctif local ne prouve pas tous les diagnostics de mocks.
+- Archives rouge `out/qa-b2-h3/final-20261025-01/` et verte
+  `out/qa-b2-h3/final-h4-20261025-01/` conservées ; preuve portable :
+  `_meta/session-2026-10-25-qa-continuation.json` et
+  [[development/build-and-test|validation et commandes]].
+- **Mission non close** : audit final test-reviewer hors board non exécuté,
+  admission native incompatible/non démontrée. Le diagnostic harness constate
+  encore un oracle communicationv2 réservé au planner alors que les trois profils
+  portent cette politique ; aucune correction des diffs concurrents intégrée.
+- **Dettes inchangées** : F8 catch INCONCLUSIVE, close DEFER ; C2
+  OPEN/INCONCLUSIVE ; B1 historique non résolu ; GCC/libstdc++ natif non validé.
+  Un comptage PASS d'une autre population ne clôt jamais ces incidents.
 
 ## Incident transport Ensemble — `final_response` jamais capturé — 2026-10-20
 

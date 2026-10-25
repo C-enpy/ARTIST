@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-25",
+  "kind": "interim-validation-not-mission-closure",
+  "sourceHead": "82bf52d52e594fae02593866669a1af715127d1f",
+  "productionDeltaDuringContinuation": "none",
+  "changedCppFiles": ["ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp"],
+  "h3Source": "318bf7a0e5da2a65cc437ccc29baa92418822bc4",
+  "h3DocumentaryIntegration": "849e6d50c2a545bfdaf661d4d0f408e9a0066a7a",
+  "qaPlanCommits": ["51a4356", "2a2e40e"],
+  "runner": "lead",
+  "initialRed": {
+    "verdict": "FAIL",
+    "archive": "out/qa-b2-h3/final-20261025-01",
+    "executed": 555,
+    "passed": 554,
+    "failure": 1,
+    "error": 0,
+    "skipped": 0,
+    "test": "unit.ShaderLifetimeTests.PassDestructorReleasesProgramThenShaders",
+    "diagnostic": "AddressSanitizer heap-buffer-overflow in mock output-buffer argument diagnostic",
+    "summarySha256": "b6d5b6e00daf2a8d506fb80bc0c811fd43a1d9fb39488c4c9239bccaca050a01"
+  },
+  "normal": {
+    "newlyExecutedCPU": 484,
+    "failure": 0,
+    "error": 0,
+    "skipped": 0,
+    "junit": "out/qa-b2-h3/h4-normal-unit-20261025-01.xml",
+    "reusedHistoricalGL": 71,
+    "notANew555NormalRun": true,
+    "invocationLimit": "PowerShell preamble emitted ExecutionPolicy spelling error; subsequent build and CTest executed, logs/JUnit verified; not rerun"
+  },
+  "asanFinal": {
+    "verdict": "PASS",
+    "archive": "out/qa-b2-h3/final-h4-20261025-01",
+    "executed": 555,
+    "unit": 484,
+    "opengl": 71,
+    "failure": 0,
+    "error": 0,
+    "skipped": 0,
+    "sameDiscoveredSelectedExecutedUniqueNames": true,
+    "historical17EachOnce": true,
+    "lateDiagnosticsChecked": true,
+    "sourceBinaryConfigPdbDllIdentityUnchangedAfterRun": true,
+    "selectionSha256": "9da0543500a4c597dccd03250bcd0a7db64493bc5c8e052ae150e165324b8a05",
+    "unitExeSha256": "2f945fb722a1ca83e8bb40c98cb2fc4c885c9f01d1ac7593162f73e3b051b764",
+    "summarySha256": "aeb82398ce9a549ab560686f942ac55862988c2f77a380771fe184308f1bba7f",
+    "preflight": "prior probe0/86+diagnostics reused after identity check, not rerun",
+    "parallel": 1,
+    "asanOptions": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "asanActivationOptions": null,
+    "unchangedDebugOptions": ["/RTC1", "-MDd", "assertions"]
+  },
+  "reviews": {
+    "correctness": "fresh independent static review of delta accepted, no demonstrated blocking defect",
+    "nativeMember": "pool-3",
+    "profile": "correctness-reviewer",
+    "testReviewerFinal": "NOT_RUN; native off-board admission not established"
+  },
+  "harness": "local static diagnosis delivered; concurrent profile/oracle changes not integrated, no Node suite run",
+  "mission": "NOT_CLOSED",
+  "limits": ["F8 catch INCONCLUSIVE", "F8 close DEFER", "C2 OPEN/INCONCLUSIVE", "B1 historical unresolved", "native GCC/libstdc++ unvalidated", "Linux/Release/image/performance unvalidated"],
+  "evidenceReports": [
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/09-asan-final-fail-et-decision.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/10-contrat-correction-asan-tests.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/11-correction-test-red-green.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/12-h4-asan-pass-et-revue.md",
+    ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/13-diagnostic-qa-windows-linux.md"
+  ]
+}
