@@ -2,10 +2,27 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Continuation bornée vérifiée : correctif mock82bf52d, ASan555 et audit final indépendant reçus ; dettes moteur/harness et limites conservées."
+summary: "Correctif mock82bf52d, ASan555 et audit final acceptés ; clôture native bloquée et dettes F8/C2/B1/GCC conservées, sans PASS global."
 created: 2026-10-03
 updated: 2026-10-25
-sources: [docs/references/session-2026-10-03-shader-pass.md, docs/_meta/session-2026-10-03-validation.json, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, research/sessions/2026-10-15-loaded-owner-move/R-review.md, docs/_meta/next-mission-2026-10-15-selection.json, docs/references/session-2026-10-15-f5-gl-diagnostics.md, docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json, docs/_meta/session-2026-10-16-pipeline-a1c-validation.json, docs/_meta/session-2026-10-16-pipeline-i0-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json]
+sources:
+  - docs/references/session-2026-10-03-shader-pass.md
+  - docs/_meta/session-2026-10-03-validation.json
+  - research/sessions/2026-10-15-loaded-owner-move/session-capture.md
+  - research/sessions/2026-10-15-loaded-owner-move/R-review.md
+  - docs/_meta/next-mission-2026-10-15-selection.json
+  - docs/references/session-2026-10-15-f5-gl-diagnostics.md
+  - docs/_meta/session-2026-10-15-f5-gl-diagnostics-validation.json
+  - docs/architecture/missions/2026-10-15-failure-contracts.md
+  - docs/_meta/session-2026-10-15-failure-contracts-validation.json
+  - docs/architecture/missions/2026-10-16-pipeline-ownership.md
+  - docs/_meta/session-2026-10-16-pipeline-i-a1-validation.json
+  - docs/_meta/session-2026-10-16-pipeline-a1c-validation.json
+  - docs/_meta/session-2026-10-16-pipeline-i0-validation.json
+  - docs/_meta/session-2026-10-16-pipeline-final-validation.json
+  - docs/_meta/session-2026-10-16-asan-caller-restoration.json
+  - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md
+  - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -46,6 +63,15 @@ provenance:
 - **Dettes inchangées** : F8 catch INCONCLUSIVE, close DEFER ; C2
   OPEN/INCONCLUSIVE ; B1 historique non résolu ; GCC/libstdc++ natif non validé.
   Un comptage PASS d'une autre population ne clôt jamais ces incidents.
+
+### Dette native après audit accepté
+
+Le graphe importé ASAN→AUDIT→CLOTURE n'a pas été réconcilié automatiquement avec
+le nouvel audit dédié completed. Compléter CLOTURE a été refusé pour dépendances
+non résolues ; libérer ASAN pourrait relancer l'ancien audit sur une fiche obsolète.
+La **clôture native est donc bloquée**, pas les preuves déjà acceptées. Aucun faux
+completed ni modification de base interne. Détails et provenance :
+[[references/session-2026-10-25-qa-continuation|synthèse de continuation]].
 
 ## Incident transport Ensemble — `final_response` jamais capturé — 2026-10-20
 

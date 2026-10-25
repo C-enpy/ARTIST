@@ -3,7 +3,12 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Photographie82bf52d : production inchangée, correctif mock et ASan555 vérifiés ; CPU normal484, audit final indépendant accepté et continuation bornée terminée, dettes conservées."
+summary: "Source82bf52d : ASan555 et audit final acceptés ; livrables bornés terminés, clôture native bloquée, dettes F8/C2/B1/GCC conservées."
+sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 status: observed
 source_revision: 82bf52d52e594fae02593866669a1af715127d1f
 created: 2026-10-03
@@ -24,6 +29,11 @@ updated: 2026-10-25
 > `_meta/session-2026-10-25-qa-continuation.json` et
 > [[development/build-and-test|commandes et portée]]. F8/C2/B1/GCC restent ouverts ;
 > les ADR ne sont pas promus et aucune performance/image/Linux n'est validée.
+
+La **clôture native reste bloquée** par le graphe importé ASAN→AUDIT→CLOTURE,
+malgré l'audit dédié completed et les livrables intégrés. Ne pas relancer l'ancien
+audit ni déduire la fin native du PASS :
+[[references/session-2026-10-25-qa-continuation|synthèse sourcée et dette de statut]].
 
 > [!info] Photographie historique — 2026-10-20
 > Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +

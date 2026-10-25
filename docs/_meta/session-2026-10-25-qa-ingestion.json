@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "date": "2026-10-25",
+  "mode": "append",
+  "project": "ARTIST",
+  "vault": "docs",
+  "collection": "artist-wiki",
+  "basisHead": "c840a64",
+  "scope": "Distilled final audit and native-board debt; not a full session export or new engine validation",
+  "sources": [
+    {
+      "path": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md",
+      "size_bytes": 3254,
+      "content_hash": "sha256:051158e124cfc2aa454a9871fdaeaea83730ea36242ab2a8d9d1bf521c0cc5dd"
+    },
+    {
+      "path": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md",
+      "size_bytes": 4402,
+      "content_hash": "sha256:3c3b7116c3d226f5c23aad9a60803aa783ae70ee2bf745cccd1a37b235a34760"
+    }
+  ],
+  "pages_created": ["references/session-2026-10-25-qa-continuation.md"],
+  "pages_updated": ["architecture/current-state.md", "architecture/correction-plan.md", "development/build-and-test.md", "development/known-incidents.md", "index.md", "log.md"],
+  "manifest": ".manifest.json local ignored; two new entries by SHA256; 352 sources and 57 markdown pages",
+  "configResolution": "Project .wiki.json identifies ARTIST/docs; global wiki config belongs to a different project and was not modified",
+  "limits": ["native mission not closed", "no new tests or builds", "F8/C2/B1/GCC unchanged", "concurrent diffs excluded from commit"]
+}

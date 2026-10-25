@@ -4,13 +4,13 @@ category: index
 tags: [artist, documentation, index]
 aliases: [ARTIST, Accueil ARTIST]
 summary: Entrée du vault ARTIST, état actuel, cap technique, ADR de correction et procédures de développement.
-sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md]
+sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 created: 2026-10-03
-updated: 2026-10-20
+updated: 2026-10-25
 qmd_collection: artist-wiki
 ---
 
@@ -45,6 +45,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 
 ## Corriger
 
+- [[references/session-2026-10-25-qa-continuation|Continuation QA du25octobre]] — audit indépendant accepté, ASan555/555 ; livrables terminés à leur portée, clôture native bloquée par le graphe hérité. F8/C2/B1/GCC restent ouverts, aucun PASS global.
 - [[adr/README|Registre des ADR]] — huit contrats avec statuts, périmètres et preuves.
 - [[architecture/correction-plan|Ordre de correction]] — build reproductible, ownership, exécution, bindings, mesures.
 - [[architecture/missions/2026-10-16-pipeline-ownership|Mission Pipeline archivée (2026-10-16)]] — ownership du Pipeline et de `IPass` (A1+A2/F6), curseur borné, F8-extraction, H-RESTORE/H-FIXTURE ; C++ `f914d77` : **215 normales** (176 unit + 39 GL) / **198 ASan** sélection (17 GL hors sélection) ; QA 24 critères (**14 PASS, 3 FAIL, 7 INCONCLUSIVE**), aucun PASS global, oracle GMock préexistant retenu FAIL ; contrat G-A/A2/F8 archivé intégralement.
@@ -57,7 +58,8 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
 
 > [!important] Statut des ADR initiaux
-> Cinq ADR restent **Proposed / not-started**. ADR-0003 est **Accepted / partial**
+> Cinq ADR restent **Proposed** ; ADR-0002 comporte une tranche partielle observée,
+> sans adoption de la cible terminale. ADR-0003 est **Accepted / partial**
 > (Shader→Pass puis Pipeline A1–A2/F6 et F7 Uniform/Attribute à `6d6dcb7`),
 > ADR-0005 **Accepted / partial**, ADR-0008 **Accepted / verified**
 > pour sa baseline Windows Debug. La mission Pipeline s'ajoute au principal à

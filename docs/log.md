@@ -4,7 +4,12 @@ category: journal
 tags: [artist, documentation]
 summary: Historique append-only des transformations et mises à jour de la documentation ARTIST.
 created: 2026-10-03
-updated: 2026-10-20
+updated: 2026-10-25
+sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # Journal documentaire
@@ -84,3 +89,4 @@ Navigation : [[index|Accueil]] · [[_meta/wiki-maintenance|Maintenance]] · [[ad
 - [2026-10-19] AUDIT_V_CLOSED candidate="71dacbb40ad8746fce5e57cd3cbecc2e1fa8a493" head_docs_at_attestation="a7b63ef" reviewer="ses_eac13149bffeGZlfxc6nQ0sv3f" accepted="result_mvf8gjec_008t_9t7qc0" prior="result_mvf81glz_008o_dxg58x INCONCLUSIVE" verdict="COVERED K1, K1-migration, K2, K3, K5, bornes H, diff tests/mocks ; PASS borné Windows Debug" counts="466/466 unit, 64/64 OpenGL, 0 fail" unit_sha256="0a952ff3005336893ca8bb34841903838f96a98ac72bcfaa63aa9b521ecc2109" excluded="ctest racine sans --test-dir, No tests were found, exit 8" h_bounds="seeds 1 et 3 échec→création 2/2 ; seed 4 création→échec 2/2 ; LoadShaderFailureTest isolé 1/1 ; shuffles 7 et 61219 466/466 ; même SHA256 avant/après" report="architecture/missions/2026-10-19-opengl-lifetime-audit-v.md" adr="0003 Accepted/partial inchangé ; aucun ADR promu" next_mission="aucune".
 - [2026-10-19] INGEST_REFRESH source="research/sessions/opencode-lifetime-20261019" mode="append" sessions_unchanged=29 sessions_refreshed="ses_eace2b30, ses_eac13149" reason="messages grown after the 11:41Z export, including audit V" pages_updated="references/session-2026-10-19-opengl-lifetime.md, index.md, log.md" archive="mission closed, no next mission selected".
 - [2026-10-19] NEXT_MISSION_PROPOSED file="architecture/missions/2026-10-19-pipeline-execution-path.md" pointer="architecture/next-mission.md" archive="architecture/missions/2026-10-19-next-mission-lifetime-closed.md" objective="chemin d'exécution concret, chaîne OpenGL Classic à deux passes, coexistence avec IPipeline" status="proposed/not-started" evaluation="PM/LLM locale du lead, JEV=0, plancher 70 sur S/X/I/F" adr="0002/0004/0006 Proposed inchangés ; 0003 Accepted/partial" authorization="préparation documentaire ; aucun worker, aucune source ARTIST, aucun start".
+- [2026-10-25T17:44:34Z] INGEST source=".opencode/missions/team_mvnxps48_0000_dfde7a/reports/{21-audit-final-accepte,22-bilan-final-et-dette-board}.md" pages_updated=6 pages_created=1 mode=append scope="audit borné accepté, ASan555 conservé, dette de clôture native distincte des livrables ; aucun nouveau test/build" tracking="_meta/session-2026-10-25-qa-ingestion.json et .manifest.json local ignoré" publication="commit+push demandés explicitement ; diffs concurrents exclus".
