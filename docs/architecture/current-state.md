@@ -65,7 +65,11 @@ Revue indépendante fresh reçue et acceptée au rapport63 de la mission (commit
 close et allocation non exécutées. Aucun transfert du verdict ASan555 au probe.
 La calibration stdio M0/M1/M2 reste à écrire/exécuter. Le refus close par protection
 OS a été admis seulement pour un probe FILE* en enfant dédié (décision52) ;
-contrat statique privé de supervision en préparation, aucun essai close lancé.
+contrat statique privé `can_reap_process` a suivi RED de définition manquante puis
+GREEN de deux TU compilées, quatre assertions policy inchangées (sourcef235db8,
+preuves `_meta/session-2026-10-26-close-policy-{red,green}.json`). Cette preuve
+de compilation ne valide aucun wait ni futur caller ; parent/enfant encore au
+stade proposition, aucun essai close lancé.
 M5Reader/non-publication/catch et adoption du futur Reader restent ouverts ;
 ni nouveau backend, ni image/performance/GCC/Linux/Release validés.
 
