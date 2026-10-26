@@ -26,4 +26,10 @@ C++ **a96104c**, aucun diffsource depuis tests : Reader stable simplifié,13prob
 
 Photographie/métadonnée misesàjour pour28/28 et QA réelle, historique89/93préservé avec supersession explicite. Diffsétrangers/archives/worktrees conservés, aucun outil développé ni service relancé. Contrôlesdocumentaires et indexartist-wiki exécutés ensuite et journalisés dansl'archive stable ; aucunpush implicite.
 
+Indexation finale réellement aboutie après commit604a9c9 :
+`node .opencode/scripts/update-wiki.mjs` exit0,1documentactualisé/56inchangés,
+0retiré/skip ; `qmd embed -c artist-wiki` exit0,12chunks/1document en3s.
+Logs distincts `out/qa-f8/stable-20261026-01/wiki-final-task-closure-{update,embed}.log`,
+sans écraser les logs d'indexation93. C++ et campagnes toujours inchangés.
+
 **Clôture de la mission au périmètre livré et de toutes les tâches du board.** Pas de PASSglobal moteur/harness ni d'affirmation que toutes les dettestechniques du moteur sont résolues. B1borné, B5/C2administratif, B2/B4/B6acquis, B3stablelivré avec gapsconservés : voir92/95 et `docs/_meta/session-2026-10-26-stable-reader-cleanup.json`.
