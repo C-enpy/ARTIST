@@ -2,10 +2,11 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Source82bf52d et ASan555 acquis ; causesB1 isolées, calibrationB3 autorisée et fermeture administrative motivéeC2 acceptée, sans PASS global."
+summary: "Sourcea96104c : nettoyage Reader stable validé normal/ASan555 ; B1 clôturé pour deux contaminations précises, C2 disposition acceptée ; gaps authentiques extraction/close maintenus."
 created: 2026-10-03
 updated: 2026-10-26
 sources:
+  - docs/_meta/session-2026-10-26-stable-reader-cleanup.json
   - docs/references/session-2026-10-03-shader-pass.md
   - docs/_meta/session-2026-10-03-validation.json
   - research/sessions/2026-10-15-loaded-owner-move/session-capture.md
@@ -32,6 +33,39 @@ provenance:
 ---
 
 # Incidents, diagnostics et suivi
+
+## Recentrage Reader stable et disposition B1–B6 — 2026-10-26
+
+- **B3, nettoyage stable livré à a96104c** : callback et instrumentation Reader
+  retirés,13 fichiers probes stdio/close supprimés après contrôle consommateurs.
+  Aucun RUN exploratoire effectué ; archives/manifestes annulés/preuves/commits
+  conservés. Mode texte, diagnostics, lecture complète et publication après close
+  vérifié conservés, sans garantie d'auteur concurrent ni nouvelle synchronisation.
+- Deux injections et oracle Windows de suppression à publication retirés ; trois
+  caractérisations fichiers stables ajoutées. Les pertes de caractérisation catch/
+  bad_alloc et d'oracle dynamique de l'ordre sont explicites : **aucune preuve
+  d'erreur authentique extraction/close n'en résulte**. Ces gaps restent ouverts
+  comme limites, sans prolonger le chantier OS/probes ni annoncer impossibilité.
+- **B1, clôture bornée après revue indépendante** : defaults ON_CALL historiques
+  persistants, compilation fausse et handles8/5. Témoins historiques A1échec/4RUN,
+  B2échecs/6RUN ; current82bf52d A4/4,B6/6. Overrides actuels EXPECT_CALL/WillOnce,
+  mais reset ne nettoie toujours pas exhaustivement les defaults. Quatre fichiers
+  concernés inchangés à a96104c, vieux binaire réidentifié ; pas replay176 ni
+  nouvelle réduction répétée de a96104c, pas résolution universelle historique.
+- **B5/C2** : fermeture administrative motivée acceptée au34 ; défaut de fixture
+  établi, explication forte Empty/probable MultiBlock, primaires incomplets gardés.
+  Réouverture seulement sur nouveau symptôme/preuve contradictoire, pas silence.
+- B2/B4/B6 acquis à leurs candidats, non rouverts. Sur le nouveau candidat :
+  **555/555 normaux et555/555 ASan**,0failure/error/skip ; revue C++ indépendante
+  et audit des archives sans finding bloquant démontré. Pas PASS global moteur.
+- QA locale simplifiée à la reprise opérateur : plan/gap-check lead, revue native
+  correctness-reviewer fresh. Pas de requalification en audit test-reviewer ;
+  admission QA Ensemble incompatible et notifications sans rapports récupérables
+  restent limites d'outillage, sans développement correctif dans cette tranche.
+
+Preuve portable `_meta/session-2026-10-26-stable-reader-cleanup.json` ;
+[[development/build-and-test|commandes et comptages]]. Les sections suivantes
+conservent les états historiques, supersédés seulement aux dispositions ci-dessus.
 
 ## Continuation QA — débordement du diagnostic mock — 2026-10-25
 

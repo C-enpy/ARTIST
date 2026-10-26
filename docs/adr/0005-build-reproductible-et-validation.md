@@ -9,10 +9,22 @@ implementation: partial
 decision_origin: Demande utilisateur de build complet le 2026-10-03, avec réévaluation explicite de Conan 2.
 summary: Rétablir une configuration propre avec dépendances compatibles et tests réellement découverts avant de modifier ou comparer les pipelines.
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-26
 ---
 
 # ADR-0005 — Build reproductible et validation
+
+## Preuve complémentaire Windows Debug — 2026-10-26
+
+**Accepted/partial inchangé.** Nouveau candidat Reader stable `a96104c` :
+555/555 normaux puis555/555 ASan (484CPU+71OpenGL chacun), zérofailure/error/skip,
+sélections pré-run et identités recoupées avec JUnit/LastTest ;17historiques une
+foisASan, diagnostics tardifs contrôlés. Trois tests retirés/trois ajoutés :
+cardinalité identique n'est pas identité de population historique. PréflightASan
+antérieur réutilisé après contrôle d'identité, pas nouvelle installation/config
+propre ni validation Release/GCC/Linux/CI. Preuve
+`_meta/session-2026-10-26-stable-reader-cleanup.json` et
+[[development/build-and-test|commandes réellement exécutées]].
 
 ## Contexte et faits
 

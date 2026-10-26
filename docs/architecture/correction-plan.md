@@ -3,14 +3,14 @@ title: Plan de correction de l'existant
 category: architecture
 tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
-sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 status: proposed
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-26
 ---
 
 # Plan de correction de l'existant
@@ -18,6 +18,29 @@ updated: 2026-10-25
 Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier
 de livraison. Les durées et pourcentages des rapports ne sont pas des budgets ratifiés.
+
+## Recentrage stable — 2026-10-26, nettoyage livré
+
+Contrat fichier stable adopté avant refactoring, amendement QA local committé
+`f27f690`, candidat **a96104c** : callback et instrumentation Reader retirés,
+13 fichiers probes supprimés après consommateurs contrôlés. Correctifs de lecture,
+fixtures isolées et preuves historiques conservés. **555/555 normaux et555/555
+ASan** (484CPU+71OpenGL chacun),0failure/error/skip ; revue C++ indépendante et
+audit des preuves sans finding bloquant démontré. QA locale simplifiée, pas un
+nouvel audit natif test-reviewer ni une correction du harness.
+
+B1 : clôture bornée aux deux contaminations ON_CALL causalement identifiées,
+revue finale acquise ; pas replay176. B5/C2 : fermeture administrative motivée
+acceptée34, pas de chasse supplémentaire. B2/B4/B6 restent acquis à leurs candidats.
+B3 : nettoyage stable terminé, poursuites stdio/close annulées NOT_RUN ; erreurs
+authentiques extraction/close et observation dynamique portable de l'ordre restent
+des gaps documentés, pas PASS ni essais autorisés implicitement. Ce bilan remplace
+les attentes exploratoires des jalons historiques ci-dessous.
+
+Preuve `_meta/session-2026-10-26-stable-reader-cleanup.json`,
+[[architecture/current-state|photographie]] et
+[[development/known-incidents|limites conservées]]. Statuts ADR inchangés :
+0001/2/4/6/7 Proposed,0003/5 Accepted partial,0008 Windows Debug seulement.
 
 ## Continuation QA — 2026-10-25, terminée à sa portée bornée
 

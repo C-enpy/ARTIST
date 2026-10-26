@@ -3,21 +3,41 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Source82bf52d : ASan555 acquis ; causesB1 vérifiées, calibrationB3 autorisée sans correctifReader, fermeture motivéeC2 acceptée."
-sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
+summary: "Sourcea96104c : Reader stable simplifié,13 probes retirés ;555 normaux et555 ASan vérifiés, revue indépendante ; B1 borné et C2 disposés, gaps authentiques catch/close conservés."
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 status: observed
-source_revision: 82bf52d52e594fae02593866669a1af715127d1f
+source_revision: a96104c7aaeede7dd6915bfeac86f53565615114
 created: 2026-10-03
 updated: 2026-10-26
 ---
 
 # État réel d'ARTIST
 
-> [!info] Photographie finale de la continuation bornée — 2026-10-25
+> [!info] Photographie courante — nettoyage stable du26octobre
+> **a96104c** : fichier stable pendant lecture, sans écriture concurrente garantie.
+> Callback d'extraction et instrumentation retirés ;13 fichiers probes supprimés
+> après vérification des consommateurs, archives/diffs étrangers conservés.
+> Boucle read/gcount, contrôles d'erreur et fermeture vérifiée avant publication
+> inchangés. Caractérisations pré-refactor15/15, puis **555/555 normaux et555/555
+> ASan**, chacun484CPU+71OpenGL, zérofailure/error/skip. Trois tests retirés et
+> trois ajoutés : même cardinalité, pas population historique identique.
+> Revue C++ indépendante et audit des preuves reçus sans finding bloquant démontré.
+> QA locale simplifiée, pas nouvel audit sous profil test-reviewer.
+> B1 clôturé pour les deux contaminations ON_CALL identifiées et populations
+> réduites ; pas replay176 ni reset exhaustif. B5/C2 : disposition administrative
+> acceptée34 conservée. **Extraction/close authentiques restent des gaps de preuve**,
+> pas nouveaux essais ni PASS global. Preuve :
+> `_meta/session-2026-10-26-stable-reader-cleanup.json` et
+> [[development/build-and-test|commandes et portée]].
+
+Les paragraphes datés ci-dessous conservent les jalons antérieurs ; leurs attentes
+de calibration/probes sont **supersédées par le recentrage et le nettoyage stable**.
+
+> [!info] Photographie historique de la continuation bornée — 2026-10-25
 > Candidat C++82bf52d : correction de8lignes dans un seul test lifetime mocké,
 > aucune production modifiée par cette continuation. **ASan555/555**
 > (484CPU+71OpenGL), zéro failure/error/skip,17historiques chacun une fois ;
@@ -226,7 +246,7 @@ graphique, ni l'image produite.
 - `graphic/pipeline/Shader.hpp` possède son `ShaderContext` en `unique_ptr` et
   expose un emprunt par référence ; ses composants OpenGL prennent
   `Context&`. `Shader` libère le shader natif dans son destructeur dérivé.
-- La lecture de fichier shader passe par la seam `detail` de mission I0
+- La lecture de fichier shader passe par les helpers internes `detail`
   (`extractShaderSource` + `readShaderFile`, `Reader.hpp`) — transaction
   extraire dans une string locale → `clear()`/`close()` vérifiée → publication.
   L'extraction consomme par `read()`/`gcount()` et rejette

@@ -2,12 +2,12 @@
 title: Build et tests actuels
 category: development
 aliases: [build-and-test]
-source_revision: 82bf52d52e594fae02593866669a1af715127d1f
+source_revision: a96104c7aaeede7dd6915bfeac86f53565615114
 tags: [artist, build, testing, guide]
-summary: "Windows Debug82bf52d : ASan555, CPU484 et71GL normaux réutilisés ; audit final accepté, board réconcilié7/7, dettes conservées."
+summary: "Windows Debuga96104c :555/555 normaux et555/555 ASan nouvellement exécutés après nettoyage Reader stable ; revue indépendante et limites conservées."
 status: verified-windows-debug
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-26
 sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
@@ -18,6 +18,41 @@ provenance:
 # Build et tests actuels
 
 ## Résumé courant — Windows x64 Debug
+
+Dernier candidat C++ vérifié : **a96104c7aaeede7dd6915bfeac86f53565615114**,
+le2026-10-26. **555/555 normaux et555/555 ASan nouvellement exécutés**, chacun
+484CPU+71OpenGL,0failure/error/skip. Découverte=sélection=exécution/JUnit,555 noms
+uniques et même ordre ;17historiques chacun une fois sous ASan, diagnostics tardifs
+contrôlés, identités source/EXE/config et ASanPDB/DLL inchangées après run.
+
+Refactor pur :15/15Reader caractérisés avant modification de production,12Reader
+après migration. Deux injections et un oracle Windows supprimés, trois tests
+stables ajoutés ; **555 courant n'est pas identité de population ancienne**.
+Callback/instrumentation supprimés et13 fichiers probes retirés, sans nouveau
+comportement Reader revendiqué ni RED artificiel. Revue C++ indépendante et audit
+des preuves reçus sans finding bloquant démontré ; plan/gap-check locaux du lead,
+pas nouvel audit natif sous profil test-reviewer.
+
+Runner lead, wrapper partagé inchangé, un job par build, campagnes sérielles sous
+bail coopératif. Builds : `cmake --build --preset windows-msvc-debug` (puis
+`windows-msvc-debug-asan`) `--target ArtistLib_tests ArtistLib_component_tests
+--parallel 1`. Découverte réelle `ctest --preset <preset> --show-only=json-v1`.
+CTest réel pour chaque preset :
+
+```text
+ctest --preset windows-msvc-debug --tests-from-file C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/normal-selected.txt --parallel 1 --no-tests=error --output-on-failure --test-output-size-passed 65536 --test-output-size-failed 65536 --output-junit C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/normal.xml
+ctest --preset windows-msvc-debug-asan --tests-from-file C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/asan-selected.txt --parallel 1 --no-tests=error --output-on-failure --test-output-size-passed 65536 --test-output-size-failed 65536 --output-junit C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/asan.xml
+```
+
+ASan normalisé par `scripts/asan-env.ps1`, Debug/RTC1 conservés. Préflight0/86
+antérieur réutilisé après identité probe/summary/config/6DLL vérifiée, pas nouveau
+canari. Archives complètes `out/qa-f8/stable-20261026-01/`, logs
+`out/logs/stable-*.log`, preuve portable
+`_meta/session-2026-10-26-stable-reader-cleanup.json`.
+Gaps authentiques extraction/close maintenus ; aucune validation GCC/Linux/Release,
+image/performance ou PASS global. [[development/known-incidents|Disposition B1–B6]].
+
+### Historique de la continuation précédente — 2026-10-25
 
 Dernier candidat C++ vérifié : **82bf52d52e594fae02593866669a1af715127d1f**,
 le2026-10-25. **ASan555/555** (484CPU+71OpenGL),0failure/error/skip,17historiques

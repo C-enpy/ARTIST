@@ -542,6 +542,14 @@ préservant le voisin.
 
 ### Cycle 2 — refactoring caractérisé et preuve d'extraction
 
+> [!note] Contrat historique, supersédé le2026-10-26
+> La seam/callback et ses tests instrumentés décrits ci-dessous ont été retirés à
+> `a96104c` lors du recentrage fichier stable. L'algorithme/contrôles et les fixtures
+> utiles sont conservés ; les preuves historiques ne sont pas réécrites. Voir
+> [[architecture/current-state|état courant]] et
+> `_meta/session-2026-10-26-stable-reader-cleanup.json`. Les erreurs authentiques
+> extraction/close restent des gaps, pas des PASS acquis par ce retrait.
+
 Conserver l'entrée `OpenGLShaderReader<Classic>::on(Context&)`. Dans un espace
 `detail` interne à `Reader.hpp`, fonctions `inline` header-only :
 

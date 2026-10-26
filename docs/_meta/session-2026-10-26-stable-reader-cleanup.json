@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-26",
+  "kind": "stable-file-reader-cleanup-verified-with-explicit-proof-gaps",
+  "sourceHead": "a96104c7aaeede7dd6915bfeac86f53565615114",
+  "qaBeforeAuthorCommit": "f27f690cc0f9b437d3aa5453d75b35fa6cb6778d",
+  "scope": "Stable shader file for the duration of reading; no concurrent writer guarantee, no new synchronization",
+  "ownerAndRunner": "lead",
+  "method": "Pure refactoring and bounded removal; characterize before restructure, then non-regression; no fabricated RED or behavioral correction claimed",
+  "preRefactor": {"readerTests": 15, "failure": 0, "error": 0, "skipped": 0, "junit": "out/qa-f8/stable-20261026-01/pre-reader.xml"},
+  "normal": {
+    "verdict": "PASS",
+    "executed": 555, "unit": 484, "opengl": 71, "reader": 12,
+    "failure": 0, "error": 0, "skipped": 0,
+    "sameDiscoveredSelectedExecutedNamesAndOrder": true,
+    "sourceBinaryConfigIdentityUnchangedAfterRun": true,
+    "lastTestPass": 555, "lateAsanDiagnostics": 0, "truncationMarkers": 0,
+    "junitSha256": "b0d2e976908df2ad6b8b1d633d2e76c9a88cb7e2c22373d045b23b12c3581a5d"
+  },
+  "asan": {
+    "verdict": "PASS",
+    "executed": 555, "unit": 484, "opengl": 71, "reader": 12,
+    "failure": 0, "error": 0, "skipped": 0,
+    "sameDiscoveredSelectedExecutedNamesAndOrder": true,
+    "historical17EachOnce": true,
+    "sourceBinaryConfigPdbDllIdentityUnchangedAfterRun": true,
+    "lastTestPass": 555, "lateAsanDiagnostics": 0, "truncationMarkers": 0,
+    "junitSha256": "590e62422f83829263994a676d1b3c65c38fb5b6418b8324bc75eff2a167bc24",
+    "options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "activationOptions": null,
+    "preflight": "prior canary 0/86 reused after probe, summary, config and six runtime DLL identity checks; not rerun",
+    "unchangedDebugOptions": ["/RTC1", "-MDd", "assertions"]
+  },
+  "populationMigration": {
+    "sameCardinalityIsNotSameHistoricalPopulation": true,
+    "removed": ["ExtractionFailure_SentinelTranslatedWithExactMessage", "ExtractionFailure_BadAllocStaysUntranslated", "CloseHappensBeforePublication_ObservableThroughVirtualSetter"],
+    "added": ["StableFile_ShortSourcesReplacePreviousContent", "StableFile_ExactlyTwoBlocksPreserveContent", "StableFile_TextAndEmbeddedNullsPreserveContent"],
+    "existingAbsentAndEmptyTests": "strengthened with stale source prefill",
+    "isolatedFixturesAndFourFixtureRegressions": "preserved"
+  },
+  "removals": {"probeFiles": 13, "directories": ["scripts/probes/qa-f8-stdio", "scripts/probes/qa-f8-close"], "consumerCheck": "only internal probe references before deletion; no residual match in checked active production/scripts/CMake/CI scope", "archivesAndForeignDiffs": "preserved", "probeRuntime": "NOT_RUN_OPERATOR_RECENTER"},
+  "review": {
+    "profile": "correctness-reviewer",
+    "session": "ses_e864a6b90ffeWqUmBQrIGdpqpl",
+    "initialContext": "fresh native session observed, no author reports or implementation board provided",
+    "finding": "no demonstrated blocking defect in Reader diff or examined validation evidence",
+    "scope": "independent static C++ review, test discriminants, B1 causal evidence, final archive consistency; no reviewer execution",
+    "admissionLimit": "native identity and parent confirmed; complete effective profile ruleset not independently certified",
+    "notNativeTestReviewerAudit": true,
+    "localQaAdaptation": "operator requested resume to completion after simpler local workflow proposal; plan and gap-check by lead, not independent QA profiles"
+  },
+  "b1": {
+    "disposition": "closed for two identified ON_CALL contaminations and their precise reduced populations; no universal historical closure",
+    "evidencePin": "82bf52d52e594fae02593866669a1af715127d1f",
+    "historical": {"A": "1 failure in 4 executions", "B": "2 failures in 6 executions"},
+    "currentAtEvidencePin": {"A": "4/4", "B": "6/6"},
+    "independentReview": "cause and bounded disposition accepted; reset still only clears expectations, current overrides bounded by EXPECT_CALL/WillOnce",
+    "fourRelevantFilesUnchangedAtNewCandidate": true,
+    "historicalBinarySha256Rechecked": "3d4fb31ee463a1c44370e9ba051e584784bf2f5becbf584341169d71d2ea1388",
+    "notReplayOf176": true,
+    "noNewRepeatedReductionOnNewCandidate": true
+  },
+  "b5c2": "administrative motivated closure accepted by operator at report34; no new provenance hunt; missing primaries preserved",
+  "b2b4b6": "previously acquired at their candidates; not reopened, no new corrections",
+  "archive": "out/qa-f8/stable-20261026-01",
+  "fullBuildAndCtestLogs": "out/logs/stable-*.log",
+  "parallel": 1,
+  "gpuLease": "exclusive cooperative file handle on out/artist-opengl.lock during each full campaign",
+  "sourceSha256": {"Reader.hpp": "d51f61be9cd8f58b13df2731816993cac65b88399940d1b292526a04aceae95c", "ReaderTests.cpp": "e8ed5fb680250f9f4f934600a6d13159e0c9b1bbecc34fc07d09d1eddf544dc5"},
+  "remainingLimits": ["authentic extraction failure execution", "authentic close failure and non-publication execution", "portable dynamic close-before-publication observation", "GL compilation after embedded NUL outside Reader contract", "external users of internal detail symbols not excluded", "native GCC/Linux/Release/image/performance not validated", "no global engine or harness PASS"],
+  "adrStatusesUnchanged": "0001/2/4/6/7 Proposed; 0003/5 Accepted partial; 0008 Windows Debug only",
+  "reports": ["85-contrat-stable-et-inventaire-adoptes.md", "89-reprise-locale-plan-qa-stable.md", "90-caracterisation-et-nettoyage-integre.md", "91-validation-nouveau-candidat-et-revues.md"]
+}
