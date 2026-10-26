@@ -187,6 +187,53 @@ Test/preuve → obligation / limite :
 
 Orphelins **unassessed**, pas « aucun » : inventaire/diff tests à recouper au candidat. Doublons faibles : répétitions comptées comme nouveaux contrats, seam=OS, JUnit/log/résumé comptés comme exécutions distinctes. Autre candidat ou mutations postérieures = preuves périmées, sauf portée historique explicite. Aucun comportement déclaré COVERED ici.
 
+## Amendement du25octobre — reprise initiale B1/B3/B5
+
+Proposition Q par pool-6/qa-planner, cinq fragments natifs complets reçus ; persistance et décisions par lead. Analyse locale seulement, aucun test/édition/exécution par planner. Admission et transport après restriction vérifiés au rapport32 de team_mvnxps48_0000_dfde7a ; pas garantie sandbox. Cet amendement actualise les dispositions historiques ci-dessus, sans refaire le plan ni rouvrir B2/B4/B6. Source82bf52d, HEAD documentairefa7a949 au brief ; pins historiques ne valent pas identité future.
+
+### Exigences, décisions et invariants
+
+KEEP E0/E2/E5/E6/E8/E9/E10 et I1–4 au candidat acquis. MODIFY E1 : deux mécanismes causaux réduits, pas toutes permutations. MODIFY E3 : calibration distincte du futur Reader ; E4 reste obligation authentique, aucun DEFER reconduit tacitement. MODIFY E7 : provenance positive et disposition explicite.
+
+Explicites : contrat/QA commis avant auteur ; RED causal avant correctif ; erreur/EOF/publication distingués ; close réellement échoué à traiter ; disposition C2 explicite. Invariants/intent : aucun préfixe publié après rejet, owner unique/close une fois, fixtures possédées et voisins préservés. Inférences et non nouvelles specs : recovery vérifie contamination ; M3 explore préfixe acquis ; comparaison modes détecte régression texte ; cleanup préserve erreur primaire. Setter arbitraire jetant/mutation concurrente hors garantie proposée.
+
+Décisions opérateur du rapport34 (même répertoire que32) : **calibration stdio et recherche OS close bornées autorisées**, après ce plan commité et contrat de sonde ; **B5/C2 fermeture administrative motivée acceptée**, pas causalité exhaustive. Contrat Reader, messages, retrait catch/seam NON adoptés. Aucun correctif Reader autorisé par ces décisions.
+
+### Risques QA I×P (indépendants des scores PM)
+
+- Erreur assimilée EOF/publication : I4×P4=16. Déclencheur open réussi puis erreur native ; blast radius chargement shader ; détection sonde25 OS33→EOF ; mitigation contrôle actuel insuffisant, calibration M0/M1/M2 ; gap stdio non calibré, aucun verdict correction.
+- Close/lifetime/publication : I4×P3=12. Déclencheur close échoué ou cleanup après erreur ; blast radius flux/contenu ; détection statique et scripted insuffisante ; mitigation owner unique/publication après close, recherche OS bornée ; gap M5 authentique absent, aucun double-close artificiel.
+- Fausse attribution C2 : I3×P3=9. Détection provenance28, garde exists=false avant Reader, populations13≠11, exit pipeline masqué ; préserver manques, pas replay. Disposition motivée acceptée au34.
+- B1 résiduel I3×P2=6 : revue mécanismes/populations/logs sans sweep. Identité/preuves I3×P3=9 : manifestes avant réemploi, pas programme transverse. Réévaluer après calibration/surprise, sans sacrifier un risque haut ni consommer le buffer d'avance.
+
+### Scénarios et oracles
+
+B1 : H négatif A4RUN/2uniques, B6RUN/3uniques, exit1, défauts compileFalse puis8/5 au second tour ; N mêmes sélections exit0. Rapports29/30 satisfont ces témoins, pas rerun demandé. XML dernière itération seulement ; stderr A deux diagnostics négatifs attendus, avertissement GMock non-intéressant pas échec automatique. Audit final attendu.
+
+Calibration autorisée : M0 fichiers possédés0/court/4096/8192/12325/4608, CRLF/Ctrl-Z/BOM/NUL, chemins espaces/nonASCII. Comparaison au comportement texte actuel caractérisé, pas choix binaire silencieux. M1 : ouverture réussie puis LockFileEx recouvrant lecture ; témoin ReadFile erreur33, fread n/feof/ferror/errno avant cleanup. Succès expérimental = distinguer erreur native de EOF. ferror perdu = option rejetée ; open refusé/erreur native absente = expérience INCONCLUSIVE selon cause. Aucun RED fictif du probe. M2 unlock/recovery : mêmes octets exacts, ressources libérées, voisins intacts. Zéro sans EOF/erreur : règle proposée, pas panne OS prouvée. M3 seulement après M1 et hypothèse justifiant préfixe réellement acquis ; sinon GAP, pas sweep préfetch.
+
+Futur Reader conditionnel : contrat adopté/messages complets avant RED ; nominal lecture+close puis publication unique exacte, vide légitime. Négatif absence et M1 authentique, contexte prérempli vidé sans préfixe, type/message exacts adoptés. RED Reader actuel puis GREEN même verrou/recovery, oracle inchangé. Si downstream exercé, absence de compilation après rejet par moyens existants ; mock ne prouve pas GPU. M4 catch ifstream authentique toujours non prouvé : migration nécessitera substitution explicitement acceptée, jamais «catch exercé». M5 : lecture achevée puis close authentiquement échoué sur owner valide ; aucune publication, close une fois, primaire préservée. Dispositif non acquis : recherche bornée puis décision résiduelle, pas fermeture tacite. Flags/throw/rdbuf/masque/handle fermé artificiellement REJECT comme preuves OS/catch/close ; bad_alloc non traduit = sous-contrat, pas pénurie réelle.
+
+C2 : provenance28 établit défaut fixture, forte explication Empty/probable MultiBlock ; fermeture motivée34 acceptée, primaires manquants archivés. Réouverture sur primaire contradictoire ou symptôme nouveau identifié, pas verdict moteur ni reconstruction actuelle du passé.
+
+### Registre bidirectionnel et orphelins
+
+E1/I1/I2 → shader/LoaderTests.cpp(callCreate46,setContextShaderId106,Failure121), pass/LoaderTests.cpp(validContext), graphic/pipeline/ShaderLifetimeTests.cpp(PassDestructorReleasesProgramThenShaders) sous ARTIST/tests/src/graphic/opengl/pipeline/component pour les deux Loader ; raisons writer/default puis observer, preuves A-H/A-N compilation et B-H/B-N handles. COVERED exécuté attribué lead seulement pour deux mécanismes. H SHA3d4fb31ee463a1c44370e9ba051e584784bf2f5becbf584341169d71d2ea1388 ; N SHA1b0fc02956d424f7fa6de02a91211b8e14f4295784d3563342be7c064e3950b5. Commandes/manifeste29/30 et out/qa-b1/causal-20261025-01, runner lead25octobre18:25:49Z, CPU mocks.
+
+E3/I3 → Reader.hpp extractShaderSource/readShaderFile/on : présence statique ifstream/fail&&!eof/clear/close/setter/catch ; sonde25 défaut causal attribué lead, pas correction. M0–M3 GAP à exécuter selon contrat. E4/M4/M5 → close/catch : présence statique, négatifs authentiques GAP. E7 → historique ReaderTests.cpp helper/Empty/MultiBlock et provenance28 : documentaire positive, disposition34, causalité complète non acquise.
+
+Inverse : A/B supports stdout/stderr/XML/résumé = mêmes runs, pas preuves indépendantes supplémentaires. ScriptedStreambuf/SourceExtractor/PublicationProbeContext → sous-contrats, jamais OS/catch/close. Migration/suppression à décider, pas automatique. C1083 historique → environnement, aucun RED produit. ASan555/anciens verts → leurs candidats seulement. Orphelins futurs **unassessed** tant que diff tests absent. Conserver pour toute preuve candidat/delta/SHA source-binaire-config-logs, source/date/commande/runner/env, attendu/observé et comptes uniques/failed/error/skipped.
+
+### Budget, barrières et sortie
+
+Capacité100 proposée, ni coût ni durée approuvés : setup25 ; reste75 dont planifié56,25 (75%) et buffer18,75 (25%). Planifié B1/B5=8, calibration20, recherche close10, futur Reader conditionnel12, registres/audit6,25. Buffer investigation7/panne5/ré-audit6,75. Pas d'engagement M3 coûteux. Dépassement recherche close/alternative10 ou campagne indispensable hors solde → réestimation opérateur, pas réduction risque haut/buffer artificiel.
+
+Barrière1 : ce plan commité et contrat de sonde, développement C≥70, commandes exactes dérivées base compilation/protocole25 et approuvées avant runner lead. Recherche close indépendante RO possible, aucun test implicite. Barrière2 après résultats : adoption distincte Reader/messages/catch/seam et disposition M5, amendement commité avant worktree auteur ; TDD/non-régression. Producteurs intégrés avant consommateurs. Un build par sortie ; fixtures possédées, GPU/ASan sous bail si nécessaire.
+
+Nouveau diff intégré : sélection pré-run, Windows Debug CTest --parallel 1 --no-tests=error et JUnit/logs complets selon risque/protocole existant, pas campagne acquise rejouée sans pertinence. Si ASan complète nécessaire : découverte=selection=execution,17historiques chacun une fois, zéro failure/error/skip, canari pertinent et diagnostics tardifs. Sinon FAIL écart ou INCONCLUSIVE précondition, pas transfert ASan555.
+
+Sortie : B1 preuves bornées recoupées ; B3 preuve ou gap explicitement soumis pour chaque obligation ; C2 disposition acceptée archivée. Audit test-reviewer natif fresh dédié, contrat/candidat/preuves sans justifications auteur, profil/transport vérifiés, aucune exécution autonome. Proposition Q intégrée ne vaut ni Reader prêt auteur ni PASS moteur. ADR0001/2/4/6/7 Proposed,0003/5 partial,0008 Windows Debug seulement.
+
 ## 8. Qualification des preuves
 
 Chaque preuve retenue : HEAD complet/delta/SHA256 sources-binaire-config-artefacts ; source/date/commande/runner/environnement ; attendu/observé ; découverts/exécutés/échoués/skipped et uniques/répétitions ; critère/raison discriminante/limites/verdict.
