@@ -19,3 +19,7 @@ readShaderFile65–112 utilise ifstreamlocal, exceptions(badbit), open(context.g
 Digestcorps/masque/namespace/identité fourni à pool8 par message, référencesrelativesReader.hpp déjàprésentesdanssonworktree : aucunelecturecanoniqueexterne nécessaire. Complémentcourtdemandé pour confirmervoie/accessibilité/préconditions, pasrefairematrice72/rechercheshistoriques. **GOsourcepasdonné.** RevueTDD/instrumentation descontrôlesneufs et adoptionmatrice/issues restent à traiter ; cette analyse baseline ne les dispensepas.
 
 Impact : oraclecomparaisoncompatibilitétexte du futurprobe seulement, sansmodifAPI/contrat/ownershipproduction ; lesmodestexte/binairesReader et migration restent nonadoptés. AucunepreuveGenuinecatch/close/nonpublication,moteur/GPU/perf/ASan nouvelle.
+
+## Complément auteur reçu après transmission
+
+Pool8 a lu Reader.hpp27–112 **relativement dans son worktree** et confirme accès direct/corps/masquebadbit, pas copie/transaction/publication. Le gap d'accessibilité est donc levé aussi côté auteur ; pinSHA reste attribué au contrôlelead. NormalisationtexteobservéeCRTfilebuf seulement, passtripBOM/NUL/conversion. Résultat/exception etétats/gcount capturés avantcleanup ; clear seulement résidunaturelEOFvalidé puisclose distinct, primaireanormalpréservé, pas faussepreuveclose. Aucun test/source produits par ce complément. Les réserves d'adoption75/76 etGOsource dans cette remise précèdent le commit87d3625 et le GOexplicite77, pas une nouvelle suspension opérateur.
