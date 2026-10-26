@@ -68,5 +68,33 @@
   "sourceSha256": {"Reader.hpp": "d51f61be9cd8f58b13df2731816993cac65b88399940d1b292526a04aceae95c", "ReaderTests.cpp": "e8ed5fb680250f9f4f934600a6d13159e0c9b1bbecc34fc07d09d1eddf544dc5"},
   "remainingLimits": ["authentic extraction failure execution", "authentic close failure and non-publication execution", "portable dynamic close-before-publication observation", "GL compilation after embedded NUL outside Reader contract", "external users of internal detail symbols not excluded", "native GCC/Linux/Release/image/performance not validated", "no global engine or harness PASS"],
   "adrStatusesUnchanged": "0001/2/4/6/7 Proposed; 0003/5 Accepted partial; 0008 Windows Debug only",
-  "reports": ["85-contrat-stable-et-inventaire-adoptes.md", "89-reprise-locale-plan-qa-stable.md", "90-caracterisation-et-nettoyage-integre.md", "91-validation-nouveau-candidat-et-revues.md"]
+  "postDeliveryQa": {
+    "profile": "qa-planner",
+    "session": "ses_e8616755dffey91zwIwt2FLXBd",
+    "transport": "native direct subagent final_response; one team_message refusal outside a team, not retried",
+    "freshAdmission": "agent/parent/canonical root and initial admission-only context confirmed by lead; no added team grants; full enforcement not independently certified",
+    "timing": "retrospective audit of lead plan89, not an independent plan predating implementation",
+    "verdict": "KEEP bounded stable cleanup; MODIFY coverage qualification and prospective budget; no demonstrated REJECT",
+    "budgetAmendment": "20 setup + 60 planned + 20 buffer, 75/25 after setup; prospective only, not measured historical consumption",
+    "gaps": "R4 static presence and execution GAP retained; no GAP-accept invented; R6 bounded consumer checks completed by close/stdio dispositions",
+    "runner": "no tests executed by planner",
+    "integrationCommit": "872915b9900626883ed091cd41ab7ea9ba539c58"
+  },
+  "nativeBoard": {
+    "completed": 28,
+    "inProgress": 0,
+    "pending": 0,
+    "blocked": 0,
+    "busyMembers": 0,
+    "recheckedViaNativeTasksListAndStatus": true,
+    "taskDispositions": {
+      "task_mvphg6fn_0028_ear29g": "PC1_CLOSE: final supersession and retirement disposition integrated; experimental close remains NOT_RUN",
+      "task_mvpl5sf2_003b_2rumv9": "REVIEW_STDIO_PROBE: final review of stable retirement disposition integrated; no runtime stdio PASS",
+      "task_mvply25m_003x_kerfs2": "Q_STABLE: retrospective native QA delivery integrated with documentary amendments; actual author direct qa-planner, not original pool-6"
+    },
+    "notGlobalEngineGapClosure": true,
+    "teamRetainedNotArchived": true,
+    "nativeMissionModeStillLongRunRunning": true
+  },
+  "reports": ["85-contrat-stable-et-inventaire-adoptes.md", "89-reprise-locale-plan-qa-stable.md", "90-caracterisation-et-nettoyage-integre.md", "91-validation-nouveau-candidat-et-revues.md", "94-reprise-des-trois-affectations-restantes.md", "95-trois-remises-finales-integrees.md", "96-cloture-native-28-sur-28.md"]
 }

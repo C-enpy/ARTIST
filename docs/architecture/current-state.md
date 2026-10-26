@@ -34,6 +34,17 @@ updated: 2026-10-26
 > `_meta/session-2026-10-26-stable-reader-cleanup.json` et
 > [[development/build-and-test|commandes et portée]].
 
+**Clôture native finale** : les trois affectations restantes ont ensuite livré
+leurs dispositions/revues et la QA native rétrospective du plan89. Remises
+intégrées872915b avant complétion, puis board recoupé **28/28completed,
+0in_progress/0pending/0blocked**, aucun workerbusy. PC1close et revueprobe stdio
+sont clôturés pour supersession/retrait au contrat stable, **pas pour réussite
+runtime**. Planner natiffresh direct avec restitutionfinal_response : KEEP borné,
+amendement budget prospectif75/25aprèssetup intégré ; pas planindépendantpréalable
+antidaté ni GAP-accept des erreursauthentiques. Équipe/worktrees conservés,
+libellé nativelong_run/running ne désigne plus une tâche active. Rapports94–96
+et sectionnativeBoard de la preuve portable.
+
 Les paragraphes datés ci-dessous conservent les jalons antérieurs ; leurs attentes
 de calibration/probes sont **supersédées par le recentrage et le nettoyage stable**.
 
