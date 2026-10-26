@@ -12,8 +12,8 @@ prouvent jamais la terminaison. Le futur parent devra réellement consommer ce
 prédicat aux portes de collecte/cleanup ; les assertions seules ne prouvent ni
 ces appels, ni leur ordre, ni la supervision d'un enfant.
 
-Le header contient volontairement une déclaration constexpr **sans définition**.
-Ce n'est pas une implémentation volontairement fausse. La signature `noexcept`
+La tranche RED initiale contenait volontairement une déclaration constexpr
+**sans définition**, pas une implémentation volontairement fausse. La signature `noexcept`
 adoptée60 correspond au futur prédicat limité à une comparaison scalaire.
 Les seuls consommateurs actuels sont les quatre assertions du contrat ; la TU
 baseline n'appelle pas la fonction et vérifie les constantes du SDK Windows.
@@ -46,13 +46,28 @@ un comportement parent, une erreur OS, un incident historique ou Reader.
 Même auteur, mêmes quatre assertions et même baseline. Après RED causal intégré
 et GO lead, ajouter seulement la définition minimale du prédicat ; recompiler
 les deux TU avec les mêmes options : deux exit0 requis. Relire ensuite les
-callers du futur parent. Aucun corps GREEN n'est livré dans cette tranche.
+callers du futur parent.
+
+### Progression de la tranche
+
+Le lead a intégré les quatre blobs RED de `cd75653` à l'identique dans `da6d438`.
+Sa preuve `b9ffc406e81737dd2e1319ac312ef8411fc82da8`, rapport66, constate le
+2026-10-26 : baseline exit0 à17:20:50Z ; contrat exit2 à17:20:52Z, exactement
+quatre C2131 aux lignes3–6 avec notes sur la fonction constexpr non définie.
+Archives : `out/qa-f8/close-policy-red-20261026-01`. Attribution : runner lead,
+pas exécution auteur. Le décodage de synthèse a été corrigé sans rerun.
+
+Après cette preuve et GO lead, le même auteur livre uniquement la définition
+`wait_result == WAIT_OBJECT_0` et cette annotation ; baseline et quatre assertions
+inchangées. La recompilation GREEN des deux TU reste à effectuer par le lead
+après intégration des vrais blobs. Aucune preuve GREEN déduite de la lecture.
 
 ## État et limites
 
-Aucune compilation, exécution ou preuve RED/GREEN par l'auteur. Les argv exacts
-restent à dériver/approuver par le lead avant ses essais ; aucune ligne supposée
-valide n'est présentée comme exécutée. Cette compilation ne crée ni processus
+Aucune compilation ou exécution par l'auteur. Les argv RED ont été figés et
+exécutés par le lead selon rapport66 ; les commandes GREEN doivent être validées
+par lui avant ses essais. Aucune ligne supposée valide n'est présentée comme
+exécutée. Cette compilation ne crée ni processus
 ni fixture et n'appelle aucune API d'attente. Pas de CMake/CTest/ASan/GPU requis
 pour cette seule capacité. Calibration FILE*52, récupération processus,
 Reader/nonpublication et catch historique restent distincts et non démontrés.

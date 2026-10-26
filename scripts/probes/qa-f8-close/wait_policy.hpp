@@ -10,7 +10,9 @@
 
 namespace artist::qa::close_probe {
 
-// Intentionally declaration-only for the first, compile-contract RED tranche.
-constexpr bool can_reap_process(DWORD wait_result) noexcept;
+// Collection requires an observed process-termination signal.
+constexpr bool can_reap_process(DWORD wait_result) noexcept {
+    return wait_result == WAIT_OBJECT_0;
+}
 
 } // namespace artist::qa::close_probe
