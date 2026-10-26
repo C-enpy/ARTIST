@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-26",
+  "runner": "lead",
+  "head": "d03f9964b71d21b5b2893c734c39e900be3e892a",
+  "scope": "Two isolated compile/link commands only, no characterization run",
+  "report": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/81-builds-probes-executes-sans-run.md",
+  "stdio": {
+    "sourceCommit": "d03f9964b71d21b5b2893c734c39e900be3e892a",
+    "authorCommit": "c189858b804ddfb69de5e3b4b861ab8374aba327",
+    "archive": "out/qa-f8/stdio-cal-20261026-01",
+    "exit": 0,
+    "warnings": 0,
+    "exeSha256": "8ba7972b00f0faa8333701cc9dc8782b0e97ccb46c7396ef7095e5a823cd494b",
+    "buildLogSha256": "25d4f66c7c01d5b35c220cb97ffdd1608405f4ab45160497e6cc7ea3079676cf"
+  },
+  "close": {
+    "sourceCommit": "56296fedd759c6ab6a7be018b87260b0f7cb1fa5",
+    "authorCommit": "6a6af844992d5f0b879d63e15694c4fc7aeb29ac",
+    "archive": "out/qa-f8/close-cal-20261026-01",
+    "exit": 0,
+    "warnings": ["C4244 wchar_t to char, token conversion instantiation at close_probe.cpp209; preserved for review"],
+    "exeSha256": "e4eb246151ce488c893f6e24c048cd9137f146048334d2d3d86302c690a34f0b",
+    "buildLogSha256": "c0df0095413e2773c2032267b552c689efe736a7ce7d02e9dab034de90553210"
+  },
+  "sourceAndInputsUnchanged": true,
+  "runtimeTests": 0,
+  "verdict": "BUILD_ONLY_PASS_WITH_CLOSE_WARNING",
+  "limits": ["Not CRT/OS-close or stdio M0/M1/M2 observation", "No Reader publication/catch, GPU, ASan, Linux/GCC/Release/image/performance proof", "Independent close review in progress; stdio final review pending", "Behavioral RED gap for instrumentation explicitly retained"]
+}

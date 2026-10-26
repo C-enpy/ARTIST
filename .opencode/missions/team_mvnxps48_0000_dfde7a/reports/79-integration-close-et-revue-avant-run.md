@@ -15,3 +15,7 @@ RevuefreshC++ownership/supervisionpréparée surcandidat **intégré**, paquetne
 En parallèle du reviewer, leadpeutpréparer/dériver les argvCOMPILE etsélectionsmanifestes, sansmutation du candidat ; builds/runs ne serontpasconcurrentsstdio/close. Exécutionruntimeclose reste bloquée avant revueintégrée/préconditionbinaire/identité/commandsbail/transportvalidés. RUNclose jamaiswrapper1200, aucunTerminateProcessfallback. Captures/branchessurprises restentFAIL/INCONCLUSIVE, passtatut0globalprésumé.
 
 PC1globalnoncomplété ; suite auteur HOLD sansréanalyse/codejusqu'àfindingtraitableouretourlead. Stdiopool8 poursuit répertoiredisjoint. GAPREDcomportemental75 acceptéconservé, aucun correctifReader/mode/catch/nonpublicationM5ouverts fermés parsourceprobe. PasASan/GPU/image/perf/Linux/GCC/Release oupushnouveau.
+
+## Admission de revue exécutée
+
+Ancienreviewerhelperpool10 retiré après revueacquise, tâche REViEW_CLOSE_PARENT task_mvpkqt44_0032_liray2 publiée sur sourceintégrée (pas dépendancefactice à PC1globalencours), analysePM/LLMC64/R84 validéelead sansmodèleimposé. Nouveaupool11/session ses_e8695d971ffe3AyxEU9H13Lrsc : GETnatifcorrectness-reviewer/canoniqueARTIST/parentlead, contexte commence par seuleaffectation+lecturepaquet, frontièrepermissionswildcarddeny sansedit/shellallow observée, pasgarantiesandbox. Lecturepaquet29lignes+transport réellement reçus avant **GOanalyse** dans mêmecontextefresh. SourcesnonluesavantGO, pasanciennehistoireauteur/review. Revueen cours, verdictnonreçu. AuteurHOLDinformé, aucuneretouche source/compilation/runparlui.
