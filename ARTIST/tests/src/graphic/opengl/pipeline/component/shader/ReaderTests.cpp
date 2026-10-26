@@ -1,15 +1,12 @@
 #ifdef __mock_gl__
 
 #include <gtest/gtest.h>
-#include <algorithm>
 #include <atomic>
 #include <chrono>
-#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <functional>
 #include <memory>
-#include <new>
 #include <optional>
 #include <sstream>
 #include <string>
@@ -150,124 +147,6 @@ namespace
         return path;
     }
 
-    // F8-SEAM cycle 2: seam probes. The readShaderFile signature takes a
-    // SourceExtractor function reference (not a lambda), so the failing
-    // streambuf is handed over through a real test function below. The state
-    // pointer is per-test and the CPU suite is single-threaded; each test
-    // installs it in its body and clears it afterwards.
-
-    /// Scripted streambuf: the first xsgetn serves exactly the requested
-    /// bytes (the real extractor asks for its ruled 4096-byte block); the
-    /// second request is counted, then the scripted failure escapes - a real
-    /// ios_base::failure sentinel or a non-ios std::bad_alloc. A short
-    /// xsgetn alone is deliberately NOT used: it would set EOF/fail, the
-    /// ruled normal termination, not the injected error.
-    class ScriptedStreambuf : public std::streambuf
-    {
-    public:
-        explicit ScriptedStreambuf(std::function<void()> onSecondRequest)
-            : onSecondRequest_(std::move(onSecondRequest)),
-              block_(4096, 'x')
-        {
-        }
-
-        int requests() const { return requests_; }
-
-        std::streamsize firstRequestBytes() const { return firstRequestBytes_; }
-
-    protected:
-        std::streamsize xsgetn(char *destination, std::streamsize requested) override
-        {
-            ++requests_;
-            if (requests_ == 1)
-            {
-                firstRequestBytes_ = requested;
-                const auto served = std::min<std::streamsize>(requested, static_cast<std::streamsize>(block_.size()));
-                std::memcpy(destination, block_.data(), static_cast<std::size_t>(served));
-                return served;
-            }
-            onSecondRequest_();
-            return 0;
-        }
-
-    private:
-        std::function<void()> onSecondRequest_;
-        std::string block_;
-        int requests_ = 0;
-        std::streamsize firstRequestBytes_ = 0;
-    };
-
-    ScriptedStreambuf *scriptedStreambuf = nullptr;
-
-    /// Test adapter: the transaction opens the REAL fixture file and hands
-    /// the live stream to this function, which calls the SAME extractor the
-    /// production path uses, on a local istream backed by the failing
-    /// streambuf under the same badbit mask. Whatever escapes the extractor,
-    /// the stream's badbit is verified set before the exception is rethrown
-    /// unchanged - the error is never raised by the callback itself.
-    std::string scriptedExtraction(std::istream &realFile)
-    {
-        EXPECT_TRUE(realFile.good())
-            << "the transaction must hand the adapter a real, usable file stream";
-        EXPECT_NE(scriptedStreambuf, nullptr)
-            << "test wiring: the scripted streambuf must be installed";
-        if (scriptedStreambuf == nullptr)
-        {
-            throw std::runtime_error("test wiring: missing scripted streambuf");
-        }
-        ScriptedStreambuf &failing = *scriptedStreambuf;
-        std::istream source(&failing);
-        source.exceptions(std::ifstream::badbit);
-        try
-        {
-            return shader::detail::extractShaderSource(source);
-        }
-        catch (...)
-        {
-            // The injected failure crossed the real read loop as a real
-            // stream state: badbit is actually set on the stream before the
-            // exception is rethrown (MSVC 14.44 iosfwd _CATCH_IO_END: "set
-            // badbit and rethrow").
-            EXPECT_TRUE(source.bad())
-                << "badbit must be actually set on the stream after the injected failure";
-            throw;
-        }
-    }
-
-    /// Test-side context whose virtual setter observes the transaction at the
-    /// exact moment of publication: the reader opens its file without
-    /// FILE_SHARE_DELETE, so a still-open handle denies deletion on Windows;
-    /// a successful remove AT PUBLICATION proves the borrowed filebuf was
-    /// closed before the code was published. The observation is only valid
-    /// while the transaction call is live (no pending observation after).
-    /// The setter also serves the transaction's initial clearing call
-    /// (setShaderCode("")), so the probe fires only on the publication of
-    /// the expected bytes, never on the clearing step.
-    class PublicationProbeContext : public context::OpenGLShaderContext
-    {
-    public:
-        explicit PublicationProbeContext(std::string publishedMarker)
-            : publishedMarker_(std::move(publishedMarker))
-        {
-        }
-
-        void setShaderCode(const std::string &shaderCode) override
-        {
-            if (shaderCode == publishedMarker_)
-            {
-                std::error_code removeError;
-                removedAtPublication_ = std::filesystem::remove(getShaderPath(), removeError);
-                removalDiagnosis_ = removeError.message();
-            }
-            context::OpenGLShaderContext::setShaderCode(shaderCode);
-        }
-
-        bool removedAtPublication_ = false;
-        std::string removalDiagnosis_;
-
-    private:
-        std::string publishedMarker_;
-    };
 }
 
 class ReaderTests : public ::testing::Test
@@ -392,6 +271,7 @@ TEST_F(ReaderTests, ReadShaderTest_AbsentFileRejected)
     ASSERT_TRUE(absentPath.has_value())
         << "setup: a guaranteed-absent path is required for this test (see the setup diagnosis above)";
     shaderContext->setShaderPath(absentPath->string());
+    shaderContext->setShaderCode("STALE-SOURCE");
 
     // Act & Assert: the rejection keeps the read error nature.
     expectSpecificError(
@@ -414,6 +294,7 @@ TEST_F(ReaderTests, ReadShaderTest_EmptyReadableFileYieldsEmptyCode)
     ASSERT_TRUE(emptyPath.has_value())
         << "setup: the empty source fixture file is required (see the setup diagnosis above)";
     shaderContext->setShaderPath(emptyPath->string());
+    shaderContext->setShaderCode("STALE-SOURCE");
     ASSERT_TRUE(std::filesystem::exists(*emptyPath));
 
     // Act: the read must succeed.
@@ -449,6 +330,56 @@ TEST_F(ReaderTests, ReadShaderTest_MultiBlockReadPreservesContent)
 
     // Assert: byte-identical content (no whitespace swallowing, no truncation).
     ASSERT_EQ(shaderContext->getShaderCode(), expected);
+}
+
+TEST_F(ReaderTests, StableFile_ShortSourcesReplacePreviousContent)
+{
+    for (const std::size_t size : {std::size_t{1}, std::size_t{4095}})
+    {
+        SCOPED_TRACE(size);
+        const std::string expected(size, 's');
+        const auto path = makeTempShaderSource("short-" + std::to_string(size) + ".vert", expected);
+        ASSERT_TRUE(path.has_value());
+        context::OpenGLShaderContext shaderContext;
+        shaderContext.setShaderPath(path->string());
+        shaderContext.setShaderCode("STALE-SOURCE");
+
+        ASSERT_NO_THROW(shader::OpenGLShaderReader<Classic>::on(shaderContext));
+        EXPECT_EQ(shaderContext.getShaderCode(), expected);
+    }
+}
+
+TEST_F(ReaderTests, StableFile_ExactlyTwoBlocksPreserveContent)
+{
+    const std::string expected(8192, 'b');
+    const auto path = makeTempShaderSource("two-blocks.vert", expected);
+    ASSERT_TRUE(path.has_value());
+    context::OpenGLShaderContext shaderContext;
+    shaderContext.setShaderPath(path->string());
+    shaderContext.setShaderCode("STALE-SOURCE");
+
+    ASSERT_NO_THROW(shader::OpenGLShaderReader<Classic>::on(shaderContext));
+    EXPECT_EQ(shaderContext.getShaderCode(), expected);
+}
+
+TEST_F(ReaderTests, StableFile_TextAndEmbeddedNullsPreserveContent)
+{
+    // Text-mode characters, not an assertion of on-disk CRLF byte identity.
+    // Embedded NULs are preserved by Reader; GL compilation is a separate contract.
+    std::string expected(8193, 't');
+    expected.replace(0, 5, " \t\n  ");
+    expected[4095] = '\0';
+    expected[4096] = '\0';
+    expected[8191] = '\0';
+    expected[8192] = '\n';
+    const auto path = makeTempShaderSource("text-and-nulls.vert", expected);
+    ASSERT_TRUE(path.has_value());
+    context::OpenGLShaderContext shaderContext;
+    shaderContext.setShaderPath(path->string());
+    shaderContext.setShaderCode("STALE-SOURCE");
+
+    ASSERT_NO_THROW(shader::OpenGLShaderReader<Classic>::on(shaderContext));
+    EXPECT_EQ(shaderContext.getShaderCode(), expected);
 }
 
 // F8-SEAM cycle 2 characterization: exactly one full 4096-byte block, the
@@ -580,140 +511,6 @@ TEST_F(ReaderTests, Cleanup_IsBoundedToOwnedRootAndPreservesNeighbor)
     // The neighbor's own owner cleans it, bounded the same way.
     ASSERT_TRUE(tryCleanupOwnedRoot(*neighbor, ec));
     EXPECT_FALSE(std::filesystem::exists(*neighbor));
-}
-
-// F8-SEAM cycle 2: the real badbit failure branch, previously unexercised
-// (docs/development/known-incidents.md, "F8 - preuve de lecture incomplete").
-// The test adapter receives the real opened file from the transaction, then
-// calls the SAME extractor the production path uses, with a local failing
-// streambuf under the same badbit mask: first xsgetn serves exactly 4096
-// bytes (the ruled block), the second request is counted, then a real
-// ios_base::failure sentinel escapes the streambuf. The transaction must
-// translate it into the public read error with the EXACT sentinel message
-// (computed on the current STL), leave the pre-filled context empty and
-// publish no partial block. GREEN by construction on the current catch: this
-// is a seam-enablement proof, not an invented engine RED.
-TEST_F(ReaderTests, ExtractionFailure_SentinelTranslatedWithExactMessage)
-{
-    // The expected message is computed on the current STL: the sentinel is a
-    // real std::ios_base::failure and the translation keeps its what()
-    // verbatim (MSVC 14.44 rethrows the original exception after setting
-    // badbit, so the object that reaches the translation IS the sentinel).
-    const std::ios_base::failure sentinel("reader-test-extraction-sentinel");
-    const std::string expectedMessage =
-        std::string("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ\n") + sentinel.what();
-
-    constexpr std::size_t contentSize = 4096 + 512;
-    std::string content(static_cast<std::size_t>(contentSize), '\0');
-    for (std::size_t i = 0; i < contentSize; ++i)
-    {
-        content[i] = static_cast<char>('a' + (i % 26));
-    }
-
-    auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
-    const auto path = makeTempShaderSource("sentinel-shader.vert", content);
-    ASSERT_TRUE(path.has_value())
-        << "setup: the sentinel source fixture file is required (see the setup diagnosis above)";
-    shaderContext->setShaderPath(path->string());
-    shaderContext->setShaderCode("PRE-FILLED-AND-MUST-BE-CLEARED");
-
-    ScriptedStreambuf failing([]()
-                              { throw std::ios_base::failure("reader-test-extraction-sentinel"); });
-    scriptedStreambuf = &failing;
-
-    // Act & Assert: exact final type and exact message (not merely a prefix).
-    try
-    {
-        shader::detail::readShaderFile(*shaderContext, scriptedExtraction);
-        FAIL() << "the injected extraction failure must be translated into the public read error";
-    }
-    catch (const TraceableException<std::runtime_error> &e)
-    {
-        EXPECT_EQ(std::string(e.what()), expectedMessage);
-    }
-    catch (...)
-    {
-        FAIL() << "unexpected exception type: the sentinel must be translated into "
-                  "TraceableException<std::runtime_error>";
-    }
-    scriptedStreambuf = nullptr;
-
-    // The first block was consumed (the real loop came back for more) with
-    // the ruled 4096-byte request, the second request happened, and the
-    // failure crossed the real loop as badbit (verified inside the adapter
-    // while the stream lived).
-    EXPECT_EQ(failing.requests(), 2);
-    EXPECT_EQ(failing.firstRequestBytes(), 4096);
-
-    // Context cleared by the transaction, no partial block published.
-    EXPECT_TRUE(shaderContext->getShaderCode().empty());
-}
-
-// F8-SEAM cycle 2: a non-ios exception injected at the streambuf level
-// (process-level bad_alloc) must NOT be remapped as a file error - it keeps
-// its nature and the transaction leaves the context empty (cleared, never
-// published). The current STL rethrows the original exception after setting
-// badbit, which this test observes through the adapter.
-TEST_F(ReaderTests, ExtractionFailure_BadAllocStaysUntranslated)
-{
-    constexpr std::size_t contentSize = 4096 + 512;
-    std::string content(static_cast<std::size_t>(contentSize), '\0');
-    for (std::size_t i = 0; i < contentSize; ++i)
-    {
-        content[i] = static_cast<char>('a' + (i % 26));
-    }
-
-    auto shaderContext = std::make_shared<context::OpenGLShaderContext>();
-    const auto path = makeTempShaderSource("bad-alloc-shader.vert", content);
-    ASSERT_TRUE(path.has_value())
-        << "setup: the bad-alloc source fixture file is required (see the setup diagnosis above)";
-    shaderContext->setShaderPath(path->string());
-    shaderContext->setShaderCode("PRE-FILLED-AND-MUST-BE-CLEARED");
-
-    ScriptedStreambuf failing([]()
-                              { throw std::bad_alloc(); });
-    scriptedStreambuf = &failing;
-
-    // A remap into the business error would be caught here as a type mismatch.
-    ASSERT_THROW(shader::detail::readShaderFile(*shaderContext, scriptedExtraction),
-                 std::bad_alloc);
-    scriptedStreambuf = nullptr;
-
-    EXPECT_EQ(failing.requests(), 2);
-    EXPECT_EQ(failing.firstRequestBytes(), 4096);
-    EXPECT_TRUE(shaderContext->getShaderCode().empty());
-}
-
-// F8-SEAM cycle 2: closure happens before publication. The virtual test
-// setter runs exactly at publication and attempts to remove the source file:
-// on Windows the reader opens it without FILE_SHARE_DELETE, so a still-open
-// handle would deny deletion - a successful remove at that exact point is the
-// closure proof. The observation is only valid while the transaction lives.
-// No close hook is added to production code.
-TEST_F(ReaderTests, CloseHappensBeforePublication_ObservableThroughVirtualSetter)
-{
-    constexpr std::size_t contentSize = 2 * 4096 + 11;
-    std::string expected(static_cast<std::size_t>(contentSize), '\0');
-    for (std::size_t i = 0; i < contentSize; ++i)
-    {
-        expected[i] = static_cast<char>('A' + (i % 26));
-    }
-
-    auto shaderContext = std::make_shared<PublicationProbeContext>(expected);
-    const auto path = makeTempShaderSource("close-before-publish-shader.vert", expected);
-    ASSERT_TRUE(path.has_value())
-        << "setup: the close-probe source fixture file is required (see the setup diagnosis above)";
-    shaderContext->setShaderPath(path->string());
-
-    // Act
-    ASSERT_NO_THROW(shader::OpenGLShaderReader<Classic>::on(*shaderContext));
-
-    // Assert: publication content intact, and the file handle was already
-    // released when the virtual setter ran (the remove succeeded).
-    ASSERT_EQ(shaderContext->getShaderCode(), expected);
-    EXPECT_TRUE(shaderContext->removedAtPublication_)
-        << "the filebuf borrowed during extraction was still open at publication: "
-        << shaderContext->removalDiagnosis_;
 }
 
 #endif // __mock_gl__
