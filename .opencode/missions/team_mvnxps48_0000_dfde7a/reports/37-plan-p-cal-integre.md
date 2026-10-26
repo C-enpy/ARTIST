@@ -2,6 +2,8 @@
 
 2026-10-26. Auteur pool-7/project-manager, lecture seule ; persistance et validation lead. Texte complet récupéré dans les arguments publics de ses appels team_message refusés pour taille (rapport36), **pas une livraison team_results prétendue réussie**. Fragmentation demandée pour rétablir le transport, sans recommencer l'analyse. L'intégration documentaire peut avancer sur ce texte désormais disponible.
 
+**Réception native ultérieure confirmée** : team_results a finalement livré le résultat terminal P-CAL et les six fragments numérotés avec FIN_P_CAL. Ils corroborent le graphe et les scores intégrés ci-dessous ; aucune nouvelle analyse ou tâche doublon nécessaire. Les premiers refus de taille restent historiques. Le contexte fresh de S/C prévu ci-dessous a ensuite été amendé explicitement par décision opérateur41 pour leurs seules analyses RO ; auteur source et audit final conservent leurs gates distincts.
+
 ## Contrat et provenance
 
 Analyse au HEADfb3c9b9, source82bf52d, diff ARTIST vide. Nouveau HEADdecd225 documentaire seulement, sans effet sur les préconditions C++. Sources : AGENTS/principes/ADR,26/34/contratB3,ancien25 et QA17 amendé ; politique model-policy.json team_mvnxps48_0000_dfde7a lue. QMD absent du worker : sources locales autorisées. Refus externe Context Mode conservé, aucun contournement. Aucun shell/build/test/édition/commit par PM. Cette analyse PM/LLM C62/R58 ; pas d'autre méthode/modèle imposé.
