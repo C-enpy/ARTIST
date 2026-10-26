@@ -1,6 +1,6 @@
 # PC1 — contrat de compilation de la collecte
 
-Tranche initiale autorisée par les rapports60 et64 (décisions locales du lead,
+Tranche policy initiale autorisée par les rapports60 et64 (décisions locales du lead,
 commit46dd3893b742170bfaab317b4c622e2a561eb3c9). Aucun parent/enfant,
 processus, handle, flag de protection ou correction Reader dans cette tranche.
 
@@ -71,3 +71,47 @@ exécutée. Cette compilation ne crée ni processus
 ni fixture et n'appelle aucune API d'attente. Pas de CMake/CTest/ASan/GPU requis
 pour cette seule capacité. Calibration FILE*52, récupération processus,
 Reader/nonpublication et catch historique restent distincts et non démontrés.
+
+## Nouvelle tranche parent/enfant — décisions75/76
+
+Autorisation explicite opérateur et QA amendé, commit87d3625, avant logique.
+`PARENT-ORACLES.md` a été écrit avant `close_probe.cpp` ; `controls.ps1`
+matérialise ensuite cinq contrôles CLI négatifs sans timeout/kill. Ce sont des
+contrôles de caractérisation, pas un RED comportemental revendiqué. GAP RED
+comportemental du nouveau superviseur conservé. Tout défaut observé ultérieur
+doit garder sa preuve causale avant correction minimale et GREEN.
+
+Le header policy et les deux TU restent immuables dans cette tranche.
+Le parent appelle réellement la policy via `Supervisor::observe` sur ses trois
+chemins d'attente : initial10000ms, attenteINFINITE après HOLD, destruction.
+WAIT_FAILED/inattendu conserve les owners et attend quiescent dans Sleep ;
+timeout ne libère pas le bail ni ne permet un bras suivant. Une fin tardive
+permet cleanup après signal, mais reste exit40. Crash fatal/hôte hors garantie.
+
+CLI publique : `close_probe.exe --root ABS_NOUVEAU --run-id TOKEN_ASCII`.
+Le mode enfant interne porte arm/root/run-id/parent-pid/parent-ctime ; ce n'est
+pas une authentification/sandbox. Hypothèse : environnement local possédé,
+sans mutateur concurrent. Seuls chemins locaux sur lecteur, sans composants
+dot ni suffixe point/espace sont admis. Logs128KiB, records8192octets ; valeurs
+variables autorisées sont token ASCII validé et cheminmodule encodé UTF16hex.
+
+La valeur d'adresse réellement appelée pour fclose est attribuée à un module
+non EXE sans charger une autre CRT. Imports, version et hashfichier de ce module
+restent à recouper par le lead ; le probe ne certifie pas les sources SDK ni le
+syscall CloseHandle interne. Exception native : aucun handler ajouté, aucune
+consommation FILE inventée. Une garde ne réessaie jamais une tentative engagée.
+
+Codes20 usage/setup/identité/nominal ;30 instrumentation/cleanup ;40 fin tardive ;
+10 cible fclose0 ou observation incomplète/exception ;0 uniquement nominal
+conforme, cibleprotégée fcloseEOF, signaux observés et cleanup réussi. Champs
+finaux distincts, toujours reader_proven=false. Le root/log/lease restent
+artefacts ; seul fixture/target.dat puis fixture sont supprimés après fin.
+Une acquisition setup échouée peut laisser des artefacts privés à inspecter,
+sans enfant abandonné ni suppression récursive.
+
+Runner : COMPILE argv exacts à dériver/valider après intégration. Contrôles CLI
+via controls.ps1 avec Exe absolu et Root absolu neuf. RUN parent exclusivement
+functions.shell background=true timeout=0, jamais le wrapper timeout1200.
+Aucun build, contrôle PowerShell, processus ou flag n'a été exécuté par auteur.
+La compilation, les scénarios runtime et la revue fresh restent non effectués
+à la remise source ; ne pas transformer la lecture en verdict de validation.
