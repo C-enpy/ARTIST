@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-26",
+  "scope": "Standalone nativeRead whole-file contract controls; causal RED only",
+  "sourceCandidate": "c77fb5a10168b2a9dace0a3e8bea2002cae49705",
+  "authorCommit": "fc02b9481de736fcde722acc83dbbe00cebb46cf",
+  "author": "pool-8 cpp-engineer, native fresh isolated worktree",
+  "runner": "lead",
+  "archive": "out/qa-f8/stdio-red-20261026-01",
+  "protocol": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/57-approbation-commandes-red-stdio.md",
+  "report": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/58-red-native-read-causal-execute.md",
+  "buildExit": 0,
+  "runExit": 1,
+  "beforeBuildManifestSha256": "098224db652798ce1d4baf3bf2c9bb4b7fc0566e7a8c1607a81576cbf5b52c14",
+  "beforeRunManifestSha256": "163188835205fb86894c74a97c94f57443f7d2247c8b5d8894b5b563dac31f4c",
+  "executableSha256": "233932deb7b52796cce60787c62963ad9f2e8e59cd81b8a83ec279f15572996a",
+  "runLogSha256": "9251f4473aa8cacfa5bcc4ab5b9c82b09d6125d2fb9d5d7299c52e95a1aa2cfc",
+  "cases": [
+    {"expected": 0, "received": 0, "readOk": true, "error": 0, "outcome": "PASS"},
+    {"expected": 4096, "received": 4096, "readOk": true, "error": 0, "outcome": "PASS"},
+    {"expected": 8192, "received": 8192, "readOk": true, "error": 0, "outcome": "PASS"},
+    {"expected": 12325, "received": 8192, "readOk": true, "error": 0, "outcome": "FAIL_EXPECTED_RED"}
+  ],
+  "selectedExecuted": 4,
+  "assertionPass": 3,
+  "assertionFail": 1,
+  "skipped": 0,
+  "cleanupAndSentinelVerified": true,
+  "sourceAndBinaryUnchanged": true,
+  "lateDiagnostics": false,
+  "verdict": "RED_CAUSAL_OBSERVED",
+  "limits": [
+    "New whole-file helper contract, not a defect of the old4608 use",
+    "Not Reader RED, CRT stdio error calibration, close or catch proof",
+    "Not CTest/GTest/JUnit, ASan, GPU, GCC, Linux, Release, image or performance validation",
+    "Physical fixture SHA not independently measured before cleanup; expected payload SHA recorded and exact writes/comparisons checked",
+    "GREEN and independent review pending"
+  ]
+}
