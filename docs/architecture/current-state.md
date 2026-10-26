@@ -73,6 +73,18 @@ stade proposition, aucun essai close lancé.
 M5Reader/non-publication/catch et adoption du futur Reader restent ouverts ;
 ni nouveau backend, ni image/performance/GCC/Linux/Release validés.
 
+**Recentrage opérateur —26octobre** : le contrat normal est désormais celui d'un
+fichier **stable pendant sa lecture, sans écriture concurrente** ; solution
+portable, contrôles d'erreur et acceptation du contenu après réussite, sans
+synchronisation ajoutée pour un scénario concurrent hors contrat. La poursuite
+des probes stdio/close est arrêtée : leurs builds existent, mais **aucun RUN de
+caractérisation n'a été lancé** ; le manifeste stdio sélectionné est conservé
+NOT_RUN. Inventaire des consommateurs et contrat minimal en préparation RO,
+avant retrait méthodique des surcouches/tests devenus spécifiques à l'exploration.
+À ce jalon aucun nettoyage source ni correction Reader encore exécutés ; preuves
+historiques/correctifs utiles/diffs étrangers préservés. Décision et limites :
+rapport83 de la mission team_mvnxps48_0000_dfde7a, entrées83/84 commit45d1884.
+
 > [!info] Photographie historique — 2026-10-20
 > Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +
 > 69 OpenGL), zéro échec/skip rapporté par CTest. Le chemin d'exécution fermé
