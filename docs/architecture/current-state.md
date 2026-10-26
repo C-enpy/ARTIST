@@ -54,6 +54,21 @@ et amendement ciblé QA17 intégrés dans `fb3c9b9` ; aucune calibration exécut
 ce jalon, B1 attend encore sa revue finale. Ces décisions actualisent les dettes
 de la photographie historique ci-dessus, sans changer les anciens verdicts.
 
+**Jalon du26octobre — contrôles de la future sonde, pas correctif Reader** :
+le helper Win32 privé `scripts/probes/qa-f8-stdio/native_read.hpp` a suivi RED
+causal12325→8192 puis GREEN4/4lectures complètes, comparateur inchangé ; deux
+contrats CLI séparés ont aussi été vérifiés par le lead. Preuves portables :
+`_meta/session-2026-10-26-stdio-control-red.json` et
+`_meta/session-2026-10-26-stdio-control-green.json`, source intégrée961d92e.
+Revue indépendante fresh reçue et acceptée au rapport63 de la mission (commit
+46dd389) : aucun défaut démontré à ce périmètre ; erreurs authentiques de lecture,
+close et allocation non exécutées. Aucun transfert du verdict ASan555 au probe.
+La calibration stdio M0/M1/M2 reste à écrire/exécuter. Le refus close par protection
+OS a été admis seulement pour un probe FILE* en enfant dédié (décision52) ;
+contrat statique privé de supervision en préparation, aucun essai close lancé.
+M5Reader/non-publication/catch et adoption du futur Reader restent ouverts ;
+ni nouveau backend, ni image/performance/GCC/Linux/Release validés.
+
 > [!info] Photographie historique — 2026-10-20
 > Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +
 > 69 OpenGL), zéro échec/skip rapporté par CTest. Le chemin d'exécution fermé
