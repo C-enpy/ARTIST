@@ -2,9 +2,9 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Correctif mock82bf52d, ASan555 et audit final acceptés ; blocage du board résolu7/7, dettes F8/C2/B1/GCC conservées sans PASS global."
+summary: "Source82bf52d et ASan555 acquis ; causesB1 isolées, calibrationB3 autorisée et fermeture administrative motivéeC2 acceptée, sans PASS global."
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-26
 sources:
   - docs/references/session-2026-10-03-shader-pass.md
   - docs/_meta/session-2026-10-03-validation.json
@@ -465,7 +465,7 @@ pas des preuves et ne sont pas comptées dans les totaux.
 - Ne pas écrire que « les chemins réels couvrent chaque branche » : formule du message de commit
   `e736bba`, écartée avec la réserve β de R.
 
-### Anomalie RED de développement — baseline C2 du 20:35 (OPEN, cause non établie)
+### Anomalie RED de développement — baseline C2 du20:35 (fermeture motivée acceptée)
 
 - `mission-c2-baseline-ctest.xml` (20:35) : 165 cas, 13 échecs : 10 F4 (`0xc0000409`) et 3
   `ReaderTests`.
@@ -473,10 +473,23 @@ pas des preuves et ne sont pas comptées dans les totaux.
   (`ReaderTests.cpp:114` dans le log) ; `MultiBlockReadPreservesContent` échoue à
   `ReaderTests.cpp:146`.
 - `mission-c2-red-exact.xml` (20:38) : 16 cas, 11 échecs (10 F4 et `AbsentFileRejected`). Ces
-  deux tests Reader y passent. Les numéros de ligne diffèrent : version antérieure possible du
-  fichier de tests, non vérifiée. Aucun rapport n'attribue ces échecs.
+  deux tests Reader y passent. La provenance retrouvée le25octobre décrit une modification de
+  préparation de fixture entre les deux runs, avec les limites ci-dessous.
 - Statut : la baseline 20:35 **n'est pas un RED causal** et n'est citée nulle part comme tel. Seul
   `red-exact` (20:38) sert de RED F8 causal.
+
+- Enquête nouvelle : transport natif auteur précisément identifié, helper sans
+  création du dossier parent et garde exists=false avant Reader ; ajout
+  create_directories puis lien et sortie red-exact11/16. Défaut de fixture établi,
+  explication forte pour Empty, probable pour MultiBlock. Rapport28 sous
+  `.opencode/missions/team_mvnxps48_0000_dfde7a/reports/` : opérations/ordre/IDs
+  et limites, sans nouveau replay. XML primaires, valeurs complètes MultiBlock
+  et identité binaire pré-run restent manquants.
+- **Fermeture administrative motivée explicitement acceptée par l'opérateur**
+  au rapport34, décision intégrée dans `fb3c9b9` le26octobre. Aucun verdict moteur,
+  causalité exhaustive ou disparition des anciens FAIL n'en découle. Réouverture
+  sur primaire contradictoire ou nouveau symptôme identifié ; pas de chasse
+  identique ni reconstruction actuelle présentée comme preuve historique.
 
 ### Campagne ASan incrémentale — FAIL 133/134 (mécanique expliquée en mission A1+A2, H-ASan)
 

@@ -3,7 +3,7 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Source82bf52d : ASan555 acquis ; scope initial B1/B3/B5 repris, deux causesB1 vérifiées, contratB3 proposé et décisionC2 attendue."
+summary: "Source82bf52d : ASan555 acquis ; causesB1 vérifiées, calibrationB3 autorisée sans correctifReader, fermeture motivéeC2 acceptée."
 sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
@@ -12,7 +12,7 @@ provenance:
 status: observed
 source_revision: 82bf52d52e594fae02593866669a1af715127d1f
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-26
 ---
 
 # État réel d'ARTIST
@@ -41,8 +41,18 @@ anciennes7tâches restent acquises ; trois enquêtes nouvelles B1/B3/B5 ont ét�
 lancées. B1 dispose maintenant de deux témoins causaux négatifs historiques
 (1et2échecs) et de nominaux actuels verts (4et6RUN,5cas uniques), sans nouveau
 correctif. `_meta/session-2026-10-25-b1-causal-validation.json` conserve preuves
-et limites. Contrat Reader/F8 seulement proposé, C2 en décision motivée : **la
+et limites. Contrat Reader/F8 seulement proposé : **la
 reprise du scope initial n'est pas terminée**, et7/7ne désigne pas ce nouveau lot.
+
+**Décisions opérateur puis intégration QA (25–26octobre)** : calibration stdio et
+recherche OS close bornées autorisées, sans correction Reader ni substitution
+catch/close. Fermeture administrative motivée B5/C2 explicitement acceptée :
+défaut de fixture établi, explication forte pour Empty/probable pour MultiBlock,
+pas reconstruction complète ou verdict moteur. Primaires manquants conservés ;
+réouverture sur preuve contradictoire ou nouveau symptôme identifié. Décisions34
+et amendement ciblé QA17 intégrés dans `fb3c9b9` ; aucune calibration exécutée à
+ce jalon, B1 attend encore sa revue finale. Ces décisions actualisent les dettes
+de la photographie historique ci-dessus, sans changer les anciens verdicts.
 
 > [!info] Photographie historique — 2026-10-20
 > Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +
