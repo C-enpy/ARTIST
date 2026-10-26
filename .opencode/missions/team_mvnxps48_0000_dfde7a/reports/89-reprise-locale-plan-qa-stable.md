@@ -37,3 +37,15 @@ Pertes délibérées : deux injections et oracle Windows remove-au-setter retir�
 Ressources exclusives : index Git lead ; un build à la fois par sortie ; fixtures distinctes ; GL et ASan sériels réservés au runner lead. Enveloppe de travail :20% préparation,55% caractérisation/nettoyage/validation,25% buffer findings ; pas budget facturé ni promesse de durée. Commandes exactes et identités enregistrées avant chaque run dans les sorties `out/qa-f8/stable-20261026-01/` et logs dédiés. Aucun nouveau harness exécutable.
 
 Registre bidirectionnel : R1–R3→JUnit pré/post et tests nommés ; R4→revue indépendante + gaps ; R5→tests fixture conservés ; R6→diff/résultats refs ; chaque preuve finale précise candidat/commande/population, toute preuve sans obligation est historique/orpheline à qualifier. Critères de sortie : checks choisis non nuls et verdicts recoupés, diff limité, archives/diffs étrangers préservés, limites explicitement consignées. Aucun GCC/Linux/Release/image/performance nouveau.
+
+## Amendement documentaire après audit Q_STABLE natif — 2026-10-26
+
+Le planner natif a ensuite audité ce plan a posteriori (rapport95), sans modifier
+la qualité de son auteur initial ni antidater une QA indépendante. L'allocation
+proposée ci-dessus20setup/55plan/25buffer correspond à68,75/31,25aprèssetup,
+hors cible70–80/20–30. **Cible prospective corrigée :20setup/60plan/20buffer,
+soit75/25aprèssetup** ; buffer pour investigationfinding,pannevalidation,réaudit.
+Ce correctif n'est ni un tempsconsommé mesuré ni une réécriture du budget historique.
+R4 reste présence statique/GAP d'exécution ; aucun GAP-accept ni preuve authentique
+catch/close n'est créé par l'audit. R6 est désormais complété par contrôlesRO de
+dispositionpool9/pool12, toujours bornés au corpus et sans garantie externe.
