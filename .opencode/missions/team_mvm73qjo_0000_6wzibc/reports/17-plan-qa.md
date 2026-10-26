@@ -234,6 +234,47 @@ Nouveau diff intégré : sélection pré-run, Windows Debug CTest --parallel 1 -
 
 Sortie : B1 preuves bornées recoupées ; B3 preuve ou gap explicitement soumis pour chaque obligation ; C2 disposition acceptée archivée. Audit test-reviewer natif fresh dédié, contrat/candidat/preuves sans justifications auteur, profil/transport vérifiés, aucune exécution autonome. Proposition Q intégrée ne vaut ni Reader prêt auteur ni PASS moteur. ADR0001/2/4/6/7 Proposed,0003/5 partial,0008 Windows Debug seulement.
 
+## Amendement close OS en enfant dédié — décision52,26octobre
+
+Proposition Q_CLOSE par pool-6/qa-planner : quatre fragments/FIN et complément focalisé reçus ; persistance lead, aucune édition/test/API/MCPexterne/claim/délégation par planner. Contexte conservé de préparation **non indépendant**, admissionrestrictive/lecture53/transport effectifs vérifiés54. HEAD e1508b9/source82bf52d attribués brief, pas Git/hashrecalculés par QA ; référencesMicrosoft/CRT digestlead, pas nouvelle recherche externe. Cet ajout actualiseE4 sans refaire17 ni rouvrirB1/B2/B4/B5/B6/C2.
+
+### Exigences et limites
+
+MODIFY E4-calibration : décision52 adopte seulement refus délibérément configuré HANDLE_FLAG_PROTECT_FROM_CLOSE sur emprunt valide de FILE*enfantdédié ; exception ciblée à l'interditflags, tous autresEOF/ferror/throw/handleinvalide restent exclus. **KEEP E4-ReaderM5/nonpublication et M4catch NON prouvés** ; calibration≠M5couvert. OwnerFILE/fd/enfant unique, une fclose, pas retry/_close/CloseHandleemprunté/réutilisationvaleurhorsenfant. Parent seul owner de ses handles supervision, signalfinavantstatut/cleanup, timeout≠terminaison, aucunTerminateProcessfallback. CRTchargée etretour/exception à observer sanscodeprédéterminé. Nominal/cible distincts, fixtures/voisins possédés ; contrat/protocole/QAcommisavantfreshworktreeauteur, commandes approuvées avant runnerlead.
+
+Inférences proposées : corrélationPID/bras/ressource/étapes pour ordre, logs découplés d'attente/pipesdrainés ; sortie main ou exit0 ne prouve ni finDLLdetach ni fclose0. Intent = pas secondefermetureemprunt ni suppressionfixtureenfantvivant. Compile/link fixe structure/CRT ; refus/vieprocessus runtime, aucun assettype/GPU/Reader changé. Source future scripts/probes/qa-f8-close/**, aucun symbole créé/présence statique fictive ; pool8 reste seul stdio.
+
+### Risques QA distincts du risquePM
+
+- R1 enfantvivant/cleanupprematuré : **I4×P3=12**. Déclencheurdetachbloqué,timeoutattente/transportexterne,supérationperdue ; blast radius processus/fixtures/handles possédés/capacitérunner. Détection documentaire50 et wrapper54, pas runtime. Mitigation attentehandle, supervision/bailconservés,pascleanup/kill ; **gapbloquant superviseurdurable/conduiteaprèsdélai** avantauteur.
+- R2 ownershipconsommé : **I4×P3=12**. Déclencheur garde/atexit/réemploiFILE/fd/valeurparent/retraitflag+CloseHandle ; blast radius doubleclose/fdrecyclé/ressourceétrangère au processus. Détection statique42/47/50 ; mitigation étatconsommé/zeroréemploi et revuecheminsprécoces ; **gapcontratdestruction/exception** avantauteur, consommationnonaffirmée si exceptionnative interromptfclose.
+- R3 fauxverdictCRT/syscall/Reader : **I3×P4=12**. DéclencheurSDKrcprisDLL,errnopréchoisi,EOFprisCloseHandleobservé,suppressionprisefermeture,calibrationprisepublication. Blast radius crédibilitéE4/décisionmigration. Mitigation modulesréellementchargés/hash/étapes et verdictsparniveau ; **gap mécanismeobservationFILE/exception etidentitéCRT**. Pas nouveauxtraceursyscallexigé : refusinterne reste documentaire/inféré sanstrace, nepasétiqueterexecuted. Pas installation/service/programmetracing pourremplircase.
+
+PrioriserrevueR1/R2 avantcalibrationR3 ; réévaluerauxsurprises/changementcandidat sanssweep/campagneGL/ASan. Churninfluenceprobabilitépasimpact, scoresPM61/73 indépendantsdecettematrice.
+
+### Scénarios et oracles
+
+- C0 nominal : enfantdistinct/fixturelectureseule,lecturecomplèteavantclose,protectionabsente,une fclose0 à observer,résultatimmédiat,puisfinprocesssignal/statut/logsconcordants. Parentfermeseulesseshandles/cleanupaprèsfin,voisinsintacts ; exit0seulinsuffisant.
+- C1 cible : mêmebinaire/config/données,empruntvalide/protectionappliquéeetlueavantcallunique. Phases lecturefinie→protectionconfirmée→entrée fclose→retourOUexception→fin. Capturerretour/errnoavantlogging ; GetLastErroraprèsCRTneprouvepasCloseHandleinterne. AucunCloseHandletémoin surl'emprunt. Sansobservationinternequalifier FILE*/politiqueconfigurée, pas syscallobservé ; pascodes/absenceexceptionprédéterminés.
+- C2 setup : création/open/lecture/instrumentationéchouée avantconditioncomplète→arrêtbras,pascalibrationclose. Nettoyeruniquementacquis/vivantsconformeowner ; lectureéchouée≠closeéchoué, instrumentationéchouée≠permissionderefermeremprunt.
+- C3 retour/exception : aprèsretourconsommant,pasusageFILE/fd,logsseulspuissortie ; exceptionnative/debuggerneprouve ni retour ni consommationachevée, jamaishandler/retryinventantcettepreuve. Finprocessrécupérationdocumentée50≠tracechaquehandlekernel.
+- C4 timeout/WAIT_FAILED/logsincomplets/crash : étatidentités/bailconservés,pasautrebras/rerunsurlamêmeressource,nicleanupavantfin. Maintenirsupervisionoutransfertautoriséexplicite ; plusvivantque budget=INCONCLUSIVE/décisionopérateur,pasrecoveryPASS. Ne pas provoquerdeadlockpourcouvrirligne. AttentebornéeWaitForSingleObject/signalavantGetExitCodeProcess ; WAIT_FAILEDdistincttimeout, derniercodeapparentnelibèrepaspropriété.
+- C5 cleanupaprèsfin : suppressionracinepossédéeetvoisins ; échec=FAILcleanup, preuveclosedistinctesansPASSglobal. Suppressionseuleinsuffisante(share-delete). Sortiesprécocesconserventresponsabilitésupervisionvivante.
+
+NouveauxcontrôlesdéterministessuiventvraisRED/GREENsi défaut/capacitémanquantepertinents ; pascodevolontairementfaux. RésultatC1inconnu=caractérisation,pasREDparcequefcloseéchoueintentionnellement. Aucune duplicationwhole-native-readS. Si branchetimeout/setupnécessiteinfrastructuresupplémentairenonadoptée : revue statique+GAP, passeam/mockimplicitement. FuturcorrectifReadercontrat/REDséparés.
+
+### Registre, transport et sortie
+
+E4-calibration→futurecloseC0/C1(GAPruntime) ; I-lifetime→42fclose17–43/close81–94 et50ownership(stat/digestionlead) ; I-identité→42limiteSDK/futurmanifestemodules(GAP) ; I-supervision/exclusivité→50detach/52conditions,C2–C5(GAPprotocole) ; E4Reader→readShaderFileclose/publication/M4catch(NONcouvert).
+
+Inverse42/43→hypothèseseeknonsoutenuepasimpossibilité ;47/50→contratspublicspasrun ;52→admissibilitépaspreuve ; futurslogsCRT/signal/cleanup→C1/C3/C4/C5 séparément,paspublication. Close nominal≠refus,EOF/errno≠traceOS,résumé/log/XML≠3runs ; orphelinsunassessedavantdiff,ASan555autrecandidatpaspreuveclose. Source/datelectures26octobre,commandes0/runneraucunpourQA ; identitéDLL/binaire/delta/logs/env/commandeexacte/attenduobservé/comptes àfixeravant/aprèsrunner, paszérotestPASS.
+
+Findingtransportdigestionlead : run-build.py utilise subprocess.run(timeout=1200),tueenfantdirectsurTimeoutExpired ; parentclose ainsi tuépourrait laisserenfantorphelin. **Compilewrapperréutilisable, RUNcloseinterditviaCEwrapperpardéfaut.** Gateavant auteur : transportRUNsanskillimplicite,bailresponsable/PID+instantcréation/bras/handlesvivants,markers/logs/observabilitéaprèsdélai etsuiviaulead. Markerne remplacepas signalhandle ; deadlineinterne/externe≠fin,aucunréemploibail/fixturetantquenonfin. Manque de transport sûr=BLOCKED, pasforcekill/service/infra supplémentaireinventés. LignesRUNàvalider parleadavantessai.
+
+Budgetlocalproposé100unités(nonheures/coût,nonsumautomatiqueglobal17) : setup30 ; reste70dont52,5planifié75%et17,5buffer25%. Planifié supervision/lifetime14,nominal/setup12,refus/observation12,cleanup8,registre/revue6,5 ; bufferinvestigation7/panne6/réaudit4,5. Si transportadmissibleabsent/enveloppetenableabsente : arbitrageavantauteur,pasréductionrisquehautoubuffer.
+
+Sortiepréparation=ajout+protocolecommisavantfreshsource,ownershipséparé/unbuildsortieleadrunner ; **cetajoutn'affirme pas auteurprêt** tantquesupervision/observation/identiténonarrêtées. Sortiecalibration=brasidentifiés/résultatsfidèles/finconstatée/cleanupvérifié,sinonFAILécartouINCONCLUSIVEmanque. M5Reader/catchGAP,aucuneGL/ASan/Linux/GCC/Release/image/perf/PASSglobal implicite.
+
 ## 8. Qualification des preuves
 
 Chaque preuve retenue : HEAD complet/delta/SHA256 sources-binaire-config-artefacts ; source/date/commande/runner/environnement ; attendu/observé ; découverts/exécutés/échoués/skipped et uniques/répétitions ; critère/raison discriminante/limites/verdict.
