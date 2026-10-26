@@ -275,6 +275,18 @@ Budgetlocalproposé100unités(nonheures/coût,nonsumautomatiqueglobal17) : setup
 
 Sortiepréparation=ajout+protocolecommisavantfreshsource,ownershipséparé/unbuildsortieleadrunner ; **cetajoutn'affirme pas auteurprêt** tantquesupervision/observation/identiténonarrêtées. Sortiecalibration=brasidentifiés/résultatsfidèles/finconstatée/cleanupvérifié,sinonFAILécartouINCONCLUSIVEmanque. M5Reader/catchGAP,aucuneGL/ASan/Linux/GCC/Release/image/perf/PASSglobal implicite.
 
+## Décision opérateur75 — observation bornée et gapRED conservé
+
+2026-10-26. Amendement ciblé lead au planQA existant, fondé sur propositionsQ_CLOSE et protocolesS/PC1 déjàintégrés ; pas nouvelle campagne ni secondplan. Après rapport74 et questionnaire, l'opérateur adopte explicitement **Caractérisation bornée** et **matrice stdio72**. Cette stratégie résout la décisionhumaine précédemmentouverte sur nouveauxoutils, sans prétendre REDcausalaccompli.
+
+Pour **ces seuls outils d'observation** (stdioM0/M1/M2 et parent/enfantcloseFILE*), un GAP de REDcomportemental préalable est accepté et doit apparaître dans les preuves. Les tests/oracles/invariantsdéterministes sont écrits avant logique quand pertinents, sanssquelette/comparateurvolontairementfaux ni infrastructurepourfabriquerRED. Les expériencesCRT sont caractérisations fidèles ; toute correction d'un défaut effectivementobservé conserve son vraiRED/oracleinchangé puisGREEN. Aucune exception au TDDmoteur/Reader ou futurtravailhorscesoutils n'est inférée.
+
+Matricefigée :30lignesM0=10vecteurs×3classeschemin, puis deuxcasM1texte/binaire avecrecoveryM2fluxneuf, pasM3/sweep. Baseline directeextractShaderSourceproductionidentique82bf52d, SHAReaderce97d9e3ecfcf163ab757bb9c1dbf29116fb52505443c17a8725da5c0a90a284 ; helper/controlsvalidésimmuables. Oracles72, données/offsets/ACP/localepréenregistrés, issues0/10/20/30 et lignesindividuellesnonmasquées. Baseline/compatibilitétexte n'adoptent pasmodeReader.
+
+Close : refusOSdélibéréadmis52, nonpannestockage ; distinguer instrumentationcomplète, résultatCRT et confirmationhypothèserefus. Retourprotégé0 ou ambiguïtéCRT ne deviennentrésultatrefuspositif ; pas dePASSReader/catch/nonpublication ou syscallinterneexecuted. RisksR1/R2/R3, supervision10000ms→HOLDmêmehandle,WAIT_FAILEDquiescent,cleanupseulementaprèssignal et pasTerminateProcess restentinchangés. Deadlock/WAIT_FAILED artificiels nonprovoqués, gapsruntime explicites.
+
+AvantGOsource : décision75/planamendécommis, propriétaire/répertoiredisjointscpp etctxnatifsvalables, détailsinterfacesadoptés ; avantRUN : sourceintégrée/argvexactsmanifestes/SHA/sélections/bail/sentinelles/exclusivité puis runnerleadseul. Revuesensiblesfreshsurcandidatsintégrés avantconclusionfinale desoutils, auditfinalfreshdéjàacceptéinchangé. Aucun correctif spéculatif, installation/service/backend ou nouveauxASan/GL/Linux/GCC/Release/image/perf implicites ; aucune diminutiondescores/routage.
+
 ## 8. Qualification des preuves
 
 Chaque preuve retenue : HEAD complet/delta/SHA256 sources-binaire-config-artefacts ; source/date/commande/runner/environnement ; attendu/observé ; découverts/exécutés/échoués/skipped et uniques/répétitions ; critère/raison discriminante/limites/verdict.
