@@ -45,6 +45,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 
 ## Corriger
 
+- [[references/session-2026-10-26-stable-reader|Reader stable et sous-agents]] — nettoyage validé555normaux/555ASan, board28/28 ; erreurs de coordination et limites des preuves conservées.
 - [[references/session-2026-10-25-qa-continuation|Continuation QA du25octobre]] — audit indépendant accepté, ASan555/555 ; livrables terminés et board réconcilié7/7 sous verrou natif. Équipe conservée, F8/C2/B1/GCC ouverts, aucun PASS global.
 - [[adr/README|Registre des ADR]] — huit contrats avec statuts, périmètres et preuves.
 - [[architecture/correction-plan|Ordre de correction]] — build reproductible, ownership, exécution, bindings, mesures.

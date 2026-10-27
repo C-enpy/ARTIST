@@ -9,12 +9,17 @@ implementation: partial
 decision_origin: Analyse des contexts partagés et recommandation commune des rapports ; adoption explicite par l'utilisateur le 2026-10-03 avec une migration franche (rien n'est en production).
 summary: Séparer propriétaires et emprunts du chemin d'appel, définir invalidation et libération conforme aux règles du backend.
 created: 2026-10-03
-updated: 2026-10-26
+updated: 2026-10-27
 ---
 
 # ADR-0003 — Ownership et lifetime CPU/GPU
 
 ## Preuve complémentaire Reader stable — 2026-10-26
+
+Ingestion du27octobre : [[references/session-2026-10-26-stable-reader|remises des
+six sous-agents et enseignements]], exports publics ciblés et empreintes conservés.
+L'ordre de fermeture est revu statiquement, pas démontré par un échec authentique ;
+la clôture28/28 ne complète pas l'implémentation de cet ADR.
 
 **Accepted/partial inchangé.** À `a96104c`, le Reader emprunte le contexte et
 possède fichier/string locaux ; callback d'injection supprimé, fermeture vérifiée

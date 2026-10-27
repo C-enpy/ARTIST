@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-27",
+  "records": [
+    {
+      "role": "pm",
+      "id": "ses_e87558e7affeOtee8XOFUkxYPZ",
+      "path": "research/sessions/stable-reader-20261027/pm-public-deliveries.json",
+      "sha256": "6ad279c1ba9f0fa43b85a26e5bfe86f5d8bdfd4e7a8bceac10a411150082df32",
+      "deliveries": 36
+    },
+    {
+      "role": "architect",
+      "id": "ses_e8682b9a8ffe10kcn1gS02Ic3Q",
+      "path": "research/sessions/stable-reader-20261027/architect-public-deliveries.json",
+      "sha256": "6aa50cc583de62d80f7acc1544504d688dda6f3af1da10eac91bd6b609a76357",
+      "deliveries": 4
+    },
+    {
+      "role": "close",
+      "id": "ses_e86ea4cc2ffezLKs4XAq2Hdky1",
+      "path": "research/sessions/stable-reader-20261027/close-public-deliveries.json",
+      "sha256": "7fb622c9b7401ab4b6893672623dedd39b967ee7f9b9990c1da23cae357bdbd4",
+      "deliveries": 54
+    },
+    {
+      "role": "stdioReview",
+      "id": "ses_e868b2ea3ffeBR5uAbuQDRph9X",
+      "path": "research/sessions/stable-reader-20261027/stdioReview-public-deliveries.json",
+      "sha256": "7f7958d485419ff803227b9ebad402712bca16c77d07581759c6ffb5239785df",
+      "deliveries": 12
+    },
+    {
+      "role": "correctness",
+      "id": "ses_e864a6b90ffeWqUmBQrIGdpqpl",
+      "path": "research/sessions/stable-reader-20261027/correctness-public-deliveries.json",
+      "sha256": "f092a51179ff56a9d17c382f333168b5a1e6e5ff6b5bdb4c9fc5089a0b0b3e6f",
+      "deliveries": 4
+    },
+    {
+      "role": "qa",
+      "id": "ses_e8616755dffey91zwIwt2FLXBd",
+      "path": "research/sessions/stable-reader-20261027/qa-public-deliveries.json",
+      "sha256": "4554a5697b5d806b8438e7c351a7c0cde595a15da779bba1dde5d69904c1e5dd",
+      "deliveries": 4
+    }
+  ]
+}

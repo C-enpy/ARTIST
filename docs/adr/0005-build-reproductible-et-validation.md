@@ -9,12 +9,17 @@ implementation: partial
 decision_origin: Demande utilisateur de build complet le 2026-10-03, avec réévaluation explicite de Conan 2.
 summary: Rétablir une configuration propre avec dépendances compatibles et tests réellement découverts avant de modifier ou comparer les pipelines.
 created: 2026-10-03
-updated: 2026-10-26
+updated: 2026-10-27
 ---
 
 # ADR-0005 — Build reproductible et validation
 
 ## Preuve complémentaire Windows Debug — 2026-10-26
+
+Ingestion du27octobre : [[references/session-2026-10-26-stable-reader|sources des
+sous-agents et retour d'expérience]]. Distinguer comptage, identité de population,
+preuve exécutée, revue statique et clôture du board ; les nouveaux exports ne sont
+ni une nouvelle campagne ni une validation native du harness. Statut inchangé.
 
 **Accepted/partial inchangé.** Nouveau candidat Reader stable `a96104c` :
 555/555 normaux puis555/555 ASan (484CPU+71OpenGL chacun), zérofailure/error/skip,
