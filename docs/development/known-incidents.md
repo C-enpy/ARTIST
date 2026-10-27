@@ -2,10 +2,11 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Sourcea96104c : nettoyage Reader stable validé normal/ASan555 ; B1 clôturé pour deux contaminations précises, C2 disposition acceptée ; gaps authentiques extraction/close maintenus."
+summary: "Float préparé 3b1b102 validé normal/ASan581 ; incrémentalité Ninja d'en-tête non fiable observée, final clean-first ; gaps Reader antérieurs conservés."
 created: 2026-10-03
-updated: 2026-10-26
+updated: 2026-10-27
 sources:
+  - docs/_meta/session-2026-10-27-prepared-float.json
   - docs/_meta/session-2026-10-26-stable-reader-cleanup.json
   - docs/references/session-2026-10-03-shader-pass.md
   - docs/_meta/session-2026-10-03-validation.json
@@ -33,6 +34,39 @@ provenance:
 ---
 
 # Incidents, diagnostics et suivi
+
+## Float préparé — limites conservées le 2026-10-27
+
+- Pendant les mutants C/L/A, le premier essai L a repris le binaire C : Ninja
+  annonçait no work, EXE identique et mauvais témoin en échec. `ninja -t deps`
+  montrait zéro dépendance pour cet objet malgré le header plus récent. Essai
+  exclu, recompilation ciblée forcée puis clean-first intégral normal/ASan avant
+  les 581 tests finaux de chaque configuration. Défaut d'incrémentalité observé,
+  cause précise non corrigée, aucun changement toolchain/harness livré.
+- Le patch QA proposé utilisait un accesseur protected : premier build C2248,
+  aucun test exécuté, ancien XML conservé STALE-NOT-EXECUTED. Réparation test-only
+  1/2 : témoin public déjà disponible, sans ouvrir l'API ; étape intermédiaire
+  504 CPU/579 ASan puis finale506 CPU/581 ASan passent. Ce n'est pas un RED
+  comportemental ni un bug production.
+- Un mutant Freer recompilé dans une seule unité a survécu avec les autres
+  définitions inline d'origine encore liées. Expérience non cohérente exclue ;
+  tous les objets unitaires reconstruits avec le même mutant détectent l'erreur
+  dès le premier detach puis les writes erronés après échec partiel. Source
+  restaurée, clean-first normal/ASan final. Aucun correctif moteur ou oracle assoupli.
+- Plusieurs tests lifetime/invalidation ont été ajoutés après leurs gardes,
+  empreinte source RED initiale non capturée. Mutants causaux et non-régressions
+  ne reconstruisent pas ces preuves historiques manquantes.
+- Récupération automatique des finales QA Ensemble encore défaillante : textes
+  publics natifs réellement reçus/lus par le lead, pas de complétion supposée.
+  Audit hors board qualifié directement ; exception navigateur héritée révoquée
+  par restriction native de cette seule session, sans grant ou réparation globale.
+- detect_leaks=0, dépendances/driver non instrumentés ; Release/Linux/autres API,
+  performance et retraite GPU générale non validés. Les anciens gaps Reader
+  extraction/close ci-dessous restent ouverts, pas de nouvelle expérience autorisée.
+
+Preuve `_meta/session-2026-10-27-prepared-float.json` ;
+[[adr/0004-layouts-types-et-donnees-preparees|contrat borné]] et
+[[development/build-and-test|commandes et résultats]].
 
 ## Recentrage Reader stable et disposition B1–B6 — 2026-10-26
 

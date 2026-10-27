@@ -10,7 +10,7 @@ provenance:
   inferred: 0.0
   ambiguous: 0.0
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-27
 qmd_collection: artist-wiki
 ---
 
@@ -45,6 +45,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 
 ## Corriger
 
+- [[adr/0004-layouts-types-et-donnees-preparees|Float OpenGL préparé, tranche bornée du 27 octobre]] — source `3b1b102`, 581 normaux/581 ASan, oracle pixel ciblé et témoins révocables ; ADR global Proposed/partial, aucun gain mesuré. [[usage/uniform-attribute|Usage]].
 - [[references/session-2026-10-26-stable-reader|Reader stable et sous-agents]] — nettoyage validé555normaux/555ASan, board28/28 ; erreurs de coordination et limites des preuves conservées.
 - [[references/session-2026-10-25-qa-continuation|Continuation QA du25octobre]] — audit indépendant accepté, ASan555/555 ; livrables terminés et board réconcilié7/7 sous verrou natif. Équipe conservée, F8/C2/B1/GCC ouverts, aucun PASS global.
 - [[adr/README|Registre des ADR]] — huit contrats avec statuts, périmètres et preuves.
@@ -53,13 +54,13 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[architecture/missions/2026-10-15-f5-gl-diagnostics|Mission F5 archivée]] — diagnostics GL vides compilation/link bornés, RED causal et validation indépendante (143/143 distincts, 121 ASan distincts) dans le périmètre Windows Debug.
 - [[architecture/missions/2026-10-15-failure-contracts|Mission C archivée]] — bornage des contrats d'échec (Q1 et Q3 traités ; F4 pour l'accesseur ; F8 partiel ; F10 conservé), RED causal, 165/165 normaux et 143 ASan distincts dans le périmètre Windows Debug à `e736bba` ; `getStackTraceString` ouvert (retour par valeur depuis S-GSS, 2026-10-16).
 - [[architecture/missions/2026-10-19-pipeline-execution-path|Mission Pipeline exécution close (2026-10-20)]] — type fermé `ClosedExecution<API>` N=2 en coexistence avec `IPipeline` : **546/546 natifs** Windows Debug à `fdbce15` (477 unit + 69 GL), RED→GREEN tracé, revue R PASS, audit V « suite discriminante ». [[references/session-2026-10-20-pipeline-execution-path|Session]] · [[development/testing-oracle-constraints|Contraintes d'oracles GMock/GL]] · [[architecture/closed-execution-pattern|Motif d'exécution fermée]].
-- [[architecture/next-mission|Prochaine mission — pointeur entre missions]] — étape 3 (ADR-0004) candidate, **non sélectionnée**. Lifetime close : [[architecture/missions/2026-10-19-next-mission-lifetime-closed|pointeur archivé]] (`71dacbb`, 466/466 + 64/64, audit V COVERED). [[architecture/missions/2026-10-18-next-mission-f7-closed|Ancien pointeur F7]].
+- [[architecture/next-mission|Prochaine mission — pointeur entre missions]] — tranche float exécutée ; aucune mission suivante sélectionnée. Lifetime close : [[architecture/missions/2026-10-19-next-mission-lifetime-closed|pointeur archivé]] (`71dacbb`, 466/466 + 64/64, audit V COVERED). [[architecture/missions/2026-10-18-next-mission-f7-closed|Ancien pointeur F7]].
 - [[references/session-2026-10-18-f7|Session F7, preuves et 28 sous-agents]] — 29 exports publics, 271 fichiers de preuves versionnés et registre exhaustif ; les restitutions QA BLOCKED retrouvées corrigent le diagnostic initial de workers « inertes ».
 - [[architecture/missions/2026-10-15-loaded-owner-move|Mission précédente archivée]] — loaded-owner move et ASan vérifiés dans leur périmètre, contrat préservé.
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
 
 > [!important] Statut des ADR initiaux
-> Cinq ADR restent **Proposed** ; ADR-0002 comporte une tranche partielle observée,
+> Cinq ADR restent **Proposed** ; ADR-0002 et ADR-0004 comportent une tranche partielle observée,
 > sans adoption de la cible terminale. ADR-0003 est **Accepted / partial**
 > (Shader→Pass puis Pipeline A1–A2/F6 et F7 Uniform/Attribute à `6d6dcb7`),
 > ADR-0005 **Accepted / partial**, ADR-0008 **Accepted / verified**
@@ -73,7 +74,7 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 > `e589aee` **137/137** (106 + 31, ASan 106 + 9) ; mission C `e736bba`
 > **165/165** (134 + 31) et **143 ASan** ; F5 (143/143, ASan 121) est
 > historique. Les autres GL sous ASan, plateformes,
-> images et performances restent non validés.
+> images hors oracle float ciblé et performances restent non validés.
 
 ## Développer
 

@@ -10,7 +10,7 @@ provenance:
   ambiguous: 0.0
 status: proposed
 created: 2026-10-03
-updated: 2026-10-26
+updated: 2026-10-27
 ---
 
 # Plan de correction de l'existant
@@ -18,6 +18,22 @@ updated: 2026-10-26
 Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier
 de livraison. Les durées et pourcentages des rapports ne sont pas des budgets ratifiés.
+
+## Tranche float préparé — 2026-10-27
+
+La tranche bornée d'ADR-0004 adoptée explicitement est présente à `3b1b102` :
+préparation runtime après link/réflexion d'un float strictement scalaire, accès
+emprunté révocable puis updates typés sans lookup/any_cast. API par nom et miroir
+CPU conservés, consommateur target préparé/decoy par nom et oracle pixel fixe.
+Runner lead : **581/581 normaux et 581/581 ASan**, chacun 506 CPU + 75 OpenGL,
+mêmes noms sans failure/error/skip, canari 0/86, mutants C/L/A détectés/restaurés.
+Revue de sûreté indépendante sans défaut bloquant démontré ; ré-audit final après
+deux compléments de tests **PASS borné**, F1/F2 fermés, historique RED incomplet
+conservé. Tranche terminée à cette portée. ADR-0004 reste **Proposed/partial**, pas d'adoption
+globale, d'extension aux attributes/cook ou de performance mesurée.
+Preuve `_meta/session-2026-10-27-prepared-float.json` ;
+[[architecture/next-mission|aucune nouvelle mission engagée automatiquement]].
+Les gaps Reader historiques ci-dessous ne sont pas rouverts par cette tranche.
 
 ## Recentrage stable — 2026-10-26, nettoyage livré
 

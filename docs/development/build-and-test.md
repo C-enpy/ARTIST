@@ -2,12 +2,12 @@
 title: Build et tests actuels
 category: development
 aliases: [build-and-test]
-source_revision: a96104c7aaeede7dd6915bfeac86f53565615114
+source_revision: 3b1b1028dcd64ca46e0a359365ae096be1a38ac4
 tags: [artist, build, testing, guide]
-summary: "Windows Debuga96104c :555/555 normaux et555/555 ASan nouvellement exécutés après nettoyage Reader stable ; revue indépendante et limites conservées."
+summary: "Windows Debug 3b1b102 : 581/581 normaux et 581/581 ASan, float préparé et oracle pixel ciblé ; clean-first final et limites conservées."
 status: verified-windows-debug
 created: 2026-10-03
-updated: 2026-10-26
+updated: 2026-10-27
 sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
@@ -17,7 +17,51 @@ provenance:
 
 # Build et tests actuels
 
-## Résumé courant — Windows x64 Debug
+## Résumé courant — float préparé, Windows x64 Debug du 2026-10-27
+
+Source **3b1b1028dcd64ca46e0a359365ae096be1a38ac4**, runner **lead** :
+**581/581 normaux et 581/581 ASan**, 506 CPU + 75 OpenGL chacun, mêmes noms
+uniques entre découvertes et JUnit, zéro failure/error/skip. Quatre nouveaux tests
+QA après intégration portent le total auteur 577 au total final 581.
+
+Cinq commandes convenues réellement exécutées et terminées à zéro :
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -TestLabel unit
+ctest --test-dir out/build/windows-msvc-debug -N
+ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error -j 1
+ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error -j 1
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -AddressSanitizer
+```
+
+Les commandes CTest de run ajoutaient `--output-junit <chemin absolu unique>`.
+Découvertes JSON normales/ASan supplémentaires recoupées. Avant les runs finaux :
+`cmake --build --preset windows-msvc-debug --clean-first --parallel 1`, puis
+équivalent `windows-msvc-debug-asan`, 69 étapes chacun. Un objet montrait zéro
+dépendance d'en-tête Ninja : ne pas se fier à l'incrémentalité sur cette machine
+pour revalider un header ; aucun correctif de toolchain n'est livré ici.
+
+Canari ASan final healthy0 / use-after-free86, options canoniques
+`halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0` ; pas preuve de fuites.
+MSVC19.44/toolset14.44, SDK26100, CMake3.31.7, Conan2.12.2 ; matériel auteur
+journalisé RTX3090/621.01, OpenGL3.3core. Les 75 tests GL et l'oracle pixel ciblé
+ont été exécutés réellement, sans valider une scène moteur complète ou une autre API.
+
+Archives finales `out/qa-prepared-float/lead-followup-20261027/`, manifeste
+final-validation.json, JUnit09/10/13 et découvertes08/14 ; étape précédente579
+conservée séparément dans lead-runner-20261027. Preuve portable
+`_meta/session-2026-10-27-prepared-float.json`. Mutants C/L/A et omissions de valeur/
+draw sont des expériences séparées ; un essai L au binaire périmé et un XML
+préexistant après erreur de compilation sont explicitement exclus des verdicts.
+Après audit fresh, préparation sans contexte et révocation tardive pendant free
+partiel sont détectées par deux nouveaux tests et leurs mutants. Premier essai
+Freer mutant avec une seule unité recompilée exclu (définitions inline mixtes) ;
+expérience cohérente après recompilation de tous les objets unitaires retenue.
+Revue C++ indépendante acquise, ré-audit des tests PASS borné, F1/F2 fermés,
+aucun finding bloquant maintenu. Limites TDD
+historiques, Release/Linux, autres API, leaks/performance restent non validés.
+
+## Historique — nettoyage stable, Windows x64 Debug du 2026-10-26
 
 Dernier candidat C++ vérifié : **a96104c7aaeede7dd6915bfeac86f53565615114**,
 le2026-10-26. **555/555 normaux et555/555 ASan nouvellement exécutés**, chacun

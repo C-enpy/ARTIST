@@ -5,14 +5,58 @@ category: adr
 tags: [artist, rendering, assets, cpp, adr]
 aliases: [ADR-0004]
 status: Proposed
-implementation: not-started
-decision_origin: Correction proposée des maps par noms et valeurs effacées observées dans les contexts.
-summary: Résoudre noms, formats et bindings à la préparation, puis exécuter sur IDs et layouts validés avec invalidation explicite.
+implementation: partial
+decision_origin: Correction proposée des maps par noms et valeurs effacées ; seule la tranche float OpenGL a été adoptée explicitement par l'utilisateur le 2026-10-27.
+summary: "Proposed globalement ; première tranche float scalaire préparé livrée, emprunts révocables et consommateur pixel vérifiés Windows Debug."
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-27
 ---
 
 # ADR-0004 — Layouts typés et données préparées
+
+## Tranche adoptée et exécutée — 2026-10-27
+
+Le statut global reste **Proposed**, l'implémentation devient **partial**. Seule
+la tranche `PreparedFloatUniform` OpenGL est adoptée ; aucun format cooké, binding
+d'attribute, gestionnaire global de handles ou suppression générale de `std::any`.
+
+Source finale `3b1b1028dcd64ca46e0a359365ae096be1a38ac4` :
+`graphic/opengl/pipeline/PreparedFloatUniform.hpp` sous `ARTIST/include/` expose
+`prepareFloatUniform(pass, name)` puis `set(float)`. Nom et métadonnées de réflexion
+sont résolus **runtime après link**, pas au cook. Seul `GL_FLOAT` strictement
+scalaire est admis ; arrays de taille 1 compris refusés, nom absent/optimisé requis
+introuvable, métadonnées manuelles ou altérées rejetées.
+
+Les owners restent uniques ; l'accès emprunte avec témoins faibles locaux et
+générations vérifiés avant pointees. Maps, métadonnées, retrait, destruction et
+nouvelle incarnation révoquent l'ancien accès. Les moves suivent le contexte
+transféré ; pas de copie implicite d'identité. Contrat mono-thread, sérialisé,
+non réentrant, fenêtre vivante, sans relink/delete natif externe aux owners.
+
+`set` valide contexte/programme, conserve le miroir CPU `std::any` historique,
+puis transmet directement le float à `glUniform1f`, sans lookup par nom,
+résolution native ou `any_cast` dans les updates. L'API par nom est conservée,
+avec ses propres compatibilités. Aucune promesse de zéro allocation ou gain mesuré.
+
+Consommateur : `ReflectedProgramGuardCrossTests.cpp`, target préparé une fois,
+decoy par nom. `PreparedFloatUniformRenderTests.cpp` vérifie un triangle dans
+un FBO RGBA8 linéaire 32×32 : attendus fixes non vides pour chaque route, égalité
+des buffers et changement de valeur discriminant. Omission d'update et rendu
+tout noir détectés séparément ; mutants C/L/A détectés puis sources restaurées.
+
+Runner lead : **581/581 normaux et 581/581 ASan**, chacun 506 CPU + 75 OpenGL,
+mêmes noms, zéro failure/error/skip, canari 0/86 ; clean-first intégral des deux
+configurations. Revue C++ indépendante sans défaut bloquant démontré ; audit
+fresh des tests ayant demandé deux compléments, puis **ré-audit PASS borné**, F1/F2
+fermés, aucun finding bloquant maintenu. Historique RED toujours INCONCLUSIVE.
+Les nouveaux tests détectent la préparation sans contexte autorisé et la révocation
+tardive après détachement partiel ; leurs mutants séparés échouent avant restauration.
+Preuve portable :
+`_meta/session-2026-10-27-prepared-float.json` ; [[usage/uniform-attribute|usage]],
+[[development/build-and-test|commandes]] et [[development/known-incidents|limites]].
+Certains tests lifetime ont été ajoutés après les gardes et l'empreinte source RED
+initiale manque : aucune preuve historique reconstituée. Fuites, Release/Linux,
+autres API et performances non validés ; aucune retraite GPU générale démontrée.
 
 ## Contexte et faits
 
@@ -65,8 +109,8 @@ requise/facultative explicite ; binding périmé rejeté ou reconstruit ; bornes
 alignements validés. Pour la tranche migrée, mesurer les lookups/allocations
 restants et vérifier l'image à paramètres identiques.
 
-**Preuves actuelles** : les nouvelles représentations et le format cooké ne sont
-pas implémentés ; leurs types exacts restent à préciser dans le travail borné.
+**Portée restante** : hors de la tranche float ci-dessus, les layouts généralisés
+et le format cooké ne sont pas implémentés ; leurs types exacts restent à préciser.
 
 ## Références
 

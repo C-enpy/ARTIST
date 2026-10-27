@@ -3,38 +3,45 @@ title: "Prochaine mission — pointeur entre missions"
 category: architecture
 tags: [artist, architecture, rendering, cpp]
 aliases: [next-mission]
-summary: "Mission usage-doc close (2026-10-20) ; la dette QA/harnais consolidée est sélectionnée pour la session suivante (2026-10-23). L'étape 3 (ADR-0004) suit : adoption explicite requise."
+summary: "Tranche float OpenGL préparé terminée au périmètre Windows Debug à 3b1b102, normal/ASan581 et ré-audit borné accepté ; aucune mission suivante sélectionnée."
 status: pointer
 implementation: not-started
-source_revision: 7c65d4bebefa560dae3f37c25071409f415885ed
+source_revision: 3b1b1028dcd64ca46e0a359365ae096be1a38ac4
 created: 2026-10-19
-updated: 2026-10-23
+updated: 2026-10-27
 sources:
+  - "docs/_meta/session-2026-10-27-prepared-float.json"
   - "architecture/missions/2026-10-23-qa-harness-debt-batch.md"
   - "architecture/missions/2026-10-20-usage-doc-layer.md"
   - "architecture/missions/2026-10-19-pipeline-execution-path.md"
   - "architecture/correction-plan.md"
 provenance:
-  extracted: 0.8
-  inferred: 0.2
+  extracted: 1.0
+  inferred: 0.0
   ambiguous: 0.0
 ---
 
 # Prochaine mission — pointeur entre missions
 
-> [!important] Session suivante sélectionnée le 2026-10-23
-> **Dette QA/harnais consolidée** : six findings conservés instruits **avant**
-> le churn de l'étape 3 —
-> [[architecture/missions/2026-10-23-qa-harness-debt-batch|la fiche]]. Arbitrage
-> de l'opérateur : **B puis A**, pas de session totale combinée. Deux missions
-> closes précédemment : chemin d'exécution Pipeline (`fdbce15`,
-> [[architecture/missions/2026-10-19-pipeline-execution-path|fiche]]) et couche
-> documentation d'usage (`6a8925f`, quatre pages sous `docs/usage/`,
-> [[architecture/missions/2026-10-20-usage-doc-layer|fiche]]).
-> ADR-0002 passe à **Proposed/partial** ; ADR-0003 Accepted/partial inchangé ;
-> ADR-0004/0006 toujours Proposed/not-started.
+> [!important] État du 27 octobre — aucune mission suivante sélectionnée
+> La tranche bornée float OpenGL de l'étape 3 est adoptée et exécutée à `3b1b102` :
+> 581 normaux et 581 ASan, pixels ciblés et emprunts révocables. Ré-audit final
+> PASS borné, deux gaps fermés, historique RED incomplet conservé. Aucun prolongement, benchmark,
+> autre type, attribute ou cooker n'est lancé implicitement.
 
-## Sessions — la dernière close, la suivante sélectionnée
+## Tranche actuelle et condition d'une suite
+
+[[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]] reste **Proposed/partial**
+globalement, seule cette tranche explicitement adoptée. Préparation runtime après
+link/réflexion, float strictement scalaire ; API par nom/mirror CPU conservés.
+[[usage/uniform-attribute|Usage]] et [[development/build-and-test|preuves]].
+
+Une extension de formats ou un protocole de performance demanderait un contrat
+et une sélection distincts ; ce pointeur ne les autorise pas. Aucun gain n'est
+annoncé à partir des compteurs C/L/A. Le choix de la prochaine mission reste ouvert.
+Preuve `_meta/session-2026-10-27-prepared-float.json`.
+
+## Sessions historiques — ne pas relancer leur ancienne sélection
 
 La mission **couche documentation d'usage** est **exécutée et close le
 2026-10-20** : [[architecture/missions/2026-10-20-usage-doc-layer|la fiche]].
@@ -43,20 +50,15 @@ Quatre pages `docs/usage/` + touchpoints `Readme.md` et `build-and-test.md`,
 changement `ARTIST/`. La couche consommation n'est plus absente ; les
 touchpoints face utilisateur portent des comptages datés (`fdbce15`).
 
-La mission **dette QA/harnais consolidée** est sélectionnée le 2026-10-23
-pour la session suivante :
+La mission **dette QA/harnais consolidée** avait été sélectionnée le 2026-10-23 :
 [[architecture/missions/2026-10-23-qa-harness-debt-batch|la fiche]] — six
 findings conservés instruits avant le churn de l'étape 3 ; ADR-0002/0003
 rafraîchis (pliage D). Arbitrage de l'opérateur : B puis A, pas de session
 totale combinée.
 
-## Candidat d'après — non sélectionné
-
-L'**étape 3** du plan (préparation des données et bindings,
-[[adr/0004-layouts-types-et-donnees-preparees|ADR-0004]]) suit : elle exige une
-**adoption explicite** d'ADR-0004 — gate K de sa propre mission. Le protocole
-de mesure (ADR-0006) vient après, avec la question Release tranchée dans son
-K. Le choix revient à une décision humaine via une nouvelle fiche de mission.
+Le recentrage Reader stable a ensuite été livré le 26 octobre :
+[[references/session-2026-10-26-stable-reader|bilan et limites]]. Les anciennes
+sélections ne sont plus des missions à démarrer automatiquement.
 
 ## Restes ouverts consignés (non bloquants)
 

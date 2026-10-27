@@ -3,21 +3,41 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Sourcea96104c : Reader stable simplifié,13 probes retirés ;555 normaux et555 ASan vérifiés, revue indépendante ; B1 borné et C2 disposés, gaps authentiques catch/close conservés."
+summary: "Source 3b1b102 : float OpenGL préparé, emprunts révocables et pixels ciblés ; 581 normaux et 581 ASan Windows Debug, limites TDD et incrémentalité conservées."
 sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 status: observed
-source_revision: a96104c7aaeede7dd6915bfeac86f53565615114
+source_revision: 3b1b1028dcd64ca46e0a359365ae096be1a38ac4
 created: 2026-10-03
-updated: 2026-10-26
+updated: 2026-10-27
 ---
 
 # État réel d'ARTIST
 
-> [!info] Photographie courante — nettoyage stable du26octobre
+> [!info] Photographie courante — float préparé du 27 octobre
+> **3b1b102** : `prepareFloatUniform(pass, name)` après link/réflexion runtime,
+> puis `PreparedFloatUniform::set(float)` sans recherche répétée de nom/type.
+> `GL_FLOAT` strictement scalaire, arrays[1] refusés ; témoins faibles locaux et
+> générations avant pointees, owners uniques et miroir CPU `std::any` conservés.
+> Maps/métadonnées/retrait/destruction révoquent les accès ; moves suivent le
+> contexte transféré. Mono-thread non réentrant, fenêtre vivante, pas de mutation
+> GL externe contournant les owners. Consommateur target préparé/decoy par nom,
+> readbacks et oracle pixel fixe non vide dans un FBO RGBA8 32×32.
+> **581/581 normaux et 581/581 ASan**, chacun 506 CPU + 75 OpenGL, zéro échec/skip,
+> runner lead, mêmes noms, canari 0/86. Mutants C/L/A séparés détectés, sources
+> restaurées ; clean-first des deux configurations après dépendances Ninja nulles
+> observées pour un objet. Revue C++ indépendante sans défaut bloquant démontré,
+> ré-audit final PASS borné après deux compléments, aucun finding bloquant maintenu.
+> Historique RED incomplet conservé. ADR-0004 reste **Proposed/partial**, seule
+> cette tranche adoptée ; aucune performance, autre API ou RAII générale validée.
+> Preuve `_meta/session-2026-10-27-prepared-float.json` ;
+> [[adr/0004-layouts-types-et-donnees-preparees|contrat et limites]],
+> [[usage/uniform-attribute|usage]], [[development/build-and-test|commandes]].
+
+> [!info] Photographie historique — nettoyage stable du26octobre
 > **a96104c** : fichier stable pendant lecture, sans écriture concurrente garantie.
 > Callback d'extraction et instrumentation retirés ;13 fichiers probes supprimés
 > après vérification des consommateurs, archives/diffs étrangers conservés.
@@ -34,7 +54,7 @@ updated: 2026-10-26
 > `_meta/session-2026-10-26-stable-reader-cleanup.json` et
 > [[development/build-and-test|commandes et portée]].
 
-**Clôture native finale** : les trois affectations restantes ont ensuite livré
+**Clôture native historique du lot Reader** : les trois affectations restantes ont ensuite livré
 leurs dispositions/revues et la QA native rétrospective du plan89. Remises
 intégrées872915b avant complétion, puis board recoupé **28/28completed,
 0in_progress/0pending/0blocked**, aucun workerbusy. PC1close et revueprobe stdio
