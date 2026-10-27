@@ -17,6 +17,13 @@
 #include <graphic/pipeline/Pass.hpp>
 #include <optional>
 #include <graphic/opengl/pipeline/PreparedFloatUniform.hpp>
+#include <utility>
+#include <graphic/pipeline/Shader.hpp>
+#include <graphic/opengl/profile/Shader.hpp>
+#include <graphic/opengl/pipeline/component/shader/Freer.hpp>
+#include <graphic/opengl/pipeline/component/shader/Loader.hpp>
+#include <graphic/opengl/pipeline/component/shader/Reader.hpp>
+#include <graphic/opengl/validator/Validator.hpp>
 
 namespace
 {
@@ -168,6 +175,157 @@ namespace
         context.getUniform("boolean")->set(.25f);
         EXPECT_EQ(context.getUniform("boolean")->get<GLfloat>(), .25f);
         EXPECT_EQ(mock.uniformCalls().size(), 1u);
+    }
+
+    TEST_F(PreparedFloatUniformTest, PreparationRejectsMissingAndOtherContextBeforeNativeQueriesAndRecovers)
+    {
+        using Access = artist::graphic::opengl::pipeline::PreparedFloatUniform;
+        reflect("scalar");
+        auto *uniform = context.getUniform("scalar");
+        ASSERT_NE(uniform, nullptr);
+        uniform->getContext().setValue(GLfloat(.25f));
+        const auto witness = context.preparedUniformState().lock();
+        ASSERT_NE(witness, nullptr);
+        const auto generation = witness->generation();
+
+        GLFWwindow *invalidContexts[] = {
+            nullptr, reinterpret_cast<GLFWwindow *>(&context)
+        };
+        for (int mode = 0; mode != 2; ++mode)
+        {
+            SCOPED_TRACE(mode);
+            mock.configureCurrentContext(invalidContexts[mode]);
+            // Keep the successful link response so removing the context guard
+            // cannot be hidden by a different native link-status rejection.
+            const auto calls = mock.glCalls().size();
+            std::optional<Access> rejected;
+            try
+            {
+                rejected.emplace(prepare(context, "scalar"));
+                ADD_FAILURE() << "Preparation returned an access under an invalid context";
+            }
+            catch (const Error &error)
+            {
+                EXPECT_STREQ(error.what(), mode == 0
+                    ? "ERROR::UNIFORM::SET::NO_CURRENT_CONTEXT"
+                    : "ERROR::UNIFORM::SET::WRONG_CONTEXT");
+            }
+            EXPECT_FALSE(rejected.has_value());
+            EXPECT_EQ(mock.glCalls().size(), calls);
+            EXPECT_TRUE(mock.uniformCalls().empty());
+            EXPECT_EQ(context.getUniform("scalar"), uniform);
+            EXPECT_EQ(uniform->get<GLfloat>(), .25f);
+            EXPECT_EQ(witness->generation(), generation);
+            EXPECT_TRUE(witness->accepts(generation));
+        }
+
+        mock.configureCurrentContext(reinterpret_cast<GLFWwindow *>(this));
+        auto access = prepare(context, "scalar");
+        access.set(.75f);
+        EXPECT_EQ(uniform->get<GLfloat>(), .75f);
+        ASSERT_EQ(mock.uniformCalls().size(), 1u);
+        const auto &call = mock.uniformCalls().front();
+        EXPECT_EQ(call.location, 3);
+        GLfloat payload = 0;
+        ASSERT_EQ(call.payload.size(), sizeof(payload));
+        std::memcpy(&payload, call.payload.data(), sizeof(payload));
+        EXPECT_EQ(payload, .75f);
+    }
+
+    TEST_F(PreparedFloatUniformTest, PartialDetachFailureRetiresBeforeFirstEffectAndRejectsRepeatedSets)
+    {
+        using Shader = artist::graphic::pipeline::Shader<
+            API, artist::graphic::opengl::profile::Shader::Classic>;
+        using Pass = artist::graphic::pipeline::Pass<
+            API, artist::graphic::opengl::profile::Pass::Classic>;
+        auto ownerContext = std::make_unique<Context>();
+        ownerContext->setPassID(7);
+        auto first = std::make_unique<Shader>(
+            "", artist::graphic::context::ShaderType::VERTEX);
+        auto second = std::make_unique<Shader>(
+            "", artist::graphic::context::ShaderType::VERTEX);
+        first->getContext().setShaderID(61);
+        second->getContext().setShaderID(62);
+        auto *secondShader = second.get();
+        ownerContext->addShader(std::move(first));
+        ownerContext->addShader(std::move(second));
+        Pass owner(std::move(ownerContext));
+        auto &passContext = owner.getContext();
+        reflect("scalar", GL_FLOAT, 1, &passContext);
+        auto access = prepare(passContext, "scalar");
+        auto *uniform = passContext.getUniform("scalar");
+        ASSERT_NE(uniform, nullptr);
+        access.set(.25f);
+        ASSERT_EQ(mock.uniformCalls().size(), 1u);
+        EXPECT_EQ(uniform->get<GLfloat>(), .25f);
+        const auto witness = passContext.preparedUniformState().lock();
+        ASSERT_NE(witness, nullptr);
+        const auto generation = witness->generation();
+        ASSERT_TRUE(witness->accepts(generation));
+
+        Shader parked(std::move(*secondShader));
+        bool firstDetached = false;
+        EXPECT_CALL(mock, glDetachShader_mock(7, 61))
+            .WillOnce(::testing::Invoke([&](GLuint, GLuint) {
+                firstDetached = true;
+                // Observe revocation at the first native effect, without
+                // re-entering the prepared access.
+                EXPECT_FALSE(witness->accepts(generation));
+            }));
+        EXPECT_CALL(mock, glDetachShader_mock(7, 62)).Times(0);
+        EXPECT_CALL(mock, glDeleteProgram_mock(::testing::_)).Times(0);
+        EXPECT_CALL(mock, glDeleteShader_mock(::testing::_)).Times(0);
+        const auto callsBeforeFree = mock.glCalls().size();
+        const auto queriesBeforeFree = mock.contextQueryCount();
+        try
+        {
+            Context::Freer<artist::graphic::opengl::profile::Pass::Classic>::on(passContext);
+            ADD_FAILURE() << "Expected rejection of the moved-from second shader";
+        }
+        catch (const Error &error)
+        {
+            EXPECT_STREQ(error.what(), "ERROR::SHADER::FREED_CONTEXT");
+        }
+        // Restore the owned wrapper before assertions and owner destruction.
+        *secondShader = std::move(parked);
+
+        EXPECT_TRUE(firstDetached);
+        EXPECT_EQ(mock.glCalls().size(), callsBeforeFree + 1);
+        EXPECT_EQ(mock.contextQueryCount(), queriesBeforeFree);
+        EXPECT_EQ(passContext.getPassID(), 7u);
+        EXPECT_EQ(secondShader->getContext().getShaderID(), 62u);
+        EXPECT_FALSE(witness->accepts(generation));
+        EXPECT_EQ(passContext.getUniform("scalar"), uniform);
+        const auto callsAfterFailure = mock.glCalls().size();
+        const auto queriesAfterFailure = mock.contextQueryCount();
+        for (int attempt = 0; attempt != 2; ++attempt)
+        {
+            SCOPED_TRACE(attempt);
+            try
+            {
+                access.set(.5f);
+                ADD_FAILURE() << "Expected partial-retirement revocation";
+            }
+            catch (const Error &error)
+            {
+                EXPECT_STREQ(error.what(),
+                    "ERROR::UNIFORM::SET::STALE_PREPARED_ACCESS");
+            }
+            EXPECT_EQ(mock.glCalls().size(), callsAfterFailure);
+            EXPECT_EQ(mock.contextQueryCount(), queriesAfterFailure);
+            EXPECT_EQ(mock.uniformCalls().size(), 1u);
+            EXPECT_EQ(uniform->get<GLfloat>(), .25f);
+        }
+
+        EXPECT_TRUE(::testing::Mock::VerifyAndClearExpectations(&mock));
+        {
+            ::testing::InSequence sequence;
+            EXPECT_CALL(mock, glDetachShader_mock(7, 61)).Times(1);
+            EXPECT_CALL(mock, glDetachShader_mock(7, 62)).Times(1);
+            EXPECT_CALL(mock, glDeleteProgram_mock(7)).Times(1);
+        }
+        EXPECT_CALL(mock, glDeleteShader_mock(61)).Times(1);
+        EXPECT_CALL(mock, glDeleteShader_mock(62)).Times(1);
     }
 
     TEST_F(PreparedFloatUniformTest, NativeRetirementFailureNeverRehabilitatesOldAccess)
