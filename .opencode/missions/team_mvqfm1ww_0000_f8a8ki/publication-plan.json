@@ -1,0 +1,97 @@
+{
+  "kind": "lead-staged-publication-plan-not-native-import",
+  "initialPreparationTaskIds": ["qa-contract"],
+  "rules": [
+    "Le document PM importable contient seulement qa-contract. Les autres fiches restent dans le plan documentaire complet, pas dans tasks ni dans des dependsOn vers des IDs absents.",
+    "Après start utilisateur, le lead valide la restitution QA et commit le contrat/plan avant les worktrees auteurs.",
+    "Le lead ajoute ensuite les seules tâches prêtes par team_tasks_add, avec les contrats natifs ci-dessous et les vrais IDs de producteurs retournés par les outils.",
+    "Fin ou complétion d'auteur seule ne permet jamais de publier son consommateur : shutdown/intégration native, contrôle du diff et des preuves, puis fourniture du HEAD intégré d'abord.",
+    "Pas de tâche factice d'intégration, completion fictive, modèle explicite, classifier, seconde importation globale ou réparation du harness."
+  ],
+  "stages": [
+    {
+      "planId": "qa-contract",
+      "publication": "initial-native-preparation-import",
+      "nativeTaskContract": {
+        "agent": "qa-planner",
+        "context": { "mode": "fresh" },
+        "complexity": 66,
+        "risk": 76,
+        "worktree": false,
+        "report_mode": "final_response"
+      },
+      "producerPlanIds": [],
+      "gate": "Start utilisateur requis avant admission ; profil/contexte/permissions, lecture et restitution QA à qualifier dans cette première tâche, puis plan réconcilié validé/commité avant auteurs."
+    },
+    {
+      "planId": "prepared-float",
+      "publication": "later-native-team_tasks_add",
+      "nativeTaskContract": {
+        "agent": "cpp-engineer",
+        "context": { "mode": "fresh" },
+        "complexity": 84,
+        "risk": 90,
+        "worktree": true,
+        "report_mode": "team_message"
+      },
+      "producerPlanIds": ["qa-contract"],
+      "gate": "QA qualifiée et résultat validé par lead, contrat et plan QA committés H0, entrées réellement disponibles dans le worktree auteur."
+    },
+    {
+      "planId": "consumer-pixels",
+      "publication": "later-native-team_tasks_add",
+      "nativeTaskContract": {
+        "agent": "gpu-engineer",
+        "context": { "mode": "fresh" },
+        "complexity": 74,
+        "risk": 77,
+        "worktree": true,
+        "report_mode": "team_message"
+      },
+      "producerPlanIds": ["prepared-float"],
+      "gate": "Mécanisme réellement intégré en H1 après shutdown/merge natif, diff/preuves contrôlés et API disponible."
+    },
+    {
+      "planId": "lifetime-review",
+      "publication": "later-native-team_tasks_add",
+      "nativeTaskContract": {
+        "agent": "correctness-reviewer",
+        "context": { "mode": "fresh" },
+        "complexity": 76,
+        "risk": 85,
+        "worktree": false,
+        "report_mode": "final_response"
+      },
+      "producerPlanIds": ["consumer-pixels"],
+      "gate": "Tous producteurs intégrés H2 ; paquet neutre. Lecture parallèle à test-gaps possible sans groupe separate-worktrees."
+    },
+    {
+      "planId": "test-gaps",
+      "publication": "later-native-team_tasks_add",
+      "nativeTaskContract": {
+        "agent": "test-engineer",
+        "context": { "mode": "fresh" },
+        "complexity": 70,
+        "risk": 68,
+        "worktree": false,
+        "report_mode": "final_response"
+      },
+      "producerPlanIds": ["consumer-pixels"],
+      "gate": "Tous producteurs intégrés H2 ; propositions seulement. Lead applique/exécute les propositions retenues ; pas de correctif production par ce profil."
+    },
+    {
+      "planId": "delivery-docs",
+      "publication": "later-native-team_tasks_add",
+      "nativeTaskContract": {
+        "agent": "cpp-engineer",
+        "context": { "mode": "fresh" },
+        "complexity": 43,
+        "risk": 50,
+        "worktree": true,
+        "report_mode": "team_message"
+      },
+      "producerPlanIds": ["lifetime-review", "test-gaps"],
+      "gate": "Corrections/propositions retenues réellement intégrées H3, runner lead terminé et audit test-reviewer fresh hors board reçu sans finding bloquant, ou limites explicitement arbitrées. Les seuls IDs complétés ne satisfont pas ce gate."
+    }
+  ]
+}

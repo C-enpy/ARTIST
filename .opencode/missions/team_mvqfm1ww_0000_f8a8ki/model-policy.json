@@ -1,0 +1,107 @@
+{
+  "version": 2,
+  "providers": ["openai"],
+  "models": [
+    {
+      "id": "openai/gpt-6.1-sol", "provider": "openai", "reasoningEffort": "medium",
+      "intelligenceScore": 48, "averageCostPerTask": 0.21, "available": true,
+      "level": "medium", "usage": "coding_et_raisonnement", "benchmarkCostPerTask": 0.21, "accessMode": "unknown",
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6-astra", "provider": "openai", "reasoningEffort": "high",
+      "intelligenceScore": 51, "averageCostPerTask": 1.73, "available": true,
+      "level": "complexe", "usage": "raisonnement_complexe", "benchmarkCostPerTask": 1.73, "accessMode": "unknown",
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6.1-sol", "provider": "openai", "reasoningEffort": "max",
+      "intelligenceScore": 52, "averageCostPerTask": 0.72, "benchmarkCostPerTask": 0.72,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6.1-sol", "provider": "openai", "reasoningEffort": "high",
+      "intelligenceScore": 50, "averageCostPerTask": 0.32, "benchmarkCostPerTask": 0.32,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6.1-sol", "provider": "openai", "reasoningEffort": "low",
+      "intelligenceScore": 42, "averageCostPerTask": 0.13, "benchmarkCostPerTask": 0.13,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6.1-sol", "provider": "openai", "reasoningEffort": "xhigh",
+      "intelligenceScore": 51, "averageCostPerTask": 0.39, "benchmarkCostPerTask": 0.39,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6-astra", "provider": "openai", "reasoningEffort": "max",
+      "intelligenceScore": 53, "averageCostPerTask": 3.26, "benchmarkCostPerTask": 3.26,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6-astra", "provider": "openai", "reasoningEffort": "low",
+      "intelligenceScore": 46, "averageCostPerTask": 0.82, "benchmarkCostPerTask": 0.82,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6-astra", "provider": "openai", "reasoningEffort": "medium",
+      "intelligenceScore": 50, "averageCostPerTask": 1.54, "benchmarkCostPerTask": 1.54,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6-astra", "provider": "openai", "reasoningEffort": "xhigh",
+      "intelligenceScore": 52, "averageCostPerTask": 2.31, "benchmarkCostPerTask": 2.31,
+      "accessMode": "unknown", "available": true, "reserve": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    },
+    {
+      "id": "openai/gpt-6-luna", "provider": "openai", "reasoningEffort": "high",
+      "intelligenceScore": 33, "averageCostPerTask": 0.03, "benchmarkCostPerTask": 0.03,
+      "accessMode": "unknown", "available": true,
+      "structuredOutput": { "supported": true, "source": "https://models.dev/api.json", "checkedAt": "2026-10-13T08:19:21.633Z", "strictVerification": "unverified" }
+    }
+  ],
+  "startingIntelligence": 50,
+  "classificationBeta": 0.35,
+  "verification": {
+    "level": "proportionate",
+    "commands": [
+      "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -TestLabel unit",
+      "ctest --test-dir out/build/windows-msvc-debug -N",
+      "ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error -j 1",
+      "ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error -j 1",
+      "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -AddressSanitizer"
+    ],
+    "acceptance": [
+      "Respecter le contrat de tranche adopté : uniform GLSL float strictement scalaire, arrays de taille 1 compris rejetés, accès typé et API par nom conservée.",
+      "Plan QA réconcilié et commité avant les worktrees auteurs ; profils, contexte et restitution QA vérifiés avant admission, sinon blocage explicite sans réparation du harness.",
+      "RED causal avant implémentation, GREEN minimal puis non-régression sur le candidat intégré ; environnement absent et zéro test ne sont pas RED ou PASS.",
+      "Nom absent ou optimisé, mauvais type, métadonnées modifiées et accès périmé rejetés avant déréférence dangereuse et upload ; moves et ID graphique réutilisé couverts.",
+      "Mises à jour répétées sans nouvelle résolution CPU par nom, résolution native ou any_cast ; miroir CPU et anciennes interfaces cohérents, aucune promesse de zéro allocation.",
+      "Consommateur existant ReflectedProgramGuardCrossTests migré pour target, decoy conservé par nom ; readbacks GL et pixels déterministes identiques avec contrôle discriminant non vide.",
+      "Revue indépendante fresh des emprunts, générations et chemins d'erreur ; complément des gaps après intégration et audit fresh hors board selon les obligations ARTIST, runner lead distinct.",
+      "Suites normales et ASan pertinentes exécutées, tests graphiques réels sérialisés ; découverte, sélection, JUnit, skips et identité du candidat recoupés, limites non exécutées explicitement rapportées.",
+      "Documentation ADR-0004, registre, usage et prochaine mission actualisés seulement à la portée effectivement livrée ; aucun gain de performance annoncé sans mesure."
+    ]
+  },
+  "autonomy": {
+    "mode": "long_run",
+    "instructions": [
+      "Privilégier la correction, la sûreté des emprunts et la fidélité au contrat ADR-0004 borné déjà adopté ; déplacer le travail de résolution au bon moment sans refonte générale ni promesse de performance.",
+      "Après le start natif, décider et poursuivre les choix techniques locaux, intégrations, tests, corrections et revues dans le périmètre adopté sans demander un nouveau GO à chaque jalon ; rendre compte des étapes significatives.",
+      "Utiliser exclusivement les modèles du fournisseur openai présents dans cette politique ; aucun remplacement par un autre fournisseur ou override de spawn pour contourner le catalogue.",
+      "Conserver le consommateur component-test adopté, l'oracle pixel, le miroir CPU historique et l'interface par nom ; aucun nouveau backend, système global de handles, famille d'attributs ou suppression générale de std::any.",
+      "Ne pas rouvrir les expériences de lecture de fichiers ni transformer un blocage d'affectation en chantier d'outillage. Préserver les diffs étrangers, ne pas élargir les permissions ; exposer les blocages avec une solution bornée.",
+      "Respecter les barrières QA et TDD ARTIST, l'intégration avant consommateurs, les contextes indépendants et les ressources exclusives. Une preuve absente reste absente ; aucune complétion fictive ou clôture anticipée.",
+      "Demander une décision seulement pour une modification du contrat ou de l'architecture non adoptée, une extension de périmètre, une permission indispensable manquante, une contradiction insoluble ou une pause opérateur explicite ; ne jamais invoquer start à la place de l'utilisateur."
+    ]
+  }
+}
