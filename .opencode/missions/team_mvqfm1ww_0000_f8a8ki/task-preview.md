@@ -1,4 +1,14 @@
-# Aperçu borné des tâches — qualification QA seule importée, exécution non approuvée
+# Plan initial archivé — mission float OpenGL préparé
+
+État final du 2026-10-27 : politique native v1 approuvée, source `3b1b102`,
+581 normaux/581 ASan, ré-audit borné accepté et six livrables du board complétés.
+[Bilan final et limites](reports/24-bilan-final-float-prepare.md).
+
+Le contenu de préparation ci-dessous est conservé comme historique du graphe,
+des scores et des barrières. Les mentions « non approuvée » ou « non publiée »
+décrivent cet instant initial, pas une demande de redémarrage de la tranche terminée.
+
+## Photographie de préparation conservée
 
 Date : 2026-10-27. Lire contract.md et qa-plan.md dans ce répertoire.
 La politique est encore un brouillon ; aucun auteur ni classifier ne démarre.
