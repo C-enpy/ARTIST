@@ -101,9 +101,16 @@ namespace
 class ShaderLifetimeTests : public ::testing::Test
 {
 protected:
+    void SetUp() override
+    {
+        auto &gl = *mock::opengl::glFunctionMock::instance();
+        gl.resetContractState();
+        gl.configureCurrentContext(reinterpret_cast<GLFWwindow *>(this));
+    }
     void TearDown() override
     {
         mock::opengl::glFunctionMock::reset();
+        mock::opengl::glFunctionMock::instance()->resetContractState();
     }
 };
 

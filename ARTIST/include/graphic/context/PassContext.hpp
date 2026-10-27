@@ -10,6 +10,7 @@
 #include <graphic/pipeline/Shader.hpp>
 #include <graphic/pipeline/Uniform.hpp>
 #include <graphic/pipeline/Attribute.hpp>
+#include <graphic/context/PreparedUniformState.hpp>
 
 namespace artist::graphic::context
 {
@@ -29,7 +30,17 @@ namespace artist::graphic::context
         using UniformMap = std::unordered_map<std::string, std::unique_ptr<pipeline::Uniform<API>>, collection_utils::StringHash, collection_utils::StringEqual>;
         using AttributeMap = std::unordered_map<std::string, std::unique_ptr<pipeline::IAttribute<API>>, collection_utils::StringHash, collection_utils::StringEqual>;
 
-        virtual ~PassContext() = default;
+        PassContext() = default;
+        PassContext(const PassContext &) = delete;
+        PassContext &operator=(const PassContext &) = delete;
+        PassContext(PassContext &&) = delete;
+        PassContext &operator=(PassContext &&) = delete;
+        virtual ~PassContext() { invalidatePreparedUniforms(); }
+
+        std::weak_ptr<const detail::PreparedUniformState> preparedUniformState() const
+        {
+            return m_preparedUniformState;
+        }
 
         /**
          * @brief Take unique ownership of a shader in the pass.
@@ -57,7 +68,11 @@ namespace artist::graphic::context
             {
                 throw common::exception::TraceableException<std::invalid_argument>("ERROR::PASS::NULL_UNIFORM");
             }
-            m_uniforms[name] = std::move(uniform);
+            // Allocate/hash before revoking any existing borrow. Everything
+            // following successful insertion is non-throwing.
+            auto [entry, inserted] = m_uniforms.try_emplace(name);
+            invalidatePreparedUniforms();
+            entry->second = std::move(uniform);
         }
 
         /**
@@ -102,15 +117,7 @@ namespace artist::graphic::context
          */
         void replaceUniforms(UniformMap uniforms)
         {
-            for (const auto &entry : uniforms)
-            {
-                if (!entry.second)
-                {
-                    throw common::exception::TraceableException<std::invalid_argument>("ERROR::PASS::NULL_UNIFORM");
-                }
-            }
-            static_assert(noexcept(m_uniforms.swap(uniforms)), "Uniform publication must not throw");
-            m_uniforms.swap(uniforms);
+            publishUniformMap(uniforms);
             // Parameter destruction may be deferred until the caller's full
             // expression ends; retire the old pointees before returning.
             uniforms.clear();
@@ -177,8 +184,14 @@ namespace artist::graphic::context
          */
         [[nodiscard]] pipeline::Uniform<API> *getUniform(const std::string &name) const
         {
+#ifdef __mock_gl__
+            ++detail::PreparedUniformObservations::nameSearches;
+#endif
             if (m_uniforms.contains(name))
             {
+#ifdef __mock_gl__
+                ++detail::PreparedUniformObservations::nameSearches;
+#endif
                 return m_uniforms.at(name).get();
             }
             return nullptr;
@@ -234,9 +247,28 @@ namespace artist::graphic::context
             return m_attributes;
         }
 
+    protected:
+        // Leave the old map in candidate so a backend can publish its
+        // non-throwing provenance stamp before retiring the old pointees.
+        void publishUniformMap(UniformMap &candidate)
+        {
+            for (const auto &entry : candidate)
+            {
+                if (!entry.second)
+                    throw common::exception::TraceableException<std::invalid_argument>("ERROR::PASS::NULL_UNIFORM");
+            }
+            static_assert(noexcept(m_uniforms.swap(candidate)), "Uniform publication must not throw");
+            invalidatePreparedUniforms();
+            m_uniforms.swap(candidate);
+        }
+        void invalidatePreparedUniforms() { m_preparedUniformState->invalidate(); }
+        std::uint64_t preparedUniformGeneration() const { return m_preparedUniformState->generation(); }
+
     private:
         std::vector<std::unique_ptr<pipeline::IShader<API>>> m_shaders;
         UniformMap m_uniforms;
         AttributeMap m_attributes;
+        std::shared_ptr<detail::PreparedUniformState> m_preparedUniformState =
+            std::make_shared<detail::PreparedUniformState>();
     };
 }

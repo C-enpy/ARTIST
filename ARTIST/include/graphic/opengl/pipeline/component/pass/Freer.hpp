@@ -32,6 +32,7 @@ namespace artist::graphic::opengl::pipeline::component::pass
             GLuint passID = openglContext.getPassID();
             if (passID != 0)
             {
+                openglContext.retirePreparedUniforms();
                 // Optionally detach shaders before deleting the pipeline
                 for (const auto &shader : openglContext.getShaders())
                 {

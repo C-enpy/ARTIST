@@ -26,6 +26,12 @@ using artist::test::utils::expectSpecificError;
 class UniformReaderTests : public ::testing::Test
 {
 protected:
+    void SetUp() override
+    {
+        auto &gl = *mock::opengl::glFunctionMock::instance();
+        gl.resetContractState();
+        gl.configureCurrentContext(reinterpret_cast<GLFWwindow *>(this));
+    }
     // Behave like the driver: copy at most capacity-1 bytes and report the
     // number actually written. Long names must not be fabricated by the mock.
     void reflect(const std::vector<std::string> &names, bool missingLocation = false, GLint reflectedSize = 1)
@@ -73,6 +79,7 @@ protected:
     void TearDown() override
     {
         mock::opengl::glFunctionMock::reset();
+        mock::opengl::glFunctionMock::instance()->resetContractState();
     }
 };
 

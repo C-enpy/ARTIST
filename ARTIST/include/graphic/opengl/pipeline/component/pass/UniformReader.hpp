@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <limits>
 #include <graphic/Api.hpp>
 #include <graphic/opengl/context/PassContext.hpp>
 #include <common/exception/TraceableException.hpp>
@@ -46,9 +47,12 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::UNIFORM::INVALID_COUNT");
             }
             graphic::api::OpenGL::PassContext::UniformMap uniforms;
+            const auto generation = openglContext.preparedUniformGeneration();
+            if (generation == (std::numeric_limits<std::uint64_t>::max)())
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::UNIFORM::PREPARE::GENERATION_EXHAUSTED");
             if (numUniforms == 0)
             {
-                openglContext.replaceUniforms(std::move(uniforms));
+                openglContext.publishReflectedUniforms(std::move(uniforms));
                 return;
             }
 
@@ -100,11 +104,17 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 uniformContext->setGLType(type);
                 uniformContext->setSize(static_cast<GLuint>(size));
                 uniformContext->setProgramID(passID);
+                uniformContext->m_reflected = true;
+                uniformContext->m_reflectionOwner = openglContext.preparedUniformState();
+                uniformContext->m_reflectionGeneration = generation + 1;
+                // Indexed names include arrays of size one and arrays nested
+                // inside structures. Ambiguous/indexed cases are not scalars.
+                uniformContext->m_strictScalar = name.find_first_of("[]") == std::string::npos && size == 1;
                 // Known limitation of OpenGL: Uniforms profile are driven by Pass profile
                 auto uniform = std::make_unique<graphic::pipeline::Uniform<graphic::api::OpenGL>>(std::move(uniformContext));
                 uniforms.emplace(name, std::move(uniform));
             }
-            openglContext.replaceUniforms(std::move(uniforms));
+            openglContext.publishReflectedUniforms(std::move(uniforms));
         }
     };
 }
