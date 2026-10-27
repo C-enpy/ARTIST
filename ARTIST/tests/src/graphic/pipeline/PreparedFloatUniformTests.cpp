@@ -294,11 +294,14 @@ namespace
         EXPECT_EQ(uniform.get<GLfloat>(), .25f);
         mock.configureCurrentProgram(0);
         EXPECT_THROW(access.set(.5f), Error);
+        EXPECT_EQ(uniform.get<GLfloat>(), .25f);
         mock.configureCurrentProgram(7);
         mock.configureCurrentContext(nullptr);
         EXPECT_THROW(access.set(.5f), Error);
+        EXPECT_EQ(uniform.get<GLfloat>(), .25f);
         mock.configureCurrentContext(reinterpret_cast<GLFWwindow *>(&context));
         EXPECT_THROW(access.set(.5f), Error);
+        EXPECT_EQ(uniform.get<GLfloat>(), .25f);
         EXPECT_EQ(mock.uniformCalls().size(), 1u);
         mock.configureCurrentContext(reinterpret_cast<GLFWwindow *>(this));
         access.set(.75f);
@@ -373,6 +376,95 @@ namespace
         auto deadPass = prepare(context, "scalar");
         context.replaceUniforms({});
         EXPECT_THROW(deadPass.set(.5f), Error);
+    }
+
+    // Pass revocation must not rely on uniform or witness destruction.
+    TEST_F(PreparedFloatUniformTest, PassDestructionRevokesWithLiveUniformAndWitness)
+    {
+        auto owner = std::make_unique<Context>();
+        owner->setPassID(7);
+        reflect("scalar", GL_FLOAT, 1, owner.get());
+        auto access = prepare(*owner, "scalar");
+        const auto witness = owner->preparedUniformState().lock();
+        ASSERT_NE(witness, nullptr);
+        const auto generation = witness->generation();
+        auto retainedUniform = std::move(*owner->getUniform("scalar"));
+        access.set(.25f);
+        ASSERT_EQ(mock.uniformCalls().size(), 1u);
+
+        owner.reset();
+        EXPECT_FALSE(witness->accepts(generation));
+        const auto queries = mock.contextQueryCount();
+        for (int attempt = 0; attempt != 2; ++attempt)
+        {
+            SCOPED_TRACE(attempt);
+            try
+            {
+                access.set(.5f);
+                FAIL() << "Expected pass-destruction revocation";
+            }
+            catch (const Error &error)
+            {
+                EXPECT_STREQ(error.what(),
+                    "ERROR::UNIFORM::SET::STALE_PREPARED_ACCESS");
+            }
+            EXPECT_EQ(mock.contextQueryCount(), queries);
+            EXPECT_EQ(mock.uniformCalls().size(), 1u);
+            EXPECT_EQ(retainedUniform.get<GLfloat>(), .25f);
+        }
+    }
+
+    // A rejected candidate prefix must not revoke the old publication.
+    TEST_F(PreparedFloatUniformTest, LateReflectionFailurePreservesPreparedPublication)
+    {
+        reflect("scalar");
+        auto access = prepare(context, "scalar");
+        access.set(.25f);
+        auto *original = context.getUniform("scalar");
+        const auto witness = context.preparedUniformState().lock();
+        ASSERT_NE(witness, nullptr);
+        const auto generation = witness->generation();
+
+        EXPECT_CALL(mock, glGetProgramiv_mock(7, GL_ACTIVE_UNIFORMS, ::testing::_))
+            .WillOnce(::testing::SetArgPointee<2>(2));
+        EXPECT_CALL(mock, glGetProgramiv_mock(7, GL_ACTIVE_UNIFORM_MAX_LENGTH, ::testing::_))
+            .WillOnce(::testing::SetArgPointee<2>(7));
+        for (GLuint index = 0; index != 2; ++index)
+        {
+            EXPECT_CALL(mock, glGetActiveUniform_mock(7, index, 7,
+                ::testing::_, ::testing::_, ::testing::_, ::testing::_))
+                .WillOnce(::testing::Invoke([](GLuint, GLuint, GLsizei,
+                    GLsizei *length, GLint *size, GLenum *type, GLchar *buffer) {
+                    std::memcpy(buffer, "scalar", 7);
+                    *length = 6;
+                    *size = 1;
+                    *type = GL_FLOAT;
+                }));
+        }
+        EXPECT_CALL(mock, glGetUniformLocation_mock(7, ::testing::StrEq("scalar")))
+            .WillOnce(::testing::Return(4));
+        try
+        {
+            Reader::on(context);
+            FAIL() << "Expected rejection of the second candidate entry";
+        }
+        catch (const Error &error)
+        {
+            EXPECT_STREQ(error.what(), "ERROR::PASS::UNIFORM::DUPLICATE_NAME");
+        }
+
+        EXPECT_EQ(witness->generation(), generation);
+        EXPECT_TRUE(witness->accepts(generation));
+        ASSERT_EQ(context.getUniforms().size(), 1u);
+        ASSERT_EQ(context.getUniform("scalar"), original);
+        EXPECT_EQ(original->get<GLfloat>(), .25f);
+        ASSERT_EQ(mock.uniformCalls().size(), 1u);
+        access.set(.5f);
+        prepare(context, "scalar").set(.75f);
+        ASSERT_EQ(mock.uniformCalls().size(), 3u);
+        EXPECT_EQ(mock.uniformCalls()[1].location, 3);
+        EXPECT_EQ(mock.uniformCalls()[2].location, 3);
+        EXPECT_EQ(original->get<GLfloat>(), .75f);
     }
 
     TEST_F(PreparedFloatUniformTest, RepeatedUpdatesObserveNoCpuNativeOrErasedResolution)

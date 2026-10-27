@@ -49,6 +49,17 @@ Compilation/exécution par le generator : NOT_RUN ; aucun défaut production rep
 Ces compléments ne remplacent ni le RED initial des auteurs ni une preuve historique
 manquante. Réparations healer consommées : zéro sur deux au moment de réception.
 
+### Application runner — réparation bornée 1/2
+
+Le premier build lead a rejeté deux appels proposés à preparedUniformGeneration,
+accesseur protected. Pas de test exécuté par ce build et pas de défaut production.
+Le lead a remplacé ces lectures par le témoin public preparedUniformState().lock(),
+sa generation() et accepts(generation) ; aucun changement de visibilité moteur.
+Relance de la commande build Debug/unit : exit 0, 504 tests passants. Le JUnit
+standard ancien copié après le premier build échoué est explicitement marqué
+STALE-NOT-EXECUTED et exclu. Les ajouts sont donc deux tests, trois assertions
+et cette adaptation test-only ; aucun oracle n'a été abaissé.
+
 ## Contrôles discriminants retenus, avant expériences
 
 Préserver nominal puis expérimenter séparément, jamais cumuler les mutants.
