@@ -57,3 +57,23 @@ réellement de l'API et du candidat intégré, pas d'un nouvel accord utilisateu
 - [Contrat adopté](../contract.md), [plan QA actif](../qa-plan.md),
   [graphe prévu](../task-preview.md). Ces deux derniers historiques de préparation
   ne remplacent pas le présent état d'intégration.
+
+## Publication et admission du consommateur confirmées
+
+Une seule tranche suivante a été publiée : migration du consommateur et preuve
+pixel, tâche `task_mvqplny5_000k_ldfdp5`, dépendance réelle du producteur intégré.
+Profil gpu-engineer, contexte fresh, worktree isolé, scores PM/LLM 74/77 et
+restitution team_message configurés ; auto-admission OpenAI/Sol high observée.
+Base de travail `4e4725170e07ece52fc2dcdee0be1db4d785a543`, qui ajoute ce rapport
+au H1 moteur. Contrat et empreinte QA exacts vérifiés dans le worktree.
+
+La session pointait encore main pendant les premières lectures. Aucun edit/build
+n'a eu lieu avant le déplacement natif de la même session vers son worktree.
+Après transition implementation, l'auteur confirme lui-même cwd, gitdir fichier,
+branche dédiée, HEAD attendu et état propre. Aucun droit ou modèle changé.
+
+Le bail graphique et build est exclusif à l'auteur pendant cette tranche.
+Caractérisation existante puis oracle pixel avec omission volontaire du second
+update : ce futur RED démontrera la sensibilité de l'oracle à cette omission,
+pas un défaut ni un RED historique de l'API déjà intégrée. Les contrôles et le
+candidat final seront archivés séparément. Aucun nouveau résultat test revendiqué.
