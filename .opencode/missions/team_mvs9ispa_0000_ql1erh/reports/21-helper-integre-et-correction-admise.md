@@ -24,6 +24,10 @@ Les baux Linux build/GPU et Windows build/GPU lui sont accordés dans ses seuls 
 
 Une copie locale complète de la politique Context Mode est disponible dans son worktree pour éviter la lecture externe refusée lors des phases précédentes. Sa lecture et celle du contrat doivent être effectivement confirmées, pas déduites de la copie. Aucune réparation de MCP, modification de permissions ou politique de modèles.
 
+Confirmation reçue ensuite : l'auteur a lu AGENTS, le contrat et le complément QA avant toute édition, en conservant leur chronologie de commits antérieurs au worktree. Sa session initiale voyait encore le canonique et une lecture externe du worktree a été refusée une fois. Il est resté en lecture seule, puis la transition native a rendu session_move disponible : le déplacement vers le worktree a réussi et la copie locale de politique a été effectivement lue. Le catalogue Context Mode est revenu après refresh, sans réparation ni élargissement des droits. Les baux ont été effectivement reçus.
+
+Le texte de tâche préparée conservait une mention DEFERRED ; le lead a clarifié que la publication native et le transfert de bail sont désormais effectifs, sans nouvelle approbation utilisateur. Le plan local est conforme : tests causaux et diagnostics d'abord, puis route moderne interne et validation, snapshots et non-régression. La transition implementation/high ne vaut pas preuveRED ; celle-ci reste à remettre avant modification de production. Le lead n'annonce pas de RED/GREEN encore acquis.
+
 L'auteur peut conserver sa base de RED pendant l'intégration indépendante du helper : le C++ de départ est identique. Le lead combinera les branches avant validation finale ; pas de rebase pendant une expérience sans contrôle du candidat.
 
 ## Résultats et limites restantes
