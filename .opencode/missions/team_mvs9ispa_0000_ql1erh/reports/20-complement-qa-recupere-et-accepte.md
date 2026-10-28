@@ -16,9 +16,17 @@ Le plan conserve les contrôles aval obligatoires du projet sous une forme cibl�
 
 ## Suite autorisée
 
-Après commit vérifié, le lead clôturera le livrable de plan, puis publiera une seule tranche auteur OpenGL avec ownership explicite et cycleRED/GREEN complet. Le bailLinux/GPU doit d'abord être libéré par le producteur de campagne. Pendant cela, workflow/helpers peuvent être remis et intégrés indépendamment : fichiers distincts et pas de consommation de leur branche non intégrée.
+Le complément et le présent rapport ont depuis été commités à `a41b8c0866f115b37e1c9532c89141532ee14888`, après diffcheck propre et contrôle des deux seuls fichiers inclus. Le livrable QA a alors été clôturé par le lead pour sa remise réelle, pas sur le statut d'autorestitution. Aucun auteur n'est admis tant que le transfert du bail Linux/GPU n'est pas confirmé.
+
+Le plan étant intégré, la prochaine admission sera une seule tranche auteur OpenGL avec ownership explicite et cycleRED/GREEN complet, après libération du bailLinux/GPU par le producteur de campagne. Pendant cela, workflow/helpers peuvent être remis et intégrés indépendamment : fichiers distincts et pas de consommation de leur branche non intégrée.
 
 Les résultats restent506CPU réussis et72/75OpenGL sous WSL et CI, normal/ASan, sans skip. Aucune réussite de la future correction n'est annoncée.
+
+## Mise à jour explicite de la délégation long run
+
+La décision utilisateur transmise depuis `longrun-autonomy-default-2026-10-28` est intégrée dans la note de reprise de cette mission : `.opencode/missions/team_mvs9ispa_0000_ql1erh/resume.md`. Les décisions techniques et validations opérationnelles nécessaires dans le mandat sont déléguées par défaut, sans GO intermédiaire ; les rapports n'appellent pas implicitement une autorisation. L'incertitude technique ou la catégorie d'une opération ne suffisent pas à créer une question.
+
+Objectif, phase, restrictions explicites, modèles, QA, permissions, pauses et contrôles de sécurité restent inchangés. Aucun fichier de politique ni révision approuvée n'est modifié, aucune commande config/start invoquée et aucun agent créé pour cette mise à jour. La consigne est transmise au producteur encore actif par son canal autorisé et sera incluse dans le brief du futur auteur. La note conserve aussi les résultats actuels et les barrières réelles pour la reprise/compaction.
 
 ## Annexe de preuve
 
