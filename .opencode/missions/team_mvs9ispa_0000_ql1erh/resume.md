@@ -12,7 +12,20 @@ Cette décision ne change ni objectif, phase, restrictions explicites, modèles,
 
 La politique native révision1 et son hash approuvé restent inchangés. Cette note précise la délégation opérationnelle ; ce n'est pas une nouvelle révision de politique. Transmettre cette décision aux workers actifs par leur canal permis et aux futurs auteurs dans leur brief. Aucun nouvel agent n'est requis pour cette mise à jour.
 
-## État à reprendre
+## État courant prioritaire — après rapport 24
+
+Les sections historiques ci-dessous décrivent les étapes précédentes, pas le statut actuel.
+
+- Candidat moteur final `78e7b74989dd463cddf14080916e03b60405640d`, poussé sans force uniquement sur `mission/linux-qa-attribute-0a4a671`. Aucun push de main.
+- Windows, WSL et CI Ubuntu : **six configurations normal/ASan à 589/589 chacune**, 513 CPU + 76 GL, zéro failure/error/skip, populations bijectives. CI réelle `40760506988` success, artefacts téléchargés et recoupés ; 149 hashes sources/config par campagne Linux vérifiés, deux écarts CRLF Windows comparés aux blobs Git exacts.
+- Gate GLEW réparé après nouveau RED lead à chaud (513 tests CPU, un seul échec attendu), puis GREEN propre Windows et Linux/CI. Ré-audit indépendant pool-10 reçu : finding fermé, aucun nouveau défaut démontré dans le delta direct. Suspension interne des admissions levée ; aucune pause opérateur ou nouveau GO.
+- Auteur pool-9 et producteur pool-5 arrêtés, baux rendus au lead. Ne pas refaire shutdown/merge : nettoyage du worktree pool-9 avait échoué après merge réussi, branches préservées.
+- Generator pool-11 : remise publique retrouvée via API native de session, sans relance ou élargissement de permissions. Trois propositions ciblées du contrôleur adoptées dans `gaps-integrated-candidate.md`, à commiter avant code puis exécuter par le lead (seul fichier test_linux_evidence.py). Aucun défaut production supplémentaire proposé. Méthode locale PM/LLM, complexité 70, risque 40.
+- Prochaine étape : tests de caractérisation renderer/environnement/identité, vérification de leur détection, intégration puis audit final test-reviewer fresh hors board à qualifier effectivement. Ensuite documentation et PR, sans merge distant.
+- Les admissions et restitutions QA doivent rester effectives ; /api/agent a été refusé une fois, ne pas le retenter. API native lecture des messages a permis de récupérer les seules remises publiques. Ne pas confondre défaut de récupération automatique et absence de livrable, ni se substituer au reviewer indépendant.
+- Archives : `out/logs/mission-linux-qa/gate-final-reconciliation.json`, `gate-final-linux/`, `ci-40760506988/`, `gate-green-windows-*`, RED et FAIL historiques conservés. Couverture GPU limitée à Mesa llvmpipe/Linux et NVIDIA/Windows ; detect_leaks=0, pas de performance/Release/UBSan/fuites exhaustives.
+
+## Historique — état avant intégration
 
 - Objectif : obligations QA Windows rattrapées sous Ubuntu WSL2 dédié sur I:, puis CI Linux propre ; outils existants mutualisés.
 - Dernier HEAD lead d'intégration : `44943016b8b732d843e58b8137044890c03b3ba8`. C++ encore celui de `a4c0f82` ; contrat, plan QA et workflow/helper désormais intégrés. Diff préexistant profils/harness/docs hors ownership à préserver.
@@ -39,6 +52,14 @@ Mise à jour RED : le test natif de classification a été exécuté avant le Re
 Parallélisme : remise/intégration workflow/helper et préparation/écriture auteur peuvent avancer sans conflit de fichiers ; sérialiser le bailGPU et les compilations d'un même arbre. Les consommateurs ne reçoivent une branche qu'après intégration et relecture du lead. Le QA generator ne remplace pas le RED auteur. Revue sensible ciblée et test-reviewer fresh hors board à qualifier effectivement avant admission ; ne pas fabriquer l'audit ou ouvrir des droits si cette voie manque.
 
 ## Limites et conservation
+
+### État courant après intégration et revue
+
+La correction auteur est intégrée à `0a4a671` et ses quatre archives588/588 ont été recoupées, mais n'est PAS acceptée globalement : le reviewer a établi un gateGLEW expérimental non conforme. Les nouvelles admissions sont suspendues, les reviewersRO existants continuent. Le lead prend une réparation locale bornée enTDD, couverte par A2, Reader/mock/tests uniquement, complexité70/risque72 ; ré-audit requis après correction. Ne pas annoncer la parité depuis les seules archives auteur.
+
+Le premier passage Windows intégré a échoué (binaire incrémental : deuxCPP seulement recompilés). À sources identiques, clean de projet puis63CPP reconstruits et588/588réussis. Écart de cache archivé, mécanisme de dépendances non entièrement expliqué. Tous prochains passages de la réparation doivent reconstruire les TU de façon cohérente. Le gate reste un défaut distinct à corriger. Voir rapport23.
+
+Workflow+correction0a4a671 publiés sur branche distante nouvelle `mission/linux-qa-attribute-0a4a671`, sans toucher main. Sa CI ne peut prouver la future réparation du gate. Recherche de gaps pool-11 active enRO sur sources intégrées et ledgerneutre ; revueC++pool-10 terminée avecfinding, ré-audit à demander sans nouveauworker tant que suspension. Le test-reviewer final hors board reste à qualifier après gaps et preuvefinale.
 
 OpenGL seul backend implémenté. StatutsADR inchangés :0001/2/4/6/7Proposed,0003/5Acceptedpartial,0008WindowsDebugseulement. PasGPUmatérielLinux, Release, UBSan, performance ou rechercheexhaustivedefuites dans cette livraison. Un pilote3.3 sans route moderne à nom ambigu reste un gap explicite de qualification, jamais skip/PASS implicite.
 
