@@ -99,3 +99,79 @@ Proposition qa-planner : 120 minutes de préparation, dont 30 de setup ; reste 9
 Sortie : populations réconciliées par nom et obligation ; critères matériels vérifiés ou écarts explicitement disposés avec motif/propriétaire/impact ; aucun zéro test, skip requis, résultat périmé ou négatif non causal présenté comme PASS. Les limites non exécutées restent INCONCLUSIVE/NOT_RUN. PASS partiel n'est pas PASS global ; FAIL reproduit reste prioritaire.
 
 Au moment de cette acceptation documentaire, aucune exécution Linux n'est prouvée. Parité Linux : INCONCLUSIVE, à établir par les tranches autorisées après le commit du présent plan.
+
+## Complément accepté — classification Attribute et route moderne conditionnelle
+
+Date : 2026-10-28. Ce complément précise la correction bornée par `attribute-correction-contract.md`, commité à `38d03b7`. Il ne réécrit pas l'état historique du plan initial : normal et ASan ont depuis exécuté les mêmes 581 tests sous WSL puis en CI propre, avec 506 CPU réussis et 72/75 OpenGL, trois failures et aucun skip. La parité actuelle reste **FAIL**.
+
+### Provenance, admission et limites
+
+Proposition texte du qa-planner pool-8, tâche `task_mvsg0uhi_001w_zcu4t6`, session native `ses_e7c3ef5a5ffe79FU279WXBegrw`. Remise complète réellement récupérée par le lead dans le message assistant `msg_183c1b1ff001EPUjNbjIEmWaFA`, finish stop, 18573 caractères. Une réponse ultérieure ne faisait que renvoyer à cette remise : elle ne la remplace pas.
+
+Original public archivé : `out/logs/mission-linux-qa/qa-attribute-final-msg_183c1b1ff001EPUjNbjIEmWaFA.md`, SHA256 `0c7aea3184d8f3a4020a29f8588026e8bb3bf17db232889624d2c39ca39507ad` (19187 octets UTF-8). Le présent texte est la synthèse adoptée et persistée par le lead après relecture, pas une exécution du qa-planner.
+
+Routage qa-planner et répertoire ARTIST constatés via API native, sans ajout de permission de session ; lectures locales et message effectivement reçus. La récupération automatique Ensemble a échoué, puis le lead a retrouvé la réponse publique finale via l'API native en lecture seule, sans relancer le worker, sans modifier sa configuration ou la base du runtime. Ces faits ne prouvent pas une sandbox ni un enforcement exhaustif des permissions.
+
+Les capacités, la classification et le staging ci-dessous sont des **obligations à tester**, pas des résultats déjà acquis. La sonde préalable ne remplace pas le RED moteur. Aucun auteur admis avant commit de ce complément.
+
+### Exigences explicites et scénarios
+
+- **A1 — clés exactes.** Publier exactement les noms legacy indépendamment énumérés du même programme. Si la route moderne ajoute `[0]`, la clé legacy reste inchangée. Aucun alias supplémentaire ; un nom absent ne devient pas un lookup admis.
+- **A2 — capacité réelle.** Tester core4.3 sans extension et3.3 avec extension, fonctions requises chargées. Négatifs :3.3 sans extension malgré pointeurs présents, puis chaque fonction requise absente. Zéro appel moderne et comportement legacy conservé dans ces négatifs. Pointeur ou token seul ne suffit pas.
+- **A3 — association.** Même programme et interface PROGRAM_INPUT, association par nom, exact ou unique ajout final `[0]`. Permuter l'énumération moderne ; une location identique ne justifie pas un nom incompatible. Rejeter `[00]`, `[1]`, suffixe arbitraire ou double ajout plutôt que joindre par ordre/location.
+- **A4 — réponses valides.** Après sélection de la route moderne : index absent/invalide, propriétés incomplètes, longueur/NUL invalides, nom tronqué/incompatible, type/taille/location contradictoires doivent faire échouer le staging, sans fallback silencieux. Distinguer une fonction manquante (A2, aucun appel) d'un GL_INVALID_INDEX après appel disponible (A4, erreur). Tester capacité minimale valide, longueur capacité−1, égale/supérieure à capacité, NUL absent/interne et cohérence NAME_LENGTH ; tailles0/négative/différente, type différent, location négative/différente. Ne pas ajouter une requête inutile pour inventer une borne d'index. Diagnostics précis figés dans les tests avant code.
+- **A5 — classification.** Scalaire vec3/size1 : isGLArray false et upload admis. Array1 de même type/taille/location : true ; array2 : true. Ni size1 ni la localisation `[0]` ne prouvent la scalarité.
+- **A6 — refus natif.** Après préparation volontaire des ressources et snapshot : arrays1/2 lèvent ARRAY_NOT_SUPPORTED avant changement des buffers cible/leurre, binding et état natif pertinents. Utiliser type valide et valeur non nulle pour éviter un autre diagnostic. Scalaire : contenu cible exact, leurre intact et consommateur existant conservé. Ce scénario ne promet pas le rollback du miroir CPU du wrapper, qui stage déjà sa valeur avant le Setter.
+- **A7 — staging.** Ancienne map non vide, première entrée candidate valide puis seconde moderne invalide : mêmes clés, adresses des pointees, métadonnées et valeurs anciennes ; aucun préfixe nouveau publié. Succès publie toute la génération ; count0 conserve le commit vide. Une réflexion valide après échec reste possible.
+- **A8 — frontière.** Réflexion moderne au Reader seulement, pas de nouvelle requête aux set/consommations. Mêmes interfaces, ownership et oracles de rendu. Aucune assertion nouvelle de conservation de l'ancienne valeur CPU du wrapper après rejet ; le Setter direct garde ses contrats propres.
+
+### Inférences de test, distinctes des garanties publiques
+
+Réutiliser les mocks existants et le pattern fp64 de capacité/pointeurs explicitement configurés et restaurés. Une configuration omise ne doit jamais déclencher GLEW réel involontairement. Réfléchir deux fois le même programme conserve la description, pas nécessairement les pointees : un commit réussi peut remplacer la génération. Programme/contexte appropriés et absence de relink/destruction concurrent sont des préconditions, pas une nouvelle garantie de concurrence. Pas de campagne sécurité/accessibilité ajoutée.
+
+### Trois risques prioritaires — matrice QA distincte du risque PM
+
+1. **Array1 classé scalaire ou simple relâchement d'orthographe : impact4 × probabilité4 =16.** Déclencheur : nom legacy nu et size1 ; portée : refus et buffers du consommateur Attribute. Détection/mitigation existantes : sonde moderne discriminante, Setter refusant lorsque son bit est correct. Gap : RED causal sous clé native et refus avant mutation à établir.
+2. **Route moderne non supportée ou réponse incohérente admise :4 ×4 =16.** Déclencheur : pointeurs sans capacité, fonction absente ou données malformées ; portée : réflexion, crash ou mauvaise classification. Détection/mitigation : patterns GLEW/mocks et contrat de rejet. Gap : interposition complète, négatifs de gate/réponse à écrire et exécuter.
+3. **Publication partielle et anciens emprunts invalidés après erreur tardive :5 ×3 =15.** Déclencheur : première entrée staged puis faute suivante ; portée : map et consommateurs empruntés. Détection/mitigation : staging et tests legacy de conservation existants. Gap : erreurs modernes tardives et transition échec→succès non qualifiées.
+
+### RED obligatoire avant correction
+
+Réutiliser les shaders/fixtures Attribute légaux, établir compile/link/contexte, énumérer le nom legacy d'array1 indépendamment du Reader. Vérifier publication sous cette seule clé avec champs exacts et sans alias, puis exiger isGLArray true. **Avant correctif sur Mesa, la clé et les préconditions doivent passer, et la classification échouer.** Une clé codée en dur `[0]`, une compilation échouée ou un contexte absent ne constituent pas ce RED.
+
+Garder un témoin scalaire comparable et array2. Après GREEN, vérifier refus avant mutations natives. Les trois FAIL initiaux restent archivés ; disposer leurs assertions d'orthographe en remplaçant l'hypothèse fournisseur par la clé native indépendamment observée, sans supprimer les obligations de classification et de refus. Pas d'historique réécrit.
+
+### Traçabilité bidirectionnelle ciblée
+
+- Préflight NativeCapabilitiesAndArraySpelling → A1/A5 : observation utile, pas blocage de conformité fournisseur hors consommation moteur.
+- NativeReaderArrayOneRegression → A1/A5 : avant modification échoue trop tôt sur clé, d'où le nouveau RED causal.
+- NativeArraysDescribeThenRefuseWithoutTouchingDecoy → A5/A6 : préserver leurre/binding et compléter les observations pertinentes de cible au snapshot approprié.
+- ExactNaturalLongNameContract et FaultInjection_InvalidLengthAndTerminator → A1/A4 legacy ; ne prouvent pas la nouvelle réponse moderne.
+- FaultInjection_ExactArraySuffixAndUnsupportedEnumDescription → A2/A5/A8 pour fallback configuré explicitement.
+- DuplicateNamePreservesPreviousGeneration et LateInvalidLocationKeepsPreviousBorrow → A7 legacy, à compléter pour erreur moderne tardive.
+- SuccessRetiresMissingNamesAndOldValues et ZeroCountCommitsEmptyGeneration → A7, transitions conservées.
+- Tests typés/transform feedback/pixels → A6/A8, pas preuve des gates.
+
+À l'intégration : rattacher chaque nouveau cas A1–A8 à son défaut plausible et à sa preuve, signaler les orphelins et les preuves périmées par candidat. Ne pas dupliquer les négatifs sans frontière distincte ni déclarer « aucun orphelin » sans inventaire.
+
+### Ordre, ownership et disposition QA
+
+1. Lead : récupération réelle, relecture, persistance et commit avant worktree auteur ; réservation exacte du Reader, de ses tests, du mock `ARTIST/tests/mock/opengl/glFunctionMock.hpp` et des tests composants Attribute. Aucune écriture dans workflow/helpers du producteur indépendant.
+2. Auteur OpenGL unique : RED causal Mesa/CPU, correction minimale, GREEN ciblé, reconstruction des TU touchées par les headers. Sorties et bail GPU exclusifs ; aucun build dans l'arbre actif de pool-5.
+3. Lead : shutdown/merge, diff intégré relu, candidat commité et vrai résultat disponible avant consommateurs. Refaire les contrôles nécessaires Windows/NVIDIA et Linux/Mesa normal/ASan ; même population rapprochée par nom, pas quota figé581 empêchant les nouveaux tests.
+4. Après intégration : test-engineer complète uniquement les gaps avec oracles et propositions KEEP/MODIFY/REJECT/DEFER, sans production ni rôle de runner. Le lead persiste, relit et exécute ; pas de substitution au RED auteur.
+5. Revue indépendante sensible ciblée sur gates, GLEW, longueurs et staging ; test-reviewer fresh hors board d'implémentation seulement si profil/permissions/contexte/restitution sont effectivement qualifiés. Corrections au propriétaire puis ré-audit. Une voie native manquante reste BLOCKED, sans substitution générique, grant ou audit fictif.
+
+La QA proportionnée ne supprime pas les exigences du projet : cette disposition conserve les étapes obligatoires avec des contrôles ciblés, sans modifier scores/politique/provider ni créer de harnais ou d'audit généraliste. La barrière hors board reste à qualifier au bon jalon ; sa réalisation n'est pas annoncée ici.
+
+Conan2/C++23 qualifiés, canari, renderer réel et builds distincts restent des préconditions. Les commandes doivent venir des CMake/presets/lanceurs réellement intégrés : ne pas dépendre d'un helper de branche non intégré. Zéro test/skip requis n'est pas une réussite.
+
+### Budget et sortie
+
+Allocation relative100unités, pas estimation de temps : setup25 ; RED/classification/refus17 ; gates/réponses20 ; staging/transitions10 ; rapprochement9,25 ; buffer18,75. Après setup,56,25planifiées et18,75buffer =75%/25% des75restantes. Aucune durée de build ni budget monétaire inventés.
+
+Blocages avant annonce GREEN/parité corrigée : RED causal non exécuté ; gates/réponses/staging non qualifiés ; correctif non intégré ; non-régression normale/ASan manquante. Ces gaps ne bloquent pas la remise du plan.
+
+Pilote3.3 sans capacité moderne à nom ambigu : gap global conservé, disposition du lead avant ajout aux cibles requises, jamais acceptation implicite/skip/PASS. Hors périmètre : Release, UBSan, fuites exhaustives, performance, nouveau framework/driver matériel et minimum global4.3. Diagnostics et interposition locale sont des choix auteur à figer avant code ; aucune API nouvelle.
+
+Sortie : A1–A8 liés à preuves discriminantes, RED conservé, GREEN sur candidat intégré reconstruit, populations rapprochées, anciensFAIL et dispositions conservés. PASS uniquement au critère exécuté ; FAIL prioritaire sur écart reproduit ; INCONCLUSIVE pour preuve/précondition manquante. Aucune validation d'implémentation ni enforcement exhaustif des permissions n'est déduite du présent complément.
