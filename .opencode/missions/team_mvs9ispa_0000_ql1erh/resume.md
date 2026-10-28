@@ -14,6 +14,8 @@ La politique native révision1 et son hash approuvé restent inchangés. Cette n
 
 ## État courant prioritaire — après rapport 24
 
+Mise à jour rapport 25 : tests de gaps intégrés à `1532b78d96489923773e7b2a8b355dc91f94345c`, 9/9 Windows + Linux, trois mutants en mémoire détectés ; runtime/config inchangés depuis 78e7b74. Remises du reviewer C++ et generator acceptées/clôturées après persistance réelle. Dossier neutre `final-audit-input.md` préparé. Aucun test-reviewer admis : sa qualification effective exige la consultation native de profils précédemment refusée. Demande utilisateur strictement limitée à autoriser une lecture GET /api/agent locale, sans droits/config/modèles modifiés. Ne pas retenter avant réponse distincte ; ne pas remplacer le profil ou annoncer la clôture globale. Documentation finale et PR attendent l'audit, aucune nouvelle campagne moteur nécessaire pour les seuls tests Python/documents.
+
 Les sections historiques ci-dessous décrivent les étapes précédentes, pas le statut actuel.
 
 - Candidat moteur final `78e7b74989dd463cddf14080916e03b60405640d`, poussé sans force uniquement sur `mission/linux-qa-attribute-0a4a671`. Aucun push de main.
