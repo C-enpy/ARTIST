@@ -377,6 +377,24 @@ TEST_F(AttributeReaderTests, ModernUnavailableNeverCallsModernFunctions)
     }
 }
 
+TEST_F(AttributeReaderTests, ExperimentalLoaderFlagWithoutAdvertisedExtensionNeverCallsModernFunctions)
+{
+    auto& gl = *mock::opengl::glFunctionMock::instance();
+    gl.configureProgramInterface(false, true, true);
+    gl.interfaceAdvertised = false;
+    ASSERT_TRUE(GLEW_ARB_program_interface_query);
+    ASSERT_FALSE(glewGetExtension("GL_ARB_program_interface_query"));
+    EXPECT_CALL(gl, glGetProgramResourceIndex_mock(::testing::_, ::testing::_, ::testing::_)).Times(0);
+    EXPECT_CALL(gl, glGetProgramResourceiv_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+    EXPECT_CALL(gl, glGetProgramResourceName_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+    openglContext->setPassID(1);
+    reflectedInput("input[0]");
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    ASSERT_EQ(openglContext->getAttributes().size(), 1u);
+    ASSERT_NE(openglContext->getAttribute("input[0]"), nullptr);
+    EXPECT_TRUE(openglContext->getAttribute("input[0]")->getContext().isGLArray());
+}
+
 TEST_F(AttributeReaderTests, ModernExactArrayNameAndArrayTwoPreserveTheNativeKey)
 {
     auto& gl = *mock::opengl::glFunctionMock::instance(); gl.configureProgramInterface(true, false, true);

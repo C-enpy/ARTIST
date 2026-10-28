@@ -92,7 +92,8 @@ namespace artist::graphic::opengl::pipeline::component::pass
 
             // Staging owns this Reader's entire next generation. A failure
             // destroys only the candidate and preserves all published borrows.
-            const bool modern = (GLEW_VERSION_4_3 || GLEW_ARB_program_interface_query) &&
+            // Experimental loader flags can be true without an advertised extension.
+            const bool modern = (GLEW_VERSION_4_3 || glewGetExtension("GL_ARB_program_interface_query")) &&
                 __glewGetProgramResourceIndex != nullptr && __glewGetProgramResourceiv != nullptr &&
                 __glewGetProgramResourceName != nullptr;
             for (GLint i = 0; i < numAttributes; ++i)

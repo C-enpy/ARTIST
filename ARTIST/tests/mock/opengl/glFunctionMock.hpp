@@ -86,6 +86,8 @@
 #undef GLEW_ARB_program_interface_query
 #define GLEW_VERSION_4_3 artist::mock::opengl::glFunctionMock::instance()->interfaceCore
 #define GLEW_ARB_program_interface_query artist::mock::opengl::glFunctionMock::instance()->interfaceExtension
+#undef glewGetExtension
+#define glewGetExtension(Extension) artist::mock::opengl::glFunctionMock::instance()->programInterfaceAdvertised(Extension)
 #define __glewGetProgramResourceIndex artist::mock::opengl::glFunctionMock::instance()->interfaceIndexProc()
 #define __glewGetProgramResourceiv artist::mock::opengl::glFunctionMock::instance()->interfacePropertiesProc()
 #define __glewGetProgramResourceName artist::mock::opengl::glFunctionMock::instance()->interfaceNameProc()
@@ -169,10 +171,17 @@ namespace artist::mock::opengl
     public:
         // Historical mock consumers have an explicit 3.3, unextended baseline.
         bool interfaceCore = false, interfaceExtension = false;
+        bool interfaceAdvertised = false;
         std::array<bool, 3> interfaceEntries{false, false, false};
         void configureProgramInterface(bool core, bool extension, bool entries)
         {
-            interfaceCore = core; interfaceExtension = extension; interfaceEntries.fill(entries);
+            interfaceCore = core; interfaceExtension = extension;
+            interfaceAdvertised = extension; interfaceEntries.fill(entries);
+        }
+        GLboolean programInterfaceAdvertised(const char* name) const
+        {
+            return interfaceAdvertised && name != nullptr &&
+                std::strcmp(name, "GL_ARB_program_interface_query") == 0 ? GL_TRUE : GL_FALSE;
         }
         static GLuint GLAPIENTRY interfaceIndexStub(GLuint, GLenum, const GLchar*) { return GL_INVALID_INDEX; }
         static void GLAPIENTRY interfacePropertiesStub(GLuint, GLenum, GLuint, GLsizei, const GLenum*, GLsizei, GLsizei*, GLint*) {}
