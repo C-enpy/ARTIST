@@ -35,6 +35,10 @@ Ce passage ne précise pas l'orthographe `[0]` ni les règles d'alias base/élé
 
 La remise spécialiste cite des règles explicites de noms et d'équivalence legacy/moderne dans ARB_program_interface_query et OpenGL4.3+. Leur portée ne doit pas être transposée sans gate à3.3. Elle cite aussi le code d'un miroir Mesa tag25.2.8 suggérant une différence entre les routes legacy et moderne ; ce n'est pas une preuve de la construction Ubuntu exécutée ni un verdict de conformité du pilote.
 
+**Complément primaire recoupé après la remise :** le lead a également lu le TXT officiel ARB, révision21 du10janvier2019. Ses lignes50–51 précisent qu'il est rédigé contre **OpenGL4.2 Compatibility du19janvier2012** : ses renvois imprimés p109–113 ne sont donc pas une pagination3.3 ou4.3. Les lignes296–302 donnent le nom source pour un scalaire et `nom+[0]` pour un tableau de types de base ; les lignes764–785 définissent matching exact, base de tableau et élément actif, tout autre nom étant non actif. Les lignes808–843 rendent explicitement les requêtes legacy équivalentes aux requêtes PROGRAM_INPUT correspondantes. L'issue25, lignes1886–1892, confirme ARRAY_SIZE=1 pour les non-arrays aussi : la taille seule ne discrimine pas array1.
+
+Cette vérification confirme le caractère normatif de ces règles **lorsque cette extension ou le socle pertinent est disponible**, pas leur imposition rétroactive à3.3 non étendu. Un contexte4.5 annoncé est une raison de comparer les deux routes dans la sonde ; il ne prouve pas encore leur divergence exécutée. La première tentative du script de lecture a eu une erreur de chaîne Python, corrigée avant téléchargement ; ce n'est ni panne MCP ni résultat de test.
+
 ## Expérience autorisée, encore NOT_RUN dans ce rapport
 
 Trois programmes GLSL330 actifs, scalaire/array1/array2 ; compilation et link doivent d'abord réussir. Comparer réflexion legacy, localisations base et éléments, nom inexistant et erreursGL. Avec version4.3 ou extension effectivement disponible et fonctions chargées, comparer aussi la réflexion moderne PROGRAM_INPUT ; aucun appel moderne non supporté.
@@ -55,5 +59,6 @@ La parité Linux reste FAIL au résultat normal actuel. La campagne ASan/CI ind�
 - Norme primaire : `https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/specs/gl/glspec33.core.pdf`.
 - PDF : 2620959octets, 425pages, SHA256 `dc1d454f0a889f9f2b6e6f645e1110dc24939396265f57eab35ae9d4e77cfd5c`.
 - Copies : `out/logs/mission-linux-qa/glspec33.core.pdf` et `glspec33-core-printed-page-56.txt`.
+- TXT primaire complémentaire : `https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/extensions/ARB/ARB_program_interface_query.txt` ; copie `out/logs/mission-linux-qa/ARB_program_interface_query.txt`, SHA256 `67a3eea83d11a2e521555cfa0eb44d807f67937ea16ee713a428829b8d775be5`.
 - Commandes lead : extraction Python3.13/pypdf via Context Mode ; navigation Serena et lectures ciblées. Aucun configure/build/testGPU exécuté pour ce rapport.
 - Rapport13 : observation JUnit Linux75cas/3failure/0skip et plan de sonde ; rapport12 : preuve Windows au candidat indiqué.
