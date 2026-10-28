@@ -30,6 +30,8 @@ Le producteur workflow/helpers pool-5 doit rendre son livrable et confirmer la l
 
 Après préconditions : publier une seule tranche auteur OpenGL, complexité84/risque76 PM/LLM, contexte et ownership explicites, sur contrat et planQA intégrés. Fichiers réservés : Reader, testsReader, `ARTIST/tests/mock/opengl/glFunctionMock.hpp`, testscomposantsAttribute ; pas workflow/helpers. CycleREDcausal sur classification array1 sous nomlegacy indépendant, GREENminimal puis non-régression. Pas de garantie nouvelle de rollbackCPU dans IAttribute::set.
 
+Cette tranche est maintenant préparée nativement sous `task_mvsggywg_0028_23u2s9`, **deferred et non admise**, avec les vrais IDs des producteurs architecte et QA déjà intégrés. Son texte donne HEAD/diff, ownership, invariants, liberté locale, oraclesRED/GREEN, commandes/outils possibles, essais antérieurs, limites et scores84/76. Publier cette tâche existante après transfert du bail, ne pas en créer un doublon. Aucun nouveau worker n'a été lancé pour la mise à jour de délégation.
+
 Parallélisme : remise/intégration workflow/helper et préparation/écriture auteur peuvent avancer sans conflit de fichiers ; sérialiser le bailGPU et les compilations d'un même arbre. Les consommateurs ne reçoivent une branche qu'après intégration et relecture du lead. Le QA generator ne remplace pas le RED auteur. Revue sensible ciblée et test-reviewer fresh hors board à qualifier effectivement avant admission ; ne pas fabriquer l'audit ou ouvrir des droits si cette voie manque.
 
 ## Limites et conservation

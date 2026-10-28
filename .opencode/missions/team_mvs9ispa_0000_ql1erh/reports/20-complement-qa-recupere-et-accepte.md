@@ -20,6 +20,8 @@ Le complément et le présent rapport ont depuis été commités à `a41b8c0866f
 
 Le plan étant intégré, la prochaine admission sera une seule tranche auteur OpenGL avec ownership explicite et cycleRED/GREEN complet, après libération du bailLinux/GPU par le producteur de campagne. Pendant cela, workflow/helpers peuvent être remis et intégrés indépendamment : fichiers distincts et pas de consommation de leur branche non intégrée.
 
+La tranche est préparée nativement en deferred (`task_mvsggywg_0028_23u2s9`), complexité84/risque76, contextefresh et worktree isolé prévus. Elle consomme les vrais producteurs architecte/QA déjà intégrés ; elle n'est pas publiée et n'a créé aucun auteur. Le seul prérequis opérationnel restant avant publication est le transfert du bail, pas une nouvelle approbation utilisateur.
+
 Les résultats restent506CPU réussis et72/75OpenGL sous WSL et CI, normal/ASan, sans skip. Aucune réussite de la future correction n'est annoncée.
 
 ## Mise à jour explicite de la délégation long run
