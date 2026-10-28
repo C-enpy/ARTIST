@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <array>
 #include <memory>
 #include <string>
 #include <vector>
@@ -33,6 +34,34 @@ namespace artist::graphic::opengl::pipeline::component::pass
     template <>
     class OpenGLPassAttributeReader<graphic::opengl::profile::Pass::Classic>
     {
+    private:
+        static bool modernArray(GLuint program, const std::string& legacy, GLint size, GLenum type, GLint location)
+        {
+            const GLuint index = glGetProgramResourceIndex(program, GL_PROGRAM_INPUT, legacy.c_str());
+            if (index == GL_INVALID_INDEX)
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_INDEX");
+            constexpr std::array<GLenum, 4> properties{GL_NAME_LENGTH, GL_TYPE, GL_ARRAY_SIZE, GL_LOCATION};
+            std::array<GLint, 4> values{-1, -1, -1, -1};
+            GLsizei written = 0;
+            glGetProgramResourceiv(program, GL_PROGRAM_INPUT, index, 4, properties.data(), 4, &written, values.data());
+            if (written != 4 || static_cast<GLenum>(values[1]) != type || values[2] != size || values[3] != location)
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_PROPERTIES");
+            // Only the exact legacy name or a single added [0] can match. This
+            // also bounds allocation before trusting the driver's NAME_LENGTH.
+            if (values[0] <= 1 || static_cast<std::size_t>(values[0]) > legacy.size() + 4)
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_NAME");
+            std::vector<GLchar> bytes(static_cast<std::size_t>(values[0]), '\x7f');
+            GLsizei length = 0;
+            glGetProgramResourceName(program, GL_PROGRAM_INPUT, index, values[0], &length, bytes.data());
+            if (length <= 0 || length >= values[0] || length != values[0] - 1 || bytes[static_cast<std::size_t>(length)] != '\0')
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_NAME");
+            const std::string name(bytes.data(), static_cast<std::size_t>(length));
+            if (name.find('\0') != std::string::npos ||
+                (name != legacy && (legacy.ends_with("[0]") || name != legacy + "[0]")))
+                throw common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_NAME");
+            return name.ends_with("[0]");
+        }
+
     public:
         static void on(typename graphic::api::OpenGL::PassContext &openglContext)
         {
@@ -63,6 +92,9 @@ namespace artist::graphic::opengl::pipeline::component::pass
 
             // Staging owns this Reader's entire next generation. A failure
             // destroys only the candidate and preserves all published borrows.
+            const bool modern = (GLEW_VERSION_4_3 || GLEW_ARB_program_interface_query) &&
+                __glewGetProgramResourceIndex != nullptr && __glewGetProgramResourceiv != nullptr &&
+                __glewGetProgramResourceName != nullptr;
             for (GLint i = 0; i < numAttributes; ++i)
             {
                 // Non-NUL fill makes a missing terminator observable, instead of
@@ -100,7 +132,7 @@ namespace artist::graphic::opengl::pipeline::component::pass
                 attributeContext->setAttributeID(static_cast<GLuint>(location));
                 attributeContext->setGLSize(static_cast<GLuint>(size));
                 attributeContext->setGLType(type);
-                attributeContext->setGLArray(name.ends_with("[0]"));
+                attributeContext->setGLArray(modern ? modernArray(passID, name, size, type, location) : name.ends_with("[0]"));
 
                 // Known limitation of OpenGL: Attributes profile are driven by Pass profile
                 auto attribute = std::make_unique<graphic::pipeline::Attribute<graphic::api::OpenGL, graphic::opengl::profile::Attribute::Classic>>(std::move(attributeContext));

@@ -302,9 +302,9 @@ TEST_F(AttributeQaPreflightTest, NativeCapabilitiesAndArraySpelling)
     }
     ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
 
-    for (const auto& [file, expectedName, expectedSize] :
-         std::array<std::tuple<const char*, const char*, GLint>, 2>{{
-             {"array-one.vert", "qaArray[0]", 1}, {"array-two.vert", "qaArray2[0]", 2}}})
+    for (const auto& [file, expectedSize] :
+         std::array<std::pair<const char*, GLint>, 2>{{
+             {"array-one.vert", 1}, {"array-two.vert", 2}}})
     {
         SCOPED_TRACE(file);
         AttributeQaProgram program;
@@ -329,10 +329,15 @@ TEST_F(AttributeQaPreflightTest, NativeCapabilitiesAndArraySpelling)
                   << " size=" << size << " type=" << type << " location=" << location
                   << " terminator=" << static_cast<int>(name[static_cast<std::size_t>(length)]) << '\n';
         ASSERT_EQ(name[static_cast<std::size_t>(length)], '\0');
-        ASSERT_EQ(exact, expectedName) << "Q2 stop: spelling not native [0], arbitration required";
+        ASSERT_FALSE(exact.empty());
         ASSERT_EQ(size, expectedSize);
         ASSERT_EQ(type, static_cast<GLenum>(GL_FLOAT_VEC3));
         ASSERT_GE(location, 0);
+        api::OpenGL::PassContext reflected; reflected.setPassID(program.program);
+        artist::graphic::opengl::pipeline::component::pass::OpenGLPassAttributeReader<artist::graphic::opengl::profile::Pass::Classic>::on(reflected);
+        ASSERT_EQ(reflected.getAttributes().size(), 1u);
+        ASSERT_NE(reflected.getAttribute(exact), nullptr);
+        ASSERT_TRUE(reflected.getAttribute(exact)->getContext().isGLArray());
         ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
     }
 }
@@ -418,15 +423,40 @@ TEST_F(AttributeQaPreflightTest, NativeReaderLongNameRegression)
 
 TEST_F(AttributeQaPreflightTest, NativeReaderArrayOneRegression)
 {
-    AttributeQaProgram program;
-    ASSERT_TRUE(program.load(attributeQaSource("test-datas/shaders/qa-attribute/array-one.vert")));
-    api::OpenGL::PassContext context;
-    context.setPassID(program.program);
-    artist::graphic::opengl::pipeline::component::pass::OpenGLPassAttributeReader<artist::graphic::opengl::profile::Pass::Classic>::on(context);
-    ASSERT_TRUE(context.getAttributes().contains("qaArray[0]"));
-    const auto& c = context.getAttribute("qaArray[0]")->getContext();
-    EXPECT_EQ(c.getGLType(), static_cast<GLenum>(GL_FLOAT_VEC3)); EXPECT_EQ(c.getGLSize(), 1u);
-    EXPECT_EQ(c.getAttributeID(), 0u); EXPECT_TRUE(c.isGLArray());
+    // The native legacy key is an independent oracle, not a vendor spelling
+    // assumption. In particular Mesa may omit [0] even for an array of one.
+    for (const auto& [file, cardinality, array] :
+         std::array<std::tuple<const char*, GLint, bool>, 3>{{
+             {"long-name.vert", 1, false}, {"array-one.vert", 1, true}, {"array-two.vert", 2, true}}})
+    {
+        SCOPED_TRACE(file);
+        AttributeQaProgram program;
+        ASSERT_TRUE(program.load(attributeQaSource((std::string("test-datas/shaders/qa-attribute/") + file).c_str())));
+        GLint count = 0, capacity = 0;
+        glGetProgramiv(program.program, GL_ACTIVE_ATTRIBUTES, &count);
+        glGetProgramiv(program.program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &capacity);
+        ASSERT_EQ(count, 1); ASSERT_GT(capacity, 1);
+        std::vector<GLchar> bytes(static_cast<std::size_t>(capacity), '\x7f');
+        GLsizei length = 0; GLint size = 0; GLenum type = 0;
+        glGetActiveAttrib(program.program, 0, capacity, &length, &size, &type, bytes.data());
+        ASSERT_GT(length, 0); ASSERT_LT(length, capacity); ASSERT_EQ(bytes[length], '\0');
+        const std::string nativeName(bytes.data(), static_cast<std::size_t>(length));
+        ASSERT_EQ(nativeName.find('\0'), std::string::npos);
+        const auto location = glGetAttribLocation(program.program, bytes.data());
+        ASSERT_EQ(size, cardinality); ASSERT_EQ(type, static_cast<GLenum>(GL_FLOAT_VEC3)); ASSERT_EQ(location, 0);
+        ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
+        api::OpenGL::PassContext context;
+        context.setPassID(program.program);
+        artist::graphic::opengl::pipeline::component::pass::OpenGLPassAttributeReader<artist::graphic::opengl::profile::Pass::Classic>::on(context);
+        ASSERT_EQ(context.getAttributes().size(), 1u);
+        ASSERT_TRUE(context.getAttributes().contains(nativeName));
+        const auto& c = context.getAttribute(nativeName)->getContext();
+        ASSERT_EQ(c.getGLType(), type); ASSERT_EQ(c.getGLSize(), static_cast<GLuint>(size));
+        ASSERT_EQ(c.getAttributeID(), static_cast<GLuint>(location));
+        std::cout << "[AttributeQA] reader legacy key='" << nativeName << "' size=" << size
+                  << " isGLArray=" << c.isGLArray() << " expected=" << array << '\n';
+        EXPECT_EQ(c.isGLArray(), array) << "Classification under the exact independently enumerated legacy key";
+    }
 }
 
 class AttributeQaRenderTest : public AttributeQaPreflightTest
@@ -656,23 +686,79 @@ TEST_F(AttributeQaRenderTest, FourSeparateBuffersConsumeExactFloatIntUintVec4)
 
 TEST_F(AttributeQaRenderTest, NativeArraysDescribeThenRefuseWithoutTouchingDecoy)
 {
-    for (const auto& [file, name, size] : std::array<std::tuple<const char*, const char*, GLuint>, 2>{{
-        {"array-one.vert", "qaArray[0]", 1}, {"array-two.vert", "qaArray2[0]", 2}}})
+    for (const auto& [file, size] : std::array<std::pair<const char*, GLuint>, 2>{{
+        {"array-one.vert", 1}, {"array-two.vert", 2}}})
     {
         SCOPED_TRACE(file);
         AttributeQaProgram program;
         ASSERT_TRUE(program.load(attributeQaSource((std::string("test-datas/shaders/qa-attribute/") + file).c_str())));
+        GLint capacity = 0, count = 0;
+        glGetProgramiv(program.program, GL_ACTIVE_ATTRIBUTES, &count);
+        glGetProgramiv(program.program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &capacity);
+        ASSERT_EQ(count, 1); ASSERT_GT(capacity, 1);
+        std::vector<GLchar> native(static_cast<std::size_t>(capacity), '\x7f');
+        GLsizei length = 0; GLint cardinality = 0; GLenum type = 0;
+        glGetActiveAttrib(program.program, 0, capacity, &length, &cardinality, &type, native.data());
+        ASSERT_GT(length, 0); ASSERT_LT(length, capacity); ASSERT_EQ(native[length], '\0');
+        const std::string name(native.data(), static_cast<std::size_t>(length));
+        ASSERT_EQ(cardinality, static_cast<GLint>(size)); ASSERT_EQ(type, static_cast<GLenum>(GL_FLOAT_VEC3));
+        const auto location = glGetAttribLocation(program.program, name.c_str()); ASSERT_GE(location, 0);
         api::OpenGL::PassContext pass; pass.setPassID(program.program);
         artist::graphic::opengl::pipeline::component::pass::OpenGLPassAttributeReader<artist::graphic::opengl::profile::Pass::Classic>::on(pass);
         auto* a = pass.getAttribute(name); ASSERT_NE(a, nullptr);
+        ASSERT_EQ(pass.getAttributes().size(), 1u); ASSERT_EQ(a->getContext().getAttributeID(), static_cast<GLuint>(location));
         ASSERT_TRUE(a->getContext().isGLArray()); ASSERT_EQ(a->getContext().getGLSize(), size);
         ASSERT_EQ(a->getContext().getGLType(), static_cast<GLenum>(GL_FLOAT_VEC3));
         a->getContext().setGLUsage(GL_STATIC_DRAW); a->bind();
+        const auto target = a->getContext().getBufferID();
+        const std::array<GLubyte, 12> original{12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+        glBindBuffer(GL_ARRAY_BUFFER, target); glBufferData(GL_ARRAY_BUFFER, original.size(), original.data(), GL_DYNAMIC_DRAW);
         const auto lure = decoy();
+        const auto state = [location] {
+            std::array<GLint, 9> values{};
+            const std::array<GLenum, 7> properties{GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING,
+                GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_STRIDE,
+                GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED};
+            for (std::size_t i = 0; i < properties.size(); ++i) glGetVertexAttribiv(location, properties[i], &values[i]);
+            glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &values[7]); glGetIntegerv(GL_CURRENT_PROGRAM, &values[8]); return values;
+        };
+        // Snapshots follow all deliberate resource preparation, not bind().
+        const auto before = state();
+        void* pointerBefore = nullptr;
+        glGetVertexAttribPointerv(location, GL_VERTEX_ATTRIB_ARRAY_POINTER, &pointerBefore);
+        ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
         expectSpecificError([&] { a->set(std::make_shared<glm::vec3>(1)); }, TraceableException<std::runtime_error>(std::format("ERROR::ATTRIBUTE::SET::ARRAY_NOT_SUPPORTED size={}", size)));
-        EXPECT_EQ(boundArrayBuffer(), static_cast<GLint>(lure)); verifyDecoy(lure);
+        EXPECT_EQ(boundArrayBuffer(), static_cast<GLint>(lure)); EXPECT_EQ(state(), before);
+        void* pointerAfter = nullptr;
+        glGetVertexAttribPointerv(location, GL_VERTEX_ATTRIB_ARRAY_POINTER, &pointerAfter); EXPECT_EQ(pointerAfter, pointerBefore);
+        verifyDecoy(lure);
+        glBindBuffer(GL_ARRAY_BUFFER, target); ASSERT_EQ(boundArrayBufferSize(), static_cast<GLint>(original.size()));
+        std::array<GLubyte, 12> after{}; glGetBufferSubData(GL_ARRAY_BUFFER, 0, after.size(), after.data()); EXPECT_EQ(after, original);
+        GLint usage = 0; glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_USAGE, &usage); EXPECT_EQ(usage, GL_DYNAMIC_DRAW);
         ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
     }
+}
+
+TEST_F(AttributeQaRenderTest, NativeReflectedScalarUploadPreservesDecoy)
+{
+    AttributeQaProgram program;
+    ASSERT_TRUE(program.load(attributeQaSource("test-datas/shaders/qa-attribute/long-name.vert")));
+    api::OpenGL::PassContext pass; pass.setPassID(program.program);
+    artist::graphic::opengl::pipeline::component::pass::OpenGLPassAttributeReader<artist::graphic::opengl::profile::Pass::Classic>::on(pass);
+    const auto location = glGetAttribLocation(program.program, "QA_LONG_ATTRIBUTE"); ASSERT_EQ(location, 0);
+    ASSERT_EQ(pass.getAttributes().size(), 1u);
+    auto* a = pass.getAttribute("QA_LONG_ATTRIBUTE"); ASSERT_NE(a, nullptr);
+    ASSERT_FALSE(a->getContext().isGLArray()); ASSERT_EQ(a->getContext().getGLSize(), 1u);
+    ASSERT_EQ(a->getContext().getGLType(), static_cast<GLenum>(GL_FLOAT_VEC3));
+    a->getContext().setGLUsage(GL_STATIC_DRAW); a->bind();
+    const auto target = a->getContext().getBufferID(), lure = decoy();
+    a->set(std::make_shared<glm::vec3>(1.0f, -2.0f, 0.5f));
+    ASSERT_EQ(boundArrayBuffer(), static_cast<GLint>(target)); ASSERT_EQ(boundArrayBufferSize(), 12);
+    std::array<float, 3> observed{};
+    glGetBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(observed), observed.data());
+    const std::array<float, 3> expected{1.0f, -2.0f, 0.5f}; EXPECT_EQ(observed, expected);
+    verifyDecoy(lure);
+    ASSERT_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
 }
 
 TEST_F(AttributeQaRenderTest, MatrixPublishedThenSetterRefuses)
