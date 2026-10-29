@@ -1,0 +1,271 @@
+{
+  "version": 2,
+  "providers": [
+    "openai",
+    "opencode",
+    "zai-coding-plan"
+  ],
+  "models": [
+    {
+      "id": "zai-coding-plan/glm-5.3-flash",
+      "provider": "zai-coding-plan",
+      "reasoningEffort": "max",
+      "intelligenceScore": 42,
+      "averageCostPerTask": 0.25,
+      "available": true,
+      "level": "medium",
+      "usage": "coding_agentique",
+      "benchmarkCostPerTask": 0.25,
+      "accessMode": "subscription",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 48,
+      "averageCostPerTask": 0.21,
+      "available": true,
+      "level": "medium",
+      "usage": "coding_et_raisonnement",
+      "benchmarkCostPerTask": 0.21,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode/gemini-3.8-flash",
+      "provider": "opencode",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 40,
+      "averageCostPerTask": 0.93,
+      "available": true,
+      "level": "medium",
+      "usage": "multimodal",
+      "benchmarkCostPerTask": 0.93,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 51,
+      "averageCostPerTask": 1.73,
+      "available": true,
+      "level": "complexe",
+      "usage": "raisonnement_complexe",
+      "benchmarkCostPerTask": 1.73,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "max",
+      "intelligenceScore": 52,
+      "averageCostPerTask": 0.72,
+      "benchmarkCostPerTask": 0.72,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 50,
+      "averageCostPerTask": 0.32,
+      "benchmarkCostPerTask": 0.32,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "low",
+      "intelligenceScore": 42,
+      "averageCostPerTask": 0.13,
+      "benchmarkCostPerTask": 0.13,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 51,
+      "averageCostPerTask": 0.39,
+      "benchmarkCostPerTask": 0.39,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode/gemini-3.8-flash",
+      "provider": "opencode",
+      "reasoningEffort": "high",
+      "intelligenceScore": 41,
+      "averageCostPerTask": 1.24,
+      "benchmarkCostPerTask": 1.24,
+      "accessMode": "unknown",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "max",
+      "intelligenceScore": 53,
+      "averageCostPerTask": 3.26,
+      "benchmarkCostPerTask": 3.26,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "low",
+      "intelligenceScore": 46,
+      "averageCostPerTask": 0.82,
+      "benchmarkCostPerTask": 0.82,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 50,
+      "averageCostPerTask": 1.54,
+      "benchmarkCostPerTask": 1.54,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 52,
+      "averageCostPerTask": 2.31,
+      "benchmarkCostPerTask": 2.31,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-luna",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 33,
+      "averageCostPerTask": 0.03,
+      "benchmarkCostPerTask": 0.03,
+      "accessMode": "unknown",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    }
+  ],
+  "startingIntelligence": 50,
+  "classificationBeta": 0.35,
+  "verification": {
+    "level": "proportionate",
+    "commands": [
+      "Enquetes B1/B3/B5 d'abord en lecture seule ; protocoles discriminants et commandes exactes valides par le lead avant les essais. Pas de sweep de seeds ni nouvelle recherche des memes archives sans hypothese nouvelle.",
+      "Sur nouveau diff executable integre : RED causal puis GREEN/non-regression via runner lead ; CTest Windows Debug et ASan selon risque et protocole existant, selection pre-run, --parallel 1, --no-tests=error, JUnit/logs complets. Ne pas rejouer les campagnes acquises sans changement pertinent."
+    ],
+    "acceptance": [
+      "Restaurer le scope INITIAL B1-B6 du 23 octobre a la demande operateur : terminer les sujets B1/B3/B5 restants, pas seulement reconciler le board de continuation deja completed7/7. B2/B4/B6 restent acquis a leur candidat ; aucune reouverture des anciennes taches.",
+      "B1 : isoler la cause lifecycle/ordre des mocks avec population/pin identifies ou une experience discriminante nouvelle ; correctif minimal seulement apres RED causal. Deux seeds vertes actuelles ou filtre176 sur binaire484 ne ferment pas l'incident historique. Disposition residuelle explicite, pas DEFER automatique.",
+      "B3 : engine-architect propose le contrat lecture/EOF/erreur/publication/fermeture et la frontiere portable/OS avant auteur. Contrat adopte et amendement QA commite avant worktrees d'implementation ; correction Reader autorisee uniquement dans ce contrat avec RED causal. Echec authentique extraction et close sont des obligations a traiter, pas des preuves remplacees par throw/flags/seam artificiels. Toute impossibilite ou remplacement de branche exige decision explicite.",
+      "B5/C2 : reproduction/provenance exploitable ou fermeture motivee explicitement acceptee par l'operateur. Archives absentes, suite verte et silence ne prouvent ni cause ni cloture ; aucune chasse identique sans hypothese nouvelle.",
+      "Reutiliser les preuves normales et ASan555, canari et B4/B6 seulement apres controle d'identite/pertinence ; un nouveau diff C++ ne reprend pas automatiquement leur verdict. Runner lead seul, un build par sortie, fixtures possedees et GL/ASan sous bail ; aucun test GPU remplace par mock.",
+      "Sur campagne ASan complete necessaire au nouveau candidat : decouverte/selection/execution identiques ;17 historiques chacun une fois ; zero failure/error/skip ; diagnostics tardifs controles. Sinon FAIL ou INCONCLUSIVE selon preuve.",
+      "Audit final par test-reviewer natif fresh sur tache dediee avec claim autorise ; profil restrictif et transport verifies avant analyse, sans shell/tests/edition/delegation. Brief contrat/candidat/preuves, pas de rapports ou justifications auteurs ni consultation du board implementation. Un worktree isole en lecture seule est tolere avec snapshot local autorise et identite verifiee. Cette adaptation remplace seulement le hors-board litteral et worktree:false ; elle ne garantit pas une invisibilite technique du board ni une sandbox. Profil/contexte/transport incompatibles = BLOCKED, aucune substitution generique ni permission elargie.",
+      "Preserver diffs concurrents et worktrees ; aucune nouvelle seam non adoptee explicitement, dependance/service/installation, campagne Linux/GCC/Release/image/performance ou nouveau backend implicite. Pas de correction speculative ni changement de contrat moteur hors B3 valide.",
+      "Etat de depart et non verdict de sortie : F8 catch INCONCLUSIVE/close DEFER, C2 OPEN/INCONCLUSIVE, B1 historique non resolu. Sortie par branche : traite avec preuve, fermeture motivee acceptee, ou gap residuel porte au choix operateur ; pas de PASS global. GCC natif reste non valide sans execution ; ADR0001/2/4/6/7 Proposed,0003/5 Accepted partial,0008 Windows Debug seulement.",
+      "Harness concurrent : diagnostic de coherence borne ; toute nouvelle correction executable requiert ownership explicite, contrat et RED/GREEN avant implementation."
+    ]
+  }
+}

@@ -29,3 +29,6 @@ docs/.obsidian/*
 
 # Local Electron/Obsidian launcher diagnostics
 /debug.log
+
+# GrepAI: the live config contains only a local proxy credential; share the example.
+/.grepai/config.yaml

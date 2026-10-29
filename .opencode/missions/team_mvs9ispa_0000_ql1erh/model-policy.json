@@ -1,0 +1,211 @@
+{
+  "version": 2,
+  "providers": [
+    "openai"
+  ],
+  "models": [
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 48,
+      "averageCostPerTask": 0.21,
+      "available": true,
+      "level": "medium",
+      "usage": "coding_et_raisonnement",
+      "benchmarkCostPerTask": 0.21,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 51,
+      "averageCostPerTask": 1.73,
+      "available": true,
+      "level": "complexe",
+      "usage": "raisonnement_complexe",
+      "benchmarkCostPerTask": 1.73,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "max",
+      "intelligenceScore": 52,
+      "averageCostPerTask": 0.72,
+      "benchmarkCostPerTask": 0.72,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 50,
+      "averageCostPerTask": 0.32,
+      "benchmarkCostPerTask": 0.32,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "low",
+      "intelligenceScore": 42,
+      "averageCostPerTask": 0.13,
+      "benchmarkCostPerTask": 0.13,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 51,
+      "averageCostPerTask": 0.39,
+      "benchmarkCostPerTask": 0.39,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "max",
+      "intelligenceScore": 53,
+      "averageCostPerTask": 3.26,
+      "benchmarkCostPerTask": 3.26,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "low",
+      "intelligenceScore": 46,
+      "averageCostPerTask": 0.82,
+      "benchmarkCostPerTask": 0.82,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 50,
+      "averageCostPerTask": 1.54,
+      "benchmarkCostPerTask": 1.54,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 52,
+      "averageCostPerTask": 2.31,
+      "benchmarkCostPerTask": 2.31,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-luna",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 33,
+      "averageCostPerTask": 0.03,
+      "benchmarkCostPerTask": 0.03,
+      "accessMode": "unknown",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    }
+  ],
+  "startingIntelligence": 50,
+  "classificationBeta": 0.35,
+  "verification": {
+    "level": "proportionate"
+  },
+  "autonomy": {
+    "mode": "long_run",
+    "instructions": [
+      "Conduire la mission Linux QA en autonomie long run, en best effort dans le périmètre convenu, et arbitrer les choix techniques et organisationnels courants sans demander une validation à chaque étape.",
+      "Rattraper les obligations QA déjà vérifiées sous Windows sans compromis sur les contrats, les assertions ou la sincérité des preuves ; ne pas présenter un contrôle non exécuté ou incomplet comme validé.",
+      "Privilégier la mutualisation des traitements Windows et Linux et la réutilisation des outils, bibliothèques et patterns existants avant de créer une solution spécifique.",
+      "Éviter la surconception et limiter les changements au nécessaire pour la parité QA Linux définie, avec une nouvelle distribution WSL2 dont le disque virtuel est situé sur I:.",
+      "Préserver les permissions, les exigences QA et les limites explicites du projet ; signaler les blocages indispensables et ne pas étendre silencieusement la mission."
+    ]
+  }
+}

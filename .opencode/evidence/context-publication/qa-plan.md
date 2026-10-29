@@ -76,3 +76,22 @@ Budget relatif : setup25 unités, puis75% planifié/25% buffer sur le reste ; pa
 durée inventée. Pas de test moteur, nouveau harnais, nouvelle campagne GPU ou
 preuve de hot reload/enforcement revendiquée. Toute extension indispensable au
 contrat ou conflit non résolu revient au lead puis à l'utilisateur si nécessaire.
+
+## Résultats du runner et revue
+
+Raccordement v2 : RED ciblé6tests/4FAIL attendus puis633/633 au complet. La revue
+indépendante a ensuite identifié une restriction runner non protégée par l'oracle
+planner : négatif1/1RED, GREEN minimal puis **634/634**,0failure/skip. Ré-audit
+indépendant PASS borné, finding fermé ; voir `qa-review.md`.
+
+Syntax/schema/offline :41/81/215checksPASS, missionVerdictINCONCLUSIVE préservé.
+JSON nouveaux/modifiés parsés sans doublon,11exports publics385315octets avec
+SHA256 conservés, note liée et sources vérifiées. Index exact hors.tmp et live
+config ; clé active absente des blobs. Les archives brutes et le patch historique
+conservent leurs espaces finaux : avertissements diffcheck documentaires assumés,
+pas des FAIL de harnais cachés ; contrôle hors archives propre. Une seule
+normalisation CRLF standard Git, fichiers locaux inchangés.
+
+Le linter optionnel lint-agent-profiles.ts mentionné par le skill n'est pas livré
+dans l'installation inspectée ; NOT_RUN, aucune installation. Les validateurs
+locaux réellement présents fournissent la preuve syntaxe/schéma/hors ligne.

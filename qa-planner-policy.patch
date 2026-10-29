@@ -1,0 +1,22 @@
+diff --git a/AGENTS.md b/AGENTS.md
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -108,8 +108,12 @@
+ QA >= 10 exige déclencheur/blast radius/détection/mitigation/gap, sans changer la grille.
+-Runner séparé : les trois QA conservent deny-all + read/glob/skill et leurs
+-27 règles exactes ; edit/shell/execute/subagent restent fermés. Le lead fournit
+-les digestions QMD/Context Mode et exécute les tests, avec attribution explicite.
+-Une règle MCP imbriquée ne rend pas Code Mode accessible. Restitution finale
+-textuelle native si le transport est indisponible ; si cette voie est elle-même
+-refusée, BLOCKED, sans boucle ni élargissement implicite des permissions.
++Runner séparé : édition, persistance, commits, exécution de tests et délégation
++restent interdits au qa-planner et réservés au coordinateur.
++Pour qa-planner, les permissions minimales doivent permettre lecture, recherche,
++accès au contexte ARTIST explicitement fourni et restitution au coordinateur.
++Le nombre historique de 27 règles n'est plus un invariant pour ce profil.
++Sa correction autorisée inclut profil canonique, copie du worktree, instructions
++contradictoires et validateurs locaux. Les deux autres profils QA sont inchangés.
++Ne pas autoriser execute ou un outil générique sans examiner sa portée réelle ;
++préférer un transport ciblé et permissionné. Vérifier le profil effectivement
++chargé, puis une lecture et une restitution runtime ; un lint seul ne suffit pas.
+ 

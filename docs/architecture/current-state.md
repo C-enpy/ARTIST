@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
 summary: "Runtime 78e7b74 : QA Windows, WSL et CI Ubuntu à 589 normal/ASan ; Attribute moderne conditionnel compatible et contrôle de fraîcheur shader renforcé."
-sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, docs/_meta/session-2026-10-27-prepared-float.json, research/sessions/2026-10-27-prepared-float/index.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -46,6 +46,10 @@ updated: 2026-10-29
 > Preuve `_meta/session-2026-10-27-prepared-float.json` ;
 > [[adr/0004-layouts-types-et-donnees-preparees|contrat et limites]],
 > [[usage/uniform-attribute|usage]], [[development/build-and-test|commandes]].
+
+Provenance de cette livraison : [[references/session-2026-10-27-prepared-float|session et dix sous-agents]],
+transcriptions publiques filtrées et enseignements de validation.
+L'ingestion ne constitue pas une nouvelle exécution des suites ci-dessus.
 
 > [!info] Photographie historique — nettoyage stable du26octobre
 > **a96104c** : fichier stable pendant lecture, sans écriture concurrente garantie.

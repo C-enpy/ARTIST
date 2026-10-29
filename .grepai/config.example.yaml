@@ -59,13 +59,13 @@ trace:
     exclude_patterns: []
 rpg:
     enabled: true
-    feature_mode: hybrid
+    feature_mode: local
     drift_threshold: 0.35
     max_traversal_depth: 3
     llm_provider: openai
     llm_model: openai/gpt-6-luna#xhigh
-    llm_endpoint: http://127.0.0.1:48765/artist/v1
-    llm_api_key: ${GREPAI_RPG_BRIDGE_TOKEN}
+    llm_endpoint: http://127.0.0.1:4000/v1
+    llm_api_key: "REPLACE_WITH_LOCAL_PROXY_KEY"
     llm_timeout_ms: 125000
     feature_group_strategy: sample
 update:

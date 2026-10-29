@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "project": "ARTIST",
+  "root_session": "ses_e8390245bffdS3NfX0qwRMR5ed",
+  "exported_at": "2026-10-27T19:09:38.057Z",
+  "cutoff_exclusive": {
+    "message_id": "msg_17eb9ecc9001hotDiK0lNKi3tB",
+    "created": 1793127476563,
+    "iso": "2026-10-27T18:57:56.563Z"
+  },
+  "method": "Native OpenCode V2 API via opencode-cli api get; paginated /api/session and /api/session/{id}/message, user and assistant filters separately, order asc then cursor.next without order, exhausted through an empty page.",
+  "scope": "Root session and all 10 direct children returned by the native listing; no claim of a recursive descendant inventory.",
+  "child_listing_pages": 2,
+  "filter": "Only user.text and assistant.content parts of type text; no reasoning, tool payloads/results, attachments, native metadata or private instruction envelopes. Recognizable secrets and personal home paths redacted. Ingestion request and later messages excluded.",
+  "limitations": "Filtered public transcription, not an exhaustive backup or proof of execution. Public quotations may repeat briefs or old findings. No historical per-turn routing inferred from current model snapshots.",
+  "summary_page": "docs/references/session-2026-10-27-prepared-float.md",
+  "engine_source_revision": "3b1b1028dcd64ca46e0a359365ae096be1a38ac4",
+  "head_at_ingestion": "bcd3857494b361fab079092a9880b35522130022",
+  "totals": {
+    "sessions": 11,
+    "messages_before_cutoff": 858,
+    "public_messages_exported": 170,
+    "non_text_parts_omitted": 1699,
+    "transcript_bytes": 385315
+  },
+  "sessions": [
+    {
+      "session": "ses_e8390245bffdS3NfX0qwRMR5ed",
+      "role": "lead",
+      "file": "00-main.md",
+      "public_messages": 98,
+      "sha256": "dc6c1328ac9894f71dbc158819404d778f8f02c987fe4c53acf435361c10a4b7"
+    },
+    {
+      "session": "ses_e838b2cb0ffeKTjoF0uoSPLjT8",
+      "role": "qa-planner, preliminary conditional plan",
+      "file": "01-ses_e838b2cb0ffeKTjoF0uoSPLjT8.md",
+      "public_messages": 3,
+      "sha256": "56a3425f5d04b861b7c45f8732a49f386dfad90a9e7b26b0598bfb6b8a874017"
+    },
+    {
+      "session": "ses_e838c3676ffe32Z9Mt5KwsJHk0",
+      "role": "project-manager",
+      "file": "02-ses_e838c3676ffe32Z9Mt5KwsJHk0.md",
+      "public_messages": 2,
+      "sha256": "13ffda782e50359ed7479c0915fab57f615d742076ffa00ea11a9384ea4794c7"
+    },
+    {
+      "session": "ses_e838c7f7cffeweoAHqj24DDdC4",
+      "role": "engine-architect",
+      "file": "03-ses_e838c7f7cffeweoAHqj24DDdC4.md",
+      "public_messages": 2,
+      "sha256": "5575831e38e93eb837839be2aeffe9344b2c2565a2106d978be38e3d90a146da"
+    },
+    {
+      "session": "ses_e82cd2b71ffeDxUbgW6PUuLh1C",
+      "role": "qa-planner, reconciled plan",
+      "file": "04-ses_e82cd2b71ffeDxUbgW6PUuLh1C.md",
+      "public_messages": 2,
+      "sha256": "7a757385d645c3adfbd30c128c360d382e833f3a270d773cbd3c9a7b500c8247"
+    },
+    {
+      "session": "ses_e82bd3877ffe5ny3I9Xdv55nxv",
+      "role": "cpp-engineer",
+      "file": "05-ses_e82bd3877ffe5ny3I9Xdv55nxv.md",
+      "public_messages": 33,
+      "sha256": "5327661303c7f6814c5c42fce558e8ad24f80b524343d325a47faaedd5542480"
+    },
+    {
+      "session": "ses_e827eba2affe5Ss5sMlv1BZK8I",
+      "role": "gpu-engineer, OpenGL consumer",
+      "file": "06-ses_e827eba2affe5Ss5sMlv1BZK8I.md",
+      "public_messages": 10,
+      "sha256": "aae978cdc5b37b5920dd406e4cd865b6ab8781966406b16674dbf03adce72f6d"
+    },
+    {
+      "session": "ses_e82683352ffeLTe6E71BlFTId4",
+      "role": "test-engineer, initial gaps",
+      "file": "07-ses_e82683352ffeLTe6E71BlFTId4.md",
+      "public_messages": 4,
+      "sha256": "ba39f50bdca63a097ba480dda04b9332b86af191373c6d93c839ea15c2dc992e"
+    },
+    {
+      "session": "ses_e82689115ffeJlKfuUPt54xUyz",
+      "role": "correctness-reviewer",
+      "file": "08-ses_e82689115ffeJlKfuUPt54xUyz.md",
+      "public_messages": 5,
+      "sha256": "da3731233adae8b9b3a3f109ccd0f69ca28fc5e3e3cf76a2f2a06f148e85d4d5"
+    },
+    {
+      "session": "ses_e824039f2ffeU9dNg3WyIL1eV5",
+      "role": "test-engineer, context and partial-free gaps",
+      "file": "09-ses_e824039f2ffeU9dNg3WyIL1eV5.md",
+      "public_messages": 5,
+      "sha256": "e9f763b718b5f755be50ed3097e6f1769017164910fa9fd662d4f5ca1a4ce53b"
+    },
+    {
+      "session": "ses_e824af8b9ffe0vrlb3N50WZoXE",
+      "role": "test-reviewer, fresh audit and targeted re-audit",
+      "file": "10-ses_e824af8b9ffe0vrlb3N50WZoXE.md",
+      "public_messages": 6,
+      "sha256": "eefe0cf7ccfa5ce5b957cbdf762d41e76b0fce1d9a776a0e1cf7b0581d7b15d4"
+    }
+  ]
+}

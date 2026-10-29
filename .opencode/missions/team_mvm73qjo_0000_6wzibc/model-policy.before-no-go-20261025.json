@@ -1,0 +1,477 @@
+{
+  "version": 2,
+  "providers": [
+    "openai",
+    "opencode-go",
+    "zai-coding-plan",
+    "opencode"
+  ],
+  "models": [
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 50,
+      "averageCostPerTask": 0.32,
+      "benchmarkCostPerTask": 0.32,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-luna",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 33,
+      "averageCostPerTask": 0.03,
+      "benchmarkCostPerTask": 0.03,
+      "accessMode": "unknown",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/gpt-6-luna",
+      "provider": "opencode-go",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 30,
+      "averageCostPerTask": 0.02,
+      "available": true,
+      "level": "simple",
+      "usage": "petites_fonctions",
+      "benchmarkCostPerTask": 0.02,
+      "accessMode": "subscription",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/claude-haiku-5-5",
+      "provider": "opencode-go",
+      "reasoningEffort": "high",
+      "intelligenceScore": 38,
+      "averageCostPerTask": 0.08,
+      "available": true,
+      "level": "simple",
+      "usage": "coding_rapide",
+      "benchmarkCostPerTask": 0.08,
+      "accessMode": "subscription",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/deepseek-v4.1-flash",
+      "provider": "opencode-go",
+      "reasoningEffort": "max",
+      "intelligenceScore": 39,
+      "averageCostPerTask": 0.27,
+      "available": true,
+      "level": "simple",
+      "usage": "generation_rapide",
+      "benchmarkCostPerTask": 0.27,
+      "accessMode": "subscription",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "zai-coding-plan/glm-5.3-flash",
+      "provider": "zai-coding-plan",
+      "reasoningEffort": "max",
+      "intelligenceScore": 42,
+      "averageCostPerTask": 0.25,
+      "available": true,
+      "level": "medium",
+      "usage": "coding_agentique",
+      "benchmarkCostPerTask": 0.25,
+      "accessMode": "subscription",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/glm-5.3-flash",
+      "provider": "opencode-go",
+      "reasoningEffort": "max",
+      "intelligenceScore": 42,
+      "averageCostPerTask": 0.25,
+      "available": true,
+      "level": "medium",
+      "usage": "coding_agentique",
+      "benchmarkCostPerTask": 0.25,
+      "accessMode": "subscription",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 48,
+      "averageCostPerTask": 0.21,
+      "available": true,
+      "level": "medium",
+      "usage": "coding_et_raisonnement",
+      "benchmarkCostPerTask": 0.21,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode/gemini-3.8-flash",
+      "provider": "opencode",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 40,
+      "averageCostPerTask": 0.93,
+      "available": true,
+      "level": "medium",
+      "usage": "multimodal",
+      "benchmarkCostPerTask": 0.93,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "high",
+      "intelligenceScore": 51,
+      "averageCostPerTask": 1.73,
+      "available": true,
+      "level": "complexe",
+      "usage": "raisonnement_complexe",
+      "benchmarkCostPerTask": 1.73,
+      "accessMode": "unknown",
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/gpt-6-luna",
+      "provider": "opencode-go",
+      "reasoningEffort": "max",
+      "intelligenceScore": 38,
+      "averageCostPerTask": 0.07,
+      "benchmarkCostPerTask": 0.07,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/gpt-6-luna",
+      "provider": "opencode-go",
+      "reasoningEffort": "high",
+      "intelligenceScore": 33,
+      "averageCostPerTask": 0.03,
+      "benchmarkCostPerTask": 0.03,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/gpt-6-luna",
+      "provider": "opencode-go",
+      "reasoningEffort": "low",
+      "intelligenceScore": 22,
+      "averageCostPerTask": 0.0045,
+      "benchmarkCostPerTask": 0.0045,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/gpt-6-luna",
+      "provider": "opencode-go",
+      "reasoningEffort": "none",
+      "intelligenceScore": 18,
+      "averageCostPerTask": 0.01,
+      "benchmarkCostPerTask": 0.01,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/gpt-6-luna",
+      "provider": "opencode-go",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 35,
+      "averageCostPerTask": 0.04,
+      "benchmarkCostPerTask": 0.04,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/claude-haiku-5-5",
+      "provider": "opencode-go",
+      "reasoningEffort": "max",
+      "intelligenceScore": 43,
+      "averageCostPerTask": 0.21,
+      "benchmarkCostPerTask": 0.21,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/claude-haiku-5-5",
+      "provider": "opencode-go",
+      "reasoningEffort": "low",
+      "intelligenceScore": 29,
+      "averageCostPerTask": 0.02,
+      "benchmarkCostPerTask": 0.02,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/claude-haiku-5-5",
+      "provider": "opencode-go",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 34,
+      "averageCostPerTask": 0.05,
+      "benchmarkCostPerTask": 0.05,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode-go/claude-haiku-5-5",
+      "provider": "opencode-go",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 41,
+      "averageCostPerTask": 0.12,
+      "benchmarkCostPerTask": 0.12,
+      "accessMode": "subscription",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "max",
+      "intelligenceScore": 52,
+      "averageCostPerTask": 0.72,
+      "benchmarkCostPerTask": 0.72,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "low",
+      "intelligenceScore": 42,
+      "averageCostPerTask": 0.13,
+      "benchmarkCostPerTask": 0.13,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "provider": "openai",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 51,
+      "averageCostPerTask": 0.39,
+      "benchmarkCostPerTask": 0.39,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "opencode/gemini-3.8-flash",
+      "provider": "opencode",
+      "reasoningEffort": "high",
+      "intelligenceScore": 41,
+      "averageCostPerTask": 1.24,
+      "benchmarkCostPerTask": 1.24,
+      "accessMode": "unknown",
+      "available": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "max",
+      "intelligenceScore": 53,
+      "averageCostPerTask": 3.26,
+      "benchmarkCostPerTask": 3.26,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "low",
+      "intelligenceScore": 46,
+      "averageCostPerTask": 0.82,
+      "benchmarkCostPerTask": 0.82,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "medium",
+      "intelligenceScore": 50,
+      "averageCostPerTask": 1.54,
+      "benchmarkCostPerTask": 1.54,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "provider": "openai",
+      "reasoningEffort": "xhigh",
+      "intelligenceScore": 52,
+      "averageCostPerTask": 2.31,
+      "benchmarkCostPerTask": 2.31,
+      "accessMode": "unknown",
+      "available": true,
+      "reserve": true,
+      "structuredOutput": {
+        "supported": true,
+        "source": "https://models.dev/api.json",
+        "checkedAt": "2026-10-13T08:19:21.633Z",
+        "strictVerification": "unverified"
+      }
+    }
+  ],
+  "startingIntelligence": 50,
+  "classificationBeta": 0.35,
+  "verification": {
+    "level": "proportionate",
+    "acceptance": [
+      "F8 H_A : sonde Windows de lecture reelle par verrou de plage autorisee, avec calibration OS puis ifstream avant tout verdict ; aucune nouvelle seam/API, installation, service ou dependance.",
+      "F8 : fermeture reellement echouee explicitement DEFER, non couverte ; aucune cloture globale F8. Proprietaire de reprise : coordinateur avec specialiste build/OS, sous dispositif et decision separes.",
+      "Toute sonde F8 reste subordonnee au plan QA et au contrat H_A commites avant auteur, a une fixture exclusivement possedee et aux preuves causales ; precondition manquante ou sonde non discriminante = INCONCLUSIVE."
+    ]
+  }
+}
