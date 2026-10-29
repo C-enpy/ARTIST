@@ -7,10 +7,11 @@ aliases: [ADR-0005]
 status: Accepted
 implementation: partial
 decision_origin: Demande utilisateur de build complet le 2026-10-03, avec réévaluation explicite de Conan 2.
-summary: Rétablir une configuration propre avec dépendances compatibles et tests réellement découverts avant de modifier ou comparer les pipelines.
+summary: "Accepted/partial : baseline et QA Windows/Linux prouvées ; coverage ON ou rejet ciblé exécuté non prouvé, sans exiger une matrice de plateformes idéale."
 created: 2026-10-03
 updated: 2026-10-29
-sources: [docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/mission-linux-qa/final-test-reaudit.md]
+audit_date: 2026-10-29
+sources: [docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/mission-linux-qa/final-test-reaudit.md, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -18,6 +19,18 @@ provenance:
 ---
 
 # ADR-0005 — Build reproductible et validation
+
+## Audit au 29 octobre 2026
+
+**Accepted / partial** confirmé pour un critère précis : l'exécution avec
+coverage ON sur GNU, **ou** l'exécution du rejet ciblé prévu sur une toolchain
+non supportée, n'est pas établie par les preuves retrouvées. Le guard et ses
+flags sont observés (`CMakeLists.txt:26–32`), pas validés par leur seule présence.
+Coverage OFF, découverte, tests/contextes/fixtures, versions/ABI et reproduction
+aux environnements consignés disposent de preuves. Linux matériel, Release et
+verrou complet des révisions Conan ne sont pas inventés comme conditions de
+passage de la baseline à verified.
+[[references/adr-audit-2026-10-29#ADR-0005|Audit de toutes les obligations et critères]].
 
 ## Preuve complémentaire Linux — 29 octobre 2026
 
@@ -109,7 +122,8 @@ et la CI d'après les résultats, sans revendiquer toutes les plateformes.
 109/109 tests réussis dont 22 sur OpenGL NVIDIA réel. Découverte racine, fixtures,
 préfixes de suites et chemins d'échec du contexte corrigés. Voir
 [[development/build-and-test|les commandes et preuves]]. `implementation: partial`
-conserve explicitement le travail restant sur coverage et les autres plateformes.
+conserve le critère coverage non prouvé ; les plateformes désormais exercées sont
+qualifiées séparément ci-dessus, sans exiger toutes les plateformes possibles.
 
 ## Références
 

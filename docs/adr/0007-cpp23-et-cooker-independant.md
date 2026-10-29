@@ -5,14 +5,31 @@ category: adr
 tags: [artist, architecture, cpp, assets, adr]
 aliases: [ADR-0007]
 status: Proposed
-implementation: not-started
+implementation: partial
+implementation_note: "Audit du 2026-10-29 : correction initiale compilée/testée en C++23 ; sous-contrats cooker, formats et pilote de langage conditionnels non déclenchés."
 decision_origin: Recommandations explicites des rapports R3 et R4, appliquées au périmètre actuel.
-summary: Conserver C++23 pendant la correction du runtime et définir les futurs échanges du cooker en données versionnées plutôt qu'en objets ou types de langage.
+summary: "Proposed/partial : correction initiale C++23 réalisée ; futur cooker et format versionné conditionnels, aucun changement de langage adopté."
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-29
+audit_date: 2026-10-29
+sources: [.opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json, docs/_meta/session-2026-10-29-linux-qa.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0007 — C++23 et cooker indépendant
+
+## Audit au 29 octobre 2026
+
+**Proposed / partial**, au lieu de not-started : le premier sous-contrat est
+réalisé. La correction compile/teste en C++23, sans réécriture, notamment dans les
+six configurations de la QA Windows/WSL/CI (`78e7b74`, 589 chacune).
+Cette qualification ne ratifie pas globalement l'ADR. Le cooker, son schéma et
+un pilote éventuel d'un autre langage n'étant pas engagés, leurs clauses restent
+conditionnelles et ne deviennent pas des chantiers exigés pour la QA actuelle.
+[[references/adr-audit-2026-10-29#ADR-0007|Toutes les obligations et leur applicabilité]].
 
 ## Contexte et faits
 
@@ -63,8 +80,9 @@ Un futur produit cooké a un schéma, une version et des règles de compatibilit
 testables. Un pilote éventuel documente hypothèses, critères préalables et
 résultats ; aucune échéance en personne-mois n'est importée comme engagement.
 
-**Preuves actuelles** : C++23 est présent ; le nouveau contrat de préparation,
-le cooker et une comparaison de langages ne sont pas implémentés.
+**Preuves actuelles** : correction initiale compilée et testée en C++23 ;
+préparation float OpenGL runtime réalisée séparément (ADR-0004). Aucun produit
+cooké, format d'échange versionné ou pilote de comparaison de langages introduit.
 
 ## Références
 

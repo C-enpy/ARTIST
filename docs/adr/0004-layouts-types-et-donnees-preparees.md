@@ -10,7 +10,8 @@ decision_origin: Correction proposée des maps par noms et valeurs effacées ; s
 summary: "Proposed globalement ; première tranche float scalaire préparé livrée, emprunts révocables et consommateur pixel vérifiés Windows Debug."
 created: 2026-10-03
 updated: 2026-10-29
-sources: [docs/_meta/session-2026-10-27-prepared-float.json, docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json]
+audit_date: 2026-10-29
+sources: [docs/_meta/session-2026-10-27-prepared-float.json, docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -18,6 +19,17 @@ provenance:
 ---
 
 # ADR-0004 — Layouts typés et données préparées
+
+## Audit au 29 octobre 2026
+
+**Proposed / partial** confirmé : seule la tranche float est adoptée. Ses types,
+métadonnées, révocations et pixels sont exercés ; les layouts généralisés et
+bindings Attribute préparés ne sont pas livrés. Le critère de mesure des
+lookups/allocations n'est pas entièrement prouvé : l'absence de lookup/any_cast
+d'update est observée dans la source, mais pas de mesure d'allocation acquise.
+Un format cooké futur et un gestionnaire global d'IDs absents ne sont pas des
+obligations ajoutées au produit actuel.
+[[references/adr-audit-2026-10-29#ADR-0004|Chaque obligation et critère audités]].
 
 ## Non-régression Linux et classification — 29 octobre 2026
 

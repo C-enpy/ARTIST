@@ -9,10 +9,26 @@ implementation: not-started
 decision_origin: Exigence d'excellence technique des rapports et absence de benchmark moteur établi dans le dépôt inspecté.
 summary: Définir des comparaisons reproductibles à travail et qualité équivalents, incluant code size, build et déterminisme par sous-système.
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-29
+audit_date: 2026-10-29
+sources: [.opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json, docs/_meta/session-2026-10-27-prepared-float.json, docs/_meta/session-2026-10-29-linux-qa.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0006 — Preuves de performance et de déterminisme
+
+## Audit au 29 octobre 2026
+
+**Proposed / not-started** confirmé pour le protocole de mesure comparative.
+Les baselines CPU/GL, identités et l'oracle pixel float existent ; ils sont des
+prérequis réutilisables, pas un benchmark moteur. Aucune campagne comparant
+actuel/lots/statique, code-size/build, CPU/GPU/present et dispersion n'est établie.
+Ni temps CTest ni fixture utilisant une horloge pour nommer un fichier ne prouvent
+une mesure de performance. Aucun gain n'est revendiqué par cette correction.
+[[references/adr-audit-2026-10-29#ADR-0006|Séparation de chaque obligation et preuve]].
 
 ## Contexte et faits
 
@@ -70,8 +86,10 @@ Les données brutes et résumés sont conservés ; **MEASURED**, **HYPOTHESIS** 
 **INCONCLUSIVE** sont distingués. Les tests/image n'échouent pas sous une tolérance
 élargie uniquement pour masquer une régression.
 
-**Preuves actuelles** : protocole proposé ; scènes/benchmarks/images de référence
-à créer ou qualifier dans les travaux d'implémentation.
+**Preuves actuelles** : protocole comparatif proposé, non exécuté ; baselines de
+correctness et image fixe du float qualifiées dans leurs tranches. Scènes et
+benchmarks de coût moteur restent à créer/qualifier si une optimisation mesurée
+est engagée, sans déclarer absent l'oracle pixel déjà livré.
 
 ## Références
 

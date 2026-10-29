@@ -3,7 +3,7 @@ title: Plan de correction de l'existant
 category: architecture
 tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
-sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/session-2026-10-29-linux-qa.json]
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/session-2026-10-29-linux-qa.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -14,6 +14,18 @@ updated: 2026-10-29
 ---
 
 # Plan de correction de l'existant
+
+## Audit complet des ADR — 29 octobre 2026
+
+[[references/adr-audit-2026-10-29|Registre des obligations et critères]] :
+implémentations ADR-0001/0007 corrigées à partial ; décisions Proposed inchangées,
+sans confusion entre adoption et réalisation. N=2 est une séquence fixe d'emprunts
+polymorphes, pas la cible terminale ; l'étape de bindings d'ADR-0002 est partiellement
+réalisée par le float. Les limites actuelles sont précises : coverage ON/rejet
+ciblé non exécuté, échecs authentiques Reader non tous exercés, image comparative
+ClosedExecution et mesures d'allocations/performance non acquises.
+Les clauses futures cooker/API explicite ne deviennent pas des chantiers imposés.
+Aucune nouvelle mission d'implémentation n'est lancée par cet audit documentaire.
 
 ## Qualification QA Linux — 29 octobre 2026
 

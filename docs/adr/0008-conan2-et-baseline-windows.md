@@ -10,7 +10,8 @@ decision_origin: Demande utilisateur de build complet, réévaluation de Conan 2
 summary: Migrer vers Conan 2 sans changer les versions des dépendances et établir une baseline Windows MSVC C++23 exécutée.
 created: 2026-10-03
 updated: 2026-10-29
-sources: [docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json]
+audit_date: 2026-10-29
+sources: [docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/build-validation.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -18,6 +19,16 @@ provenance:
 ---
 
 # ADR-0008 — Conan 2 et baseline Windows
+
+## Audit au 29 octobre 2026
+
+**Accepted / verified** confirmé dans la baseline Windows x64 Debug adoptée :
+dépendances exactes installées via Conan2, sonde C++23, fixtures/découverte et
+109 tests réellement exécutés. La qualification Linux ultérieure est distincte.
+Release, coverage ON, tous les GPU/OS et performances ne sont pas ajoutés comme
+conditions nouvelles de cette baseline. La preuve coverage requise par
+ADR-0005 reste ouverte sans invalider le verdict borné d'ADR-0008.
+[[references/adr-audit-2026-10-29#ADR-0008|Audit de chacune des obligations et preuves]].
 
 ## Preuve Linux séparée — 29 octobre 2026
 

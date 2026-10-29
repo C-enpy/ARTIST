@@ -9,10 +9,33 @@ implementation: partial
 decision_origin: Analyse des contexts partagés et recommandation commune des rapports ; adoption explicite par l'utilisateur le 2026-10-03 avec une migration franche (rien n'est en production).
 summary: Séparer propriétaires et emprunts du chemin d'appel, définir invalidation et libération conforme aux règles du backend.
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
+audit_date: 2026-10-29
+sources: [.opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json, docs/_meta/session-2026-10-26-stable-reader-cleanup.json, docs/_meta/session-2026-10-27-prepared-float.json, docs/_meta/session-2026-10-29-linux-qa.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0003 — Ownership et lifetime CPU/GPU
+
+## Audit au 29 octobre 2026
+
+**Accepted / partial** confirmé sur les critères, pas maintenu par inertie.
+Les owners de Pipeline/Pass/Shader/Uniform/Attribute sont désormais uniques et
+leurs accesseurs empruntent ; les indications contraires ci-dessous sont
+historiques à leurs candidats. Moves, états vides, libérations répétées et
+révocation float ont des preuves CPU/GL, puis la suite actuelle normal/ASan
+Windows/WSL/CI à 589 par configuration (`78e7b74`). Ce n'est pas une nouvelle
+exécution des anciens candidats dont ASan manquait.
+
+Le critère de création/échec à chaque étape reste **partiellement prouvé** : les
+échecs authentiques d'extraction/fermeture du Reader demeurent non exercés (E26).
+Contexte compatible courant et validité des owners restent des préconditions.
+Fences d'une API future, nouveau système asynchrone et RAII exhaustive ne sont
+pas ajoutés comme préalables artificiels à cette clôture.
+[[references/adr-audit-2026-10-29#ADR-0003|Décisions, migration et critères audités]].
 
 ## Preuve complémentaire Reader stable — 2026-10-26
 

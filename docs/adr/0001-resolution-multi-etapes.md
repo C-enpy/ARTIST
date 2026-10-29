@@ -5,14 +5,34 @@ category: adr
 tags: [artist, architecture, cpp, adr]
 aliases: [ADR-0001]
 status: Proposed
-implementation: not-started
+implementation: partial
+implementation_note: "Audit du 2026-10-29 : sélection de composants, topologie N=2 et préparation float réalisées ; pas de contrat transversal complet, de cooker ou de coût machine validé."
 decision_origin: Demande utilisateur de formaliser les corrections et quatre rapports fournis le 2026-10-03.
-summary: Résoudre les comportements à la compilation, le contenu stable à la préparation et l'état intrinsèquement dynamique à l'exécution.
+summary: "Proposed/partial : sélection compile-time et préparation float présentes ; résolution multi-étapes globale et coût machine non vérifiés."
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-29
+audit_date: 2026-10-29
+sources: [.opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json, docs/_meta/session-2026-10-20-pipeline-execution-path.json, docs/_meta/session-2026-10-27-prepared-float.json, docs/_meta/session-2026-10-29-linux-qa.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0001 — Résolution multi-étapes
+
+## Audit au 29 octobre 2026
+
+**Proposed / partial**, au lieu de not-started. Le statut de décision n'est pas
+promu : les adoptions de tranches ne ratifient pas toute cette proposition.
+`Pipeline<API,PROFILE>` sélectionne les composants à la compilation ;
+`ClosedExecution` fixe une séquence N=2 avec deux emprunts `IPass&`, toujours
+polymorphes. `PreparedFloatUniform` résout nom/type à la préparation runtime
+après link, avec invalidation locale et owners explicites.
+
+Ces réalisations empêchent de décrire l'implémentation comme non commencée, mais
+ne prouvent ni plan cooké, ni résolution globale, ni inlining ou gain mesuré.
+[[references/adr-audit-2026-10-29#ADR-0001|Chaque obligation et critère audités]].
 
 ## Contexte et faits
 
@@ -70,8 +90,10 @@ contrat le sont. Ne pas refondre les sous-systèmes futurs en même temps.
 - Toute affirmation d'appel direct/inlining est appuyée sur le code généré ; tout
   gain sur [[adr/0006-preuves-performance-et-determinisme|un protocole exécuté]].
 
-**Preuves actuelles** : inspection source seulement. Aucune nouvelle exécution
-statique complète ni performance validée par la création de cet ADR.
+**Preuves actuelles** : inspection source et preuves bornées des tranches N=2
+(`fdbce15`, 546/546), float préparé (`3b1b102`, 581 normaux/581 ASan Windows),
+puis non-régression Windows/WSL/CI (`78e7b74`, 589 par configuration).
+Ces campagnes ne démontrent aucune exécution statique complète ou performance.
 
 ## Références
 

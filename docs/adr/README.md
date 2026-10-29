@@ -3,10 +3,10 @@ title: Registre des ADR ARTIST
 category: index
 tags: [artist, architecture, adr, index]
 aliases: [ADR ARTIST, Décisions ARTIST]
-summary: "Huit ADR : statuts conservés, preuves Linux/Windows distinctes et baseline Windows Conan 2 vérifiée dans son périmètre."
+summary: "Audit des huit ADR : 0001/0007 passent à partial ; décisions et preuves distinguées, coverage non prouvée, baseline Windows vérifiée à son périmètre."
 created: 2026-10-03
 updated: 2026-10-29
-sources: [research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/session-2026-10-29-linux-qa.json]
+sources: [research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/session-2026-10-29-linux-qa.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -14,6 +14,26 @@ provenance:
 ---
 
 # Registre des décisions d'architecture
+
+## Audit complet — 29 octobre 2026
+
+[[references/adr-audit-2026-10-29|Obligations, étapes et critères des huit ADR]] :
+audit architecture/build, recoupement source et preuves, sans nouvelle campagne.
+Le maintien des statuts de décision est motivé par leur adoption documentée,
+pas déduit du seul nombre de tests. Deux champs d'implémentation sont corrigés :
+
+- **0001 Proposed/partial** : sélection de composants, N=2 et préparation float réalisées.
+- **0002 Proposed/partial** : N=2 encore polymorphe ; bindings float partiellement livrés.
+- **0003 Accepted/partial** : owners/cycles testés ; échecs authentiques Reader non tous exercés.
+- **0004 Proposed/partial** : seule tranche float adoptée, pas de mesure d'allocation acquise.
+- **0005 Accepted/partial** : coverage ON ou rejet ciblé exécuté non prouvé ; pas d'exigence de matrice idéale.
+- **0006 Proposed/not-started** : protocole de mesure comparative non exécuté, prérequis QA disponibles.
+- **0007 Proposed/partial** : correction initiale C++23 réalisée ; clauses cooker conditionnelles non déclenchées.
+- **0008 Accepted/verified** : baseline Windows x64 Debug adoptée et prouvée ; Linux distinct.
+
+`Proposed` ne signifie donc pas « aucun code livré ». Un cooker futur, une API
+explicite, Release ou un GPU Linux matériel ne sont pas ajoutés comme conditions
+artificielles des contrats actuels. Les gaps effectifs sont nommés dans l'audit.
 
 ## Actualisation des preuves — 29 octobre 2026
 
@@ -28,17 +48,19 @@ ni adoption globale d'un ADR Proposed, ni nouvelle exécution.
 
 ## Premiers contrats de correction
 
-Les ADR-0001, 0006 et 0007 restent **Proposed / not-started** : aucun autre
-backend n'est écrit. ADR-0004 reste **Proposed / partial** : seule la tranche
+Les ADR-0001 et 0007 sont **Proposed / partial** après audit ; ADR-0006 reste
+**Proposed / not-started** pour son protocole de mesure. ADR-0004 reste
+**Proposed / partial** : seule la tranche
 float scalaire OpenGL est adoptée, source `3b1b102`, 581 normaux et 581 ASan
 Windows Debug, oracle pixel borné et générations locales révocables ; pas de
 gestionnaire global de handles, de format cooké ni de performance mesurée.
 Voir sa preuve et ses limites : ré-audit final PASS borné après deux compléments,
 sans requalifier l'historique RED incomplet ou adopter tout l'ADR.
-ADR-0002 reste **Proposed** mais son champ `implementation` doit être relu :
+ADR-0002 reste **Proposed / partial** après réexamen de son implémentation :
 la tranche d'exécution fermée du 2026-10-20 (`ClosedExecution<API>`, coexistence,
 `fdbce15`) est livrée et vérifiée, sans adopter la cible terminale (tuple,
-passes concrètes). ADR-0003 est
+passes concrètes) ; étape de bindings partiellement réalisée par le float.
+ADR-0003 est
 **Accepted / partial** : la tranche Shader→Pass (2026-10-03) puis la tranche
 Pipeline A1–A2/F6 (2026-10-16, C++ `f914d77`) sont vérifiées au périmètre
 Windows Debug ; la tranche F7 Uniform/Attribute, Reader et findings F2/F1 est
@@ -48,7 +70,7 @@ son périmètre Windows Debug. Voir les preuves propres à chaque décision.
 
 - [[adr/0001-resolution-multi-etapes|ADR-0001 — Résolution multi-étapes]] : spécialiser au moment où l'information est réellement connue.
 - [[adr/0002-preparation-et-execution-specialisee|ADR-0002 — Préparation et exécution spécialisée]] : séparer l'API flexible du chemin fin et migrer une tranche.
-- [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003 — Ownership et lifetime CPU/GPU]] : Shader→Pass, Pipeline A1–A2/F6 puis F7 vérifiées au périmètre Windows Debug ; reste Accepted/partial, pas de RAII exhaustive ou de retraite GPU démontrée.
+- [[adr/0003-ownership-et-lifetime-cpu-gpu|ADR-0003 — Ownership et lifetime CPU/GPU]] : owners et cycles de vie vérifiés par tranches ; Accepted/partial, chemins d'échec de préparation encore partiellement prouvés.
 - [[adr/0004-layouts-types-et-donnees-preparees|ADR-0004 — Layouts typés et données préparées]] : résoudre noms/types avant la boucle et valider l'invalidation.
 - [[adr/0005-build-reproductible-et-validation|ADR-0005 — Build reproductible et validation]] : restaurer une baseline propre avant les comparaisons.
 - [[adr/0006-preuves-performance-et-determinisme|ADR-0006 — Performance et déterminisme]] : protocole A/B, coût total et critères distincts CPU/GPU/image.

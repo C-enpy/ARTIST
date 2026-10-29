@@ -7,20 +7,37 @@ aliases: [ADR-0002]
 status: Proposed
 implementation: partial
 implementation_note: >-
-  Tranche d'exécution fermée N=2 livrée et vérifiée le 2026-10-20 (ClosedExecution,
-  coexistence, fdbce15) ; la cible terminale (types concrets + tuple) reste
-  non implémentée. Champ mis à jour le 2026-10-23 pour le périmètre prouvé.
+  Topologie fermée N=2 livrée et vérifiée le 2026-10-20 (ClosedExecution,
+  coexistence, fdbce15), mais emprunts IPass polymorphes conservés. Bindings float
+  partiellement réalisés depuis le 2026-10-27 ; cible passes concrètes/tuple et
+  migration générale des consommateurs non réalisées. Audit du 2026-10-29.
 decision_origin: Traduction des quatre rapports et de la hiérarchie Pipeline/Pass observée.
 summary: Garder une API de préparation flexible et introduire un chemin d'exécution concret, dense, spécialisé et sélectionné à granularité de lot.
 created: 2026-10-03
-updated: 2026-10-23
+updated: 2026-10-29
+audit_date: 2026-10-29
+sources: [.opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json, docs/_meta/session-2026-10-20-pipeline-execution-path.json, docs/_meta/session-2026-10-27-prepared-float.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0002 — Préparation et exécution spécialisée
 
-## Contexte et faits
+## Audit au 29 octobre 2026
 
-`ARTIST/include/graphic/pipeline/Pipeline.hpp` fournit `IPipeline` et
+**Proposed / partial** confirmé. La séquence littérale N=2 n'est pas une chaîne
+de passes concrètes : ses deux membres sont des `IPass<API>&`. La préparation
+float scalaire est désormais livrée ; dire que tous les bindings sont absents
+était obsolète. Aucun raccordement général de ces bindings au type fermé ni
+migration de consommateur existant n'est établi. Image équivalente du chemin
+ClosedExecution et mesures de coût non exécutées ; le pixel float ne les remplace pas.
+[[references/adr-audit-2026-10-29#ADR-0002|Obligations et critères audités]].
+
+## Contexte initial — 3 octobre 2026
+
+Au point de départ, `ARTIST/include/graphic/pipeline/Pipeline.hpp` fournit `IPipeline` et
 `Pipeline<API, PROFILE>`. `Pass.hpp` et `Shader.hpp` suivent un schéma comparable.
 `ARTIST/include/graphic/context/PipelineContext.hpp` stocke les passes par
 `vector<shared_ptr<IPass>>`. La sélection statique de composants intervient donc
@@ -77,12 +94,14 @@ inspection du stockage et du dispatch du chemin migré, image équivalente sur l
 contexte cible. Si gain revendiqué : comparaison ancien/runtime par lots/statique,
 y compris taille du code et coût de build.
 
-**Preuves actuelles (addendum 2026-10-23)** : la migration 1–2 de cette ADR
-est **réalisée et vérifiée au périmètre Windows Debug** — caractérisation
-(ledger K du 2026-10-20, recoupée) puis chemin concret `ClosedExecution<API>`
-N=2 en coexistence avec `IPipeline`, sans consumer migré (`fdbce15`, 546/546
-natifs). La cible terminale (types de passes concrets, composition tuple) et
-la préparation des bindings (étape 3, ADR-0004) restent **non implémentées**.
+**Preuves actuelles (réconciliées le 2026-10-29)** : caractérisation de l'étape 1
+et prototype intermédiaire de l'étape 2 **réalisés et vérifiés Windows Debug** —
+ledger K du 2026-10-20 puis `ClosedExecution<API>` N=2 en coexistence avec
+`IPipeline`, sans consumer migré (`fdbce15`, 546/546 natifs). Le type est concret,
+mais ses passes restent deux emprunts polymorphes `IPass&`. La cible terminale
+(passes concrètes, composition tuple) est **non implémentée**. L'étape 3 des
+bindings est **partiellement réalisée** par la tranche float scalaire OpenGL
+(`3b1b102`, ADR-0004), sans intégration générale au chemin N=2.
 Preuves : [[../references/session-2026-10-20-pipeline-execution-path|session]]
 et [[../architecture/missions/2026-10-19-pipeline-execution-path|fiche close]].
 Le stockage des passes cité plus haut (2026-10-03, `vector<shared_ptr>`) a

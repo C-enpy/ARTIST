@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
 summary: "Runtime 78e7b74 : QA Windows, WSL et CI Ubuntu à 589 normal/ASan ; Attribute moderne conditionnel compatible et contrôle de fraîcheur shader renforcé."
-sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, docs/_meta/session-2026-10-27-prepared-float.json, research/sessions/2026-10-27-prepared-float/index.json, docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json]
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, docs/_meta/session-2026-10-27-prepared-float.json, research/sessions/2026-10-27-prepared-float/index.json, docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -16,6 +16,14 @@ updated: 2026-10-29
 ---
 
 # État réel d'ARTIST
+
+> [!info] Audit complet des ADR — 29 octobre
+> [[references/adr-audit-2026-10-29|Chaque obligation et critère réévalués]].
+> ADR-0001/0007 passent de not-started à **partial** sans adoption globale.
+> ClosedExecution reste deux emprunts polymorphes, pas des passes concrètes ;
+> bindings float partiellement réalisés. ADR-0005 reste partial pour le chemin
+> coverage ON/rejet ciblé non prouvé, pas faute de GPU matériel Linux ou de Release.
+> Aucun code moteur ni nouvelle preuve d'exécution ajouté par cet audit.
 
 > [!info] Photographie courante — parité QA Linux du 29 octobre
 > Runtime `78e7b74` : **589/589 normal et ASan sous Windows, WSL et CI Ubuntu**,

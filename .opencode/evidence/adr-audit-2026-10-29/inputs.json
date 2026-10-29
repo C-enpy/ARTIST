@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-29",
+  "purpose": "Audit documentaire exhaustif des huit ADR ; photographie avant réconciliation",
+  "leadBase": "3d3e508f573f4738cb769d1afe5d6c2447b6f379",
+  "trackedSourceDiffAtAdmission": [],
+  "preexistingLocalFilesExcluded": ".tmp/",
+  "planning": {
+    "method": "PM/LLM",
+    "session": "ses_e784b31b0ffeFI13E5FzW1hNzB",
+    "architecture": {"complexityRaw": 76, "complexity": 76, "riskRaw": 46, "risk": 46},
+    "build": {"complexityRaw": 63, "complexity": 63, "riskRaw": 44, "risk": 44},
+    "integration": {"complexityRaw": 64, "complexity": 64, "riskRaw": 48, "risk": 48},
+    "review": {"complexityRaw": 61, "complexity": 61, "riskRaw": 39, "risk": 39}
+  },
+  "researchTasks": {
+    "architecture": "task_mvtjqeyb_0001_m5bj3c",
+    "build": "task_mvtjqeyc_0002_yvrm3w",
+    "context": "fresh",
+    "worktree": false,
+    "reportMode": "final_response",
+    "completionOwner": "lead",
+    "restrictions": "Lecture seule, aucune édition, shell, campagne de tests ou sous-délégation"
+  },
+  "adrBeforeSha256": {
+    "docs/adr/0001-resolution-multi-etapes.md": "9f554315ff884bf46fa2ced0ddfe2176b5a150a5d6e050c20859dc76207575fd",
+    "docs/adr/0002-preparation-et-execution-specialisee.md": "583f728261c6fff872fda2f8781cd783999e46ca33d404664bedd0c4c0c9f1a7",
+    "docs/adr/0003-ownership-et-lifetime-cpu-gpu.md": "321f118e37abce1d79ed2016a77ebfb5b89ea6b43460f605ed626c4c4c8cdbb6",
+    "docs/adr/0004-layouts-types-et-donnees-preparees.md": "6f34a0de023124eae22fec06a09618f317502ba79318a9c3b8c13282e2b99f9b",
+    "docs/adr/0005-build-reproductible-et-validation.md": "5dc858d3446e16d792dc61c16036d53d21790234d220c1d31fc8dc282ea278f4",
+    "docs/adr/0006-preuves-performance-et-determinisme.md": "39c40be1fd842d3a4824d996683ba725f1854e80fdec6b09270ed103e6216bfb",
+    "docs/adr/0007-cpp23-et-cooker-independant.md": "edeb688828359d73001af8ad26de7b5b5195291120ef47f8753de18bcb7e2799",
+    "docs/adr/0008-conan2-et-baseline-windows.md": "fabfc80345d34f567c8cbd21776216c8ec4e089b1a7fe1bc4cd8067757497cde"
+  },
+  "leadIdentityChecks": {
+    "runner": "lead",
+    "method": "git diff --name-only <qualified-candidate> HEAD -- <bounded-paths>",
+    "runtimeCandidate": "78e7b74989dd463cddf14080916e03b60405640d",
+    "runtimePaths": ["ARTIST", "test-datas", "cmake", "CMakeLists.txt", "CMakePresets.json", "conanfile.txt", "conan", ".github/workflows/cmake-single-platform.yml"],
+    "runtimeDifferences": [],
+    "evidenceCandidate": "f58a49f4261e018749c59b0d8aab9dd7e85ba53e",
+    "evidencePaths": ["scripts/build-linux.py", "scripts/linux-evidence.py", "scripts/tests/test_linux_evidence.py", "scripts/verify_asan.py", "scripts/build-windows.ps1"],
+    "evidenceDifferences": [],
+    "scope": "Identité Git aux chemins déclarés, pas nouvelle exécution ou validation des critères ADR",
+    "newEngineTestsRun": false
+  },
+  "priorSessionExportIndex": {
+    "path": "research/sessions/2026-10-29-linux-qa-session/index.json",
+    "sha256": "b72e77ee31d251239fdedf03a7c8239bb774fe3a42213832eb2533b162196838"
+  }
+}

@@ -4,7 +4,7 @@ category: index
 tags: [artist, documentation, index]
 aliases: [ARTIST, Accueil ARTIST]
 summary: Entrée du vault ARTIST, état actuel, cap technique, ADR de correction et procédures de développement.
-sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-27-prepared-float/index.json, research/sessions/2026-10-29-linux-qa-session/index.json]
+sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-27-prepared-float/index.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -49,6 +49,8 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 
 ## Corriger
 
+- [[references/adr-audit-2026-10-29|Audit complet des huit ADR]] — décisions et implémentations séparées, chaque obligation disposée ; 0001/0007 réévalués à partial, coverage et mesures encore non prouvées.
+
 - [[adr/0004-layouts-types-et-donnees-preparees|Float OpenGL préparé, tranche bornée du 27 octobre]] — source `3b1b102`, 581 normaux/581 ASan, oracle pixel ciblé et témoins révocables ; ADR global Proposed/partial, aucun gain mesuré. [[usage/uniform-attribute|Usage]].
 - [[references/session-2026-10-26-stable-reader|Reader stable et sous-agents]] — nettoyage validé555normaux/555ASan, board28/28 ; erreurs de coordination et limites des preuves conservées.
 - [[references/session-2026-10-25-qa-continuation|Continuation QA du25octobre]] — audit indépendant accepté, ASan555/555 ; livrables terminés et board réconcilié7/7 sous verrou natif. Équipe conservée, F8/C2/B1/GCC ouverts, aucun PASS global.
@@ -64,11 +66,14 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[adr/template|Modèle d'ADR]] — séparer statut de décision et réalité d'implémentation.
 
 > [!important] Statut des ADR initiaux
-> Cinq ADR restent **Proposed** ; ADR-0002 et ADR-0004 comportent une tranche partielle observée,
+> Cinq ADR restent **Proposed** ; ADR-0001/0002/0004/0007 sont partiellement réalisés,
+> ADR-0006 ne dispose pas de campagne de mesure comparative.
 > sans adoption de la cible terminale. ADR-0003 est **Accepted / partial**
 > (Shader→Pass puis Pipeline A1–A2/F6 et F7 Uniform/Attribute à `6d6dcb7`),
 > ADR-0005 **Accepted / partial**, ADR-0008 **Accepted / verified**
-> pour sa baseline Windows Debug. La mission Pipeline s'ajoute au principal à
+> pour sa baseline Windows Debug. Les décomptes suivants sont historiques ;
+> la QA Windows/WSL/CI actuelle est dans [[development/linux-qa]].
+> La mission Pipeline s'ajoute au principal à
 > **215/215 normales** (176 unitaires + 39 OpenGL) et **198/198 ASan** sélection
 > (176 + 22, 17 autres GL non sélectionnés), harnais vérifié séparément à
 > `95c2b9e` (cinq binaires identiques, aucun rerun moteur) ; bilan QA
