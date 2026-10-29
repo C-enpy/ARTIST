@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "providers": ["openai"],
+  "models": [
+    {"id":"openai/gpt-6.1-sol","provider":"openai","reasoningEffort":"medium","intelligenceScore":48,"averageCostPerTask":0.21,"available":true,"level":"medium","usage":"coding_et_raisonnement","benchmarkCostPerTask":0.21,"accessMode":"unknown","structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6-astra","provider":"openai","reasoningEffort":"high","intelligenceScore":51,"averageCostPerTask":1.73,"available":true,"level":"complexe","usage":"raisonnement_complexe","benchmarkCostPerTask":1.73,"accessMode":"unknown","structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6.1-sol","provider":"openai","reasoningEffort":"max","intelligenceScore":52,"averageCostPerTask":0.72,"benchmarkCostPerTask":0.72,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6.1-sol","provider":"openai","reasoningEffort":"high","intelligenceScore":50,"averageCostPerTask":0.32,"benchmarkCostPerTask":0.32,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6.1-sol","provider":"openai","reasoningEffort":"low","intelligenceScore":42,"averageCostPerTask":0.13,"benchmarkCostPerTask":0.13,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6.1-sol","provider":"openai","reasoningEffort":"xhigh","intelligenceScore":51,"averageCostPerTask":0.39,"benchmarkCostPerTask":0.39,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6-astra","provider":"openai","reasoningEffort":"max","intelligenceScore":53,"averageCostPerTask":3.26,"benchmarkCostPerTask":3.26,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6-astra","provider":"openai","reasoningEffort":"low","intelligenceScore":46,"averageCostPerTask":0.82,"benchmarkCostPerTask":0.82,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6-astra","provider":"openai","reasoningEffort":"medium","intelligenceScore":50,"averageCostPerTask":1.54,"benchmarkCostPerTask":1.54,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6-astra","provider":"openai","reasoningEffort":"xhigh","intelligenceScore":52,"averageCostPerTask":2.31,"benchmarkCostPerTask":2.31,"accessMode":"unknown","available":true,"reserve":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}},
+    {"id":"openai/gpt-6-luna","provider":"openai","reasoningEffort":"high","intelligenceScore":33,"averageCostPerTask":0.03,"benchmarkCostPerTask":0.03,"accessMode":"unknown","available":true,"structuredOutput":{"supported":true,"source":"https://models.dev/api.json","checkedAt":"2026-10-13T08:19:21.633Z","strictVerification":"unverified"}}
+  ],
+  "startingIntelligence": 50,
+  "classificationBeta": 0.35,
+  "verification": {
+    "level": "proportionate",
+    "acceptance": [
+      "Livrer le pipeline de verification des uniforms et parametres GPU pour qualification ulterieure sous Windows et Linux ; aucun gain de performance ni resultat de campagne n'est requis pour cette livraison.",
+      "Livrer des scenarios reels, un catalogue selectionnable, la separation preparation/construction/execution/rapport et des modes list/plan sans effets de bord.",
+      "Reutiliser les scripts et garanties existants ; distinguer CPU seul, OpenGL logiciel et OpenGL materiel, sans nouveau backend ni repli logiciel silencieux.",
+      "Conserver identites du candidat, shaders, executables et environnement, journaux et resultats bruts ; distinguer panne du pipeline, echec des tests et mesure invalide ou absente.",
+      "Apres approbation native start, autoriser uniquement les tests du pipeline lui-meme sur donnees synthetiques et programmes factices, en RED/GREEN puis non-regression. Ne lancer aucune suite moteur, aucun rendu ou benchmark et ne reserver aucune ressource cloud dans cette mission.",
+      "Sans execution sur une plateforme, annoncer livre pour qualification et NON_EXECUTE, jamais fonctionnement demontre. Les obligations QA et de revue independante du projet restent applicables."
+    ]
+  },
+  "autonomy": {
+    "mode": "long_run",
+    "instructions": [
+      "Poursuivre la mission jusqu'a livraison du pipeline Windows/Linux conforme au plan convenu, en decidant les choix techniques et organisationnels courants dans ce perimetre sans demander un accord a chaque etape.",
+      "Construire l'outil et ses scenarios reels pour une qualification ulterieure sur des machines maitrisees ; aucun gain de performance ni resultat de campagne n'est exige pour la livraison.",
+      "Valider uniquement le pipeline sur donnees synthetiques et programmes factices selon les exigences du projet. Ne lancer aucune suite moteur, aucun rendu ou benchmark, et ne reserver aucune ressource cloud.",
+      "Conserver la QA proportionnee et les obligations de securite, de TDD et de revue du projet ; signaler les validations non executees et demander un arbitrage pour une modification d'objectif ou une autorisation indispensable hors perimetre."
+    ]
+  }
+}
