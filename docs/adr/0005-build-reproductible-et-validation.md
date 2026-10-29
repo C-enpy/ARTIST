@@ -9,10 +9,19 @@ implementation: partial
 decision_origin: Demande utilisateur de build complet le 2026-10-03, avec réévaluation explicite de Conan 2.
 summary: Rétablir une configuration propre avec dépendances compatibles et tests réellement découverts avant de modifier ou comparer les pipelines.
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
 ---
 
 # ADR-0005 — Build reproductible et validation
+
+## Preuve complémentaire Linux — 29 octobre 2026
+
+**Accepted/partial inchangé.** Windows, Ubuntu WSL et CI propre exécutent les
+mêmes 589 cas normal/ASan au runtime `78e7b74`, sans failure/error/skip ; Conan2,
+CMake/CTest et fixtures mutualisés. Le contrôleur `f58a49f` inclut ensuite les
+shaders dans ses identités après RED/GREEN et ré-audit. Voir
+[[development/linux-qa|commandes, candidats distincts et limites]]. Aucune
+qualification universelle des toolchains, Release, fuites ou performance.
 
 ## Preuve complémentaire Windows Debug — 2026-10-26
 

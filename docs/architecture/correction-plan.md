@@ -10,10 +10,21 @@ provenance:
   ambiguous: 0.0
 status: proposed
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
 ---
 
 # Plan de correction de l'existant
+
+## Qualification QA Linux — 29 octobre 2026
+
+Parité exécutée du runtime `78e7b74` : 589/589 dans six configurations Windows,
+WSL et CI Ubuntu, normales/ASan. Correction Attribute compatible : clés natives
+exactes, classification moderne conditionnelle et contrôle d'annonce effective
+GLEW ; pas de migration API/cook ou backend. Dernier renforcement du contrôleur
+`f58a49f` : shaders inclus dans l'identité, RED/GREEN Python Windows/Linux et
+ré-audit indépendant. [[development/linux-qa|Procédure et portée de preuve]].
+Statuts ADR inchangés ; Linux matériel, Release, UBSan, performance et fuites
+exhaustives ne sont pas qualifiés.
 
 Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier

@@ -10,11 +10,15 @@ provenance:
   inferred: 0.0
   ambiguous: 0.0
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
 qmd_collection: artist-wiki
 ---
 
 # ARTIST — documentation vivante
+
+Dernière qualification : [[development/linux-qa|QA Windows, Ubuntu WSL et CI]] —
+589 tests normal/ASan dans chaque environnement, contrôleur de preuves commun et
+limites explicites ; OpenGL seul backend, statuts ADR conservés.
 
 > [!abstract] Retrouver le projet
 > Vault : `docs/` du dépôt ARTIST. Collection QMD : **`artist-wiki`**.

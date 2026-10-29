@@ -9,10 +9,17 @@ implementation: verified
 decision_origin: Demande utilisateur de build complet, réévaluation de Conan 2 et autorisation de moderniser les toolchains le 2026-10-03.
 summary: Migrer vers Conan 2 sans changer les versions des dépendances et établir une baseline Windows MSVC C++23 exécutée.
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-29
 ---
 
 # ADR-0008 — Conan 2 et baseline Windows
+
+## Preuve Linux séparée — 29 octobre 2026
+
+La mission [[development/linux-qa|QA Linux]] apporte une preuve bornée GCC14 /
+Ubuntu WSL et CI avec Conan2, distincte de la baseline adoptée ici. Le statut
+**Accepted/verified reste limité à Windows Debug dans cet ADR** ; cette note
+n'adopte pas une validation générale multi-plateforme, Release ou performance.
 
 ## Contexte
 

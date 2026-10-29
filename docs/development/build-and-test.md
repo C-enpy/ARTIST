@@ -2,12 +2,12 @@
 title: Build et tests actuels
 category: development
 aliases: [build-and-test]
-source_revision: 3b1b1028dcd64ca46e0a359365ae096be1a38ac4
+source_revision: f58a49f4261e018749c59b0d8aab9dd7e85ba53e
 tags: [artist, build, testing, guide]
-summary: "Windows Debug 3b1b102 : 581/581 normaux et 581/581 ASan, float préparé et oracle pixel ciblé ; clean-first final et limites conservées."
-status: verified-windows-debug
+summary: "QA Windows, Ubuntu WSL et CI : 589/589 normal et ASan ; commandes communes, identité shader renforcée et limites de preuve."
+status: observed
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
 sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
@@ -17,7 +17,17 @@ provenance:
 
 # Build et tests actuels
 
-## Résumé courant — float préparé, Windows x64 Debug du 2026-10-27
+## Résumé courant — QA Windows/Linux du 29 octobre
+
+**589/589 dans six configurations** Windows, WSL et CI Ubuntu, normal/ASan,
+513 CPU + 76 OpenGL, zéro failure/error/skip ; runtime `78e7b74`. L'adaptateur
+de preuve renforcé `f58a49f` inclut les shaders consommés, tests Python **10/10
+sur chaque OS**, RED causal puis ré-audit indépendant. Les identités/campagnes
+ultérieures sont consignées séparément : [[development/linux-qa|procédure et portée]],
+preuve `_meta/session-2026-10-29-linux-qa.json`.
+Les paragraphes ci-dessous restent des jalons historiques, pas la baseline Linux.
+
+## Historique — float préparé, Windows x64 Debug du 2026-10-27
 
 Source **3b1b1028dcd64ca46e0a359365ae096be1a38ac4**, runner **lead** :
 **581/581 normaux et 581/581 ASan**, 506 CPU + 75 OpenGL chacun, mêmes noms

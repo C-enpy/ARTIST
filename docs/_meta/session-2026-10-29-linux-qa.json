@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "mission": "ARTIST Linux QA parity",
+  "date": "2026-10-29",
+  "scope": "Windows x64 MSVC Debug and Ubuntu 24.04 x86_64 GCC14 Debug, normal and AddressSanitizer; Linux llvmpipe only",
+  "runtimeCandidate": "78e7b74989dd463cddf14080916e03b60405640d",
+  "strengthenedEvidenceCandidate": "f58a49f4261e018749c59b0d8aab9dd7e85ba53e",
+  "runtimeUnchangedAfterFirstCandidate": true,
+  "expectedPopulation": {"total": 589, "unit": 513, "opengl": 76},
+  "populations": {
+    "discoveryMatchesJUnit": true,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "crossPlatformMapping": "Only (glm::qualifier)0 -> 0; bijective, no collision",
+    "addedSince581": {"unit": 7, "opengl": 1},
+    "removedSince581": 0
+  },
+  "windows": {
+    "runner": "lead",
+    "candidate": "78e7b74989dd463cddf14080916e03b60405640d",
+    "normalJUnit": "out/logs/mission-linux-qa/gate-green-windows-normal.xml",
+    "normalJUnitSha256": "242ac4f361ea6bf3ea1948550e28f99b6e780d2f8af5f5fff93c20f2beda0c7e",
+    "asanJUnit": "out/logs/mission-linux-qa/gate-green-windows-asan.xml",
+    "asanJUnitSha256": "bf45cc342e4878ebd9f3490970de766b35326d7975a399284459538db9917070",
+    "normalTests": 589,
+    "asanTests": 589,
+    "reuseAtStrengthenedCandidate": "Same runtime/shaders/config; only evidence helper, Python tests and documentation subsequently changed; not rerun or relabeled",
+    "observedContext": "NVIDIA Corporation / GeForce RTX 3090 / OpenGL 3.3.0 / driver 621.01"
+  },
+  "linux": {
+    "wslRunner": "lead",
+    "ciRunner": "GitHub hosted Ubuntu runner",
+    "distribution": "ARTIST-Ubuntu, Ubuntu 24.04.5 LTS, WSL2",
+    "vhdx": "I:/WSL/ARTIST-Ubuntu/ext4.vhdx",
+    "user": "artist",
+    "toolchain": "GCC/G++14.2, libstdc++14 ABI1, CMake3.28.3, Conan2.12.2, Ninja1.13.0",
+    "observedContext": "Mesa25.2.8 / llvmpipe / OpenGL4.5 core, requested3.3",
+    "strengthenedRuns": [
+      {"mode": "normal", "environment": "WSL", "run": "20261029T082047Z-9067b2324c294e30bf25e50e24a6762e", "tests": 589},
+      {"mode": "asan", "environment": "WSL", "run": "20261029T082059Z-cb91935384bd43ceb3203b24998132fb", "tests": 589},
+      {"mode": "normal", "environment": "CI", "run": "20261029T082127Z-bd246e92ccb940bba491395e74f8c1d0", "tests": 589},
+      {"mode": "asan", "environment": "CI", "run": "20261029T082117Z-2f7ed071ebac4ab08541b36163f1fccc", "tests": 589}
+    ],
+    "ciRun": 40841460327,
+    "ciUrl": "https://github.com/C-enpy/ARTIST/actions/runs/40841460327",
+    "sourceConfigurationHashesPerRun": 169,
+    "shaderFilesIncluded": 20,
+    "reconciliation": "out/logs/mission-linux-qa/shader-identity-final-reconciliation.json",
+    "earlierRunsPreserved": [40741589259, 40754379128, 40760506988],
+    "copyLineEndingQualification": "Two Windows working files have CRLF; Linux hashes match exact Git blobs, not silently normalized evidence"
+  },
+  "asan": {
+    "policy": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0",
+    "healthyExit": 0,
+    "useAfterFreeExit": 86,
+    "diagnostic": "heap-use-after-free",
+    "unitTranslationUnits": 43,
+    "componentTranslationUnits": 13,
+    "qualification": "Compile commands checked, WSL engine binaries linked to libasan with ASan symbols and matching executed hashes; CI commands uploaded",
+    "excludedInstrumentation": "Conan binaries and system/driver libraries"
+  },
+  "controllerTests": {
+    "runner": "lead",
+    "windows": 10,
+    "linux": 10,
+    "testSha256": "847f28936a81f057945a8aa84c99608dc4e359242d1b2e0c3142e4b249c23feb",
+    "helperSha256": "b4b3050fd770967283c4cd845089eab7dc778270fdc0e038955b1696a65fdbd1",
+    "red": "10 tests, exactly two subtest failures for changed vertex/fragment shader; production helper unchanged, delta/hashes captured live",
+    "greenLogs": ["out/logs/mission-linux-qa/shader-identity-green-windows.log", "out/logs/mission-linux-qa/shader-identity-green-linux.log"],
+    "earlierDiscriminatingExperiments": "Three in-memory mutations detected for renderer, hostile ASan options and identity guard; no production file mutated on disk"
+  },
+  "independentReview": {
+    "cpp": "correctness-reviewer: advertised GLEW extension gate finding closed after RED/GREEN and re-audit",
+    "tests": "Native fresh test-reviewer outside implementation board; no edit/test execution; final audit then targeted shader-identity re-audit PASS, F1 closed",
+    "records": [".opencode/evidence/mission-linux-qa/final-test-audit.md", ".opencode/evidence/mission-linux-qa/final-test-reaudit.md"]
+  },
+  "limits": [
+    "First classification RED full delta not hashed live; causal result preserved, provenance incomplete",
+    "Initial Windows incremental access violations preserved; clean rebuild at unchanged sources passed, dependency mechanism not fully explained",
+    "OpenGL3.3 without modern reflection and ambiguous native array name is not universally qualified",
+    "Two identity samples are not transactional isolation against transient changes reverted before the final sample",
+    "No Release, UBSan, coverage, performance, exhaustive leak or Linux hardware-GPU qualification",
+    "No new backend or global ADR status promotion"
+  ]
+}

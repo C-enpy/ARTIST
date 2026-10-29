@@ -3,21 +3,31 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Source 3b1b102 : float OpenGL préparé, emprunts révocables et pixels ciblés ; 581 normaux et 581 ASan Windows Debug, limites TDD et incrémentalité conservées."
+summary: "Runtime 78e7b74 : QA Windows, WSL et CI Ubuntu à 589 normal/ASan ; Attribute moderne conditionnel compatible et contrôle de fraîcheur shader renforcé."
 sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 status: observed
-source_revision: 3b1b1028dcd64ca46e0a359365ae096be1a38ac4
+source_revision: f58a49f4261e018749c59b0d8aab9dd7e85ba53e
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
 ---
 
 # État réel d'ARTIST
 
-> [!info] Photographie courante — float préparé du 27 octobre
+> [!info] Photographie courante — parité QA Linux du 29 octobre
+> Runtime `78e7b74` : **589/589 normal et ASan sous Windows, WSL et CI Ubuntu**,
+> 513 CPU + 76 GL chacun, zéro failure/error/skip. OpenGL demeure le seul backend.
+> Attribute conserve chaque clé legacy native exacte ; réflexion moderne
+> conditionnelle pour distinguer array1, annonce effective et fonctions requises,
+> réponses incohérentes rejetées avant publication. Aucun changement d'API publique,
+> du wrapper CPU ou de provenance cook. Helper `f58a49f` : données shader incluses
+> dans les identités, RED/GREEN et ré-audit ciblé ; campagnes renforcées distinctes.
+> [[development/linux-qa|Commandes, preuves et limites]] ; les ADR ne sont pas promus.
+
+> [!info] Photographie historique — float préparé du 27 octobre
 > **3b1b102** : `prepareFloatUniform(pass, name)` après link/réflexion runtime,
 > puis `PreparedFloatUniform::set(float)` sans recherche répétée de nom/type.
 > `GL_FLOAT` strictement scalaire, arrays[1] refusés ; témoins faibles locaux et
