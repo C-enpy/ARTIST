@@ -1,0 +1,17 @@
+# 94 — Reprise explicite des trois affectations restantes
+
+2026-10-26. Après le constat25/28completed, l'opérateur demande : « Alors lance les je t'avais pourtant dit de ne pas t'arrêter ». GO de reprise distinct reçu ; plus de questions. La clôture technique93 n'était pas une clôture administrative complète. Le lead reprend les trois livrables, sans présenter un ancien essai annulé comme exécuté ni rouvrir implicitement le chantier expérimental supprimé.
+
+## Mandats actuels et livraison attendue
+
+- `PC1_CLOSE` task_mvphg6fn_0028_ear29g, pool-9 réactivé nativement par team_message force:true, modèle/politique conservés : **disposition finale RO** du parent/child retiré. Mapper critères historiques→preuves réellement acquises→NOT_RUN/supersédé83→garanties/gaps Reader actuels ; pas de nouveau code/run/OSresearch. La complétion à venir signifiera cette disposition intégrée, jamais un close expérimental réussi.
+- `REVIEW_STDIO_PROBE` task_mvpl5sf2_003b_2rumv9, pool-12 réactivé de même : **revue indépendante RO de disposition/retrait stdio** sur candidat stable a96104c et archives neutres, consommateurs/gaps/absence de preuve runtime. Pas de justifications auteurs ni board, pas de compilation/probe ; pas PASS de calibration. Contexte de sa revue initiale conservé et déclaré, aucune histoire auteur injectée.
+- `Q_STABLE` task_mvply25m_003x_kerfs2 : finir la **validation QA** du plan préexistant89 et couverture des preuves actuelles. Ancien pool-6 incompatible non réveillé ni ses permissions élargies. Agent natif direct qa-planner fresh via subagent, session `ses_e8616755dffey91zwIwt2FLXBd` ; lead GET confirme agent/parent/racine et9messages d'admission seulement. LecturesAGENTS/preuveportable et restitution final_response réussies. Tentative unique team_message refusée «This session is not in a team», sans répétition ; retour parent natif explicitement autorisé et effectivement reçu. GO analyseRO transmis ; pas de source/tests/edit/shell/délégation/board/MCPexternes. Ce plan est **audité a posteriori**, pas présenté comme plan indépendant commité avant auteur. Certification complète ruleset/enforcement non prétendue depuis la seule identité native ou overridebrowserpréexistant.
+
+Les trois travaux sont indépendants et ont été lancés en parallèle. Aucun changement exécutable : scores précédents/politique inchangés, pas de routage modèle explicite ni de nouvelle mission/config/start. Workers feuilles ; source/campagnes ne sont pas réécrites. Le lead conserve l'intégration et la complétion native après remise/persistance réelles.
+
+## Portée et barrière finale
+
+HEAD actuel e26c420, productiontestée a96104c. Les555normaux/555ASan déjàrecoupés sont réutilisés par identité ; aucun rerun cosmétique. Reader portablestable et13retraits restent la cible opérateur ; authenticerrorclose/extraction demeurent gaps documentés, pas expériences à ressusciter. Les anciens libellés/payloads du board sont raccordés explicitement à ces mandats actualisés, pas silencieusement réinterprétés.
+
+Avant toute annonce finale : récupérer les trois livrables, traiter findingbloquant éventuel dans le contrat, les persister/commiter, compléter nativement leurs véritablesIDs avec cette disposition explicite et vérifier **28/28completed,0in_progress/0pending**. Si une limite technique subsiste, la consigner sans attribuer de test/rôle/preuve inexistants ; aucun fakePASS ou nouvelle réparation d'outillage. Pas d'arrêt sur simple lancement ou promesse d'auteur.

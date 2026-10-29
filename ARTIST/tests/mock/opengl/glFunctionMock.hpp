@@ -76,6 +76,21 @@
 #define glGetAttribLocation ARTIST_MOCK_GL_ENTRY(glGetAttribLocation)
 #define glGetProgramInfoLog ARTIST_MOCK_GL_ENTRY(glGetProgramInfoLog)
 #define glGetProgramiv ARTIST_MOCK_GL_ENTRY(glGetProgramiv)
+#undef glGetProgramResourceIndex
+#undef glGetProgramResourceiv
+#undef glGetProgramResourceName
+#define glGetProgramResourceIndex ARTIST_MOCK_GL_ENTRY(glGetProgramResourceIndex)
+#define glGetProgramResourceiv ARTIST_MOCK_GL_ENTRY(glGetProgramResourceiv)
+#define glGetProgramResourceName ARTIST_MOCK_GL_ENTRY(glGetProgramResourceName)
+#undef GLEW_VERSION_4_3
+#undef GLEW_ARB_program_interface_query
+#define GLEW_VERSION_4_3 artist::mock::opengl::glFunctionMock::instance()->interfaceCore
+#define GLEW_ARB_program_interface_query artist::mock::opengl::glFunctionMock::instance()->interfaceExtension
+#undef glewGetExtension
+#define glewGetExtension(Extension) artist::mock::opengl::glFunctionMock::instance()->programInterfaceAdvertised(Extension)
+#define __glewGetProgramResourceIndex artist::mock::opengl::glFunctionMock::instance()->interfaceIndexProc()
+#define __glewGetProgramResourceiv artist::mock::opengl::glFunctionMock::instance()->interfacePropertiesProc()
+#define __glewGetProgramResourceName artist::mock::opengl::glFunctionMock::instance()->interfaceNameProc()
 #define glGetShaderInfoLog ARTIST_MOCK_GL_ENTRY(glGetShaderInfoLog)
 #define glGetShaderSource ARTIST_MOCK_GL_ENTRY(glGetShaderSource)
 #define glGetShaderiv ARTIST_MOCK_GL_ENTRY(glGetShaderiv)
@@ -154,6 +169,26 @@ namespace artist::mock::opengl
     class glFunctionMock
     {
     public:
+        // Historical mock consumers have an explicit 3.3, unextended baseline.
+        bool interfaceCore = false, interfaceExtension = false;
+        bool interfaceAdvertised = false;
+        std::array<bool, 3> interfaceEntries{false, false, false};
+        void configureProgramInterface(bool core, bool extension, bool entries)
+        {
+            interfaceCore = core; interfaceExtension = extension;
+            interfaceAdvertised = extension; interfaceEntries.fill(entries);
+        }
+        GLboolean programInterfaceAdvertised(const char* name) const
+        {
+            return interfaceAdvertised && name != nullptr &&
+                std::strcmp(name, "GL_ARB_program_interface_query") == 0 ? GL_TRUE : GL_FALSE;
+        }
+        static GLuint GLAPIENTRY interfaceIndexStub(GLuint, GLenum, const GLchar*) { return GL_INVALID_INDEX; }
+        static void GLAPIENTRY interfacePropertiesStub(GLuint, GLenum, GLuint, GLsizei, const GLenum*, GLsizei, GLsizei*, GLint*) {}
+        static void GLAPIENTRY interfaceNameStub(GLuint, GLenum, GLuint, GLsizei, GLsizei*, GLchar*) {}
+        PFNGLGETPROGRAMRESOURCEINDEXPROC interfaceIndexProc() { return interfaceEntries[0] ? &interfaceIndexStub : nullptr; }
+        PFNGLGETPROGRAMRESOURCEIVPROC interfacePropertiesProc() { return interfaceEntries[1] ? &interfacePropertiesStub : nullptr; }
+        PFNGLGETPROGRAMRESOURCENAMEPROC interfaceNameProc() { return interfaceEntries[2] ? &interfaceNameStub : nullptr; }
         struct DeleteBuffersCall
         {
             GLsizei count;
@@ -515,6 +550,9 @@ namespace artist::mock::opengl
         MOCK_METHOD(GLint, glGetAttribLocation_mock, (GLuint, const GLchar *), ());
         MOCK_METHOD(void, glGetProgramInfoLog_mock, (GLuint, GLsizei, GLsizei *, GLchar *), ());
         MOCK_METHOD(void, glGetProgramiv_mock, (GLuint, GLenum, GLint *), ());
+        MOCK_METHOD(GLuint, glGetProgramResourceIndex_mock, (GLuint, GLenum, const GLchar*), ());
+        MOCK_METHOD(void, glGetProgramResourceiv_mock, (GLuint, GLenum, GLuint, GLsizei, const GLenum*, GLsizei, GLsizei*, GLint*), ());
+        MOCK_METHOD(void, glGetProgramResourceName_mock, (GLuint, GLenum, GLuint, GLsizei, GLsizei*, GLchar*), ());
         MOCK_METHOD(void, glGetShaderInfoLog_mock, (GLuint, GLsizei, GLsizei *, GLchar *), ());
         MOCK_METHOD(void, glGetShaderSource_mock, (GLuint, GLsizei, GLsizei *, GLchar *), ());
         MOCK_METHOD(void, glGetShaderiv_mock, (GLuint, GLenum, GLint *), ());

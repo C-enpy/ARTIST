@@ -2,12 +2,12 @@
 title: Build et tests actuels
 category: development
 aliases: [build-and-test]
-source_revision: 82bf52d52e594fae02593866669a1af715127d1f
+source_revision: f58a49f4261e018749c59b0d8aab9dd7e85ba53e
 tags: [artist, build, testing, guide]
-summary: "Windows Debug82bf52d : ASan555, CPU484 et71GL normaux réutilisés ; audit final accepté, board réconcilié7/7, dettes conservées."
-status: verified-windows-debug
+summary: "QA Windows, Ubuntu WSL et CI : 589/589 normal et ASan ; commandes communes, identité shader renforcée et limites de preuve."
+status: observed
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-29
 sources: [CMakeLists.txt, CMakePresets.json, conanfile.txt, scripts/build-windows.ps1, scripts/build-requirements.txt, conan/profiles/windows-msvc, research/sessions/2026-10-15-loaded-owner-move/session-capture.md, docs/architecture/missions/2026-10-15-failure-contracts.md, docs/architecture/missions/2026-10-16-pipeline-ownership.md, docs/_meta/session-2026-10-15-failure-contracts-validation.json, docs/_meta/session-2026-10-16-pipeline-final-validation.json, docs/_meta/session-2026-10-16-asan-caller-restoration.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
@@ -17,7 +17,96 @@ provenance:
 
 # Build et tests actuels
 
-## Résumé courant — Windows x64 Debug
+## Résumé courant — QA Windows/Linux du 29 octobre
+
+**589/589 dans six configurations** Windows, WSL et CI Ubuntu, normal/ASan,
+513 CPU + 76 OpenGL, zéro failure/error/skip ; runtime `78e7b74`. L'adaptateur
+de preuve renforcé `f58a49f` inclut les shaders consommés, tests Python **10/10
+sur chaque OS**, RED causal puis ré-audit indépendant. Les identités/campagnes
+ultérieures sont consignées séparément : [[development/linux-qa|procédure et portée]],
+preuve `_meta/session-2026-10-29-linux-qa.json`.
+Les paragraphes ci-dessous restent des jalons historiques, pas la baseline Linux.
+
+## Historique — float préparé, Windows x64 Debug du 2026-10-27
+
+Source **3b1b1028dcd64ca46e0a359365ae096be1a38ac4**, runner **lead** :
+**581/581 normaux et 581/581 ASan**, 506 CPU + 75 OpenGL chacun, mêmes noms
+uniques entre découvertes et JUnit, zéro failure/error/skip. Quatre nouveaux tests
+QA après intégration portent le total auteur 577 au total final 581.
+
+Cinq commandes convenues réellement exécutées et terminées à zéro :
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -TestLabel unit
+ctest --test-dir out/build/windows-msvc-debug -N
+ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error -j 1
+ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error -j 1
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -AddressSanitizer
+```
+
+Les commandes CTest de run ajoutaient `--output-junit <chemin absolu unique>`.
+Découvertes JSON normales/ASan supplémentaires recoupées. Avant les runs finaux :
+`cmake --build --preset windows-msvc-debug --clean-first --parallel 1`, puis
+équivalent `windows-msvc-debug-asan`, 69 étapes chacun. Un objet montrait zéro
+dépendance d'en-tête Ninja : ne pas se fier à l'incrémentalité sur cette machine
+pour revalider un header ; aucun correctif de toolchain n'est livré ici.
+
+Canari ASan final healthy0 / use-after-free86, options canoniques
+`halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0` ; pas preuve de fuites.
+MSVC19.44/toolset14.44, SDK26100, CMake3.31.7, Conan2.12.2 ; matériel auteur
+journalisé RTX3090/621.01, OpenGL3.3core. Les 75 tests GL et l'oracle pixel ciblé
+ont été exécutés réellement, sans valider une scène moteur complète ou une autre API.
+
+Archives finales `out/qa-prepared-float/lead-followup-20261027/`, manifeste
+final-validation.json, JUnit09/10/13 et découvertes08/14 ; étape précédente579
+conservée séparément dans lead-runner-20261027. Preuve portable
+`_meta/session-2026-10-27-prepared-float.json`. Mutants C/L/A et omissions de valeur/
+draw sont des expériences séparées ; un essai L au binaire périmé et un XML
+préexistant après erreur de compilation sont explicitement exclus des verdicts.
+Après audit fresh, préparation sans contexte et révocation tardive pendant free
+partiel sont détectées par deux nouveaux tests et leurs mutants. Premier essai
+Freer mutant avec une seule unité recompilée exclu (définitions inline mixtes) ;
+expérience cohérente après recompilation de tous les objets unitaires retenue.
+Revue C++ indépendante acquise, ré-audit des tests PASS borné, F1/F2 fermés,
+aucun finding bloquant maintenu. Limites TDD
+historiques, Release/Linux, autres API, leaks/performance restent non validés.
+
+## Historique — nettoyage stable, Windows x64 Debug du 2026-10-26
+
+Dernier candidat C++ vérifié : **a96104c7aaeede7dd6915bfeac86f53565615114**,
+le2026-10-26. **555/555 normaux et555/555 ASan nouvellement exécutés**, chacun
+484CPU+71OpenGL,0failure/error/skip. Découverte=sélection=exécution/JUnit,555 noms
+uniques et même ordre ;17historiques chacun une fois sous ASan, diagnostics tardifs
+contrôlés, identités source/EXE/config et ASanPDB/DLL inchangées après run.
+
+Refactor pur :15/15Reader caractérisés avant modification de production,12Reader
+après migration. Deux injections et un oracle Windows supprimés, trois tests
+stables ajoutés ; **555 courant n'est pas identité de population ancienne**.
+Callback/instrumentation supprimés et13 fichiers probes retirés, sans nouveau
+comportement Reader revendiqué ni RED artificiel. Revue C++ indépendante et audit
+des preuves reçus sans finding bloquant démontré ; plan/gap-check locaux du lead,
+pas nouvel audit natif sous profil test-reviewer.
+
+Runner lead, wrapper partagé inchangé, un job par build, campagnes sérielles sous
+bail coopératif. Builds : `cmake --build --preset windows-msvc-debug` (puis
+`windows-msvc-debug-asan`) `--target ArtistLib_tests ArtistLib_component_tests
+--parallel 1`. Découverte réelle `ctest --preset <preset> --show-only=json-v1`.
+CTest réel pour chaque preset :
+
+```text
+ctest --preset windows-msvc-debug --tests-from-file C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/normal-selected.txt --parallel 1 --no-tests=error --output-on-failure --test-output-size-passed 65536 --test-output-size-failed 65536 --output-junit C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/normal.xml
+ctest --preset windows-msvc-debug-asan --tests-from-file C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/asan-selected.txt --parallel 1 --no-tests=error --output-on-failure --test-output-size-passed 65536 --test-output-size-failed 65536 --output-junit C:/Users/djden/source/repos/ARTIST/out/qa-f8/stable-20261026-01/asan.xml
+```
+
+ASan normalisé par `scripts/asan-env.ps1`, Debug/RTC1 conservés. Préflight0/86
+antérieur réutilisé après identité probe/summary/config/6DLL vérifiée, pas nouveau
+canari. Archives complètes `out/qa-f8/stable-20261026-01/`, logs
+`out/logs/stable-*.log`, preuve portable
+`_meta/session-2026-10-26-stable-reader-cleanup.json`.
+Gaps authentiques extraction/close maintenus ; aucune validation GCC/Linux/Release,
+image/performance ou PASS global. [[development/known-incidents|Disposition B1–B6]].
+
+### Historique de la continuation précédente — 2026-10-25
 
 Dernier candidat C++ vérifié : **82bf52d52e594fae02593866669a1af715127d1f**,
 le2026-10-25. **ASan555/555** (484CPU+71OpenGL),0failure/error/skip,17historiques

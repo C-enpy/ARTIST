@@ -29,12 +29,14 @@ class AttributeReaderTests : public ::testing::Test
 protected:
     void SetUp() override
     {
+        mock::opengl::glFunctionMock::instance()->configureProgramInterface(false, false, false);
         openglContext = std::make_shared<context::OpenGLPassContext>();
     }
 
     void TearDown() override
     {
         mock::opengl::glFunctionMock::reset();
+        mock::opengl::glFunctionMock::instance()->configureProgramInterface(false, false, false);
     }
 
     std::shared_ptr<context::OpenGLPassContext> openglContext;
@@ -296,6 +298,195 @@ TEST_F(AttributeReaderTests, FaultInjection_ExactArraySuffixAndUnsupportedEnumDe
         EXPECT_EQ(c.isGLArray(), std::string(name) == "foo[0]");
         mock::opengl::glFunctionMock::reset();
     }
+}
+
+namespace
+{
+    void modernInput(const std::string& legacy, const std::string& modern, GLint size = 1, int fault = -1, GLuint index = 7)
+    {
+        auto& gl = *mock::opengl::glFunctionMock::instance();
+        EXPECT_CALL(gl, glGetProgramResourceIndex_mock(1, GL_PROGRAM_INPUT, ::testing::StrEq(legacy)))
+            .WillOnce(::testing::Return(fault == 0 ? GL_INVALID_INDEX : index));
+        EXPECT_CALL(gl, glGetProgramResourceiv_mock(1, GL_PROGRAM_INPUT, index, 4, ::testing::_, 4, ::testing::_, ::testing::_))
+            .Times(fault == 0 ? 0 : 1)
+            .WillRepeatedly([=](GLuint, GLenum, GLuint, GLsizei, const GLenum* properties, GLsizei, GLsizei* length, GLint* values) {
+                EXPECT_EQ(properties[0], static_cast<GLenum>(GL_NAME_LENGTH));
+                EXPECT_EQ(properties[1], static_cast<GLenum>(GL_TYPE));
+                EXPECT_EQ(properties[2], static_cast<GLenum>(GL_ARRAY_SIZE));
+                EXPECT_EQ(properties[3], static_cast<GLenum>(GL_LOCATION));
+                *length = fault == 1 ? 3 : 4;
+                values[0] = fault == 2 ? 0 : static_cast<GLint>(modern.size() + 1);
+                if (fault == 14) values[0] = -1;
+                if (fault == 15) values[0] = 1;
+                if (fault == 16) values[0] = 1000000;
+                values[1] = fault == 3 ? GL_INT : GL_FLOAT_VEC3;
+                values[2] = fault == 4 ? 0 : (fault == 5 ? -1 : (fault == 6 ? size + 1 : size));
+                values[3] = fault == 7 ? -1 : (fault == 8 ? 1 : 0);
+            });
+        EXPECT_CALL(gl, glGetProgramResourceName_mock(1, GL_PROGRAM_INPUT, index, ::testing::_, ::testing::_, ::testing::_))
+            .Times(((fault >= 0 && fault <= 8) || (fault >= 14 && fault <= 16)) ? 0 : 1)
+            .WillRepeatedly([=](GLuint, GLenum, GLuint, GLsizei capacity, GLsizei* length, GLchar* name) {
+                ASSERT_GE(capacity, static_cast<GLsizei>(modern.size() + 1));
+                std::memcpy(name, modern.data(), modern.size()); name[modern.size()] = '\0';
+                *length = static_cast<GLsizei>(modern.size());
+                if (fault == 9) *length = -1;
+                if (fault == 10) *length = capacity;
+                if (fault == 11) name[*length] = 'x';
+                if (fault == 12) name[1] = '\0';
+                if (fault == 13) --*length;
+                if (fault == 17) *length = capacity + 1;
+                if (fault == 18) *length = 0;
+            });
+    }
+}
+
+TEST_F(AttributeReaderTests, ModernCoreAndExtensionKeepOnlyLegacyKeysAndDistinguishArrayOne)
+{
+    for (bool core : {true, false}) for (bool array : {false, true}) for (const auto& name : {"x", "input"})
+    {
+        SCOPED_TRACE(core);
+        SCOPED_TRACE(array);
+        auto& gl = *mock::opengl::glFunctionMock::instance();
+        gl.configureProgramInterface(core, !core, true);
+        openglContext->setPassID(1);
+        reflectedInput(name); modernInput(name, array ? std::string(name) + "[0]" : name);
+        ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+        ASSERT_EQ(openglContext->getAttributes().size(), 1u);
+        ASSERT_NE(openglContext->getAttribute(name), nullptr);
+        EXPECT_EQ(openglContext->getAttribute(std::string(name) + "[0]"), nullptr);
+        EXPECT_EQ(openglContext->getAttribute(name)->getContext().isGLArray(), array);
+        mock::opengl::glFunctionMock::reset();
+    }
+}
+
+TEST_F(AttributeReaderTests, ModernUnavailableNeverCallsModernFunctions)
+{
+    for (int missing : {-1, 0, 1, 2})
+    {
+        SCOPED_TRACE(missing);
+        auto& gl = *mock::opengl::glFunctionMock::instance();
+        gl.configureProgramInterface(missing != -1, false, true);
+        if (missing >= 0) gl.interfaceEntries[missing] = false;
+        EXPECT_CALL(gl, glGetProgramResourceIndex_mock(::testing::_, ::testing::_, ::testing::_)).Times(0);
+        EXPECT_CALL(gl, glGetProgramResourceiv_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+        EXPECT_CALL(gl, glGetProgramResourceName_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+        openglContext->setPassID(1); reflectedInput("input[0]");
+        ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+        EXPECT_TRUE(openglContext->getAttribute("input[0]")->getContext().isGLArray());
+        mock::opengl::glFunctionMock::reset();
+    }
+}
+
+TEST_F(AttributeReaderTests, ExperimentalLoaderFlagWithoutAdvertisedExtensionNeverCallsModernFunctions)
+{
+    auto& gl = *mock::opengl::glFunctionMock::instance();
+    gl.configureProgramInterface(false, true, true);
+    gl.interfaceAdvertised = false;
+    ASSERT_TRUE(GLEW_ARB_program_interface_query);
+    ASSERT_FALSE(glewGetExtension("GL_ARB_program_interface_query"));
+    EXPECT_CALL(gl, glGetProgramResourceIndex_mock(::testing::_, ::testing::_, ::testing::_)).Times(0);
+    EXPECT_CALL(gl, glGetProgramResourceiv_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+    EXPECT_CALL(gl, glGetProgramResourceName_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+    openglContext->setPassID(1);
+    reflectedInput("input[0]");
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    ASSERT_EQ(openglContext->getAttributes().size(), 1u);
+    ASSERT_NE(openglContext->getAttribute("input[0]"), nullptr);
+    EXPECT_TRUE(openglContext->getAttribute("input[0]")->getContext().isGLArray());
+}
+
+TEST_F(AttributeReaderTests, ModernExactArrayNameAndArrayTwoPreserveTheNativeKey)
+{
+    auto& gl = *mock::opengl::glFunctionMock::instance(); gl.configureProgramInterface(true, false, true);
+    openglContext->setPassID(1);
+    for (GLint size : {1, 2})
+    {
+        reflectedInput("input[0]", size); modernInput("input[0]", "input[0]", size, -1, 19);
+        ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+        ASSERT_EQ(openglContext->getAttributes().size(), 1u);
+        EXPECT_TRUE(openglContext->getAttribute("input[0]")->getContext().isGLArray());
+        EXPECT_EQ(openglContext->getAttribute("input[0]")->getContext().getGLSize(), static_cast<GLuint>(size));
+        EXPECT_EQ(openglContext->getAttribute("input"), nullptr);
+        mock::opengl::glFunctionMock::reset();
+    }
+    auto* previous = openglContext->getAttribute("input[0]");
+    reflectedInput("input[0]"); modernInput("input[0]", "input[0][0]");
+    expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_NAME"));
+    EXPECT_EQ(openglContext->getAttribute("input[0]"), previous);
+}
+
+TEST_F(AttributeReaderTests, InvalidModernResponsesFailClosedWithExplicitDiagnostics)
+{
+    for (int fault = 0; fault <= 18; ++fault)
+    {
+        SCOPED_TRACE(fault);
+        auto& gl = *mock::opengl::glFunctionMock::instance();
+        gl.configureProgramInterface(true, false, true);
+        openglContext->setPassID(1); reflectedInput("input"); modernInput("input", "input[0]", 1, fault);
+        const auto diagnostic = fault == 0 ? "INVALID_MODERN_INDEX" :
+            (fault == 1 || (fault >= 3 && fault <= 8) ? "INVALID_MODERN_PROPERTIES" : "INVALID_MODERN_NAME");
+        expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
+            artist::common::exception::TraceableException<std::runtime_error>(std::string("ERROR::PASS::ATTRIBUTE::") + diagnostic));
+        EXPECT_TRUE(openglContext->getAttributes().empty());
+        mock::opengl::glFunctionMock::reset();
+    }
+}
+
+TEST_F(AttributeReaderTests, ModernNamesMustMatchExactlyOrAddOneZeroSuffix)
+{
+    for (const auto& name : {"input[00]", "input[1]", "input[0]x", "input[0][0]", "other"})
+    {
+        SCOPED_TRACE(name);
+        auto& gl = *mock::opengl::glFunctionMock::instance();
+        gl.configureProgramInterface(true, false, true);
+        openglContext->setPassID(1); reflectedInput("input");
+        // Oversized names are rejected before a name query; others after it.
+        if (std::strlen(name) > 8)
+        {
+            EXPECT_CALL(gl, glGetProgramResourceIndex_mock(1, GL_PROGRAM_INPUT, ::testing::StrEq("input"))).WillOnce(::testing::Return(7));
+            EXPECT_CALL(gl, glGetProgramResourceiv_mock(1, GL_PROGRAM_INPUT, 7, 4, ::testing::_, 4, ::testing::_, ::testing::_))
+                .WillOnce([=](GLuint, GLenum, GLuint, GLsizei, const GLenum*, GLsizei, GLsizei* written, GLint* values) {
+                    *written = 4; values[0] = static_cast<GLint>(std::strlen(name) + 1); values[1] = GL_FLOAT_VEC3; values[2] = 1; values[3] = 0;
+                });
+            EXPECT_CALL(gl, glGetProgramResourceName_mock(::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_)).Times(0);
+        }
+        else modernInput("input", name);
+        expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
+            artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_NAME"));
+        EXPECT_TRUE(openglContext->getAttributes().empty());
+        mock::opengl::glFunctionMock::reset();
+    }
+}
+
+TEST_F(AttributeReaderTests, LateModernErrorKeepsPublishedGenerationThenValidReflectionCanCommit)
+{
+    openglContext->setPassID(1); reflectedInput("old", 1, 7, GL_INT);
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    auto* old = openglContext->getAttribute("old");
+    const auto value = std::make_shared<GLint>(42); old->getContext().setValue(value);
+    mock::opengl::glFunctionMock::reset();
+    auto& gl = *mock::opengl::glFunctionMock::instance(); gl.configureProgramInterface(true, false, true);
+    EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_ATTRIBUTES, ::testing::_)).WillOnce(::testing::SetArgPointee<2>(2));
+    EXPECT_CALL(gl, glGetProgramiv_mock(1, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, ::testing::_)).WillOnce(::testing::SetArgPointee<2>(6));
+    EXPECT_CALL(gl, glGetAttribLocation_mock(1, ::testing::_)).Times(2).WillRepeatedly(::testing::Return(0));
+    EXPECT_CALL(gl, glGetActiveAttrib_mock(1, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_, ::testing::_))
+        .Times(2).WillRepeatedly([](GLuint, GLuint i, GLsizei capacity, GLsizei* length, GLint* size, GLenum* type, GLchar* out) {
+            const std::string name = i == 0 ? "input" : "other";
+            ASSERT_GE(capacity, 6); std::memcpy(out, name.c_str(), 6); *length = 5; *size = 1; *type = GL_FLOAT_VEC3;
+        });
+    modernInput("input", "input[0]", 1, -1, 19);
+    modernInput("other", "other", 1, 0, 2);
+    expectSpecificError([&] { pass::OpenGLPassAttributeReader<Classic>::on(*openglContext); },
+        artist::common::exception::TraceableException<std::runtime_error>("ERROR::PASS::ATTRIBUTE::INVALID_MODERN_INDEX"));
+    ASSERT_EQ(openglContext->getAttributes().size(), 1u); ASSERT_EQ(openglContext->getAttribute("old"), old);
+    EXPECT_EQ(old->getContext().getAttributeID(), 7u); EXPECT_EQ(old->getContext().getGLType(), static_cast<GLenum>(GL_INT));
+    EXPECT_EQ(old->getContext().getGLSize(), 1u); EXPECT_FALSE(old->getContext().isGLArray());
+    EXPECT_EQ(old->getContext().getValue<GLint>(), value); EXPECT_EQ(openglContext->getAttribute("input"), nullptr);
+    mock::opengl::glFunctionMock::reset();
+    reflectedInput("input"); modernInput("input", "input[0]", 1, -1, 19);
+    ASSERT_NO_THROW(pass::OpenGLPassAttributeReader<Classic>::on(*openglContext));
+    EXPECT_EQ(openglContext->getAttribute("old"), nullptr); EXPECT_TRUE(openglContext->getAttribute("input")->getContext().isGLArray());
 }
 
 #endif // __mock_gl__

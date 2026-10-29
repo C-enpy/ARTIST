@@ -3,21 +3,82 @@ title: État réel d'ARTIST
 category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
-summary: "Source82bf52d : ASan555 et audit final acceptés, board réconcilié7/7 ; équipe conservée et dettes F8/C2/B1/GCC ouvertes."
-sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
+summary: "Runtime 78e7b74 : QA Windows, WSL et CI Ubuntu à 589 normal/ASan ; Attribute moderne conditionnel compatible et contrôle de fraîcheur shader renforcé."
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 status: observed
-source_revision: 82bf52d52e594fae02593866669a1af715127d1f
+source_revision: f58a49f4261e018749c59b0d8aab9dd7e85ba53e
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-29
 ---
 
 # État réel d'ARTIST
 
-> [!info] Photographie finale de la continuation bornée — 2026-10-25
+> [!info] Photographie courante — parité QA Linux du 29 octobre
+> Runtime `78e7b74` : **589/589 normal et ASan sous Windows, WSL et CI Ubuntu**,
+> 513 CPU + 76 GL chacun, zéro failure/error/skip. OpenGL demeure le seul backend.
+> Attribute conserve chaque clé legacy native exacte ; réflexion moderne
+> conditionnelle pour distinguer array1, annonce effective et fonctions requises,
+> réponses incohérentes rejetées avant publication. Aucun changement d'API publique,
+> du wrapper CPU ou de provenance cook. Helper `f58a49f` : données shader incluses
+> dans les identités, RED/GREEN et ré-audit ciblé ; campagnes renforcées distinctes.
+> [[development/linux-qa|Commandes, preuves et limites]] ; les ADR ne sont pas promus.
+
+> [!info] Photographie historique — float préparé du 27 octobre
+> **3b1b102** : `prepareFloatUniform(pass, name)` après link/réflexion runtime,
+> puis `PreparedFloatUniform::set(float)` sans recherche répétée de nom/type.
+> `GL_FLOAT` strictement scalaire, arrays[1] refusés ; témoins faibles locaux et
+> générations avant pointees, owners uniques et miroir CPU `std::any` conservés.
+> Maps/métadonnées/retrait/destruction révoquent les accès ; moves suivent le
+> contexte transféré. Mono-thread non réentrant, fenêtre vivante, pas de mutation
+> GL externe contournant les owners. Consommateur target préparé/decoy par nom,
+> readbacks et oracle pixel fixe non vide dans un FBO RGBA8 32×32.
+> **581/581 normaux et 581/581 ASan**, chacun 506 CPU + 75 OpenGL, zéro échec/skip,
+> runner lead, mêmes noms, canari 0/86. Mutants C/L/A séparés détectés, sources
+> restaurées ; clean-first des deux configurations après dépendances Ninja nulles
+> observées pour un objet. Revue C++ indépendante sans défaut bloquant démontré,
+> ré-audit final PASS borné après deux compléments, aucun finding bloquant maintenu.
+> Historique RED incomplet conservé. ADR-0004 reste **Proposed/partial**, seule
+> cette tranche adoptée ; aucune performance, autre API ou RAII générale validée.
+> Preuve `_meta/session-2026-10-27-prepared-float.json` ;
+> [[adr/0004-layouts-types-et-donnees-preparees|contrat et limites]],
+> [[usage/uniform-attribute|usage]], [[development/build-and-test|commandes]].
+
+> [!info] Photographie historique — nettoyage stable du26octobre
+> **a96104c** : fichier stable pendant lecture, sans écriture concurrente garantie.
+> Callback d'extraction et instrumentation retirés ;13 fichiers probes supprimés
+> après vérification des consommateurs, archives/diffs étrangers conservés.
+> Boucle read/gcount, contrôles d'erreur et fermeture vérifiée avant publication
+> inchangés. Caractérisations pré-refactor15/15, puis **555/555 normaux et555/555
+> ASan**, chacun484CPU+71OpenGL, zérofailure/error/skip. Trois tests retirés et
+> trois ajoutés : même cardinalité, pas population historique identique.
+> Revue C++ indépendante et audit des preuves reçus sans finding bloquant démontré.
+> QA locale simplifiée, pas nouvel audit sous profil test-reviewer.
+> B1 clôturé pour les deux contaminations ON_CALL identifiées et populations
+> réduites ; pas replay176 ni reset exhaustif. B5/C2 : disposition administrative
+> acceptée34 conservée. **Extraction/close authentiques restent des gaps de preuve**,
+> pas nouveaux essais ni PASS global. Preuve :
+> `_meta/session-2026-10-26-stable-reader-cleanup.json` et
+> [[development/build-and-test|commandes et portée]].
+
+**Clôture native historique du lot Reader** : les trois affectations restantes ont ensuite livré
+leurs dispositions/revues et la QA native rétrospective du plan89. Remises
+intégrées872915b avant complétion, puis board recoupé **28/28completed,
+0in_progress/0pending/0blocked**, aucun workerbusy. PC1close et revueprobe stdio
+sont clôturés pour supersession/retrait au contrat stable, **pas pour réussite
+runtime**. Planner natiffresh direct avec restitutionfinal_response : KEEP borné,
+amendement budget prospectif75/25aprèssetup intégré ; pas planindépendantpréalable
+antidaté ni GAP-accept des erreursauthentiques. Équipe/worktrees conservés,
+libellé nativelong_run/running ne désigne plus une tâche active. Rapports94–96
+et sectionnativeBoard de la preuve portable.
+
+Les paragraphes datés ci-dessous conservent les jalons antérieurs ; leurs attentes
+de calibration/probes sont **supersédées par le recentrage et le nettoyage stable**.
+
+> [!info] Photographie historique de la continuation bornée — 2026-10-25
 > Candidat C++82bf52d : correction de8lignes dans un seul test lifetime mocké,
 > aucune production modifiée par cette continuation. **ASan555/555**
 > (484CPU+71OpenGL), zéro failure/error/skip,17historiques chacun une fois ;
@@ -35,6 +96,55 @@ natif**, sur choix opérateur, sans nouveau worker/audit ni changement de politi
 Équipe/worktrees conservés, non archivés ; politique non approuvée par effet du
 verrou, sans start du lead. Les dettes techniques ne sont pas fermées :
 [[references/session-2026-10-25-qa-continuation|synthèse sourcée et résolution du statut]].
+
+**Étape ultérieure du25octobre : scope initial restauré sous révision3.** Les
+anciennes7tâches restent acquises ; trois enquêtes nouvelles B1/B3/B5 ont été
+lancées. B1 dispose maintenant de deux témoins causaux négatifs historiques
+(1et2échecs) et de nominaux actuels verts (4et6RUN,5cas uniques), sans nouveau
+correctif. `_meta/session-2026-10-25-b1-causal-validation.json` conserve preuves
+et limites. Contrat Reader/F8 seulement proposé : **la
+reprise du scope initial n'est pas terminée**, et7/7ne désigne pas ce nouveau lot.
+
+**Décisions opérateur puis intégration QA (25–26octobre)** : calibration stdio et
+recherche OS close bornées autorisées, sans correction Reader ni substitution
+catch/close. Fermeture administrative motivée B5/C2 explicitement acceptée :
+défaut de fixture établi, explication forte pour Empty/probable pour MultiBlock,
+pas reconstruction complète ou verdict moteur. Primaires manquants conservés ;
+réouverture sur preuve contradictoire ou nouveau symptôme identifié. Décisions34
+et amendement ciblé QA17 intégrés dans `fb3c9b9` ; aucune calibration exécutée à
+ce jalon, B1 attend encore sa revue finale. Ces décisions actualisent les dettes
+de la photographie historique ci-dessus, sans changer les anciens verdicts.
+
+**Jalon du26octobre — contrôles de la future sonde, pas correctif Reader** :
+le helper Win32 privé `scripts/probes/qa-f8-stdio/native_read.hpp` a suivi RED
+causal12325→8192 puis GREEN4/4lectures complètes, comparateur inchangé ; deux
+contrats CLI séparés ont aussi été vérifiés par le lead. Preuves portables :
+`_meta/session-2026-10-26-stdio-control-red.json` et
+`_meta/session-2026-10-26-stdio-control-green.json`, source intégrée961d92e.
+Revue indépendante fresh reçue et acceptée au rapport63 de la mission (commit
+46dd389) : aucun défaut démontré à ce périmètre ; erreurs authentiques de lecture,
+close et allocation non exécutées. Aucun transfert du verdict ASan555 au probe.
+La calibration stdio M0/M1/M2 reste à écrire/exécuter. Le refus close par protection
+OS a été admis seulement pour un probe FILE* en enfant dédié (décision52) ;
+contrat statique privé `can_reap_process` a suivi RED de définition manquante puis
+GREEN de deux TU compilées, quatre assertions policy inchangées (sourcef235db8,
+preuves `_meta/session-2026-10-26-close-policy-{red,green}.json`). Cette preuve
+de compilation ne valide aucun wait ni futur caller ; parent/enfant encore au
+stade proposition, aucun essai close lancé.
+M5Reader/non-publication/catch et adoption du futur Reader restent ouverts ;
+ni nouveau backend, ni image/performance/GCC/Linux/Release validés.
+
+**Recentrage opérateur —26octobre** : le contrat normal est désormais celui d'un
+fichier **stable pendant sa lecture, sans écriture concurrente** ; solution
+portable, contrôles d'erreur et acceptation du contenu après réussite, sans
+synchronisation ajoutée pour un scénario concurrent hors contrat. La poursuite
+des probes stdio/close est arrêtée : leurs builds existent, mais **aucun RUN de
+caractérisation n'a été lancé** ; le manifeste stdio sélectionné est conservé
+NOT_RUN. Inventaire des consommateurs et contrat minimal en préparation RO,
+avant retrait méthodique des surcouches/tests devenus spécifiques à l'exploration.
+À ce jalon aucun nettoyage source ni correction Reader encore exécutés ; preuves
+historiques/correctifs utiles/diffs étrangers préservés. Décision et limites :
+rapport83 de la mission team_mvnxps48_0000_dfde7a, entrées83/84 commit45d1884.
 
 > [!info] Photographie historique — 2026-10-20
 > Candidat `fdbce15`, vérifié le 2026-10-20 : **546/546 natifs** (477 unitaires +
@@ -177,7 +287,7 @@ graphique, ni l'image produite.
 - `graphic/pipeline/Shader.hpp` possède son `ShaderContext` en `unique_ptr` et
   expose un emprunt par référence ; ses composants OpenGL prennent
   `Context&`. `Shader` libère le shader natif dans son destructeur dérivé.
-- La lecture de fichier shader passe par la seam `detail` de mission I0
+- La lecture de fichier shader passe par les helpers internes `detail`
   (`extractShaderSource` + `readShaderFile`, `Reader.hpp`) — transaction
   extraire dans une string locale → `clear()`/`close()` vérifiée → publication.
   L'extraction consomme par `read()`/`gcount()` et rejette

@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-25",
+  "scope": "Restored initial B1-B6 mission; B1 two causal reductions only, B3 and B5 still open",
+  "sourceHead": "82bf52d52e594fae02593866669a1af715127d1f",
+  "runner": "lead",
+  "researchAuthor": "pool-5 cpp-engineer, read-only",
+  "archive": "out/qa-b1/causal-20261025-01",
+  "protocol": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/29-b1-protocole-causal-valide.md",
+  "report": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/30-b1-causes-reproduites-et-actuel-vert.md",
+  "historicalSha256": "3d4fb31ee463a1c44370e9ba051e584784bf2f5becbf584341169d71d2ea1388",
+  "currentSha256": "1b0fc02956d424f7fa6de02a91211b8e14f4295784d3563342be7c064e3950b5",
+  "identitiesMatchedBeforeAfter": true,
+  "A": {"historicalExit": 1, "historicalFailedExecutions": 1, "currentExit": 0, "currentExecutions": 4, "uniqueCases": 2, "currentFailures": 0, "currentSkips": 0},
+  "B": {"historicalExit": 1, "historicalFailedExecutions": 2, "currentExit": 0, "currentExecutions": 6, "uniqueCases": 3, "currentFailures": 0, "currentSkips": 0},
+  "causes": ["persistent ON_CALL compileFalse from LoadShaderFailureTest", "persistent ON_CALL shader8/program5 from lifetime writer"],
+  "currentSites": "already EXPECT_CALL/WillOnce; no new fix made",
+  "currentLateStdout": [],
+  "stderr": "A two expected compilation-error diagnostics; B empty",
+  "xml": "last iteration only: A2cases, B3cases, do not count cumulative RUN as unique tests",
+  "newBuildOrSourceChange": false,
+  "limits": ["final independent audit pending", "not full176-order replay", "not exhaustive shuffle permutations", "no new ASan/GPU/GCC/Linux/Release/image/performance proof"]
+}

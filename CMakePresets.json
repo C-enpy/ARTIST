@@ -44,6 +44,12 @@
             "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
         },
         {
+            "name": "linux-debug-asan",
+            "displayName": "Linux x64 GCC 14 Debug + ASan (separate tree)",
+            "inherits": "linux-debug",
+            "cacheVariables": { "ARTIST_ENABLE_ASAN": "ON" }
+        },
+        {
             "name": "macos-debug",
             "displayName": "macOS Debug (Conan 2, C++23 library required)",
             "inherits": "conan-base",
@@ -54,9 +60,23 @@
     "buildPresets": [
         { "name": "windows-msvc-debug", "configurePreset": "windows-msvc-debug" },
         { "name": "windows-msvc-debug-asan", "configurePreset": "windows-msvc-debug-asan" },
-        { "name": "windows-msvc-release", "configurePreset": "windows-msvc-release" }
+        { "name": "windows-msvc-release", "configurePreset": "windows-msvc-release" },
+        { "name": "linux-debug", "configurePreset": "linux-debug" },
+        { "name": "linux-debug-asan", "configurePreset": "linux-debug-asan" }
     ],
     "testPresets": [
+        {
+            "name": "linux-debug",
+            "configurePreset": "linux-debug",
+            "output": { "outputOnFailure": true },
+            "execution": { "noTestsAction": "error", "jobs": 1 }
+        },
+        {
+            "name": "linux-debug-asan",
+            "configurePreset": "linux-debug-asan",
+            "output": { "outputOnFailure": true },
+            "execution": { "noTestsAction": "error", "jobs": 1 }
+        },
         {
             "name": "windows-msvc-debug",
             "configurePreset": "windows-msvc-debug",

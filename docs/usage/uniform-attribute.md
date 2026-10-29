@@ -3,12 +3,16 @@ title: "Utiliser les uniforms et attributes réfléchis"
 category: usage
 tags: [artist, guide, cpp, ownership]
 aliases: [Usage Uniform Attribute]
-summary: "Consommer les maps possédées par une passe, écrire une valeur uniforme et reconnaître les rejets de réflexion."
+summary: "Consommer les maps réfléchies, préparer un float OpenGL scalaire, conserver l'API par nom et reconnaître les rejets/invalidation."
 status: observed
-source_revision: 1005dff0804e18c412129843e944d7f1f55a0f48
+source_revision: 3b1b1028dcd64ca46e0a359365ae096be1a38ac4
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-27
 sources:
+  - "ARTIST/include/graphic/opengl/pipeline/PreparedFloatUniform.hpp"
+  - "ARTIST/component-tests/src/graphic/shader/PreparedFloatUniformRenderTests.cpp"
+  - "ARTIST/component-tests/src/graphic/shader/ReflectedProgramGuardCrossTests.cpp"
+  - "docs/_meta/session-2026-10-27-prepared-float.json"
   - "ARTIST/component-tests/src/graphic/shader/UniformReaderComponentTests.cpp"
   - "ARTIST/tests/src/graphic/pipeline/UniformTests.cpp"
   - "ARTIST/tests/src/graphic/pipeline/UniformReaderFlowContractTests.cpp"
@@ -106,6 +110,44 @@ un programme autonome. Les includes et alias restent dans le fichier cité.
 d'attributes réfléchis fournit les noms et métadonnées ; elle ne remplace pas
 le contrat de layout, de VAO courant et de durée de vie des données d'upload.
 
+## Préparer une fois un float OpenGL scalaire
+
+Après `pass.load()` et avec le contexte GLFW propriétaire courant :
+
+```cpp
+#include <graphic/opengl/pipeline/PreparedFloatUniform.hpp>
+
+pass.use();
+const auto prepared = artist::graphic::opengl::pipeline::prepareFloatUniform(pass, "f2Scalar");
+for (float value : {0.f, .5f, -.25f}) prepared.set(value);
+```
+
+Extrait d'usage issu de `PreparedUpdatesDoNotResolveNativeLocationsAgain` dans
+`PreparedFloatUniformRenderTests.cpp` (alias de namespace explicité ici).
+La préparation utilise la réflexion du programme lié courant ; ce n'est pas
+une location portable cookée. Seul un `GL_FLOAT` déclaré scalaire est accepté :
+arrays de taille 1 compris refusés, nom absent/optimisé ou type incompatible en
+erreur. `set` garde le miroir lisible par `get<GLfloat>()` et appelle l'upload
+avec le float typé, sans recherche de nom ni `any_cast` dans les updates. Le
+`std::any` historique reste présent : pas de promesse zéro allocation ou de gain.
+`pass.withUniform(name, value)` demeure disponible et garde ses compatibilités.
+
+L'accès est un **emprunt**, mono-thread, sérialisé et non réentrant. Garder les
+owners et la fenêtre vivants ; garder le programme propriétaire courant à chaque
+set. Les témoins et générations sont vérifiés avant les objets empruntés :
+remplacement/publication de map, modification de métadonnées, free et destruction
+invalident l'accès. Après reload, préparer à nouveau ; les moves des wrappers
+suivent le contexte unique transféré et révoquent l'ancienne destination.
+Relink/delete GL externes contournant les owners interdits ; pas de verrou/fence.
+
+Le consommateur `ReflectedOwnerRejectsOtherCurrentProgramAndRecovers` prépare
+target une fois, garde decoy par nom et contrôle miroir/readbacks après rejet et
+reprise. L'oracle image compare legacy/préparé avec quatre pixels fixes non vides
+dans un FBO RGBA8 32×32. Preuve Windows Debug source `3b1b102` : 581 normaux et
+581 ASan, sans skip ; [[adr/0004-layouts-types-et-donnees-preparees|portée et limites]].
+Les extraits historiques ci-dessus gardent leur source initiale du 2026-10-20 ;
+la nouvelle section ne les transforme pas en preuves GPU ou de performance.
+
 ## Rejets à prévoir
 
 - **Uniform arrays** : conserver la taille réfléchie ne signifie pas que le
@@ -146,8 +188,9 @@ la vie du contexte GPU. Le propriétaire doit garder les ressources et le
 contexte utilisables pendant les opérations natives ; fin du scope C++ et fin
 d'utilisation GPU ne sont pas équivalentes.
 
-**Preuve** : extraits recoupés 1:1 au `source_revision` ci-dessus ; aucun
-nouveau build exécuté pour cette page. La preuve d'exécution historique est
+**Preuve** : extraits historiques recoupés au `1005dff` du 2026-10-20 ; nouvelle
+section float préparé sourcée au `source_revision` ci-dessus, avec campagnes
+normales/ASan du 2026-10-27. La preuve d'exécution historique est
 Windows x64 Debug, `fdbce15`, 546/546 (477 unitaires, 69 OpenGL), consignée dans
 [[references/session-2026-10-20-pipeline-execution-path]]. Elle n'est pas un
 nouveau résultat au HEAD documentaire. Release, ASan, autres OS et qualité

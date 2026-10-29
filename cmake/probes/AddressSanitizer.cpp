@@ -4,7 +4,9 @@
 #include <stacktrace>
 #include <string_view>
 #include <vector>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #ifndef __SANITIZE_ADDRESS__
 #error The ASan preflight must be compiled with AddressSanitizer instrumentation.
@@ -20,6 +22,7 @@ int main(int argc, char** argv) {
         if (*value != 42) {
             return 1;
         }
+#ifdef _WIN32
         std::cout << std::format("ARTIST_ASAN_HEALTHY value={} trace={} MSVC={} STL={} CXX={}\n",
             *value, std::stacktrace::current().size(), _MSC_FULL_VER, _MSVC_STL_VERSION, _MSVC_LANG);
         bool foundRuntime = false;
@@ -37,6 +40,11 @@ int main(int argc, char** argv) {
         if (!foundRuntime) {
             return 1;
         }
+#else
+        std::cout << std::format("ARTIST_ASAN_HEALTHY value={} trace={} GCC={} STL={} ABI={} CXX={}\n",
+            *value, std::stacktrace::current().size(), __VERSION__, __GLIBCXX__,
+            _GLIBCXX_USE_CXX11_ABI, __cplusplus);
+#endif
         return 0;
     }
     if (mode == "use-after-free") {

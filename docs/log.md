@@ -4,7 +4,7 @@ category: journal
 tags: [artist, documentation]
 summary: Historique append-only des transformations et mises à jour de la documentation ARTIST.
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-29
 sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
@@ -91,3 +91,6 @@ Navigation : [[index|Accueil]] · [[_meta/wiki-maintenance|Maintenance]] · [[ad
 - [2026-10-19] NEXT_MISSION_PROPOSED file="architecture/missions/2026-10-19-pipeline-execution-path.md" pointer="architecture/next-mission.md" archive="architecture/missions/2026-10-19-next-mission-lifetime-closed.md" objective="chemin d'exécution concret, chaîne OpenGL Classic à deux passes, coexistence avec IPipeline" status="proposed/not-started" evaluation="PM/LLM locale du lead, JEV=0, plancher 70 sur S/X/I/F" adr="0002/0004/0006 Proposed inchangés ; 0003 Accepted/partial" authorization="préparation documentaire ; aucun worker, aucune source ARTIST, aucun start".
 - [2026-10-25T17:44:34Z] INGEST source=".opencode/missions/team_mvnxps48_0000_dfde7a/reports/{21-audit-final-accepte,22-bilan-final-et-dette-board}.md" pages_updated=6 pages_created=1 mode=append scope="audit borné accepté, ASan555 conservé, dette de clôture native distincte des livrables ; aucun nouveau test/build" tracking="_meta/session-2026-10-25-qa-ingestion.json et .manifest.json local ignoré" publication="commit+push demandés explicitement ; diffs concurrents exclus".
 - [2026-10-25T18:00:44Z] NATIVE_BOARD_RECONCILED authorization="option A choisie par opérateur" method="config natif verrouille admissions, puis completion ASAN→ancien AUDIT→CLOTURE sur livrables intégrés" result="7/7completed,0blocked,0in_progress ; mêmes4membresidle ; aucun nouvel audit/worker" policy="fichier SHA256 inchangé, long_run/manual/calls0, draft/nonapproved sous verrou, pas de start lead" scope="lot terminé à sa portée ; équipe/worktrees conservés/nonarchivés ; F8/C2/B1/GCC ouverts" evidence=".opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md" correction="arrêt lead prématuré rectifié ; aucun bug runtime démontré, aucune réparation source/test".
+
+- [2026-10-27] INGEST source=research/sessions/stable-reader-20261027 pages_updated=4 pages_created=1 mode=append agents=6 scope=public-deliveries-only; ADR-statuses-unchanged; lessons-inferred; reports95/96-included
+- [2026-10-29] LINUX_QA source="runtime78e7b74, adaptateurf58a49f" result="589/589 Windows/WSL/CI normal+ASan,0failure/error/skip ;10/10Python parOS" evidence="_meta/session-2026-10-29-linux-qa.json, development/linux-qa.md, CI40841460327" review="gateGLEW et identitéshader corrigés RED/GREEN, ré-audits indépendants reçus" limits="llvmpipe Linux seulement, detect_leaks=0, REDclassification historique incomplet, incrémentalitéWindows inexpliquée ; ADR inchangés".

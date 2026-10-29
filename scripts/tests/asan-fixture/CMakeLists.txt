@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.25)
+project(artist_asan_fixture LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(ARTIST_ENABLE_ASAN ON)
+include("${CMAKE_CURRENT_LIST_DIR}/../../../cmake/AddressSanitizer.cmake")

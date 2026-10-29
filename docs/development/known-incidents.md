@@ -2,10 +2,12 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Correctif mock82bf52d, ASan555 et audit final acceptés ; blocage du board résolu7/7, dettes F8/C2/B1/GCC conservées sans PASS global."
+summary: "Float préparé 3b1b102 validé normal/ASan581 ; incrémentalité Ninja d'en-tête non fiable observée, final clean-first ; gaps Reader antérieurs conservés."
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-27
 sources:
+  - docs/_meta/session-2026-10-27-prepared-float.json
+  - docs/_meta/session-2026-10-26-stable-reader-cleanup.json
   - docs/references/session-2026-10-03-shader-pass.md
   - docs/_meta/session-2026-10-03-validation.json
   - research/sessions/2026-10-15-loaded-owner-move/session-capture.md
@@ -24,6 +26,7 @@ sources:
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md
+  - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/30-b1-causes-reproduites-et-actuel-vert.md
 provenance:
   extracted: 0.96
   inferred: 0.03
@@ -31,6 +34,72 @@ provenance:
 ---
 
 # Incidents, diagnostics et suivi
+
+## Float préparé — limites conservées le 2026-10-27
+
+- Pendant les mutants C/L/A, le premier essai L a repris le binaire C : Ninja
+  annonçait no work, EXE identique et mauvais témoin en échec. `ninja -t deps`
+  montrait zéro dépendance pour cet objet malgré le header plus récent. Essai
+  exclu, recompilation ciblée forcée puis clean-first intégral normal/ASan avant
+  les 581 tests finaux de chaque configuration. Défaut d'incrémentalité observé,
+  cause précise non corrigée, aucun changement toolchain/harness livré.
+- Le patch QA proposé utilisait un accesseur protected : premier build C2248,
+  aucun test exécuté, ancien XML conservé STALE-NOT-EXECUTED. Réparation test-only
+  1/2 : témoin public déjà disponible, sans ouvrir l'API ; étape intermédiaire
+  504 CPU/579 ASan puis finale506 CPU/581 ASan passent. Ce n'est pas un RED
+  comportemental ni un bug production.
+- Un mutant Freer recompilé dans une seule unité a survécu avec les autres
+  définitions inline d'origine encore liées. Expérience non cohérente exclue ;
+  tous les objets unitaires reconstruits avec le même mutant détectent l'erreur
+  dès le premier detach puis les writes erronés après échec partiel. Source
+  restaurée, clean-first normal/ASan final. Aucun correctif moteur ou oracle assoupli.
+- Plusieurs tests lifetime/invalidation ont été ajoutés après leurs gardes,
+  empreinte source RED initiale non capturée. Mutants causaux et non-régressions
+  ne reconstruisent pas ces preuves historiques manquantes.
+- Récupération automatique des finales QA Ensemble encore défaillante : textes
+  publics natifs réellement reçus/lus par le lead, pas de complétion supposée.
+  Audit hors board qualifié directement ; exception navigateur héritée révoquée
+  par restriction native de cette seule session, sans grant ou réparation globale.
+- detect_leaks=0, dépendances/driver non instrumentés ; Release/Linux/autres API,
+  performance et retraite GPU générale non validés. Les anciens gaps Reader
+  extraction/close ci-dessous restent ouverts, pas de nouvelle expérience autorisée.
+
+Preuve `_meta/session-2026-10-27-prepared-float.json` ;
+[[adr/0004-layouts-types-et-donnees-preparees|contrat borné]] et
+[[development/build-and-test|commandes et résultats]].
+
+## Recentrage Reader stable et disposition B1–B6 — 2026-10-26
+
+- **B3, nettoyage stable livré à a96104c** : callback et instrumentation Reader
+  retirés,13 fichiers probes stdio/close supprimés après contrôle consommateurs.
+  Aucun RUN exploratoire effectué ; archives/manifestes annulés/preuves/commits
+  conservés. Mode texte, diagnostics, lecture complète et publication après close
+  vérifié conservés, sans garantie d'auteur concurrent ni nouvelle synchronisation.
+- Deux injections et oracle Windows de suppression à publication retirés ; trois
+  caractérisations fichiers stables ajoutées. Les pertes de caractérisation catch/
+  bad_alloc et d'oracle dynamique de l'ordre sont explicites : **aucune preuve
+  d'erreur authentique extraction/close n'en résulte**. Ces gaps restent ouverts
+  comme limites, sans prolonger le chantier OS/probes ni annoncer impossibilité.
+- **B1, clôture bornée après revue indépendante** : defaults ON_CALL historiques
+  persistants, compilation fausse et handles8/5. Témoins historiques A1échec/4RUN,
+  B2échecs/6RUN ; current82bf52d A4/4,B6/6. Overrides actuels EXPECT_CALL/WillOnce,
+  mais reset ne nettoie toujours pas exhaustivement les defaults. Quatre fichiers
+  concernés inchangés à a96104c, vieux binaire réidentifié ; pas replay176 ni
+  nouvelle réduction répétée de a96104c, pas résolution universelle historique.
+- **B5/C2** : fermeture administrative motivée acceptée au34 ; défaut de fixture
+  établi, explication forte Empty/probable MultiBlock, primaires incomplets gardés.
+  Réouverture seulement sur nouveau symptôme/preuve contradictoire, pas silence.
+- B2/B4/B6 acquis à leurs candidats, non rouverts. Sur le nouveau candidat :
+  **555/555 normaux et555/555 ASan**,0failure/error/skip ; revue C++ indépendante
+  et audit des archives sans finding bloquant démontré. Pas PASS global moteur.
+- QA locale simplifiée à la reprise opérateur : plan/gap-check lead, revue native
+  correctness-reviewer fresh. Pas de requalification en audit test-reviewer ;
+  admission QA Ensemble incompatible et notifications sans rapports récupérables
+  restent limites d'outillage, sans développement correctif dans cette tranche.
+
+Preuve portable `_meta/session-2026-10-26-stable-reader-cleanup.json` ;
+[[development/build-and-test|commandes et comptages]]. Les sections suivantes
+conservent les états historiques, supersédés seulement aux dispositions ci-dessus.
 
 ## Continuation QA — débordement du diagnostic mock — 2026-10-25
 
@@ -464,7 +533,7 @@ pas des preuves et ne sont pas comptées dans les totaux.
 - Ne pas écrire que « les chemins réels couvrent chaque branche » : formule du message de commit
   `e736bba`, écartée avec la réserve β de R.
 
-### Anomalie RED de développement — baseline C2 du 20:35 (OPEN, cause non établie)
+### Anomalie RED de développement — baseline C2 du20:35 (fermeture motivée acceptée)
 
 - `mission-c2-baseline-ctest.xml` (20:35) : 165 cas, 13 échecs : 10 F4 (`0xc0000409`) et 3
   `ReaderTests`.
@@ -472,10 +541,23 @@ pas des preuves et ne sont pas comptées dans les totaux.
   (`ReaderTests.cpp:114` dans le log) ; `MultiBlockReadPreservesContent` échoue à
   `ReaderTests.cpp:146`.
 - `mission-c2-red-exact.xml` (20:38) : 16 cas, 11 échecs (10 F4 et `AbsentFileRejected`). Ces
-  deux tests Reader y passent. Les numéros de ligne diffèrent : version antérieure possible du
-  fichier de tests, non vérifiée. Aucun rapport n'attribue ces échecs.
+  deux tests Reader y passent. La provenance retrouvée le25octobre décrit une modification de
+  préparation de fixture entre les deux runs, avec les limites ci-dessous.
 - Statut : la baseline 20:35 **n'est pas un RED causal** et n'est citée nulle part comme tel. Seul
   `red-exact` (20:38) sert de RED F8 causal.
+
+- Enquête nouvelle : transport natif auteur précisément identifié, helper sans
+  création du dossier parent et garde exists=false avant Reader ; ajout
+  create_directories puis lien et sortie red-exact11/16. Défaut de fixture établi,
+  explication forte pour Empty, probable pour MultiBlock. Rapport28 sous
+  `.opencode/missions/team_mvnxps48_0000_dfde7a/reports/` : opérations/ordre/IDs
+  et limites, sans nouveau replay. XML primaires, valeurs complètes MultiBlock
+  et identité binaire pré-run restent manquants.
+- **Fermeture administrative motivée explicitement acceptée par l'opérateur**
+  au rapport34, décision intégrée dans `fb3c9b9` le26octobre. Aucun verdict moteur,
+  causalité exhaustive ou disparition des anciens FAIL n'en découle. Réouverture
+  sur primaire contradictoire ou nouveau symptôme identifié ; pas de chasse
+  identique ni reconstruction actuelle présentée comme preuve historique.
 
 ### Campagne ASan incrémentale — FAIL 133/134 (mécanique expliquée en mission A1+A2, H-ASan)
 
@@ -633,7 +715,7 @@ avant T3.
   décrits dans `out/mission-f7/t2/t2-slice-note.md`. Manifeste : clé
   `f7_t2_followup` de `_meta/session-2026-10-17-attribute-oracle-validation.json`.
 
-### Ordre des fixtures Loader/ShaderLoader — FAIL préexistant, non corrigé
+### Ordre des fixtures Loader/ShaderLoader — FAIL historique, causes isolées le25octobre
 
 L'essai G1 de shuffle du binaire CPU complet révèle neuf cas Loader/ShaderLoader
 en échec sous seed20261017 (effectif61219), et `LoadShaderTest_callCreate` sous
@@ -648,6 +730,23 @@ autoriser séparément. Aucun correctif ou nouveau chantier implicite. Preuves :
 `out/mission-a1a2/gmock-amendment/qa/shuffle-tripartite-results.json`.
 La suite en ordre par défaut et la fixture Attribute corrigée restent conformes
 dans les campagnes déclarées ; **pas de PASS global toutes configurations**.
+
+**Reprise du scope initial,25octobre : causes désormais reproduites isolément.**
+Sur PRE_G1 identifié par SHA3d4fb31e…, deux processus de réduction avec repeat2
+montrent la persistance des ON_CALL : compileFalse de LoadShaderFailureTest
+contamine le callCreate suivant ; shader8/program5 du test lifetime contaminent
+les observers attendant1. H échoue avec1puis2échecs attendus. Sur le binaire normal
+actuel1b0fc029…/source82bf52d, mêmes sélections :4puis6exécutions vertes,5cas uniques
+au total,0skip et aucun diagnostic stdout après dernier PASSED. Les trois sites
+sont déjà EXPECT_CALL/WillOnce ; aucun nouveau correctif/build/sweep. Le reset
+VerifyAndClearExpectations du singleton ne supprimait pas les ON_CALL.
+
+Runner lead, protocole29 avant run, stdout/stderr/XML et identités avant/après
+archivés dans out/qa-b1/causal-20261025-01. XML dernière itération seulement,
+pas10nouveaux tests uniques. B1 causalement instruit au périmètre de ces deux
+mécanismes, revue finale encore attendue ; anciens FAIL176 conservés, aucune
+garantie toutes permutations. Preuve portable :
+`_meta/session-2026-10-25-b1-causal-validation.json`. F8/B3 et C2/B5 restent distincts.
 
 ### Clôtures des correctifs harnais
 

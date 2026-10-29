@@ -187,6 +187,106 @@ Test/preuve → obligation / limite :
 
 Orphelins **unassessed**, pas « aucun » : inventaire/diff tests à recouper au candidat. Doublons faibles : répétitions comptées comme nouveaux contrats, seam=OS, JUnit/log/résumé comptés comme exécutions distinctes. Autre candidat ou mutations postérieures = preuves périmées, sauf portée historique explicite. Aucun comportement déclaré COVERED ici.
 
+## Amendement du25octobre — reprise initiale B1/B3/B5
+
+Proposition Q par pool-6/qa-planner, cinq fragments natifs complets reçus ; persistance et décisions par lead. Analyse locale seulement, aucun test/édition/exécution par planner. Admission et transport après restriction vérifiés au rapport32 de team_mvnxps48_0000_dfde7a ; pas garantie sandbox. Cet amendement actualise les dispositions historiques ci-dessus, sans refaire le plan ni rouvrir B2/B4/B6. Source82bf52d, HEAD documentairefa7a949 au brief ; pins historiques ne valent pas identité future.
+
+### Exigences, décisions et invariants
+
+KEEP E0/E2/E5/E6/E8/E9/E10 et I1–4 au candidat acquis. MODIFY E1 : deux mécanismes causaux réduits, pas toutes permutations. MODIFY E3 : calibration distincte du futur Reader ; E4 reste obligation authentique, aucun DEFER reconduit tacitement. MODIFY E7 : provenance positive et disposition explicite.
+
+Explicites : contrat/QA commis avant auteur ; RED causal avant correctif ; erreur/EOF/publication distingués ; close réellement échoué à traiter ; disposition C2 explicite. Invariants/intent : aucun préfixe publié après rejet, owner unique/close une fois, fixtures possédées et voisins préservés. Inférences et non nouvelles specs : recovery vérifie contamination ; M3 explore préfixe acquis ; comparaison modes détecte régression texte ; cleanup préserve erreur primaire. Setter arbitraire jetant/mutation concurrente hors garantie proposée.
+
+Décisions opérateur du rapport34 (même répertoire que32) : **calibration stdio et recherche OS close bornées autorisées**, après ce plan commité et contrat de sonde ; **B5/C2 fermeture administrative motivée acceptée**, pas causalité exhaustive. Contrat Reader, messages, retrait catch/seam NON adoptés. Aucun correctif Reader autorisé par ces décisions.
+
+### Risques QA I×P (indépendants des scores PM)
+
+- Erreur assimilée EOF/publication : I4×P4=16. Déclencheur open réussi puis erreur native ; blast radius chargement shader ; détection sonde25 OS33→EOF ; mitigation contrôle actuel insuffisant, calibration M0/M1/M2 ; gap stdio non calibré, aucun verdict correction.
+- Close/lifetime/publication : I4×P3=12. Déclencheur close échoué ou cleanup après erreur ; blast radius flux/contenu ; détection statique et scripted insuffisante ; mitigation owner unique/publication après close, recherche OS bornée ; gap M5 authentique absent, aucun double-close artificiel.
+- Fausse attribution C2 : I3×P3=9. Détection provenance28, garde exists=false avant Reader, populations13≠11, exit pipeline masqué ; préserver manques, pas replay. Disposition motivée acceptée au34.
+- B1 résiduel I3×P2=6 : revue mécanismes/populations/logs sans sweep. Identité/preuves I3×P3=9 : manifestes avant réemploi, pas programme transverse. Réévaluer après calibration/surprise, sans sacrifier un risque haut ni consommer le buffer d'avance.
+
+### Scénarios et oracles
+
+B1 : H négatif A4RUN/2uniques, B6RUN/3uniques, exit1, défauts compileFalse puis8/5 au second tour ; N mêmes sélections exit0. Rapports29/30 satisfont ces témoins, pas rerun demandé. XML dernière itération seulement ; stderr A deux diagnostics négatifs attendus, avertissement GMock non-intéressant pas échec automatique. Audit final attendu.
+
+Calibration autorisée : M0 fichiers possédés0/court/4096/8192/12325/4608, CRLF/Ctrl-Z/BOM/NUL, chemins espaces/nonASCII. Comparaison au comportement texte actuel caractérisé, pas choix binaire silencieux. M1 : ouverture réussie puis LockFileEx recouvrant lecture ; témoin ReadFile erreur33, fread n/feof/ferror/errno avant cleanup. Succès expérimental = distinguer erreur native de EOF. ferror perdu = option rejetée ; open refusé/erreur native absente = expérience INCONCLUSIVE selon cause. Aucun RED fictif du probe. M2 unlock/recovery : mêmes octets exacts, ressources libérées, voisins intacts. Zéro sans EOF/erreur : règle proposée, pas panne OS prouvée. M3 seulement après M1 et hypothèse justifiant préfixe réellement acquis ; sinon GAP, pas sweep préfetch.
+
+Futur Reader conditionnel : contrat adopté/messages complets avant RED ; nominal lecture+close puis publication unique exacte, vide légitime. Négatif absence et M1 authentique, contexte prérempli vidé sans préfixe, type/message exacts adoptés. RED Reader actuel puis GREEN même verrou/recovery, oracle inchangé. Si downstream exercé, absence de compilation après rejet par moyens existants ; mock ne prouve pas GPU. M4 catch ifstream authentique toujours non prouvé : migration nécessitera substitution explicitement acceptée, jamais «catch exercé». M5 : lecture achevée puis close authentiquement échoué sur owner valide ; aucune publication, close une fois, primaire préservée. Dispositif non acquis : recherche bornée puis décision résiduelle, pas fermeture tacite. Flags/throw/rdbuf/masque/handle fermé artificiellement REJECT comme preuves OS/catch/close ; bad_alloc non traduit = sous-contrat, pas pénurie réelle.
+
+C2 : provenance28 établit défaut fixture, forte explication Empty/probable MultiBlock ; fermeture motivée34 acceptée, primaires manquants archivés. Réouverture sur primaire contradictoire ou symptôme nouveau identifié, pas verdict moteur ni reconstruction actuelle du passé.
+
+### Registre bidirectionnel et orphelins
+
+E1/I1/I2 → shader/LoaderTests.cpp(callCreate46,setContextShaderId106,Failure121), pass/LoaderTests.cpp(validContext), graphic/pipeline/ShaderLifetimeTests.cpp(PassDestructorReleasesProgramThenShaders) sous ARTIST/tests/src/graphic/opengl/pipeline/component pour les deux Loader ; raisons writer/default puis observer, preuves A-H/A-N compilation et B-H/B-N handles. COVERED exécuté attribué lead seulement pour deux mécanismes. H SHA3d4fb31ee463a1c44370e9ba051e584784bf2f5becbf584341169d71d2ea1388 ; N SHA1b0fc02956d424f7fa6de02a91211b8e14f4295784d3563342be7c064e3950b5. Commandes/manifeste29/30 et out/qa-b1/causal-20261025-01, runner lead25octobre18:25:49Z, CPU mocks.
+
+E3/I3 → Reader.hpp extractShaderSource/readShaderFile/on : présence statique ifstream/fail&&!eof/clear/close/setter/catch ; sonde25 défaut causal attribué lead, pas correction. M0–M3 GAP à exécuter selon contrat. E4/M4/M5 → close/catch : présence statique, négatifs authentiques GAP. E7 → historique ReaderTests.cpp helper/Empty/MultiBlock et provenance28 : documentaire positive, disposition34, causalité complète non acquise.
+
+Inverse : A/B supports stdout/stderr/XML/résumé = mêmes runs, pas preuves indépendantes supplémentaires. ScriptedStreambuf/SourceExtractor/PublicationProbeContext → sous-contrats, jamais OS/catch/close. Migration/suppression à décider, pas automatique. C1083 historique → environnement, aucun RED produit. ASan555/anciens verts → leurs candidats seulement. Orphelins futurs **unassessed** tant que diff tests absent. Conserver pour toute preuve candidat/delta/SHA source-binaire-config-logs, source/date/commande/runner/env, attendu/observé et comptes uniques/failed/error/skipped.
+
+### Budget, barrières et sortie
+
+Capacité100 proposée, ni coût ni durée approuvés : setup25 ; reste75 dont planifié56,25 (75%) et buffer18,75 (25%). Planifié B1/B5=8, calibration20, recherche close10, futur Reader conditionnel12, registres/audit6,25. Buffer investigation7/panne5/ré-audit6,75. Pas d'engagement M3 coûteux. Dépassement recherche close/alternative10 ou campagne indispensable hors solde → réestimation opérateur, pas réduction risque haut/buffer artificiel.
+
+Barrière1 : ce plan commité et contrat de sonde, développement C≥70, commandes exactes dérivées base compilation/protocole25 et approuvées avant runner lead. Recherche close indépendante RO possible, aucun test implicite. Barrière2 après résultats : adoption distincte Reader/messages/catch/seam et disposition M5, amendement commité avant worktree auteur ; TDD/non-régression. Producteurs intégrés avant consommateurs. Un build par sortie ; fixtures possédées, GPU/ASan sous bail si nécessaire.
+
+Nouveau diff intégré : sélection pré-run, Windows Debug CTest --parallel 1 --no-tests=error et JUnit/logs complets selon risque/protocole existant, pas campagne acquise rejouée sans pertinence. Si ASan complète nécessaire : découverte=selection=execution,17historiques chacun une fois, zéro failure/error/skip, canari pertinent et diagnostics tardifs. Sinon FAIL écart ou INCONCLUSIVE précondition, pas transfert ASan555.
+
+Sortie : B1 preuves bornées recoupées ; B3 preuve ou gap explicitement soumis pour chaque obligation ; C2 disposition acceptée archivée. Audit test-reviewer natif fresh dédié, contrat/candidat/preuves sans justifications auteur, profil/transport vérifiés, aucune exécution autonome. Proposition Q intégrée ne vaut ni Reader prêt auteur ni PASS moteur. ADR0001/2/4/6/7 Proposed,0003/5 partial,0008 Windows Debug seulement.
+
+## Amendement close OS en enfant dédié — décision52,26octobre
+
+Proposition Q_CLOSE par pool-6/qa-planner : quatre fragments/FIN et complément focalisé reçus ; persistance lead, aucune édition/test/API/MCPexterne/claim/délégation par planner. Contexte conservé de préparation **non indépendant**, admissionrestrictive/lecture53/transport effectifs vérifiés54. HEAD e1508b9/source82bf52d attribués brief, pas Git/hashrecalculés par QA ; référencesMicrosoft/CRT digestlead, pas nouvelle recherche externe. Cet ajout actualiseE4 sans refaire17 ni rouvrirB1/B2/B4/B5/B6/C2.
+
+### Exigences et limites
+
+MODIFY E4-calibration : décision52 adopte seulement refus délibérément configuré HANDLE_FLAG_PROTECT_FROM_CLOSE sur emprunt valide de FILE*enfantdédié ; exception ciblée à l'interditflags, tous autresEOF/ferror/throw/handleinvalide restent exclus. **KEEP E4-ReaderM5/nonpublication et M4catch NON prouvés** ; calibration≠M5couvert. OwnerFILE/fd/enfant unique, une fclose, pas retry/_close/CloseHandleemprunté/réutilisationvaleurhorsenfant. Parent seul owner de ses handles supervision, signalfinavantstatut/cleanup, timeout≠terminaison, aucunTerminateProcessfallback. CRTchargée etretour/exception à observer sanscodeprédéterminé. Nominal/cible distincts, fixtures/voisins possédés ; contrat/protocole/QAcommisavantfreshworktreeauteur, commandes approuvées avant runnerlead.
+
+Inférences proposées : corrélationPID/bras/ressource/étapes pour ordre, logs découplés d'attente/pipesdrainés ; sortie main ou exit0 ne prouve ni finDLLdetach ni fclose0. Intent = pas secondefermetureemprunt ni suppressionfixtureenfantvivant. Compile/link fixe structure/CRT ; refus/vieprocessus runtime, aucun assettype/GPU/Reader changé. Source future scripts/probes/qa-f8-close/**, aucun symbole créé/présence statique fictive ; pool8 reste seul stdio.
+
+### Risques QA distincts du risquePM
+
+- R1 enfantvivant/cleanupprematuré : **I4×P3=12**. Déclencheurdetachbloqué,timeoutattente/transportexterne,supérationperdue ; blast radius processus/fixtures/handles possédés/capacitérunner. Détection documentaire50 et wrapper54, pas runtime. Mitigation attentehandle, supervision/bailconservés,pascleanup/kill ; **gapbloquant superviseurdurable/conduiteaprèsdélai** avantauteur.
+- R2 ownershipconsommé : **I4×P3=12**. Déclencheur garde/atexit/réemploiFILE/fd/valeurparent/retraitflag+CloseHandle ; blast radius doubleclose/fdrecyclé/ressourceétrangère au processus. Détection statique42/47/50 ; mitigation étatconsommé/zeroréemploi et revuecheminsprécoces ; **gapcontratdestruction/exception** avantauteur, consommationnonaffirmée si exceptionnative interromptfclose.
+- R3 fauxverdictCRT/syscall/Reader : **I3×P4=12**. DéclencheurSDKrcprisDLL,errnopréchoisi,EOFprisCloseHandleobservé,suppressionprisefermeture,calibrationprisepublication. Blast radius crédibilitéE4/décisionmigration. Mitigation modulesréellementchargés/hash/étapes et verdictsparniveau ; **gap mécanismeobservationFILE/exception etidentitéCRT**. Pas nouveauxtraceursyscallexigé : refusinterne reste documentaire/inféré sanstrace, nepasétiqueterexecuted. Pas installation/service/programmetracing pourremplircase.
+
+PrioriserrevueR1/R2 avantcalibrationR3 ; réévaluerauxsurprises/changementcandidat sanssweep/campagneGL/ASan. Churninfluenceprobabilitépasimpact, scoresPM61/73 indépendantsdecettematrice.
+
+### Scénarios et oracles
+
+- C0 nominal : enfantdistinct/fixturelectureseule,lecturecomplèteavantclose,protectionabsente,une fclose0 à observer,résultatimmédiat,puisfinprocesssignal/statut/logsconcordants. Parentfermeseulesseshandles/cleanupaprèsfin,voisinsintacts ; exit0seulinsuffisant.
+- C1 cible : mêmebinaire/config/données,empruntvalide/protectionappliquéeetlueavantcallunique. Phases lecturefinie→protectionconfirmée→entrée fclose→retourOUexception→fin. Capturerretour/errnoavantlogging ; GetLastErroraprèsCRTneprouvepasCloseHandleinterne. AucunCloseHandletémoin surl'emprunt. Sansobservationinternequalifier FILE*/politiqueconfigurée, pas syscallobservé ; pascodes/absenceexceptionprédéterminés.
+- C2 setup : création/open/lecture/instrumentationéchouée avantconditioncomplète→arrêtbras,pascalibrationclose. Nettoyeruniquementacquis/vivantsconformeowner ; lectureéchouée≠closeéchoué, instrumentationéchouée≠permissionderefermeremprunt.
+- C3 retour/exception : aprèsretourconsommant,pasusageFILE/fd,logsseulspuissortie ; exceptionnative/debuggerneprouve ni retour ni consommationachevée, jamaishandler/retryinventantcettepreuve. Finprocessrécupérationdocumentée50≠tracechaquehandlekernel.
+- C4 timeout/WAIT_FAILED/logsincomplets/crash : étatidentités/bailconservés,pasautrebras/rerunsurlamêmeressource,nicleanupavantfin. Maintenirsupervisionoutransfertautoriséexplicite ; plusvivantque budget=INCONCLUSIVE/décisionopérateur,pasrecoveryPASS. Ne pas provoquerdeadlockpourcouvrirligne. AttentebornéeWaitForSingleObject/signalavantGetExitCodeProcess ; WAIT_FAILEDdistincttimeout, derniercodeapparentnelibèrepaspropriété.
+- C5 cleanupaprèsfin : suppressionracinepossédéeetvoisins ; échec=FAILcleanup, preuveclosedistinctesansPASSglobal. Suppressionseuleinsuffisante(share-delete). Sortiesprécocesconserventresponsabilitésupervisionvivante.
+
+NouveauxcontrôlesdéterministessuiventvraisRED/GREENsi défaut/capacitémanquantepertinents ; pascodevolontairementfaux. RésultatC1inconnu=caractérisation,pasREDparcequefcloseéchoueintentionnellement. Aucune duplicationwhole-native-readS. Si branchetimeout/setupnécessiteinfrastructuresupplémentairenonadoptée : revue statique+GAP, passeam/mockimplicitement. FuturcorrectifReadercontrat/REDséparés.
+
+### Registre, transport et sortie
+
+E4-calibration→futurecloseC0/C1(GAPruntime) ; I-lifetime→42fclose17–43/close81–94 et50ownership(stat/digestionlead) ; I-identité→42limiteSDK/futurmanifestemodules(GAP) ; I-supervision/exclusivité→50detach/52conditions,C2–C5(GAPprotocole) ; E4Reader→readShaderFileclose/publication/M4catch(NONcouvert).
+
+Inverse42/43→hypothèseseeknonsoutenuepasimpossibilité ;47/50→contratspublicspasrun ;52→admissibilitépaspreuve ; futurslogsCRT/signal/cleanup→C1/C3/C4/C5 séparément,paspublication. Close nominal≠refus,EOF/errno≠traceOS,résumé/log/XML≠3runs ; orphelinsunassessedavantdiff,ASan555autrecandidatpaspreuveclose. Source/datelectures26octobre,commandes0/runneraucunpourQA ; identitéDLL/binaire/delta/logs/env/commandeexacte/attenduobservé/comptes àfixeravant/aprèsrunner, paszérotestPASS.
+
+Findingtransportdigestionlead : run-build.py utilise subprocess.run(timeout=1200),tueenfantdirectsurTimeoutExpired ; parentclose ainsi tuépourrait laisserenfantorphelin. **Compilewrapperréutilisable, RUNcloseinterditviaCEwrapperpardéfaut.** Gateavant auteur : transportRUNsanskillimplicite,bailresponsable/PID+instantcréation/bras/handlesvivants,markers/logs/observabilitéaprèsdélai etsuiviaulead. Markerne remplacepas signalhandle ; deadlineinterne/externe≠fin,aucunréemploibail/fixturetantquenonfin. Manque de transport sûr=BLOCKED, pasforcekill/service/infra supplémentaireinventés. LignesRUNàvalider parleadavantessai.
+
+Budgetlocalproposé100unités(nonheures/coût,nonsumautomatiqueglobal17) : setup30 ; reste70dont52,5planifié75%et17,5buffer25%. Planifié supervision/lifetime14,nominal/setup12,refus/observation12,cleanup8,registre/revue6,5 ; bufferinvestigation7/panne6/réaudit4,5. Si transportadmissibleabsent/enveloppetenableabsente : arbitrageavantauteur,pasréductionrisquehautoubuffer.
+
+Sortiepréparation=ajout+protocolecommisavantfreshsource,ownershipséparé/unbuildsortieleadrunner ; **cetajoutn'affirme pas auteurprêt** tantquesupervision/observation/identiténonarrêtées. Sortiecalibration=brasidentifiés/résultatsfidèles/finconstatée/cleanupvérifié,sinonFAILécartouINCONCLUSIVEmanque. M5Reader/catchGAP,aucuneGL/ASan/Linux/GCC/Release/image/perf/PASSglobal implicite.
+
+## Décision opérateur75 — observation bornée et gapRED conservé
+
+2026-10-26. Amendement ciblé lead au planQA existant, fondé sur propositionsQ_CLOSE et protocolesS/PC1 déjàintégrés ; pas nouvelle campagne ni secondplan. Après rapport74 et questionnaire, l'opérateur adopte explicitement **Caractérisation bornée** et **matrice stdio72**. Cette stratégie résout la décisionhumaine précédemmentouverte sur nouveauxoutils, sans prétendre REDcausalaccompli.
+
+Pour **ces seuls outils d'observation** (stdioM0/M1/M2 et parent/enfantcloseFILE*), un GAP de REDcomportemental préalable est accepté et doit apparaître dans les preuves. Les tests/oracles/invariantsdéterministes sont écrits avant logique quand pertinents, sanssquelette/comparateurvolontairementfaux ni infrastructurepourfabriquerRED. Les expériencesCRT sont caractérisations fidèles ; toute correction d'un défaut effectivementobservé conserve son vraiRED/oracleinchangé puisGREEN. Aucune exception au TDDmoteur/Reader ou futurtravailhorscesoutils n'est inférée.
+
+Matricefigée :30lignesM0=10vecteurs×3classeschemin, puis deuxcasM1texte/binaire avecrecoveryM2fluxneuf, pasM3/sweep. Baseline directeextractShaderSourceproductionidentique82bf52d, SHAReaderce97d9e3ecfcf163ab757bb9c1dbf29116fb52505443c17a8725da5c0a90a284 ; helper/controlsvalidésimmuables. Oracles72, données/offsets/ACP/localepréenregistrés, issues0/10/20/30 et lignesindividuellesnonmasquées. Baseline/compatibilitétexte n'adoptent pasmodeReader.
+
+Close : refusOSdélibéréadmis52, nonpannestockage ; distinguer instrumentationcomplète, résultatCRT et confirmationhypothèserefus. Retourprotégé0 ou ambiguïtéCRT ne deviennentrésultatrefuspositif ; pas dePASSReader/catch/nonpublication ou syscallinterneexecuted. RisksR1/R2/R3, supervision10000ms→HOLDmêmehandle,WAIT_FAILEDquiescent,cleanupseulementaprèssignal et pasTerminateProcess restentinchangés. Deadlock/WAIT_FAILED artificiels nonprovoqués, gapsruntime explicites.
+
+AvantGOsource : décision75/planamendécommis, propriétaire/répertoiredisjointscpp etctxnatifsvalables, détailsinterfacesadoptés ; avantRUN : sourceintégrée/argvexactsmanifestes/SHA/sélections/bail/sentinelles/exclusivité puis runnerleadseul. Revuesensiblesfreshsurcandidatsintégrés avantconclusionfinale desoutils, auditfinalfreshdéjàacceptéinchangé. Aucun correctif spéculatif, installation/service/backend ou nouveauxASan/GL/Linux/GCC/Release/image/perf implicites ; aucune diminutiondescores/routage.
+
 ## 8. Qualification des preuves
 
 Chaque preuve retenue : HEAD complet/delta/SHA256 sources-binaire-config-artefacts ; source/date/commande/runner/environnement ; attendu/observé ; découverts/exécutés/échoués/skipped et uniques/répétitions ; critère/raison discriminante/limites/verdict.

@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-27",
+  "scope": "Prepared scalar GL_FLOAT borrow, named API and CPU mirror retained, one OpenGL consumer and fixed nonempty pixel oracle",
+  "status": "verified-windows-debug-slice",
+  "source_revision": "3b1b1028dcd64ca46e0a359365ae096be1a38ac4",
+  "integration": {
+    "contract_and_qa_before_authors": "49005ed2ca1803eb57726b27247da01f31555a7d",
+    "mechanism": "8b60b57898b28a7ceb7b5d4434aadcd4684581b9",
+    "consumer": "c283f806f93167b86ab0278d58714764873022ca",
+    "first_test_gaps": "3d0e1452cd9bd7b126b5fd1e43c73a5d0b1b6e23",
+    "audit_test_gaps": "3b1b1028dcd64ca46e0a359365ae096be1a38ac4",
+    "foreign_diffs": "Preserved; staged GrepAI rename restored byte-for-byte and excluded from selective commits"
+  },
+  "adr": {"0004": "Proposed/partial; only scalar float slice explicitly adopted", "0003": "Accepted/partial", "0005": "Accepted/partial", "0008": "Windows Debug only"},
+  "environment": {"platform": "Windows x64 Debug", "compiler": "MSVC 19.44.35221 toolset 14.44.35207", "sdk": "10.0.26100.0", "cmake": "3.31.7", "conan": "2.12.2", "opengl": "3.3 core GLSL 3.30", "gpu": "RTX 3090", "driver": "621.01"},
+  "runner": "lead; QA profiles proposed/reviewed only and did not execute",
+  "commands": [
+    {"command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -TestLabel unit", "exit": 0, "tests": 506, "artifact": "06-final-build-unit"},
+    {"command": "ctest --test-dir out/build/windows-msvc-debug -N", "exit": 0, "tests": 581, "artifact": "07-final-discovery"},
+    {"command": "ctest --test-dir out/build/windows-msvc-debug -L unit --output-on-failure --no-tests=error -j 1", "exit": 0, "tests": 506, "artifact": "09-final-unit"},
+    {"command": "ctest --test-dir out/build/windows-msvc-debug -L opengl --output-on-failure --no-tests=error -j 1", "exit": 0, "tests": 75, "artifact": "10-final-opengl"},
+    {"command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows.ps1 -Configuration Debug -Jobs 1 -AddressSanitizer", "exit": 0, "tests": 581, "artifact": "13-final-asan"}
+  ],
+  "command_notes": "CTest runs add --output-junit with unique absolute paths; actual CTest executable C:/Program Files/CMake/bin/ctest.exe. Both presets rebuilt with --clean-first --parallel 1, 69 steps each, before final runs.",
+  "results": {"normal": 581, "unit": 506, "opengl": 75, "asan": 581, "failure": 0, "error": 0, "skip": 0, "unique_names": 581, "discovery_normal_asan_junit_same_names": true},
+  "asan": {"healthy_exit": 0, "use_after_free_exit": 86, "options": "halt_on_error=1:abort_on_error=0:exitcode=86:detect_leaks=0", "leak_validation": "NOT_RUN"},
+  "archives": {
+    "final": "out/qa-prepared-float/lead-followup-20261027/",
+    "manifest": "out/qa-prepared-float/lead-followup-20261027/final-validation.json",
+    "manifest_sha256": "29a4a2b5ac8a7a17a0dfd00de75d1a6fdf3861401b9312dfac00a1a7cfe4231b",
+    "previous_579": "out/qa-prepared-float/lead-runner-20261027/",
+    "previous_manifest_sha256": "312642425d7fd039a0469a15be373fde7a55f651b3a6bf5b7b6a0b2261eb048c",
+    "mechanism_author": "out/qa-prepared-float/1a287564-delivery/",
+    "consumer_author": "out/qa-prepared-float/460fe52-consumer-delivery/"
+  },
+  "source_aggregate_sha256": "a016d01530a7bc96ea2124c0960a033660b8cb716915970ebe0ab33febbb8560",
+  "source_aggregate_format": "Lexicographically sorted path + space + SHA256, LF separated, no final LF",
+  "source_hashes": {
+    "ARTIST/component-tests/src/graphic/shader/PreparedFloatUniformComponentTests.cpp": "1528f1835cef881b3341da2ac23c414229a04c52837ae2a56b6b6a11b93d3f99",
+    "ARTIST/include/graphic/context/PassContext.hpp": "84aa23db65ce001b2a0798369d4959aa24adf2296d59bcb237e1c8e5d00905f0",
+    "ARTIST/include/graphic/context/PreparedUniformState.hpp": "9ae931de6560deec48b9405c88923951785d652bd2037ae7a372a3ed0abf2e6f",
+    "ARTIST/include/graphic/context/UniformContext.hpp": "f18c4d3f75079c45d02f55ee7e7f7f637fb0a7a8956506085a1dafcbce7bf07a",
+    "ARTIST/include/graphic/opengl/context/PassContext.hpp": "dba3c4aa90750eaa9c799977b061312508124367f8f3376e76d4c5ad36c4e227",
+    "ARTIST/include/graphic/opengl/context/UniformContext.hpp": "1e6a88e32499805555722de1d6d893cc38581541a69104febccd9c45c8f1a161",
+    "ARTIST/include/graphic/opengl/pipeline/PreparedFloatUniform.hpp": "a791eb6bb0ebd092112e3557a00a41416d59baf3df48455d738e9650e2b1c02d",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/Freer.hpp": "8bfe24d6525a204d40d47d67caf333d8be41fc6bf2b3731031844ee4f0cd7c62",
+    "ARTIST/include/graphic/opengl/pipeline/component/pass/UniformReader.hpp": "d4e631e2720f9d36eed01a3f63ac88ecff272464b53c4b2c2609204acb8fd893",
+    "ARTIST/tests/src/graphic/opengl/pipeline/component/pass/UniformReaderTests.cpp": "77202a737afb4cc227aa3ae6dfeb80fca9e849b768ce59484e9b03d99c99c234",
+    "ARTIST/tests/src/graphic/pipeline/PreparedFloatUniformTests.cpp": "2bf8ded00380889471ef851197fe3ec3826e68a4a15c77a26f611d6ac28c958d",
+    "ARTIST/tests/src/graphic/pipeline/ShaderLifetimeTests.cpp": "d8085a94150a0eed8668f72eb7e2616efa7b588727b52c8511916e83148f0820",
+    "ARTIST/component-tests/src/graphic/shader/ReflectedProgramGuardCrossTests.cpp": "a0789642b314666b2b422d8a4686f464cf1285d3eafa0cb586c00fc6c2459260",
+    "ARTIST/component-tests/src/graphic/shader/PreparedFloatUniformRenderTests.cpp": "d6f412a0acd644799e4c4d7622440d82d336afa5a3437f21804ce2a3bdcb6a32",
+    ".opencode/missions/team_mvqfm1ww_0000_f8a8ki/prepared-float-usage.md": "e76092b91eaa8e188688f031d00057b6b9834c2ec66417055337095217a97684"
+  },
+  "binary_hashes": {
+    "out/build/windows-msvc-debug/ARTIST/tests/ArtistLib_tests.exe": "15432feec9618493c5479b38e88172da8599d365a45adb34df826148bf6f672e",
+    "out/build/windows-msvc-debug/ARTIST/component-tests/ArtistLib_component_tests.exe": "076f409017b7799bef3340ee80e74f3ea3995a975ee520a39b0d8caf04670666",
+    "out/build/windows-msvc-debug-asan/ARTIST/tests/ArtistLib_tests.exe": "e6dcf7bb7cf6199801a179aacb50ac3184fae1bb12669b7952fb5ed5e40a645e",
+    "out/build/windows-msvc-debug-asan/ARTIST/component-tests/ArtistLib_component_tests.exe": "491cacae8e82737ea1a12c55610468e9f5372c76ed72b9ae8a3125580f7f9ab1",
+    "out/build/windows-msvc-debug-asan/artist_asan_probe.exe": "5c29a8b87fa797b014799831ed624bbc676565baac8272390384f7f43c2206dd"
+  },
+  "discriminants": {
+    "C": "Real CPU getUniform lookup reintroduced: delta6, build0/test8/failure1; restored",
+    "L": "Native glGetUniformLocation reintroduced: Times0 exceeded3, build0/test8/failure1; restored",
+    "A": "getValue extraction reintroduced: delta3, build0/test8/failure1; restored",
+    "C_L_A_reuse": "Test body exactly unchanged and production hashes identical on final source; prior experiments not relabelled as new runs",
+    "pixels": "Omitted second update and omitted draw separately fail; exact four-point nonempty oracle and full image equality restored",
+    "F1": "Preparation context guard removed: build0/test8/failure1; returned accesses and extra native queries detected for null/other contexts; restored",
+    "F2": "Retirement moved after detach loop: coherent all-unit build0/test8/failure1; live witness at first effect and wrong post-failure writes detected; restored"
+  },
+  "excluded_evidence": ["Initial L experiment reused C binary", "F2 single-TU experiment retained mixed inline Freer definitions", "C2248 proposal compilation failure is not runtime RED", "Old standard JUnit copied after failed build is STALE-NOT-EXECUTED"],
+  "independent_reviews": {
+    "correctness": {"session": "ses_e82689115ffeJlKfuUPt54xUyz", "status": "No blocking defect demonstrated in bounded static review", "production_unchanged_since_review": true},
+    "test_audit": {"session": "ses_e824af8b9ffe0vrlb3N50WZoXE", "initial_status": "MODIFY: preparation-context and partial-detach test gaps", "reaudit_status": "PASS bounded; F1/F2 closed, no blocking finding maintained; historical RED remains INCONCLUSIVE", "off_board": true, "native_profile": "test-reviewer", "session_permissions": [], "provider": "openai", "execution": "Reviewer read-only; all runtime evidence executed by lead"}
+  },
+  "qa_healer_repairs": 1,
+  "limits": ["Historical RED source fingerprint missing; several lifetime tests added after guards; not reconstructed", "Mono-thread serialized non-reentrant borrow; GLFW window alive and no external relink/delete", "Ninja header dependency tracking observed empty for a TU; final clean-first used, toolchain not repaired", "No leak, Release, Linux, other API, performance or general GPU retirement validation", "Ensemble final-response recovery still defective; actual native public finals read and persisted; no harness repair", "No zero-allocation or speedup claim"],
+  "docker_resources_created": 0
+}

@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-26",
+  "scope": "Standalone Win32 whole-file helper GREEN and two CLI safety contracts",
+  "sourceCandidate": "961d92ed06904e6d97b0ac5969aba6f8d205e21c",
+  "authorCommit": "2bbc85c4d53612e1dc5a668ae1871ffcda62cda3",
+  "author": "pool-8 cpp-engineer, same isolated TDD owner",
+  "runner": "lead",
+  "archive": "out/qa-f8/stdio-green-20261026-01",
+  "report": ".opencode/missions/team_mvnxps48_0000_dfde7a/reports/62-green-controles-native-read-execute.md",
+  "redReference": "docs/_meta/session-2026-10-26-stdio-control-red.json",
+  "controlsUnchangedSha256": "ed9e0e865d2f48c67f9294a7a05bce52bfeadc5c60545bc36f82f3805f8517f8",
+  "helperSha256": "c75d648542b27f2511417b27478ad7bb438b85d66469edafbdd7a6609b91a026",
+  "beforeBuildManifestSha256": "271a17dbaa65f3e8e275470bdff4f91035ece1a6049f267152a1f4e41398d418",
+  "beforeRunManifestSha256": "86f32e40fea73e580142df18921ee0fffe49915073359593725d7278b2119006",
+  "executableSha256": "33aeccde60e06d7313c773d4445a353e275d8c8bbf098c05cba6668928ca0a15",
+  "buildExit": 0,
+  "wholeReadExit": 0,
+  "wholeRead": {"selected": 4, "executed": 4, "pass": 4, "fail": 0, "skip": 0, "sizes": [0, 4096, 8192, 12325]},
+  "safetyContracts": {"selected": 2, "executed": 2, "pass": 2, "fail": 0, "existingRootExit": 20, "invalidCaseExit": 20},
+  "processInvocations": 3,
+  "logSha256": {
+    "wholeRead": "c80e4a7c2a0c7a5ee7d02c81dba143e2093fdc8f607c02e99b507e44f1269257",
+    "existingRoot": "b545d8a5b5c639343bee55ce091a0bb0e761af1ad120647b14a7e5a19d46df72",
+    "invalidCase": "59cb026cb2e2e20f2f004733222feffb4bf133954d0f400d1054db5764c0fef8"
+  },
+  "cleanupSentinelAndIdentityVerified": true,
+  "lateDiagnostics": false,
+  "verdict": "GREEN_BOUNDED_INDEPENDENT_REVIEW_PENDING",
+  "limits": ["Not CTest/GTest/JUnit, GPU, ASan or engine validation", "No genuine I/O error, close or allocation path run", "No stdio M0/M1/M2 calibration, Reader publication, catch or M5 proof", "Runtime fixture physical hashes not independently measured before cleanup"]
+}

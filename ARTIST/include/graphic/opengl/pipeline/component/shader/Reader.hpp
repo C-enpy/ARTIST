@@ -13,11 +13,6 @@
 
 namespace artist::graphic::opengl::pipeline::component::shader
 {
-    // F8-SEAM (ruling G-F8): the extraction is factored into a header-only
-    // internal detail seam so a test can drive the same loop with a scripted
-    // streambuf and prove the real badbit failure branch. It stays at most
-    // one call per loaded file, never per block/draw/frame; no performance
-    // gain or de-virtualization is claimed.
     namespace detail
     {
         /// Extracts the whole stream through the ruled read()/gcount() loop
@@ -51,18 +46,13 @@ namespace artist::graphic::opengl::pipeline::component::shader
             return code;
         }
 
-        /// Signature of the extraction seam: a plain function of the live
-        /// stream. The callback is synchronous, called at most once per
-        /// loaded file, never retained nor nulled, and never closes,
-        /// replaces or keeps the file.
-        using SourceExtractor = std::string(std::istream &);
-
         /// The loading transaction: clear the context, open a local owning
         /// file, extract into a local string, then clear/close/verify and
         /// publish. Only std::ifstream::failure is translated into the
         /// public read error; every other exception (e.g. bad_alloc from
         /// this process) keeps its nature and the context stays empty.
-        inline void readShaderFile(graphic::api::OpenGL::ShaderContext &context, SourceExtractor &extract)
+        // The source file must remain stable for the duration of this call.
+        inline void readShaderFile(graphic::api::OpenGL::ShaderContext &context)
         {
             context.setShaderCode("");
             std::ifstream shaderFile;
@@ -77,16 +67,8 @@ namespace artist::graphic::opengl::pipeline::component::shader
             {
                 shaderFile.open(context.getShaderPath());
 
-                // F8-SEAM: extraction through the ruled read()/gcount() loop
-                // (the streambuf hand-off shaderStream << rdbuf is still
-                // avoided: every block's count is observed, so a failed
-                // opening or a short extraction can no longer turn into a
-                // silent empty source handed to the loader). The code string
-                // is published only after the file is closed and every state
-                // is verified; a process-level bad_alloc while growing the
-                // target string is NEVER remapped as a file error (only
-                // std::ifstream::failure is translated, below).
-                std::string code = extract(shaderFile);
+                // Accumulate locally; no partial source is published on failure.
+                std::string code = extractShaderSource(shaderFile);
 
                 // Documented phase boundary: the read phase has been checked
                 // and its bytes accumulated above, so the eof/fail residue is
@@ -123,7 +105,7 @@ namespace artist::graphic::opengl::pipeline::component::shader
     public:
         static void on(typename graphic::api::OpenGL::ShaderContext &context)
         {
-            detail::readShaderFile(context, detail::extractShaderSource);
+            detail::readShaderFile(context);
         }
     };
 }

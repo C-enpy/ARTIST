@@ -17,13 +17,25 @@ if(NOT ARTIST_ENABLE_ASAN)
     return()
 endif()
 
-if(NOT WIN32 OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC"
+set(artist_asan_gcc FALSE)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64"
+        AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
+        AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 14
+        AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 15
+        AND CMAKE_C_COMPILER_ID STREQUAL "GNU"
+        AND CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 14
+        AND CMAKE_C_COMPILER_VERSION VERSION_LESS 15
+        AND CMAKE_SIZEOF_VOID_P EQUAL 8
+        AND CMAKE_GENERATOR STREQUAL "Ninja" AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(artist_asan_gcc TRUE)
+endif()
+if(NOT artist_asan_gcc AND (NOT WIN32 OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC"
         OR MSVC_VERSION LESS 1944 OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8
         OR NOT CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "x64"
         OR NOT CMAKE_GENERATOR STREQUAL "Ninja"
-        OR NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+        OR NOT CMAKE_BUILD_TYPE STREQUAL "Debug"))
     message(FATAL_ERROR
-        "ARTIST_ENABLE_ASAN supports Windows x64 MSVC >= 19.44, Ninja, Debug only. "
+        "ARTIST_ENABLE_ASAN supports Windows x64 MSVC >= 19.44 or Linux x86_64 GCC 14, Ninja, Debug only. "
         "Use the separate windows-msvc-debug-asan preset. Other configurations "
         "need their own sanitizer validation, not a silent toolchain fallback.")
 endif()
@@ -31,6 +43,14 @@ if(COVERAGE)
     message(FATAL_ERROR "ARTIST_ENABLE_ASAN and COVERAGE require separate build trees.")
 endif()
 
+if(artist_asan_gcc)
+    foreach(language IN ITEMS C CXX)
+        string(APPEND CMAKE_${language}_FLAGS " -fsanitize=address -fno-omit-frame-pointer")
+    endforeach()
+    foreach(kind IN ITEMS EXE SHARED MODULE)
+        string(APPEND CMAKE_${kind}_LINKER_FLAGS " -fsanitize=address")
+    endforeach()
+else()
 # MSVC 19.44 accepts /RTC1 together with ASan (compile/link and fault preflight).
 # Keep that Debug default, /Od, /Zi, the CRT, assertions and warning levels.
 # /ZI (Edit and Continue) is incompatible; incremental linking is ignored by
@@ -67,6 +87,7 @@ if(EXISTS "${compiler_dir}/clang_rt.asan_dbg_dynamic-x86_64.dll")
     list(APPEND ARTIST_ASAN_RUNTIMES "${compiler_dir}/clang_rt.asan_dbg_dynamic-x86_64.dll")
 endif()
 
+endif()
 include(CheckCXXSourceCompiles)
 check_cxx_source_compiles([=[
     #ifndef __SANITIZE_ADDRESS__
@@ -76,15 +97,24 @@ check_cxx_source_compiles([=[
 ]=] ARTIST_ASAN_COMPILES)
 if(NOT ARTIST_ASAN_COMPILES)
     message(FATAL_ERROR
-        "MSVC ASan compile/link probe failed. Check CMakeFiles/CMakeConfigureLog.yaml "
+        "ASan compile/link probe failed. Check CMakeFiles/CMakeConfigureLog.yaml "
         "and the installed AddressSanitizer component; do not disable the probe.")
 endif()
 
+if(artist_asan_gcc)
+    message(STATUS "ASan ON: -fsanitize=address compile/link, -fno-omit-frame-pointer; Debug assertions retained")
+else()
 message(STATUS "ASan ON: /fsanitize=address, /INCREMENTAL:NO; /RTC1, Debug CRT selection and assertions retained")
 message(STATUS "ASan runtime candidates: ${ARTIST_ASAN_RUNTIMES}")
+endif()
 message(STATUS "ASan instruments project TUs and fetched GTest/GMock, not Conan binaries or system/driver libraries")
 
 # Deliberately faulty mode is never registered as an ordinary CTest test.
 add_executable(artist_asan_probe EXCLUDE_FROM_ALL "${CMAKE_CURRENT_LIST_DIR}/probes/AddressSanitizer.cpp")
 target_compile_features(artist_asan_probe PRIVATE cxx_std_23)
+if(artist_asan_gcc)
+    # libstdc++14 implements stacktrace in this separate library; CheckCxx23
+    # still checks the engine's STL contract independently.
+    target_link_libraries(artist_asan_probe PRIVATE stdc++exp)
+endif()
 artist_copy_asan_runtime(artist_asan_probe)

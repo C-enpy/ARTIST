@@ -17,6 +17,7 @@
 // tests only. Semantics besides the accessor stay unchanged.
 
 #include <gtest/gtest.h>
+#include <sstream>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -57,8 +58,8 @@ TEST_F(TraceableExceptionTests, GetStackTraceString_ReadsTheReturnedValueSafely)
                       std::string>,
                   "S-GSS: getStackTraceString must return std::string by value");
 
-    // Arrange: the fallback configuration (this branch is the one compiled on
-    // MSVC) must expose its message through the accessor.
+    // Arrange: both implementations must expose their documented content
+    // through the same owning accessor.
     const TracedRuntimeError exception("boom");
 
     // Act: bind the returned object, then read through the binding. The read is
@@ -68,6 +69,15 @@ TEST_F(TraceableExceptionTests, GetStackTraceString_ReadsTheReturnedValueSafely)
     const std::string &value = exception.getStackTraceString();
     const std::string copy = value;
 
-    // Assert: exact fallback content, byte for byte.
+    // Assert: exact native serialization or fallback content, byte for byte.
+#if __cplusplus > 202002L && _GLIBCXX_HAVE_STACKTRACE
+    std::ostringstream expected;
+    for (const auto &entry : exception.getStackTrace())
+    {
+        expected << entry << '\n';
+    }
+    EXPECT_EQ(copy, expected.str());
+#else
     EXPECT_EQ(copy, "Stacktrace not available");
+#endif
 }

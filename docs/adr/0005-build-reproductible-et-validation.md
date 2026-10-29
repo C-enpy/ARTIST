@@ -9,10 +9,36 @@ implementation: partial
 decision_origin: Demande utilisateur de build complet le 2026-10-03, avec réévaluation explicite de Conan 2.
 summary: Rétablir une configuration propre avec dépendances compatibles et tests réellement découverts avant de modifier ou comparer les pipelines.
 created: 2026-10-03
-updated: 2026-10-03
+updated: 2026-10-29
 ---
 
 # ADR-0005 — Build reproductible et validation
+
+## Preuve complémentaire Linux — 29 octobre 2026
+
+**Accepted/partial inchangé.** Windows, Ubuntu WSL et CI propre exécutent les
+mêmes 589 cas normal/ASan au runtime `78e7b74`, sans failure/error/skip ; Conan2,
+CMake/CTest et fixtures mutualisés. Le contrôleur `f58a49f` inclut ensuite les
+shaders dans ses identités après RED/GREEN et ré-audit. Voir
+[[development/linux-qa|commandes, candidats distincts et limites]]. Aucune
+qualification universelle des toolchains, Release, fuites ou performance.
+
+## Preuve complémentaire Windows Debug — 2026-10-26
+
+Ingestion du27octobre : [[references/session-2026-10-26-stable-reader|sources des
+sous-agents et retour d'expérience]]. Distinguer comptage, identité de population,
+preuve exécutée, revue statique et clôture du board ; les nouveaux exports ne sont
+ni une nouvelle campagne ni une validation native du harness. Statut inchangé.
+
+**Accepted/partial inchangé.** Nouveau candidat Reader stable `a96104c` :
+555/555 normaux puis555/555 ASan (484CPU+71OpenGL chacun), zérofailure/error/skip,
+sélections pré-run et identités recoupées avec JUnit/LastTest ;17historiques une
+foisASan, diagnostics tardifs contrôlés. Trois tests retirés/trois ajoutés :
+cardinalité identique n'est pas identité de population historique. PréflightASan
+antérieur réutilisé après contrôle d'identité, pas nouvelle installation/config
+propre ni validation Release/GCC/Linux/CI. Preuve
+`_meta/session-2026-10-26-stable-reader-cleanup.json` et
+[[development/build-and-test|commandes réellement exécutées]].
 
 ## Contexte et faits
 

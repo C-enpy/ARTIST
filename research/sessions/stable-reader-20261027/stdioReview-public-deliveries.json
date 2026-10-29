@@ -1,0 +1,80 @@
+{
+  "session": "ses_e868b2ea3ffeBR5uAbuQDRph9X",
+  "role": "stdioReview",
+  "exportedAt": "2026-10-27T08:08:38.895Z",
+  "scope": "public assistant text and team_message deliveries only; no reasoning, no full tool trace, not exhaustive session export",
+  "messages": [
+    {
+      "text": [],
+      "reports": [
+        "return await tools.team_message({to:'lead',text:'ADMISSION REVIEW_STDIO_PROBE : profil actif correctness-reviewer ; session native pool-12 fraîche, aucun historique auteur/autre revue reçu. Directory déclaré C:\\\\Users\\\\djden\\\\source\\\\repos\\\\ARTIST ; paquet neutre canonique explicitement autorisé lu (29 lignes), transport lecture + team_message fonctionnel. AGENTS fourni au contexte ; skill artist-cpp-contracts chargé conformément instruction supérieure. Aucune source analysée, aucun shell/test/artefact/board/claim/MCP externe. Identité HEAD non vérifiable sans commande ; paquet et pins lead pris comme entrée, pas identité locale prétendue vérifiée. Attends GO explicite avant analyse.'});"
+      ]
+    },
+    {
+      "text": [
+        "Admission confirmée au lead ; attente de son GO avant toute analyse."
+      ],
+      "reports": []
+    },
+    {
+      "text": [],
+      "reports": [
+        "return await tools.team_message({to:'lead',text:'<task-result><status>blocked</status><summary>Admission réalisée ; analyse suspendue au GO lead obligatoire.</summary><details>Paquet neutre review-stdio-probe-input.md lu dans le canonique autorisé ; profil correctness-reviewer et contexte natif frais confirmés ; transport lecture/team_message opérationnel. Aucun GO reçu dans cette session. Conformément à la barrière explicite, aucune source analysée, aucun test/shell/artefact/claim/board ni verdict produit. Aucun finding : absence d’analyse, non preuve de correction. Identité HEAD locale non vérifiée ; pins issus du paquet lead uniquement. Déblocage requis : GO explicite du lead avant lectures des sources autorisées.</details><branch>ensemble-93e6ec8b-2c5d-408c-a1b0-ebb2999f9649</branch></task-result>'});"
+      ]
+    },
+    {
+      "text": [
+        "Bloqué en attente du GO obligatoire ; restitution structurée envoyée au lead."
+      ],
+      "reports": []
+    },
+    {
+      "text": [
+        "Le blocage a déjà été transmis au lead en `<task-result>` : GO préalable absent. Aucune analyse ni conclusion de conformité."
+      ],
+      "reports": []
+    },
+    {
+      "text": [],
+      "reports": [
+        "return await tools.team_message({to:'lead',text:'<task-result><status>failed</status><summary>Revue non exécutée : admission seule réalisée, GO préalable absent.</summary><details>Livrable limité à admission : paquet neutre autorisé lu, profil correctness-reviewer/session fraîche et transport confirmés. La tâche impose attente du GO avant analyse ; aucun GO reçu. Sources non analysées, aucun test ni artefact ; aucun finding et aucun PASS. Merci de maintenir la tâche bloquée, non completed ; reprise uniquement après GO explicite. Ce statut failed signifie revue non réalisée, pas défaut du candidat.</details><branch>ensemble-93e6ec8b-2c5d-408c-a1b0-ebb2999f9649</branch></task-result>'});"
+      ]
+    },
+    {
+      "text": [
+        "Statut `failed` transmis : revue non exécutée faute de GO, sans verdict sur le candidat."
+      ],
+      "reports": []
+    },
+    {
+      "text": [],
+      "reports": [
+        "return await tools.team_message({to:'lead',text:'GO reçu pour disposition STABLE en lecture seule. Historique propre : seuls paquet neutre initial, admission et blocage puis GO présents ; aucun rapport auteur/autre reviewer ni ancien code probe consulté. Début par review-candidate.diff ; aucune exécution ni mutation. Limite : identité HEAD sur disque fournie par lead, non vérifiée via Git interdit.'});"
+      ]
+    },
+    {
+      "text": [],
+      "reports": [
+        "return await tools.team_message({to:'lead',text:'<task-result><status>completed</status><summary>Disposition STABLE : aucun défaut bloquant démontré dans le diff examiné ; retrait stdio sans consommateur actif retrouvé dans le périmètre ciblé.</summary><details>Fragment 1/2 — Lecture seule, aucune exécution/édition/artefact. Sources observées : Reader.hpp 1–111, ReaderTests.cpp 250–429, review-candidate.diff complet. Reader.hpp:55 readShaderFile efface l’ancien contenu, ouvre en texte, accumule localement via read/gcount (25–46), clear/close puis vérifie fail avant publication (77–85) ; traduction limitée à ifstream::failure (87–92). Sous précondition fichier stable et exception badbit active, aucun scénario de régression démontré dans le retrait du callback. Comptages gcount bornés par 4096 ; pas de nouvel emprunt conservé, partage mutable ni owner ajouté.\nRetrait : recherches exactes qa-f8-stdio/qa-f8-close/SourceExtractor/readShaderFile dans ARTIST, scripts, .github, CMakeLists.txt et fichiers cmake : seuls définition/appel locaux actuels du Reader retrouvés ; aucun appel à l’ancienne signature. Glob scripts/probes/qa-f8-*/* vide. Ce contrôle textuel borné ne prouve ni absence d’utilisateur externe du detail ni inventaire Git des 13 suppressions (non vérifié par commande interdite).\nMigration recoupée dans diff : suppression des trois tests ExtractionFailure_SentinelTranslatedWithExactMessage, ExtractionFailure_BadAllocStaysUntranslated, CloseHappensBeforePublication_ObservableThroughVirtualSetter ; ajout des trois StableFile_ShortSourcesReplacePreviousContent / ExactlyTwoBlocksPreserveContent / TextAndEmbeddedNullsPreserveContent. Préremplissage STALE ajouté aux cas absent/vide. Population actuelle Reader = 12, pas équivalence sémantique avec les trois anciennes preuves retirées.</details><branch>ensemble-93e6ec8b-2c5d-408c-a1b0-ebb2999f9649</branch></task-result>'});"
+      ]
+    },
+    {
+      "text": [],
+      "reports": [
+        "return await tools.team_message({to:'lead',text:`<task-result><status>completed</status><summary>Disposition STABLE : aucun défaut bloquant démontré dans le diff examiné.</summary><details>Fragment 1/2 — Lecture seule, aucune exécution/édition/artefact. Sources observées : Reader.hpp 1–111, ReaderTests.cpp 250–429, review-candidate.diff complet. Reader.hpp:55 readShaderFile efface le contenu précédent, ouvre en texte, accumule localement via read/gcount (25–46), clear/close puis vérifie fail avant publication (77–85) ; traduction limitée à ifstream::failure (87–92). Sous précondition fichier stable et exception badbit active, aucun scénario de régression démontré dans le retrait du callback. Comptages gcount bornés par 4096 ; aucun nouvel emprunt conservé ni owner ajouté.\nRetrait : recherches exactes qa-f8-stdio/qa-f8-close/SourceExtractor/readShaderFile dans ARTIST, scripts, .github, CMakeLists.txt et fichiers cmake : seuls définition/appel locaux actuels du Reader retrouvés ; aucun appel à ancienne signature. Glob scripts/probes/qa-f8-*/* vide. Contrôle textuel borné : utilisateurs externes du detail et inventaire Git des 13 suppressions non prouvés.\nMigration recoupée dans diff : suppression ExtractionFailure_SentinelTranslatedWithExactMessage, ExtractionFailure_BadAllocStaysUntranslated, CloseHappensBeforePublication_ObservableThroughVirtualSetter ; ajout StableFile_ShortSourcesReplacePreviousContent / ExactlyTwoBlocksPreserveContent / TextAndEmbeddedNullsPreserveContent. Préremplissage STALE ajouté aux cas absent/vide. Population actuelle Reader = 12, pas équivalence sémantique avec les trois anciennes preuves retirées.</details><branch>ensemble-93e6ec8b-2c5d-408c-a1b0-ebb2999f9649</branch></task-result>`});"
+      ]
+    },
+    {
+      "text": [],
+      "reports": [
+        "return await tools.team_message({to:'lead',text:`Fragment 2/2 — Preuves : normal/asan-verification.json pin a96104c, chacun discovered/selected/executed/unique=555, 484 unit+71 GL, Reader12, failure/error/skip/notRun=0, identités inchangées et diagnostics ASan vides ; historique17EachOnce=true ASan. Les trois nouveaux noms sont présents dans discovery, selected et testcase JUnit des deux campagnes ; les trois retirés absents de ces recherches ciblées. Pas de recalcul exhaustif des 555 noms ni hashes indépendant ici. preflight-reuse.json décrit identité probe/summary et six DLL sans changement ; réemploi, pas nouvelle activation exécutée par reviewer.\nGaps explicitement publiés dans docs/_meta/session-2026-10-26-stable-reader-cleanup.json:69 : authentique erreur extraction, authentique erreur close/non-publication, observation portable close-before-publication et autres plateformes. Aucun PASS de ces branches déduit des 555+555. Reader.hpp:77–85 montre ordre statique close avant publication, pas une preuve dynamique de close en échec. Anciennes exigences M0/M1/M2 stdio sont supersédées par recentrage STABLE (décision83 attribuée lead) : retrait sans expérimentation, NOT_RUN conservé ; ce n’est ni validation stdio ni clôture causale de ces expériences.\nLimite fraîcheur à déclarer : le fichier meta explicitement autorisé contient aussi un résumé d’autre revue lignes41–49 et B1 ; ces lignes ont été vues lors de sa lecture. Aucun rapport auteur92/93 ni board consulté, conclusions de cette section non utilisées. La lecture n’est donc pas totalement aveugle à toute conclusion d’autre reviewer après ce point ; le lead décide si cette contamination exige une autre admission. HEAD/pins fournis par lead, pas vérifiés via Git interdit.\nAucun finding bug démontré ; aucune question de performance/GPU ni frontière nouvelle nécessitant spécialiste. Pas de preuve exhaustive. Livrable texte présent dans transport ; aucune completion de board selon mandat. FIN_STDIO_DISPOSITION`});"
+      ]
+    },
+    {
+      "text": [
+        "Revue transmise au lead : aucun défaut bloquant démontré, limites des preuves et exposition au résumé d’une autre revue explicitement signalées.\n\nFIN_STDIO_DISPOSITION"
+      ],
+      "reports": []
+    }
+  ]
+}

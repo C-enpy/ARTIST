@@ -3,21 +3,71 @@ title: Plan de correction de l'existant
 category: architecture
 tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
-sources: [.opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 status: proposed
 created: 2026-10-03
-updated: 2026-10-25
+updated: 2026-10-29
 ---
 
 # Plan de correction de l'existant
 
+## Qualification QA Linux — 29 octobre 2026
+
+Parité exécutée du runtime `78e7b74` : 589/589 dans six configurations Windows,
+WSL et CI Ubuntu, normales/ASan. Correction Attribute compatible : clés natives
+exactes, classification moderne conditionnelle et contrôle d'annonce effective
+GLEW ; pas de migration API/cook ou backend. Dernier renforcement du contrôleur
+`f58a49f` : shaders inclus dans l'identité, RED/GREEN Python Windows/Linux et
+ré-audit indépendant. [[development/linux-qa|Procédure et portée de preuve]].
+Statuts ADR inchangés ; Linux matériel, Release, UBSan, performance et fuites
+exhaustives ne sont pas qualifiés.
+
 Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier
 de livraison. Les durées et pourcentages des rapports ne sont pas des budgets ratifiés.
+
+## Tranche float préparé — 2026-10-27
+
+La tranche bornée d'ADR-0004 adoptée explicitement est présente à `3b1b102` :
+préparation runtime après link/réflexion d'un float strictement scalaire, accès
+emprunté révocable puis updates typés sans lookup/any_cast. API par nom et miroir
+CPU conservés, consommateur target préparé/decoy par nom et oracle pixel fixe.
+Runner lead : **581/581 normaux et 581/581 ASan**, chacun 506 CPU + 75 OpenGL,
+mêmes noms sans failure/error/skip, canari 0/86, mutants C/L/A détectés/restaurés.
+Revue de sûreté indépendante sans défaut bloquant démontré ; ré-audit final après
+deux compléments de tests **PASS borné**, F1/F2 fermés, historique RED incomplet
+conservé. Tranche terminée à cette portée. ADR-0004 reste **Proposed/partial**, pas d'adoption
+globale, d'extension aux attributes/cook ou de performance mesurée.
+Preuve `_meta/session-2026-10-27-prepared-float.json` ;
+[[architecture/next-mission|aucune nouvelle mission engagée automatiquement]].
+Les gaps Reader historiques ci-dessous ne sont pas rouverts par cette tranche.
+
+## Recentrage stable — 2026-10-26, nettoyage livré
+
+Contrat fichier stable adopté avant refactoring, amendement QA local committé
+`f27f690`, candidat **a96104c** : callback et instrumentation Reader retirés,
+13 fichiers probes supprimés après consommateurs contrôlés. Correctifs de lecture,
+fixtures isolées et preuves historiques conservés. **555/555 normaux et555/555
+ASan** (484CPU+71OpenGL chacun),0failure/error/skip ; revue C++ indépendante et
+audit des preuves sans finding bloquant démontré. QA locale simplifiée, pas un
+nouvel audit natif test-reviewer ni une correction du harness.
+
+B1 : clôture bornée aux deux contaminations ON_CALL causalement identifiées,
+revue finale acquise ; pas replay176. B5/C2 : fermeture administrative motivée
+acceptée34, pas de chasse supplémentaire. B2/B4/B6 restent acquis à leurs candidats.
+B3 : nettoyage stable terminé, poursuites stdio/close annulées NOT_RUN ; erreurs
+authentiques extraction/close et observation dynamique portable de l'ordre restent
+des gaps documentés, pas PASS ni essais autorisés implicitement. Ce bilan remplace
+les attentes exploratoires des jalons historiques ci-dessous.
+
+Preuve `_meta/session-2026-10-26-stable-reader-cleanup.json`,
+[[architecture/current-state|photographie]] et
+[[development/known-incidents|limites conservées]]. Statuts ADR inchangés :
+0001/2/4/6/7 Proposed,0003/5 Accepted partial,0008 Windows Debug seulement.
 
 ## Continuation QA — 2026-10-25, terminée à sa portée bornée
 
@@ -50,6 +100,15 @@ réconciliées sous verrou natif sur choix opérateur : **7/7completed**, aucun 
 relancé. Équipe conservée/non archivée, politique non approuvée sous verrou.
 Voir [[references/session-2026-10-25-qa-continuation|synthèse de continuation]] pour
 les preuves, la résolution du statut et les dettes techniques toujours ouvertes.
+
+**Reprise initiale B1/B3/B5 ensuite approuvée (révision3,25octobre)** : enquêtes
+parallèles nouvelles, anciennes tâches non rouvertes. B1 : deux contaminations
+ON_CALL historiques isolées, tests réduits négatifs puis nominaux actuels verts,
+sans nouveau correctif ; preuve `_meta/session-2026-10-25-b1-causal-validation.json`.
+B3 : contrat transactionnel stdio proposé mais non adopté, calibration/modes et
+catch/close à arbitrer ; B5 : provenance native du défaut de fixture retrouvée,
+fermeture motivée encore soumise à l'opérateur. Le scope initial reste en cours,
+sans transfert automatique des preuves ASan555 sur un futur nouveau diff.
 
 ## Mission F5 du 2026-10-15 — terminée dans son périmètre
 

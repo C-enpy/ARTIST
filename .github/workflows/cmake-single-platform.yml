@@ -1,114 +1,55 @@
-name: Build, Test, Valgrind
+name: Linux Debug parity
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main, 'mission/linux-qa-*']
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
+  workflow_dispatch:
 
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Debug
-  BUILD_OUT_DIR: build
+permissions:
+  contents: read
+
+concurrency:
+  group: linux-qa-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  build:
+  baseline:
     runs-on: ubuntu-24.04
-
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        sanitizer: [normal, asan]
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-        sudo apt-get update
-        sudo apt-get install -y pkg-config gcc-14 g++-14 libstdc++-14-dev python3-venv \
-          xvfb libgl1-mesa-dri mesa-utils libgl1-mesa-dev libglu1-mesa-dev libx11-xcb-dev valgrind lcov
-        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 60
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 60
-        sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-14 60
-        python3 -m venv out/tooling/build
-        out/tooling/build/bin/pip install -r scripts/build-requirements.txt
-        echo "$GITHUB_WORKSPACE/out/tooling/build/bin" >> "$GITHUB_PATH"
-
-    - name: Install Conan 2 dependencies
-      run: |
-        conan profile detect --force
-        conan install . -of "${{ env.BUILD_OUT_DIR }}" --build=missing \
-          -s build_type=${{ env.BUILD_TYPE }} -s compiler.cppstd=23 \
-          -c tools.cmake.cmaketoolchain:generator=Ninja \
-          -c tools.system.package_manager:mode=install -c tools.system.package_manager:sudo=True
-
-    
-    
-    - name: Install sonar-scanner and build-wrapper
-      uses: SonarSource/sonarcloud-github-c-cpp@v2
-
-    - name: Create build directory
-      run: mkdir -p ${{github.workspace}} ${{env.BUILD_OUT_DIR}}
-
-#    - name: Cache build directory
-#      id: cache-build
-#      uses: actions/cache@v2
-#      with:
-#        path: |
-#          /home/runner/.conan
-#          ${{github.workspace}}/build
-#        key: ${{ runner.os }}-build-${{ hashFiles('**/*.cpp''**/CMakeLists.txt', '**/conanfile.txt') }}
-
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory
-      run: >-
-        cmake -S . -B ${{env.BUILD_OUT_DIR}} -G Ninja
-        -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/${{env.BUILD_OUT_DIR}}/conan_toolchain.cmake
-        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DMOCK_GL=ON -DCOVERAGE=ON
-
-    - name: Run build-wrapper
-      run: |
-        build-wrapper-linux-x86-64 --out-dir ${{env.BUILD_OUT_DIR}} cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-    
-    - name: Run Xvfb
-      run: |
-        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-        echo "DISPLAY=:99.0" >> $GITHUB_ENV
-        sleep 3 # give xvfb some time to start
-
-    - name: Test
-      working-directory: ${{github.workspace}}
-      # Execute tests defined by the CMake configuration.
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest --test-dir build -L unit --output-on-failure --no-tests=error
-
-    - name: Component Test
-      working-directory: ${{github.workspace}}
-      # Execute tests defined by the CMake configuration.
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest --test-dir build -L opengl --output-on-failure --no-tests=error --parallel 1
-
-    - name: Coverage
-      working-directory: ${{github.workspace}}
-      run: |
-        bash coverage.sh
-    
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-
-    - name: Valgrind Test
-      working-directory: ${{github.workspace}}
-      run: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 build/ARTIST/tests/ArtistLib_tests
-
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17'
-        distribution: 'adopt'
-    
-    - name: Run sonar-scanner
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_OUT_DIR }}"
+      - uses: actions/checkout@v4
+      - name: Install toolchain and software OpenGL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-14 g++-14 libstdc++-14-dev cmake pkg-config python3-venv xvfb xauth mesa-utils libgl1-mesa-dri libgl1-mesa-dev libglu1-mesa-dev libx11-xcb-dev libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+          # xorg/system recipe requirements, in check mode in the shared profile.
+          sudo apt-get install -y libfontenc-dev libice-dev libsm-dev libxau-dev libxaw7-dev libxcomposite-dev libxdamage-dev libxdmcp-dev libxext-dev libxfixes-dev libxkbfile-dev libxmu-dev libxmuu-dev libxpm-dev libxrender-dev libxres-dev libxss-dev libxt-dev libxtst-dev libxv-dev libxxf86vm-dev libxcb-glx0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-xkb-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-dri3-dev uuid-dev libxcb-cursor-dev libxcb-dri2-0-dev libxcb-present-dev libxcb-composite0-dev libxcb-ewmh-dev libxcb-res0-dev libxcb-util-dev
+          python3 -m venv out/tooling/build
+          out/tooling/build/bin/pip install -r scripts/build-requirements.txt
+          echo "$GITHUB_WORKSPACE/out/tooling/build/bin" >> "$GITHUB_PATH"
+      - name: Adapter contract checks
+        run: python3 -B scripts/tests/test_linux_evidence.py -v
+      - name: Build and validate the required population
+        env:
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          GALLIUM_DRIVER: llvmpipe
+        run: |
+          args=()
+          if [[ '${{ matrix.sanitizer }}' == asan ]]; then args+=(--address-sanitizer); fi
+          xvfb-run -a python3 -B scripts/linux-evidence.py "${args[@]}"
+      - name: Preserve evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-${{ matrix.sanitizer }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            out/linux-evidence/
+            out/build/linux-debug*/CMakeFiles/CMakeConfigureLog.yaml
+            out/build/linux-debug*/compile_commands.json
+          if-no-files-found: warn

@@ -6,6 +6,7 @@
 #include <any>
 #include <typeinfo>
 #include <common/exception/TraceableException.hpp>
+#include <graphic/context/PreparedUniformState.hpp>
 
 namespace artist::graphic::context
 {
@@ -28,6 +29,9 @@ namespace artist::graphic::context
             {
                 throw artist::common::exception::TraceableException<std::runtime_error>(std::format("ERROR::UNIFORM::GET::UNINITIALIZED: No value was set for the uniform variable (requested type {})", typeid(T).name()));
             }
+#ifdef __mock_gl__
+            ++detail::PreparedUniformObservations::extractions;
+#endif
             const T *value = std::any_cast<T>(&m_value);
             if (!value)
             {

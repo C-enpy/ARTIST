@@ -21,6 +21,7 @@
 #include <graphic/opengl/pipeline/component/pass/Loader.hpp>
 #include <graphic/opengl/pipeline/component/pass/User.hpp>
 #include <graphic/opengl/pipeline/component/pass/Freer.hpp>
+#include <graphic/opengl/pipeline/PreparedFloatUniform.hpp>
 #include <OpenGLComponentTests.hpp>
 
 namespace
@@ -97,6 +98,9 @@ TEST_F(ReflectedProgramGuardCrossTest, ReflectedOwnerRejectsOtherCurrentProgramA
     // No reload, free, or move may invalidate them during this test.
     const auto &targetUniform = *target.getUniforms().at(name);
     const auto &decoyUniform = *decoy.getUniforms().at(name);
+    // Prepare exactly once after runtime link/reflection. This is a borrow:
+    // owners and the current context stay alive throughout all repeated writes.
+    const auto preparedTarget = artist::graphic::opengl::pipeline::prepareFloatUniform(target, name);
     ASSERT_EQ(targetUniform.getContext().getProgramID(), targetID);
     ASSERT_EQ(decoyUniform.getContext().getProgramID(), decoyID);
     ASSERT_EQ(targetUniform.getContext().getGLType(), GL_FLOAT);
@@ -115,7 +119,7 @@ TEST_F(ReflectedProgramGuardCrossTest, ReflectedOwnerRejectsOtherCurrentProgramA
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
     ASSERT_EQ(static_cast<GLuint>(current), targetID);
     ASSERT_EQ(glGetError(), GL_NO_ERROR);
-    ASSERT_NO_THROW(target.withUniform(name, GLfloat(2.5f)));
+    ASSERT_NO_THROW(preparedTarget.set(2.5f));
     decoy.use();
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
     ASSERT_EQ(static_cast<GLuint>(current), decoyID);
@@ -131,7 +135,7 @@ TEST_F(ReflectedProgramGuardCrossTest, ReflectedOwnerRejectsOtherCurrentProgramA
 
     try
     {
-        target.withUniform(name, GLfloat(17.0f));
+        preparedTarget.set(17.0f);
         FAIL() << "Expected a reflected-program mismatch rejection";
     }
     catch (const Error &error)
@@ -146,7 +150,7 @@ TEST_F(ReflectedProgramGuardCrossTest, ReflectedOwnerRejectsOtherCurrentProgramA
     EXPECT_EQ(targetUniform.get<GLfloat>(), 2.5f);
     EXPECT_EQ(decoyUniform.get<GLfloat>(), 8.5f);
     // Native readbacks prove state isolation; strict zero-upload call counts
-    // are covered separately by the Uniform rejection unit-test journal.
+    // are covered separately by the prepared-access rejection unit tests.
     glGetUniformfv(targetID, targetLocation, &targetValue);
     glGetUniformfv(decoyID, decoyLocation, &decoyValue);
     EXPECT_EQ(targetValue, 2.5f);
@@ -156,7 +160,7 @@ TEST_F(ReflectedProgramGuardCrossTest, ReflectedOwnerRejectsOtherCurrentProgramA
     target.use();
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
     ASSERT_EQ(static_cast<GLuint>(current), targetID);
-    ASSERT_NO_THROW(target.withUniform(name, GLfloat(5.5f)));
+    ASSERT_NO_THROW(preparedTarget.set(5.5f));
     EXPECT_EQ(targetUniform.get<GLfloat>(), 5.5f);
     EXPECT_EQ(decoyUniform.get<GLfloat>(), 8.5f);
     glGetUniformfv(targetID, targetLocation, &targetValue);
