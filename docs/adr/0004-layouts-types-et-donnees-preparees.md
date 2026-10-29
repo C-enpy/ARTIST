@@ -9,10 +9,30 @@ implementation: partial
 decision_origin: Correction proposée des maps par noms et valeurs effacées ; seule la tranche float OpenGL a été adoptée explicitement par l'utilisateur le 2026-10-27.
 summary: "Proposed globalement ; première tranche float scalaire préparé livrée, emprunts révocables et consommateur pixel vérifiés Windows Debug."
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
+sources: [docs/_meta/session-2026-10-27-prepared-float.json, docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0004 — Layouts typés et données préparées
+
+## Non-régression Linux et classification — 29 octobre 2026
+
+Statut **Proposed/partial inchangé**. Les campagnes de [[development/linux-qa]]
+exercent la tranche existante dans les 589 tests Windows, WSL et CI normal/ASan.
+La correction Attribute conserve les clés natives legacy et n'utilise un nom
+moderne que temporairement pour classifier scalaire/array1. Route conditionnée
+par capacité effectivement annoncée et fonctions disponibles ; incohérence rejetée
+avant publication du staging. Pas de binding Attribute préparé, résolution cookée,
+rollback CPU supplémentaire ou gain mesuré ajouté par ce correctif.
+
+Voir [[references/session-2026-10-29-linux-qa|décision de compatibilité et revue GLEW]].
+Le fallback 3.3 ambigu reste non universellement qualifié ;
+les nombres et limites de la tranche Windows du 27 octobre ci-dessous gardent
+leur date et ne sont pas réécrits en nouvelle campagne.
 
 ## Tranche adoptée et exécutée — 2026-10-27
 

@@ -10,6 +10,11 @@ decision_origin: Demande utilisateur de build complet, réévaluation de Conan 2
 summary: Migrer vers Conan 2 sans changer les versions des dépendances et établir une baseline Windows MSVC C++23 exécutée.
 created: 2026-10-03
 updated: 2026-10-29
+sources: [docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0008 — Conan 2 et baseline Windows
@@ -20,6 +25,14 @@ La mission [[development/linux-qa|QA Linux]] apporte une preuve bornée GCC14 /
 Ubuntu WSL et CI avec Conan2, distincte de la baseline adoptée ici. Le statut
 **Accepted/verified reste limité à Windows Debug dans cet ADR** ; cette note
 n'adopte pas une validation générale multi-plateforme, Release ou performance.
+
+La [[references/session-2026-10-29-linux-qa|synthèse attribuée de session]] relie la
+distribution dédiée sur `I:`, la sonde compile/link GCC14 et les campagnes WSL/CI
+aux runners et aux audits. CMake/CTest et Conan2 sont mutualisés, les sorties et
+caches restent séparés par plateforme/configuration. Les 589 cas de chaque
+campagne actuelle ne remplacent pas les 109 de la baseline historique ci-dessous.
+La CI réellement exécutée du 29 octobre ne rend pas rétroactivement exécutée celle
+du 3 octobre ; aucun résultat n'est ajouté à cette baseline Windows initiale.
 
 ## Contexte
 
@@ -65,7 +78,8 @@ valide et sa classe dérivée, rejettent une API sans validator et un validator 
 
 Contexte : RTX 3090, OpenGL 3.3.0, driver NVIDIA 616.92. Les logs, versions et
 commandes sont dans [[development/build-and-test|le guide]] et
-`_meta/build-validation.json`. La CI Linux est adaptée mais non exécutée ici.
+`_meta/build-validation.json`. À cette baseline du 3 octobre, la CI Linux est
+adaptée mais non exécutée ; la preuve Linux ultérieure est séparée ci-dessus.
 Release, images, performances et sanitizers ne font pas partie de cette preuve.
 
 Retour : [[adr/README|Registre]] · [[architecture/correction-plan|Plan de correction]].

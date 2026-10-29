@@ -4,7 +4,12 @@ category: architecture
 tags: [artist, architecture, cpp, performance]
 summary: Philosophie multi-étapes, séparation préparation/exécution, choix de langage et limites des promesses de staticité.
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
+sources: [research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/session-2026-10-29-linux-qa.json, docs/references/research-reports.md]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # Cap technique d'ARTIST
@@ -91,13 +96,18 @@ Voir [[adr/0007-cpp23-et-cooker-independant|ADR-0007]].
    bibliothèque mature peut servir l'excellence ; la réécriture exhaustive n'est
    pas une preuve.
 
-## Photographie du code après Pipeline A1+A2, F7 et float préparé
+## Photographie du code après Pipeline, float préparé et QA Linux
 
 À revérifier lors de chaque intervention : cette section n'impose pas de conserver
 les écarts constatés. La photographie détaillée, avec sa révision, est dans
 [[architecture/current-state|État réel d'ARTIST]].
-Le code observé est celui de `3b1b102`, le 2026-10-27 : tranche float préparé,
-581 normaux et 581 ASan Windows Debug (506 CPU + 75 OpenGL), oracle pixel borné.
+Le runtime de référence est `78e7b74`, le 2026-10-29 : 589 tests dans chacune
+des six configurations Windows/WSL/CI normales et ASan (513 CPU + 76 OpenGL).
+Le contrôleur `f58a49f` ajoute les shaders à l'identité des preuves, sans changer
+le runtime ; Linux graphique reste logiciel llvmpipe, sans qualification matérielle
+ou de performance. La [[references/session-2026-10-29-linux-qa|synthèse de session]]
+attribue propositions, revues et exécutions. Les 581 tests Windows de la tranche
+float du 27 octobre gardent leur candidat et leur oracle pixel borné.
 Preuves et limites dans [[architecture/current-state|la photographie détaillée]] ;
 les décomptes historiques et fragilités antérieures restent dans leurs archives.
 

@@ -7,10 +7,20 @@ status: observed
 source_revision: f58a49f4261e018749c59b0d8aab9dd7e85ba53e
 created: 2026-10-29
 updated: 2026-10-29
-sources: [scripts/build-linux.py, scripts/linux-evidence.py, scripts/build-windows.ps1, conan/profiles/linux-gcc, cmake/AddressSanitizer.cmake, .github/workflows/cmake-single-platform.yml, .opencode/evidence/mission-linux-qa/qa-plan.md, .opencode/evidence/mission-linux-qa/final-test-audit.md, .opencode/evidence/mission-linux-qa/final-test-reaudit.md]
+sources: [scripts/build-linux.py, scripts/linux-evidence.py, scripts/build-windows.ps1, conan/profiles/linux-gcc, cmake/AddressSanitizer.cmake, .github/workflows/cmake-single-platform.yml, .opencode/evidence/mission-linux-qa/qa-plan.md, .opencode/evidence/mission-linux-qa/final-test-audit.md, .opencode/evidence/mission-linux-qa/final-test-reaudit.md, docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # QA Linux — procédure et portée
+
+La [[references/session-2026-10-29-linux-qa|session et ses sous-agents]] documente
+les décisions, les contributions et les corrections de revues. Cette page reste
+la procédure reproductible ; l'ingestion des échanges n'est pas une nouvelle
+exécution. Intégration sur `main` : fusion `e170d71`, puis contexte publié à
+`f80c7cb`, distincts des candidats de preuve ci-dessous.
 
 ## Résultat exécuté et identité
 

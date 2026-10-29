@@ -4,7 +4,7 @@ category: index
 tags: [artist, documentation, index]
 aliases: [ARTIST, Accueil ARTIST]
 summary: Entrée du vault ARTIST, état actuel, cap technique, ADR de correction et procédures de développement.
-sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-27-prepared-float/index.json]
+sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-27-prepared-float/index.json, research/sessions/2026-10-29-linux-qa-session/index.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -91,6 +91,8 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[opencode-harness|Harness OpenCode]] — agents, skills, commandes et MCP.
 
 ## Maintenir la connaissance
+
+- [[references/session-2026-10-29-linux-qa|Session Linux QA et quatorze sous-agents]] — 15 transcriptions publiques filtrées, preuves et revues attribuées ; identité shader, publication et ADR actualisés sans nouvelle campagne.
 
 - [[references/session-2026-10-27-prepared-float|Session float préparé et dix sous-agents]] — sources publiques filtrées, emprunts révocables, oracles discriminants et limites des mutations ; résultats moteur déjà documentés, pas de nouvelle exécution.
 

@@ -3,7 +3,7 @@ title: Plan de correction de l'existant
 category: architecture
 tags: [artist, architecture, testing]
 summary: Séquence de travaux réversibles et critères de passage des ADR vers une implémentation vérifiée.
-sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md]
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/session-2026-10-29-linux-qa.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -25,6 +25,14 @@ GLEW ; pas de migration API/cook ou backend. Dernier renforcement du contrôleur
 ré-audit indépendant. [[development/linux-qa|Procédure et portée de preuve]].
 Statuts ADR inchangés ; Linux matériel, Release, UBSan, performance et fuites
 exhaustives ne sont pas qualifiés.
+
+La [[references/session-2026-10-29-linux-qa|synthèse de session et sous-agents]]
+complète la provenance sans relancer les contrôles. Intégration `main` effectuée,
+contexte publié ; la divergence des validateurs QA v2 est corrigée séparément
+avec RED/GREEN, revue et ré-audit, 634/634 tests statiques/hors ligne. Les deux
+entrées natives historiques audit/documentation restent deferred/inactives ; ce
+statut administratif ne retire pas les livrables intégrés et ne justifie pas de
+nouvelle admission. Aucune mission suivante sélectionnée par cette ingestion.
 
 Ce plan est dérivé des [[references/research-reports|quatre rapports]] et de
 [[architecture/current-state|la photographie source]]. Ce n'est pas un calendrier

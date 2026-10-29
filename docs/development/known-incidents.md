@@ -2,10 +2,13 @@
 title: Incidents connus et suivi Shader→Pass
 category: development
 tags: [artist, cpp, ownership, testing, tooling]
-summary: "Float préparé 3b1b102 validé normal/ASan581 ; incrémentalité Ninja d'en-tête non fiable observée, final clean-first ; gaps Reader antérieurs conservés."
+summary: "Incidents et limites conservés : classification Attribute Linux, identité shader, incrémentalité Windows et protections QA ; historiques Reader/float inchangés."
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
 sources:
+  - research/sessions/2026-10-29-linux-qa-session/index.json
+  - docs/_meta/session-2026-10-29-linux-qa.json
+  - .opencode/evidence/context-publication/qa-review.md
   - docs/_meta/session-2026-10-27-prepared-float.json
   - docs/_meta/session-2026-10-26-stable-reader-cleanup.json
   - docs/references/session-2026-10-03-shader-pass.md
@@ -28,12 +31,48 @@ sources:
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md
   - .opencode/missions/team_mvnxps48_0000_dfde7a/reports/30-b1-causes-reproduites-et-actuel-vert.md
 provenance:
-  extracted: 0.96
-  inferred: 0.03
+  extracted: 0.97
+  inferred: 0.02
   ambiguous: 0.01
 ---
 
 # Incidents, diagnostics et suivi
+
+## Linux QA et publication — 28–29 octobre 2026
+
+- **Classification Attribute** : trois FAIL initiaux WSL/CI, pas une panne
+  d'environnement à ignorer. Les clés natives exactes sont conservées ; nom moderne
+  temporaire et classification interne conditionnelle. Le reviewer C++ détecte
+  ensuite que le flag expérimental GLEW ne suffit pas à prouver l'annonce de
+  l'extension ; gate corrigé après nouveau RED causal, finding fermé en ré-audit.
+  Pas de nouvelle garantie de rollback CPU du wrapper.
+- **Identité des entrées** : le premier contrôleur hashait code/configuration et
+  binaires, mais omettait les shaders ouverts à l'exécution. Finding de l'audit
+  fresh, pas preuve qu'un shader a changé pendant les campagnes. `f58a49f` ajoute
+  leurs hashes après RED/GREEN Python et ré-audit ; les nouveaux runs WSL/CI sont
+  distincts, les résultats Windows antérieurs réutilisés par identité.
+- **Provenance/incrémentalité** : le delta complet du premier RED classification
+  n'a pas été hashé à chaud. Un échec incrémental Windows est suivi d'un clean
+  réussi aux mêmes sources ; cause du suivi de dépendances non entièrement
+  expliquée. Aucun hash final ne reconstitue le RED manquant, et aucun succès
+  clean ne vaut correction démontrée de l'incrémentalité.
+- **Publication du contexte QA** : cinq FAIL sur 594 tests, incohérence entre les
+  trois profils déjà v2 et leur reconnaissance seulement pour le planner. Correction
+  des validateurs et consommateurs sans ouverture de droits ; 633/633. La revue
+  détecte ensuite que la suppression de la restriction runner du planner échappe
+  à son oracle : nouveau négatif causal, GREEN minimal, finale **634/634**, finding
+  fermé. Ce contrôle est statique, pas une preuve de sandbox ou de hot reload.
+- **Restitution des agents** : `team_message` a refusé les sessions natives hors
+  équipe ; finales effectivement reçues, pas de nouveau cycle de relance. Deux
+  entrées historiques du plan restent deferred/inactives pour éviter des doublons,
+  malgré les livrables d'audit/documentation réellement intégrés.
+
+Limites Linux : llvmpipe, `detect_leaks=0`, pas de matériel Linux, Release, UBSan,
+coverage ou performance validés ; fallback 3.3 sans réflexion moderne non
+universellement qualifié. Détails et sources dans
+[[references/session-2026-10-29-linux-qa|la session et ses quatorze sous-agents]] et
+[[development/linux-qa|la procédure]]. Les limites du 27 octobre ci-dessous sont
+historiques ; elles ne nient pas les campagnes Linux exécutées ensuite.
 
 ## Float préparé — limites conservées le 2026-10-27
 

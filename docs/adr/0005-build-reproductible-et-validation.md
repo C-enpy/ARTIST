@@ -10,18 +10,32 @@ decision_origin: Demande utilisateur de build complet le 2026-10-03, avec réév
 summary: Rétablir une configuration propre avec dépendances compatibles et tests réellement découverts avant de modifier ou comparer les pipelines.
 created: 2026-10-03
 updated: 2026-10-29
+sources: [docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/mission-linux-qa/final-test-reaudit.md]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # ADR-0005 — Build reproductible et validation
 
 ## Preuve complémentaire Linux — 29 octobre 2026
 
-**Accepted/partial inchangé.** Windows, Ubuntu WSL et CI propre exécutent les
-mêmes 589 cas normal/ASan au runtime `78e7b74`, sans failure/error/skip ; Conan2,
-CMake/CTest et fixtures mutualisés. Le contrôleur `f58a49f` inclut ensuite les
-shaders dans ses identités après RED/GREEN et ré-audit. Voir
-[[development/linux-qa|commandes, candidats distincts et limites]]. Aucune
-qualification universelle des toolchains, Release, fuites ou performance.
+**Accepted/partial inchangé.** Six configurations Windows, Ubuntu WSL et CI
+Ubuntu exécutent chacune les mêmes 589 cas au runtime `78e7b74`, normal/ASan,
+sans failure/error/skip ; Conan2, CMake/CTest et fixtures mutualisés. Le contrôleur
+`f58a49f` inclut ensuite les shaders dans ses identités après RED/GREEN Python
+10/10 sur chaque OS et ré-audit indépendant. Quatre nouvelles campagnes WSL/CI
+normal/ASan passent chacune 589/589 avec 169 empreintes dont 20 shaders ; Windows
+est réutilisé par identité, pas rebaptisé run du nouveau contrôleur.
+
+La [[references/session-2026-10-29-linux-qa|session et ses quatorze sous-agents]]
+attribue propositions, revues en lecture seule et runners. L'audit avait identifié
+une omission de couverture d'identité, pas une modification shader démontrée
+pendant les campagnes précédentes. Les premiers FAIL CI/WSL et la provenance RED
+classification incomplète restent archivés. Ingestion documentaire, aucun test
+relancé. Voir [[development/linux-qa|commandes, candidats distincts et limites]].
+Pas de qualification universelle des toolchains, Release, fuites ou performance.
 
 ## Preuve complémentaire Windows Debug — 2026-10-26
 

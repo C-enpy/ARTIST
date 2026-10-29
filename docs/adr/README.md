@@ -3,12 +3,28 @@ title: Registre des ADR ARTIST
 category: index
 tags: [artist, architecture, adr, index]
 aliases: [ADR ARTIST, Décisions ARTIST]
-summary: Registre des huit ADR, des propositions architecturales à la baseline Windows Conan 2 vérifiée.
+summary: "Huit ADR : statuts conservés, preuves Linux/Windows distinctes et baseline Windows Conan 2 vérifiée dans son périmètre."
 created: 2026-10-03
-updated: 2026-10-27
+updated: 2026-10-29
+sources: [research/sessions/2026-10-29-linux-qa-session/index.json, docs/_meta/session-2026-10-29-linux-qa.json]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # Registre des décisions d'architecture
+
+## Actualisation des preuves — 29 octobre 2026
+
+La [[references/session-2026-10-29-linux-qa|session Linux QA et ses sous-agents]]
+enrichit les preuves d'ADR-0004/0005/0008, pas leurs statuts.
+Runtime `78e7b74` : six configurations à 589/589 ; contrôleur `f58a49f` renforcé
+par l'identité shader, quatre runs WSL/CI distincts également à 589/589.
+[[development/linux-qa|Portée : Linux logiciel llvmpipe, sans détection de fuites]].
+ADR-0005 reste Accepted/partial ; ADR-0008 reste vérifié pour sa baseline Windows
+Debug seulement. La publication de rapports ou la fermeture d'une revue ne vaut
+ni adoption globale d'un ADR Proposed, ni nouvelle exécution.
 
 ## Premiers contrats de correction
 

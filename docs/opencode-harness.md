@@ -4,7 +4,12 @@ category: tooling
 tags: [artist, tooling, guide]
 summary: Missions ARTIST préparées avec le PM, politique Ensemble persistée et approuvée avant exécution, évaluation LLM/JEV, TDD et QA indépendante.
 created: 2026-10-03
-updated: 2026-10-16
+updated: 2026-10-29
+sources: [research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/context-publication/qa-plan.md, .opencode/evidence/context-publication/qa-review.md]
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 qmd_collection: artist-wiki
 ---
 
@@ -12,6 +17,28 @@ qmd_collection: artist-wiki
 
 Navigation : [[index|Accueil]] · [[engineering-principles|Principes]] ·
 [[adr/README|ADR]] · [[_meta/wiki-maintenance|Obsidian et QMD]].
+
+## Communication QA — état vérifié le 29 octobre 2026
+
+Les trois profils `qa-planner`, `test-engineer` et `test-reviewer` partagent le
+contrat de communication v2 déclaré dans AGENTS. Le validateur le reconnaît à
+`7132c9a` pour les identités/chemins/modes attendus, avec oracle hardcodé distinct
+du candidat ; les permissions des profils ne sont pas élargies par ce raccordement.
+L'interdiction du planner d'employer Code Mode pour écrire, tester, muter une
+session, créer un worktree ou déléguer est protégée par un négatif causal ajouté
+à `be888ff`. Le lead reste le runner distinct.
+
+Non-régression statique/hors ligne : **634/634 tests**, zéro échec/skip ; modes
+syntaxe/schéma/hors ligne : 41/81/215 contrôles PASS, mais `missionVerdict` demeure
+**INCONCLUSIVE**. Reconnaître un template ne démontre ni son chargement effectif
+ni l'enforcement ou le confinement de Code Mode. Aucun nouveau canari natif/GPU
+n'est exécuté pour publier le contexte.
+
+Deux finales natives de QA ont été réellement reçues après échec du transport
+équipe hors équipe. Ne pas confondre ce refus et une absence de livrable, ni
+relancer un auteur terminé pour fabriquer une clôture administrative. Les plans
+et politiques archivés ne sont pas de nouvelles autorisations `start` ou de modèle.
+[[references/session-2026-10-29-linux-qa|Sources et contributions attribuées]].
 
 ## Utilisation
 

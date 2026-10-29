@@ -4,7 +4,7 @@ category: architecture
 tags: [artist, architecture, cpp, rendering]
 aliases: [État actuel ARTIST]
 summary: "Runtime 78e7b74 : QA Windows, WSL et CI Ubuntu à 589 normal/ASan ; Attribute moderne conditionnel compatible et contrôle de fraîcheur shader renforcé."
-sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, docs/_meta/session-2026-10-27-prepared-float.json, research/sessions/2026-10-27-prepared-float/index.json]
+sources: [docs/_meta/session-2026-10-26-stable-reader-cleanup.json, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, docs/_meta/session-2026-10-27-prepared-float.json, research/sessions/2026-10-27-prepared-float/index.json, docs/_meta/session-2026-10-29-linux-qa.json, research/sessions/2026-10-29-linux-qa-session/index.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
@@ -26,6 +26,14 @@ updated: 2026-10-29
 > du wrapper CPU ou de provenance cook. Helper `f58a49f` : données shader incluses
 > dans les identités, RED/GREEN et ré-audit ciblé ; campagnes renforcées distinctes.
 > [[development/linux-qa|Commandes, preuves et limites]] ; les ADR ne sont pas promus.
+
+Intégration sur `main` : `e170d71`, puis contexte public à `f80c7cb`. Ces révisions
+de publication ne remplacent pas les candidats moteur et contrôleur ci-dessus.
+La [[references/session-2026-10-29-linux-qa|session et ses quatorze sous-agents]]
+relie les décisions, les revues et les preuves. Le raccordement distinct du harnais
+QA passe 634/634 contrôles de tests statiques/hors ligne ; il ne démontre ni
+chargement natif des profils ni enforcement. Aucun changement moteur supplémentaire
+ou nouvelle campagne ne découle de cette ingestion.
 
 > [!info] Photographie historique — float préparé du 27 octobre
 > **3b1b102** : `prepareFloatUniform(pass, name)` après link/réflexion runtime,
