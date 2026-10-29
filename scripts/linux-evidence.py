@@ -66,6 +66,8 @@ def main():
                  'scripts/build-linux.py', 'scripts/linux-evidence.py', 'scripts/verify_asan.py']
         paths += [str(path.relative_to(root)) for path in (root / 'ARTIST').rglob('*')
                   if path.is_file() and path.suffix in ('.cpp', '.hpp', '.h', '.txt')]
+        paths += [str(path.relative_to(root)) for path in (root / 'test-datas').rglob('*')
+                  if path.is_file()]
         paths += [str(path.relative_to(root)) for path in build.rglob('ArtistLib*tests') if path.is_file()]
         return {path: hashlib.sha256((root / path).read_bytes()).hexdigest() for path in sorted(paths)}
 

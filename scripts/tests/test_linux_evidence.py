@@ -16,12 +16,14 @@ SPEC.loader.exec_module(MODULE)
 
 
 class EvidenceTests(unittest.TestCase):
-    def controller_fixture(self, contexts, *, asan=False, parent=None, change_identity=False):
+    def controller_fixture(self, contexts, *, asan=False, parent=None, change_identity=False,
+                           identity_path='CMakeLists.txt'):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             for name in ('CMakeLists.txt', 'CMakePresets.json', 'conanfile.txt',
                          'conan/profiles/linux-gcc', 'cmake/AddressSanitizer.cmake',
-                         'scripts/build-linux.py', 'scripts/linux-evidence.py', 'scripts/verify_asan.py'):
+                         'scripts/build-linux.py', 'scripts/linux-evidence.py', 'scripts/verify_asan.py',
+                         'test-datas/shaders/fixture.vert', 'test-datas/shaders/fixture.frag'):
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('fixture')
@@ -43,7 +45,7 @@ class EvidenceTests(unittest.TestCase):
                             ET.SubElement(case, 'system-out').text = contexts[i]
                     ET.ElementTree(suite).write(command[command.index('--output-junit') + 1])
                     if label == 'opengl' and change_identity:
-                        (root / 'CMakeLists.txt').write_text('changed during tests')
+                        (root / identity_path).write_text('changed during tests')
 
             argv = ['linux-evidence.py'] + (['--address-sanitizer'] if asan else [])
             with patch.dict(os.environ, parent or {}, clear=True), \
@@ -98,6 +100,22 @@ class EvidenceTests(unittest.TestCase):
                 else:
                     self.assertEqual(result, 0)
                     self.assertEqual(manifest['status'], 'PASS')
+
+    def test_controller_rejects_shader_change_after_green_tests(self):
+        for path in ('test-datas/shaders/fixture.vert', 'test-datas/shaders/fixture.frag'):
+            for changed in (False, True):
+                with self.subTest(path=path, changed=changed):
+                    result, manifest, _ = self.controller_fixture(
+                        ['[OpenGL] Mesa | llvmpipe | 4.5'],
+                        change_identity=changed, identity_path=path)
+                    self.assertEqual(manifest['counts']['opengl']['executed'], 1)
+                    if changed:
+                        self.assertNotEqual(result, 0)
+                        self.assertEqual(manifest['status'], 'FAIL')
+                        self.assertEqual(manifest['error'], 'Source/configuration/binary identity changed during tests')
+                    else:
+                        self.assertEqual(result, 0)
+                        self.assertEqual(manifest['status'], 'PASS')
 
     def test_matching_population(self):
         with tempfile.TemporaryDirectory() as directory:
