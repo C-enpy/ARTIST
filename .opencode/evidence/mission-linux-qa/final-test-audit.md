@@ -1,5 +1,7 @@
 # Audit final indépendant — remise reçue, réserve à corriger
 
+**État ultérieur : réserve F1 fermée par ré-audit indépendant sur f58a49f**, avec nouveau RED causal puis GREEN Python Windows/Linux. Voir `final-test-reaudit.md`. Les verdicts historiques ci-dessous décrivent la première remise, non le statut de cette réserve après réparation. Les campagnes runtime de l'adaptateur renforcé sont qualifiées séparément par le lead.
+
 Reviewer natif test-reviewer, contexte fresh hors board, session `ses_e79498a83ffe3GxE7urS3rUXcG`. Remise finale publique `msg_186ba2f980015xLyxmHfyBmyfW`, reçue via récupération native puis notification finale. Texte complet conservé sans modification dans `out/logs/mission-linux-qa/final-audit-msg_186ba2f980015xLyxmHfyBmyfW.md`. Le présent document en persiste la disposition, pas un audit nouveau du lead.
 
 Admission et indépendance constatées : profil natif et permissions préalablement vérifiés par le lead ; lecture locale AGENTS et skill validation réussis. Le reviewer n'a ni écrit, exécuté, délégué ou consulté les justifications privées auteurs. Un essai de restitution team_message a retourné « This session is not in a team. » ; aucun nouvel essai, finale native utilisée et effectivement reçue. Ce refus ne justifie aucune ouverture de droits ou nouveau bootstrap.
