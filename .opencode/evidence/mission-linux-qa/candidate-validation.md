@@ -1,5 +1,11 @@
 # Candidat intégré — contrat et preuves pour contrôles indépendants
 
+## État final — identité shader renforcée et ré-audit fermé
+
+Adaptateur final `f58a49f4261e018749c59b0d8aab9dd7e85ba53e`, C++/shaders/config identiques au runtime78e7b74. F1 de l'audit final fermé après RED puis GREEN10/10Windows/Linux et ré-audit indépendant ; voir `final-test-reaudit.md`. WSL renforcé et CI réelle40841460327 passent chacun589/589normaletASan,0failure/error/skip,169hashes source/config dont20shaders recoupés ; `out/logs/mission-linux-qa/shader-identity-final-reconciliation.json`. Windows589/589 est réutilisé par identité, pas rebaptisé runf58a49f.
+
+Documentation intégrée àe8a6dbe, preuve portable `docs/_meta/session-2026-10-29-linux-qa.json`, QMD artist-wiki ciblé actualisé et restitution vérifiée. Acceptation technique bornée, pas certification universelle. Anciennes entrées de plan audit/docs conservéesdeferredpouréviterdoublon ; livrables réels intégrés, aucune complétion native fabriquée. Les sections ci-dessous restent la chronologie de candidats antérieurs.
+
 ## Mise à jour prioritaire — correctif final exécuté
 
 Candidat moteur `78e7b74989dd463cddf14080916e03b60405640d`. Le finding GLEW du candidat précédent décrit ci-dessous est corrigé et fermé en ré-audit indépendant. Delta `out/logs/mission-linux-qa/gate-repair-integrated.diff`, identité correspondante. RED lead identifié à chaud, Reader inchangé lors du RED ; puis GREEN Windows normal/ASan à589 chacun.
