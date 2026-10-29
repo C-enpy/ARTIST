@@ -1,5 +1,13 @@
 # F6 — contrat du template QA déclaré
 
+> Note de portée, 2026-10-29 : le contrat v1 ci-dessous est historique pour les
+> trois profils QA. AGENTS.md impose désormais la même politique communication
+> v2 au planner, generator et reviewer. Les validateurs reconnaissent exactement
+> cette déclaration pour leurs identités/chemins fixes, sans élargir les droits
+> des profils ni prouver leur enforcement natif. Voir le plan de raccordement
+> `.opencode/evidence/context-publication/qa-plan.md`.
+> Cette évolution ne transforme aucune ancienne preuve en validation du v2.
+
 Date : 2026-10-16. Avis engine-architect / qa-policy-boundary, fresh, lecture seule,
 PM/LLM C64/R70. Candidat réellement identifié :
 `fd1e8cdd6559ec05b26012bb59ed42f05dc73f18`. Aucun test/canari exécuté par l'architecte.

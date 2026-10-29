@@ -106,12 +106,15 @@ avant `test-engineer` (generator de gaps, pas substitut au RED) ; `test-reviewer
 fresh hors board d'implémentation, puis correction/ré-audit. Contrat détaillé dans
 `.opencode/agents/orchestrator.md`. Risque PM 0–100 distinct de QA I×P 1–5 → 1–25 ;
 QA >= 10 exige déclencheur/blast radius/détection/mitigation/gap, sans changer la grille.
-Runner séparé : les trois QA conservent deny-all + read/glob/skill et leurs
-27 règles exactes ; edit/shell/execute/subagent restent fermés. Le lead fournit
-les digestions QMD/Context Mode et exécute les tests, avec attribution explicite.
-Une règle MCP imbriquée ne rend pas Code Mode accessible. Restitution finale
-textuelle native si le transport est indisponible ; si cette voie est elle-même
-refusée, BLOCKED, sans boucle ni élargissement implicite des permissions.
+Runner séparé : édition, persistance, commits, exécution de tests et délégation
+restent interdits au qa-planner et réservés au coordinateur.
+Pour qa-planner, les permissions minimales doivent permettre lecture, recherche,
+accès au contexte ARTIST explicitement fourni et restitution au coordinateur.
+Le nombre historique de 27 règles n'est plus un invariant pour ce profil.
+Sa correction autorisée inclut profil canonique, copie du worktree, instructions
+contradictoires et validateurs locaux. Les deux autres profils QA ont les même permissions.
+Vérifier le profil effectivement chargé, puis une lecture et une restitution runtime ;
+un lint seul ne suffit pas.
 
 ### Admission et accès : contrôle avant départ
 
@@ -121,7 +124,7 @@ refusée, BLOCKED, sans boucle ni élargissement implicite des permissions.
   champs doit être corrigée par une voie native avant admission, sinon bloquée.
 - Pour un profil restrictif, le lead fournit les données et extraits nécessaires
   dans le brief ou dans des fichiers locaux autorisés. Ne pas lui demander une
-  commande, un MCP via execute ou un chemin externe que son profil interdit.
+  commande ou un chemin externe que son profil interdit.
 - Un refus identifié donne une restitution unique (action/ressource/refus,
   sections réalisables, limites), pas un bootstrap répété ni une demande de grant.
   Une modification sur disque ne prouve pas le rechargement du profil actif.

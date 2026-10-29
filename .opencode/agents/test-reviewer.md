@@ -76,13 +76,25 @@ permissions:
     effect: deny
   - action: "execute"
     resource: "*"
-    effect: deny
+    effect: allow
   - action: "subagent"
     resource: "*"
     effect: deny
   - action: "external_directory"
     resource: "*"
     effect: deny
+  - action: "grep"
+    resource: "*"
+    effect: allow
+  - action: "team_message"
+    resource: "*"
+    effect: allow
+  - action: "external_directory"
+    resource: "$HOME/source/repos/ARTIST/*"
+    effect: allow
+  - action: "external_directory"
+    resource: "$HOME/.local/share/opencode/worktree/3a086c/ensemble-2dc31e0a-6wzibc-pool-5/*"
+    effect: allow
 ---
 
 ## Méthode portable
@@ -111,19 +123,24 @@ autorisation exacte native vérifiée, puis un mandat distinct ; ne modifie pas 
 propres permissions. `Permission.Ruleset` exposé dans OpenAPI est un schéma, pas
 une preuve de composition ni d’applicabilité Ensemble. Pas d’appel session/grant/API.
 
-Shell et Code Mode fermés : execute est denied. Les seuls accès MCP par Code Mode
-(GrepAI, Serena, QMD, Context Mode, équipe) sont inaccessibles, pas autorisés par
-une exception imbriquée. Demande une digestion au lead des recherches/longs logs ;
-aucun contournement ni réparation/installation. Interdits : exécuteurs MCP,
-ctx_execute/file/batch, mutateurs Serena, purge/upgrade, shell/fetch API,
-sous-agent/spawn/dispatch/handoff. `grep` reste fermé, car sa ressource est un
-motif et non un périmètre de fichiers ; read/glob ciblés sans secrets ni externe.
-Les skills ne donnent pas de nouveaux droits.
+Code Mode est ouvert pour la communication : `execute` et `team_message` sont
+allow, comme pour qa-planner. Découvrir puis appeler team_message vers le lead ;
+aucun autre outil d'équipe (board, claim, clôture, spawn, dispatch, handoff).
+GrepAI, Serena, QMD, Context Mode restent deny par défaut : le lead fournit les
+digestions. Pas de contournement, réparation/installation, exécuteur MCP,
+ctx_execute/file/batch, mutateur Serena, purge/upgrade, shell/fetch API ou sous-agent.
+`grep` est autorisé : borner path/include/limit au lot, sans secrets. Sa permission
+porte sur le motif, pas sur les fichiers ; ce n'est pas une garde de confidentialité.
+Les accès externes restent limités aux contextes nommés ; les skills n'ajoutent aucun droit.
+Portée réelle : `execute` expose aussi fetch HTTP et certains utilitaires sans
+contrôle individuel ; ce profil n’est pas une sandbox. Ne les utilise pas pour
+écrire, lancer des tests, muter une session ou déléguer.
 
 Les tests relus sont exécutés par un runner distinct de confiance, attribués au
 lead, pas à ce profil ; une lecture n’est jamais un test exécuté. Rapport équipe :
-transport à éprouver. Sinon réponse finale textuelle à relever par le lead ; pas
-d’ouverture d’execute ou `team_*`. L’autonomie dégradée est consentie, pas une sandbox.
+`execute` → `team_message`. Si le transport est absent/refusé après un essai,
+finale native unique avec refus exact et sections réalisables, sans répétition.
+L’autonomie dégradée est consentie, pas une sandbox.
 Écriture autonome du briefing et enforcement non démontrés : blocked / INCONCLUSIVE.
 
 ### Audit discriminant
@@ -226,11 +243,10 @@ Plan existant : `.opencode/evidence/mission-gpu-qa/qa-plan.md` ; contrat/ruling 
 `.opencode/evidence/mission-gpu-qa/t03-contract.md` §6–8. Briefing nommé dans ce
 répertoire par le lead, sans droit d’écriture implicite. Recherche prescrite :
 GrepAI sémantique, Serena symboles, QMD `artist-wiki` avec intent, Context Mode
-digestion ; si uniquement Code Mode, le lead fournit les extraits sourcés/frais.
+digestion ; si l’outil n’est pas autorisé, le lead fournit les extraits sourcés/frais.
 L’index canonique ne prouve pas un diff de worktree non intégré.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.
+Rapport d'équipe : communication collaborative par `execute` → `team_message`.
+Le lead vérifie une lecture et la réception effective avant d'accepter l'admission.
+Une modification sur disque ne prouve pas le rechargement du profil actif.
+Persistance et tests restent au lead ; aucun fichier de briefing écrit ici.

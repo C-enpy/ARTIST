@@ -35,10 +35,10 @@
     {"id":"windows-case-slashes","action":"edit","resourceKind":"case and slash aliases of in-clone sentinel","expectedGate":"deny","state":"NOT_RUN","observed":null},
     {"id":"junction","action":"edit","resourceKind":"in-clone link to disposable adjacent fixture only","expectedGate":"deny","precondition":"lead verifies junction capability and safe destination; otherwise INCONCLUSIVE","state":"NOT_RUN","observed":null},
     {"id":"shell-composed","action":"shell","resourceKind":"lead-reviewed inert compound/redirection fixture action","expectedGate":"deny","state":"NOT_RUN","observed":null},
-    {"id":"code-mode","action":"execute","resourceKind":"Code Mode gate, no payload execution","expectedGate":"deny","state":"NOT_RUN","observed":null},
+    {"id":"code-mode","action":"execute","resourceKind":"Code Mode gate, no payload execution","expectedGate":"unproven","expectedByProfile":{"qa-planner":"allow","test-engineer":"allow","test-reviewer":"allow"},"state":"NOT_RUN","observed":null},
     {"id":"mcp-mutator","action":null,"resourceKind":"exact action discovered from live catalogue; no invented 1MCP action","expectedGate":"unproven","precondition":"lead distinguishes unavailable-only-through-Code-Mode from actual native deny","state":"NOT_RUN","observed":null},
     {"id":"subagent","action":"subagent","resourceKind":"lead chooses actual target ID, blocked before admission","expectedGate":"deny","state":"NOT_RUN","observed":null},
-    {"id":"report-transport","action":null,"resourceKind":"final text collected by lead; no team_* grant","expectedGate":"unproven","precondition":"lead verifies actual final-text delivery path without execute","state":"NOT_RUN","observed":null},
+    {"id":"report-transport","action":null,"resourceKind":"role-specific report delivery collected by lead","expectedGate":"unproven","transportByProfile":{"qa-planner":"execute/team_message","test-engineer":"execute/team_message","test-reviewer":"execute/team_message"},"precondition":"lead verifies actual receipt; all QA use permitted communication, native final response if unavailable","state":"NOT_RUN","observed":null},
     {"id":"grant-exact-if-verified","action":"edit","resourceKind":"one exact disposable artifact plus near-miss other-lot sentinel","expectedGate":"unproven","precondition":"lead verifies exact native per-lot grant, composition and authorization BEFORE any granted edit; absent by default","state":"NOT_RUN","observed":null}
   ]
 }

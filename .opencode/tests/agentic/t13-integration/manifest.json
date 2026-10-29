@@ -125,6 +125,7 @@
     ".opencode/agents/qa-planner.md", ".opencode/agents/test-engineer.md", ".opencode/agents/test-reviewer.md",
     ".opencode/tests/agentic/t05-qa/contract.test.mjs", ".opencode/tests/agentic/t05-qa/manifest.json",
     ".opencode/tests/agentic/t05-qa/fixtures/expectations.json", ".opencode/tests/agentic/t05-qa/fixtures/offline-checks.mjs",
+    ".opencode/tests/agentic/t05-qa/fixtures/qa-planner-permissions.json",
     ".opencode/tests/agentic/t05-qa/fixtures/native-canaries.json", ".opencode/evidence/mission-gpu-qa/t05-result.md",
     ".opencode/agents/vulkan-backend-engineer.md", ".opencode/skills/vulkan-backend/SKILL.md",
     ".opencode/skills/vulkan-backend/references/recipes.md", ".opencode/skills/vulkan-backend/references/sources.md",

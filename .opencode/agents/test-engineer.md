@@ -76,13 +76,25 @@ permissions:
     effect: deny
   - action: "execute"
     resource: "*"
-    effect: deny
+    effect: allow
   - action: "subagent"
     resource: "*"
     effect: deny
   - action: "external_directory"
     resource: "*"
     effect: deny
+  - action: "grep"
+    resource: "*"
+    effect: allow
+  - action: "team_message"
+    resource: "*"
+    effect: allow
+  - action: "external_directory"
+    resource: "$HOME/source/repos/ARTIST/*"
+    effect: allow
+  - action: "external_directory"
+    resource: "$HOME/.local/share/opencode/worktree/3a086c/ensemble-2dc31e0a-6wzibc-pool-5/*"
+    effect: allow
 ---
 
 ## Méthode portable
@@ -114,15 +126,20 @@ Une proposition non exécutée reste INCONCLUSIVE ; la capacité autonome
 d’écriture/exécution est blocked. Cette autonomie dégradée est consentie,
 pas une sandbox ni un PASS d’enforcement natif.
 
-Shell et Code Mode sont fermés : execute est denied. MCP uniquement Code Mode
-(GrepAI/Serena/QMD/Context Mode/équipe) inaccessibles : demande une digestion au
-lead, aucun contournement. Pas de réparation/installation, exécuteur ou mutateur
-MCP/Serena, ctx_execute/file/batch, purge/upgrade, shell, fetch API,
-sous-agent/spawn/dispatch/handoff. `grep` reste fermé (motif, pas périmètre de
-fichiers) ; lectures ciblées/glob sans secrets ni accès externe uniquement.
-Les skills n’accordent aucune capacité. Le rapport d’équipe est un transport à
-éprouver ; à défaut réponse finale textuelle à relever par le lead, pas d’ouverture
-d’execute ou de `team_*` pour la transmettre.
+Code Mode est ouvert pour la communication : `execute` et `team_message` sont
+allow, comme pour qa-planner. Découvrir puis appeler team_message vers le lead ;
+aucun autre outil d'équipe (board, claim, clôture, spawn, dispatch, handoff).
+GrepAI/Serena/QMD/Context Mode restent deny par défaut ; le lead fournit les
+digestions. Pas de réparation/installation, exécuteur ou mutateur MCP/Serena,
+ctx_execute/file/batch, purge/upgrade, shell, fetch API ou sous-agent.
+`grep` est autorisé : borner path/include/limit au lot, sans secrets. Les accès
+externes restent limités aux contextes nommés par les règles, pas de grant implicite.
+Portée réelle : `execute` expose aussi fetch HTTP et certains utilitaires sans
+contrôle individuel ; ce profil n’est pas une sandbox. Ne les utilise pas pour
+écrire, lancer des tests, muter une session ou déléguer. Les skills n’accordent
+aucune capacité supplémentaire. Si le transport est absent/refusé après un essai,
+restituer une seule finale native avec le refus exact et les sections réalisables,
+sans autre transport ni répétition ; le lead persiste le livrable.
 
 ### Generator : compléter, pas remplacer le TDD
 
@@ -225,11 +242,10 @@ Plan : `.opencode/evidence/mission-gpu-qa/qa-plan.md` ; ruling/contrat :
 répertoire par le lead, aucune permission implicite sur celui-ci.
 Navigation prescrite : GrepAI sémantique, Serena symboles, QMD collection
 `artist-wiki` avec intent, Context Mode logs ; demande les digestions sourcées au
-lead si leur seule route est Code Mode. L’index canonique ne contient pas forcément
+lead lorsque l’outil requis n’est pas autorisé. L’index canonique ne contient pas forcément
 ton diff isolé ; ne le prends pas pour preuve du candidat.
 
-<!-- ensemble-report: final_response -->
-
-Rapport d'équipe : profil restrictif sans `execute` ni outils d'équipe. Le lead
-le spawn avec `report_mode: "final_response"` et relève la réponse finale avec
-`team_results` ; il ne lui ouvre ni `team_*` ni `execute` pour l'envoi.
+Rapport d'équipe : communication collaborative par `execute` → `team_message`.
+Le lead vérifie une lecture et la réception effective avant d'accepter l'admission.
+Une modification sur disque ne prouve pas le rechargement du profil actif.
+Persistance, commits et exécution restent au lead ; aucun fichier de remise écrit ici.

@@ -9,6 +9,25 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../../../..');
 const readJson = name => JSON.parse(readFileSync(path.join(here, name), 'utf8'));
 const oracle = readJson('fixtures/expectations.json');
+const plannerOracle = {
+  ...oracle,
+  permissions: readJson('fixtures/qa-planner-permissions.json'),
+  common: oracle.common.map(c => c.id === 'T-06.tools' ? {
+    id: c.id, phrases: ['Code Mode', 'execute est allow', 'team_message', 'QMD',
+      'Context Mode', 'aucun contournement', 'transport à éprouver', 'pas une sandbox', 'Permission.Ruleset'],
+  } : c),
+};
+const communicationOracle = {
+  ...oracle,
+  permissions: plannerOracle.permissions,
+  common: oracle.common.map(c => c.id === 'T-06.tools' ? {
+    id: c.id, phrases: ['Code Mode est ouvert pour la communication',
+      '`execute` et `team_message` sont allow', 'aucun autre outil', 'QMD',
+      'Context Mode', 'deny par défaut', 'Permission.Ruleset', 'pas une sandbox',
+      'écrire, lancer des tests, muter une session ou déléguer'],
+  } : c),
+};
+const oracleFor = role => role === 'qa-planner' ? plannerOracle : communicationOracle;
 const roles = ['qa-planner', 'test-engineer', 'test-reviewer'];
 const expectedPaths = [
   '.opencode/agents/qa-planner.md',
@@ -17,6 +36,7 @@ const expectedPaths = [
   '.opencode/tests/agentic/t05-qa/contract.test.mjs',
   '.opencode/tests/agentic/t05-qa/manifest.json',
   '.opencode/tests/agentic/t05-qa/fixtures/expectations.json',
+  '.opencode/tests/agentic/t05-qa/fixtures/qa-planner-permissions.json',
   '.opencode/tests/agentic/t05-qa/fixtures/offline-checks.mjs',
   '.opencode/tests/agentic/t05-qa/fixtures/native-canaries.json',
   '.opencode/evidence/mission-gpu-qa/t05-result.md',
@@ -24,7 +44,8 @@ const expectedPaths = [
 
 // Synthetic document built from an explicit source-derived oracle, never the
 // candidate. It exercises the checker only; real profiles are checked below.
-function specimen(role, permissions = oracle.permissions) {
+function specimen(role, permissions = oracleFor(role).permissions) {
+  const oracle = oracleFor(role);
   const rules = permissions.flatMap(r => [
     `  - action: ${JSON.stringify(r.action)}`,
     `    resource: ${JSON.stringify(r.resource)}`,
@@ -47,6 +68,7 @@ function manifestSpecimen() {
 }
 
 for (const role of roles) {
+  const oracle = oracleFor(role);
   test(`offline validator: ${role} nominal subset`, () => {
     assert.deepEqual(inspectProfile(specimen(role), role, oracle), []);
   });
@@ -153,4 +175,8 @@ test('canary format: proposed-only, no fabricated runtime or grant', () => {
   }
   assert.ok(packet.cases.find(c => c.id === 'grant-exact-if-verified').precondition.includes('lead'));
   assert.equal(packet.cases.find(c => c.id === 'mcp-mutator').action, null);
+  assert.deepEqual(packet.cases.find(c => c.id === 'code-mode').expectedByProfile,
+    {'qa-planner': 'allow', 'test-engineer': 'allow', 'test-reviewer': 'allow'});
+  assert.deepEqual(packet.cases.find(c => c.id === 'report-transport').transportByProfile,
+    {'qa-planner': 'execute/team_message', 'test-engineer': 'execute/team_message', 'test-reviewer': 'execute/team_message'});
 });

@@ -179,10 +179,13 @@ Ne change ni scores/grille/provider ni politique approuvée pour satisfaire ce s
 
 Runner séparé : propositions texte/patch ; le lead persiste, relit et exécute
 les tests avec un mandat distinct de confiance, en attribuant auteur/proposition
-et exécutant réels. Aucun agent runner autonome. Les trois QA gardent leur
-deny-all + read/glob/skill et 27 règles exactes : edit/shell/execute/subagent fermés.
-execute fermé rend les MCP uniquement Code Mode indisponibles : longues données
-digérées par le lead ; pas de contournement, d'API session ou de grant supposé.
+et exécutant réels. Aucun agent runner autonome. Les trois profils QA partagent
+la politique communication v2 : deny-all puis read/glob/skill/grep, contexte
+ARTIST/pool-5 explicite, execute et team_message ; edit/shell/subagent fermés.
+Le nombre historique de 27 règles n'est plus leur invariant. Les autres MCP restent
+fermés : longues données digérées par le lead, sans API session/grant supposé.
+Code Mode expose fetch et certains utilitaires sans garde individuelle : cette
+politique n'est pas une sandbox. Vérifier la restitution au runtime.
 L'autonomie d'édition/exécution est dégradée ; aucun grant natif par lot vérifié.
 Un template déclaré reconnu ne prouve ni sandbox ni enforcement. Si la voie de
 restitution autorisée manque, signaler blocked, ne pas élargir team_* ou les MCP.
@@ -193,7 +196,7 @@ Avant toute admission QA, vérifier le profil effectivement routé, ses permissi
 le contexte/HEAD disponible et la voie de restitution native. Les mentions en
 prose du profil ou de `worktree: false` ne prouvent pas leur application par
 l'importeur/auto-dispatch. Si ces champs sont perdus ou la remise impossible,
-bloquer l'admission plutôt que substituer build ou ouvrir execute/team_*.
+bloquer l'admission plutôt que substituer build ou ouvrir des droits hors profil.
 Fournir soi-même les digestions et extraits, dans le brief ou des fichiers locaux
 lisibles, sans imposer des chemins canoniques hors worktree au profil restrictif.
 Un refus identifié ne doit être essayé qu'une fois ; réutiliser les observations

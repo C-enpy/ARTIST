@@ -467,11 +467,12 @@ test('F5: worktree Git légitime (gitfile) préservé sans mutation', t => {
   assert.equal(result.status, 0); assert.deepEqual(snapshot(owned), before); assert.deepEqual(snapshot(f.root), beforeMain);
 });
 
-// T04-R2 : oracle T05 indépendant et inchangé, jamais chargé par le validateur.
-// Contrat adopté : evidence/mission-gpu-qa/qa-policy-boundary.md (27 triplets).
+// Oracle indépendant, jamais chargé par le validateur. Le v1 reste un témoin
+// historique négatif ; AGENTS impose désormais communication v2 aux trois QA.
 const qaOracle = JSON.parse(fs.readFileSync(path.join(directory, '../t05-qa/fixtures/expectations.json'), 'utf8'));
 const qaIDs = ['qa-planner', 'test-engineer', 'test-reviewer'];
-const qaRules = qaOracle.permissions;
+const plannerRules = JSON.parse(fs.readFileSync(path.join(directory, '../t05-qa/fixtures/qa-planner-permissions.json'), 'utf8'));
+const qaRules = plannerRules;
 const qaText = (rules = qaRules) => agentText(rules.map(r => rule(r.action, r.resource, r.effect)).join('\n'));
 const qaCheck = result => result.json.checks.find(c => c.code === 'PERMISSION_QA');
 const firstRuleDifference = rules => {
@@ -489,8 +490,8 @@ function assertDeclaredTemplate(result, id) {
   assert.equal(check.evidenceKind, 'static-presence');
   assert.equal(check.observed.path, `.opencode/agents/${id}.md`);
   assert.equal(check.observed.form, 'B');
-  assert.equal(check.observed.template, 'qa-readonly-declared-v1');
-  assert.equal(check.observed.templateVersion, 1);
+  assert.equal(check.observed.template, `${id}-communication-v2`);
+  assert.equal(check.observed.templateVersion, 2);
   assert.equal(check.observed.firstMismatch, null);
   assert.equal(check.observed.message, 'template déclaré reconnu');
   assert.match(check.expected, /mode décidé, enforcement non prouvé/);
@@ -499,7 +500,8 @@ function assertDeclaredTemplate(result, id) {
 }
 
 test('F6: les trois consommateurs T05 réels inchangés reconnaissent B, pas une preuve native', () => {
-  assert.equal(qaRules.length, 27);
+  assert.equal(qaOracle.permissions.length, 27); // fixture historique, pas invariant runtime
+  assert.notDeepEqual(qaRules, qaOracle.permissions);
   assert.deepEqual(qaOracle.agents, qaIDs);
   const root = path.resolve(directory, '../../../..');
   const inputs = ['.opencode/tests/agentic/t05-qa/manifest.json',
@@ -512,15 +514,48 @@ test('F6: les trois consommateurs T05 réels inchangés reconnaissent B, pas une
   for (const id of qaIDs) assertDeclaredTemplate(result, id);
 });
 
-for (const id of qaIDs) test(`F6: template B nominal et syntaxe équivalente pour ${id}`, t => {
+for (const id of qaIDs) test(`F6: communication v2 nominale et syntaxe équivalente pour ${id}`, t => {
   const f = fixture(t);
-  for (const text of [qaText(), '\uFEFF' + agentText(qaRules.map(r =>
+  const rules = qaRules;
+  for (const text of [qaText(rules), '\uFEFF' + agentText(rules.map(r =>
     `  - effect: '${r.effect}' # commentaire\n    resource: '${r.resource}'\n    action: '${r.action}'`).join('\n')).replaceAll('\n', '\r\n')]) {
     namedAgent(f, id, text);
     const result = run(f);
     assert.equal(result.status, 0); assertDeclaredTemplate(result, id);
     has(result, 'PERMISSION_SUBAGENT', 'PASS');
   }
+});
+
+for (const id of qaIDs) test(`communication v2: ancien profil sans transport refusé pour ${id}`, t => {
+  const f = fixture(t); namedAgent(f, id, qaText(qaOracle.permissions));
+  const result = run(f);
+  assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
+});
+
+for (const id of qaIDs) for (const [name, change] of [
+  ['execute retiré', r => { r.find(x => x.action === 'execute').effect = 'deny'; }],
+  ['transport retiré', r => r.splice(r.findIndex(x => x.action === 'team_message'), 1)],
+  ['shell rouvert', r => { r.find(x => x.action === 'shell').effect = 'allow'; }],
+  ['édition rouverte', r => { r.find(x => x.action === 'edit').effect = 'allow'; }],
+  ['délégation rouverte', r => { r.find(x => x.action === 'subagent').effect = 'allow'; }],
+  ['externe élargi', r => { r.at(-1).resource = '*'; }],
+  ['contexte externe retiré', r => r.pop()],
+  ['contexte mauvais pool', r => { r.at(-1).resource = r.at(-1).resource.replace('pool-5', 'pool-6'); }],
+  ['contexte avant deny', r => r.splice(1, 0, ...r.splice(-1, 1))],
+  ['doublon externe', r => r.push({...r.at(-1)})],
+  ['exécuteur MCP', r => r.push({action: 'context-mode_ctx_execute', resource: '*', effect: 'allow'})],
+]) test(`communication v2 ${id}: ${name} refusé`, t => {
+  const f = fixture(t), rules = structuredClone(plannerRules); change(rules);
+  namedAgent(f, id, qaText(rules));
+  const result = run(f); assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
+});
+
+test('planner v2: oracle candidat ne peut ouvrir le shell', t => {
+  const f = fixture(t), rules = structuredClone(plannerRules);
+  rules.find(r => r.action === 'shell').effect = 'allow';
+  f.put('.opencode/tests/agentic/t05-qa/fixtures/qa-planner-permissions.json', rules);
+  namedAgent(f, 'qa-planner', qaText(rules));
+  const result = run(f); assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
 });
 
 // Chaque règle, pas un échantillon de gardes. Mutations de schéma VALIDE.
@@ -539,7 +574,7 @@ for (let index = 0; index < qaRules.length; index++) {
     const result = run(f), expected = firstRuleDifference(rules);
     assert.ok(result.json.checks.every(c => !['syntax', 'schema'].includes(c.level) || c.verdict === 'PASS'), 'mutant bien parsé/typé');
     assert.equal(result.status, 1); has(result, 'PERMISSION_QA', 'FAIL');
-    assert.equal(qaCheck(result).observed.template, 'qa-readonly-declared-v1');
+    assert.equal(qaCheck(result).observed.template, 'test-reviewer-communication-v2');
     assert.equal(qaCheck(result).evidenceKind, 'static-presence');
     assert.deepEqual(qaCheck(result).observed.firstMismatch, expected);
   });
