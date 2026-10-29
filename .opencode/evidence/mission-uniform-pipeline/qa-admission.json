@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "scope": "qa-planner admission before implementation",
+  "contract_commit": "003ad9c5804a31523b46150579589abba3a30f65",
+  "native_agent_location": "C:\\Users\\djden\\source\\repos\\ARTIST",
+  "native_agent_id": "qa-planner",
+  "native_agent_mode": "subagent",
+  "served_wildcard_rules": {
+    "edit": "deny",
+    "shell": "deny",
+    "subagent": "deny",
+    "read": "allow",
+    "execute": "allow",
+    "team_message": "allow"
+  },
+  "task_context": "fresh",
+  "task_worktree": false,
+  "task_report_mode": "final_response",
+  "native_member": "pool-2",
+  "native_session": "ses_e7626883effe2VyjXAO2qEvRRk",
+  "native_routing_observation": "team_status and team_view report qa-planner",
+  "read_observation": "Worker reports successful reads of local AGENTS, artist-build-validation, contract, qa-inputs and mission policy",
+  "return_observation": "team_results received native complement result_mvu4zzei_000l_84xjul; lead retrieved prior complete public final msg_189da1351001zr1oaU6F5shSug using native read-only message API",
+  "limitations": [
+    "No attempted edit or shell refusal test; served permissions do not prove a sandbox",
+    "Read success attributed to worker testimony, not an independent replay",
+    "QA plan ratified separately in qa-plan.md; this admission record does not prove runtime implementation correctness"
+  ]
+}
