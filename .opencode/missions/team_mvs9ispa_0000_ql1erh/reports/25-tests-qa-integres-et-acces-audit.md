@@ -22,6 +22,14 @@ La décision demandée porte exclusivement sur cette consultation locale en lect
 
 ## Annexe technique
 
+### Suite de la décision utilisateur
+
+L'utilisateur a choisi **Autoriser la lecture locale**. L'unique consultation autorisée a réussi ; snapshot `out/logs/mission-linux-qa/final-audit-profile-admission.json` : profil natif test-reviewer/subagent, deny-all suivi des permissions restrictives attendues, édition/shell/délégation interdits. Aucun fichier de configuration, modèle ou droit modifié. Hash du profil sur disque : `14c5b6fa14d091c5012eec518fe133cf26e80e221bf583ce31ea7dadfad33591` ; le snapshot natif, et non ce hash seul, fonde le contrôle.
+
+Le premier lancement team_spawn hors board a été refusé avant création : « Autonomous workers require claim_task ». Il n'a pas été répété et l'audit n'a pas été publié sur le board d'implémentation. Le profil natif test-reviewer disponible dans cette session a ensuite été invoqué directement en contexte neuf, sans modèle explicite, worktree ou tâche d'implémentation : session `ses_e79498a83ffe3GxE7urS3rUXcG`, sélection native de session inchangée. C'est l'invocation indépendante hors routage Ensemble prévue par le contrat d'audit, pas une équipe recréée ou un contournement d'une permission refusée. Lecture et restitution effectives restent à vérifier à sa remise.
+
+L'audit est donc en cours, plus bloqué sur la consultation. La préparation documentaire peut avancer indépendamment ; publication finale et acceptation attendent son résultat réel.
+
 - Tests intégrés : `1532b78d96489923773e7b2a8b355dc91f94345c`, runtime/config identiques au candidat moteur exécuté `78e7b74`.
 - Propositions et résultats : `.opencode/evidence/mission-linux-qa/gaps-integrated-candidate.md`. Logs runner lead `qa-gaps-{windows,linux}.log`, expériences `qa-gaps-mutations.json`, sous `out/logs/mission-linux-qa/`.
 - Préparation neutre de l'audit : `.opencode/evidence/mission-linux-qa/final-audit-input.md`, sans justifications privées d'auteurs. Aucun worktree ou nouveau worker créé pour ce document.
