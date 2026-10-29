@@ -14,7 +14,8 @@ const plannerOracle = {
   permissions: readJson('fixtures/qa-planner-permissions.json'),
   common: oracle.common.map(c => c.id === 'T-06.tools' ? {
     id: c.id, phrases: ['Code Mode', 'execute est allow', 'team_message', 'QMD',
-      'Context Mode', 'aucun contournement', 'transport à éprouver', 'pas une sandbox', 'Permission.Ruleset'],
+      'Context Mode', 'aucun contournement', 'transport à éprouver', 'pas une sandbox', 'Permission.Ruleset',
+      'Ne pas employer ces capacités pour écrire, lancer des tests, muter une session, créer un worktree ou déléguer.'],
   } : c),
 };
 const communicationOracle = {
@@ -29,6 +30,22 @@ const communicationOracle = {
 };
 const oracleFor = role => role === 'qa-planner' ? plannerOracle : communicationOracle;
 const roles = ['qa-planner', 'test-engineer', 'test-reviewer'];
+
+test('planner: retirer la restriction runner est refusé sans changer les permissions', () => {
+  const content = readFileSync(path.join(root, '.opencode/agents/qa-planner.md'), 'utf8');
+  assert.deepEqual(inspectProfile(content, 'qa-planner', plannerOracle), []);
+  const restriction = [
+    'Ne pas employer ces capacités pour écrire, lancer des tests, muter une session,',
+    'créer un worktree ou déléguer. Cette interdiction est aussi une consigne de rôle,',
+    "pas une garantie d'enforcement par les seuls triplets du profil.",
+  ].join('\n');
+  assert.ok(content.includes(restriction));
+  const changed = content.replace(restriction, 'RUNNER_RESTRICTION_REMOVED');
+  assert.equal(changed.slice(0, changed.indexOf('## Méthode portable')),
+    content.slice(0, content.indexOf('## Méthode portable')));
+  assert.ok(inspectProfile(changed, 'qa-planner', plannerOracle).includes('T-06.tools'));
+});
+
 const expectedPaths = [
   '.opencode/agents/qa-planner.md',
   '.opencode/agents/test-engineer.md',
