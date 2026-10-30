@@ -34,6 +34,11 @@ de noms autorisés. Les dix tests, fixtures Python, production et pins restent
 inchangés. Première réparation de harnais de cette tranche ; auteur distinct du
 runner, aucun test auteur. Nouvelle relecture avant baselines puis caractérisations.
 
+Le contrat de réparation a été committé en7a77eac avant publication de
+`task_mvuys3y9_008t_2u3hxr`, build-engineer fresh/worktree isolé. PM/LLM brut55,
+complexité retenue70, risque52. Un seul fichier autorisé ; commit auteur de ce
+fichier explicitement permis, exécution toujours réservée au lead.
+
 ## Preuves et identités
 
 - Fichiers auteur persistés par le lead : `eb0294dd0b550cd6922a7881c605760728261d6c`.
