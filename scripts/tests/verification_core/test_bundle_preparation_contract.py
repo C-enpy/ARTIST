@@ -96,6 +96,27 @@ class OwnedBundleRunner:
             for scenario in self.fixture.plan.scenarios:
                 for target in scenario.targets:
                     (directory / (target + suffix)).write_bytes(b'owned fixture, NOT executable code')
+        # QA section14 mapping: only successful Windows transport helpers emit
+        # the newly required private DATA. Generic/Linux/early outcomes above
+        # retain their old behavior and all business assertions stay unchanged.
+        if (self.fixture.plan.request.platform == 'windows' and self.fixture.sink.manifest and
+                PAYLOAD in self.fixture.sink.manifest['artifacts']):
+            from windows_helper_evidence_fixtures import (
+                ROLES, ROOTS, WITNESS, command_data, json_bytes, witness_data,
+            )
+            for role in ROLES[command.phase]:
+                path = self.fixture.sink.bundle / ROOTS[command.phase] / role
+                path.mkdir()
+                for name, raw in (
+                        ('stdout.bin', b'owned synthetic helper stdout\n'),
+                        ('stderr.bin', b'owned synthetic helper stderr\n'),
+                        ('command.json', json_bytes(command_data(self.fixture.root, role)))):
+                    with (path / name).open('xb') as stream:
+                        stream.write(raw)
+            if command.phase == 'prepare':
+                with (self.fixture.sink.bundle / WITNESS).open('xb') as stream:
+                    stream.write(json_bytes(witness_data(
+                        self.fixture.root, directory, self.fixture.plan.request.configuration)))
         return ProcessOutcome(0, 'owned ' + command.phase + ' stdout\n',
                               'owned ' + command.phase + ' stderr\n', False, False)
 

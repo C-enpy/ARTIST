@@ -87,6 +87,26 @@ class BindingRunner:
                 path.write_bytes(b'owned inert Windows binary identity, not executable code')
         else:
             fixture.raw_writer.write_result(command)
+        # QA section14 mapping: private proof DATA only after the successful
+        # Windows helper/seed path. No change to generic/run or early outcomes.
+        if (command.phase in ('prepare', 'build') and fixture.plan.request.platform == 'windows' and
+                fixture.sink.manifest and PAYLOAD in fixture.sink.manifest['artifacts']):
+            from windows_helper_evidence_fixtures import (
+                ROLES, ROOTS, WITNESS, command_data, json_bytes, witness_data,
+            )
+            for role in ROLES[command.phase]:
+                path = fixture.sink.bundle / ROOTS[command.phase] / role
+                path.mkdir()
+                for name, raw in (
+                        ('stdout.bin', b'owned synthetic helper stdout\n'),
+                        ('stderr.bin', b'owned synthetic helper stderr\n'),
+                        ('command.json', json_bytes(command_data(fixture.root, role)))):
+                    with (path / name).open('xb') as stream:
+                        stream.write(raw)
+            if command.phase == 'prepare':
+                with (fixture.sink.bundle / WITNESS).open('xb') as stream:
+                    stream.write(json_bytes(witness_data(
+                        fixture.root, fixture.build_root, fixture.plan.request.configuration)))
         return ProcessOutcome(0, 'owned binding stdout\n', 'owned binding stderr\n', False, False)
 
     @staticmethod

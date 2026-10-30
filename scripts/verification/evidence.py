@@ -90,6 +90,23 @@ _SAFE_ENVIRONMENT = frozenset(('platform', 'profile', 'configuration', 'architec
                               'build', 'generator', 'preset', 'gl', 'opengl', 'device', 'driver'))
 _CTEST_POPULATION_RELATIVE = 'raw/ctest-population.json'
 _WINDOWS_HELPER_INPUT = 'raw/windows-helper-input.json'
+_WINDOWS_HELPER_WITNESS = 'logs/windows-helper-prepare/toolchain.json'
+_WINDOWS_HELPER_ROLES = {
+    'prepare': ('python-venv', 'python-ensurepip', 'python-pip', 'vswhere',
+                'msvc-env', 'conan-install', 'cmake-configure'),
+    'build': ('msvc-env', 'cmake-build'),
+}
+_WINDOWS_HELPER_REQUIRED = {'prepare': ('msvc-env', 'conan-install', 'cmake-configure'),
+                            'build': ('msvc-env', 'cmake-build')}
+_WINDOWS_HELPER_FILES = ('stdout.bin', 'stderr.bin', 'command.json')
+_WINDOWS_HELPER_TRANSPORT = ('export-msvc.ps1', 'load-msvc.cmd', 'msvc-env.json')
+_WINDOWS_HELPER_COMMAND_KEYS = frozenset((
+    'format', 'role', 'program', 'command_line', 'cwd', 'returncode',
+    'timed_out', 'interrupted', 'error'))
+_WINDOWS_HELPER_WITNESS_KEYS = frozenset((
+    'format', 'configuration', 'build_directory', 'visual_studio_installation',
+    'msvc_version', 'msvc_architecture', 'windows_sdk_version',
+    'python', 'conan', 'ninja', 'cmake', 'cl'))
 _BOOTSTRAP_EFFECTS = frozenset(('network', 'bootstrap', 'dependency-resolution', 'dependency_resolution',
                                 'pip-install', 'conan-install', 'install-dependencies'))
 
@@ -271,6 +288,24 @@ class BundleSink:
         # A confined alias can still name another owner's internal artifact.
         if path.is_symlink() or _within(self.bundle, relative, relative_only=True) != path:
             raise EvidenceError('private Windows helper path is not owned: ' + relative, stale=True)
+        current = self.bundle
+        for part in Path(relative).parts:
+            current = current / part
+            try:
+                info = current.lstat()
+            except FileNotFoundError:
+                break  # Exclusive creation is allowed, never adoption of an alias.
+            if (stat.S_ISLNK(info.st_mode) or
+                    getattr(info, 'st_file_attributes', 0) &
+                    getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0) or
+                    (stat.S_ISREG(info.st_mode) and info.st_nlink != 1)):
+                raise EvidenceError('private Windows helper alias is not owned: ' + relative, stale=True)
+        return path
+
+    def _windows_helper_file(self, relative):
+        path = self._windows_helper_path(relative)
+        if not stat.S_ISREG(path.lstat().st_mode):
+            raise EvidenceError('private Windows helper output is not a regular file: ' + relative)
         return path
 
     def _windows_helper_logs(self, phase):
@@ -283,7 +318,7 @@ class BundleSink:
         # Generic doubles without a bootstrap effect retain their existing contract.
         if self.plan.request.platform != 'windows' or not any(
                 _BOOTSTRAP_EFFECTS.intersection(command.declared_effects) for command in commands):
-            return
+            return False
         path = self._windows_helper_path(_WINDOWS_HELPER_INPUT)
         self._windows_helper_logs('prepare')
         targets = list(dict.fromkeys(target for spec in self.plan.scenarios for target in spec.targets))
@@ -292,6 +327,127 @@ class BundleSink:
         # _write_json closes its exclusive handle before hashing/publication.
         self.artifact(path)
         self.save()
+        return True
+
+    def _windows_helper_witness(self, value):
+        # Admit declarations, NOT binary tool identity or MSVC capabilities.
+        if (type(value) is not dict or set(value) != _WINDOWS_HELPER_WITNESS_KEYS or
+                any(type(item) is not str or not item for item in value.values())):
+            raise EvidenceError('invalid private Windows helper toolchain fields')
+        configuration = {'debug': 'Debug', 'release': 'Release'}[self.plan.request.configuration]
+        # Native lexical path semantics (including Windows case), without
+        # resolving/probing the helper's declaration or rewriting its bytes.
+        build_directory = Path(value['build_directory'])
+        if (value['format'] != 'artist-helper-toolchain-v1' or
+                value['configuration'] != configuration or
+                not build_directory.is_absolute() or build_directory != _build_root(self)):
+            raise EvidenceError('private Windows helper toolchain disagrees with its plan')
+
+    @staticmethod
+    def _windows_helper_command(value, role, successful):
+        if type(value) is not dict or set(value) != _WINDOWS_HELPER_COMMAND_KEYS:
+            raise EvidenceError('invalid private Windows helper command fields')
+        if (value['format'] != 'artist-helper-command-v1' or value['role'] != role or
+                type(value['command_line']) is not str or
+                any(type(value[key]) is not str or not Path(value[key]).is_absolute()
+                    for key in ('program', 'cwd')) or
+                (value['returncode'] is not None and type(value['returncode']) is not int) or
+                any(type(value[key]) is not bool for key in ('timed_out', 'interrupted')) or
+                (value['error'] is not None and type(value['error']) is not str)):
+            raise EvidenceError('invalid private Windows helper command values: ' + role)
+        if successful and (type(value['returncode']) is not int or value['returncode'] != 0 or
+                           value['timed_out'] or value['interrupted'] or value['error'] is not None):
+            raise EvidenceError('private Windows helper command did not succeed: ' + role)
+
+    def _collect_windows_helper(self, phase):
+        """Only the just-owned phase; bounded names, no recursive adoption/repair.
+
+        Called after the primary outcome/cause, still under both leases. Collect
+        regular partial bytes independently before interpreting any private JSON.
+        All anomalies are secondary to an existing command/capture failure.
+        """
+        successful = (self.manifest['pipeline_state'] == 'COMPLETED' and
+                      self.manifest['exit_code'] == 0)
+        errors, collected = [], set()
+        root = 'logs/windows-helper-' + phase
+
+        def observe(action):
+            try:
+                return action()
+            except KeyboardInterrupt:
+                errors.append(EvidenceError('private Windows helper evidence interrupted', 130))
+            except EvidenceError as error:
+                errors.append(error)
+            except Exception as error:
+                errors.append(EvidenceError('private Windows helper evidence: ' + str(error)))
+            return None
+
+        def entries(relative, allowed):
+            path = self._windows_helper_path(relative)
+            if not stat.S_ISDIR(path.lstat().st_mode):
+                raise EvidenceError('private Windows helper directory is not regular: ' + relative)
+            found, unknown = set(), False
+            for child in path.iterdir():
+                if child.name in allowed:
+                    found.add(child.name)
+                elif not unknown:
+                    # Detect even empty unknown directories, but never enter them.
+                    unknown = True
+                    errors.append(EvidenceError('unexpected entry in private Windows helper directory: ' + relative))
+            return found
+
+        def collect(relative):
+            path = self._windows_helper_file(relative)
+            self.artifact(path)
+            collected.add(relative)
+
+        def document(relative):
+            path = self._windows_helper_file(relative)
+            value = _json(path)  # Reject duplicate keys and nonfinite JSON too.
+            if _sha(path) != self.manifest['artifacts'][relative]:
+                raise EvidenceError('private Windows helper document changed during collection: ' + relative)
+            return value
+
+        roles = _WINDOWS_HELPER_ROLES[phase]
+        allowed = (*roles, '_transport', *(['toolchain.json'] if phase == 'prepare' else []))
+        present = observe(lambda: entries(root, allowed))
+        if present is not None:
+            for role in roles:
+                if role not in present:
+                    if successful and role in _WINDOWS_HELPER_REQUIRED[phase]:
+                        errors.append(EvidenceError('required private Windows helper role is absent: ' + role))
+                    continue
+                prefix = root + '/' + role
+                members = observe(lambda: entries(prefix, _WINDOWS_HELPER_FILES))
+                if members is None:
+                    continue
+                for name in _WINDOWS_HELPER_FILES:
+                    relative = prefix + '/' + name
+                    if name in members:
+                        observe(lambda: collect(relative))
+                    elif successful:
+                        errors.append(EvidenceError('required private Windows helper output is absent: ' + relative))
+                trace = prefix + '/command.json'
+                if trace in collected:
+                    observe(lambda: self._windows_helper_command(document(trace), role, successful))
+            if '_transport' in present:
+                prefix = root + '/_transport'
+                members = observe(lambda: entries(prefix, _WINDOWS_HELPER_TRANSPORT))
+                if members is not None:
+                    for name in _WINDOWS_HELPER_TRANSPORT:
+                        if name in members:
+                            observe(lambda: collect(prefix + '/' + name))
+                    if successful and members:
+                        errors.append(EvidenceError('private Windows helper transport cleanup is incomplete'))
+            if phase == 'prepare':
+                if 'toolchain.json' in present:
+                    observe(lambda: collect(_WINDOWS_HELPER_WITNESS))
+                    if _WINDOWS_HELPER_WITNESS in collected:
+                        observe(lambda: self._windows_helper_witness(document(_WINDOWS_HELPER_WITNESS)))
+                elif successful:
+                    errors.append(EvidenceError('required private Windows helper toolchain is absent'))
+        for error in errors:
+            _cause(self, error)
 
     def _admit_windows_helper(self, preparation):
         # The admitted receipt, not a guessed pathname or a mutable adapter, owns
@@ -299,11 +455,22 @@ class BundleSink:
         if self.plan.request.platform != 'windows' or _WINDOWS_HELPER_INPUT not in preparation.artifacts:
             return False
         try:
-            path = self._windows_helper_path(_WINDOWS_HELPER_INPUT)
-            if not path.is_file() or _sha(path) != preparation.artifacts[_WINDOWS_HELPER_INPUT]:
-                raise EvidenceError('private Windows helper input changed or disappeared', stale=True)
-        except (OSError, RuntimeError) as error:
-            raise EvidenceError('private Windows helper input cannot be admitted', stale=True) from error
+            for relative in (_WINDOWS_HELPER_INPUT, _WINDOWS_HELPER_WITNESS):
+                digest = preparation.artifacts.get(relative)
+                if digest is None or self.manifest['artifacts'].get(relative) != digest:
+                    raise EvidenceError('private Windows helper predecessor output is not inventoried: ' + relative)
+                path = self._windows_helper_file(relative)
+                if _sha(path) != digest:
+                    raise EvidenceError('private Windows helper predecessor output changed: ' + relative)
+            path = self._windows_helper_file(_WINDOWS_HELPER_WITNESS)
+            self._windows_helper_witness(_json(path))
+            if _sha(path) != preparation.artifacts[_WINDOWS_HELPER_WITNESS]:
+                raise EvidenceError('private Windows helper toolchain changed during admission')
+        except EvidenceError as error:
+            raise EvidenceError('private Windows helper input cannot be admitted: ' + str(error),
+                                error.exit_code, stale=True) from error
+        except (OSError, ValueError, RuntimeError) as error:
+            raise EvidenceError('private Windows helper input cannot be admitted: ' + str(error), stale=True) from error
         return True
 
     def trace_path(self):
@@ -565,6 +732,7 @@ def _finish(sink, cls, phase, identity=None, **details):
 def prepare(plan, adapter, sink):
     sink.create(plan)
     identity = None
+    windows_helper = False
     with sink.lease('prepare'):
         try:
             identity = _snapshot(sink)
@@ -580,7 +748,7 @@ def prepare(plan, adapter, sink):
                     if not path.is_file():
                         raise EvidenceError('required source fixture is absent', 3)
             commands = _commands(plan, adapter.describe_preparation(plan, bundle_root=str(sink.bundle)), 'prepare')
-            sink._prepare_windows_helper(commands)
+            windows_helper = sink._prepare_windows_helper(commands)
             for command in commands:
                 _check_child(sink.command(command))
             _assert_snapshot(sink, identity)
@@ -589,6 +757,8 @@ def prepare(plan, adapter, sink):
             _cause(sink, EvidenceError('preparation interrupted', 130))
         except Exception as error:
             _cause(sink, error if isinstance(error, EvidenceError) else EvidenceError(str(error)))
+        if windows_helper:
+            sink._collect_windows_helper('prepare')
         return _finish(sink, PreparationReceipt, 'prepare', identity)
 
 
@@ -597,6 +767,7 @@ def build(plan, preparation, adapter, sink):
     if 'build' in sink.manifest['receipts']:
         raise EvidenceError('construction already has a receipt; prepare a new bundle', 3)
     identity = None
+    collect_helper = False
     with sink.lease('build'):
         # Preserve the failed admission, but do not silently reconstruct a build
         # from incompatible source/revision data or observe an adapter first.
@@ -616,6 +787,7 @@ def build(plan, preparation, adapter, sink):
             commands = _commands(plan, adapter.describe_build(plan, preparation), 'build')
             if windows_helper:
                 sink._windows_helper_logs('build')
+                collect_helper = True
             for command in commands:
                 _check_child(sink.command(command))
             _assert_snapshot(sink, preparation.details['identity'])
@@ -630,6 +802,8 @@ def build(plan, preparation, adapter, sink):
         except Exception as error:
             _cause(sink, error if isinstance(error, EvidenceError) else EvidenceError(str(error)))
             executables = {}
+        if collect_helper:
+            sink._collect_windows_helper('build')
         return _finish(sink, BuildReceipt, 'build', identity, executables=executables)
 
 
