@@ -44,6 +44,16 @@ class SubprocessRunner:
         environment = os.environ.copy()
         for name in CONTEXT_ENV_NAMES:
             environment.pop(name, None)
+        if command.env_delta.get('ARTIST_VERIFICATION_CONTEXT_V1') == 'opengl-hardware':
+            for name in CONTEXT_ENV_NAMES:
+                if not command.env_delta.get(name):
+                    raise ValueError('missing or empty hardware context field: ' + name)
+            software_forcing = ('LIBGL_ALWAYS_SOFTWARE', 'GALLIUM_DRIVER')
+            for name in software_forcing:
+                if name in command.env_delta:
+                    raise ValueError('hardware context forbids environment key: ' + name)
+            for name in software_forcing:
+                environment.pop(name, None)
         environment.update(command.env_delta)
         child = None
         reaped = False
