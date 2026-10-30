@@ -1,64 +1,8 @@
-# Test-owned program. Never dot-source or invoke build-windows.ps1 here.
-# All dispatch effect boundaries below are record-only functions with no fallback.
-param(
-    [Parameter(Mandatory = $true)][string]$InputFile,
-    [Parameter(Mandatory = $true)][string]$OutputFile
-)
-
-Set-StrictMode -Version 2.0
-$ErrorActionPreference = 'Stop'
-$payload = Get-Content -LiteralPath $InputFile -Raw | ConvertFrom-Json
-$dispatch = [string]$payload.dispatch
-$fixtureEvents = New-Object 'System.Collections.Generic.List[object]'
-$fixtureError = $null
-$fixtureHarnessError = $null
-$fixtureExit = 0
-$fixtureChildIndex = 0
-$fixtureEnvironment = @{}
-foreach ($property in $payload.environment.PSObject.Properties) {
-    $fixtureEnvironment[$property.Name] = [string]$property.Value
-}
-
-function Copy-FixtureMap($Values) {
-    $copy = @{}
-    foreach ($key in $Values.Keys) { $copy[$key] = $Values[$key] }
-    return $copy
-}
-
-function Get-VerificationProcessEnvironment {
-    $script:fixtureEvents.Add(@{ kind = 'snapshot' })
-    return (Copy-FixtureMap $script:fixtureEnvironment)
-}
-
-function Get-VerificationMsvcEnvironment {
-    $script:fixtureEvents.Add(@{ kind = 'msvc-fixture' })
-    $values = @{}
-    foreach ($property in $script:payload.msvc_environment.PSObject.Properties) {
-        $values[$property.Name] = [string]$property.Value
-    }
-    return $values
-}
-
-function Set-VerificationProcessEnvironment($Values) {
-    $script:fixtureEvents.Add(@{ kind = 'set-environment' })
-    $script:fixtureEnvironment = Copy-FixtureMap $Values
-}
-
-function Invoke-VerificationChild([string]$Program, [string[]]$Arguments) {
-    # Arguments are data: no &, Start-Process, cmd, shell or native executable.
-    $script:fixtureEvents.Add(@{
-        kind = 'child'
-        program = $Program
-        arguments = @($Arguments)
-        environment = Copy-FixtureMap $script:fixtureEnvironment
-    })
-    if ($script:fixtureChildIndex -ge @($script:payload.child_codes).Count) {
-        throw 'Fixture received an unexpected extra child request.'
-    }
-    $code = [int]$script:payload.child_codes[$script:fixtureChildIndex]
-    $script:fixtureChildIndex += 1
-    return $code
-}
+# RETIRED as a standalone dispatch qualification program (QA15 G4).
+# wrapper_fixture.ps1 still parses ONLY the verbatim Assert-FixtureDispatch AST.
+# Never dot-source this file or invoke the real helper. No payload is read here.
+# Replacement inventory and selected proofs: G2_G3_G4_MAPPING.md.
+throw 'RETIRED: standalone dispatch fixture; see scripts/tests/verification_windows/G2_G3_G4_MAPPING.md. Run uses the direct adapter/runner, never helper-run.'
 
 function Assert-FixtureDispatch($Source) {
     # A narrow audit for this reviewed fixture, NOT a general PowerShell sandbox.
@@ -112,47 +56,3 @@ function Assert-FixtureDispatch($Source) {
         }
     }
 }
-
-try {
-    try { Assert-FixtureDispatch $dispatch }
-    catch {
-        $fixtureHarnessError = $_.Exception.Message
-        $fixtureExit = 96
-    }
-    if (-not $fixtureHarnessError) {
-        # These are fixture variables, not a copy of model.py or a core receipt.
-        # No actual toolchain, device, filesystem workload or process env is read.
-        $AllowDependencyResolution = [bool]$payload.allow_dependency_resolution
-        $Configuration = [string]$payload.configuration
-        $VerificationTargets = @($payload.targets)
-        $VerificationExecutable = [string]$payload.executable
-        $VerificationArguments = @($payload.arguments)
-        $VerificationBuildDirectory = [string]$payload.build_directory
-        $VisualStudioPath = 'C:/fixture Visual Studio'
-        $Python = 'fixture-python-never-executed'
-        $Jobs = 1
-        $root = 'C:/fixture source with spaces'
-        # Appending a harmless sentinel detects accidental fallthrough. An early
-        # return in the dispatch exits this block, a throw/exit also skips it.
-        # Bind the local automatic PSBoundParameters in the invoked block itself,
-        # rather than assuming it inherits a parent script's bound parameters.
-        $withSentinel = [scriptblock]::Create(
-            'param([string]$VerificationPhase)' + [Environment]::NewLine +
-            $dispatch + [Environment]::NewLine + "throw 'FIXTURE_LEGACY_FALLTHROUGH'")
-        try { & $withSentinel -VerificationPhase ([string]$payload.phase) }
-        catch {
-            $fixtureError = $_.Exception.Message
-            $fixtureExit = 1
-        }
-    }
-} finally {
-    # Also runs for exit <child-code> from dispatch; preserve the raw process code.
-    @{
-        fixture_version = 1
-        harness_error = $fixtureHarnessError
-        phase_error = $fixtureError
-        events = @($fixtureEvents.ToArray())
-        environment_after = $fixtureEnvironment
-    } | ConvertTo-Json -Depth 16 | Set-Content -LiteralPath $OutputFile -Encoding UTF8
-}
-exit $fixtureExit

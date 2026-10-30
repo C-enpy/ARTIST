@@ -176,18 +176,14 @@ class WindowsWrapperTests(unittest.TestCase):
                 self.assertNotEqual(code, 0)
                 self.assertTrue((report["phase_error"] or "").startswith("InvalidMsvcEnvironment:"), report)
 
-    def test_local_composition_separates_phases_and_restores_environment(self):
-        cases = (("prepare", ["conan", "cmake"], (0, 0), 0), ("build", ["cmake"], (0,), 0),
-                 ("run", None, (0,), 0), ("prepare", ["conan"], (17,), 17))
-        for phase, programs, codes, expected_code in cases:
-            with self.subTest(phase=phase, expected_code=expected_code):
-                code, report, payload = self.run_fixture("compose", phase=phase, codes=codes)
-                self.assertEqual(code, expected_code, f"Local composition refused: {report}")
-                events = [event for event in report["events"] if event["kind"] == "process"]
-                expected = programs if programs is not None else [payload["values"]["executable"]]
-                self.assertEqual([event["program"] for event in events], expected)
-                self.assertEqual(report["environment_after"], PARENT)
-                self.assertIsNone(report["phase_error"])
+    # REPLACED, not skipped: test_local_composition_separates_phases_and_restores_environment.
+    # Its prototype dispatch omitted real admission and cannot qualify helper-run.
+    # QA15 ratified all four cases before this migration; see G2_G3_G4_MAPPING.md:
+    # prepare0/build0 -> HelperFunctionalAdmissionTests prepare/build exact commands;
+    # prepare17 -> first_nonzero_stops_prepare_and_preserves_raw_data;
+    # run0 -> WindowsAdapterBindingTests.test_19 + EffectiveWindowsEnvironmentTests;
+    # all parents -> functional restore, wrappers snapshot/restore, native StartInfo.
+    # No replacement test checks only method names or reruns another TestCase.
 
     def test_fixture_positive_child_and_effect_rejection_are_independent(self):
         code, report, payload = self.run_fixture("selfcheck", child_code=17)
@@ -213,14 +209,40 @@ class WindowsWrapperTests(unittest.TestCase):
 
 
 class WindowsRealHelperBarrierTests(unittest.TestCase):
-    def test_real_helper_remains_closed_before_dispatch(self):
+    def test_real_helper_admits_only_validated_prepare_build_before_effects(self):
         source = HELPER.read_text(encoding="utf-8-sig")
-        prefix = source.split("# END ARTIST_VERIFICATION_WRAPPERS", 1)[1].split(
-            "# BEGIN ARTIST_VERIFICATION_DISPATCH", 1
-        )[0]
-        self.assertIn("if ($PSBoundParameters.ContainsKey('VerificationPhase'))", prefix)
-        self.assertIn("throw 'Verification phases are not implemented yet;", prefix)
-        self.assertNotIn("Invoke-VerificationChild", prefix)
+        positions = []
+        for name in ("WRAPPERS", "NATIVE", "BINDING", "DISPATCH"):
+            begin = "# BEGIN ARTIST_VERIFICATION_" + name
+            end = "# END ARTIST_VERIFICATION_" + name
+            self.assertEqual(source.count(begin), 1, name)
+            self.assertEqual(source.count(end), 1, name)
+            positions.extend((source.index(begin), source.index(end)))
+        self.assertEqual(positions, sorted(positions), "regions must be unique and in source order")
+        # BINDING contains definitions, not effects executed by the entry guard.
+        prefix = source[positions[5] + len("# END ARTIST_VERIFICATION_BINDING"):positions[6]]
+        ordered = (
+            "$root = Split-Path $PSScriptRoot -Parent",
+            "$admittedPhase = Resolve-VerificationPhaseFlags",
+            "if ($admittedPhase -ceq 'run')",
+            "Read-VerificationPayloadFile",
+            "Resolve-VerificationInputs",
+            "Assert-VerificationPreparedTree",
+        )
+        offsets = []
+        for text in ordered:
+            self.assertEqual(prefix.count(text), 1, text)
+            offsets.append(prefix.index(text))
+        self.assertEqual(offsets, sorted(offsets), "root/flags/refusal/payload/inputs/tree must precede dispatch")
+        self.assertIn("$verificationRequested = $PSBoundParameters.ContainsKey('VerificationPhase')", prefix)
+        self.assertIn("run is not a helper phase; use the direct adapter.", prefix)
+        self.assertIn("if ($admittedPhase -ceq 'build') { $preparedWitness = Assert-VerificationPreparedTree", prefix)
+        for effect in ("Initialize-VerificationTooling", "Get-VerificationTooling",
+                       "Get-VerificationMsvcEnvironment", "Enter-VerificationContext",
+                       "Invoke-VerificationChild", "Invoke-VerificationProcessLeaf"):
+            self.assertNotIn(effect, prefix)
+        # Structure only: functional admission/mutation/sentinel proofs remain
+        # separately selected by the lead, never inferred from these strings.
 
 
 if __name__ == "__main__":
