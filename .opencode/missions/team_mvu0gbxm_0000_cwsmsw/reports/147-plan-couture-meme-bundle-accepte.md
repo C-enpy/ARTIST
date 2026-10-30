@@ -26,3 +26,11 @@ final attend les deux livrables réellement intégrés, pas seulement la fin des
   avant ce plan29d5758, code inchangé depuis52e7330/9aedc0a.
 - Ni programme ni test nouveau exécuté. G1 demeure INCONCLUSIVE/NON_EXECUTE ;
   qualification native Windows/Linux et GPU toujours NON_EXECUTE.
+
+## Publication après persistance
+
+Le plan/QA ont été committés en `d19c720638bc56eb46f2862874110d0e1b6f2852`
+avant publication de la tranche tests `task_mvuxrzkh_008i_pze6wy` : build-engineer,
+contexte fresh et worktree isolé, PM/LLM78/73. La dépendance est le vrai ID du
+plan A0 reçu et persisté. La réception finale reste réservée au lead après merge
+et vérification ; aucun worker runner ni changement de politique ajouté.
