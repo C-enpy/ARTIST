@@ -98,3 +98,12 @@ nouveau départ ou faux completed pour effacer une absence de livrable. Équipe,
 branches et preuves conservées ; aucun nettoyage, purge, push ou merge manuel.
 Les modifications préexistantes des profils agents et autres fichiers hors
 mission ne sont ni incluses ni supprimées.
+
+Après enregistrement natif, aucune tâche n'est en cours. Les trois anciennes
+fiches restent explicitement deferred avec le motif de remplacement ; l'une
+est pending mais non publiée, les deux autres blocked/deferred. Elles ne sont
+ni des départs autorisés ni des livrables manquants masqués par un faux completed.
+Le contrôle final du diff n'a trouvé aucune divergence des sources testées,
+aucun lien/source manquant dans le guide et aucune erreur de whitespace.
+Avis/QA/guide et ce rapport sont persistés dans le commit de réception111879f ;
+la présente précision de suivi ne modifie aucune source ou preuve de test.
