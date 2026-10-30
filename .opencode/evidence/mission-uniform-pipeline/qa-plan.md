@@ -198,3 +198,84 @@ Chaque RED/GREEN/non-régression retenu conserve HEAD/delta/empreintes, date/sou
 Sortie : cet addendum commité avant autorisation d'écriture ; RED causal puis GREEN minimal et non-régression par lead ; core réellement intégré avant adaptateurs ; revue indépendante fresh ciblée ownership/publication/pureté puis corrections/ré-audit ; aucun schéma public imprévu, réparation silencieuse ou brut perdu. Zéro test et skip requis ne valent pas PASS.
 
 Le lead accepte le complément et la rectification du lien manquant. Qualification Windows/Linux réelle, C++/OpenGL et performances restent DEFER, propriétaire lead/futur responsable de qualification, à établir avant toute revendication native. Pas de nouveau choix d'architecture ni autorisation de campagne. Le futur auteur ne reçoit que le delta core et son mapping explicite de doubles, pas une permission générale sur les adaptateurs ou les scripts moteur.
+
+## 12. Addendum ratifié — environnement enfant matériel
+
+Proposition qa-planner/pool-21 `result_mvumebdm_0000_uv51g1`, réponse finale
+publique complète reçue nativement. Lectures locales du contrat, du runner et du
+test de transport réussies ; aucune édition, exécution ou refus de lecture.
+Commit contrat fourni au lecteur : `7a5ed1632278add245a6d65b7f86875b60907b36`.
+Le lead persiste et ratifie ce plan avant nouveau worktree auteur. Le §11 reste acquis.
+
+### Obligations et risque
+
+Explicites : H1 déclenchement uniquement par delta exactement hardware, sans
+dépendance à argv ; H2 six champs explicites non vides, sinon refus avant factory,
+sans refaire le validateur sémantique core ; H3 retirer les deux variables
+logicielles de la copie et refuser toute présence dans le delta, même vide ou0 ;
+H4 contexte hardware seulement ambiant inactif, six contextes ambiants nettoyés,
+CPU/sans déclaration et logiciel explicite inchangés ; H5 parent intact,
+indépendance des appels, refus comme panne pipeline et non précondition GPU ;
+H6 aucun schéma modifié, capture/causes/gestion primaire conservées.
+
+Inférés : I1 comparaison complète du parent avant/après ; I2 factory strict et
+compteur des invocations inattendues ; I3 ordre permuté sur la même instance.
+
+Top risques impact×probabilité :
+- R1 forçage logiciel conservé,5×4=20 : parent avec une ou deux variables ; portée
+  workloads et CTest matériels. Détection : finding statique indépendant ;
+  mitigation existante par garde GL ultérieure, insuffisante pour assainir ;
+  gap environnement effectif à la factory.
+- R2 transport incomplet/réintroduction,4×3=12 : champ absent/vide ou variable
+  interdite dans delta ; portée admission et attribution. Détection contrat,
+  garde runner absente ; mitigation admission core ; gap refus causal/zéro lancement.
+- R3 contamination parent/profils suivants,4×3=12 : nettoyage global ou état
+  réemployé ; portée parent/CPU/logiciel. Détection test existant partiel,
+  mitigation copie par appel ; gap séquences et comparaison complète après refus.
+
+### Tests, registre bidirectionnel et oracles
+
+Réutiliser les doubles du fichier de transport existant, pas de nouveau harness.
+- HT1→H1/H3 : matériel complet avec chaque variable puis paire dans parent,
+  argv workload/CTest/découverte. Factory reçoit deux clés absentes, six valeurs
+  exactes et marqueur ordinaire conservé ; ni None ni vide de substitution.
+- HT2→H2/H5 : chaque champ retiré puis vidé ; présence dans parent ne répare pas
+  delta. Refus causal et factory zéro. Le champ sélecteur retiré/vide ne déclenche
+  toutefois pas hardware selon H1 : tester ce cas selon HT4, sans contradiction
+  H1/H2. Les cinq autres champs incomplets sous sélecteur hardware sont refusés.
+- HT3→H3/H5 : chaque clé interdite présente avec1,0 ou vide : refus avant factory.
+- HT4→H1/H4 : hardware seulement ambiant nettoyé sans assainissement des deux
+  variables ; CPU/sans déclaration garde héritage et logiciel ses valeurs
+  explicites. Sélecteur absent/vide/autre non exactement hardware ne déclenche
+  ni assainissement ni rejet sémantique nouveau.
+- HT5→H4/H5/I1/I3 : même runner CPU→matériel→logiciel puis inverse ; insérer refus
+  HT2/HT3, vérifier parent identique et appel suivant non contaminé.
+- HT6→H5/H6 : sorties synthétiques succès/nonzero et outcome/capture conservés ;
+  refus propagé comme panne, pas code enfant favorable. Réutiliser contrôles
+  existants de causes/capture, documenter convention d'exception avant RED sans
+  nouvelle classe ou code public imposé par le planner.
+
+Sens obligations→preuves : H1–H3 dans construction d'environnement de
+SubprocessRunner.run→HT1–HT3 ; H4/H5 copie/nettoyage par invocation→HT4/HT5 ;
+H5/H6 propagation/capture→HT6. Sens inverse : tous HT1–HT6 sont rattachés,
+aucun test driver/performance/GPU. Test existant de contexte hérité soutient
+H4/H5 statiquement, pas H2/H3. H1–H6 restent GAP jusqu'aux preuves ; aucun COVERED.
+
+### Charge, sortie et arbitrage lead
+
+Base relative100 : setup25 ; planifié56,25 (HT1/3:18,HT2:12,HT4/5:16,
+HT6/revue:10,25), buffer18,75. Après setup75%planifié/25%buffer, sans durée promise.
+Priorité aux refus et environnement effectif, sans nouvelle infrastructure.
+
+Sortie : plan commité avant auteur unique runner/tests, tests RED avant
+implémentation, RED lead puis GREEN/non-régression ciblée, factory factice stricte
+sans aucun enfant réel dans cette tranche ; revue indépendante des conditions,
+ordre de nettoyage et refus, corrections/ré-audit avant intégration puis
+revalidation Linux synthétique. Preuves : candidat/diff/SHA256, source/date,
+commande/cwd/interpréteur, auteur/runner, attendu/observé et nombres ; changement
+de candidat exige requalification, zéro test ou skip requis ne vaut pas PASS.
+
+Arbitrage lead : complément accepté avec précision HT2 nécessaire pour préserver
+H1 ; sélecteur absent ne peut à la fois ne pas déclencher et exiger hardware.
+Autres mécanismes externes de sélection du driver hors correction. Environnement
+assaini ne prouve pas renderer matériel ; GL/cible exacte réels NON_EXECUTE.
