@@ -19,6 +19,8 @@ Les adaptateurs transmettent par `CommandSpec.env_delta`, depuis le plan et les 
 
 Aucune déduction depuis un nom de GPU, aucun fallback logiciel. Paire exacte non vide, sans contrôle, maximum 4096 scalaires ; espaces conservés. Sous Windows, lecture Unicode wide explicite pour ces entrées, sans supposer la page ANSI du processus de tests. Linux : UTF-8 strict. La cible reste dans l'empreinte du plan. Ces seules variables publiques peuvent être conservées dans les preuves ; jamais l'environnement global.
 
+Au lancement par le pipeline, les six noms réservés hérités du parent ne valent pas déclaration : les retirer de l'environnement enfant de base puis appliquer les seules valeurs explicites de `CommandSpec.env_delta`. Ne pas modifier le parent. Ce filtrage limité empêche une activation ambiante d'un cas CPU/logiciel ; les autres variables ordinaires restent soumises au contrat existant.
+
 Activation absente et aucun champ présent : voie historique. Activation/identités/paire partiellement présentes, invalides ou incompatibles : refus avant corps du test, pas voie historique silencieuse.
 
 ## Observation par cas
@@ -54,6 +56,8 @@ Avant intégration du producteur/collecteur équivalent, les sélections hardwar
 Après QA : auteur GPU désigné uniquement pour `ARTIST/component-tests/include/OpenGLComponentTests.hpp`, support local nouveau sous ce dossier si utile, et l'arrêt préalable du seul `SetUp` dérivé concerné dans `PreparedFloatUniformComponentTests.cpp`. Corps des tests, assertions et API moteur hors édition. Pas de CMake nécessaire. Toute autre édition historique requiert un nouveau transfert explicite.
 
 Parser d'observation Python pur et ses tests : nouveau module `scripts/verification/context_evidence.py`, tests dédiés ; ownership à attribuer avec le producteur avant écriture. Réemploi des utilitaires intégrés permis, pas deuxième parseur workload.
+
+Interface fixée avant auteur : `parse_context_observation(text: str, *, expected: dict) -> dict`. `text` contient le `system-out` d'un seul cas. Le parser exige exactement une ligne au préfixe ratifié et retourne son objet JSON validé ; données absentes, ambiguës, malformées ou étrangères : `ValueError`. `expected` contient exactement `run_id`, `plan_sha256`, `request_id`, `ctest_name`, `profile`, `expected_gl_vendor`, `expected_gl_renderer`. Les noms `schema_version` et `kind` sont contrôlés par le format, pas un second schéma workload. Construction/import/parsing sans I/O, processus, réseau ou chargement GL. L'interprétation des statuts de précondition et des assertions JUnit reste au collecteur.
 
 Auteur core : raccordement `_junit`/états après intégration du parser/producteur, injection explicite pour tests isolés, pas copie de branche. Adaptateurs : transport des six variables et déclarations d'effets après intégration des interfaces communes. Le lead possède les barrières et transferts.
 

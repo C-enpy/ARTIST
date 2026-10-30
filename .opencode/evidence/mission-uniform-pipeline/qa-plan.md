@@ -105,3 +105,30 @@ Admission QA qualifiee par regles natives, lecture et restitution ; ce plan et c
 Apres integration reelle des quatre producteurs : integration des raccordements ; puis generator des gaps demontres (texte/patch, jamais production modifiee par QA), corrections integrees avant audit fresh. Les consommateurs restent deferred avant leurs entrees effectives.
 
 Sortie : tests synthetiques attribues et concordants, catalogueproducteurs reellement raccorde, rapporthonnete des manques et revue des changements sensibles. Pipeline livre pour qualification Windows/Linux ; execution reelle des workloads, compilation C++, images et performance NON_EXECUTE. Aucun gain exige. Une future qualification ne conditionne pas la livraison ici, ni n'autorise du cloud.
+
+## 10. Addendum ratifié — contextes historiques v1
+
+Proposition QA native `result_mvucmc0f_001x_7w875k`, profil qa-planner fresh/pool-9. Contrat : `legacy-context-observation-v1.md`, entrée commitée `452b615d9efbb89e8eab93a9181ee6c017255684`. Lecture locale et restitution finale natives confirmées. Une lecture a visé par erreur `evidence/.../qa-inputs.md` absent ; le vrai contexte était fourni dans le dossier de mission. Pas de permission élargie, de nouvelle tentative ou de besoin de cette digestion pour les sections réalisées. Les sources et contrats lisibles suffisent à l'addendum ; cette limite est conservée.
+
+Exigences explicites : activation absente inchangée / partielle refusée ; arrêt avant corps et propagation au SetUp dérivé ; une observation attribuée par cas OpenGL ; six variables publiques issues du plan ; parser pur, populations et statuts distincts ; négatifs/ownership et modes consultatifs inchangés. Contrôles inférés : sentinelles d'effets, ordre d'agrégation permuté et mutations d'un seul champ. Pas de nouvelle fonctionnalité ni nouveau seuil de gain.
+
+Top risques I×P : arrêt non propagé (5×4=20), faux favorable attribution/agrégation (5×4=20), transport divergent/activation implicite (4×3=12). Déclencheurs : retour base suivi de GL dans SetUp dérivé ; ligne absente/double/étrangère ou précondition masquant assertion ; variables héritées/paire incomplète/Unicode normalisé. Portée : trois cas OpenGL historiques et rapport de sélection, pas conversion des cas CPU en preuve GPU. Détection actuelle : lecture source/contrats seulement. Mitigations : garde locale avant travail et contrôle du SetUp appelant, identités strictes par cas, transport explicite et chaîne exacte. Gaps : revue du nouveau flux natif et nettoyage ; tests parser/JUnit mixtes et codes ; tests adaptateurs/Unicode. La compilation/exécution GL demeure hors preuve même après clôture synthétique.
+
+Groupes additionnels et oracles :
+
+- A1 (activation/compatibilité) : toutes variables absentes historique ; chaque champ partiel/invalide refuse sans repli. Revue statique native.
+- A2 (arrêt/lifetime) : contexte possédé 3.3+ core et cible exacte avant programme ; refus courant/version/masque/logiciel avant corps et boucle dérivée. Négatif de détachement ultérieur conservé. Revue indépendante statique, pas simulation transformée en preuve native.
+- A3 (parser/attribution) : ligne unique JSON stricte ; absence/doublon/troncature/clés dupliquées/types/version/identité/nom incorrects : code protocole 4 au collecteur, même enfant 0.
+- A4 (transport) : six valeurs exactes, identité distincte par invocation ; Unicode 4096 scalaires et espaces conservés, paire/contrôle/NUL/surrogate/4097 rejetés, quotes/backslashes non interprétés.
+- A5 (population) : noms découverte/sélection/JUnit concordants, observation sur chaque OpenGL matériel, pas exigée sur CPU ; omission/duplication/transfert entre cas refuse un favorable.
+- A6 (priorités) : précondition structurée cohérente →3 ; assertion réelle + précondition ailleurs →5 avec causes/population partielle ; protocole + assertion →4 ; interruption →130 ; skip ordinaire ou enfant incompatible jamais favorable. Permutation de l'ordre stable.
+- A7 (pureté) : descriptions et list/plan sans sonde, écriture, enfant ou import workload ; environnement contradictoire ou doublure manquante ne déclenche aucun fallback.
+- A8 (relecture) : parsing de deux cas sans état partagé, mutation identité/JUnit relue sans cache ni relance.
+
+Registre bidirectionnel : fixture commune et SetUp dérivé →A1/A2 ; nouveau parser `context_evidence.py`/tests dédiés →A3/A4/A5/A8 ; adaptateurs describe_execution →A4/A7 ; collecteur/rapport →A5/A6/A8 après intégration des producteurs ; catalogue →A5 avec présence statique des trois noms. Chaque groupe A1–A8 doit pointer ces obligations ; tests de charge/mesure du plan initial restent hors delta, pas artificiellement orphelins. Aucun nouvel item n'est encore COVERED. Les 31 tests workload et les 124 succès/1 skip du cœur ne prouvent aucune de ces nouvelles gardes.
+
+Allocation relative additionnelle : setup25 ; du reste75% planifié (56,25) et25% buffer (18,75), sans promesse horaire. Priorité aux contre-exemples des risques élevés avant cosmétique. Arrêt du contrôle affecté si enfant réel non autorisé, réseau, mutation hors fixture, candidat divergent ou oracle affaibli ; poursuite des branches indépendantes.
+
+Séquence obligatoire : contrat/interface/ownership + cet addendum committés → auteur parser/producteur → RED/GREEN synthétiques par runner lead → intégration effective → collecteur/adaptateurs → non-régression et revue indépendante native fresh, corrections/ré-audit. L'auteur n'exécute pas de tests. Aucune édition implicite des autres fixtures dérivées, corps de tests, assertions, moteur ou CMake. Gaps de stratégie/ownership du candidat QA sont levés par l'interface fixée et l'affectation explicite du lead, pas par une nouvelle permission.
+
+Sortie additionnelle : A3–A8 exécutés sur données/processus factices par le lead, A1/A2 revus indépendamment, codes/logs bruts et limites conservés, aucun finding haut ouvert sans décision. Livraison pour qualification ; C++ et GL NON_COMPILE/NON_EXECUTE, jamais fonctionnement démontré.
