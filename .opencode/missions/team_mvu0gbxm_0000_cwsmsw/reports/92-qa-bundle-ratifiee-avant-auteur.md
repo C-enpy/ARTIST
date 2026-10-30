@@ -6,6 +6,8 @@ Le plan retient B1–B6 : bundle explicite et descriptions pures, transport sink
 
 Après ce commit seulement, l'auteur core peut recevoir le brief de tests RED. Le worktree historique déjà créé automatiquement reste propre et sans écriture source ; son point Git devra être explicitement aligné sur le plan commité avant la reprise. Aucun adaptateur Windows/Linux, script moteur ou workflow n'est libéré par cette décision.
 
+Exécution de cette barrière : plan commité `222a34164ec91fde54dfdafc288004ea21c99f75`. Le lead a constaté l'arbre auteur propre à `8ddb85e`, vérifié son ascendance et zéro commit unique, puis l'a avancé avec `git reset --keep` vers ce commit, sans suppression ni abandon de travail. Il s'agit du worktree historique possédé, pas d'un nouveau worktree d'implémentation créé avant le plan. HEAD et propreté sont contrôlés après l'alignement. Un brief explicite de tests RED seulement a ensuite été envoyé à pool-20 ; production, anciens tests et adaptateurs restent interdits à l'écriture initiale.
+
 La tranche conserve l'évaluation et la politique de la tâche core déjà admise (76/67), sans modèle explicite ni score modifié pour le routage. Périmètre local de développement borné, plancher70 respecté ; la QA est une analyse distincte. Les seules adaptations initiales d'anciens tests seront des signatures de doubles, avec mapping annoncé, assertions métier conservées. Le coordinateur reste runner.
 
 ## Traçabilité
