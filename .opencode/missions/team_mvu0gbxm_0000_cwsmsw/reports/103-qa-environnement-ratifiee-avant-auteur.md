@@ -26,3 +26,11 @@ Les travaux Windows sur l'adaptateur et les paramètres continuent sans collisio
 
 Aucun nouveau test, moteur, outil natif, GL, rendu, benchmark, installation ou
 cloud exécuté. La reproduction dynamique du défaut reste à obtenir.
+
+## Admission après commit du plan
+
+Plan commité `b89110594731737f5f813c4017599a195e56033d` avant publication.
+Tâche `task_mvumhg9g_005j_81env1` admise fresh avec worktree et completion lead,
+tests RED seulement. Le statut natif confirme pool-26 sur build-engineer, worktree
+isolé `ensemble-2dc31e0a-cwsmsw-pool-26`. Ownership unique futur du runner explicite,
+sans auteur concurrent ; aucun fichier de production autorisé à l'écriture initiale.
