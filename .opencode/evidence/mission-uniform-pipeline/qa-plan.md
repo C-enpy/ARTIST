@@ -447,3 +447,115 @@ sinon contrôle textuel structuré borné + revue, aucune installation. Doubles 
 sans shell/outils/workflow réels ; vérification textuelle ne prouve pas GitHub Actions.
 Choix détaillés auteur proposés avant implémentation ; RED/GREEN lead et revue
 indépendante ciblée avant intégration. Aucune extension de droit, budget ou campagne.
+
+## 14. Addendum ratifié — preuves privées et feuilles réelles du helper
+
+Proposition complète `result_mvuq7fp5_0000_3vnwya`, pool-21, lectures réussies,
+aucun refus, édition, test ou processus. Contrat `windows-helper-evidence-v1.md`
+au commit fourni `b8d036a72d9ebfb3f972023c12c7c36e1a1e3097`. Les §11–13 restent
+acquis. Les sept baselines, RED1 et dix-huit tests haut niveau ne prouvent pas
+encore ce delta ; W1–W8 restent GAP avant preuves.
+
+### Obligations, risques et moyens de preuve
+
+Explicites : W1 contexte privé par invocation non réentrant après admission,
+retiré finally, map enfant sans mutation OS/cache/global/fallback ; W2 Process
+unique, ownership Dispose/streams conservé, budget global restant, aucun succès
+sur code absent/timeout/exception/cleanup ; W3 rôles/noms/champs exacts du contrat,
+création exclusive, command_line réellement transmise, bruts partiels ; W4 témoin
+douze chaînes fermé après prepare réussi, SHA du JSON déclaratif pas des binaires ;
+W5 témoin empreinté puis réadmis avant adaptateur/tooling, configuration/arbre et
+préconditions CMake/Ninja bornées, aucun bootstrap/configure implicite en build ;
+W6 collecte Windows possédé sous lease après succès/nonzero/interruption/exception
+avant receipt, témoin/rôles nécessaires au succès ; W7 regular files, liens/reparse/
+alias/hardlinks interdits refusés, no-clobber, inconnu signalé sans adoption/suppression,
+première cause/priorité conservées ; W8 aucun schéma public/parser capacité/deuxième
+capture workload, wrappers/primitives pinés intangibles.
+
+Inférés : sentinelles d'effets, compteur factory, horloge factice, parent synthétique
+comparé et mutants ciblés, pas de nouvelles fonctionnalités.
+
+Top risques impact×probabilité : R1 receipt favorable sans preuve5×4=20 ; déclencheur
+zéro sans témoin/rôle ou témoin modifié/étranger, portée attribution prepare/build,
+détection payload/empreintes génériques, mitigation receipts candidat, gap validation/
+collecte/réadmission privées. R2 adoption/perte de partiels5×3=15 ; alias/ancien
+dossier/inconnu/exception collecte, portée intégrité/diagnostic, détection confinement
+existant, mitigation lease/chemins bornés, gap ownership/population et causes secondaires.
+R3 doubles masquant wiring/budget/cleanup4×4=16 ; child remplacé, timeout réinitialisé,
+map persistante ou Dispose échoué, portée commandes/verdicts, détection haut niveau
+et primitives, mitigation factory/contexte, gap nouvelles coutures et exporter réel borné.
+
+### Branche core — C1–C6 sans processus
+
+- C1→W3/W4/W6 : faux prepare/build publient données conformes et hash avant receipt ;
+  enfant0 sans témoin/rôle nécessaire reste défavorable. Toutes les traces présentes : code0/flags faux/error null
+  requis pour succès, pas simple présence d'un fichier.
+- C2→W4/W5 : témoin valide lié au plan/arbre, octets réadmis ; absence/mutation/
+  étranger/clé inconnue ou manquante/doublon JSON/type ou format invalide refuse
+  avant adaptateur/runner, sans rewrite.
+- C3→W3/W6/W7 : collecte sur tous retours et interruptions/exceptions ; bruts partiels
+  ou trace incomplète conservés, anomalie visible, aucun témoin de succès inventé.
+- C4→W3/W7 : population fermée, transports allowlistés restants collectés en échec ;
+  rôle/fichier/dossier inconnu ou collision ancien→défavorable, inconnu préservé
+  non adopté, pas parcours récursif arbitraire.
+- C5→W7 : fichiers réguliers distincts ; liens/reparse/hardlink/alias refusés sans
+  clobber. Précondition indisponible→limite/skip explicite, pas privilège ni PASS.
+- C6→W6/W7/W8 : doubles génériques sans transport inchangés ; helper échoué puis
+  collecte anormale conserve première cause/secondaire et priorité existante.
+
+Mapping préalable ratifié, assertions métier conservées :
+- `test_bundle_preparation_contract.py::OwnedBundleRunner.run` → contrats B1–B6
+  payload fermé/hash avant commande, séparation/permissions/codes → succès Windows
+  bootstrap manque journaux/témoin → ajouter ces seules données privées conformes
+  sous destinations possédées, pas en Linux/générique ni avant refus/interruptions.
+- `verification_windows/binding_fixtures.py::BindingRunner.run` → vrais reçus seed
+  et composition de l'adaptateur, mapping/cache/argv/capture → succès prepare/build
+  manque témoin/rôles → ajouter données synthétiques conformes, garder les fakes
+  inertes et leurs compteurs/outcomes/codes. Aucun moteur ni CTest émulé en plus.
+- Un helper de données commun dédié aux tests core est permis pour cette seule
+  production factice ; ne pas importer la validation production pour fabriquer
+  l'oracle. Aucun changement des assertions des 22/54 tests ni des génériques.
+
+Tout autre fake touché nécessite un mapping complémentaire avant édition. Les
+nouveaux tests sont proposés et exécutés en RED avant ces adaptations ou le core.
+
+### Branche PowerShell — P0–P5
+
+Nouvelle fixture test-owned, data/factory mémoire, source réelle de wiring/exporter
+non remplacée entièrement, seuls effets doubles. P0→W8 baseline syntaxe/extraction/
+pins/factory avant RED ; fonction absente, pin inattendu ou harnais cassé reste
+HARNESS/INCONCLUSIVE. P1→W1 map copiée null/vide, root source réel, contexte absent/
+réentrant refusé, invocations indépendantes, parent OS intact. P2→W2/W3 factory
+observe chemin/cwd absolus, command line exacte et Process unique ; absent/nonzero/
+exception défavorables, Dispose/cause/sorties conservés. P3→W2 horloge factice
+budget restant, épuisement avant commande suivante→zéro lancement, pas reset,
+cleanup échoué visible. P4→W3 exporter source borné et journaux/transports exacts
+exclusifs ; collision/inconnu/cleanup sans clobber ou suppression étrangère, partiels
+conservés. P5→W4/W5 témoin après succès seul puis build sans rewrite ; VS explicite
+invalide, témoin/cache/toolchain/build.ninja divergent/absent refuse avant effets.
+
+Revue lead obligatoire de toute nouvelle source/fixture et pin privé avant run ;
+aucun repin WRAPPERS/NATIVE. Le gap Dispose/writers hérités reste ouvert. Toute
+adaptation de métadonnée fake VSINSTALLDIR doit être annoncée avant changement,
+sans altérer les assertions de path/configuration ou injecter root dans l'entrée.
+
+### Registre, charge et sortie
+
+W1/W2↔contexte/factory/binding↔P1–P3 ; W3/W4↔exporter/témoin/collecteur↔P4/P5/C1–C4 ;
+W5↔_admit_windows_helper/build/admission PS↔C2/P5 ; W6/W7↔collecte prepare/build avant
+_finish↔C1/C3–C6 ; W8↔diff/pins/génériques↔P0/C6. Chaque nouveau test cite ces
+obligations ; aucun orphelin établi. Les dix-huit haut niveau restent utiles,
+sans remplacer les nouveaux oracles de feuilles.
+
+Après les deux intégrations seulement : couture synthétique témoin réellement
+empreinté dans PreparationReceipt.artifacts puis réadmis ; mutation refusée avant
+adaptateur/tooling. Pas de consommation implicite d'un diff de branche.
+
+Base100 : setup25, planifié56,25 (core24,PS24,couture/revue8,25), buffer18,75 ;
+75%/25% après setup, sans durée promise ni outil supplémentaire. Plan/mappings
+commités avant auteurs, ownership core/helper distinct, baselines valides puis
+RED/GREEN lead et non-régression, collecte/no-clobber/causes/réadmission démontrés,
+revue indépendante puis couture intégrée. Preuves candidat/diff/hashes/date/
+commandes/cwd/runner/attendu-observé/comptages conservées ; candidat changé exige
+requalification, zéro test/skip requis ≠ PASS. Natif et identité binaire outils
+non démontrés ; aucun workflow, CMake réel, moteur, GPU, installation ou cloud.

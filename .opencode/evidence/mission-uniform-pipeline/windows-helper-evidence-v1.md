@@ -84,6 +84,9 @@ Après commande helper, **également sur nonzero, interruption et exception**,
 collecter la population disponible ci-dessus avec sink.artifact, avant receipt.
 Pas de collecte des révisions Git ou commandes génériques sans transport helper.
 Le témoin et les rôles nécessaires sont obligatoires pour un receipt favorable.
+Dans ce cas toutes les traces présentes portent un code entier0, aucun flag timeout/
+interruption et aucune erreur ; leurs rôles correspondent à leurs répertoires.
+La configuration du témoin vaut exactement Debug ou Release selon le plan.
 Un échec garde les fichiers partiels disponibles sans inventer un témoin de succès.
 
 Confinement et fichiers réguliers ; liens/reparse/alias/hardlinks vers d'autres
