@@ -1,6 +1,6 @@
 # Lead-owned diagnostic only; no helper, child, process start or environment write.
 param(
-    [ValidateSet('return', 'getters')][string]$Mode,
+    [ValidateSet('return', 'getters', 'dot')][string]$Mode,
     [Parameter(Mandatory = $true)][string]$OutputFile
 )
 Set-StrictMode -Version 2.0
@@ -14,12 +14,19 @@ $initialLength = -1
 if (-not $initialNull) { $initialLength = $initial.Length }
 $trace = New-Object Text.StringBuilder
 [void]$trace.AppendLine('initial|null=' + $initialNull + '|length=' + $initialLength)
-if ($Mode -eq 'return') {
+if ($Mode -eq 'return' -or $Mode -eq 'dot') {
     $direct = 'owned literal'
     $before = [Environment]::GetEnvironmentVariable('ARTIST_NATIVE_EMPTY', 'Process')
     [void]$trace.AppendLine('direct|null=' + [object]::ReferenceEquals($before, $null))
-    function Get-OwnedLiteral { return 'owned literal' }
-    $returned = Get-OwnedLiteral
+    function Get-OwnedLiteral {
+        $inside = [Environment]::GetEnvironmentVariable('ARTIST_NATIVE_EMPTY', 'Process')
+        [void]$script:trace.AppendLine('callee-entry|null=' + [object]::ReferenceEquals($inside, $null))
+        $beforeReturn = [Environment]::GetEnvironmentVariable('ARTIST_NATIVE_EMPTY', 'Process')
+        [void]$script:trace.AppendLine('callee-before-return|null=' + [object]::ReferenceEquals($beforeReturn, $null))
+        return 'owned literal'
+    }
+    if ($Mode -eq 'dot') { $returned = . Get-OwnedLiteral }
+    else { $returned = Get-OwnedLiteral }
     $after = [Environment]::GetEnvironmentVariable('ARTIST_NATIVE_EMPTY', 'Process')
     [void]$trace.AppendLine('function-return|null=' + [object]::ReferenceEquals($after, $null))
     [void]$trace.AppendLine('return-equal=' + ($direct -ceq $returned))
