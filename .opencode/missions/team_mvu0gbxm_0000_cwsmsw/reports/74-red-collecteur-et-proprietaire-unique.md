@@ -12,6 +12,8 @@ Le runtime a repris la tâche initiale du cœur sur pool-14 après l'arrêt de p
 
 La mise en attente native de la fiche supplémentaire reste à traiter si une voie autorisée est disponible ; elle n'est pas annoncée comme déjà effectuée. Aucune seconde implémentation ou fusion n'est autorisée.
 
+Confirmation reçue de pool-15 : STOP respecté, aucune nouvelle écriture ou exécution, diff non commité vide au contrôle. Quatre fichiers de tests/proposition sont préservés dans `d4f697bcc9fae3507bfbde3519e888d13d7cd051`, sans code de production. Cette alternative reste non exécutée et non intégrée ; le worker demeure inactif, sans clôture fictive de sa fiche (`result_mvugipck_003i_kqhbal`).
+
 ## Sécurité avant retrait de la garde provisoire
 
 Les vingt nouvelles assertions et les 144 tests acquis sont conservés. Si la régression historique « matériel non pris en charge » devient intentionnellement obsolète, le propriétaire doit proposer son mapping avant modification : absence ou déclaration partielle de contexte doit rester refusée avant tout enfant, sans fallback. Une description pure d'adaptateur nécessaire à ce contrôle ne doit pas être assimilée à une preuve de device ou introduire une sonde.
