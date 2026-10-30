@@ -184,6 +184,7 @@ function Assert-G1Program {
     $allowed = $expectedNames + @('Split-Path', 'Join-Path', 'Test-Path', 'Get-Item', 'Get-ChildItem',
         'Get-Content', 'Set-Content', 'ConvertTo-Json', 'ConvertFrom-Json', 'New-Object', 'Write-Output',
         'Write-Error', 'Out-Null', 'Get-Variable', 'Set-Variable', 'Remove-Variable',
+        'Skip-PayloadWhitespace', 'Require-PayloadCharacter', 'Read-PayloadString', 'Read-PayloadStringArray',
         'New-G1MemoryProcess', 'Read-G1Clock', 'Read-G1Host', 'Read-G1Metadata', 'Invoke-G1MemoryCapture')
     foreach ($node in $ast.FindAll({ param($n) $true }, $true)) {
         if ($node -is [Management.Automation.Language.CommandAst] -and
