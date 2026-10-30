@@ -19,16 +19,18 @@ sources:
   - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/142-helper-integre-verification-synthetique.md
   - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/149-tests-windows-migres-integres-verts.md
   - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/152-couture-meme-bundle-verte-avant-audit.md
+  - .opencode/evidence/mission-uniform-pipeline/final-test-audit-result.md
+  - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/156-livraison-pipeline-pour-qualification.md
 ---
 
 # Pipeline de vérification des uniforms
 
 > [!warning] Livré pour qualification — NON_EXECUTE natif
-> Cette photographie précède la QA finale. Aucun C++/moteur, même CPU seul,
+> QA synthétique et revue indépendante bornée reçues. Aucun C++/moteur, même CPU seul,
 > contexte GL, rendu, benchmark, outil natif de build, helper complet, cmd/vcvars,
 > installation, workflow ou cloud n'a été exécuté dans cette mission.
 > Les tests synthétiques du pipeline ne démontrent pas son fonctionnement natif
-> Windows/Linux, ni une performance. Actualiser cette note après intégration et QA.
+> Windows/Linux, ni une performance. Ces qualifications restent à exécuter hors mission.
 
 Le code fait foi. Voir [[development/build-and-test]],
 [[engineering-principles]] et [[adr/README]]. ADR-0001/0002/0004/0006/0007 restent
@@ -222,9 +224,14 @@ historiques ne sont pas réattribués à une nouvelle campagne ni additionnés s
 tenir compte des recouvrements. Les commandes exactes et l'attribution
 auteur/runner figurent dans les manifestes des rapports cités.
 
-La **réception globale reste EN ATTENTE de l'audit indépendant final des tests**,
-dont l'admission du profil restrictif doit être vérifiée avant revue. Les succès
-locaux ne constituent ni cet audit ni un PASS natif. Dispose/writers hérités et
+La revue indépendante finale des compléments G1–G4 est reçue : **aucun finding
+bloquant établi dans les assertions examinées**, aucun correctif demandé. Elle
+relie scénarios discriminants et assertions, en lecture seule ; aucune mutation
+ou exécution par le reviewer. L'inventaire historique et l'audit AST ne sont pas
+certifiés exhaustivement, les hashes actuels sont fournis par le runner lead.
+Avis persisté dans `.opencode/evidence/mission-uniform-pipeline/final-test-audit-result.md`.
+
+**Réception acceptée pour qualification ultérieure**, pas PASS natif. Dispose/writers hérités et
 encodage non ASCII cmd restent non qualifiés ; cinq skips historiques de liens et
 test de jonction06 gardent leurs limites. Aucun verdict global natif Windows
 Debug/Release ou Linux, campagne matérielle/logicielle ou performance annoncé.
@@ -234,5 +241,6 @@ Debug/Release ou Linux, campagne matérielle/logicielle ou performance annoncé.
 Contrôles adaptés : diff limité à cette note et au lien d'accueil, frontmatter,
 liens internes et comparaison des flags/cibles/états aux sources listées.
 Pas de RED comportemental fictif pour une documentation, pas de réindexation,
-build ou test nécessaire à sa rédaction. La revue du lead et l'actualisation
-après QA finale restent requises avant réception globale.
+build ou test nécessaire à sa rédaction. Revue du lead et photographie après
+réception de l'avis indépendant consignées au rapport156 ; aucun test relancé
+pour actualiser ce guide.

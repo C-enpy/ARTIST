@@ -714,3 +714,26 @@ des dix anciennes méthodes plus composition wrapper obsolète. La dépendance
 AST vers Assert-FixtureDispatch est préservée verbatim, sans étendre son allowlist
 ou exécuter helper-run. Cinq fichiers autorisés, production et fixtures communes
 inchangées. Auteur non runner, programmes relus et exécutés uniquement par le lead.
+
+## 16. Réception des compléments et portée finale
+
+Les livrables G1–G4 sont réellement intégrés. Windows :19 tests (5+4+10) sura130773,
+sans échec/erreur/skip ; couture :6 baselines puis4 caractérisations sur165aee5,
+sans échec/erreur/skip. Empreintes stables et sources actuelles identiques aux
+manifestes. Les erreurs de harnais antérieures restent documentées, pas RED produit.
+Rapports149/150/152 pour attribution, commandes et causes ; pas de nouvelle campagne
+réalisée pour alimenter le document.
+
+Admission native restrictive et indépendance de contexte recoupées au rapport155.
+Revue privée fresh, hors contenu de board d'implémentation, reçue intégralement
+en `result_mvuzl44v_0000_r21li8` et persistée dans `final-test-audit-result.md`.
+Aucun finding bloquant établi dans les assertions examinées, aucun correctif
+demandé. Capacité discriminante lue, pas mutation exécutée par le reviewer ;
+inventaire historique/AST non certifiés exhaustivement, continuité SHA fournie
+par le runner lead. Acceptation de cette revue bornée, sans PASS natif extrapolé.
+
+Sortie : livré pour qualification Windows/Linux, vérification synthétique et
+revues requises effectuées dans leur portée, aucune campagne moteur/GPU/performance
+requise ou exécutée. Les limites de liens/reparse/jonction06, encodage cmd non
+ASCII, Dispose/writers hérités, outils natifs et compilation C++ restent explicites.
+Pas de statut ADR modifié ni garantie de sandbox/enforcement QA ajoutée.
