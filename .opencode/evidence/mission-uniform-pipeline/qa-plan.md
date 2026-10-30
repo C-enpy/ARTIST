@@ -279,3 +279,125 @@ Arbitrage lead : complément accepté avec précision HT2 nécessaire pour prés
 H1 ; sélecteur absent ne peut à la fois ne pas déclencher et exiger hardware.
 Autres mécanismes externes de sélection du driver hors correction. Environnement
 assaini ne prouve pas renderer matériel ; GL/cible exacte réels NON_EXECUTE.
+
+## 13. Addendum ratifié — helper Windows et parents CMake
+
+Proposition QA `result_mvuo139f_0002_rccy4h`, pool-21 ; réponse finale complète
+native reçue. Lectures helper, fixtures, CMake et contrats réussies ; aucune
+édition ni exécution. HEAD fourni `a7aacb9bb10346c28a637d8264aa539a12f3d733`,
+pas de vérification Git du planner. Les §11–12 restent acquis. Toutes obligations
+nouvelles ci-dessous sont GAP jusqu'aux preuves, pas COVERED.
+
+### A — Helper prepare/build seulement
+
+Obligations explicites : A1 admission prepare/build uniquement ; run, flags
+incompatibles, payload invalide ou prepare sans opt-in refusés avant bootstrap,
+environnement ou outils. A2 payload privé quatre champs lié au bundle admis,
+jamais recréé/réparé. A3 prepare : Conan2 puis configure, configuration/arbre/cibles
+et PRE_TEST cohérents, aucun build/test/workload. A4 build : seules cibles choisies
+dans arbre préparé, aucun bootstrap/Conan/configure/réparation. A5 environnement
+outil seulement aux commandes possédées, appelant restauré sur succès/nonzero/
+exception. A6 legacy, run direct et capture primaire core préservés, aucun
+helper-run commun ou nouveau schéma. A7 régions natives pinées inchangées par
+défaut, aucun repin, seuls fragments explicitement extraits/factices relus exécutés.
+
+Inférés : sentinelle de fallthrough legacy, événements ordonnés, mutations ciblées
+et comparaison parent synthétique, moyens de preuve et non nouvelles fonctions.
+
+Risques impact×probabilité :
+- RA1 ouverture trop large5×4=20 : retrait de garde/phase run/flags ; portée outils
+  et phases interdites ; détection oracle fermeture actuel, mitigation helper fermé,
+  gap admission fine avant effets.
+- RA2 fixture masquant binding4×4=16 : root/tooling injectés dans test ou payload
+  remplacé par variables ; portée arbre/commandes/attribution ; détection dispatch
+  testé avec variables injectées, mitigation wrapper valide, gap chaîne source
+  réelle garde→binding→dispatch sans initialisation cachée.
+- RA3 erreurs/env/bruts perdus4×3=12 : nonzero/exception/restauration partielle ;
+  portée commandes suivantes/preuves ; détection tests existants partiels,
+  mitigation finally dispatch ; gap nouvelle composition/première cause.
+
+Mapping préalable obligatoire de
+`test_wrappers.WindowsRealHelperBarrierTests.test_real_helper_remains_closed_before_dispatch` :
+ancienne fermeture globale→admission prepare/build après validation ; absence
+d'effets avant refus→journal vide A-T1 ; absence run/fallback→A-T1 et sentinelle
+legacy ; helper complet jamais exécuté→lanceur/extraction bornés A-T0. L'ancien
+oracle n'est modifié qu'après adoption de ce mapping détaillé et RED ; jamais
+simplement supprimé pour verdir.
+
+Groupes/scénarios et registre bidirectionnel :
+- A-T0→A7 : fragments source réels garde/binding/dispatch, marqueurs uniques,
+  syntaxe valide et feuilles factices admises. Extraction inattendue/pin modifié/
+  appel non autorisé→HARNESS/INCONCLUSIVE, pas RED comportemental.
+- A-T1→A1/A6 : prepare autorisé/build valide atteignent dispatch ; opt-in absent,
+  run/unsupported/flags incompatibles/payload absent ou invalide→refus causal et
+  effets bootstrap/env/outils zéro, aucun legacy fallback.
+- A-T2→A2/A3 : vrai payload synthétique quatre champs, Debug/Release et espaces,
+  workloads seuls puis tests ; mauvais bundle/arbre/config/champ supplémentaire
+  ou commande run transportée→refus avant effets, octets payload intacts.
+- A-T3→A3 : journal Conan→CMake, profils host/build et configuration concordants,
+  workloads ON ; tests sélectionnés→BUILD_TESTING ON et PRE_TEST, sinon OFF.
+  Conan nonzero→pas CMake, ni build/CTest/run/installation hors prepare opt-in.
+- A-T4→A4 : commande CMake build unique, arbre/cibles/jobs exacts ; arbre non
+  admis/nonzero→aucun bootstrap/configure/réparation, code causal conservé.
+- A-T5→A5/A6 : MSVC vu par faux enfant puis restauration exacte ; succès/nonzero/
+  exception avec clés initialement absentes/vides ; première cause et bruts conservés.
+- A-T6→A6/A7 : revue legacy et non-régression ciblée, aucune chute verification
+  vers legacy/helper-run ajouté/région native modifiée.
+
+Sens inverse : oracle fermeture→A-T0/T1 ; test_dispatch/dispatch_fixture→A-T3/T5 ;
+Resolve-VerificationInputs/dispatch→A-T2/T3/T4/T5 ; tests adaptateurs payload
+ownership/build reuse/common capture→A2/A6 réutilisés sans doublons. Chaque nouveau
+test cite ses obligations. Fonctions privées run restent hors preuve run commun.
+
+RED recevable : refus explicite actuel « non implémenté » sur prepare autorisé
+avec harness valide. Fonction absente, parse error, PowerShell indisponible,
+fixture cassée ou zéro test ne sont pas RED. Le lead relit programme test-owned,
+extraction, feuilles, frontière spawn et sorties AVANT exécution. Helper complet
+et toute feuille native réelle restent interdits. Pas de discovery Windows globale ;
+test06 jonction reste NON_EXECUTE. Limite Dispose/writers hérités privée connue
+hors correction, ne devient pas preuve du run commun.
+
+### B — Parents CMake
+
+Explicites : B1 option root ARTIST_BUILD_VERIFICATION OFF par défaut ; B2 inclusion
+conditionnelle dans ARTIST/CMakeLists indépendante de BUILD_TESTING et après
+disponibilité ArtistLib ; B3 réutiliser deux workloads intégrés, pas custom command/
+découverte/lancement ajouté ; B4 Conan2 avant configure, Ninja/config/PRE_TEST
+préservés, aucun configure réel dans cette mission. Contrôles inférés : structure
+contextualisée, commentaires/chaînes ignorés et contre-exemples synthétiques.
+
+Risques : RB1 activation/exécution implicite5×3=15 (défaut ON/inclusion inconditionnelle,
+portée builds ordinaires ; leaf sans lancement, option prévue ; gap garde OFF et
+absence effets). RB2 raccordement manquant/dépendant tests4×3=12 (mauvais scope,
+portée workloads ; source parents actuellement non raccordés, leaf existant ; gap
+matrice logique). RB3 workflow automatique/fallback/cloud5×2=10 : non retiré du
+mandat par cette proposition ; voir arbitrage et complément séparé ci-dessous.
+
+B-T1→B1/B2 : matrice OFF/ON×BUILD_TESTING OFF/ON, option ON raccorde indépendamment
+tests, OFF exclut. B-T2→B2/B3 : deux cibles exactes atteignables statiquement ;
+contre-exemples mauvais chemin, inclusion inconditionnelle, scope tests seul,
+lancement ajouté doivent être détectés. B-T3→B3/B4 : diff structurel sans mutation
+générateur/toolchain/découverte opportuniste ni commande moteur exécutée. Ces
+tests ne prouvent pas configure/compilation réels. Sources/obligations↔preuves :
+parents CMake et ARTIST/verification/CMakeLists→B-T1/T2/T3, pas de tests orphelins.
+
+### Charge et sortie
+
+Base relative100 : setup25, planifié56,25 (A admission/binding20, phases/env/causes18,
+B structure10, revue/non-régression8,25), buffer18,75 ; après setup75%/25%, sans
+engagement horaire. Priorité aux risques≥10, pas nouvelle infrastructure.
+
+Plan commité avant auteurs, ownership distinct helper/tests Windows et parents
+CMake/tests intégration ; RED causal puis GREEN/non-régression lead sur fixtures
+relues, revue indépendante ciblée A et contrôle garde/raccordement B, corrections/
+ré-audit, preuves candidat/delta/hashes/date/commandes/cwd/runner/comptages conservées.
+Intégration effective avant consommateurs/docs finales. Zéro test ou skip requis
+ne vaut pas PASS. Gap WindowsAdapter→runner→factory effectif reste au generator
+ultérieur, pas duplication dans A. Natif/C++/CTest réel/GPU/performance NON_EXECUTE.
+
+Arbitrage lead : A et B source CMake ratifiés. La proposition « pas de nouveau
+workflow » n'est PAS retenue : contract.md ligne28 prévoit explicitement
+`.github/workflows/verification-pipeline.yml`, confirmé par PM rapport114.
+Complément B workflow demandé au planner avec activation manuelle et machines
+opérateur préparées ; aucun auteur workflow admis avant ce complément commité.
+Cette attente n'empêche pas A, indépendant, de commencer ses tests après ce commit.
