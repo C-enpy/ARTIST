@@ -1,7 +1,20 @@
 # Entrées QA — raccordement privé du bundle Windows
 
-Contexte ARTIST explicite, continuité du corpus pool-5 déjà digéré dans
-`qa-inputs.md` du même dossier. Cette mission ne lance aucun moteur, build C++,
+Contexte ARTIST explicite. Correction du brief : `qa-inputs.md` annoncé dans ce
+dossier est absent ; aucune lecture du corpus historique pool-5 ne doit être
+présumée depuis ce lien. Le complément présent utilise les exigences E1–E8,
+risques R1–R6 et scénarios S1–S10 déjà persistés dans `qa-plan.md`, ainsi que les
+faits intégrés ci-dessous. Ce n'est pas une restitution intégrale du corpus
+historique pool-5 et aucune nouvelle preuve GPU n'en est déduite.
+
+Digestion utile au delta : conserver séparation des phases et états, attribution
+par plan/run/empreintes, absence d'effets consultatifs et conservation des bruts.
+La revue géométrique/source des scénarios n'est pas réouverte pour un transport
+de préparation ; ses qualifications natives restent hors périmètre. Le planner
+doit signaler si une entrée absente empêche un oracle de ce delta, sans rechercher
+un chemin externe ni demander de droits supplémentaires.
+
+Cette mission ne lance aucun moteur, build C++,
 CTest réel, OpenGL, rendu, benchmark, installation ou cloud. Le coordinateur seul
 exécute les tests synthétiques et programmes factices relus ; les auteurs livrent
 TESTS_RED_READY avant implémentation. Ce complément est un plan en lecture seule.
