@@ -132,3 +132,69 @@ Allocation relative additionnelle : setup25 ; du reste75% planifié (56,25) et25
 Séquence obligatoire : contrat/interface/ownership + cet addendum committés → auteur parser/producteur → RED/GREEN synthétiques par runner lead → intégration effective → collecteur/adaptateurs → non-régression et revue indépendante native fresh, corrections/ré-audit. L'auteur n'exécute pas de tests. Aucune édition implicite des autres fixtures dérivées, corps de tests, assertions, moteur ou CMake. Gaps de stratégie/ownership du candidat QA sont levés par l'interface fixée et l'affectation explicite du lead, pas par une nouvelle permission.
 
 Sortie additionnelle : A3–A8 exécutés sur données/processus factices par le lead, A1/A2 revus indépendamment, codes/logs bruts et limites conservés, aucun finding haut ouvert sans décision. Livraison pour qualification ; C++ et GL NON_COMPILE/NON_EXECUTE, jamais fonctionnement démontré.
+
+## 11. Addendum ratifié — bundle Windows et préparation pure
+
+Proposition qa-planner/pool-21, session `ses_e74b2e63bffe2V2PnsBSflHrRv`, réponse finale publique complète `msg_18b4ddef4001bn4XbXogv09VOP` (11656 caractères), rectification native `result_mvujhmp8_004p_513f22`. Le lead a récupéré la réponse publique par API native, parties text uniquement, sans lecture du raisonnement privé. Persistance, arbitrages et exécutions futures : coordinateur.
+
+### Admission, pin et limite documentaire
+
+Profil servi et routé qa-planner vérifié avant départ, lecture locale et `team_message` réussis, réponse finale complète reçue. Aucune édition/test/build par le planner, aucune garantie de sandbox. HEAD fourni au lecteur : `493bf4f73a8ba5f8f1b7350deb7aaab09fcd1b3b`, non vérifié par Git par ce profil restrictif.
+
+La référence `qa-inputs.md` absente était une erreur du brief lead, pas un refus de permission ni un blocage du lot. La rectification du planner confirme qu'aucun oracle du delta prepare/bundle/payload/receipts n'en dépend. Les sources locales, `qa-bundle-inputs.md`, le binding ratifié et le plan existant suffisent ; aucune lecture intégrale du corpus pool-5 absent n'est revendiquée.
+
+Le code observé utilise encore `describe_preparation(plan)` : le keyword bundle_root est futur. Les statuts d'implémentation partial observés au registre du29octobre ne changent pas les décisions Proposed/Accepted. Les preuves de fondations sont réutilisées, pas rejouées pour cet addendum : cœur170succès+2symlinkSKIP/172, contexte28, scénarios31, Windows51, LinuxRelease6+19. Leurs commandes, empreintes et exécutant lead sont dans les rapports81/82/90 et manifestes référencés ; aucune ne prouve le nouveau delta.
+
+### Obligations explicites B1–B6
+
+- **B1 — Pureté et bundle explicite.** `describe_preparation(plan, *, bundle_root: str)` reçoit le chemin absolu admis sous lease. Linux et doubles acceptent le keyword ; aucun fallback après TypeError, y compris TypeError interne.
+- **B2 — Transport possédé par le sink.** Création exclusive de `raw/windows-helper-input.json` avec exactement `build_directory`, `targets`, `executable: ""`, `arguments: []`. Root issu de `_build_root`, union ordonnée dédupliquée des cibles du plan. Fermeture, SHA256 et inscription artefact précèdent toute commande.
+- **B3 — Réemploi sans réparation.** Build réutilise les mêmes octets depuis le PreparationReceipt admis. Collision, disparition, mutation, reçu étranger ou incomplet refusent avant lancement, sans réécriture réparatrice.
+- **B4 — Phases et effets bornés.** Descriptions/list/plan purs, répertoires de logs privés prepare/build créés exclusivement, opt-in de préparation respecté avant helper/bootstrap, aucune construction ou exécution implicite. L'opt-in concerne la résolution explicite des dépendances via `allow_dependency_resolution` ; ne pas transformer les doubles génériques sans bootstrap des contrats existants en commandes réelles ou les affaiblir pour le raccordement.
+- **B5 — Conservation et attribution.** Bruts/artefacts partiels conservés ; interruption/échec ne donne aucun reçu favorable. Capture commune primaire, pas deuxième capture.
+- **B6 — Compatibilité.** Request, CommandSpec, schémas de receipts et signature build inchangés. Consommateurs adaptés après intégration du core seulement.
+
+Contrôles inférés, non fonctionnalités : sentinelles d'effets et compteurs (I1), interruptions injectées aux frontières de publication sans promesse de toutes pannes système (I2), permutation de deux bundles du même plan pour détecter setter/global ou « dernier bundle » (I3).
+
+### Top trois risques impact×probabilité
+
+- **Attribution/réemploi :5×4=20.** Déclencheur : bundles du même plan, reçu échangé, mutation entre phases ou ancienne API masquée. Portée : commandes/preuves du mauvais candidat. Détection actuelle : `_predecessor` et empreintes, présence source seulement. Mitigation : bundle exclusif et reçus run/plan. Gap : transport Windows absent, T1–T3 à qualifier.
+- **Effets/collisions :5×3=15.** Déclencheur : matérialisation dans description, opt-in tardif, destination préexistante ou chemin interne réservé. Portée : preuves existantes/arborescence/interdictions. Détection : contrats de pureté et `_within`. Mitigation : lease et création exclusive. Gap : confinement et hash seuls ne prouvent pas l'ownership, T2/T4/T5.
+- **Publication/interruption :4×3=12.** Déclencheur : interruption pendant écriture, après fermeture avant hash, après hash avant commande ou pendant fake command. Portée : reçu et preuves. Détection : `_cause`, tests d'interruption existants. Mitigation : états distincts et logs. Gap : ordre de publication nouveau non testé, T2/T6.
+
+Réévaluer la probabilité après intégration/contre-exemple, sans modifier scores ou grille Ensemble pour satisfaire un seuil QA.
+
+### Scénarios discriminants T1–T7
+
+Tous restent GAP pour le delta jusqu'aux preuves. L'auteur écrit les tests ; le lead relit et exécute. Aucun nouvel outil ou processus réel n'est nécessaire.
+
+- **T1→B1/B6/I3.** Deux bundles séquentiels du même plan, descriptions répétées, chemins propres à chacun ; Linux/doubles acceptent le keyword. Ancien double ou TypeError interne : aucun second appel sans keyword, aucune commande après erreur, cause non masquée.
+- **T2→B2.** À son entrée, le fake runner lit le payload et vérifie quatre clés/valeurs exactes, hash et inscription déjà publiés, fermeture effective. Contre-exemples : clé superflue, cible dupliquée/mal ordonnée, mauvais root. Une présence constatée seulement après commande est un oracle insuffisant.
+- **T3→B2/B3.** Build relit le même fichier et les mêmes octets admis. Mutation/suppression/reçu étranger/incomplet : aucun appel adaptateur/runner après échec d'admission, pas de réparation, pas de succès.
+- **T4→B2/B4.** Destinations absentes : créations exclusives aux phases prévues. Fichier/répertoire préexistant ou collision interne, dont `raw/ctest-population.json` : refus avant commande et contenu initial intact. Symlink seulement si fixture supportée ; SKIP explicite sinon, aucun droit ou jonction de substitution.
+- **T5→B1/B4.** Répétitions descriptions/CLI list/plan déterministes et arbre inchangé ; prepare autorisé ne lance que prepare. Sans opt-in, aucun helper/bootstrap/build/run ; sentinelles écriture/enfant/réseau causales, jamais fallback réel.
+- **T6→B2/B5/I2.** Prepare/build factices réussis attribuent capture commune et logs privés. Interruption aux frontières de publication ou fake enfant nonzero : reçu non favorable, codes/flags/bruts/préfixes disponibles conservés ; nouvelle tentative dans nouveau bundle.
+- **T7→B6.** Aller-retour des modèles existants, adaptations de consommateurs après entrée core intégrée. Audit de diff et contrats : aucun champ public, schéma copié, setter/global ou signature build supplémentaire.
+
+Passe heuristique bornée : prepare/build admis/refusé/interrompu ; absent/existant/partiel ; fermeture→empreinte→publication→commande ; descriptions répétables, phases non réparatrices ; concurrence limitée au lease existant.
+
+### Registre obligations↔preuves et orphelins
+
+- B1 : `adapters/base.py::PlatformAdapter.describe_preparation`, `evidence.prepare`→T1/T5.
+- B2 : `BundleSink.artifact`, `_build_root`, `prepare`→T2/T4/T6.
+- B3 : `_predecessor`, `build`→T3.
+- B4 : `verify.main`, `BundleSink.lease`→T4/T5.
+- B5 : `_cause`, `_finish`, `prepare/build`→T6.
+- B6 : protocole adaptateur, `runtime_fixtures.AdapterDouble`, modèles→T1/T7.
+
+Sens inverse/réemploi : la régression de prédécesseur invalide avant enfant/adaptateur soutient B3 ; les tests help/list/plan et CLI cold sans effets soutiennent B4 ; conservation des logs partiels prepare/build soutient B5 ; `test_plan_contract.AdapterInterfaceTests` soutient B1/B6 et nécessite un mapping borné de signature. Références statiques du planner, pas audit complet des corps ni exécutions du delta. Chaque nouveau test pointe B1–B6 ; aucun test orphelin établi, aucune obligation d'ajouter un doublon faible.
+
+### Charge, preuves, sortie et décisions lead
+
+Sur100unités relatives : setup25 ; planifié56,25 (T1/T3:16,T2/T4:17,T5:8,T6:10,T7/revue:5,25) ; buffer18,75 investigation/panne/ré-audit. Soit75%planifié/25%buffer après setup, sans engagement horaire. Réduire cosmétique/extensions avant contrôles des risques≥10.
+
+Chaque RED/GREEN/non-régression retenu conserve HEAD/delta/empreintes, date/source, commande/cwd/interpréteur, auteur/proposition/exécutant, attendu/observé et nombres découverts/exécutés/échecs/erreurs/skips. Les fondations inchangées gardent leurs preuves attribuées, mais aucun groupe T1–T7 n'est actuellement COVERED.
+
+Sortie : cet addendum commité avant autorisation d'écriture ; RED causal puis GREEN minimal et non-régression par lead ; core réellement intégré avant adaptateurs ; revue indépendante fresh ciblée ownership/publication/pureté puis corrections/ré-audit ; aucun schéma public imprévu, réparation silencieuse ou brut perdu. Zéro test et skip requis ne valent pas PASS.
+
+Le lead accepte le complément et la rectification du lien manquant. Qualification Windows/Linux réelle, C++/OpenGL et performances restent DEFER, propriétaire lead/futur responsable de qualification, à établir avant toute revendication native. Pas de nouveau choix d'architecture ni autorisation de campagne. Le futur auteur ne reçoit que le delta core et son mapping explicite de doubles, pas une permission générale sur les adaptateurs ou les scripts moteur.
