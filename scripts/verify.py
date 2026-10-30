@@ -140,8 +140,7 @@ def main(argv=None, *, adapter_factory=None, runner=None, source_root=None,
                               and plan.request.expected_gl_vendor is None)
             # Even adapter construction can observe a device. Missing-target
             # execution is recorded by the core without loading that service.
-            blocked_hardware = missing_target or (args.mode == 'run' and evidence._unsupported_hardware_ctest(plan))
-            adapter = None if blocked_hardware else (adapter_factory(plan.request.platform)
+            adapter = None if missing_target else (adapter_factory(plan.request.platform)
                        if adapter_factory is not None else _adapter(plan.request.platform, sink.source_root))
             receipt = (evidence.build(plan, predecessor, adapter, sink) if args.mode == 'build' else
                        evidence.execute(plan, predecessor, adapter, sink))

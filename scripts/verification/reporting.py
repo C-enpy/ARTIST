@@ -2,9 +2,10 @@
 from pathlib import Path
 import json
 from types import SimpleNamespace
+import xml.etree.ElementTree as ET
 
 from . import evidence
-from .model import (BuildReceipt, ExecutionReceipt, Freshness, MeasurementValidity,
+from .model import (BuildReceipt, CommandSpec, ExecutionReceipt, Freshness, MeasurementValidity,
                     PipelineState, PreparationReceipt, ProcessOutcome, TestVerdict, VerificationPlan)
 
 
@@ -52,9 +53,11 @@ def _completed_proof(root, plan, manifest, receipts):
         raise evidence.EvidenceError('completed build lacks its required executable identities')
     records = [json.loads(line) for line in (root / 'commands.jsonl').read_text(encoding='utf-8').splitlines()]
     phases, pairs, junit = set(), [], []
+    hardware_ctest = evidence._has_hardware_ctest(plan)
+    commands, discovered, returncodes = [], [], []
     for record in records:
         _identity(record, manifest['run_id'], plan.plan_sha256)
-        ProcessOutcome(record['returncode'], '', '', record['timed_out'], record['interrupted'])
+        outcome = ProcessOutcome(record['returncode'], '', '', record['timed_out'], record['interrupted'])
         if record['phase'] not in ('prepare', 'build', 'run') or not record['argv']:
             raise evidence.EvidenceError('command provenance is incomplete')
         phases.add(record['phase'])
@@ -62,6 +65,17 @@ def _completed_proof(root, plan, manifest, receipts):
             if record[key] not in artifacts:
                 raise evidence.EvidenceError('command stream lacks artifact attribution')
         options = evidence._options(record['argv'])
+        if hardware_ctest and record['phase'] == 'run':
+            if '--output-junit' in options or '--show-only=json-v1' in record['argv']:
+                evidence._check_child(outcome, allowed=(0, 8) if '--output-junit' in options else (0,))
+            commands.append(CommandSpec(tuple(record['argv']), record['cwd'], record['env_delta'],
+                                        record['timeout_seconds'], 'run', tuple(record['declared_effects'])))
+            if '--show-only=json-v1' in record['argv']:
+                inventory = evidence._json(root / record['stdout_log'])
+                names = [test['name'] for test in inventory['tests']]
+                if not names or any(type(name) is not str or not name for name in names):
+                    raise evidence.EvidenceError('recorded CTest discovery is empty or malformed')
+                discovered.extend(names)
         for option in ('--result', '--output-junit'):
             if option in options:
                 path = Path(options[option])
@@ -73,12 +87,36 @@ def _completed_proof(root, plan, manifest, receipts):
                     pairs.append((options.get('--scenario'), options.get('--route')))
                 else:
                     junit.append(path)
+                    returncodes.append(record['returncode'])
     expected = [(spec.id, route) for spec in plan.scenarios if spec.producer['kind'] == 'workload'
                 for route in (plan.request.routes or spec.routes)]
     if phases != {'prepare', 'build', 'run'} or sorted(pairs) != sorted(expected):
         raise evidence.EvidenceError('completed invocation population differs from selection')
     if any(spec.producer['kind'] == 'selection_ctest' for spec in plan.scenarios) and not junit:
         raise evidence.EvidenceError('selected CTest proof is absent')
+    if hardware_ctest:
+        # Reconstruct from the attributed command and original case bytes, not
+        # report.json, global stdout, a cached device or a new native probe.
+        owner = SimpleNamespace(plan=plan, run_id=manifest['run_id'], bundle=root)
+        context_requests = evidence._ctest_context_requests(owner, commands)
+        context_requests = {evidence._within(root, path): expected for path, expected in context_requests.items()}
+        groups = {path: list(ET.parse(path).iter('testcase')) for path in junit}
+        cases = [case for group in groups.values() for case in group]
+        selected = tuple(dict.fromkeys(name for spec in plan.scenarios
+                                      if spec.producer['kind'] == 'selection_ctest'
+                                      for name in spec.producer['names']))
+        evidence._check_discovery(discovered, selected)
+        if sorted(case.attrib.get('name', '') for case in cases) != sorted(selected):
+            raise evidence.EvidenceError('recorded CTest population disagrees with selection')
+        findings = evidence._hardware_context_findings(groups, context_requests, returncodes)
+        failed = any(case.find(tag) is not None for case in cases for tag in ('failure', 'error'))
+        proof_code = 5 if failed else 0
+        for cause in findings:
+            proof_code = evidence._combined(proof_code, cause['exit_code'])
+        if (evidence._combined(manifest['exit_code'], proof_code) != manifest['exit_code']
+                or (failed and manifest['test_verdict'] != 'FAIL')
+                or (findings and manifest['test_verdict'] == 'PASS')):
+            raise evidence.EvidenceError('completed verdict contradicts its per-case CTest proof')
 
 
 def report(bundle):
@@ -123,6 +161,13 @@ def report(bundle):
                     if manifest['artifacts'].get(relative) != expected:
                         raise evidence.EvidenceError('artifact index contradicts phase receipt: ' + relative, stale=True)
                 receipts[phase] = receipt
+        execution = receipts.get('run')
+        if execution is not None:
+            if (execution.state != manifest['pipeline_state']
+                    or type(execution.details.get('exit_code')) is not int
+                    or execution.details['exit_code'] != manifest['exit_code']
+                    or (execution.state != 'COMPLETED' and manifest['test_verdict'] == 'PASS')):
+                raise evidence.EvidenceError('manifest contradicts its execution receipt')
         for relative, expected in manifest['artifacts'].items():
             path = evidence._within(root, relative, relative_only=True)
             if not path.is_file() or evidence._sha(path) != expected:

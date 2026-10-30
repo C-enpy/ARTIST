@@ -1,5 +1,40 @@
 # Proposition de tests consommateur — contexte CTest historique
 
+## Candidat GREEN de composition — 2026-10-30
+
+Le lead a observé les deux RED (20 méthodes/33 failures, puis trois méthodes/13
+failures) et ratifié le mapping d'une seule assertion dans `f4021cc`. Le candidat
+minimal est décrit dans `CONTEXT_COLLECTOR_GREEN_READY.md` : préflight pur des six
+variables, vrai parser par cas/invocation, populations/causes et relecture readonly.
+Aucun test exécuté par l'auteur ; GREEN/non-régression à observer par le lead.
+Le plan et les remises historiques ci-dessous restent conservés et attribués.
+
+## Actualisation de réception — 2026-10-30
+
+Les conditions de réception du cœur et du parser sont maintenant satisfaites :
+base `3bd72fc`, fondations reçues dans
+`107a2d3bbd88ba95a2eb70e904085911b71662bd`, rapport73 intégré. Les adaptateurs
+de production ne sont pas requis pour le RED local : composition par service
+factice explicite, sans copie de branche et sans lancement d'outil natif.
+
+Ownership de cette tranche : nouveau `test_context_collector_contract.py`, ce
+plan et sa remise `CONTEXT_COLLECTOR_RED_READY.md`. Après observation RED par le
+lead seulement : `_junit`/agrégation de `evidence.py`, relecture de `reporting.py`
+si nécessaire et retrait conditionnel de la garde CLI. Aucun changement runner,
+schéma public, parser/producteur, adaptateur, fixture C++ ou assertion existante.
+
+Séquence bornée : tests C1–C5/C7 et liaison d'invocation C6 → RED lead → GREEN
+minimal de composition → non-régression lead → revue indépendante. Le transport
+réel C6 reste une barrière d'intégration adaptateurs distincte ; les sentinelles
+list/plan et le filtrage des six noms réservés existants ne sont pas remplacés.
+
+La suite nouvelle comporte 20 méthodes statiquement recensées, pas 20 résultats
+observés. Aucun test exécuté par l'auteur. Voir la remise autonome pour commandes,
+RED attendu, mappings QA et limites. Le texte ci-dessous conserve le plan et les
+préconditions historiques, désormais remplacées par cette actualisation.
+
+## Plan historique conservé
+
 Statut : préparation documentaire uniquement, pas RED_READY exécutable.
 Base cœur locale : `b48947abecf7f65f48a92df8a9691dccdadf4ac9` (R2 remis,
 GREEN à observer par le lead). R1 reste bloquant et sans implémentation anticipée.

@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from functools import lru_cache
 import hashlib
 import importlib.util
+import io
 import json
 import os
 from pathlib import Path
@@ -18,7 +19,7 @@ import xml.etree.ElementTree as ET
 
 from .model import (BuildReceipt, CommandSpec, ExecutionReceipt, MeasurementValidity,
                     PreparationReceipt, ProcessOutcome, TestVerdict, VerificationPlan)
-from .runner import _CaptureError
+from .runner import CONTEXT_ENV_NAMES, _CaptureError
 
 
 class EvidenceError(ValueError):
@@ -87,6 +88,7 @@ _SAFE_VARIABLES = frozenset(('LIBGL_ALWAYS_SOFTWARE', 'GALLIUM_DRIVER', 'ASAN_OP
 _SAFE_ENVIRONMENT = frozenset(('platform', 'profile', 'configuration', 'architecture', 'os',
                               'python', 'compiler', 'cmake', 'conan', 'ninja', 'dependencies',
                               'build', 'generator', 'preset', 'gl', 'opengl', 'device', 'driver'))
+_CTEST_POPULATION_RELATIVE = 'raw/ctest-population.json'
 
 
 def _filtered_environment(value):
@@ -313,7 +315,8 @@ class BundleSink:
                     stream.write(text.encode('utf-8', errors='surrogateescape'))
                 self.artifact(path)
             record = self.document(argv=list(command.argv), cwd=command.cwd,
-                                   env_delta={key: val for key, val in command.env_delta.items() if key in _SAFE_VARIABLES},
+                                   env_delta={key: val for key, val in command.env_delta.items()
+                                              if key in _SAFE_VARIABLES or key in CONTEXT_ENV_NAMES},
                                    phase=command.phase, timeout_seconds=command.timeout_seconds,
                                    declared_effects=list(command.declared_effects), started_utc=started,
                                    finished_utc=finished, returncode=outcome.returncode,
@@ -603,6 +606,7 @@ def _options(argv):
 
 def _execution_requests(sink, commands):
     plan, requests, paths, pairs = sink.plan, {}, set(), []
+    checkpoint = _within(sink.bundle, _CTEST_POPULATION_RELATIVE)
     request_ids = set()
     specs = {spec.id: spec for spec in plan.scenarios}
     expected_pairs = [(spec.id, route) for spec in plan.scenarios if spec.producer['kind'] == 'workload'
@@ -639,6 +643,8 @@ def _execution_requests(sink, commands):
                 value = Path(options[option])
                 value = value if value.is_absolute() else Path(command.cwd) / value
                 path = _within(sink.bundle, value)
+                if path == checkpoint:
+                    raise EvidenceError('child output targets the reserved internal CTest checkpoint')
                 if path.exists() or path in paths:
                     raise EvidenceError('output already exists or is duplicated', stale=True)
                 paths.add(path)
@@ -656,11 +662,16 @@ def _legacy_guard():
     return module
 
 
-def reconcile_junit(discovered, selected, xml):
+def _check_discovery(discovered, selected):
     discovered, selected = tuple(discovered), tuple(selected)
     if (not discovered or not selected or len(set(discovered)) != len(discovered)
             or len(set(selected)) != len(selected) or not set(selected).issubset(discovered)):
         raise ValueError('discovery/selection is empty, duplicated or missing names')
+
+
+def reconcile_junit(discovered, selected, xml):
+    discovered, selected = tuple(discovered), tuple(selected)
+    _check_discovery(discovered, selected)
     guard = _legacy_guard()
     summary = guard.result_summary(selected, xml, 0)
     if not summary['population_matches'] or summary['skips']:
@@ -736,7 +747,117 @@ def _workload(sink, command, outcome, identity, parser):
             sink.manifest['causes'].append({'exit_code': 6, 'message': 'requested measurement ' + validity})
 
 
-def _junit(sink, discovered, paths, returncodes):
+def _has_hardware_ctest(plan):
+    return (plan.request.profile == 'opengl-hardware'
+            and any(spec.producer['kind'] == 'selection_ctest' for spec in plan.scenarios))
+
+
+def _ctest_context_requests(sink, commands):
+    """Inspect explicit transport only, before source/device probes or children.
+
+    Values originate in the already checked plan/build invocation, never ambient
+    environment or a context preflight. The returned mapping is private to this
+    collection; it grants no cached capability to another execution.
+    """
+    if not _has_hardware_ctest(sink.plan):
+        return {}
+    expected = {
+        'ARTIST_VERIFICATION_CONTEXT_V1': sink.plan.request.profile,
+        'ARTIST_VERIFICATION_RUN_ID': sink.run_id,
+        'ARTIST_VERIFICATION_PLAN_SHA256': sink.plan.plan_sha256,
+        'ARTIST_VERIFICATION_EXPECTED_GL_VENDOR': sink.plan.request.expected_gl_vendor,
+        'ARTIST_VERIFICATION_EXPECTED_GL_RENDERER': sink.plan.request.expected_gl_renderer,
+    }
+    requests, request_ids = {}, set()
+    for command in commands:
+        options = _options(command.argv)
+        if '--output-junit' not in options:
+            continue
+        environment = command.env_delta
+        if any(name not in environment for name in CONTEXT_ENV_NAMES):
+            raise EvidenceError('hardware CTest requires complete explicit context transport', 3)
+        if any(environment[name] != value for name, value in expected.items()):
+            raise EvidenceError('CTest context transport disagrees with the checked plan/build')
+        request_id = environment['ARTIST_VERIFICATION_REQUEST_ID']
+        if (type(request_id) is not str or not request_id.strip() or len(request_id) > 4096
+                or any(ord(char) < 0x20 or 0x7f <= ord(char) <= 0x9f
+                       or 0xd800 <= ord(char) <= 0xdfff for char in request_id)):
+            raise EvidenceError('CTest request identity is invalid')
+        if request_id in request_ids:
+            raise EvidenceError('CTest invocation request identity is duplicated')
+        request_ids.add(request_id)
+        path = Path(options['--output-junit'])
+        path = path if path.is_absolute() else Path(command.cwd) / path
+        # Keep this transport check pure. Existing execution admission resolves
+        # containment/aliases before any child; collection then uses those paths.
+        if path in requests:
+            raise EvidenceError('CTest invocation output is duplicated')
+        requests[path] = dict(run_id=sink.run_id, plan_sha256=sink.plan.plan_sha256,
+                              request_id=request_id, profile=sink.plan.request.profile,
+                              expected_gl_vendor=sink.plan.request.expected_gl_vendor,
+                              expected_gl_renderer=sink.plan.request.expected_gl_renderer)
+    if not requests:
+        raise EvidenceError('selected hardware CTest has no attributed invocation', 3)
+    return requests
+
+
+def _hardware_context_findings(groups, requests, returncodes):
+    """Pure per-case interpretation shared with read-only report reconstruction."""
+    from .context_evidence import parse_context_observation
+
+    findings = []
+    for (path, cases), returncode in zip(groups.items(), returncodes, strict=True):
+        for case in cases:
+            name = case.attrib.get('name', '')
+            skipped = case.find('skipped') is not None
+            failed = any(case.find(tag) is not None for tag in ('failure', 'error'))
+            if not name.startswith('opengl.'):
+                if skipped:
+                    findings.append(dict(exit_code=4, message='required CPU CTest case was skipped', names=[name]))
+                continue
+            try:
+                outputs = case.findall('system-out')
+                if len(outputs) > 1:
+                    raise ValueError('multiple per-case system-out elements')
+                expected = dict(requests[path], ctest_name=name)
+                text = ''.join(outputs[0].itertext()) if outputs else ''
+                observation = parse_context_observation(text, expected=expected)
+                if skipped and failed:
+                    raise ValueError('case declares both a skip and an assertion failure')
+                if observation['precondition'] == 'OK':
+                    if skipped:
+                        raise ValueError('qualified case has an ordinary required skip')
+                elif skipped and not failed:
+                    findings.append(dict(exit_code=3, message='CTest context precondition unavailable', names=[name]))
+                else:
+                    raise ValueError('unavailable context lacks a coherent native stop')
+            except (ValueError, KeyError) as error:
+                findings.append(dict(exit_code=4, message='CTest context protocol: ' + str(error), names=[name]))
+        if returncode not in (0, 8) or (returncode == 8 and not any(
+                case.find(tag) is not None for case in cases for tag in ('failure', 'error'))):
+            findings.append(dict(exit_code=4, message='CTest nonzero exit without an attributed oracle failure',
+                                 returncode=returncode))
+    return findings
+
+
+def _publish_ctest_population(sink, summary, returncodes):
+    """Update an internal publication, not a child artifact with a matching hash.
+
+    Admission reserves this destination before the described execution commands.
+    The hash below checks integrity of that internal publication, not ownership.
+    """
+    path = sink.bundle / _CTEST_POPULATION_RELATIVE
+    relative = path.relative_to(sink.bundle).as_posix()
+    exists = path.exists()
+    registered = sink.manifest['artifacts'].get(relative)
+    if (path.is_symlink() or (exists and (registered is None or registered != _sha(path)))
+            or (not exists and registered is not None)):
+        raise EvidenceError('CTest population checkpoint changed outside its writer', stale=True)
+    _write_json(path, sink.document(**summary, native_returncodes=returncodes), replace=exists)
+    sink.artifact(path)
+
+
+def _junit(sink, discovered, paths, returncodes, context_requests, *, complete=True):
     selected = tuple(dict.fromkeys(name for spec in sink.plan.scenarios
                                   if spec.producer['kind'] == 'selection_ctest' for name in spec.producer['names']))
     if not selected:
@@ -745,9 +866,19 @@ def _junit(sink, discovered, paths, returncodes):
         return
     if not paths:
         raise EvidenceError('selected CTest result is absent')
-    cases = [case for path in paths for case in ET.parse(path).iter('testcase')]
+    paths = tuple(_within(sink.bundle, path) for path in paths)
+    context_requests = {_within(sink.bundle, path): expected for path, expected in context_requests.items()}
+    groups = {path: list(ET.parse(path).iter('testcase')) for path in paths}
+    cases = [case for group in groups.values() for case in group]
+    hardware = _has_hardware_ctest(sink.plan)
     if len(paths) == 1:
         combined = paths[0]
+    elif hardware:
+        # The originals stay raw artifacts. An in-memory aggregate lets each
+        # invocation publish a checkpoint without rewriting a derived XML file.
+        root = ET.Element('testsuite')
+        root.extend(cases)
+        combined = io.BytesIO(ET.tostring(root, encoding='utf-8'))
     else:
         derived = sink.bundle / 'derived'
         derived.mkdir(exist_ok=True)
@@ -757,7 +888,28 @@ def _junit(sink, discovered, paths, returncodes):
         with combined.open('xb') as stream:
             ET.ElementTree(root).write(stream, encoding='utf-8')
         sink.artifact(combined)
-    summary = reconcile_junit(discovered, selected, combined)
+    findings = []
+    if hardware:
+        # Reuse the historical population guard, but interpret structured stops
+        # separately instead of rejecting every skip before looking at its case.
+        summary = _legacy_guard().result_summary(selected, combined, 0)
+        summary['failures'].sort()
+        summary['skips'].sort()
+        summary['discovery_names'], summary['selected_names'] = list(discovered), list(selected)
+        try:
+            if complete:
+                _check_discovery(discovered, selected)
+            elif len(set(discovered)) != len(discovered):
+                raise ValueError('CTest discovery contains duplicate names')
+            actual = [case.attrib.get('name', '') for case in cases]
+            if (len(set(actual)) != len(actual) or not set(actual).issubset(selected)
+                    or (complete and not summary['population_matches'])):
+                raise ValueError('CTest discovery/JUnit population mismatch or empty selection')
+        except ValueError as error:
+            findings.append(dict(exit_code=4, message=str(error)))
+        findings.extend(_hardware_context_findings(groups, context_requests, returncodes))
+    else:
+        summary = reconcile_junit(discovered, selected, combined)
     summary['returncode'] = next((code for code in returncodes if code), 0)
     for case in cases:
         if not case.attrib['name'].startswith('opengl.'):
@@ -766,10 +918,27 @@ def _junit(sink, discovered, paths, returncodes):
         if sink.plan.request.profile == 'opengl-software':
             if not contexts or any('llvmpipe' not in line.casefold() for line in contexts):
                 raise EvidenceError('required llvmpipe context absent from selected graphics test', 3)
-        elif sink.plan.request.profile == 'opengl-hardware':
-            # Legacy CTest does not emit the new structured context proof. Do
-            # not manufacture hardware qualification from a renderer label.
-            raise EvidenceError('legacy hardware CTest requires structured context attribution', 3)
+    if hardware:
+        for name in summary['failures']:
+            findings.append(dict(exit_code=5, message='CTest oracle failure', names=[name]))
+        findings.sort(key=lambda cause: (_priority(cause['exit_code']), cause.get('names', []), cause['message']))
+        for cause in findings:
+            if cause not in sink.manifest['causes']:
+                sink.manifest['causes'].append(cause)
+            sink.manifest['exit_code'] = _combined(sink.manifest['exit_code'], cause['exit_code'])
+        if summary['failures']:
+            sink.manifest['test_verdict'] = 'FAIL'
+        elif findings and sink.manifest['test_verdict'] != 'FAIL':
+            sink.manifest['test_verdict'] = 'INCONCLUSIVE'
+        elif complete and sink.manifest['test_verdict'] not in ('FAIL', 'INCONCLUSIVE'):
+            sink.manifest['test_verdict'] = 'PASS'
+        _publish_ctest_population(sink, summary, returncodes)
+        code = sink.manifest['exit_code']
+        # A precondition is not a protocol failure: finish collecting the other
+        # invocations/producers before deciding its aggregate priority.
+        if code == 4 or (complete and code == 3):
+            raise EvidenceError('CTest context/population qualification was not completed', code)
+        return
     population = sink.bundle / 'raw' / 'ctest-population.json'
     _write_json(population, sink.document(**summary, native_returncodes=returncodes))
     sink.artifact(population)
@@ -783,11 +952,6 @@ def _junit(sink, discovered, paths, returncodes):
         sink.manifest['test_verdict'] = 'PASS'
 
 
-def _unsupported_hardware_ctest(plan):
-    return (plan.request.profile == 'opengl-hardware'
-            and any(spec.producer['kind'] == 'selection_ctest' for spec in plan.scenarios))
-
-
 def execute(plan, build, adapter, sink):
     _predecessor(sink, plan, build, 'build')
     if 'run' in sink.manifest['receipts']:
@@ -797,10 +961,13 @@ def execute(plan, build, adapter, sink):
         try:
             if plan.request.profile == 'opengl-hardware' and plan.request.expected_gl_vendor is None:
                 raise EvidenceError('expected hardware target is absent', 3)
-            if _unsupported_hardware_ctest(plan):
-                raise EvidenceError('legacy hardware CTest awaits integrated structured context proof', 3)
+            commands, context_requests = None, {}
+            if _has_hardware_ctest(plan):
+                commands = _commands(plan, adapter.describe_execution(plan, build), 'run')
+                context_requests = _ctest_context_requests(sink, commands)
             identity = _assert_snapshot(sink, build.details['identity'], built=True)
-            commands = _commands(plan, adapter.describe_execution(plan, build), 'run')
+            if commands is None:
+                commands = _commands(plan, adapter.describe_execution(plan, build), 'run')
             requests = _execution_requests(sink, commands)
             parser = _parser(sink) if requests else None
             discovered, junit, returncodes = [], [], []
@@ -835,9 +1002,13 @@ def execute(plan, build, adapter, sink):
                     sink.artifact(path)
                     junit.append(path)
                     returncodes.append(outcome.returncode)
+                    if _has_hardware_ctest(plan):
+                        # Attribute and preserve known failures/populations NOW,
+                        # before a later child or malformed XML can abort run.
+                        _junit(sink, discovered, junit, returncodes, context_requests, complete=False)
                 else:
                     raise EvidenceError('run command has no declared result protocol')
-            _junit(sink, discovered, junit, returncodes)
+            _junit(sink, discovered, junit, returncodes, context_requests)
             if sink.manifest['test_verdict'] == 'NOT_EXECUTED':
                 raise EvidenceError('no selected producer executed')
             sink.manifest['pipeline_state'] = 'COMPLETED'

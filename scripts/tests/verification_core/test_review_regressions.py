@@ -190,7 +190,7 @@ class FreshReviewRegressionTests(unittest.TestCase):
         self.assertEqual(receipt.details['exit_code'], 3)
         self.assertEqual(len(fixture.runner.calls), calls, 'known unsupported qualification must not start CTest')
         self.assertEqual(fixture.revision.calls, revisions)
-        self.assertEqual(fixture.adapter.calls, adapter_calls)
+        self.assertEqual(fixture.adapter.calls, [*adapter_calls, 'run'])
         self.assertFalse(fixture.parser.calls)
 
 
