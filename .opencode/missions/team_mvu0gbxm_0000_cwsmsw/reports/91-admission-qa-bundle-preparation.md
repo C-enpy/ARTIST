@@ -4,7 +4,11 @@ Le collecteur étant effectivement intégré, le prochain changement peut être 
 
 Le coordinateur a vérifié le profil qa-planner effectivement servi à la location ARTIST via l'API native : mode subagent, lecture/recherche autorisées, édition/shell/sous-agent refusés, restitution permise. Aucun droit n'a été modifié ; ce contrôle ne prouve pas une sandbox. Le brief local fournit le candidat, les preuves et les extraits nécessaires, sans imposer une lecture externe au profil restrictif.
 
+Admission publiée après commit des entrées `493bf4f73a8ba5f8f1b7350deb7aaab09fcd1b3b` : tâche `task_mvujeqpu_004m_3sfeit`, contexte fresh, worktree false et final_response explicites. Le contrôle natif suivant confirme pool-21 effectivement routé qa-planner, sans worktree. Sa première lecture et sa restitution de ce nouveau livrable restent à recevoir.
+
 La tentative de différer nativement l'ancienne tâche core a été refusée : ce contrôle exige une tâche jamais admise. Le statut n'a pas été changé et aucune complétion fictive n'est fabriquée. Ce refus n'est pas réessayé ; la barrière d'écriture et le besoin d'un nouveau brief explicite ont été transmis par la voie d'équipe. Toute reprise historique doit rester inactive sur le delta tant que le plan QA n'est pas commité.
+
+La reprise historique est apparue sur pool-20. Sa restitution `result_mvujds60_004k_0zc5nk` confirme la barrière, aucune écriture ni exécution, et un worktree propre à `8ddb85e`. Il reste inactif jusqu'au plan QA commité et au nouveau point Git auteur explicite ; la création automatique de ce worktree n'est pas présentée comme une autorisation d'y développer avant cette barrière.
 
 ## Références techniques
 
