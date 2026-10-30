@@ -559,3 +559,140 @@ revue indépendante puis couture intégrée. Preuves candidat/diff/hashes/date/
 commandes/cwd/runner/attendu-observé/comptages conservées ; candidat changé exige
 requalification, zéro test/skip requis ≠ PASS. Natif et identité binaire outils
 non démontrés ; aucun workflow, CMake réel, moteur, GPU, installation ou cloud.
+
+## 15. Compléments finaux G1–G4 — plan generator ratifié
+
+Proposition textuelle complète `result_mvuxb9xc_008c_y6ti6z`, test-engineer/pool-37,
+reçue après restitution complète demandée. Lectures et profil restrictif vérifiés
+au rapport143 ; aucun code, patch, test ou édition produit par ce profil. Plan PM
+`ses_e734d125dffejyP9S8sAZXcEFw`, lecture seule, validé par le lead. Entrées réelles :
+helper52e7330, collecteur9aedc0a et vérifications rapport142, guide9a45bf6. Les
+résultats existants ne couvrent pas ces compléments ; G1–G4 restent INCONCLUSIVE.
+
+### Obligations et risques
+
+- G1/W3–W6, I5×P4=20 : reçu favorable sans continuité helper→collecte→réadmission.
+  Déclencheur : témoin préfabriqué ou copié d'un autre bundle ; portée attribution
+  prepare/build. Détection : octets/hash/ordre/lease, mitigation fixtures et reçus
+  existants, gap couture réelle sur les mêmes artefacts.
+- G2, I5×P3=15 : delta décrit correctement mais environnement effectif erroné.
+  Déclencheur : contexte ambiant ou forçage logiciel hérité ; portée workloads et
+  CTest Windows. Détection factory.env effective ; mitigation runner assaini,
+  gap composition du véritable adaptateur avec ce runner.
+- G3, I5×P3=15 : suppression d'une ancienne barrière sans remplacement des garanties.
+  Portée admission/zéro effet/fallback ; détection structure et tests fonctionnels,
+  mitigation mapping préalable, gap ancien oracle obsolète.
+- G4, I4×P4=16 : prototype dispatch obsolète pris pour preuve actuelle ou imposant
+  helper-run. Portée sélection/codes/argv/restauration ; détection inventaire
+  bidirectionnel, mitigation tests actuels, gap migration visible des anciens tests.
+
+### G1 — couture du même bundle et témoin
+
+Nominal : fragments PowerShell réels admis sous factory mémoire, appelés pendant
+evidence.prepare dans le bundle du vrai BundleSink. Rôles et témoin proviennent
+de la source, jamais de witness_data ou d'un faux reçu. Avant _finish : leases
+bundle/arbre actives, writers fermés et SHA256 calculés indépendamment égaux au
+manifeste et PreparationReceipt. Build utilise ce reçu et les mêmes octets,
+sans réécriture, bootstrap ou configure ; une capture primaire commune par commande,
+pas deuxième exécution de preuve.
+
+Négatifs minimaux : mutation ou suppression du témoin après prepare favorable,
+bundle distinct par cas ; refus avant description build/runner/tooling, sans
+remplacement. Un échec Conan après partiels : pas de configure ou témoin favorable,
+partiels collectés avant reçu et première cause conservée. Ne pas dupliquer la
+matrice exhaustive du schéma déjà couverte dans le cœur.
+
+KEEP cible, DEFER **seule réalisation** jusqu'à validation du plan de fixture A0,
+pas abandon du critère. NativeBindingCase.run_case recrée son bundle ; HelperRunner
+fabrique ses données. Leur juxtaposition ne suffit pas. Symboles vérifiés :
+runtime_fixtures.RuntimeFixture, BundleSink, evidence.prepare/build,
+NativeBindingCase/fragments, native_binding_fixture.ps1 et ArtistBindingMemoryProcess.
+Le nom SINKFixtureRuntime évoqué dans un brief n'existe pas : aucune API supposée.
+
+A0 propose avant code une adaptation test-owned minimale vers le bundle unique,
+ses sentinelles et ses extractions. Installer les programmes source nécessaires
+avant snapshot, ne pas masquer les contrôles d'identité. A1 n'écrit que de nouveaux
+tests/fixtures dédiés, noms réservés à l'acceptation A0 ; aucun changement de
+production ou fixture historique commune.
+
+### G2 — environnement effectif Windows
+
+KEEP nouveau test test_effective_windows_environment.py. Réutiliser vrais
+WindowsAdapter, plans/reçus existants et SubprocessRunner(popen_factory mémoire).
+Pour chaque route workload, découverte et exécution CTest : parent entièrement
+synthétique, variables de contexte périmées et chacun/pair des deux forçages.
+Observer à la factory argv/cwd exacts, shell=False/stdin DEVNULL/captures possédées,
+six champs attendus dérivés du plan/reçu (pas tous recopiés d'env_delta), identifiants
+liés, absence des deux forçages, un Process mémoire et parent intact.
+
+CPU : six contextes ambiants retirés, marqueurs et politique d'héritage des forçages
+inchangés, parent préservé. KEEP refus Windows opengl-software déjà existant ;
+REJECT un test d'exécution logicielle Windows copié depuis Linux. Les preuves de
+codes/capture du runner sont réutilisées, pas dupliquées sans besoin.
+
+### G3 — remplacement ponctuel de la fermeture globale
+
+MODIFY test_wrappers.WindowsRealHelperBarrierTests.test_real_helper_remains_closed_before_dispatch.
+Conserver la classe et autres assertions ; nom et oracle deviennent admission
+fine prepare/build. Vérifier unicité/ordre des régions et root→flags→refus run→
+payload→inputs→admission arbre build, absence d'effets avant dispatch, legacy et
+pins intangibles. Proposition SOURCE_GREEN_READY.md136–163 comme base à relire.
+Structure seule ≠ preuve fonctionnelle : conserver invalid phases/opt-in/flags,
+payload/binding zéro effets, mutations/extraction et sentinelle des suites actuelles.
+
+### G4 — mapping bidirectionnel du prototype dispatch
+
+MODIFY/REPLACE la couverture de test_dispatch.py et dispatch_fixture.ps1, pas
+réintroduire helper-run pour leurs anciennes attentes. REPLACE signifie migration
+visible des obligations et de leur inventaire, pas suppression d'une garantie.
+
+Ancien WindowsDispatchTests → preuves conservées :
+- prepare_without_opt_in_refuses_before_effects → admission fonctionnelle phases/
+  opt-in/flags, journal zéro effets.
+- prepare_authorized_runs_conan_then_cmake_only → prepare_conan_before_fresh_cmake_profiles_trees_and_testing.
+- build_only_selected_target_without_bootstrap_or_configure → build_is_one_selected_command,
+  refus arbre/tooling.
+- run_only_preserves_argument_boundaries → adapter05/06/19, G2 argv factory et
+  wrappers quoting ; REJECT helper-run.
+- child_failure_preserves_raw_code_and_stops_sequence → first_nonzero_stops_prepare_and_preserves_raw_data,
+  native first-cause.
+- environment_present_and_absent_restored_after_success/failure → functional
+  child_environment_and_restore_success_nonzero_exception_absent_empty, G2 parent.
+- selected_phases_never_fall_through_to_legacy_sentinel → admission et sentinelle,
+  phases prepare/build admises, run refusé.
+- fixture_refuses_unapproved_effects_before_evaluation → mutations/extraction
+  functional et contrôles source natifs.
+- fixture_can_record_fake_child_and_restore_map_on_exit → baselines functional/
+  exception et factory native0/17.
+
+Mapping inverse : admission functional+G3→admission/zéro effet/fallback ; prepare/
+build functional→ordre/cibles/stop ; adapter+G2→run direct argv/env ; wrappers/native→
+quoting Windows/command line transmise ; harness functional/native→mutations/pins ;
+core/native+G1→témoin/collecte/receipt/réadmission. Conserver les tests wrapper
+quote_round_trip_through_owned_finite_python_child et child_wrapper_preserves_code_17_and_all_arguments,
+ainsi que native real_child_wrapper_to_real_binding_records_exact_start_info.
+REJECT skip global/archive invisible ou baisse d'assertions pour masquer la migration.
+
+### Graphe, ownership et sortie
+
+H0 : présent plan commité avant worktrees, HEAD/diff fournis par le lead.
+A0 recherche/plan de couture, pas code (PM/LLM63/59) ; A1 attend son acceptation
+persistée, tests uniquement (78/73, complexité brute78, plancher70 respecté).
+B G2+G3/G4, tranche cohérente (73/66, complexité brute73) : nouveaux tests effectifs,
+test_wrappers.py, test_dispatch.py, dispatch_fixture.ps1 ; mapping détaillé avant
+édition, aucun fichier A ni production/pin modifié. Affinité build-engineer pour
+les scripts/harness, pas substitution du profil QA restrictif par un runner.
+
+A0/A1 et B indépendants en lecture/écriture ; exécutions PS/bundles sérialisées
+par le coordinateur. Consommateurs retenus dans le plan : revue des tests et audit
+final test-reviewer fresh hors board d'implémentation, après réelle intégration des
+deux branches (estimation lecture61/60). Aucun fin auteur ne libère ces consommateurs.
+
+Sur production intégrée correcte, caractérisation et contre-exemples discriminants
+sans faux RED historique ; bug production révélé reste rouge et retourne au
+propriétaire. Aucun processus auteur. Lead relit programmes/patches, persiste et
+exécute sous mandat runner distinct, conserve candidat/hash/commandes/cwd/comptages/
+skips/causes, puis vérifie diff intégré. Les grants d'édition/exécution autonome QA
+restent absents. Budget proportionné : après setup75% planifié/25% buffer, pas de
+campagne ou infrastructure nouvelle pour ces gaps. Encodage cmd non ASCII,
+Dispose/writers hérités, jonction06 et cinq skips connus restent non qualifiés.
