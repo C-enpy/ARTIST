@@ -237,7 +237,7 @@ class RuntimeContractTests(unittest.TestCase):
             with self.subTest(phase=phase):
                 fixture = self.fixture()
                 if phase == 'prepare':
-                    fixture.adapter.describe_preparation = lambda plan: (
+                    fixture.adapter.describe_preparation = lambda plan, *, bundle_root=None: (
                         fixture.adapter.command(('owned-fake', 'build'), 'build'),)
                     receipt = evidence.prepare(fixture.plan, fixture.adapter, fixture.sink)
                 else:

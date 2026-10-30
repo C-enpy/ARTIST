@@ -405,7 +405,7 @@ class AdapterInterfaceTests(unittest.TestCase):
     def test_protocol_signatures_are_the_ratified_data_only_boundaries(self):
         self.assertTrue(getattr(PlatformAdapter, '_is_protocol', False))
         self.assertEqual(tuple(inspect.signature(PlatformAdapter.describe_preparation).parameters),
-                         ('self', 'plan'))
+                         ('self', 'plan', 'bundle_root'))
         self.assertEqual(tuple(inspect.signature(PlatformAdapter.describe_build).parameters),
                          ('self', 'plan', 'preparation'))
         self.assertEqual(tuple(inspect.signature(PlatformAdapter.describe_execution).parameters),

@@ -89,6 +89,9 @@ _SAFE_ENVIRONMENT = frozenset(('platform', 'profile', 'configuration', 'architec
                               'python', 'compiler', 'cmake', 'conan', 'ninja', 'dependencies',
                               'build', 'generator', 'preset', 'gl', 'opengl', 'device', 'driver'))
 _CTEST_POPULATION_RELATIVE = 'raw/ctest-population.json'
+_WINDOWS_HELPER_INPUT = 'raw/windows-helper-input.json'
+_BOOTSTRAP_EFFECTS = frozenset(('network', 'bootstrap', 'dependency-resolution', 'dependency_resolution',
+                                'pip-install', 'conan-install', 'install-dependencies'))
 
 
 def _filtered_environment(value):
@@ -262,6 +265,46 @@ class BundleSink:
         relative = path.relative_to(self.bundle).as_posix()
         self.manifest['artifacts'][relative] = _sha(path)
         return relative
+
+    def _windows_helper_path(self, relative):
+        path = self.bundle / relative
+        # A confined alias can still name another owner's internal artifact.
+        if path.is_symlink() or _within(self.bundle, relative, relative_only=True) != path:
+            raise EvidenceError('private Windows helper path is not owned: ' + relative, stale=True)
+        return path
+
+    def _windows_helper_logs(self, phase):
+        relative = {'prepare': 'logs/windows-helper-prepare',
+                    'build': 'logs/windows-helper-build'}[phase]
+        self._windows_helper_path(relative).mkdir()  # Exclusive, never adopt earlier logs.
+
+    def _prepare_windows_helper(self, commands):
+        # Called only after _commands has admitted phases and dependency permission.
+        # Generic doubles without a bootstrap effect retain their existing contract.
+        if self.plan.request.platform != 'windows' or not any(
+                _BOOTSTRAP_EFFECTS.intersection(command.declared_effects) for command in commands):
+            return
+        path = self._windows_helper_path(_WINDOWS_HELPER_INPUT)
+        self._windows_helper_logs('prepare')
+        targets = list(dict.fromkeys(target for spec in self.plan.scenarios for target in spec.targets))
+        _write_json(path, {'build_directory': str(_build_root(self)), 'targets': targets,
+                           'executable': '', 'arguments': []})
+        # _write_json closes its exclusive handle before hashing/publication.
+        self.artifact(path)
+        self.save()
+
+    def _admit_windows_helper(self, preparation):
+        # The admitted receipt, not a guessed pathname or a mutable adapter, owns
+        # the decision to reuse this transport. No write or repair occurs here.
+        if self.plan.request.platform != 'windows' or _WINDOWS_HELPER_INPUT not in preparation.artifacts:
+            return False
+        try:
+            path = self._windows_helper_path(_WINDOWS_HELPER_INPUT)
+            if not path.is_file() or _sha(path) != preparation.artifacts[_WINDOWS_HELPER_INPUT]:
+                raise EvidenceError('private Windows helper input changed or disappeared', stale=True)
+        except (OSError, RuntimeError) as error:
+            raise EvidenceError('private Windows helper input cannot be admitted', stale=True) from error
+        return True
 
     def trace_path(self):
         path = self.bundle / 'commands.jsonl'
@@ -464,9 +507,7 @@ def _commands(plan, commands, phase):
     for command in commands:
         if not isinstance(command, CommandSpec) or command.phase != phase:
             raise EvidenceError('adapter attempted an undeclared phase')
-        bootstrap = {'network', 'bootstrap', 'dependency-resolution', 'dependency_resolution',
-                     'pip-install', 'conan-install', 'install-dependencies'}
-        if bootstrap.intersection(command.declared_effects) and (phase != 'prepare' or not plan.request.allow_dependency_resolution):
+        if _BOOTSTRAP_EFFECTS.intersection(command.declared_effects) and (phase != 'prepare' or not plan.request.allow_dependency_resolution):
             raise EvidenceError('dependency resolution requires explicit preparation permission', 3)
     return commands
 
@@ -538,7 +579,9 @@ def prepare(plan, adapter, sink):
                     path = _within(sink.source_root, fixture, relative_only=True)
                     if not path.is_file():
                         raise EvidenceError('required source fixture is absent', 3)
-            for command in _commands(plan, adapter.describe_preparation(plan), 'prepare'):
+            commands = _commands(plan, adapter.describe_preparation(plan, bundle_root=str(sink.bundle)), 'prepare')
+            sink._prepare_windows_helper(commands)
+            for command in commands:
                 _check_child(sink.command(command))
             _assert_snapshot(sink, identity)
             sink.manifest.update(pipeline_state='COMPLETED', freshness='CURRENT')
@@ -559,6 +602,7 @@ def build(plan, preparation, adapter, sink):
         # from incompatible source/revision data or observe an adapter first.
         try:
             _assert_snapshot(sink, preparation.details['identity'])
+            windows_helper = sink._admit_windows_helper(preparation)
         except KeyboardInterrupt:
             error = EvidenceError('construction admission interrupted', 130)
             _cause(sink, error)
@@ -569,7 +613,10 @@ def build(plan, preparation, adapter, sink):
             _finish(sink, BuildReceipt, 'build')
             raise
         try:
-            for command in _commands(plan, adapter.describe_build(plan, preparation), 'build'):
+            commands = _commands(plan, adapter.describe_build(plan, preparation), 'build')
+            if windows_helper:
+                sink._windows_helper_logs('build')
+            for command in commands:
                 _check_child(sink.command(command))
             _assert_snapshot(sink, preparation.details['identity'])
             identity = _snapshot(sink, built=True)

@@ -69,7 +69,7 @@ class AdapterDouble:
                            {'GITHUB_TOKEN': 'SECRET_FIXTURE_TOKEN'}, 60, phase,
                            ('synthetic-owned-fixture',))
 
-    def describe_preparation(self, plan):
+    def describe_preparation(self, plan, *, bundle_root=None):
         self.calls.append('prepare')
         return (self.command(('owned-fake', 'prepare'), 'prepare'),)
 

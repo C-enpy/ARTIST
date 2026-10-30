@@ -7,7 +7,8 @@ from ..model import (
 
 
 class PlatformAdapter(Protocol):
-    def describe_preparation(self, plan: VerificationPlan) -> tuple[CommandSpec, ...]:
+    def describe_preparation(self, plan: VerificationPlan, *,
+                             bundle_root: str) -> tuple[CommandSpec, ...]:
         ...
 
     def describe_build(self, plan: VerificationPlan,
