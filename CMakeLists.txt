@@ -10,6 +10,7 @@ include(CTest)
 option(MOCK_GL "Mock OpenGL in unit tests" ON)
 option(COVERAGE "Enable GCC coverage instrumentation" OFF)
 option(ARTIST_ENABLE_ASAN "Enable AddressSanitizer in a separate supported build tree" OFF)
+option(ARTIST_BUILD_VERIFICATION "Build explicitly selected verification workloads" OFF)
 
 include(cmake/AddressSanitizer.cmake)
 

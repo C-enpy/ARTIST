@@ -1,0 +1,121 @@
+name: Manual uniform verification qualification
+
+# Delivered for later operator qualification; never invoked by this mission.
+# List/plan are consultative only: a successful job is not a workload PASS.
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        type: choice
+        options: [windows, linux]
+        default: windows
+        required: true
+      profile:
+        type: choice
+        options: [cpu-only, opengl-software, opengl-hardware]
+        default: cpu-only
+        required: true
+      phase:
+        type: choice
+        options: [list, plan, prepare, build, run, report]
+        default: list
+        required: true
+      configuration:
+        type: choice
+        options: [debug, release]
+        default: debug
+        required: true
+      scenario:
+        type: choice
+        options: [cpu.float-mirror, gl.float-routes-correctness, gl.float-preparation, gl.float-lifetime, gl.float-submission-cpu]
+        default: cpu.float-mirror
+        required: true
+      bundle:
+        description: Existing bundle on the same prepared machine and candidate; required for build/run/report
+        type: string
+        default: ''
+      expected_gl_vendor:
+        description: Exact observed vendor expected for hardware; not a runner label
+        type: string
+        default: ''
+      expected_gl_renderer:
+        description: Exact observed renderer expected for hardware; never inferred from labels
+        type: string
+        default: ''
+      allow_dependency_resolution:
+        description: Explicit opt-in required for prepare only; prepared tooling is still a prerequisite
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: manual-verification-${{ inputs.platform }}
+  cancel-in-progress: false
+
+env:
+  VERIFY_PLATFORM: ${{ inputs.platform }}
+  VERIFY_PROFILE: ${{ inputs.profile }}
+  VERIFY_PHASE: ${{ inputs.phase }}
+  VERIFY_CONFIGURATION: ${{ inputs.configuration }}
+  VERIFY_SCENARIO: ${{ inputs.scenario }}
+  VERIFY_BUNDLE: ${{ inputs.bundle }}
+  VERIFY_EXPECTED_GL_VENDOR: ${{ inputs.expected_gl_vendor }}
+  VERIFY_EXPECTED_GL_RENDERER: ${{ inputs.expected_gl_renderer }}
+  VERIFY_ALLOW_DEPENDENCY_RESOLUTION: ${{ inputs.allow_dependency_resolution }}
+  VERIFY_OUTPUT_ROOT: out/verification
+
+jobs:
+  windows:
+    if: ${{ inputs.platform == 'windows' }}
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 90
+    steps:
+      # Operator prerequisites: Python, PowerShell, MSVC/SDK, Ninja, Conan 2
+      # and existing dependency/tooling policy. No tool installation or repair.
+      # Hardware qualification requires the actual context matching exact inputs.
+      # Predecessors must already exist on this same machine/candidate. OS labels
+      # alone do not pin one machine: operators must route an appropriate runner.
+      - uses: actions/checkout@v4
+        with:
+          clean: false
+      - name: Execute only the explicitly selected phase
+        shell: pwsh
+        run: python -B scripts/verification_workflow.py
+      - name: Preserve available evidence independently of the phase verdict
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-windows-${{ github.run_id }}-${{ github.run_attempt }}
+          path: out/verification/
+          if-no-files-found: warn
+
+  linux:
+    if: ${{ inputs.platform == 'linux' }}
+    runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 90
+    steps:
+      # Operator prerequisites: Python 3, GCC/STL C++23, Ninja, Conan 2 and all
+      # existing tooling/dependencies. GL profiles additionally require DISPLAY
+      # and an operator-prepared X server. No Xvfb startup, package installation,
+      # display repair, hardware inference or implicit software fallback here.
+      # Predecessors must already exist on this same machine/candidate. clean:false
+      # preserves files, not their validity: core admission remains authoritative.
+      - uses: actions/checkout@v4
+        with:
+          clean: false
+      - name: Execute only the explicitly selected phase
+        shell: bash
+        run: python3 -B scripts/verification_workflow.py
+      - name: Preserve available evidence independently of the phase verdict
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-linux-${{ github.run_id }}-${{ github.run_attempt }}
+          path: out/verification/
+          if-no-files-found: warn
+
+# Upload success neither repairs a missing predecessor/result nor qualifies any
+# bundle. Native codes, identities, logs and raw results remain core evidence;
+# a failed phase remains failed even when the independent upload succeeds.

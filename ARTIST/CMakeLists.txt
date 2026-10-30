@@ -21,6 +21,10 @@ target_include_directories(ArtistLib INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
+if(ARTIST_BUILD_VERIFICATION)
+    add_subdirectory(verification)
+endif()
+
 # Optional: Add version information for packaging
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
