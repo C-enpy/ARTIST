@@ -5,7 +5,7 @@ tags: [artist, build, testing, guide]
 summary: "Photographie documentaire du pipeline livré : phases explicites, preuves synthétiques attribuées et qualification native NON_EXECUTE."
 created: 2026-10-30
 updated: 2026-10-30
-source_revision: 1abe4d108997ae72b3f81faf99ec70ca7edc4dac
+source_revision: 165aee5f1a1da7db8431555d196081f802558ed2
 sources:
   - scripts/verify.py
   - scripts/verification_workflow.py
@@ -17,6 +17,8 @@ sources:
   - ARTIST/verification/CMakeLists.txt
   - .github/workflows/verification-pipeline.yml
   - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/142-helper-integre-verification-synthetique.md
+  - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/149-tests-windows-migres-integres-verts.md
+  - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/152-couture-meme-bundle-verte-avant-audit.md
 ---
 
 # Pipeline de vérification des uniforms
@@ -202,11 +204,30 @@ est la source des comptages suivants, **non réexécutés pour cette note** :
   Ces sorties locales ne sont pas requises dans chaque worktree et ne sont pas
   copiées ici ; ne pas reconstruire des commandes exactes à partir des seuls noms.
 
-Restent **EN ATTENTE QA**, pas PASS : couture cœur/helper sur le même témoin,
-factory WindowsAdapter → environnement effectif du runner, et mapping des
-anciens tests/oracles. Dispose/writers hérités et encodage non ASCII cmd restent
-non qualifiés. Aucun verdict global natif Windows Debug/Release ou Linux,
-aucune campagne matérielle/logicielle et aucune performance ne sont annoncés.
+Compléments ensuite intégrés et exécutés par le coordinateur, avec empreintes
+stables et sans échec, erreur ou skip :
+
+- **19 tests** d'environnement effectif Windows, admission fine, migration des
+  anciens oracles et garanties wrappers/StartInfo. Rapport149, candidat intégré
+  `a130773`, journaux `out/verification-synthetic/windows-migration-integrated-2026-10-30T12-31-46-914Z/`.
+- **6 baselines puis 4 caractérisations** de la couture cœur/helper sur le même
+  bundle et témoin : vrais reçus, octets/hash/mtime conservés, refus de mutation
+  et absence avant build, Conan17 et partiels. Rapport152, candidat `165aee5`,
+  journaux `windows-seam-baseline-v2-2026-10-30T12-50-42-192Z/` et
+  `windows-seam-characterizations-2026-10-30T12-51-14-668Z/` sous `out/verification-synthetic/`.
+
+Ces compléments utilisent des outils simulés ; le rôle python-pip de préparation
+est aussi simulé, aucune résolution ou installation réelle. Les comptages
+historiques ne sont pas réattribués à une nouvelle campagne ni additionnés sans
+tenir compte des recouvrements. Les commandes exactes et l'attribution
+auteur/runner figurent dans les manifestes des rapports cités.
+
+La **réception globale reste EN ATTENTE de l'audit indépendant final des tests**,
+dont l'admission du profil restrictif doit être vérifiée avant revue. Les succès
+locaux ne constituent ni cet audit ni un PASS natif. Dispose/writers hérités et
+encodage non ASCII cmd restent non qualifiés ; cinq skips historiques de liens et
+test de jonction06 gardent leurs limites. Aucun verdict global natif Windows
+Debug/Release ou Linux, campagne matérielle/logicielle ou performance annoncé.
 
 ## Contrôle documentaire
 
