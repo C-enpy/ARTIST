@@ -25,3 +25,16 @@ effectivement intégrées.
 
 Aucun test, workflow, build, moteur, GPU, rendu, benchmark, installation ou
 cloud exécuté pour cette ratification. Aucun nouveau droit ou modèle imposé.
+
+## Admission parallèle après commit
+
+Complément commité `3ba6628a480c40461a93be42531fe87d3cff3633` avant publication
+de `task_mvuoddxc_006a_6xb4qt`, contexte fresh et worktree explicites, tests RED
+seulement, ownership CMake/workflow/tests distinct. Le statut natif confirme
+pool-32 sur build-engineer et son worktree isolé, en parallèle de pool-31 sur
+la seule tranche helper `task_mvuo974b_0069_duptzs`. Aucun auteur n'exécute les tests.
+
+Un premier appel Code Mode de publication comportait une chaîne JavaScript
+multiligne mal délimitée : erreur de syntaxe avant tout appel natif, aucune tâche
+créée. Le script corrigé a ensuite rendu le seul ID ci-dessus ; aucun doublon
+ou échec de permission n'est déduit de cette erreur locale.
