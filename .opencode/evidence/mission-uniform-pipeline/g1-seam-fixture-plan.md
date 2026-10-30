@@ -78,8 +78,8 @@ déjà inventorié et répertoire de phase possédé par le core avant chaque in
 Le driver ne crée/adopte ni bundle ni répertoire privé de phase ; les vraies
 fonctions source créent les sous-répertoires de rôles conformément au contrat.
 
-Avec tooling préinstallé et découverte VS synthétique : prepare produit vswhere,
-msvc-env, conan-install, cmake-configure ; build msvc-env et cmake-build. Traces
+Avec tooling préinstallé et découverte VS synthétique : prepare produit python-pip,
+vswhere, msvc-env, conan-install, cmake-configure ; build msvc-env et cmake-build. Traces
 command.json source et stdout.bin/stderr.bin binaires directement dans le bundle.
 Faux Conan écrit seulement le toolchain synthétique, configure le cache/Ninja,
 build l'exécutable cible inerte requis par le vrai inventaire, jamais exécuté.
