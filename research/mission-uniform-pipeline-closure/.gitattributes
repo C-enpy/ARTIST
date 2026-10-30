@@ -1,0 +1,4 @@
+* -text
+*.patch -diff
+*.snapshot -diff
+*.bundle -diff

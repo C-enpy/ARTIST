@@ -1,0 +1,80 @@
+# Candidat Linux — livré pour qualification, NON_EXECUTE natif
+
+## Localisation / impact
+
+- `scripts/verification/adapters/linux.py` implémente `PlatformAdapter` par
+  descriptions uniquement. La préparation utilise `build-linux.py` ; la
+  construction sélectionne les cibles du catalogue ; l'exécution reprend les
+  executables du reçu et `build_workload_argv`, puis les validateurs communs.
+- `build-linux.py --configure-only --verification` ajoute uniquement
+  `-DARTIST_BUILD_VERIFICATION=ON`. Sans `--configure-only`, cette nouvelle option
+  est refusée avant tout enfant. Les appels historiques sont inchangés.
+- CPU seul : ni variable GL ni Xvfb. OpenGL logiciel : llvmpipe explicite.
+  Matériel : cible vendor/renderer exacte obligatoire, pas de fallback/Xvfb,
+  overrides hérités `GALLIUM_DRIVER` / `MESA_LOADER_DRIVER_OVERRIDE` refusés,
+  `LIBGL_ALWAYS_SOFTWARE` doit être absent ou explicitement faux.
+- Les noms CTest sont une union exacte des entrées choisies, découverte avant
+  exécution sérialisée. Réconciliation, skips, identités, verrous et verdicts
+  restent à la charge du collecteur commun. Les stdout/stderr des outils sont
+  capturés par ce collecteur, pas réinterprétés comme des mesures.
+
+Les presets configure/build/test `linux-release`, les overrides Conan host/build
+et l'arbre `out/build/linux-release` existaient déjà dans d2d7be7 : ils sont
+vérifiés, pas recréés. Profil inchangé : Linux x86_64, GCC14, libstdc++11,
+cppstd23, Ninja ; Conan2 CMakeDeps/CMakeToolchain avant CMake. ASan reste réservé
+à `linux-debug-asan`, séparé de Release. La sonde compile/link C++23 est conservée.
+
+## RED / GREEN réellement exercés
+
+Observateur : Windows, Python 3.13.1 ; worktree isolé pool-19, base d2d7be7.
+
+Commande exacte depuis ce worktree :
+
+```text
+python -B -m unittest discover -s scripts/tests/verification_linux -p 'test_*.py' -v
+python -B scripts/tests/test_build_linux.py -v
+python -B scripts/tests/test_linux_evidence.py -v
+```
+
+- RED : 20 tests, 13 erreurs attendues : adaptateur absent (12), option
+  `--verification` inconnue (1). Journal `out/linux-adapter-synthetic/red.log`.
+- GREEN final : 27 tests dédiés, 0 échec/skip ; version/architecture/ABI sont des
+  contraintes lues, pas une toolchain Linux observée. Journal `green.log`.
+- Non-régression : 9 tests du helper, 10 du contrôleur historique, 0 échec/skip ;
+  journaux `legacy-build.log`, `legacy-evidence.log` au même emplacement.
+- Le premier essai GREEN a aussi révélé une erreur de fixture Windows : recherche
+  d'un chemin avec slash littéral. Comparaison corrigée par `Path`/argument exact,
+  sans relâcher le contrat testé.
+
+Les processus Conan/CMake/CTest/GL et le réseau sont doublés ou interdits dans
+les nouveaux tests. La composition du vrai adaptateur et du collecteur utilise
+les fixtures existantes : fichiers non exécutables et réponses synthétiques,
+parseur double d'attribution. Elle ne valide ni schéma natif ni rendu. Le test
+historique de propagation d'erreur démarre seulement un Python factice `exit(7)`.
+
+## Intégration restante (bloquante pour qualification réelle)
+
+1. Le CMake racine/ARTIST n'inclut pas encore `ARTIST/verification/CMakeLists.txt`.
+   Le lead doit intégrer son option `ARTIST_BUILD_VERIFICATION` et son inclusion
+   explicite ; le module propriétaire définit déjà les deux cibles workload.
+2. Le collecteur intégré à cette base refuse encore les scénarios CTest matériel
+   via sa garde `legacy hardware CTest awaits integrated structured context proof`.
+   Elle est conservée. L'adaptateur décrit les six variables d'attribution du
+   contrat C++ existant, mais n'en fabrique pas la preuve. Le remplacement de la
+   garde et sa validation appartiennent au propriétaire du collecteur.
+3. Raccorder la sélection CLI de `LinuxAdapter` à l'interface publique finale.
+   Constructeur : `LinuxAdapter(source_root, jobs=1, python_executable=None,
+   environment=None)` ; les reçus communs transportent bundle et exécutables.
+
+Avant qualification Linux : environnement maîtrisé, GCC14 et STL réellement
+disponibles (format/stacktrace au compile/link), dépendances système de la CI,
+Conan/Ninja/CMake, contexte courant réel et cible explicite. Ne pas utiliser une
+observation GL logicielle comme mesure du matériel cible. Les versions sont
+conservées comme logs de préparation, les observations GL dans les résultats.
+
+Aucun build moteur, suite moteur, Xvfb, rendu ou benchmark n'a été lancé. Linux
+natif, Release compilé, OpenGL logiciel réel et matériel réel : **NON_EXECUTE**.
+Pas de base `compile_commands.json` créée ni d'include path inventé. Serena est
+rattaché à la source canonique, C++ seulement : les fichiers Python de ce
+worktree ont été analysés directement. Revue indépendante réservée au lead ;
+l'auto-vérification de l'auteur n'est pas présentée comme telle.

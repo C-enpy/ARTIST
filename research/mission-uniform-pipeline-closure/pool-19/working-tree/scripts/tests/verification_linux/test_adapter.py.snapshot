@@ -1,0 +1,276 @@
+"""Synthetic command descriptions only: never launch Conan, CMake, CTest or GL."""
+from contextlib import ExitStack
+import configparser
+import importlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / 'scripts'))
+from verification.model import BuildReceipt, PreparationReceipt, Request
+from verification.planning import make_plan
+from verification.catalogue import list_scenarios
+from verification.context_evidence import parse_context_observation
+
+
+class AdapterTests(unittest.TestCase):
+    def setUp(self):
+        self.stack = ExitStack()
+        self.addCleanup(self.stack.close)
+        for name in ('subprocess.run', 'subprocess.Popen', 'os.system',
+                     'socket.socket', 'socket.create_connection'):
+            self.stack.enter_context(patch(name, side_effect=AssertionError('No native execution/network')))
+        module = importlib.import_module('verification.adapters.linux')
+        self.directory = self.stack.enter_context(tempfile.TemporaryDirectory(prefix='artist linux synthetic '))
+        self.root = Path(self.directory).resolve()
+        self.bundle = self.root / 'out' / 'verification' / 'run-1'
+        self.adapter = module.LinuxAdapter(self.root, jobs=2, python_executable='synthetic python',
+                                           environment={})
+
+    def plan(self, profile='cpu-only', configuration='release', scenarios=None, **options):
+        scenarios = scenarios or (('cpu.float-mirror',) if profile == 'cpu-only'
+                                   else ('gl.float-routes-correctness',))
+        if profile == 'opengl-hardware':
+            options.setdefault('expected_gl_vendor', 'NVIDIA Corporation')
+            options.setdefault('expected_gl_renderer', 'NVIDIA target synthetic')
+        return make_plan(Request('linux', profile, scenarios, configuration, **options), list_scenarios())
+
+    def receipt(self, plan, phase):
+        cls = PreparationReceipt if phase == 'prepare' else BuildReceipt
+        executables = {target: 'out/build/linux-' + plan.request.configuration + '/ARTIST/verification/' + target
+                       for scenario in plan.scenarios for target in scenario.targets}
+        return cls(1, 'run-1', plan.plan_sha256, phase, 'COMPLETED', {},
+                   {'bundle': str(self.bundle), 'source_root': str(self.root),
+                    'executables': executables, 'exit_code': 0})
+
+    def test_prepare_reuses_helper_configure_only_and_explicit_permission(self):
+        for configuration in ('debug', 'release'):
+            plan = self.plan(configuration=configuration, allow_dependency_resolution=True)
+            commands = self.adapter.describe_preparation(plan)
+            helper = [c for c in commands if str(self.root / 'scripts/build-linux.py') in c.argv]
+            self.assertEqual(len(helper), 1)
+            self.assertEqual(helper[0].argv, ('synthetic python', str(self.root / 'scripts/build-linux.py'),
+                '--configuration', configuration, '--jobs', '2', '--configure-only', '--verification'))
+            self.assertIn('dependency-resolution', helper[0].declared_effects)
+            self.assertTrue(all(c.phase == 'prepare' for c in commands))
+            self.assertFalse(any('--build' in c.argv or c.argv[0] == 'ctest' for c in commands))
+
+    def test_prepare_without_permission_fails_closed(self):
+        with self.assertRaises(ValueError):
+            self.adapter.describe_preparation(self.plan())
+
+    def test_build_only_selected_targets_and_matching_preset(self):
+        for configuration in ('debug', 'release'):
+            plan = self.plan(configuration=configuration)
+            commands = self.adapter.describe_build(plan, self.receipt(plan, 'prepare'))
+            self.assertEqual(len(commands), 1)
+            self.assertEqual(commands[0].argv, ('cmake', '--build', '--preset', 'linux-' + configuration,
+                '--parallel', '2', '--target', 'ArtistUniformCpuWorkload'))
+            self.assertEqual(commands[0].phase, 'build')
+            self.assertNotIn('dependency-resolution', commands[0].declared_effects)
+
+    def test_cpu_run_uses_receipt_executable_and_common_protocol(self):
+        plan = self.plan()
+        commands = self.adapter.describe_execution(plan, self.receipt(plan, 'build'))
+        self.assertEqual(len(commands), 1)
+        command = commands[0]
+        self.assertEqual(command.argv[0], str(self.root / 'out/build/linux-release/ARTIST/verification/ArtistUniformCpuWorkload'))
+        self.assertEqual(command.argv[command.argv.index('--run-id') + 1], 'run-1')
+        self.assertEqual(command.argv[command.argv.index('--plan-sha256') + 1], plan.plan_sha256)
+        self.assertEqual(command.env_delta, {})
+        self.assertNotIn('--profile', command.argv)
+        self.assertFalse(any('xvfb' in arg or 'asan' in arg for arg in command.argv))
+        self.assertFalse(self.bundle.exists(), 'Description must not create evidence directories')
+
+    def test_software_explicitly_forces_llvmpipe_without_starting_x_server(self):
+        plan = self.plan('opengl-software')
+        commands = self.adapter.describe_execution(plan, self.receipt(plan, 'build'))
+        self.assertEqual(len(commands), 2, 'Both catalogue routes are selected by default')
+        for command in commands:
+            self.assertEqual(command.env_delta['LIBGL_ALWAYS_SOFTWARE'], 'true')
+            self.assertEqual(command.env_delta['GALLIUM_DRIVER'], 'llvmpipe')
+            self.assertIn('opengl-software', command.argv)
+            self.assertFalse(any('xvfb' in arg for arg in command.argv))
+        outputs = [c.argv[c.argv.index('--result') + 1] for c in commands]
+        requests = [c.argv[c.argv.index('--request-id') + 1] for c in commands]
+        self.assertEqual(len(set(outputs)), 2)
+        self.assertEqual(len(set(requests)), 2)
+        self.assertTrue(all(Path(p).is_relative_to(self.bundle) for p in outputs))
+
+    def test_hardware_passes_exact_target_without_software_fallback(self):
+        plan = self.plan('opengl-hardware')
+        for command in self.adapter.describe_execution(plan, self.receipt(plan, 'build')):
+            self.assertEqual(command.env_delta, {})
+            for option, expected in (('--expected-gl-vendor', 'NVIDIA Corporation'),
+                                     ('--expected-gl-renderer', 'NVIDIA target synthetic')):
+                self.assertEqual(command.argv[command.argv.index(option) + 1], expected)
+            self.assertIn('opengl-hardware', command.argv)
+            self.assertNotIn('llvmpipe', command.argv)
+
+    def test_hardware_absent_expectation_is_not_qualified(self):
+        plan = self.plan('opengl-hardware', expected_gl_vendor=None, expected_gl_renderer=None)
+        with self.assertRaises(ValueError):
+            self.adapter.describe_execution(plan, self.receipt(plan, 'build'))
+
+    def test_measurement_keeps_release_tree_and_requested_work_count(self):
+        plan = self.plan('opengl-hardware', scenarios=('gl.float-submission-cpu',),
+                         routes=('prepared-float',), measurement_requested=True,
+                         iterations=11, repetitions=3, batch_size=16)
+        commands = self.adapter.describe_execution(plan, self.receipt(plan, 'build'))
+        self.assertEqual(len(commands), 1)
+        command = commands[0]
+        self.assertIn('linux-release', command.argv[0])
+        for option, value in (('--route', 'prepared-float'), ('--measurement-requested', 'true'),
+                              ('--iterations', '11'), ('--repetitions', '3'), ('--batch-size', '16')):
+            self.assertEqual(command.argv[command.argv.index(option) + 1], value)
+        self.assertNotIn('ASAN_OPTIONS', command.env_delta)
+
+    def test_hardware_ctest_attribution_is_explicit_but_does_not_remove_core_gate(self):
+        plan = self.plan('opengl-hardware', scenarios=('gl.float-preparation',))
+        commands = self.adapter.describe_execution(plan, self.receipt(plan, 'build'))
+        self.assertNotIn('ARTIST_VERIFICATION_CONTEXT_V1', commands[0].env_delta)
+        environment = commands[1].env_delta
+        self.assertEqual(environment['ARTIST_VERIFICATION_CONTEXT_V1'], 'opengl-hardware')
+        self.assertEqual(environment['ARTIST_VERIFICATION_RUN_ID'], 'run-1')
+        self.assertEqual(environment['ARTIST_VERIFICATION_PLAN_SHA256'], plan.plan_sha256)
+        self.assertEqual(environment['ARTIST_VERIFICATION_EXPECTED_GL_RENDERER'], 'NVIDIA target synthetic')
+        self.assertNotIn('LIBGL_ALWAYS_SOFTWARE', environment)
+
+    def test_hardware_rejects_inherited_software_forcing(self):
+        module = importlib.import_module('verification.adapters.linux')
+        for environment in ({'LIBGL_ALWAYS_SOFTWARE': 'true'}, {'LIBGL_ALWAYS_SOFTWARE': '1'},
+                            {'GALLIUM_DRIVER': 'llvmpipe'}, {'MESA_LOADER_DRIVER_OVERRIDE': 'swrast'}):
+            with self.subTest(environment=environment):
+                adapter = module.LinuxAdapter(self.root, environment=environment)
+                plan = self.plan('opengl-hardware')
+                with self.assertRaises(ValueError):
+                    adapter.describe_execution(plan, self.receipt(plan, 'build'))
+
+    def test_ctest_exact_selection_inventory_then_execution_is_serial(self):
+        plan = self.plan('opengl-software', scenarios=('gl.float-preparation', 'gl.float-lifetime'))
+        commands = self.adapter.describe_execution(plan, self.receipt(plan, 'build'))
+        self.assertEqual(len(commands), 2)
+        self.assertIn('--show-only=json-v1', commands[0].argv)
+        self.assertIn('--output-junit', commands[1].argv)
+        self.assertIn('--no-tests=error', commands[1].argv)
+        self.assertEqual(commands[1].argv[commands[1].argv.index('--parallel') + 1], '1')
+        import re
+        regex = commands[0].argv[commands[0].argv.index('-R') + 1]
+        names = {name for spec in plan.scenarios for name in spec.producer['names']}
+        self.assertTrue(all(re.fullmatch(regex, name) for name in names))
+        self.assertIsNone(re.fullmatch(regex, 'opengl.not.selected'))
+        self.assertIsNone(re.fullmatch(regex, next(iter(names)) + 'Extra'))
+
+    def test_missing_receipted_executable_never_falls_back_to_search_or_build(self):
+        plan = self.plan()
+        receipt = BuildReceipt(1, 'run-1', plan.plan_sha256, 'build', 'COMPLETED', {},
+                              {'bundle': str(self.bundle), 'executables': {}})
+        with self.assertRaises(ValueError):
+            self.adapter.describe_execution(plan, receipt)
+
+    def test_executable_from_another_tree_or_outside_source_is_rejected(self):
+        plan = self.plan()
+        for path in ('../ArtistUniformCpuWorkload',
+                     'out/build/linux-debug/ARTIST/verification/ArtistUniformCpuWorkload',
+                     'out/build/linux-release/not-selected'):
+            receipt = BuildReceipt(1, 'run-1', plan.plan_sha256, 'build', 'COMPLETED', {},
+                                  {'bundle': str(self.bundle), 'source_root': str(self.root), 'exit_code': 0,
+                                   'executables': {'ArtistUniformCpuWorkload': path}})
+            with self.subTest(path=path), self.assertRaises(ValueError):
+                self.adapter.describe_execution(plan, receipt)
+
+    def test_stale_or_wrong_phase_receipt_rejected(self):
+        plan = self.plan()
+        other = self.plan(configuration='debug')
+        with self.assertRaises(ValueError):
+            self.adapter.describe_build(plan, self.receipt(other, 'prepare'))
+        with self.assertRaises((ValueError, TypeError)):
+            self.adapter.describe_execution(plan, self.receipt(plan, 'prepare'))
+
+    def test_environment_collection_is_read_only_and_explicitly_unobserved(self):
+        before = dict(os.environ)
+        environment = self.adapter.collect_environment()
+        self.assertEqual(environment['platform'], 'linux')
+        self.assertEqual(environment['compiler']['qualification'], 'NON_EXECUTE')
+        self.assertEqual(environment['gl']['qualification'], 'NON_EXECUTE')
+        self.assertEqual(os.environ, before)
+        self.assertFalse((self.root / 'out').exists())
+
+
+class SharedHardwareRendererTests(unittest.TestCase):
+    """Reuse the integrated validator; strings alone never prove GPU acceleration."""
+    def test_expected_software_unknown_and_absent_context(self):
+        expected = dict(run_id='synthetic', plan_sha256='a' * 64, request_id='case-1',
+                        ctest_name='opengl.Suite.Case', profile='opengl-hardware',
+                        expected_gl_vendor='NVIDIA Corporation', expected_gl_renderer='NVIDIA synthetic')
+        observed = dict(expected, schema_version=1, kind='opengl-context', gl_vendor='NVIDIA Corporation',
+                        gl_renderer='NVIDIA synthetic', gl_version='3.3 synthetic', context_major=3,
+                        context_minor=3, context_profile_mask=1, context_current=True,
+                        qualification='MATCHED_EXPECTATION', precondition='OK', reason='synthetic')
+        def text(value):
+            return '[ARTIST_CONTEXT_V1] ' + json.dumps(value)
+        self.assertEqual(parse_context_observation(text(observed), expected=expected), observed)
+        for renderer in ('llvmpipe', 'softpipe', 'SwiftShader', 'unidentified renderer'):
+            with self.subTest(renderer=renderer), self.assertRaises(ValueError):
+                parse_context_observation(text(dict(observed, gl_renderer=renderer)), expected=expected)
+        with self.assertRaises(ValueError):
+            parse_context_observation('', expected=expected)
+        software_expected = dict(expected, expected_gl_renderer='llvmpipe')
+        software_observed = dict(observed, expected_gl_renderer='llvmpipe', gl_renderer='llvmpipe')
+        with self.assertRaises(ValueError):
+            parse_context_observation(text(software_observed), expected=software_expected)
+
+
+class VerificationHelperTests(unittest.TestCase):
+    def test_linux_profile_preserves_native_architecture_compiler_stl_and_generator(self):
+        profile = configparser.ConfigParser(delimiters=('=',))
+        profile.read(ROOT / 'conan/profiles/linux-gcc', encoding='utf-8')
+        settings = profile['settings']
+        self.assertEqual(dict(settings), {'os': 'Linux', 'arch': 'x86_64', 'compiler': 'gcc',
+            'compiler.version': '14', 'compiler.libcxx': 'libstdc++11',
+            'compiler.cppstd': '23', 'build_type': 'Debug'})
+        self.assertEqual(profile['conf']['tools.cmake.cmaketoolchain:generator'], 'Ninja')
+        self.assertEqual(json.loads(profile['conf']['tools.build:compiler_executables']),
+                         {'c': 'gcc-14', 'cpp': 'g++-14'})
+
+    def load(self):
+        spec = importlib.util.spec_from_file_location('synthetic_verification_helper', ROOT / 'scripts/build-linux.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def test_opt_in_configures_workloads_without_build_or_test(self):
+        module = self.load()
+        with patch('subprocess.Popen', side_effect=AssertionError('No native execution')), \
+             patch.object(module.subprocess, 'run') as run:
+            self.assertEqual(module.main(['--configuration', 'release', '--configure-only', '--verification']), 0)
+        self.assertEqual(run.call_count, 2)
+        self.assertEqual(run.call_args_list[0].args[0][:3], ['conan', 'install', '.'])
+        self.assertEqual(run.call_args_list[1].args[0], ['cmake', '--fresh', '--preset', 'linux-release',
+                                                       '-DARTIST_BUILD_VERIFICATION=ON'])
+
+    def test_verification_requires_separate_phases_before_any_child(self):
+        module = self.load()
+        with patch.object(module.subprocess, 'run') as run:
+            with self.assertRaises(SystemExit) as caught:
+                module.main(['--verification'])
+        self.assertEqual(caught.exception.code, 2)
+        run.assert_not_called()
+
+    def test_release_cannot_select_asan_tree_before_any_child(self):
+        module = self.load()
+        with patch.object(module.subprocess, 'run') as run:
+            with self.assertRaises(SystemExit) as caught:
+                module.main(['--configuration', 'release', '--address-sanitizer', '--configure-only'])
+        self.assertEqual(caught.exception.code, 2)
+        run.assert_not_called()
+
+
+if __name__ == '__main__':
+    unittest.main()

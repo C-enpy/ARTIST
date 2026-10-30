@@ -1,0 +1,85 @@
+"""Compose the real Linux adapter with existing core fixtures, never native tools."""
+from contextlib import ExitStack
+from dataclasses import replace
+from pathlib import Path
+import sys
+import unittest
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / 'scripts'))
+sys.path.insert(0, str(ROOT / 'scripts/tests/verification_core'))
+from runtime_fixtures import RuntimeFixture
+from verification import catalogue, evidence, planning
+from verification.adapters.linux import LinuxAdapter
+from verification.model import CommandSpec, ProcessOutcome
+
+
+class DescriptionRunnerDouble:
+    """Translate only recognized descriptions into the pre-existing owned fake.
+
+    There is deliberately no subprocess runner or native-execution fallback.
+    Result parsing is the existing fixture's attribution double; schema/native
+    correctness remains the responsibility of the scenario owner's tests.
+    """
+    def __init__(self, fixture):
+        self.fixture = fixture
+        self.descriptions = []
+
+    def run(self, command):
+        self.descriptions.append(command)
+        if command.phase == 'prepare':
+            if '--configure-only' in command.argv:
+                verb, arguments = 'prepare', ()
+            elif command.argv in (('uname', '-a'), ('g++-14', '--version'),
+                                  ('cmake', '--version'), ('conan', '--version'), ('ninja', '--version')):
+                return ProcessOutcome(0, 'synthetic version, not an observation', '', False, False)
+            else:
+                raise AssertionError('Unexpected prepare description')
+        elif command.phase == 'build' and command.argv[:2] == ('cmake', '--build'):
+            verb, arguments = 'build', ()
+        elif command.phase == 'run' and '--result' in command.argv:
+            verb, arguments = 'workload', command.argv[1:]
+        elif command.phase == 'run' and command.argv[0] == 'ctest':
+            verb = 'discover' if '--show-only=json-v1' in command.argv else 'ctest'
+            arguments = command.argv[1:]
+        else:
+            raise AssertionError('Unexpected description; no native fallback')
+        fake = CommandSpec(('owned-fake', verb, *arguments), command.cwd, command.env_delta,
+                           command.timeout_seconds, command.phase, ('synthetic-owned-fixture',))
+        return self.fixture.runner.run(fake)
+
+
+class CoreCompositionTests(unittest.TestCase):
+    def setUp(self):
+        self.stack = ExitStack()
+        self.addCleanup(self.stack.close)
+        for name in ('subprocess.run', 'subprocess.Popen', 'os.system', 'socket.socket'):
+            self.stack.enter_context(patch(name, side_effect=AssertionError('No native execution/network')))
+
+    def test_cpu_and_llvmpipe_use_common_receipts_hashes_and_result_controls(self):
+        for profile in ('cpu-only', 'opengl-software'):
+            scenario = 'cpu.float-mirror' if profile == 'cpu-only' else 'gl.float-routes-correctness'
+            with self.subTest(profile=profile):
+                fixture = RuntimeFixture(profile=profile, scenario=scenario, configuration='release')
+                self.addCleanup(fixture.close)
+                fixture.plan = planning.make_plan(replace(fixture.plan.request,
+                    allow_dependency_resolution=True), catalogue.list_scenarios())
+                fixture.runner.environment = {'gl_renderer': 'llvmpipe synthetic', 'context_current': True,
+                    'context_major': 3, 'context_minor': 3, 'context_profile_mask': 1}
+                fixture.sink.runner = DescriptionRunnerDouble(fixture)
+                adapter = LinuxAdapter(fixture.root, python_executable='synthetic python', environment={})
+                prepared = evidence.prepare(fixture.plan, adapter, fixture.sink)
+                self.assertEqual(prepared.details['exit_code'], 0)
+                built = evidence.build(fixture.plan, prepared, adapter, fixture.sink)
+                self.assertEqual(built.details['exit_code'], 0)
+                executed = evidence.execute(fixture.plan, built, adapter, fixture.sink)
+                self.assertEqual(executed.details['exit_code'], 0, fixture.sink.manifest['causes'])
+                self.assertEqual(fixture.sink.manifest['test_verdict'], 'PASS')
+                self.assertEqual(fixture.sink.manifest['measurement_validity'], 'NOT_REQUESTED')
+                self.assertTrue((fixture.sink.bundle / 'identity-build.json').is_file())
+                self.assertTrue((fixture.sink.bundle / 'commands.jsonl').is_file())
+
+
+if __name__ == '__main__':
+    unittest.main()

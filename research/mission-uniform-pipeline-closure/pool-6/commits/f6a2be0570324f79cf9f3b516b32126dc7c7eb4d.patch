@@ -1,0 +1,197 @@
+From f6a2be0570324f79cf9f3b516b32126dc7c7eb4d Mon Sep 17 00:00:00 2001
+From: denne <djoe.denne@gmail.com>
+Date: Fri, 30 Oct 2026 01:44:43 +0100
+Subject: [PATCH] docs: propose bounded float verification scenario plan
+
+---
+ ARTIST/verification/SCENARIO-PLAN.md | 181 +++++++++++++++++++++++++++
+ 1 file changed, 181 insertions(+)
+ create mode 100644 ARTIST/verification/SCENARIO-PLAN.md
+
+diff --git a/ARTIST/verification/SCENARIO-PLAN.md b/ARTIST/verification/SCENARIO-PLAN.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..79c408e70a39d80751e127c6d25e07495afe9cfe
+--- /dev/null
++++ b/ARTIST/verification/SCENARIO-PLAN.md
+@@ -0,0 +1,181 @@
++# Scénarios float — plan auteur soumis au lead
++
++Statut : PLANNED, pas une livraison des producteurs. Tâche
++`task_mvu0yczu_0008_c6oe96`, profil historique `gpu-engineer`.
++Base du worktree : `b484f02`, branche
++`ensemble-36be9100-a943-4d6d-8143-e6825befb5cb`.
++
++Autorité : `.opencode/evidence/mission-uniform-pipeline/contract.md`,
++`qa-plan.md` et `.opencode/missions/team_mvu0gbxm_0000_cwsmsw/author-briefs.md`.
++Les chemins ratifiés remplacent ARTIST/benchmarks et tests-common du brief initial.
++Cette remise demande la revue du plan au coordinateur, pas un nouveau GO utilisateur.
++Le brief impose une transition de tâche autorisée avant implémentation et une
++observation RED par le runner lead avant GREEN. Aucune transition n'est effectuée ici.
++
++## Fichiers possédés et tranches
++
++1. `scripts/tests/verification_scenarios/test_contract.py` : tests synthétiques
++   du plan de répétitions et des analyses d'exports, sans processus enfant.
++2. `scripts/verification/scenarios/__init__.py`, `float_protocol.py` : fonctions
++   pures, standard library, sans import moteur, core, adaptateur ou sondage local.
++   Interfaces privées proposées : `make_schedule(...)` et
++   `analyse_samples(result, expected_parameters)` ; aucun second modèle Request.
++3. `ARTIST/verification/CMakeLists.txt`, `CpuUniformWorkload.cpp`,
++   `OpenGLFloatWorkload.cpp` et `support/` : producteurs CLI réels et support local.
++   Aucun changement de ARTIST/include, des tests existants ou CMake parents.
++4. `ARTIST/verification/INTEGRATION.md` : cibles, argv, schéma, sélections exactes,
++   description des métriques et limites à raccorder par l'intégrateur.
++
++Aucune dépendance nouvelle, Google Benchmark non adopté. Le support reste local,
++sans nouveau type d'uniform moteur, sans RHI, extension GL ou instrumentation
++dans les gardes de production. Les parties C++ ne sont ni compilées ni exécutées.
++
++## Première tranche TDD proposée
++
++Commande réservée au runner lead, après lecture des imports/tests :
++
++    C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_scenarios -p 'test_*.py' -v
++
++Ces tests n'existent pas encore à cette remise ; la commande n'a pas été exécutée.
++Après acceptation du plan : remise RED_READY autonome avec tests et éventuelle
++interface minimale importable explicitement signalée. Le RED attendu doit être
++une assertion de calendrier/population/validité, jamais un ModuleNotFoundError,
++une toolchain absente ou un appel à un workload. Ne pas livrer GREEN avant retour
++du runner lead. Les stubs transitoires ne constituent pas les producteurs livrés.
++
++Cas nominaux :
++
++- calendrier déterministe et équilibré A/B et A/A pour lots 1,16,256 ; répétitions
++  et ordre effectivement exportés ; chauffe séparée des populations mesurées ;
++- valeurs et viewports préconstruits, phase initiale réversible, nombre exact
++  updates/draws et population de chaque métrique ;
++- export synthétique complet en ns, horloge monotone, samples bruts conservés ;
++- différence A-B nulle ou négative conservée, sans exigence de gain.
++
++Contre-exemples discriminants : mauvaise unité, durée négative, timer figé ou
++intervalle sous résolution, NaN/inf, répétition omise/dupliquée, compteur absent,
++compte incohérent, résultat absent, oracle FAIL, paramètres divergents, mesure
++non demandée. Une absence reste ABSENT et non zéro ; un zéro de différence n'est
++pas une durée nulle ; une durée invalide n'est pas un gain négatif.
++Bornes communes : iterations 1..1000000, repetitions 1..100, batch 1/16/256,
++produit <=100000000. Les tests d'imports/pureté interceptent subprocess, réseau
++et écritures ; les fixtures synthétiques restent en mémoire.
++
++## Comparabilité et oracle réel futur
++
++A = `Pass::withUniform<float>("f2Scalar", value)` ; B =
++`prepareFloatUniform(pass, "f2Scalar")` puis `prepared.set(value)`.
++Sélection de route une fois par lot, owners vivants, même Pass lié et même
++contexte courant pendant A/B. Un prepared durable après réflexion pour les
++updates ; les constructions répétées de préparation sont une métrique distincte.
++Aucune suppression des validations de génération, contexte ou programme.
++
++Réutiliser le triangle et les états de
++`PreparedFloatUniformRenderTests.cpp:71-108` : vertices (-.75,-.75), (.75,-.75),
++(0,.75), VAO/VBO, FBO RGBA8 linéaire sans MSAA ni sRGB, viewport 32x32.
++Les cellules des lots forment une grille 1x1/4x4/16x16, chacune avec viewport
++32x32 distinct ; tester les limites de renderbuffer/viewport obtenues avant usage.
++Initialiser matrice identité, vecteur zéro, testUniform=1 et f2Array zéro hors
++chrono. Employer les shaders existants f2-single-values.vert et minimal.frag,
++résolus depuis la racine source explicite et identifiés dans le bundle.
++
++Correction : trois images par route 0 -> .5 -> 0, chaque cellule vérifiée.
++Oracle indépendant repris d'`expectOracle` : (8,8) blanc puis fond puis blanc ;
++(24,24) fond puis blanc puis fond ; (18,16) toujours blanc ; (2,2) toujours fond.
++Blanc RGBA=(255,255,255,255), fond=(0,0,0,255), origine bas-gauche.
++Vérifier miroir CPU et glGetUniformfv après chaque étape ; images non vides,
++changement visible et retour à l'image initiale. A/B égalité supplémentaire,
++jamais oracle unique. Conserver les images brutes référencées dans le bundle.
++
++Soumission : chaque update possède un draw consommateur dans sa cellule.
++Préconstruire une alternance 0/.5 sur l'index global d'opération pour éviter
++les écritures identiques consécutives ; changer la phase entre répétitions.
++Initialiser hors chrono le scalaire à l'inverse de la première valeur utile.
++Les trois étapes de correction et le contrôle des cellules ne se réduisent pas
++au seul dernier état global du programme.
++
++Les appels OpenGL restent sur le thread propriétaire, sans share group externe.
++Ordre de destruction : accessoires/ressources puis Pass puis contexte/window,
++contexte courant vérifié. Readback/attente de fin éventuelle hors chrono ; aucune
++attente globale par update et aucune barrière mémoire ajoutée par réflexe.
++
++## Fenêtres et contrôle du travail
++
++Métriques murales côté CPU, `std::chrono::steady_clock`, unité explicite ns,
++résolution exportée ; jamais temps GPU ou temps CPU thread.
++
++- préparation : après link/réflexion, fenêtre des seuls appels prepare et de la
++  gestion du handle indispensable à cet appel ; pas de création contexte/shader ;
++- updates seuls : séquence préconstruite, pas de dessin, microdiagnostic déclaré ;
++- updates+draws : mêmes valeurs, viewports et dessins dans les deux routes,
++  coûts communs déclarés ; viewport par cellule inclus dans la soumission.
++
++Chauffe fixe publiée, samples de chauffe exclus des mesures ; répétitions et
++ordre reproductible alterné A/B et B/A. Contrôle A/A : deux labels distincts
++exécutent réellement pass-name, dans le même protocole. Les invocations de route
++du CLI ne doivent pas prétendre partager un contexte entre processus : les bras
++internes du producteur possèdent la comparaison et ses labels dans un seul run.
++Exporter chaque échantillon et ordre, pas uniquement un ratio ou une moyenne.
++
++Contrôle du travail séparé des mesures : interception locale/calibrée des entrées
++GLEW pour uploads, draws et résolutions natives, sur une passe non chronométrée ;
++restauration RAII des entrées. Compter les appels observés, pas seulement ceux
++demandés ; observer zéro lookup natif pendant les updates A comme B. Instrumenter
++sans modifier le moteur et vérifier les points d'entrée avant remplacement.
++Comparer attendu/observé, vérifier miroir/readback et chaque cellule ; remettre
++les entrées originales avant chauffe/mesure. Aucun compteur, assertion, log,
++readback, image, calcul statistique ou sérialisation dans une fenêtre mesurée.
++Conserver les gardes internes de production, notamment le contrôle du programme.
++Le contrôle séparé prouve son propre passage, pas une capture exhaustive de
++chaque invocation chronométrée : l'export et la documentation le disent.
++
++## Producteurs et raccordements à remettre
++
++Deux cibles optionnelles : ArtistUniformCpuWorkload et ArtistUniformOpenGLWorkload,
++activées seulement par le CMake parent possédé par l'intégrateur, option OFF par
++défaut et sans inscription CTest. CPU ne crée/charge aucun contexte GL ; il
++exerce le miroir existant et ne revendique pas d'upload. GL demande 3.3 core et
++enregistre version/profil/GLSL/vendor/renderer obtenus. Le producteur ne décide
++pas hardware par exclusion des noms logiciels et ne choisit aucun repli logiciel.
++
++Parser CLI strict/borné selon contrat section 7, argument inconnu/dupliqué refusé.
++Résultat JSON schema_version=1, IDs et paramètres exacts, compteurs attendus et
++observés, verdict/validité séparés, samples et environnement. Création exclusive,
++pas d'écrasement ; données partielles jamais acceptées comme résultat complet.
++Codes 0/10/20/30, stdout/stderr journaux seulement. Le collecteur core reste
++responsable des hashes candidat/shaders/binaires et de la validation des chemins.
++
++Sélections de tests à transmettre au catalogue (future découverte réconciliée,
++aucune exécution ici) :
++
++- PreparedFloatUniformComponentTest.StrictReflectionAndTypedReadback ;
++- PreparedFloatUniformComponentTest.WrongProgramAndAbsentContextPreserveCpuAndDriver ;
++- PreparedFloatUniformRenderTest.LegacyAndPreparedMatchFixedNonemptyPixels ;
++- PreparedFloatUniformRenderTest.PreparedUpdatesDoNotResolveNativeLocationsAgain ;
++- PreparedFloatUniformTest.ArrayOfOneRejectedBeforeCpuMutationOrUpload ;
++- PreparedFloatUniformTest.PreparationRejectsMissingAndOtherContextBeforeNativeQueriesAndRecovers ;
++- PreparedFloatUniformTest.RejectsAbsentInvalidNamesAndFabricatedMetadata ;
++- PreparedFloatUniformTest.MetadataMutationEvenToSameValueRevokesAndCannotReattest ;
++- PreparedFloatUniformTest.RetirementCannotResurrectWithReusedNumericProgramId ;
++- PreparedFloatUniformTest.OwnerDestructionAndUniformMoveAssignmentRejectBeforePointee ;
++- PreparedFloatUniformTest.PassDestructionRevokesWithLiveUniformAndWitness.
++
++Ne pas confondre les tests unitaires à doubles natifs avec la preuve driver.
++Préserver STALE_PREPARED_ACCESS et PROGRAM_NOT_CURRENT ; aucun test existant
++modifié, supprimé ou affaibli. Le schéma/catalogue central reste au core.
++
++## Localisation, impact, limites de cette remise
++
++Serena a lu les corps expectOracle et PreparedFloatUniform::set sur la racine
++canonique ARTIST ; git diff HEAD main sur ces deux fichiers est vide, donc ces
++deux lectures correspondent au worktree. Les noms des tests et la séquence
++graphique ont été lus directement dans ce worktree. LSP sans compilation nouvelle
++ne constitue ni une preuve C++ ni un diagnostic du futur producteur.
++
++Impact présent : documentation de plan uniquement, aucun coût CPU/GPU mesuré.
++Tests synthétiques : NON_EXECUTE, fichiers encore à écrire après transition.
++Compilation C++, contexte GL, compteurs natifs, images et performance :
++NON_EXECUTE / INCONCLUSIVE. Aucun programme moteur, helper build, CTest ou outil
++de campagne lancé. Aucune ressource Docker/cloud créée. Une revue indépendante
++du producteur sensible intégré reste à organiser par le lead ; cette lecture
++auteur n'est pas cette revue.

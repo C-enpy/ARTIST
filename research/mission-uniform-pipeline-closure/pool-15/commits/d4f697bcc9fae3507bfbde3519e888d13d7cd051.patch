@@ -1,0 +1,737 @@
+From d4f697bcc9fae3507bfbde3519e888d13d7cd051 Mon Sep 17 00:00:00 2001
+From: denne <djoe.denne@gmail.com>
+Date: Fri, 30 Oct 2026 05:12:49 +0100
+Subject: [PATCH] test(verification): prepare context collector RED contract
+
+---
+ .../CONTEXT_COLLECTOR_RED_READY.md            | 143 +++++++
+ .../CONTEXT_CONSUMER_PLAN.md                  |  20 +
+ .../context_collector_fixtures.py             | 133 ++++++
+ .../test_context_collector_contract.py        | 398 ++++++++++++++++++
+ 4 files changed, 694 insertions(+)
+ create mode 100644 scripts/tests/verification_core/CONTEXT_COLLECTOR_RED_READY.md
+ create mode 100644 scripts/tests/verification_core/context_collector_fixtures.py
+ create mode 100644 scripts/tests/verification_core/test_context_collector_contract.py
+
+diff --git a/scripts/tests/verification_core/CONTEXT_COLLECTOR_RED_READY.md b/scripts/tests/verification_core/CONTEXT_COLLECTOR_RED_READY.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..f96a1f6a759d79f99e4a7d5e1a021039279f1b7e
+--- /dev/null
++++ b/scripts/tests/verification_core/CONTEXT_COLLECTOR_RED_READY.md
+@@ -0,0 +1,143 @@
++# Collecteur contexte — TESTS_RED_READY (2026-10-30)
++
++## Identité, portée, résultat réel
++
++- Auteur pool-15, tâche `task_mvug6j0v_003c_eve8lc`, branche
++  `ensemble-d3731b04-0a47-4a5d-80b5-5eddc902a58a`.
++- Base vérifiée : `3bd72fcaa696c822ac6ca79474425823e1e2f302` ; fondations
++  `107a2d3` et producteur/parser `91c5ac2` ancêtres effectifs. Arbre initial propre.
++- Contrat §8, `legacy-context-observation-v1.md`, QA §10/A3–A8,
++  rapports 60/61/73 lus. PM/LLM local brut/retenu 78/72, incertitude moyenne.
++- **21 méthodes de tests proposées**, non découvertes/non exécutées par l'auteur.
++  Diagnostic uniquement : analyse AST sous Python 3.13.1 des deux nouveaux fichiers, sans
++  import ni exécution de test. Ce contrôle syntaxique n'est pas un RED/GREEN.
++- Les 144 tests acquis et leurs fixtures sont inchangés. Résultat historique
++  communiqué par le rapport73 : 142 succès + deux skips Windows, pas un run ici.
++- Aucun changement de production, garde, runner, modèle, schéma, adaptateur,
++  C++, CMake ou assertion historique. Aucun programme enfant ajouté.
++
++## Localisation / impact
++
++`context_collector_fixtures.py` réutilise explicitement `RuntimeFixture`,
++`AdapterDouble` et `RunnerDouble`. Son vocabulaire `owned-fake` ne peut pas
++basculer vers un vrai outil. Il produit des fichiers XML possédés et des
++`ProcessOutcome` en mémoire ; les octets de cible sont non exécutables.
++Les observations proviennent du builder synthétique déjà intégré dans les tests
++du producteur : pas de copie du protocole ou d'un second parser.
++
++`test_context_collector_contract.py` exerce les vrais `prepare/build/execute`
++et `report`, les vrais XML et `parse_context_observation`. Les phases
++prepare/build sont exclusivement simulées par ces doubles. C1 exige une délégation
++par cas au parser réel du module `verification.context_evidence` ; le futur cœur
++doit le réutiliser, pas substituer le parser workload ou une validation maison.
++L'espion ne change ni le retour ni les exceptions du parser.
++
++Couverture proposée, sans prétendre COVERED avant le run lead :
++
++- C0 : contrôle du support seul, XML nominal réellement décodé par le parser
++  intégré. Attendu PASS même avant raccordement ; distingue une panne de fixture
++  d'un RED consommateur. Ce contrôle ne vaut pas exécution composée.
++- C1/A3/A5 : parcours composé PASS/0, exactement un appel réel par cas OpenGL,
++  aucun appel pour CPU ; aucun contournement de garde.
++- C2/A3/A5 : absence, doublon, troncature, identités étrangères, transfert entre
++  cas, observation dans stdout global ou un cas CPU : protocole/4.
++- C3/A5 : population mixte exacte ; CPU sans preuve GL ; dernier GPU non oublié ;
++  omission/duplication/nom étranger/découverte incohérente : 4.
++- C4/A6 : précondition structurée + skip : 3 ; assertion ailleurs + précondition :
++  5 avec les deux causes ; protocole + assertion : 4 avec les causes, population
++  et échec domaine conservés ; interruption : 130. Permutations stables.
++  `reason` ne détermine aucun statut. Précondition sans skip cohérent, skip
++  ordinaire et code8 sans assertion ne deviennent pas favorables.
++- C5/A3/A6 : JUnit absent/tronqué et `INVALID_REQUEST` brut, mode analogue à
++  `catch_exceptions=0` : 4, jamais précondition structurée fabriquée.
++- C6/A4/A5 : deux invocations CTest, request_id distinct par invocation (partagé
++  par ses cas), exacts Unicode/espaces, doublon refusé avant exécution,
++  observation d'une autre invocation rejetée. L'env_delta est fourni par le
++  double explicite ; transport des adaptateurs de production à qualifier après.
++- C7/A8 : octets JUnit/logs et code natif0 conservés malgré protocole/4 ;
++  report sans relance/sonde/écriture ; relecture après corruption XML ou identité,
++  même indexes de hashes réconciliés ; pas de cache inter-candidats favorable.
++
++Les contrôles purs list/plan et le retrait des variables héritées restent acquis
++dans leurs suites dédiées, inchangés. Le test de relecture réindexe seulement
++ses fichiers possédés pour isoler l'analyse sémantique : pas une revendication
++d'authentification cryptographique du bundle.
++
++## RED attendu, non observé
++
++Première cause statique : `evidence.execute` refuse encore toute sélection CTest
++hardware via `_unsupported_hardware_ctest`, avant adapter/enfant, code3. C1 attend
++0 ; plusieurs négatifs attendent4. Le RED attendu est ce raccordement absent,
++**jamais ImportError, fixture invalide ou absence d'adaptateur de production**.
++Même après retrait futur de la garde, `_junit` refuse encore hardware, rejette
++tous les skips via `reconcile_junit` et ne lit pas les observations structurées.
++`reporting` vérifie les hashes/provenances mais ne rejoue pas leur sémantique
++contexte. Ces constats ne sont pas des échecs reproduits.
++
++Pas de patch/mock de `_unsupported_hardware_ctest`, pas de GREEN avant RED
++constaté par le lead et retour à l'auteur de cette même tranche.
++
++## Mapping historique soumis explicitement au lead — NON APPLIQUÉ
++
++Le test acquis
++`test_review_regressions.FreshReviewRegressionTests.test_known_unsupported_hardware_ctest_blocks_before_children_or_device_observations`
++emploie aujourd'hui un plan hardware **avec** cible, mais attend
++un refus avant tout appel d'adaptateur. Ce cas ne peut pas devenir nominal
++composé tout en gardant cette attente inconditionnelle.
++
++Proposition bornée à ratifier avant toute édition : renommer cette méthode pour
++le refus d'une **cible hardware absente**, et remplacer seulement `target=True`
++par `target=False` dans sa construction de fixture. Conserver intégralement les
++assertions BLOCKED/3, absence de commande enfant, de sonde de révision, d'appel
++adaptateur et de parser. Cette précondition reste testable avant tout travail,
++et C1/C2 prennent explicitement en charge la cible présente et le vrai contexte.
++Cela n'autorise pas à affaiblir le refus avant travail pour un plan sans cible.
++Aucune modification de ce test acquis ici.
++
++La garde CLI, si présente, ne se retire qu'avec un GREEN composé observé et la
++non-régression/mapping accepté. La seule importabilité du parser ne suffit pas.
++
++## Commandes exactes proposées au lead (pas exécutées)
++
++Depuis la racine de ce candidat intégré, une commande à la fois, journaliser
++sous un nouveau `out/verification-synthetic/context-collector-<UTC>/` :
++
++```powershell
++& C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_core -p test_context_collector_contract.py -v
++```
++
++Attendu initial : C0 passe ; C1 et les tests consommateurs révèlent le code3 de
++la garde. Aucun nombre d'échecs observé n'est annoncé. Le lead conserve stdout,
++stderr, code de sortie, HEAD/diff et hashes ; analyser le premier échec causal
++avec Context Mode. Après seulement RED observé et GREEN reçu, non-régression
++séquentielle des suites synthétiques existantes :
++
++```powershell
++& C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_core -p test_*.py -v
++& C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_context -p test_*.py -v
++& C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_scenarios -p test_*.py -v
++```
++
++L'interpréteur à ce chemin existe sur l'hôte auteur ; aucune autre plateforme
++n'a été interrogée. Les commandes Python de syntaxe ne qualifient ni compilateur,
++STL C++23, ABI, générateur, dépendances natives ou compilation database.
++CMake/presets/Conan/CI existants consultés, sans configuration ni modification.
++Conan2 avant CMake et ADR0008 restent inchangés ; aucune commande native proposée.
++
++## Confinement et limites
++
++Toutes les créations des tests se situent dans les `TemporaryDirectory`
++possédés de `RuntimeFixture`, supprimés par `addCleanup`. Pas de sous-processus,
++parent/descendant réel, junction, symlink, grant, réseau, cloud ou installation.
++Sentinelles contre `Popen`, `subprocess.run`, `os.system` et connexion réseau.
++Aucune réservation GPU réelle ; seuls les verrous locaux du bundle factice sont
++utilisés. Les commandes de non-régression déjà acquises peuvent employer leurs
++programmes factices préexistants, sous le contrôle du lead, pas de l'auteur.
++
++Matrice réellement exercée : Windows, diagnostic syntaxique Python seulement.
++Tests synthétiques **NON_EXECUTE** ; Windows/Linux natif, moteur CPU, OpenGL
++logiciel/matériel, rendu, benchmark : **NON_EXECUTE**. Les preuves compiler/STL,
++CTest et clangd ne sont ni nécessaires ni autorisées dans cette remise.
++Statut : **livré pour observation du RED**, pas pipeline livré pour qualification
++complète, pas fonctionnement démontré. Le GREEN et la revue indépendante restent
++aux barrières du lead ; aucun contournement de la QA projet n'est revendiqué.
+diff --git a/scripts/tests/verification_core/CONTEXT_CONSUMER_PLAN.md b/scripts/tests/verification_core/CONTEXT_CONSUMER_PLAN.md
+index 8922d37db42ced83e0e2661b7addb2899856e17f..ec393058f107e0e45b9e838c0facc0ee6dc7f5a0 100644
+--- a/scripts/tests/verification_core/CONTEXT_CONSUMER_PLAN.md
++++ b/scripts/tests/verification_core/CONTEXT_CONSUMER_PLAN.md
+@@ -1,5 +1,25 @@
+ # Proposition de tests consommateur — contexte CTest historique
+ 
++## Actualisation 2026-10-30 — tranche collecteur admise
++
++Le worktree de pool-15 part de `3bd72fcaa696c822ac6ca79474425823e1e2f302` ;
++les ancêtres `107a2d3bbd88ba95a2eb70e904085911b71662bd` (fondations) et
++`91c5ac23bf17d4d88dd36699cb7d15a6d6835872` (producteur/parser) ont été vérifiés.
++Les rapports 60/61/73 et contrat §8 / QA §10 sont reçus dans cet arbre.
++Les conditions historiques R1/R2 ci-dessous sont donc dépassées, pas des blocages
++à reproduire. Les adaptateurs de production restent une composition ultérieure,
++pas une précondition des doubles explicites du collecteur.
++
++La proposition est maintenant matérialisée par
++`test_context_collector_contract.py` et `context_collector_fixtures.py` :
++21 méthodes proposées C0–C7, aucun run auteur. Statut **TESTS_RED_READY**,
++pas RED observé et aucun GREEN anticipé. Remise, commandes, confinement et
++mapping d'une assertion historique devenue conditionnelle :
++`CONTEXT_COLLECTOR_RED_READY.md`. Le reste de ce document conserve le contexte
++de la proposition initiale ; ses anciens comptages ne sont pas ceux du candidat.
++
++## Proposition historique conservée
++
+ Statut : préparation documentaire uniquement, pas RED_READY exécutable.
+ Base cœur locale : `b48947abecf7f65f48a92df8a9691dccdadf4ac9` (R2 remis,
+ GREEN à observer par le lead). R1 reste bloquant et sans implémentation anticipée.
+diff --git a/scripts/tests/verification_core/context_collector_fixtures.py b/scripts/tests/verification_core/context_collector_fixtures.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..7980659559e0592686b435f71f19d7b613ff7d13
+--- /dev/null
++++ b/scripts/tests/verification_core/context_collector_fixtures.py
+@@ -0,0 +1,133 @@
++"""Owned data/file doubles for the context consumer; never start a process.
++
++Reuse RuntimeFixture and the producer's existing synthetic observation builder.
++No parallel context schema/parser, native adapter, executable or GL fixture.
++"""
++from dataclasses import replace
++import json
++from pathlib import Path
++import xml.etree.ElementTree as ET
++
++from verification import evidence
++from verification.model import ProcessOutcome
++from runtime_fixtures import AdapterDouble, RunnerDouble, RuntimeFixture
++from scripts.tests.verification_context.test_context_evidence import encoded, observation
++
++
++class ContextAdapterDouble(AdapterDouble):
++    def collect_environment(self):
++        self.calls.append('environment')
++        return {'platform': self.fixture.plan.request.platform,
++                'python': 'synthetic interpreter', 'variables': {}}
++
++    def describe_execution(self, plan, build):
++        self.calls.append('run')
++        commands = [self.command(('owned-fake', 'discover', '--show-only=json-v1'), 'run')]
++        names = self.fixture.names
++        groups = (names,) if not self.fixture.split else (names[:1], names[1:])
++        for index, group in enumerate(groups):
++            request_id = build.run_id + '-owned-invocation-' + str(0 if self.fixture.duplicate_request else index)
++            path = Path(build.details['bundle']) / 'raw' / ('context-' + str(index) + '.xml')
++            delta = {
++                'ARTIST_VERIFICATION_CONTEXT_V1': plan.request.profile,
++                'ARTIST_VERIFICATION_RUN_ID': build.run_id,
++                'ARTIST_VERIFICATION_PLAN_SHA256': plan.plan_sha256,
++                'ARTIST_VERIFICATION_REQUEST_ID': request_id,
++                'ARTIST_VERIFICATION_EXPECTED_GL_VENDOR': plan.request.expected_gl_vendor,
++                'ARTIST_VERIFICATION_EXPECTED_GL_RENDERER': plan.request.expected_gl_renderer,
++            }
++            self.fixture.groups[str(path)] = tuple(group)
++            command = self.command(('owned-fake', 'ctest', '--no-tests=error',
++                                    '--output-junit', str(path)), 'run')
++            commands.append(replace(command, env_delta=delta))
++        return tuple(commands)
++
++
++class ContextRunnerDouble(RunnerDouble):
++    def run(self, command):
++        # This vocabulary is deliberately not executable, even if a real runner
++        # were accidentally substituted. No fallback or subprocess factory.
++        if command.argv[0] != 'owned-fake':
++            raise AssertionError('context fixture refuses every external tool')
++        if command.argv[1] != 'ctest':
++            return super().run(command)
++        self.calls.append(command)
++        fixture = self.fixture
++        path = Path(self.option(command.argv, '--output-junit'))
++        names = fixture.groups[str(path)]
++        if fixture.reverse:
++            names = tuple(reversed(names))
++        suite = ET.Element('testsuite')
++        expected = {}
++        for name in names:
++            case = ET.SubElement(suite, 'testcase', name=name)
++            if name.startswith('opengl.'):
++                identity = fixture.expected(command, name)
++                expected[name] = identity
++                ET.SubElement(case, 'system-out').text = encoded(observation(identity))
++        if fixture.mutation:
++            fixture.mutation(suite, expected)
++        if fixture.xml_mode != 'absent':
++            data = (b'<testsuite><testcase' if fixture.xml_mode == 'truncated'
++                    else ET.tostring(suite, encoding='utf-8', xml_declaration=True))
++            with path.open('xb') as stream:
++                stream.write(data)
++            fixture.raw[path] = data
++        stdout = 'owned CTest stdout, not a GL observation\n' + fixture.global_output
++        return ProcessOutcome(fixture.returncode, stdout, 'owned CTest stderr\n',
++                              False, fixture.interrupted)
++
++
++class ContextFixture(RuntimeFixture):
++    def __init__(self, *, split=False, reverse=False):
++        super().__init__(profile='opengl-hardware', scenario='gl.float-lifetime',
++                         target=(' Exact Véndor ', '\u00a0Exact Renderer \U0001f680 '))
++        self.names = tuple(self.plan.scenarios[0].producer['names'])
++        self.split, self.reverse = split, reverse
++        self.groups, self.raw = {}, {}
++        self.duplicate_request = False
++        self.mutation = None
++        self.xml_mode = 'valid'
++        self.returncode, self.interrupted = 0, False
++        self.global_output = ''
++        self.runner, self.adapter = ContextRunnerDouble(self), ContextAdapterDouble(self)
++        self.sink = evidence.BundleSink(self.root, self.output, runner=self.runner,
++                                        revision_reader=self.revision)
++
++    def expected(self, command, name):
++        return dict(run_id=self.sink.run_id, plan_sha256=self.plan.plan_sha256,
++                    request_id=command.env_delta['ARTIST_VERIFICATION_REQUEST_ID'],
++                    ctest_name=name, profile='opengl-hardware',
++                    expected_gl_vendor=self.plan.request.expected_gl_vendor,
++                    expected_gl_renderer=self.plan.request.expected_gl_renderer)
++
++
++def gpu_cases(suite):
++    return [case for case in suite if case.attrib['name'].startswith('opengl.')]
++
++
++def unavailable(case, expected, *, reason='owned context unavailable'):
++    value = observation(expected)
++    for key in ('gl_vendor', 'gl_renderer', 'gl_version', 'context_major',
++                'context_minor', 'context_profile_mask'):
++        value[key] = None
++    value.update(context_current=False, qualification='UNVERIFIED',
++                 precondition='UNAVAILABLE', reason=reason)
++    case.find('system-out').text = encoded(value)
++    ET.SubElement(case, 'skipped').text = 'owned synthetic refusal before body'
++
++
++def reindex_owned_artifact(fixture, path):
++    """Keep receipt/hash indexes consistent to isolate semantic report replay.
++
++    This is a test mutation, not a production signing or trust mechanism.
++    """
++    manifest_path = fixture.sink.bundle / 'manifest.json'
++    manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
++    relative = path.relative_to(fixture.sink.bundle).as_posix()
++    digest = fixture.hash(path)
++    manifest['artifacts'][relative] = digest
++    for receipt in manifest['receipts'].values():
++        if relative in receipt['artifacts']:
++            receipt['artifacts'][relative] = digest
++    manifest_path.write_text(json.dumps(manifest), encoding='utf-8')
+diff --git a/scripts/tests/verification_core/test_context_collector_contract.py b/scripts/tests/verification_core/test_context_collector_contract.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..37f072d125af85cb9e74e787af0cfcfc3359777b
+--- /dev/null
++++ b/scripts/tests/verification_core/test_context_collector_contract.py
+@@ -0,0 +1,398 @@
++"""C1-C7 / QA A3-A8: composed context consumer, synthetic data only.
++
++Author proposes; lead runs. No guard is bypassed and no acquired test is edited.
++All phases use RuntimeFixture-derived explicit doubles, real JUnit files and
++the integrated pure context parser. No child, CTest, engine, GL or build tool.
++"""
++from contextlib import ExitStack
++import json
++from pathlib import Path
++import sys
++import unittest
++from unittest.mock import patch
++import xml.etree.ElementTree as ET
++
++sys.dont_write_bytecode = True
++SCRIPTS = Path(__file__).resolve().parents[2]
++sys.path.insert(0, str(SCRIPTS.parent))
++sys.path.insert(0, str(SCRIPTS))
++
++from verification import context_evidence, evidence, reporting
++from context_collector_fixtures import (ContextFixture, encoded, gpu_cases,
++                                       observation, reindex_owned_artifact, unavailable)
++
++REAL_CONTEXT_PARSER = context_evidence.parse_context_observation
++
++
++class ContextCollectorContractTests(unittest.TestCase):
++    def setUp(self):
++        # Fail closed on accidental external execution, including the read-only
++        # report tests. The explicit fake runner itself only writes owned files.
++        for target in ('subprocess.Popen', 'subprocess.run', 'os.system',
++                       'socket.create_connection'):
++            self.enterContext(patch(target, side_effect=AssertionError('external effect forbidden')))
++
++    def fixture(self, **kwargs):
++        fixture = ContextFixture(**kwargs)
++        self.addCleanup(fixture.close)
++        return fixture
++
++    def built(self, fixture):
++        prepared = evidence.prepare(fixture.plan, fixture.adapter, fixture.sink)
++        self.assertEqual(prepared.state, 'COMPLETED', 'owned synthetic preparation must succeed')
++        built = evidence.build(fixture.plan, prepared, fixture.adapter, fixture.sink)
++        self.assertEqual(built.state, 'COMPLETED', 'owned synthetic build must succeed')
++        return built
++
++    def execute(self, fixture):
++        built = self.built(fixture)
++        receipt = evidence.execute(fixture.plan, built, fixture.adapter, fixture.sink)
++        return receipt, fixture.sink.manifest
++
++    def classified(self, fixture, code, *, causes=()):
++        receipt, manifest = self.execute(fixture)
++        self.assertEqual(manifest['exit_code'], code, manifest['causes'])
++        self.assertEqual(receipt.details['exit_code'], code)
++        self.assertTrue(set(causes).issubset({cause['exit_code'] for cause in manifest['causes']}))
++        if code:
++            self.assertNotEqual(manifest['test_verdict'], 'PASS')
++        return manifest
++
++    def population(self, fixture):
++        path = fixture.sink.bundle / 'raw' / 'ctest-population.json'
++        self.assertTrue(path.is_file(), 'keep parsed population even when a context is unavailable/invalid')
++        return json.loads(path.read_text(encoding='utf-8'))
++
++    def readonly_report(self, fixture):
++        def snapshot():
++            return {p.relative_to(fixture.root).as_posix():
++                    (p.read_bytes(), p.stat().st_mtime_ns)
++                    for p in fixture.root.rglob('*') if p.is_file()}
++        before = snapshot()
++        with ExitStack() as stack:
++            stack.enter_context(patch.object(fixture.runner, 'run', side_effect=AssertionError('no relaunch')))
++            stack.enter_context(patch.object(type(fixture.revision), '__call__', side_effect=AssertionError('no revision probe')))
++            stack.enter_context(patch.object(evidence, '_snapshot', side_effect=AssertionError('no live revision snapshot')))
++            stack.enter_context(patch.object(evidence, '_write_json', side_effect=AssertionError('no report write')))
++            result = reporting.report(fixture.sink.bundle)
++        self.assertEqual(snapshot(), before, 'report must not alter files or create cached evidence')
++        return result
++
++    def test_c0_fixture_roundtrip_is_valid_real_junit_and_real_parser_without_consumer(self):
++        fixture = self.fixture()
++        built = self.built(fixture)
++        commands = fixture.adapter.describe_execution(fixture.plan, built)
++        for command in commands:
++            fixture.runner.run(command)  # Data/file double only; not evidence.execute.
++        seen = []
++        for command in commands:
++            if command.argv[1] != 'ctest':
++                continue
++            for case in ET.parse(Path(command.argv[-1])).iter('testcase'):
++                name = case.attrib['name']
++                if name.startswith('opengl.'):
++                    value = REAL_CONTEXT_PARSER(case.findtext('system-out'),
++                                                expected=fixture.expected(command, name))
++                    self.assertEqual(value['qualification'], 'MATCHED_EXPECTATION')
++                else:
++                    self.assertIsNone(case.find('system-out'))
++                seen.append(name)
++        self.assertCountEqual(seen, fixture.names)
++
++    def test_c1_nominal_composed_execution_calls_real_parser_per_gpu_case(self):
++        fixture = self.fixture()
++        with patch.object(context_evidence, 'parse_context_observation', wraps=REAL_CONTEXT_PARSER) as parser:
++            manifest = self.classified(fixture, 0)
++            calls = list(parser.call_args_list)
++        self.assertEqual((manifest['pipeline_state'], manifest['test_verdict'],
++                          manifest['measurement_validity']), ('COMPLETED', 'PASS', 'NOT_REQUESTED'))
++        names = [name for name in fixture.names if name.startswith('opengl.')]
++        self.assertCountEqual([call.kwargs['expected']['ctest_name'] for call in calls], names)
++        self.assertEqual(len(calls), len(names), 'one real parse per GPU case, no CPU qualification')
++        for call in calls:
++            self.assertEqual(REAL_CONTEXT_PARSER(*call.args, **call.kwargs)['precondition'], 'OK')
++        self.assertEqual(self.readonly_report(fixture)['exit_code'], 0)
++        self.assertFalse(fixture.parser.calls, 'never use the workload ParserDouble for context data')
++
++    def test_c2_absent_duplicate_truncated_and_foreign_observations_are_protocol_errors(self):
++        def mutation(mode):
++            def apply(suite, expected):
++                case = gpu_cases(suite)[0]
++                output = case.find('system-out')
++                if mode == 'absent':
++                    output.text = '[OpenGL] label is not structured evidence'
++                elif mode == 'duplicate':
++                    output.text += '\n' + output.text
++                elif mode == 'truncated':
++                    output.text = '[ARTIST_CONTEXT_V1] {'
++                else:
++                    value = observation(expected[case.attrib['name']])
++                    value[mode] = ('f' * 64 if mode == 'plan_sha256' else 'foreign identity')
++                    output.text = encoded(value)
++            return apply
++        for mode in ('absent', 'duplicate', 'truncated', 'run_id', 'plan_sha256',
++                     'request_id', 'ctest_name', 'expected_gl_vendor', 'expected_gl_renderer'):
++            with self.subTest(mode=mode):
++                fixture = self.fixture()
++                fixture.mutation = mutation(mode)
++                self.classified(fixture, 4, causes=(4,))
++
++    def test_c2_swapped_cases_cannot_borrow_each_others_observation(self):
++        fixture = self.fixture()
++        def mutate(suite, expected):
++            first, second = gpu_cases(suite)
++            first.find('system-out').text, second.find('system-out').text = (
++                second.findtext('system-out'), first.findtext('system-out'))
++        fixture.mutation = mutate
++        self.classified(fixture, 4)
++
++    def test_c2_global_stdout_or_cpu_case_is_not_gpu_system_out(self):
++        for destination in ('global', 'cpu'):
++            with self.subTest(destination=destination):
++                fixture = self.fixture()
++                def mutate(suite, expected):
++                    case = gpu_cases(suite)[0]
++                    line = case.findtext('system-out')
++                    case.find('system-out').text = 'no context here'
++                    if destination == 'cpu':
++                        cpu = next(item for item in suite if item.attrib['name'].startswith('unit.'))
++                        ET.SubElement(cpu, 'system-out').text = line
++                    else:
++                        fixture.global_output = line
++                fixture.mutation = mutate
++                self.classified(fixture, 4)
++
++    def test_c3_mixed_population_cpu_cases_need_no_context(self):
++        fixture = self.fixture()
++        self.classified(fixture, 0)
++        summary = self.population(fixture)
++        self.assertEqual(summary['executed'], len(fixture.names))
++        self.assertTrue(summary['population_matches'])
++        self.assertTrue(any(name.startswith('unit.') for name in summary['selected_names']))
++        for path in fixture.raw:
++            for case in ET.parse(path).iter('testcase'):
++                if case.attrib['name'].startswith('unit.'):
++                    self.assertIsNone(case.find('system-out'))
++
++    def test_c3_every_gpu_case_requires_its_own_observation_including_the_last(self):
++        fixture = self.fixture()
++        fixture.mutation = lambda suite, expected: setattr(gpu_cases(suite)[-1].find('system-out'),
++                                                          'text', 'last case has no observation')
++        self.classified(fixture, 4)
++
++    def test_c3_missing_duplicated_foreign_cases_and_discovery_mismatch_refuse_success(self):
++        for mode in ('missing', 'duplicate', 'foreign', 'discovery'):
++            with self.subTest(mode=mode):
++                fixture = self.fixture()
++                def mutate(suite, expected):
++                    first = gpu_cases(suite)[0]
++                    if mode == 'missing':
++                        suite.remove(first)
++                    elif mode == 'duplicate':
++                        suite.append(ET.fromstring(ET.tostring(first)))
++                    elif mode == 'foreign':
++                        first.set('name', 'opengl.Foreign.Unselected')
++                if mode == 'discovery':
++                    fixture.runner.discovery_names = fixture.names[1:]
++                fixture.mutation = mutate
++                self.classified(fixture, 4)
++
++    def test_c4_structured_unavailable_with_skip_is_precondition_not_oracle_failure(self):
++        fixture = self.fixture()
++        def mutate(suite, expected):
++            case = gpu_cases(suite)[0]
++            unavailable(case, expected[case.attrib['name']])
++        fixture.mutation = mutate
++        manifest = self.classified(fixture, 3, causes=(3,))
++        self.assertEqual((manifest['pipeline_state'], manifest['test_verdict']), ('BLOCKED', 'INCONCLUSIVE'))
++        summary = self.population(fixture)
++        self.assertEqual(summary['executed'], len(fixture.names))
++        self.assertEqual(len(summary['skips']), 1)
++        self.assertEqual(self.readonly_report(fixture)['exit_code'], 3)
++
++    def test_c4_assertion_precondition_protocol_priorities_are_order_independent(self):
++        for protocol_error, expected_code in ((False, 5), (True, 4)):
++            results = []
++            for reverse in (False, True):
++                with self.subTest(protocol_error=protocol_error, reverse=reverse):
++                    fixture = self.fixture(reverse=reverse)
++                    unavailable_name, failed_name = [n for n in fixture.names if n.startswith('opengl.')]
++                    def mutate(suite, expected):
++                        by_name = {case.attrib['name']: case for case in suite}
++                        unavailable(by_name[unavailable_name], expected[unavailable_name])
++                        ET.SubElement(by_name[failed_name], 'failure').text = 'owned real JUnit assertion'
++                        if protocol_error:
++                            by_name[failed_name].find('system-out').text = '[ARTIST_CONTEXT_V1] {'
++                    fixture.mutation, fixture.returncode = mutate, 8
++                    codes = (3, 5, 4) if protocol_error else (3, 5)
++                    manifest = self.classified(fixture, expected_code, causes=codes)
++                    self.assertEqual(manifest['test_verdict'], 'FAIL', 'real assertions remain visible')
++                    summary = self.population(fixture)
++                    self.assertEqual(summary['failures'], [failed_name])
++                    self.assertEqual(summary['skips'], [unavailable_name])
++                    results.append((manifest['exit_code'], manifest['test_verdict'],
++                                    sorted(c['exit_code'] for c in manifest['causes']),
++                                    sorted(summary['selected_names']), summary['executed']))
++                    report = self.readonly_report(fixture)
++                    self.assertEqual(report['exit_code'], expected_code)
++                    self.assertTrue(set(codes).issubset({c['exit_code'] for c in report['causes']}))
++            self.assertEqual(results[0], results[1])
++
++    def test_c4_reason_is_diagnostic_not_a_status_classifier(self):
++        for precondition in (False, True):
++            with self.subTest(precondition=precondition):
++                fixture = self.fixture()
++                def mutate(suite, expected):
++                    case = gpu_cases(suite)[0]
++                    if precondition:
++                        unavailable(case, expected[case.attrib['name']], reason='PASS SUCCESS all OK')
++                    else:
++                        value = observation(expected[case.attrib['name']])
++                        value['reason'] = 'UNAVAILABLE INVALID_REQUEST FAIL fatal exception'
++                        case.find('system-out').text = encoded(value)
++                fixture.mutation = mutate
++                self.classified(fixture, 3 if precondition else 0)
++
++    def test_c4_ordinary_skip_and_incompatible_native_code_are_not_favorable(self):
++        for mode in ('ordinary-skip', 'nonzero-without-failure'):
++            with self.subTest(mode=mode):
++                fixture = self.fixture()
++                if mode == 'ordinary-skip':
++                    fixture.mutation = lambda suite, expected: ET.SubElement(gpu_cases(suite)[0], 'skipped')
++                else:
++                    fixture.returncode = 8
++                self.classified(fixture, 4)
++
++    def test_c4_unavailable_without_coherent_skip_is_not_a_valid_precondition(self):
++        fixture = self.fixture()
++        def mutate(suite, expected):
++            case = gpu_cases(suite)[0]
++            unavailable(case, expected[case.attrib['name']])
++            case.remove(case.find('skipped'))
++        fixture.mutation = mutate
++        self.classified(fixture, 4)
++
++    def test_c4_interruption_outranks_protocol_and_assertion_in_any_order(self):
++        for reverse in (False, True):
++            with self.subTest(reverse=reverse):
++                fixture = self.fixture(reverse=reverse)
++                def mutate(suite, expected):
++                    case = gpu_cases(suite)[0]
++                    case.find('system-out').text = '[ARTIST_CONTEXT_V1] {'
++                    ET.SubElement(case, 'failure').text = 'owned assertion before interruption'
++                fixture.mutation = mutate
++                fixture.interrupted, fixture.returncode = True, 130
++                manifest = self.classified(fixture, 130, causes=(130,))
++                self.assertEqual(manifest['pipeline_state'], 'INTERRUPTED')
++                self.assertEqual(self.readonly_report(fixture)['exit_code'], 130)
++
++    def test_c5_catch_exceptions_zero_missing_truncated_or_raw_invalid_request_is_not_precondition(self):
++        for mode in ('absent', 'truncated', 'raw-invalid-request'):
++            with self.subTest(mode=mode):
++                fixture = self.fixture()
++                fixture.returncode = 8
++                if mode == 'raw-invalid-request':
++                    def mutate(suite, expected):
++                        for case in gpu_cases(suite):
++                            case.find('system-out').text = '[ARTIST_CONTEXT_V1] INVALID_REQUEST'
++                            ET.SubElement(case, 'skipped')
++                    fixture.mutation = mutate
++                else:
++                    fixture.xml_mode = mode
++                self.classified(fixture, 4, causes=(4,))
++                self.assertFalse(any(c['exit_code'] == 3 for c in fixture.sink.manifest['causes']),
++                                 'never invent a structured precondition from raw text or missing JUnit')
++
++    def test_c6_distinct_ctest_invocations_bind_exact_declared_targets_and_request_ids(self):
++        fixture = self.fixture(split=True)
++        self.classified(fixture, 0)
++        commands = [command for command in fixture.runner.calls if command.argv[1] == 'ctest']
++        self.assertEqual(len(commands), 2)
++        identities = [command.env_delta['ARTIST_VERIFICATION_REQUEST_ID'] for command in commands]
++        self.assertEqual(len(set(identities)), 2, 'identity is per invocation, not per case')
++        for command in commands:
++            self.assertEqual(command.env_delta['ARTIST_VERIFICATION_EXPECTED_GL_VENDOR'],
++                             fixture.plan.request.expected_gl_vendor)
++            self.assertEqual(command.env_delta['ARTIST_VERIFICATION_EXPECTED_GL_RENDERER'],
++                             fixture.plan.request.expected_gl_renderer)
++            path = Path(command.argv[-1])
++            for case in ET.parse(path).iter('testcase'):
++                if case.attrib['name'].startswith('opengl.'):
++                    parsed = REAL_CONTEXT_PARSER(case.findtext('system-out'),
++                                                 expected=fixture.expected(command, case.attrib['name']))
++                    self.assertEqual(parsed['request_id'], command.env_delta['ARTIST_VERIFICATION_REQUEST_ID'])
++
++    def test_c6_duplicate_ctest_request_identity_is_rejected_before_execution(self):
++        fixture = self.fixture(split=True)
++        fixture.duplicate_request = True
++        self.classified(fixture, 4)
++        self.assertFalse(any(command.argv[1] == 'ctest' for command in fixture.runner.calls))
++
++    def test_c6_observation_from_another_invocation_cannot_be_reused(self):
++        fixture = self.fixture(split=True)
++        def mutate(suite, expected):
++            for case in gpu_cases(suite):
++                value = observation(expected[case.attrib['name']])
++                value['request_id'] = fixture.sink.run_id + '-owned-invocation-' + (
++                    '1' if value['request_id'].endswith('-0') else '0')
++                case.find('system-out').text = encoded(value)
++        fixture.mutation = mutate
++        self.classified(fixture, 4)
++
++    def test_c7_rejected_protocol_preserves_exact_raw_junit_streams_and_native_code(self):
++        fixture = self.fixture()
++        fixture.mutation = lambda suite, expected: setattr(gpu_cases(suite)[0].find('system-out'), 'text',
++                                                          '[ARTIST_CONTEXT_V1] {')
++        self.classified(fixture, 4)
++        self.assertTrue(fixture.raw)
++        manifest = fixture.sink.manifest
++        for path, original in fixture.raw.items():
++            self.assertEqual(path.read_bytes(), original)
++            self.assertEqual(manifest['artifacts'][path.relative_to(fixture.sink.bundle).as_posix()], fixture.hash(path))
++        records = [json.loads(line) for line in (fixture.sink.bundle / 'commands.jsonl').read_text().splitlines()]
++        ctest = next(record for record in records if record['argv'][1] == 'ctest')
++        self.assertEqual(ctest['returncode'], 0, 'protocol rejection must not invent a native exit')
++        self.assertEqual((fixture.sink.bundle / ctest['stdout_log']).read_bytes(),
++                         b'owned CTest stdout, not a GL observation\n')
++        self.assertEqual((fixture.sink.bundle / ctest['stderr_log']).read_bytes(), b'owned CTest stderr\n')
++        self.assertEqual(self.readonly_report(fixture)['exit_code'], 4)
++
++    def test_c7_report_rejects_modified_junit_even_with_self_consistent_hash_indexes(self):
++        for mutation in ('malformed', 'foreign-identity'):
++            with self.subTest(mutation=mutation):
++                fixture = self.fixture()
++                self.classified(fixture, 0)
++                self.assertEqual(self.readonly_report(fixture)['exit_code'], 0)
++                path = next(iter(fixture.raw))
++                tree = ET.parse(path)
++                case = next(case for case in tree.iter('testcase') if case.attrib['name'].startswith('opengl.'))
++                if mutation == 'malformed':
++                    case.find('system-out').text = '[ARTIST_CONTEXT_V1] {'
++                else:
++                    command = next(c for c in fixture.runner.calls if c.argv[1] == 'ctest')
++                    value = observation(fixture.expected(command, case.attrib['name']))
++                    value['request_id'] = 'foreign-persisted-request'
++                    case.find('system-out').text = encoded(value)
++                tree.write(path, encoding='utf-8', xml_declaration=True)
++                reindex_owned_artifact(fixture, path)
++                result = self.readonly_report(fixture)
++                self.assertEqual(result['exit_code'], 4, 'report must replay context semantics, not cached PASS or hashes alone')
++                self.assertNotEqual(result['test_verdict'], 'PASS')
++
++    def test_c7_second_candidate_does_not_reuse_first_context_qualification(self):
++        first = self.fixture()
++        self.classified(first, 0)
++        second = self.fixture()
++        def mutate(suite, expected):
++            for case in gpu_cases(suite):
++                value = observation(expected[case.attrib['name']])
++                value['run_id'] = first.sink.run_id
++                case.find('system-out').text = encoded(value)
++        second.mutation = mutate
++        self.classified(second, 4)
++        self.assertNotEqual(first.sink.run_id, second.sink.run_id)
++        self.assertEqual(self.readonly_report(first)['exit_code'], 0)
++
++
++if __name__ == '__main__':
++    unittest.main()

@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "purpose": "Inert preservation of superseded proposals, not active pipeline code",
+  "main_before_archives": "83c29f16c97cc4f2217b64e26b13afc79b396e0b",
+  "patches": [
+    {
+      "worker": "pool-13",
+      "source_ref": "refs/heads/ensemble-a699abb2-9d41-4287-b050-11c0fb3384f5",
+      "source_head": "f2810779235273c984b5a5e4d937fbef77221d73",
+      "commit": "f2810779235273c984b5a5e4d937fbef77221d73",
+      "archive": "research/mission-uniform-pipeline-closure/pool-13/commits/f2810779235273c984b5a5e4d937fbef77221d73.patch",
+      "sha256": "5524ffec5997fb991dfb85b2a08590451986bba0f65a7c8fe21da6aaf7db97b7",
+      "bytes": 21229,
+      "restored_tree": "242eae9e15495cbc2b9884344fc913a05ce99a95",
+      "expected_tree": "242eae9e15495cbc2b9884344fc913a05ce99a95"
+    },
+    {
+      "worker": "pool-15",
+      "source_ref": "refs/heads/ensemble-d3731b04-0a47-4a5d-80b5-5eddc902a58a",
+      "source_head": "d4f697bcc9fae3507bfbde3519e888d13d7cd051",
+      "commit": "d4f697bcc9fae3507bfbde3519e888d13d7cd051",
+      "archive": "research/mission-uniform-pipeline-closure/pool-15/commits/d4f697bcc9fae3507bfbde3519e888d13d7cd051.patch",
+      "sha256": "eacc9287be3d345f5c778624ebef91bf1c96021d05a403625990cb19212db73a",
+      "bytes": 41585,
+      "restored_tree": "8183ece102a21fdefc3e513e8418d28e42d98183",
+      "expected_tree": "8183ece102a21fdefc3e513e8418d28e42d98183"
+    },
+    {
+      "worker": "pool-29",
+      "source_ref": "refs/heads/pool29-linux-binding-red",
+      "source_head": "591f0fe6e8200f5a86b0f2035918e8d2094dcebb",
+      "commit": "591f0fe6e8200f5a86b0f2035918e8d2094dcebb",
+      "archive": "research/mission-uniform-pipeline-closure/pool-29/commits/591f0fe6e8200f5a86b0f2035918e8d2094dcebb.patch",
+      "sha256": "1cf280a1052769bfff1bbed019a9337b41ad2d7281d1e482348b807b743b94ff",
+      "bytes": 58076,
+      "restored_tree": "4b959e43365d867302a77f4c0363eb87d000f7af",
+      "expected_tree": "4b959e43365d867302a77f4c0363eb87d000f7af"
+    },
+    {
+      "worker": "pool-6",
+      "source_ref": "refs/heads/ensemble-36be9100-a943-4d6d-8143-e6825befb5cb",
+      "source_head": "f6a2be0570324f79cf9f3b516b32126dc7c7eb4d",
+      "commit": "c32dc75f26fe8f6014d418b50eef3c3c5080a557",
+      "archive": "research/mission-uniform-pipeline-closure/pool-6/commits/c32dc75f26fe8f6014d418b50eef3c3c5080a557.patch",
+      "sha256": "f98bce5e281da22673de9d400a72dd7a209d9eb0de41cab010a8abbc4bfb8ae1",
+      "bytes": 11674,
+      "restored_tree": "5f91ed198fd86563e9bf5d77d6591d862c4c4825",
+      "expected_tree": "5f91ed198fd86563e9bf5d77d6591d862c4c4825"
+    },
+    {
+      "worker": "pool-6",
+      "source_ref": "refs/heads/ensemble-36be9100-a943-4d6d-8143-e6825befb5cb",
+      "source_head": "f6a2be0570324f79cf9f3b516b32126dc7c7eb4d",
+      "commit": "01e970b682a90d32e1be71ad997475c9d206bf2c",
+      "archive": "research/mission-uniform-pipeline-closure/pool-6/commits/01e970b682a90d32e1be71ad997475c9d206bf2c.patch",
+      "sha256": "96eac68d043380d4d5ce59e8ba6ab6b9da2da6f7e0f9b06dacbd6362b0202215",
+      "bytes": 9954,
+      "restored_tree": "2f526292f62c3a3061aa4d5cdb568c2c10062130",
+      "expected_tree": "2f526292f62c3a3061aa4d5cdb568c2c10062130"
+    },
+    {
+      "worker": "pool-6",
+      "source_ref": "refs/heads/ensemble-36be9100-a943-4d6d-8143-e6825befb5cb",
+      "source_head": "f6a2be0570324f79cf9f3b516b32126dc7c7eb4d",
+      "commit": "b96df6530e486c6057e8ad7e7414a4a4946110a9",
+      "archive": "research/mission-uniform-pipeline-closure/pool-6/commits/b96df6530e486c6057e8ad7e7414a4a4946110a9.patch",
+      "sha256": "fe9a11a7e3dac378c7d8072d3d5207088b82cea80b9840d559f9b206076a8254",
+      "bytes": 33440,
+      "restored_tree": "ed6ea70c033872e24ff41f5dee840007e705de21",
+      "expected_tree": "ed6ea70c033872e24ff41f5dee840007e705de21"
+    },
+    {
+      "worker": "pool-6",
+      "source_ref": "refs/heads/ensemble-36be9100-a943-4d6d-8143-e6825befb5cb",
+      "source_head": "f6a2be0570324f79cf9f3b516b32126dc7c7eb4d",
+      "commit": "d47855057789cc62392e1ca7f74b2077ea6616a2",
+      "archive": "research/mission-uniform-pipeline-closure/pool-6/commits/d47855057789cc62392e1ca7f74b2077ea6616a2.patch",
+      "sha256": "c0ff952b4307ff17ca095e4b3a329039c496817368645938749af32999e6e9d6",
+      "bytes": 10325,
+      "restored_tree": "37238793e1719d010120cf24ab24adde258eb81d",
+      "expected_tree": "37238793e1719d010120cf24ab24adde258eb81d"
+    },
+    {
+      "worker": "pool-6",
+      "source_ref": "refs/heads/ensemble-36be9100-a943-4d6d-8143-e6825befb5cb",
+      "source_head": "f6a2be0570324f79cf9f3b516b32126dc7c7eb4d",
+      "commit": "b484f026b2a715c868b1b29b7a80fde23371a56e",
+      "archive": "research/mission-uniform-pipeline-closure/pool-6/commits/b484f026b2a715c868b1b29b7a80fde23371a56e.patch",
+      "sha256": "81389ded0b382da3ffeac54517758e6f7e650c85f073abe05a6707bdf80f4439",
+      "bytes": 44771,
+      "restored_tree": "348b163eb5b9f44fa5be1d669ae1a8e22a00336d",
+      "expected_tree": "348b163eb5b9f44fa5be1d669ae1a8e22a00336d"
+    },
+    {
+      "worker": "pool-6",
+      "source_ref": "refs/heads/ensemble-36be9100-a943-4d6d-8143-e6825befb5cb",
+      "source_head": "f6a2be0570324f79cf9f3b516b32126dc7c7eb4d",
+      "commit": "f6a2be0570324f79cf9f3b516b32126dc7c7eb4d",
+      "archive": "research/mission-uniform-pipeline-closure/pool-6/commits/f6a2be0570324f79cf9f3b516b32126dc7c7eb4d.patch",
+      "sha256": "2e1e13c92a0f51e2ff70267b08308b87c9e6787a8990366ae0694eee9e2ef740",
+      "bytes": 12138,
+      "restored_tree": "6f58462d2819a77883839d7ba4b3a78e00d4bc2b",
+      "expected_tree": "6f58462d2819a77883839d7ba4b3a78e00d4bc2b"
+    }
+  ],
+  "snapshots": [
+    {
+      "worker": "pool-19",
+      "original_path": "scripts/build-linux.py",
+      "archive": "research/mission-uniform-pipeline-closure/pool-19/working-tree/scripts/build-linux.py.snapshot",
+      "sha256": "36efceac596a524a5a4f34a96216e7e0e63dbc55c06ba6fc65f2cc3c758d8282",
+      "bytes": 3684,
+      "restored_equal": true
+    },
+    {
+      "worker": "pool-19",
+      "original_path": "scripts/tests/verification_linux/LINUX_ADAPTER_PLAN.md",
+      "archive": "research/mission-uniform-pipeline-closure/pool-19/working-tree/scripts/tests/verification_linux/LINUX_ADAPTER_PLAN.md.snapshot",
+      "sha256": "51fa4997d4c505c1f662e5ca378f6a5508651baa16449ed078a18ce5f21434ff",
+      "bytes": 1974,
+      "restored_equal": true
+    },
+    {
+      "worker": "pool-19",
+      "original_path": "scripts/tests/verification_linux/README.md",
+      "archive": "research/mission-uniform-pipeline-closure/pool-19/working-tree/scripts/tests/verification_linux/README.md.snapshot",
+      "sha256": "8a017026a17c6786a87566acb1e13ebc7e7d1e4f795844f77969071c6dee1f86",
+      "bytes": 4921,
+      "restored_equal": true
+    },
+    {
+      "worker": "pool-19",
+      "original_path": "scripts/tests/verification_linux/test_adapter.py",
+      "archive": "research/mission-uniform-pipeline-closure/pool-19/working-tree/scripts/tests/verification_linux/test_adapter.py.snapshot",
+      "sha256": "2e786896c1d5b2cf79b8ab5d3a25355f4825298f21c7c5ad6a15305519885d42",
+      "bytes": 16602,
+      "restored_equal": true
+    },
+    {
+      "worker": "pool-19",
+      "original_path": "scripts/tests/verification_linux/test_core_composition.py",
+      "archive": "research/mission-uniform-pipeline-closure/pool-19/working-tree/scripts/tests/verification_linux/test_core_composition.py.snapshot",
+      "sha256": "57d959a5a2592605e0590236e6c286fd9a331bb235ce588086e63b78311730c7",
+      "bytes": 4605,
+      "restored_equal": true
+    },
+    {
+      "worker": "pool-19",
+      "original_path": "scripts/verification/adapters/linux.py",
+      "archive": "research/mission-uniform-pipeline-closure/pool-19/working-tree/scripts/verification/adapters/linux.py.snapshot",
+      "sha256": "35b84d3da166446dc935e38ac52437b744271965334610868e25d8187a54426a",
+      "bytes": 9671,
+      "restored_equal": true
+    }
+  ],
+  "bundle": {
+    "archive": "research/mission-uniform-pipeline-closure/history/original-worker-commits.bundle",
+    "sha256": "d535463c806835a29fe879fc9aad5cb2cf7c0128a1e8f439d3c1cd32b8daebc9",
+    "bytes": 49223,
+    "heads": "f2810779235273c984b5a5e4d937fbef77221d73 refs/heads/ensemble-a699abb2-9d41-4287-b050-11c0fb3384f5\nd4f697bcc9fae3507bfbde3519e888d13d7cd051 refs/heads/ensemble-d3731b04-0a47-4a5d-80b5-5eddc902a58a\n591f0fe6e8200f5a86b0f2035918e8d2094dcebb refs/heads/pool29-linux-binding-red\nf6a2be0570324f79cf9f3b516b32126dc7c7eb4d refs/heads/ensemble-36be9100-a943-4d6d-8143-e6825befb5cb\n",
+    "verified": true,
+    "prerequisites": "Base commits already reachable from main; see git bundle verify"
+  },
+  "raw_evidence": "out/verification-synthetic/mission-close-inventory-2026-10-30T13-43-45-896Z/preserved-originals",
+  "source_policy": "No old RED, dispatch prototype or draft is reactivated in active paths; no programs executed."
+}

@@ -1,0 +1,999 @@
+From 591f0fe6e8200f5a86b0f2035918e8d2094dcebb Mon Sep 17 00:00:00 2001
+From: denne <djoe.denne@gmail.com>
+Date: Fri, 30 Oct 2026 08:47:54 +0100
+Subject: [PATCH] test: prepare Linux adapter binding RED candidate [skip ci]
+
+---
+ .../LINUX_BINDING_RED_READY.md                | 208 +++++++++++++++
+ .../verification_linux/binding_support.py     | 181 +++++++++++++
+ .../test_binding_adapter.py                   | 243 ++++++++++++++++++
+ .../test_binding_composition.py               | 119 +++++++++
+ .../verification_linux/test_binding_helper.py | 119 +++++++++
+ .../test_binding_pure_cli.py                  |  42 +++
+ scripts/verification/adapters/linux.py        |  23 ++
+ 7 files changed, 935 insertions(+)
+ create mode 100644 scripts/tests/verification_linux/LINUX_BINDING_RED_READY.md
+ create mode 100644 scripts/tests/verification_linux/binding_support.py
+ create mode 100644 scripts/tests/verification_linux/test_binding_adapter.py
+ create mode 100644 scripts/tests/verification_linux/test_binding_composition.py
+ create mode 100644 scripts/tests/verification_linux/test_binding_helper.py
+ create mode 100644 scripts/tests/verification_linux/test_binding_pure_cli.py
+ create mode 100644 scripts/verification/adapters/linux.py
+
+diff --git a/scripts/tests/verification_linux/LINUX_BINDING_RED_READY.md b/scripts/tests/verification_linux/LINUX_BINDING_RED_READY.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..55b2a495f6fe15626c1f4574df12e598c7050c1f
+--- /dev/null
++++ b/scripts/tests/verification_linux/LINUX_BINDING_RED_READY.md
+@@ -0,0 +1,208 @@
++# Linux binding — PLAN borné et TESTS_RED_READY (pool-29)
++
++Tâche `task_mvul0bd4_0053_ptc60a`. Auteur des tests : pool-29 ; seul runner
++autorisé : lead via Context Mode. **STOP avant GREEN. Aucun test exécuté par
++l'auteur, aucun RED observé, aucun fonctionnement de production revendiqué.**
++
++## Candidat et provenance
++
++- Base exacte `8c7e51b28ae085ada2eb98c97b292fa7147e2988`, vérifiée dans ce worktree.
++  Fondations Linux Release `d2d7be7` et cœur `94e4111` déjà intégrés, non refaits.
++- Le dispatcher avait créé ce worktree propre à `a9668b9`, descendant avec delta
++  source (`runner.py` et test matériel). La branche native
++  `ensemble-0bee66a6-96eb-4c5e-9e00-fb6c145ed3b2` est préservée à ce HEAD ; la
++  branche candidate `pool29-linux-binding-red` part du pin demandé. Ce choix
++  n'annule aucun changement partagé. Le lead devra choisir explicitement la
++  base d'intégration après RED/revue ; aucun rebase/merge implicite ici.
++- Entrées lues : contrat, QA dont §11, raccordement Windows v1 au pin,
++  rapports82/85/95, helper, modèles/reçus, planning/catalogue/protocole, sink,
++  runner/CLI, CMake parents/verification, presets, Conan et CI.
++- Aucun fichier, brouillon ni résultat auteur pool-19 copié ou utilisé comme
++  preuve. Les 6 Release et 9+10 historiques restent inchangés. Le rapport82
++  porte leurs preuves lead antérieures, pas un résultat du présent candidat.
++- PM/LLM fourni : brut/retenu78, risque71, incertitude moyenne ; aucun changement
++  de modèle, grille ou statut d'ADR.
++
++## Plan proposé au lead, avant implémentation
++
++1. Relire le confinement et le contrat des nouveaux tests. Exécuter le RED avec
++   empreintes/cwd/interpréteur/journaux bruts conservés. Une panne d'import,
++   de fixture ou de garde n'est pas un RED admissible : corriger la fixture dans
++   une nouvelle tranche auteur/runner, sans implémenter le produit avant ce gate.
++2. Ratifier les deux extensions locales proposées du helper :
++   - `--build-only --target <nom>` répétable, non vide, dédupliqué dans l'ordre,
++     incompatible avec configure-only ; uniquement
++     `cmake --build --preset linux-<config> --target <cibles...> --parallel <jobs>`.
++     Ni Conan/configure/CTest/canary ASan ni création de logs implicite. Arbre
++     déjà préparé, échec explicite sans réparation.
++   - `--configure-only --verification-workloads` : configure historique avec
++     `-DARTIST_BUILD_VERIFICATION=ON`. Interdire ce flag sans configure-only,
++     ou en build-only ; cibles acceptées seulement en build-only.
++     Option cohérente avec le contrat§2 et `ARTIST/verification/CMakeLists.txt`.
++     L'intégrateur seul ajoute l'option OFF par défaut et le sous-répertoire
++     dans les CMake parents. Ces fichiers ne sont pas édités ici.
++   - Garder défaut, configure-only sans flag, Debug/Release/ASan, Conan2
++     host/build avant CMake, codes et environnement enfant historiques.
++     Le helper ASan build-only ne qualifie pas la canary.
++3. Après RED accepté et autorisation GREEN du lead : implémenter uniquement
++   `LinuxAdapter` et ces branches étroites du helper. `linux-evidence.py` et
++   presets ne nécessitent a priori aucune édition. Toute nécessité nouvelle
++   sera proposée avant édition. Aucun changement de signature, schéma, oracle
++   historique, core, Windows, C++, workflow ou CMake parent.
++4. Décrire prepare/build par le helper historique (Python courant, `-B`, argv
++   tableau, cwd source, configuration explicite). Effet `dependency-resolution`
++   déclaré uniquement à prepare ; le core applique l'opt-in avant tout enfant.
++   Le core reste seul propriétaire des bundles, leases, captures et receipts.
++5. Décrire le run direct depuis `BuildReceipt.details.executables`, jamais noms
++   de binaires devinés ; réutiliser `build_workload_argv`. IDs déterministes par
++   invocation à partir du run_id, distincts entre routes, CTest et nouveaux runs ;
++   fichiers de résultats/JUnit privés sous le bundle explicite, pas de cache
++   « dernier bundle ». Aucune écriture/sonde dans constructeur/descriptions.
++6. CTest proposé : outil `ctest` trouvé dans le PATH préparé par l'opérateur,
++   `--test-dir <build_root du reçu> -C Debug|Release`, une découverte JSON puis
++   sélection exacte non vide, regex ancrée/échappée sans syntaxe Python `(?:...)`,
++   `--no-tests=error --parallel 1` et JUnit privé. Pas de population historique
++   codée en dur. Cette résolution d'outil n'est pas une attestation du binaire
++   CTest ; qualification/version/PATH réels à établir ultérieurement.
++7. CPU sans GL/serveur X. Software explicite `LIBGL_ALWAYS_SOFTWARE=true`,
++   `GALLIUM_DRIVER=llvmpipe`. Hardware : cible exacte et six variables CTest
++   explicites ; observations réelles futures, jamais une déduction par exclusion.
++   Les argv ne contiennent ni wrapper Xvfb ni second lancement. Pour toute
++   qualification GL, l'opérateur prépare DISPLAY et le serveur X/contexte avant
++   l'invocation ; aucune installation, recherche/réparation d'affichage ou repli.
++8. `collect_environment` est distinct : métadonnées OS/architecture/Python et
++   `g++-14|cmake|conan|ninja --version` seulement, argv sans shell, timeout fini
++   <=15s, sorties traitées/bornées (proposition4096caractères par version, plus
++   métadonnées de statut bornées ; oracle4352caractères JSON par entrée), outils
++   manquants/nonzero/timeout explicitement indisponibles,
++   aucun dump d'environnement ni identité GPU/STL inventée. Ces appels sont
++   exclusivement doublés dans les tests de mission.
++9. GREEN/non-régression par lead puis revue indépendante ciblée, avant intégration.
++   Le présent arrêt livre uniquement les tests et le scaffold, pas l'adaptateur
++   de production ni une qualification native.
++
++## Premier RED attendu et scaffold
++
++`scripts/verification/adapters/linux.py` expose seulement la classe/signature
++nominales, `Path(source_root)` lexical, descriptions vides et métadonnées vides.
++Il n'exécute rien et ne valide aucune phase. Il évite un faux RED ImportError.
++Au pin, le helper ne reconnaît pas les nouveaux switches ; les tests positifs
++convertissent cet arrêt argparse en échec d'assertion contextualisé.
++
++Premières causes attendues, **non observées** : descriptions Linux vides,
++préparation core refusée pour absence de commande, flags helper absents. Les
++contrôles de pureté/consultation/rejet invalide peuvent déjà passer. Aucun nombre
++d'échecs attendu arbitraire, aucune revendication RED/GREEN sans logs du lead.
++
++## Tests et confinement
++
++- `test_binding_adapter.py` : plans/reçus réels ; pureté sans filesystem,
++  environnement, sous-processus ou collecte ; alternance des bundles ; helper,
++  cibles ordonnées ; Debug/Release ; mapping avec espaces ; builder existant ;
++  deux routes visibles ; IDs ; six variables hardware ; software explicite ;
++  CTest même arbre/configuration et sélection exacte ; métadonnées allowlistées.
++- `test_binding_helper.py` : main historique importé seulement sous sentinelles,
++  `__file__` relocalisé dans une fixture possédée ; `subprocess.run` remplacé par
++  enregistreur en mémoire. Ordre Conan/CMake host/build, nouveaux modes,
++  Debug/Release/ASan, aucune exécution/construction implicite, erreurs17/outil
++  absent et parent inchangé. Ni outil ni programme factice enfant.
++- `test_binding_composition.py` : vrais sink, plan, receipts et parser CPU.
++  `MemoryRunner` n'a aucune délégation/processus : vocabulaire fini, données
++  inertes synthétiques sous root possédée. Préparation/build/run séparés,
++  opt-in, admission du reçu, captures et code17, raw empreinté, FAIL domaine,
++  code0 sans résultat, binaire muté sans reconstruction.
++- `test_binding_pure_cli.py` : vrais list/plan ; factory d'adaptateur interdite,
++  pas d'enfant/réseau/dossier ni changement de l'arbre, unresolved conservés.
++- `binding_support.py` : seules fixtures nouvelles ; sentinelles Popen/run/call/
++  check_call/check_output, shell et sockets. Les doubles restent en processus.
++  Environnement des fixtures remplacé/restauré avec sentinelles non secrètes,
++  pour ne pas exposer le parent réel en cas d'assertion sur un collecteur fautif.
++  Fichiers exécutables synthétiques = octets inertes, jamais lancés. Aucune
++  fixture de test copiée du brouillon. Pas de fixture historique modifiée.
++
++Ces nouveaux oracles complètent les obligations S3/S7/T1/T5/T7 et les erreurs
++d'exécution déjà contractualisées. Aucun mapping/changement d'oracle ou signature
++historique proposé dans ce candidat.
++
++## Commandes exactes remises au lead — NON EXÉCUTÉES par l'auteur
++
++Depuis la racine du worktree candidat ci-dessus, sous Context Mode, après revue :
++
++```powershell
++C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_linux -p 'test_binding_*.py' -v
++```
++
++La même commande doit produire GREEN seulement après la tranche de production
++autorisée. Non-régression proposée ensuite :
++
++```powershell
++C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_linux -p 'test_*.py' -v
++```
++
++Les historiques `test_build_linux.py` (9) et `test_linux_evidence.py` (10) restent
++à exécuter séparément par le lead dans ses copies exactes/fixtures possédées,
++comme rapport82 : ne pas lancer leur découverte depuis l'arbre auteur, car ils
++créent des sorties et l'un lance un enfant Python factice. Revue de confinement
++et commandes/cwd de ces copies restent la responsabilité du runner.
++
++## Contrôle auteur réellement effectué
++
++Context Mode `ctx_execute(language="python")`, sans import de module du dépôt,
++sur les six nouveaux fichiers Python seulement : `ast.parse` et SHA256 des
++octets, comptage statique des fonctions `test_*`. Interpréteur observé
++`C:\Python313\python.exe`, Python3.13.1, `win32/nt`.
++
++**6 fichiers AST_OK ; 29 définitions test (14 adaptateur,7 composition,6 helper,
++2 CLI), zéro test découvert ou exécuté par l'auteur.** Ceci prouve seulement
++la syntaxe, pas le confinement effectif ou la validité comportementale des tests.
++
++Empreintes au contrôle AST :
++
++- `scripts/verification/adapters/linux.py` : `5d099fddcaa79b2e4a5887871519edcdc9657d2d85e4e8708d2079ee6271bed3`.
++- `binding_support.py` : `ed26fa195a37b7be0162bd03ba8599be06566fb60d03bbb6b2340a1e8e3ec356`.
++- `test_binding_adapter.py` : `b0e1ec85fbd36d51e2541e767868650deac128c73866a45b79e7a4aa1a6bebe2`.
++- `test_binding_composition.py` : `29fe72e8064cb37bd67c5c90695d4294937ebed65ff74ad1765f6a83144ab4c5`.
++- `test_binding_helper.py` : `dd1221bb50cdf1917eb82550397bf725592c79d18e7563819b04bb7952d00e64`.
++- `test_binding_pure_cli.py` : `86a180abc1dcd8c667674fb717ff839ceefb643873b6ffb63f3c640ed658bf81`.
++
++Code de diagnostic exact (racine absolue fournie au sandbox, indépendant du cwd) :
++
++```python
++import ast, hashlib, os, sys
++from pathlib import Path
++root=Path(r'C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-2dc31e0a-cwsmsw-pool-29')
++paths=[root/'scripts/verification/adapters/linux.py',root/'scripts/tests/verification_linux/binding_support.py',*sorted((root/'scripts/tests/verification_linux').glob('test_binding_*.py'))]
++print('AST ONLY: no repository import, test discovery, helper or child execution')
++print('interpreter=',sys.executable,'version=',sys.version.split()[0],'platform=',sys.platform,'os=',os.name)
++total=0
++for p in paths:
++    raw=p.read_bytes();tree=ast.parse(raw.decode('utf-8'),filename=str(p))
++    tests=[n.name for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and n.name.startswith('test_')]
++    total+=len(tests)
++    print(p.relative_to(root).as_posix(),'AST_OK','test_definitions='+str(len(tests)),'sha256='+hashlib.sha256(raw).hexdigest())
++print('test definitions only, NOT executed/discovered=',total)
++```
++
++## Limites et décision d'intégration à conserver
++
++- Au pin demandé, le runner commun hérite des variables ambiantes hors contexte
++  CTest. L'absence de variables forçant logiciel dans les **descriptions** hardware
++  ne prouve donc pas l'environnement **effectif** si le parent impose Mesa. Le
++  HEAD initial `a9668b9` avait déjà un delta runner matériel ; il n'est pas copié
++  ou revalidé ici. Réconcilier ce delta explicitement à l'intégration. Aucun
++  test nouveau ci-dessus ne prétend couvrir sa garantie effective ; aucune
++  qualification hardware ne doit être annoncée sur cette seule base.
++- Sous ce mandat, compilateur/STL C++23, générateur Ninja effectif, architecture
++  Linux x86_64/ABI libstdc++11, dépendances résolues, chemins outils réels,
++  découverte CTest native, serveur X et renderer restent NON_EXECUTE. Le profil
++  versionné déclare GCC14/C++23, mais seule la sonde compile/link existante
++  `cmake/CheckCxx23.cmake` pourra qualifier format/stacktrace. Aucun cache Windows
++  réutilisé, aucun compile_commands généré ou inventé pour clangd/Serena.
++- Serena est attaché à la racine canonique ARTIST, backend C++ seulement, pas à
++  ce pin du worktree ; aucune analyse symbolique Python/C++ probante revendiquée.
++  Les lectures ciblées du worktree font autorité. QMD n'est pas la preuve runtime
++  du candidat ; les statuts Proposed/Accepted partial restent inchangés.
++- Contrôle auteur autorisé : syntaxe AST sans import/exécution de modules du
++  dépôt, état Git et empreintes. Pas d'unittest/d'enfant factice/helper/toolchain/
++  CTest/Xvfb/moteur/GL/rendu/benchmark/install/cloud lancé. Linux natif reste
++  **NON_EXECUTE**, même si la future suite Python devient verte sous Windows.
+diff --git a/scripts/tests/verification_linux/binding_support.py b/scripts/tests/verification_linux/binding_support.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..35cb3446e34f0c66472821f285847c43675584d7
+--- /dev/null
++++ b/scripts/tests/verification_linux/binding_support.py
+@@ -0,0 +1,181 @@
++"""Owned in-process fixtures; no child, native tool, network or GL fallback.
++
++Only the lead may import/run this candidate. The author uses AST parsing only.
++"""
++from contextlib import ExitStack, contextmanager
++import importlib.util
++import json
++import os
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import unittest
++from unittest.mock import patch
++
++sys.dont_write_bytecode = True
++ROOT = Path(__file__).resolve().parents[3]
++SCRIPTS = ROOT / 'scripts'
++if str(SCRIPTS) not in sys.path:
++    sys.path.insert(0, str(SCRIPTS))
++
++from verification import catalogue, evidence, planning
++from verification.model import BuildReceipt, PreparationReceipt, ProcessOutcome, Request
++from verification.scenarios.protocol import parse_workload_result
++
++
++def option(argv, name):
++    return argv[argv.index(name) + 1]
++
++
++def repeated_options(argv, name):
++    return [argv[index + 1] for index, value in enumerate(argv) if value == name]
++
++
++def make_plan(*, profile='cpu-only', configuration='debug', scenarios=None,
++              permission=True, routes=(), measurement=False, target=True):
++    if scenarios is None:
++        scenarios = ('cpu.float-mirror',) if profile == 'cpu-only' else ('gl.float-routes-correctness',)
++    expected = {}
++    if profile == 'opengl-hardware' and target:
++        expected = dict(expected_gl_vendor='Synthetic exact vendor',
++                        expected_gl_renderer='Synthetic exact renderer')
++    request = Request('linux', profile, tuple(scenarios), configuration,
++                      routes=routes, iterations=3, repetitions=2, batch_size=16,
++                      measurement_requested=measurement,
++                      allow_dependency_resolution=permission, **expected)
++    return planning.make_plan(request, catalogue.list_scenarios())
++
++
++def receipt(root, plan, *, kind=BuildReceipt, run_id='owned-run-a', bundle=None):
++    bundle = bundle or root / 'out' / 'verification' / run_id
++    build_root = root / 'out' / 'build' / ('linux-' + plan.request.configuration)
++    executables = {
++        target: (build_root / 'admitted executable paths' / target).relative_to(root).as_posix()
++        for spec in plan.scenarios for target in spec.targets
++    }
++    details = dict(bundle=str(bundle), source_root=str(root), build_root=str(build_root),
++                   exit_code=0, identity=dict(files={path: '1' * 64 for path in executables.values()}))
++    if kind is BuildReceipt:
++        details['executables'] = executables
++    return kind(1, run_id, plan.plan_sha256,
++                'build' if kind is BuildReceipt else 'prepare', 'COMPLETED', {}, details)
++
++
++def load_helper():
++    spec = importlib.util.spec_from_file_location('pool29_linux_helper_under_test', SCRIPTS / 'build-linux.py')
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++class UnreadableEnvironment(dict):
++    def deny(self, *args, **kwargs):
++        raise AssertionError('A pure description must not observe or modify ambient environment')
++
++    __getitem__ = __setitem__ = __delitem__ = __iter__ = __len__ = __contains__ = deny
++    get = copy = items = keys = values = clear = pop = popitem = update = setdefault = deny
++
++
++@contextmanager
++def no_observations():
++    """Descriptions must not even stat/resolve paths or probe ambient state."""
++    with ExitStack() as stack:
++        for name in ('resolve', 'stat', 'lstat', 'exists', 'is_file', 'is_dir', 'open',
++                     'read_bytes', 'read_text', 'write_bytes', 'write_text', 'mkdir',
++                     'iterdir', 'glob', 'rglob'):
++            stack.enter_context(patch.object(Path, name, side_effect=AssertionError('Description filesystem access: ' + name)))
++        for name in ('getcwd', 'getenv', 'scandir', 'listdir', 'stat', 'lstat', 'access', 'open', 'readlink'):
++            stack.enter_context(patch.object(os, name, side_effect=AssertionError('Description ambient probe: ' + name)))
++        stack.enter_context(patch('builtins.open', side_effect=AssertionError('Description open')))
++        stack.enter_context(patch.object(os, 'environ', UnreadableEnvironment()))
++        yield
++
++
++class NoNativeCase(unittest.TestCase):
++    def setUp(self):
++        self.stack = ExitStack()
++        self.addCleanup(self.stack.close)
++        for name in ('Popen', 'run', 'call', 'check_call', 'check_output'):
++            self.stack.enter_context(patch.object(subprocess, name, side_effect=AssertionError('Native child forbidden: ' + name)))
++        for name in ('system', 'popen'):
++            self.stack.enter_context(patch.object(os, name, side_effect=AssertionError('Shell forbidden: ' + name)))
++        for name in ('socket.socket', 'socket.create_connection'):
++            self.stack.enter_context(patch(name, side_effect=AssertionError('Network forbidden')))
++        self.root = Path(self.stack.enter_context(tempfile.TemporaryDirectory(
++            prefix='artist pool29 Linux binding with spaces '))).resolve()
++        # Never let a faulty collector expose the runner's real environment in
++        # assertion output. Even negative tests see only non-secret sentinels.
++        self.stack.enter_context(patch.dict(os.environ, {
++            'PATH': 'owned synthetic path', 'SECRET_FIXTURE_TOKEN': 'NOT_FOR_EVIDENCE'}, clear=True))
++        from verification.adapters.linux import LinuxAdapter
++        self.adapter_type = LinuxAdapter
++        self.adapter = LinuxAdapter(self.root)
++
++
++class MemoryRunner:
++    """Finite vocabulary, writes only owned fixture data; never delegates."""
++    def __init__(self, root, plan):
++        self.root, self.plan = root, plan
++        self.calls = []
++        self.failure_phase = None
++        self.domain_fail = False
++        self.omit_result = False
++
++    def run(self, command):
++        self.calls.append(command)
++        argv = command.argv
++        if command.phase in ('prepare', 'build'):
++            if argv[:3] != (sys.executable, '-B', str(self.root / 'scripts' / 'build-linux.py')):
++                raise AssertionError('Only the described historical helper is admitted by this double')
++            if command.phase == self.failure_phase:
++                return ProcessOutcome(17, 'synthetic partial stdout', 'synthetic failure', False, False)
++            if command.phase == 'prepare':
++                if '--configure-only' not in argv or '--build-only' in argv:
++                    raise AssertionError('Preparation must be configure-only')
++            else:
++                if '--build-only' not in argv or '--configure-only' in argv:
++                    raise AssertionError('Construction must be build-only')
++                tree = self.root / 'out' / 'build' / ('linux-' + self.plan.request.configuration)
++                for spec in self.plan.scenarios:
++                    for target in spec.targets:
++                        path = tree / 'admitted executable paths' / target
++                        path.parent.mkdir(parents=True, exist_ok=True)
++                        path.write_bytes(b'owned inert synthetic data, never executable')
++            return ProcessOutcome(0, 'synthetic helper output', '', False, False)
++        if command.phase != 'run' or '--result' not in argv:
++            raise AssertionError('This composition double admits only direct CPU protocol commands')
++        target = self.root / 'out' / 'build' / ('linux-' + self.plan.request.configuration) / 'admitted executable paths' / 'ArtistUniformCpuWorkload'
++        if argv[0] != str(target):
++            raise AssertionError('Workload must use the exact BuildReceipt mapping')
++        if not self.omit_result:
++            request = self.plan.request
++            count = request.iterations * request.repetitions * request.batch_size
++            document = dict(
++                schema_version=1, run_id=option(argv, '--run-id'),
++                request_id=option(argv, '--request-id'), plan_sha256=option(argv, '--plan-sha256'),
++                scenario=option(argv, '--scenario'), scenario_version=1, route=option(argv, '--route'),
++                profile='cpu-only', parameters=dict(iterations=request.iterations,
++                    repetitions=request.repetitions, batch_size=request.batch_size, measurement_requested=False),
++                operations_expected=dict(updates=count, draws=0),
++                operations_observed=dict(updates=0 if self.domain_fail else count, draws=0),
++                test_verdict='FAIL' if self.domain_fail else 'PASS', measurement_validity='NOT_REQUESTED',
++                observations={}, samples=[], environment={})
++            with Path(option(argv, '--result')).open('x', encoding='utf-8') as stream:
++                json.dump(document, stream)
++        return ProcessOutcome(10 if self.domain_fail else 0, 'synthetic workload output', '', False, False)
++
++
++def make_sink(root, plan, runner):
++    # These inert bytes are inventoried by the real sink; no source/tool import.
++    helper = root / 'scripts' / 'build-linux.py'
++    helper.parent.mkdir(parents=True, exist_ok=True)
++    helper.write_bytes(b'owned inert helper identity')
++    for spec in plan.scenarios:
++        for relative in spec.fixtures:
++            path = root / relative
++            path.parent.mkdir(parents=True, exist_ok=True)
++            path.write_bytes(b'owned inert source fixture')
++    return evidence.BundleSink(root, root / 'out' / 'verification', runner=runner,
++        revision_reader=lambda source: dict(head='1' * 40, delta='owned synthetic delta'),
++        result_parser=parse_workload_result)
+diff --git a/scripts/tests/verification_linux/test_binding_adapter.py b/scripts/tests/verification_linux/test_binding_adapter.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..339995944125ff51078d0e052a3ebe0e35c9d61d
+--- /dev/null
++++ b/scripts/tests/verification_linux/test_binding_adapter.py
+@@ -0,0 +1,243 @@
++"""Pure Linux command assembly using real plans/receipts and protocol builder."""
++from dataclasses import replace
++import json
++from pathlib import Path
++import re
++import subprocess
++import sys
++from unittest.mock import patch
++
++from binding_support import (
++    NoNativeCase, make_plan, no_observations, option, receipt, repeated_options,
++)
++from verification.model import PreparationReceipt
++from verification.scenarios.protocol import build_workload_argv
++
++
++class LinuxBindingAdapterTests(NoNativeCase):
++    def commands(self, profile='cpu-only', **kwargs):
++        plan = make_plan(profile=profile, **kwargs)
++        built = receipt(self.root, plan)
++        commands = tuple(self.adapter.describe_execution(plan, built))
++        self.assertTrue(commands, 'Linux execution binding is not implemented')
++        return plan, built, commands
++
++    def test_constructor_and_all_descriptions_are_pure_repeatable_and_bundle_local(self):
++        plan = make_plan()
++        first = receipt(self.root, plan)
++        second = receipt(self.root, plan, run_id='owned-run-b')
++        prepared = receipt(self.root, plan, kind=PreparationReceipt)
++        with no_observations():
++            adapter = self.adapter_type(self.root)
++            with patch.object(adapter, 'collect_environment', side_effect=AssertionError('Description must not collect')):
++                a = adapter.describe_preparation(plan, bundle_root=first.details['bundle'])
++                b = adapter.describe_preparation(plan, bundle_root=second.details['bundle'])
++                self.assertEqual(a, adapter.describe_preparation(plan, bundle_root=first.details['bundle']))
++                self.assertTrue(a, 'Preparation binding missing, not an import failure')
++                self.assertTrue(b)
++                self.assertTrue(adapter.describe_build(plan, prepared))
++                x = adapter.describe_execution(plan, first)
++                y = adapter.describe_execution(plan, second)
++                self.assertEqual(x, adapter.describe_execution(plan, first))
++                self.assertTrue(x)
++                self.assertTrue(y)
++        for commands, bundle in ((x, first.details['bundle']), (y, second.details['bundle'])):
++            for command in commands:
++                destination = Path(option(command.argv, '--result'))
++                self.assertTrue(destination.is_relative_to(Path(bundle)))
++
++    def test_prepare_and_build_use_helper_only_and_union_targets_in_plan_order(self):
++        plan = make_plan(profile='opengl-software', scenarios=(
++            'gl.float-routes-correctness', 'gl.float-preparation', 'gl.float-lifetime'))
++        prepared = receipt(self.root, plan, kind=PreparationReceipt)
++        prepare = tuple(self.adapter.describe_preparation(plan, bundle_root=prepared.details['bundle']))
++        build = tuple(self.adapter.describe_build(plan, prepared))
++        self.assertEqual(len(prepare), 1)
++        self.assertEqual(len(build), 1)
++        prefix = (sys.executable, '-B', str(self.root / 'scripts' / 'build-linux.py'))
++        self.assertEqual(prepare[0].argv[:3], prefix)
++        self.assertEqual(build[0].argv[:3], prefix)
++        self.assertIn('--configure-only', prepare[0].argv)
++        self.assertIn('--verification-workloads', prepare[0].argv)
++        self.assertIn('dependency-resolution', prepare[0].declared_effects)
++        self.assertIn('--build-only', build[0].argv)
++        self.assertEqual(repeated_options(build[0].argv, '--target'),
++                         ['ArtistUniformOpenGLWorkload', 'ArtistLib_tests', 'ArtistLib_component_tests'])
++        self.assertNotIn('dependency-resolution', build[0].declared_effects)
++        for command, phase in ((prepare[0], 'prepare'), (build[0], 'build')):
++            self.assertEqual(command.phase, phase)
++            self.assertEqual(command.cwd, str(self.root))
++            self.assertEqual(option(command.argv, '--configuration'), 'debug')
++            self.assertNotIn('ctest', command.argv)
++            self.assertNotIn('--result', command.argv)
++
++    def test_release_receipt_tree_and_helper_configuration_match_core_root(self):
++        plan = make_plan(configuration='release')
++        prepared = receipt(self.root, plan, kind=PreparationReceipt)
++        commands = tuple(self.adapter.describe_build(plan, prepared))
++        self.assertTrue(commands)
++        self.assertEqual(prepared.details['build_root'], str(self.root / 'out' / 'build' / 'linux-release'))
++        self.assertEqual(option(commands[0].argv, '--configuration'), 'release')
++        self.assertNotIn('--address-sanitizer', commands[0].argv)
++
++    def test_cpu_uses_exact_admitted_executable_and_existing_protocol_without_gl(self):
++        plan, built, commands = self.commands()
++        self.assertEqual(len(commands), 1)
++        command = commands[0]
++        mapped = self.root / built.details['executables']['ArtistUniformCpuWorkload']
++        self.assertEqual(command.argv[0], str(mapped))
++        self.assertNotIn('--profile', command.argv)
++        self.assertNotIn('--measurement-requested', command.argv)
++        self.assertFalse(set(command.env_delta) & {'DISPLAY', 'LIBGL_ALWAYS_SOFTWARE', 'GALLIUM_DRIVER'})
++        self.assertFalse(any('xvfb' in arg.lower() for arg in command.argv))
++        expected = build_workload_argv(executable=str(mapped), scenario='cpu.float-mirror',
++            route='pass-name', profile='cpu-only', iterations=3, repetitions=2, batch_size=16,
++            measurement_requested=False, request_id=option(command.argv, '--request-id'),
++            run_id=built.run_id, plan_sha256=plan.plan_sha256, result_path=option(command.argv, '--result'))
++        self.assertEqual(command.argv, expected)
++        self.assertEqual(command.cwd, str(self.root))
++        self.assertEqual(command.phase, 'run')
++
++    def test_run_requires_receipt_mapping_instead_of_guessing_binary_names(self):
++        plan = make_plan()
++        built = receipt(self.root, plan)
++        details = dict(built.details)
++        details['executables'] = {}
++        with self.assertRaises((ValueError, KeyError)):
++            self.adapter.describe_execution(plan, replace(built, details=details))
++
++    def test_software_is_explicit_llvmpipe_with_no_x_server_wrapper_or_install(self):
++        _, _, commands = self.commands('opengl-software')
++        self.assertEqual(len(commands), 2)
++        for command in commands:
++            self.assertEqual(command.env_delta.get('LIBGL_ALWAYS_SOFTWARE'), 'true')
++            self.assertEqual(command.env_delta.get('GALLIUM_DRIVER'), 'llvmpipe')
++            self.assertEqual(option(command.argv, '--profile'), 'opengl-software')
++            self.assertFalse(any('xvfb' in arg.lower() for arg in command.argv))
++            self.assertNotIn('install', command.declared_effects)
++
++    def test_workload_and_ctest_ids_are_stable_unique_per_invocation_and_run(self):
++        plan, built, commands = self.commands('opengl-hardware', scenarios=(
++            'gl.float-routes-correctness', 'gl.float-preparation', 'gl.float-lifetime'))
++        def ids(items):
++            return [option(c.argv, '--request-id') if '--result' in c.argv else
++                    c.env_delta['ARTIST_VERIFICATION_REQUEST_ID']
++                    for c in items if '--result' in c.argv or '--output-junit' in c.argv]
++        identities = ids(commands)
++        self.assertGreaterEqual(len(identities), 3)
++        self.assertEqual(len(identities), len(set(identities)))
++        self.assertEqual(identities, ids(self.adapter.describe_execution(plan, built)))
++        other = receipt(self.root, plan, run_id='owned-run-b')
++        self.assertTrue(set(identities).isdisjoint(ids(self.adapter.describe_execution(plan, other))))
++
++    def test_hardware_ctest_declares_all_six_fields_and_workload_exact_target(self):
++        plan, built, commands = self.commands('opengl-hardware', scenarios=(
++            'gl.float-routes-correctness', 'gl.float-preparation'))
++        selected = [c for c in commands if '--output-junit' in c.argv]
++        self.assertTrue(selected)
++        for command in selected:
++            expected = {
++                'ARTIST_VERIFICATION_CONTEXT_V1': 'opengl-hardware',
++                'ARTIST_VERIFICATION_RUN_ID': built.run_id,
++                'ARTIST_VERIFICATION_PLAN_SHA256': plan.plan_sha256,
++                'ARTIST_VERIFICATION_REQUEST_ID': command.env_delta.get('ARTIST_VERIFICATION_REQUEST_ID'),
++                'ARTIST_VERIFICATION_EXPECTED_GL_VENDOR': plan.request.expected_gl_vendor,
++                'ARTIST_VERIFICATION_EXPECTED_GL_RENDERER': plan.request.expected_gl_renderer,
++            }
++            self.assertTrue(expected['ARTIST_VERIFICATION_REQUEST_ID'])
++            self.assertEqual({key: command.env_delta.get(key) for key in expected}, expected)
++        for command in commands:
++            self.assertFalse(set(command.env_delta) & {'LIBGL_ALWAYS_SOFTWARE', 'GALLIUM_DRIVER', 'MESA_LOADER_DRIVER_OVERRIDE'})
++            if '--result' in command.argv:
++                self.assertEqual(option(command.argv, '--expected-gl-vendor'), plan.request.expected_gl_vendor)
++                self.assertEqual(option(command.argv, '--expected-gl-renderer'), plan.request.expected_gl_renderer)
++
++    def test_ctest_discovery_and_exact_selection_use_same_receipt_tree_and_configuration(self):
++        plan, built, commands = self.commands('opengl-software', configuration='release',
++                                              scenarios=('gl.float-preparation', 'gl.float-lifetime'))
++        discovery = [c for c in commands if '--show-only=json-v1' in c.argv]
++        selected = [c for c in commands if '--output-junit' in c.argv]
++        self.assertEqual(len(discovery), 1)
++        self.assertTrue(selected)
++        self.assertLess(commands.index(discovery[0]), min(commands.index(c) for c in selected))
++        for command in commands:
++            self.assertEqual(command.argv[0], 'ctest')
++            self.assertEqual(option(command.argv, '--test-dir'), built.details['build_root'])
++            self.assertEqual(option(command.argv, '-C'), 'Release')
++        names = list(dict.fromkeys(name for spec in plan.scenarios for name in spec.producer['names']))
++        patterns = []
++        paths = []
++        for command in selected:
++            self.assertIn('--no-tests=error', command.argv)
++            self.assertEqual(option(command.argv, '--parallel'), '1')
++            pattern = option(command.argv, '-R')
++            self.assertTrue(pattern.startswith('^') and pattern.endswith('$'))
++            self.assertNotIn('(?:', pattern, 'CTest regex is not Python regex')
++            patterns.append(pattern)
++            paths.append(option(command.argv, '--output-junit'))
++        self.assertEqual(len(paths), len(set(paths)))
++        for name in names:
++            self.assertEqual(sum(bool(re.fullmatch(p, name)) for p in patterns), 1)
++            self.assertFalse(any(re.fullmatch(p, name.replace('.', 'X')) for p in patterns))
++        self.assertFalse(any(re.fullmatch(p, 'unit.Unrelated.Test') for p in patterns))
++        for path in paths:
++            self.assertTrue(Path(path).is_relative_to(Path(built.details['bundle']) / 'raw'))
++
++    def test_measurement_release_options_are_visible_not_wrapped_or_rebuilt(self):
++        _, _, commands = self.commands('opengl-software', configuration='release',
++            scenarios=('gl.float-submission-cpu',), measurement=True)
++        self.assertEqual(len(commands), 2)
++        for command in commands:
++            self.assertEqual(option(command.argv, '--measurement-requested'), 'true')
++            self.assertEqual(option(command.argv, '--iterations'), '3')
++            self.assertEqual(option(command.argv, '--repetitions'), '2')
++            self.assertEqual(option(command.argv, '--batch-size'), '16')
++            self.assertNotIn('--build-only', command.argv)
++            self.assertNotIn('--configure-only', command.argv)
++
++    def test_environment_collection_only_uses_bounded_allowlisted_version_commands(self):
++        calls = []
++        def version(argv, **kwargs):
++            self.assertIn(tuple(argv), [(tool, '--version') for tool in ('g++-14', 'cmake', 'conan', 'ninja')])
++            self.assertFalse(kwargs.get('shell', False))
++            self.assertGreater(kwargs.get('timeout', 0), 0)
++            self.assertLessEqual(kwargs['timeout'], 15)
++            calls.append(tuple(argv))
++            return subprocess.CompletedProcess(argv, 0, stdout='synthetic version 1.2.3\n', stderr='')
++        with patch('subprocess.run', side_effect=version), patch.dict('os.environ', {'SECRET_FIXTURE_TOKEN': 'NOT_FOR_EVIDENCE'}, clear=True):
++            environment = self.adapter.collect_environment()
++        self.assertEqual(set(calls), {(tool, '--version') for tool in ('g++-14', 'cmake', 'conan', 'ninja')})
++        self.assertEqual(len(calls), 4)
++        for name in ('os', 'architecture', 'python', 'compiler', 'cmake', 'conan', 'ninja'):
++            self.assertIn(name, environment)
++        self.assertNotIn('NOT_FOR_EVIDENCE', json.dumps(environment))
++        self.assertNotIn('MATCHED_EXPECTATION', json.dumps(environment))
++
++    def test_environment_missing_tools_are_explicit_not_fabricated_qualification(self):
++        with patch('subprocess.run', side_effect=FileNotFoundError('owned missing version tool')):
++            environment = self.adapter.collect_environment()
++        for name in ('compiler', 'cmake', 'conan', 'ninja'):
++            self.assertIn(name, environment)
++            self.assertIn('unavailable', json.dumps(environment[name]).lower())
++
++    def test_environment_timeouts_and_nonzero_versions_are_unavailable_not_success(self):
++        for outcome in ('timeout', 'nonzero'):
++            def unavailable(argv, **kwargs):
++                if outcome == 'timeout':
++                    raise subprocess.TimeoutExpired(argv, kwargs.get('timeout', 15))
++                return subprocess.CompletedProcess(argv, 17, stdout='not a valid version', stderr='synthetic error')
++            with self.subTest(outcome=outcome), patch('subprocess.run', side_effect=unavailable):
++                environment = self.adapter.collect_environment()
++            for name in ('compiler', 'cmake', 'conan', 'ninja'):
++                self.assertIn(name, environment)
++                self.assertIn('unavailable', json.dumps(environment[name]).lower())
++
++    def test_environment_version_payloads_are_bounded(self):
++        def oversized(argv, **kwargs):
++            return subprocess.CompletedProcess(argv, 0, stdout='x' * 100000, stderr='y' * 100000)
++        with patch('subprocess.run', side_effect=oversized):
++            environment = self.adapter.collect_environment()
++        for name in ('compiler', 'cmake', 'conan', 'ninja'):
++            self.assertIn(name, environment)
++            self.assertLessEqual(len(json.dumps(environment[name])), 4352,
++                                 'Proposed bound: 4096 characters plus bounded status metadata')
+diff --git a/scripts/tests/verification_linux/test_binding_composition.py b/scripts/tests/verification_linux/test_binding_composition.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e268113e6afde3c849d5df09ba02aed080a5e59c
+--- /dev/null
++++ b/scripts/tests/verification_linux/test_binding_composition.py
+@@ -0,0 +1,119 @@
++"""Real core/adapter/receipts/parser; all execution stays in MemoryRunner."""
++from dataclasses import replace
++import hashlib
++import json
++from pathlib import Path
++from unittest.mock import patch
++
++from binding_support import MemoryRunner, NoNativeCase, make_plan, make_sink, option
++from verification import evidence, reporting
++
++
++class LinuxBindingCompositionTests(NoNativeCase):
++    def setup_pipeline(self, *, permission=True):
++        self.plan = make_plan(permission=permission)
++        self.runner = MemoryRunner(self.root, self.plan)
++        self.sink = make_sink(self.root, self.plan, self.runner)
++        # The metadata boundary is tested separately with strict tool doubles.
++        self.stack.enter_context(patch.object(self.adapter, 'collect_environment', return_value={
++            'platform': 'linux', 'os': 'synthetic only', 'architecture': 'synthetic x86_64'}))
++
++    def prepared(self):
++        result = evidence.prepare(self.plan, self.adapter, self.sink)
++        self.assertEqual(result.state, 'COMPLETED', 'Prepare binding absent or malformed; inspect preserved causes')
++        self.assertEqual(result.details['exit_code'], 0)
++        return result
++
++    def built(self):
++        result = evidence.build(self.plan, self.prepared(), self.adapter, self.sink)
++        self.assertEqual(result.state, 'COMPLETED')
++        self.assertEqual(result.details['exit_code'], 0)
++        return result
++
++    def test_without_dependency_optin_real_core_blocks_before_helper(self):
++        self.setup_pipeline(permission=False)
++        result = evidence.prepare(self.plan, self.adapter, self.sink)
++        self.assertEqual(result.state, 'BLOCKED')
++        self.assertEqual(result.details['exit_code'], 3)
++        self.assertEqual(self.runner.calls, [])
++
++    def test_prepare_build_run_receipts_and_raw_identity_stay_separate(self):
++        self.setup_pipeline()
++        prepared = self.prepared()
++        self.assertEqual([c.phase for c in self.runner.calls], ['prepare'])
++        self.assertNotIn('build', self.sink.manifest['receipts'])
++        built = evidence.build(self.plan, prepared, self.adapter, self.sink)
++        self.assertEqual(built.state, 'COMPLETED')
++        self.assertEqual([c.phase for c in self.runner.calls], ['prepare', 'build'])
++        self.assertNotIn('run', self.sink.manifest['receipts'])
++        self.assertEqual(built.details['build_root'], str(self.root / 'out' / 'build' / 'linux-debug'))
++        result = evidence.execute(self.plan, built, self.adapter, self.sink)
++        self.assertEqual([c.phase for c in self.runner.calls], ['prepare', 'build', 'run'])
++        self.assertEqual(result.state, 'COMPLETED')
++        self.assertEqual(result.details['exit_code'], 0)
++        self.assertEqual(self.sink.manifest['test_verdict'], 'PASS')
++        self.assertEqual(self.sink.manifest['measurement_validity'], 'NOT_REQUESTED')
++        for record in (prepared, built, result):
++            self.assertEqual(record.run_id, self.sink.run_id)
++            self.assertEqual(record.plan_sha256, self.plan.plan_sha256)
++        command = self.runner.calls[-1]
++        self.assertEqual(command.argv[0], str(self.root / built.details['executables']['ArtistUniformCpuWorkload']))
++        raw = Path(option(command.argv, '--result'))
++        document = json.loads(raw.read_text(encoding='utf-8'))
++        self.assertEqual(document['request_id'], option(command.argv, '--request-id'))
++        self.assertEqual(result.artifacts[raw.relative_to(self.sink.bundle).as_posix()],
++                         hashlib.sha256(raw.read_bytes()).hexdigest())
++        report = reporting.report(self.sink.bundle)
++        self.assertEqual(report['exit_code'], 0)
++
++    def test_foreign_preparation_is_refused_before_describing_build_or_child(self):
++        self.setup_pipeline()
++        prepared = self.prepared()
++        foreign = replace(prepared, run_id='foreign-run')
++        calls = len(self.runner.calls)
++        with patch.object(self.adapter, 'describe_build', side_effect=AssertionError('Must refuse before adapter')):
++            with self.assertRaises(evidence.EvidenceError):
++                evidence.build(self.plan, foreign, self.adapter, self.sink)
++        self.assertEqual(len(self.runner.calls), calls)
++
++    def test_build_helper_failure_preserves_raw_code_and_no_run_occurs(self):
++        self.setup_pipeline()
++        prepared = self.prepared()
++        self.runner.failure_phase = 'build'
++        result = evidence.build(self.plan, prepared, self.adapter, self.sink)
++        self.assertEqual(result.state, 'FAILED')
++        self.assertEqual(result.details['exit_code'], 4)
++        self.assertEqual([c.phase for c in self.runner.calls], ['prepare', 'build'])
++        text = (self.sink.bundle / 'commands.jsonl').read_text(encoding='utf-8')
++        self.assertIn('17', text)
++        logs = list((self.sink.bundle / 'logs').rglob('*'))
++        self.assertTrue(any(p.is_file() and b'synthetic failure' in p.read_bytes() for p in logs))
++
++    def test_workload_domain_failure_is_not_a_pipeline_failure(self):
++        self.setup_pipeline()
++        built = self.built()
++        self.runner.domain_fail = True
++        result = evidence.execute(self.plan, built, self.adapter, self.sink)
++        self.assertEqual(result.state, 'COMPLETED')
++        self.assertEqual(result.details['exit_code'], 5)
++        self.assertEqual(self.sink.manifest['test_verdict'], 'FAIL')
++
++    def test_zero_exit_without_result_is_explicit_pipeline_failure_not_pass(self):
++        self.setup_pipeline()
++        built = self.built()
++        self.runner.omit_result = True
++        result = evidence.execute(self.plan, built, self.adapter, self.sink)
++        self.assertEqual(result.state, 'FAILED')
++        self.assertEqual(result.details['exit_code'], 4)
++        self.assertNotEqual(self.sink.manifest['test_verdict'], 'PASS')
++
++    def test_mutated_binary_refused_before_execution_and_no_implicit_repair(self):
++        self.setup_pipeline()
++        built = self.built()
++        mapped = self.root / built.details['executables']['ArtistUniformCpuWorkload']
++        mapped.write_bytes(b'changed inert fixture')
++        calls = len(self.runner.calls)
++        result = evidence.execute(self.plan, built, self.adapter, self.sink)
++        self.assertEqual(result.details['exit_code'], 4)
++        self.assertEqual(self.sink.manifest['freshness'], 'STALE')
++        self.assertEqual(len(self.runner.calls), calls)
+diff --git a/scripts/tests/verification_linux/test_binding_helper.py b/scripts/tests/verification_linux/test_binding_helper.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..5f625a19a82956ea54fe6c984c2415fd6a65de8b
+--- /dev/null
++++ b/scripts/tests/verification_linux/test_binding_helper.py
+@@ -0,0 +1,119 @@
++"""Proposed helper switches: causal RED must be run by the lead, not author."""
++from contextlib import redirect_stderr, redirect_stdout
++import io
++import os
++from pathlib import Path
++import subprocess
++from unittest.mock import patch
++
++from binding_support import NoNativeCase, load_helper, option
++
++
++class LinuxBindingHelperTests(NoNativeCase):
++    def setUp(self):
++        super().setUp()
++        self.module = load_helper()
++        self.module.__file__ = str(self.root / 'scripts' / 'build-linux.py')
++        self.calls = []
++        self.failure = None
++        self.stack.enter_context(patch.dict(os.environ, {'CONAN_HOME': 'parent cache sentinel'}, clear=True))
++        self.environment = dict(os.environ)
++        self.stack.enter_context(patch('subprocess.run', side_effect=self.record))
++
++    def record(self, argv, **kwargs):
++        self.assertIsInstance(argv, (list, tuple))
++        self.assertFalse(kwargs.get('shell', False))
++        self.assertEqual(kwargs['cwd'], self.root)
++        self.assertTrue(kwargs['check'])
++        self.calls.append((list(argv), kwargs['env'].copy()))
++        if self.failure:
++            raise self.failure
++        return subprocess.CompletedProcess(argv, 0)
++
++    def invoke(self, argv):
++        with redirect_stderr(io.StringIO()) as err, redirect_stdout(io.StringIO()):
++            try:
++                result = self.module.main(argv)
++            except SystemExit as stopped:
++                self.fail('Missing proposed helper mode, not an admissible parser success: '
++                          f'{stopped.code}: {err.getvalue().strip()}')
++        self.assertEqual(dict(os.environ), self.environment)
++        return result
++
++    def test_build_only_each_configuration_and_asan_never_prepares_tests_or_canary(self):
++        for configuration, asan, preset in (
++            ('debug', False, 'linux-debug'), ('release', False, 'linux-release'),
++            ('debug', True, 'linux-debug-asan'),
++        ):
++            with self.subTest(preset=preset):
++                self.calls.clear()
++                args = ['--configuration', configuration, '--build-only', '--jobs', '2',
++                        '--target', 'ArtistLib_tests', '--target', 'ArtistUniformCpuWorkload',
++                        '--target', 'ArtistLib_tests']
++                if asan:
++                    args.append('--address-sanitizer')
++                with patch.object(Path, 'mkdir', side_effect=AssertionError('Build-only must not create logs')):
++                    self.assertEqual(self.invoke(args), 0)
++                self.assertEqual([argv for argv, _ in self.calls], [
++                    ['cmake', '--build', '--preset', preset, '--target',
++                     'ArtistLib_tests', 'ArtistUniformCpuWorkload', '--parallel', '2']])
++
++    def test_verification_prepare_orders_conan_host_build_then_opted_in_cmake_only(self):
++        for configuration, asan in (('debug', False), ('release', False), ('debug', True)):
++            with self.subTest(configuration=configuration, asan=asan):
++                self.calls.clear()
++                args = ['--configuration', configuration, '--configure-only', '--verification-workloads']
++                if asan:
++                    args.append('--address-sanitizer')
++                with patch.object(Path, 'mkdir', side_effect=AssertionError('Prepare must not create run logs')):
++                    self.assertEqual(self.invoke(args), 0)
++                self.assertEqual(len(self.calls), 2)
++                install, configure = [argv for argv, _ in self.calls]
++                self.assertEqual(install[:3], ['conan', 'install', '.'])
++                profile = str(self.root / 'conan' / 'profiles' / 'linux-gcc')
++                self.assertEqual(option(install, '-pr:h'), profile)
++                self.assertEqual(option(install, '-pr:b'), profile)
++                for context in ('h', 'b'):
++                    self.assertEqual(option(install, '-s:' + context), 'build_type=' + configuration.capitalize())
++                preset = 'linux-' + configuration + ('-asan' if asan else '')
++                self.assertEqual(option(install, '-of'), str(self.root / 'out' / 'build' / preset))
++                self.assertEqual(configure, ['cmake', '--fresh', '--preset', preset,
++                                             '-DARTIST_BUILD_VERIFICATION=ON'])
++                if asan:
++                    for _, env in self.calls:
++                        self.assertEqual(env['ASAN_OPTIONS'], self.module.CANONICAL_ASAN_OPTIONS)
++                        self.assertNotIn('ASAN_ACTIVATION_OPTIONS', env)
++
++    def test_new_modes_reject_incompatible_or_empty_selections_before_commands(self):
++        invalid = (
++            ['--build-only'], ['--target', 'ArtistLib_tests'],
++            ['--configure-only', '--target', 'ArtistLib_tests'],
++            ['--configure-only', '--build-only', '--target', 'ArtistLib_tests'],
++            ['--verification-workloads'],
++            ['--build-only', '--verification-workloads', '--target', 'ArtistLib_tests'],
++            ['--build-only', '--target', ''],
++            ['--configuration', 'release', '--address-sanitizer', '--build-only', '--target', 'ArtistLib_tests'],
++        )
++        for args in invalid:
++            with self.subTest(args=args), redirect_stderr(io.StringIO()):
++                with self.assertRaises(SystemExit) as stopped:
++                    self.module.main(args)
++                self.assertEqual(stopped.exception.code, 2)
++                self.assertEqual(self.calls, [])
++
++    def test_build_only_preserves_native_failure_without_reconfiguration(self):
++        self.failure = subprocess.CalledProcessError(17, ['cmake'])
++        self.assertEqual(self.invoke(['--build-only', '--target', 'ArtistLib_tests']), 17)
++        self.assertEqual(len(self.calls), 1)
++        self.assertEqual(self.calls[0][0][:2], ['cmake', '--build'])
++
++    def test_build_only_missing_tool_is_not_a_repair_trigger(self):
++        self.failure = FileNotFoundError('owned missing cmake')
++        self.assertEqual(self.invoke(['--build-only', '--target', 'ArtistLib_tests']), 1)
++        self.assertEqual(len(self.calls), 1)
++
++    def test_verification_conan_failure_stops_before_configuration(self):
++        self.failure = subprocess.CalledProcessError(17, ['conan'])
++        self.assertEqual(self.invoke(['--configure-only', '--verification-workloads']), 17)
++        self.assertEqual(len(self.calls), 1)
++        self.assertEqual(self.calls[0][0][:2], ['conan', 'install'])
+diff --git a/scripts/tests/verification_linux/test_binding_pure_cli.py b/scripts/tests/verification_linux/test_binding_pure_cli.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e7a7c14b8aa7ea0cfd6ab8d128bbd9c37c32e7b4
+--- /dev/null
++++ b/scripts/tests/verification_linux/test_binding_pure_cli.py
+@@ -0,0 +1,42 @@
++"""Real consultative CLI, no adapter selection or side effects permitted."""
++from contextlib import redirect_stderr, redirect_stdout
++import importlib.util
++import io
++import json
++from pathlib import Path
++from unittest.mock import patch
++
++from binding_support import NoNativeCase, SCRIPTS
++
++
++class LinuxBindingPureCliTests(NoNativeCase):
++    def invoke(self, argv):
++        spec = importlib.util.spec_from_file_location('pool29_verification_cli', SCRIPTS / 'verify.py')
++        cli = importlib.util.module_from_spec(spec)
++        spec.loader.exec_module(cli)
++        before = sorted(path.relative_to(self.root).as_posix() for path in self.root.rglob('*'))
++        out, err = io.StringIO(), io.StringIO()
++        def forbidden_adapter(*args):
++            raise AssertionError('Consultative modes must not construct or observe an adapter')
++        with patch.object(cli, '_adapter', side_effect=forbidden_adapter), \
++             patch.object(Path, 'mkdir', side_effect=AssertionError('Consultative directory creation')), \
++             patch.object(Path, 'write_text', side_effect=AssertionError('Consultative write')), \
++             patch.object(Path, 'write_bytes', side_effect=AssertionError('Consultative write')), \
++             redirect_stdout(out), redirect_stderr(err):
++            code = cli.main(argv, source_root=self.root, adapter_factory=forbidden_adapter,
++                            runner=object())
++        self.assertEqual(code, 0, err.getvalue())
++        self.assertEqual(sorted(path.relative_to(self.root).as_posix() for path in self.root.rglob('*')), before)
++        return json.loads(out.getvalue())
++
++    def test_list_remains_consultative_with_linux_binding_present(self):
++        document = self.invoke(['list', '--json'])
++        self.assertTrue(document['scenarios'])
++
++    def test_plan_retains_unresolved_toolchain_and_gl_without_adapter_observation(self):
++        document = self.invoke(['plan', '--platform', 'linux', '--profile', 'opengl-hardware',
++                                '--scenario', 'gl.float-preparation', '--configuration', 'release'])
++        self.assertEqual(document['commands'], [])
++        self.assertIn('toolchain', document['unresolved'])
++        self.assertIn('gl_context', document['unresolved'])
++        self.assertIn('expected_gl_target', document['unresolved'])
+diff --git a/scripts/verification/adapters/linux.py b/scripts/verification/adapters/linux.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a068aaba52157969d0bf459483d98fcb81c9fdfc
+--- /dev/null
++++ b/scripts/verification/adapters/linux.py
+@@ -0,0 +1,23 @@
++"""Nominal Linux binding scaffold, awaiting a lead-observed causal RED.
++
++Not a production adapter: empty descriptions deliberately satisfy no phase.
++No historical draft is imported or reused. Implement only after lead review.
++"""
++from pathlib import Path
++
++
++class LinuxAdapter:
++    def __init__(self, source_root):
++        self.source_root = Path(source_root)
++
++    def describe_preparation(self, plan, *, bundle_root: str):
++        return ()
++
++    def describe_build(self, plan, preparation):
++        return ()
++
++    def describe_execution(self, plan, build):
++        return ()
++
++    def collect_environment(self):
++        return {}

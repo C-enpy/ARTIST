@@ -1,0 +1,160 @@
+"""Linux command descriptions, not a second runner or qualification controller.
+
+Descriptions never start a process, create a directory or acquire a GL context.
+The common collector owns leases, hashes, discovery/JUnit reconciliation and
+renderer verdicts; build-linux.py owns Conan-before-CMake and toolchain probes.
+"""
+import os
+from pathlib import Path
+import platform
+import re
+import sys
+
+from ..model import BuildReceipt, CommandSpec, PreparationReceipt, VerificationPlan
+from ..scenarios.protocol import build_workload_argv
+
+
+class LinuxAdapter:
+    def __init__(self, source_root, *, jobs=1, python_executable=None, environment=None):
+        if type(jobs) is not int or not 1 <= jobs <= 64:
+            raise ValueError('jobs must be between 1 and 64')
+        self.source_root = Path(source_root).resolve()
+        self.jobs = jobs
+        self.python = sys.executable if python_executable is None else python_executable
+        self.environment = dict(os.environ if environment is None else environment)
+
+    def _plan(self, plan):
+        if not isinstance(plan, VerificationPlan) or plan.request.platform != 'linux':
+            raise ValueError('LinuxAdapter requires a Linux verification plan')
+        return 'linux-' + plan.request.configuration
+
+    def _receipt(self, plan, receipt, cls):
+        self._plan(plan)
+        if (not isinstance(receipt, cls) or receipt.plan_sha256 != plan.plan_sha256
+                or receipt.state != 'COMPLETED' or receipt.details.get('exit_code') != 0
+                or receipt.details.get('source_root') != str(self.source_root)):
+            raise ValueError('incompatible or incomplete predecessor receipt')
+
+    def _command(self, argv, phase, effects, env=None, timeout=3600):
+        return CommandSpec(tuple(argv), str(self.source_root), env or {}, timeout, phase, tuple(effects))
+
+    def describe_preparation(self, plan):
+        self._plan(plan)
+        if not plan.request.allow_dependency_resolution:
+            raise ValueError('Linux preparation requires explicit dependency resolution permission')
+        # One helper, one Conan integration. Its configure-only mode never builds
+        # or invokes CTest, including when verification workloads are enabled.
+        commands = [self._command((self.python, str(self.source_root / 'scripts/build-linux.py'),
+            '--configuration', plan.request.configuration, '--jobs', str(self.jobs),
+            '--configure-only', '--verification'), 'prepare',
+            ('dependency-resolution', 'configure', 'write-build-tree'))]
+        for argv in (('uname', '-a'), ('g++-14', '--version'), ('cmake', '--version'),
+                     ('conan', '--version'), ('ninja', '--version')):
+            commands.append(self._command(argv, 'prepare', ('observe-toolchain',), timeout=60))
+        return tuple(commands)
+
+    def describe_build(self, plan, preparation):
+        preset = self._plan(plan)
+        self._receipt(plan, preparation, PreparationReceipt)
+        targets = tuple(dict.fromkeys(target for scenario in plan.scenarios for target in scenario.targets))
+        return (self._command(('cmake', '--build', '--preset', preset,
+            '--parallel', str(self.jobs), '--target', *targets), 'build', ('write-build-tree',)),)
+
+    def _render_environment(self, request):
+        if request.profile == 'opengl-software':
+            return {'LIBGL_ALWAYS_SOFTWARE': 'true', 'GALLIUM_DRIVER': 'llvmpipe'}
+        if request.profile == 'opengl-hardware':
+            if request.expected_gl_vendor is None or request.expected_gl_renderer is None:
+                raise ValueError('hardware execution requires an exact expected GL vendor and renderer')
+            # Do not silently clear operator steering, turn it into hardware
+            # evidence or launch a software fallback. An explicit clean launch
+            # environment is required; the common result validator still checks
+            # the actual current context and exact observed target afterwards.
+            software = self.environment.get('LIBGL_ALWAYS_SOFTWARE', '').strip().casefold()
+            if software not in ('', '0', 'false', 'no') or any(
+                    self.environment.get(name, '').strip()
+                    for name in ('GALLIUM_DRIVER', 'MESA_LOADER_DRIVER_OVERRIDE')):
+                raise ValueError('hardware execution refuses inherited renderer overrides')
+        return {}
+
+    def _executable(self, plan, build, target):
+        relative = build.details.get('executables', {}).get(target)
+        if not isinstance(relative, str) or not relative:
+            raise ValueError('selected executable is absent from build receipt: ' + target)
+        path = Path(relative)
+        if path.is_absolute() or '..' in path.parts:
+            raise ValueError('receipted executable must remain within the selected build tree')
+        path = self.source_root / path
+        tree = self.source_root / 'out/build' / self._plan(plan)
+        if not path.is_relative_to(tree) or path.name != target:
+            raise ValueError('receipted executable does not match selected tree/target')
+        return str(path)
+
+    def describe_execution(self, plan, build):
+        preset = self._plan(plan)
+        self._receipt(plan, build, BuildReceipt)
+        request = plan.request
+        environment = self._render_environment(request)
+        bundle = Path(build.details.get('bundle', ''))
+        if not bundle.is_absolute() or bundle == self.source_root:
+            raise ValueError('build receipt requires an owned absolute evidence bundle')
+        commands, names = [], []
+        for scenario in plan.scenarios:
+            if scenario.producer['kind'] == 'selection_ctest':
+                names.extend(scenario.producer['names'])
+                continue
+            executable = self._executable(plan, build, scenario.producer['target'])
+            for route in (request.routes or scenario.routes):
+                request_id = 'linux-workload-' + str(len(commands))
+                argv = build_workload_argv(executable=executable, scenario=scenario.id, route=route,
+                    profile=request.profile, iterations=request.iterations, repetitions=request.repetitions,
+                    batch_size=request.batch_size, measurement_requested=request.measurement_requested,
+                    request_id=request_id, run_id=build.run_id, plan_sha256=plan.plan_sha256,
+                    result_path=str(bundle / 'raw' / (request_id + '.json')),
+                    expected_gl_vendor=request.expected_gl_vendor,
+                    expected_gl_renderer=request.expected_gl_renderer)
+                commands.append(self._command(argv, 'run', ('execute-selected-workload', 'write-evidence'),
+                                              environment, scenario.timeout_seconds))
+        if names:
+            # One exact union, discovery before execution; never run a full suite
+            # when a catalogue entry or test name is absent. The common collector
+            # reconciles the actual nonempty population and every required skip.
+            regex = '^(' + '|'.join(re.escape(name) for name in dict.fromkeys(names)) + ')$'
+            prefix = ('ctest', '--preset', preset, '-R', regex)
+            commands.append(self._command((*prefix, '--show-only=json-v1'), 'run',
+                ('discover-selected-tests',), environment, 60))
+            ctest_environment = dict(environment)
+            if request.profile == 'opengl-hardware':
+                ctest_environment.update({
+                    'ARTIST_VERIFICATION_CONTEXT_V1': 'opengl-hardware',
+                    'ARTIST_VERIFICATION_RUN_ID': build.run_id,
+                    'ARTIST_VERIFICATION_PLAN_SHA256': plan.plan_sha256,
+                    'ARTIST_VERIFICATION_REQUEST_ID': 'linux-ctest',
+                    'ARTIST_VERIFICATION_EXPECTED_GL_VENDOR': request.expected_gl_vendor,
+                    'ARTIST_VERIFICATION_EXPECTED_GL_RENDERER': request.expected_gl_renderer,
+                })
+            commands.append(self._command((*prefix, '--parallel', '1', '--no-tests=error',
+                '--output-on-failure', '--output-junit', str(bundle / 'raw/linux-ctest.xml')), 'run',
+                ('execute-selected-tests', 'write-evidence'), ctest_environment))
+        return tuple(commands)
+
+    def collect_environment(self):
+        # Declared requirements are not observed toolchain or hardware versions.
+        # Preparation command stdout/stderr and the common collector retain the
+        # actual tool versions; native results retain per-context GL observations.
+        return {
+            'platform': 'linux', 'architecture': 'x86_64',
+            'os': {'observer_system': platform.system(), 'observer_machine': platform.machine()},
+            'python': {'version': platform.python_version(), 'executable': self.python},
+            'compiler': {'required': 'GCC 14', 'libcxx': 'libstdc++11', 'cppstd': '23',
+                         'qualification': 'NON_EXECUTE'},
+            'generator': 'Ninja',
+            'gl': {'qualification': 'NON_EXECUTE', 'context_creation': 'external, no fallback',
+                   'renderer_overrides': {name: self.environment[name] for name in
+                       ('LIBGL_ALWAYS_SOFTWARE', 'GALLIUM_DRIVER', 'MESA_LOADER_DRIVER_OVERRIDE')
+                       if name in self.environment}},
+            'variables': {name: self.environment[name] for name in
+                          ('LIBGL_ALWAYS_SOFTWARE', 'GALLIUM_DRIVER', 'ASAN_OPTIONS',
+                           'ASAN_ACTIVATION_OPTIONS', 'CC', 'CXX', 'CMAKE_GENERATOR')
+                          if name in self.environment},
+        }

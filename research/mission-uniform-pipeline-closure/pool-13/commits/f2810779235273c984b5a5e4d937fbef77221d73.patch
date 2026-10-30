@@ -1,0 +1,427 @@
+From f2810779235273c984b5a5e4d937fbef77221d73 Mon Sep 17 00:00:00 2001
+From: denne <djoe.denne@gmail.com>
+Date: Fri, 30 Oct 2026 04:12:03 +0100
+Subject: [PATCH] test: prepare historical context evidence causal RED
+ checkpoint [skip ci]
+
+---
+ scripts/tests/verification_context/README.md  |  57 ++++
+ .../test_context_evidence.py                  | 320 ++++++++++++++++++
+ scripts/verification/context_evidence.py      |  17 +
+ 3 files changed, 394 insertions(+)
+ create mode 100644 scripts/tests/verification_context/README.md
+ create mode 100644 scripts/tests/verification_context/test_context_evidence.py
+ create mode 100644 scripts/verification/context_evidence.py
+
+diff --git a/scripts/tests/verification_context/README.md b/scripts/tests/verification_context/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..8e7dfc37b5f630763471a0524387b25173f7a253
+--- /dev/null
++++ b/scripts/tests/verification_context/README.md
+@@ -0,0 +1,57 @@
++# Historical context evidence — RED_READY checkpoint
++
++## Frozen inputs and bounded sequence
++
++Author base: `68703a6714d7e1d91a1cc3751a292fec8599fea6`, descendant of
++`50af7923ff9094ac8e7a175d3256126204b4da41`. The three ratified contracts
++(`legacy-context-observation-v1.md`, `hardware-expectation-v1.md`, and
++`qa-plan.md` section 10) and the common author brief are unchanged from that
++entry commit in this worktree.
++
++1. Introduce discriminating pure tests A3/A4/A5/A8 and an importable nominal
++   JSON decoder. No validator implementation at this checkpoint.
++2. Lead runner reviews and records causal RED; author does not execute tests.
++3. Only after the observed RED and lead continuation: implement strict parsing,
++   then return GREEN_READY for lead execution/non-regression.
++4. After lead GREEN: author the opt-in historical fixture producer and the
++   transferred derived SetUp guard, source only. Independent native source
++   review remains required; compilation/GL execution remain NON_EXECUTE.
++
++This checkpoint intentionally is **not integration-ready**: the decoder does
++not validate evidence and must not be connected to collectors or adapters.
++
++## Runner command and oracles
++
++From this isolated worktree root, lead only, through Context Mode:
++
++```text
++python -B -m unittest discover -s scripts/tests/verification_context -v
++```
++
++Nominal decode, absent observation, Unicode preservation, valid unavailable
++records, and effect sentinels should pass with the scaffold. Duplicate records,
++duplicate JSON keys, missing fields, wrong attribution, invalid types/identity,
++bad Unicode/limits, contradictory qualification, noncurrent/old/ambiguous-core
++and falsely matched software must fail by discriminating assertions. An import
++error, no tests discovered, toolchain/context absence, or sentinel harness
++failure is not an acceptable causal RED.
++
++## Scope of these tests
++
++- A3: unique strict JSON observation, format/types and complete required fields.
++- A4: exact target and identity, Unicode scalars/control rejection, 4096-scalar
++  boundary, no whitespace/case/normalization change, no ambient environment.
++- A5: per-case attribution and CPU/software names/profiles cannot qualify as
++  historical hardware observations. Complete discovery/JUnit population and
++  assertion/skip precedence belong to the collector, not this parser.
++- A8: separate cases/requests, reread mutation and caller/result independence.
++- Present UNVERIFIED/UNAVAILABLE and INVALID_REQUEST records remain structured
++  data, not test verdicts. Unknown observed fields remain null; software or a
++  mismatch can be reported as unavailable but can never be MATCHED_EXPECTATION.
++- Import execution and parsing are guarded against filesystem, process,
++  network, environment and native dependency access. Source acquisition by the
++  test runner occurs before the guards; no native executable is invoked.
++
++No tests, build, engine, rendering, benchmark, installation or cloud operation
++were executed by the author. C++ producer not authored at RED_READY. No CPU/GPU
++performance or native hardware behavior is demonstrated by synthetic records.
+diff --git a/scripts/tests/verification_context/test_context_evidence.py b/scripts/tests/verification_context/test_context_evidence.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..ce17524e40b1b070a5e6d1164d1642e9c0545719
+--- /dev/null
++++ b/scripts/tests/verification_context/test_context_evidence.py
+@@ -0,0 +1,320 @@
++"""A3/A4/A5/A8: synthetic evidence only, never a native/GL execution.
++
++Runner (lead only), from the worktree root:
++  python -B -m unittest discover -s scripts/tests/verification_context -v
++
++The nominal decoder exists before RED so the required failures are assertions
++about validation, not absent modules, executables, contexts or dependencies.
++"""
++
++import builtins
++import copy
++import io
++import json
++import os
++from pathlib import Path
++import socket
++import subprocess
++import unittest
++from unittest.mock import patch
++
++from scripts.verification.context_evidence import parse_context_observation
++
++
++PREFIX = "[ARTIST_CONTEXT_V1] "
++
++
++def expected_identity(**changes):
++    value = {
++        "run_id": "run-context-001",
++        "plan_sha256": "a" * 64,
++        "request_id": "ctest-invocation-001",
++        "ctest_name": "opengl.PreparedFloatUniformComponentTest.UpdatesTarget",
++        "profile": "opengl-hardware",
++        "expected_gl_vendor": "Synthetic vendor",
++        "expected_gl_renderer": "Synthetic discrete renderer",
++    }
++    value.update(changes)
++    return value
++
++
++def observation(expected=None, **changes):
++    identity = expected_identity() if expected is None else expected
++    value = {
++        "schema_version": 1,
++        "kind": "opengl-context",
++        **identity,
++        "gl_vendor": identity["expected_gl_vendor"],
++        "gl_renderer": identity["expected_gl_renderer"],
++        "gl_version": "3.3 Synthetic; not a real driver observation",
++        "context_major": 3,
++        "context_minor": 3,
++        "context_profile_mask": 1,
++        "context_current": True,
++        "qualification": "MATCHED_EXPECTATION",
++        "precondition": "OK",
++        "reason": "Exact synthetic target matched",
++    }
++    value.update(changes)
++    return value
++
++
++def line(value):
++    return PREFIX + json.dumps(value, ensure_ascii=True, allow_nan=False)
++
++
++class ContextEvidenceTests(unittest.TestCase):
++    def setUp(self):
++        self.expected = expected_identity()
++        self.record = observation(self.expected)
++
++    def parse(self, text=None, expected=None):
++        return parse_context_observation(
++            line(self.record) if text is None else text,
++            expected=self.expected if expected is None else expected,
++        )
++
++    def test_nominal_object_with_unrelated_gtest_output_and_crlf(self):
++        text = "[ RUN      ] case\r\n" + line(self.record) + "\r\n[       OK ] case\r\n"
++        self.assertEqual(self.record, self.parse(text))
++
++    def test_absent_observation_is_not_success(self):
++        for text in ("", "[       OK ] case", "log " + line(self.record)):
++            with self.subTest(text=text), self.assertRaises(ValueError):
++                self.parse(text)
++
++    def test_duplicate_observations_rejected_even_when_equal(self):
++        with self.assertRaises(ValueError):
++            self.parse(line(self.record) + "\n" + line(self.record))
++
++    def test_duplicate_json_keys_rejected(self):
++        payload = json.dumps(self.record)
++        for key in ("schema_version", "request_id", "context_current"):
++            value = json.dumps(self.record[key])
++            text = PREFIX + "{" + json.dumps(key) + ":" + value + "," + payload[1:]
++            with self.subTest(key=key), self.assertRaises(ValueError):
++                self.parse(text)
++
++    def test_malformed_truncated_and_nonobject_json_rejected(self):
++        for payload in ("{", "[]", "null", '"text"', "1", json.dumps(self.record) + " trailing"):
++            with self.subTest(payload=payload), self.assertRaises(ValueError):
++                self.parse(PREFIX + payload)
++
++    def test_json_nonfinite_constants_rejected(self):
++        for constant in ("NaN", "Infinity", "-Infinity"):
++            text = line(self.record).replace('"context_major": 3', '"context_major": ' + constant)
++            with self.subTest(constant=constant), self.assertRaises(ValueError):
++                self.parse(text)
++
++    def test_each_required_field_is_checked(self):
++        for key in self.record:
++            changed = dict(self.record)
++            del changed[key]
++            with self.subTest(key=key), self.assertRaises(ValueError):
++                self.parse(line(changed))
++
++    def test_format_version_kind_and_exact_scalar_types(self):
++        changes = (
++            ("schema_version", True), ("schema_version", 1.0), ("schema_version", 2),
++            ("kind", "workload"), ("context_current", 1),
++            ("context_major", True), ("context_minor", 3.0),
++            ("context_profile_mask", True), ("gl_vendor", 42),
++            ("gl_renderer", []), ("gl_version", {}), ("reason", None),
++            ("qualification", "UNKNOWN"), ("precondition", "FAILED"),
++        )
++        for key, value in changes:
++            changed = {**self.record, key: value}
++            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
++                self.parse(line(changed))
++
++    def test_unavailable_still_validates_present_observation_types(self):
++        base = observation(
++            self.expected, qualification="UNVERIFIED", precondition="UNAVAILABLE",
++            reason="Synthetic unavailable context", context_current=False,
++        )
++        for key, value in (
++            ("context_current", None), ("context_major", "3"),
++            ("context_minor", False), ("context_profile_mask", -1),
++            ("gl_vendor", []), ("gl_renderer", 1), ("gl_version", {}),
++        ):
++            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
++                self.parse(line({**base, key: value}))
++
++    def test_every_identity_component_is_attributed_exactly(self):
++        for key in self.expected:
++            changed = {**self.record, key: self.expected[key] + "foreign"}
++            with self.subTest(key=key), self.assertRaises(ValueError):
++                self.parse(line(changed))
++
++    def test_expected_mapping_has_exact_keys(self):
++        for key in self.expected:
++            changed = dict(self.expected)
++            del changed[key]
++            with self.subTest(missing=key), self.assertRaises(ValueError):
++                self.parse(expected=changed)
++        with self.assertRaises(ValueError):
++            self.parse(expected={**self.expected, "ambient_ctest_name": "ignored"})
++
++    def test_identical_malformed_identity_does_not_become_valid(self):
++        changes = (
++            ("plan_sha256", "A" * 64), ("plan_sha256", "a" * 63),
++            ("plan_sha256", "g" * 64), ("run_id", ""), ("request_id", ""),
++            ("run_id", "run\x00id"), ("request_id", "bad\ud800"),
++            ("ctest_name", "unit.Suite.Case"), ("ctest_name", "opengl."),
++            ("profile", "cpu-only"), ("profile", "opengl-software"),
++        )
++        for key, value in changes:
++            identity = {**self.expected, key: value}
++            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
++                self.parse(line(observation(identity)), expected=identity)
++
++    def test_unicode_target_spaces_quotes_and_backslashes_preserved(self):
++        for target in (' Fabricant GPU 雪😀 "\\ ', " ", "\u2003", "é", "e\u0301", "😀" * 4096):
++            identity = expected_identity(expected_gl_vendor=target, expected_gl_renderer=target)
++            record = observation(identity)
++            with self.subTest(target_length=len(target)):
++                self.assertEqual(record, self.parse(line(record), expected=identity))
++
++    def test_raw_utf8_json_and_unicode_line_separator_are_not_extra_records(self):
++        identity = expected_identity(
++            expected_gl_vendor="Fabricant 雪😀",
++            expected_gl_renderer="GPU\u2028exact\u2029renderer",
++        )
++        record = observation(identity)
++        text = PREFIX + json.dumps(record, ensure_ascii=False, allow_nan=False) + "\r\n"
++        self.assertEqual(record, self.parse(text, expected=identity))
++
++    def test_target_not_stripped_normalized_or_casefolded(self):
++        for key in ("gl_vendor", "gl_renderer"):
++            for expected, actual in ((" Vendor ", "Vendor"), ("é", "e\u0301"), ("GPU", "gpu")):
++                identity = expected_identity(expected_gl_vendor=expected, expected_gl_renderer=expected)
++                record = observation(identity, **{key: actual})
++                with self.subTest(key=key, actual=actual), self.assertRaises(ValueError):
++                    self.parse(line(record), expected=identity)
++
++    def test_target_pair_limits_types_controls_and_unicode_scalars(self):
++        invalid = (None, "", 1, "x" * 4097, "😀" * 4097, "bad\x00", "bad\n", "bad\r", "bad\t",
++                   "bad\x7f", "bad\x85", "bad\ud800", "bad\udfff")
++        for key in ("expected_gl_vendor", "expected_gl_renderer"):
++            for value in invalid:
++                identity = {**self.expected, key: value}
++                with self.subTest(key=key, value_length=len(value) if isinstance(value, str) else None):
++                    with self.assertRaises(ValueError):
++                        self.parse(line(observation(identity)), expected=identity)
++
++    def test_matched_requires_current_33_or_newer_unambiguous_core(self):
++        changes = (
++            {"context_current": False}, {"context_major": 3, "context_minor": 2},
++            {"context_major": 2, "context_minor": 9}, {"context_major": -1},
++            {"context_minor": -1}, {"context_profile_mask": 0},
++            {"context_profile_mask": 2}, {"context_profile_mask": 3},
++            {"context_profile_mask": 5}, {"gl_vendor": None},
++            {"gl_renderer": None}, {"gl_version": None}, {"gl_version": ""},
++        )
++        for change in changes:
++            with self.subTest(change=change), self.assertRaises(ValueError):
++                self.parse(line({**self.record, **change}))
++        for major, minor in ((3, 3), (4, 0), (4, 6)):
++            record = {**self.record, "context_major": major, "context_minor": minor}
++            with self.subTest(major=major, minor=minor):
++                self.assertEqual(record, self.parse(line(record)))
++
++    def test_software_cannot_be_matched_even_when_exactly_expected(self):
++        for renderer in ("llvmpipe (LLVM)", "Softpipe", "SwiftShader", "Software Rasterizer",
++                         "swrast", "GDI Generic"):
++            identity = expected_identity(expected_gl_renderer=renderer)
++            record = observation(identity)
++            with self.subTest(renderer=renderer), self.assertRaises(ValueError):
++                self.parse(line(record), expected=identity)
++
++    def test_unavailable_observation_preserves_unknowns_without_inventing_values(self):
++        record = observation(
++            self.expected, gl_vendor=None, gl_renderer=None, gl_version=None,
++            context_major=None, context_minor=None, context_profile_mask=None,
++            context_current=False, qualification="UNVERIFIED", precondition="UNAVAILABLE",
++            reason="Synthetic context creation unavailable",
++        )
++        self.assertEqual(record, self.parse(line(record)))
++
++    def test_unverified_known_mismatch_and_software_remain_structured_preconditions(self):
++        for changes in (
++            {"context_current": False}, {"context_major": 3, "context_minor": 2},
++            {"context_profile_mask": 3}, {"gl_renderer": "llvmpipe"},
++            {"gl_vendor": "Different vendor"},
++        ):
++            record = observation(
++                self.expected, qualification="UNVERIFIED", precondition="UNAVAILABLE",
++                reason="Synthetic unavailable precondition", **changes,
++            )
++            with self.subTest(changes=changes):
++                self.assertEqual(record, self.parse(line(record)))
++
++    def test_invalid_request_preserved_but_never_matched(self):
++        record = observation(
++            self.expected, gl_vendor=None, gl_renderer=None, gl_version=None,
++            context_major=None, context_minor=None, context_profile_mask=None,
++            context_current=False, qualification="UNVERIFIED", precondition="INVALID_REQUEST",
++            reason="Synthetic invalid activation request",
++        )
++        self.assertEqual(record, self.parse(line(record)))
++        for qualification, precondition in (
++            ("MATCHED_EXPECTATION", "UNAVAILABLE"), ("MATCHED_EXPECTATION", "INVALID_REQUEST"),
++            ("UNVERIFIED", "OK"),
++        ):
++            with self.subTest(qualification=qualification, precondition=precondition):
++                with self.assertRaises(ValueError):
++                    self.parse(line({**self.record, "qualification": qualification, "precondition": precondition}))
++
++    def test_separate_cases_are_fresh_and_returned_mutation_is_not_cached(self):
++        original = copy.deepcopy(self.expected)
++        first = self.parse()
++        first["run_id"] = "mutated-result"
++        self.assertEqual(self.record, self.parse())
++        self.assertEqual(original, self.expected)
++        second_identity = expected_identity(
++            request_id="ctest-invocation-002", ctest_name="opengl.OtherSuite.OtherCase",
++        )
++        second = observation(second_identity)
++        self.assertEqual(second, self.parse(line(second), expected=second_identity))
++        with self.assertRaises(ValueError):
++            self.parse(line(self.record), expected=second_identity)
++        changed = dict(self.record, request_id="mutated-junit-identity")
++        with self.assertRaises(ValueError):
++            self.parse(line(changed))
++
++    def test_import_and_parsing_have_no_external_effects_or_ambient_configuration(self):
++        # Read/compile before sentinels: the subject is import execution + parsing,
++        # not the runner's own source acquisition. All input stays synthetic.
++        source_path = Path(__file__).resolve().parents[2] / "verification" / "context_evidence.py"
++        code = compile(source_path.read_text(encoding="utf-8"), str(source_path), "exec")
++        real_import = builtins.__import__
++
++        def guarded_import(name, *args, **kwargs):
++            if name.split(".")[0] in {"subprocess", "socket", "ctypes", "OpenGL", "glfw"}:
++                raise AssertionError("forbidden external/native dependency: " + name)
++            return real_import(name, *args, **kwargs)
++
++        def forbidden(*args, **kwargs):
++            raise AssertionError("unexpected external or ambient effect")
++
++        class ForbiddenEnvironment(dict):
++            __getitem__ = get = __iter__ = __contains__ = keys = items = values = forbidden
++
++        namespace = {"__name__": "context_evidence_purity_probe", "__file__": str(source_path)}
++        with (
++            patch("builtins.__import__", guarded_import),
++            patch("builtins.open", forbidden), patch("io.open", forbidden),
++            patch.object(Path, "open", forbidden), patch.object(Path, "mkdir", forbidden),
++            patch.object(Path, "write_text", forbidden), patch.object(Path, "write_bytes", forbidden),
++            patch.object(os, "environ", ForbiddenEnvironment()), patch.object(os, "getenv", forbidden),
++            patch.object(os, "system", forbidden), patch.object(os, "stat", forbidden),
++            patch.object(subprocess, "Popen", forbidden), patch.object(subprocess, "run", forbidden),
++            patch.object(socket, "socket", forbidden), patch.object(io, "FileIO", forbidden),
++        ):
++            exec(code, namespace)
++            parsed = namespace["parse_context_observation"](line(self.record), expected=self.expected)
++            self.assertEqual(self.record, parsed)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/scripts/verification/context_evidence.py b/scripts/verification/context_evidence.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..afda9a5356d6d0a5c6cd70a476e9f73965a51af8
+--- /dev/null
++++ b/scripts/verification/context_evidence.py
+@@ -0,0 +1,17 @@
++"""Historical context observation boundary (RED scaffold, not a validator).
++
++Only the nominal JSON transport exists at this checkpoint. Do not integrate
++this scaffold as trusted evidence; the lead must observe the discriminating
++RED tests before the validation implementation is authored.
++"""
++
++import json
++
++
++def parse_context_observation(text: str, *, expected: dict) -> dict:
++    """Decode a nominal observation; validation deliberately awaits causal RED."""
++    prefix = "[ARTIST_CONTEXT_V1] "
++    for line in text.split("\n"):
++        if line.startswith(prefix):
++            return json.loads(line[len(prefix):])
++    raise ValueError("context observation absent")

@@ -1,0 +1,32 @@
+# Linux adapter — plan borné
+
+Base observée : d2d7be7, worktree pool-19. Les presets configure/build/test
+linux-release et les overrides Conan host/build Release sont déjà intégrés.
+GCC14 x86_64 / libstdc++11 / cppstd23, Ninja et CMakeDeps/CMakeToolchain restent
+inchangés. La sonde format/stacktrace n'est pas contournée.
+
+1. RED synthétique : contrat de l'adaptateur absent, préparation seule via le
+   helper existant, construction des seules cibles sélectionnées, profils CPU /
+   llvmpipe / matériel, attribution et résultats sans fallback.
+2. GREEN : adaptateur pur de descriptions conforme à PlatformAdapter ; option
+   explicite du helper pour configurer les workloads sans les exécuter. Réutiliser
+   le protocole scénario et les validations du collecteur. Ne pas modifier les
+   gardes historiques du contrôleur linux-evidence.py.
+3. Non-régression : tests Linux dédiés et tests synthétiques des deux scripts
+   historiques. Tous les processus de préparation/build/GL sont doublés.
+
+La demande de dépendances reste explicite avant Conan ; les commandes CMake de
+build ne reconstruisent ni dépendances ni configuration. ASan reste dans
+linux-debug-asan, jamais dans les commandes optimisées de l'adaptateur.
+L'adaptateur ne lance pas Xvfb et ne crée pas de contexte. Le profil matériel
+exige une cible exacte et refuse les variables imposant un renderer logiciel.
+Les validateurs communs doivent encore refuser tout résultat logiciel/inconnu ou
+absent lors d'une qualification matérielle.
+
+Dépendances d'intégration à transmettre : inclusion racine du CMake workloads
+ARTIST_BUILD_VERIFICATION ; raccord CLI ; support CTest matériel structuré par
+le cœur (sa garde actuelle est conservée). Aucun fichier de ces propriétaires
+n'est modifié ici. Aucune qualification Linux, GPU ou performance n'est exécutée.
+
+Commande de validation :
+`python -B -m unittest discover -s scripts/tests/verification_linux -p 'test_*.py' -v`

@@ -1,0 +1,625 @@
+From b96df6530e486c6057e8ad7e7414a4a4946110a9 Mon Sep 17 00:00:00 2001
+From: denne <djoe.denne@gmail.com>
+Date: Fri, 30 Oct 2026 00:26:05 +0100
+Subject: [PATCH] test(windows): propose confined verification dispatch RED
+ slice
+
+---
+ scripts/build-windows.ps1                     |   2 +
+ .../verification_windows/DISPATCH_RED.md      | 149 +++++++++++
+ scripts/tests/verification_windows/README.md  |   8 +-
+ .../verification_windows/dispatch_fixture.ps1 | 158 ++++++++++++
+ .../verification_windows/test_dispatch.py     | 237 ++++++++++++++++++
+ 5 files changed, 553 insertions(+), 1 deletion(-)
+ create mode 100644 scripts/tests/verification_windows/DISPATCH_RED.md
+ create mode 100644 scripts/tests/verification_windows/dispatch_fixture.ps1
+ create mode 100644 scripts/tests/verification_windows/test_dispatch.py
+
+diff --git a/scripts/build-windows.ps1 b/scripts/build-windows.ps1
+index 865594b65d4c8d955d9500b282ff373cec68057a..e0094b91c201c8300ba5e3e40c6a0d4413017134 100644
+--- a/scripts/build-windows.ps1
++++ b/scripts/build-windows.ps1
+@@ -15,9 +15,11 @@ $ErrorActionPreference = 'Stop'
+ # Interface-only slice: the operational verification paths need their own
+ # confined tests before implementation. Never fall through to the legacy
+ # bootstrap/build/CTest campaign when a verification phase was requested.
++# BEGIN ARTIST_VERIFICATION_DISPATCH
+ if ($PSBoundParameters.ContainsKey('VerificationPhase')) {
+     throw 'Verification phases are not implemented yet; no bootstrap, build or test was started.'
+ }
++# END ARTIST_VERIFICATION_DISPATCH
+ if ($AddressSanitizer -and $Configuration -ne 'Debug') {
+     throw 'AddressSanitizer currently supports Debug only; use its separate build tree.'
+ }
+diff --git a/scripts/tests/verification_windows/DISPATCH_RED.md b/scripts/tests/verification_windows/DISPATCH_RED.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..bd29060a229a90b37225f5fb1ad46c14205cc6a5
+--- /dev/null
++++ b/scripts/tests/verification_windows/DISPATCH_RED.md
+@@ -0,0 +1,149 @@
++# Deuxieme tranche Windows — RED_READY comportemental sous fixture
++
++## Etat et autorisation
++
++Base de tranche : `01e970b682a90d32e1be71ad997475c9d206bf2c`.
++Le lead a observe GREEN statique 5/5, code 0, assertions inchangees et sources
++stables ; logs annonces :
++`out/verification-synthetic/windows-helper-static-green-2026-10-29T23-15-35-041Z/`.
++Cette interface intermediaire n'est pas une fonctionnalite integrable.
++
++Autorisation suivante recue : preparer/ecrire les tests confines ; le lead
++examine le harnais et les commandes avant toute execution, puis doit observer
++le RED causal avant logique operationnelle GREEN. L'auteur n'execute rien.
++
++## Fichiers et absence de changement operationnel
++
++- `test_dispatch.py` : dix methodes unittest, sous-cas de refus/erreurs/env.
++- `dispatch_fixture.ps1` : programme factice possede par les tests.
++- Helper : ajout de deux **commentaires marqueurs seulement**, autour du refus
++  existant. Aucun nouveau comportement prepare/build/run ni correction de code
++  enfant avant le RED lead. Les assertions de premiere tranche sont inchangees.
++- Aucun core importe, modele/schema/receipt copie, ni fichier d'un autre auteur.
++
++## Frontiere de confinement soumise a revue du lead
++
++1. Python ne lance qu'un interpreteur Windows PowerShell connu, avec `-File`
++   pointant exactement vers le programme factice versionne. `shell=False`,
++   timeout de 15 s. Le helper original n'est **jamais** une cible de processus,
++   d'import, de dot-source ou d'Invoke-Expression.
++2. Python lit le helper comme texte, extrait uniquement la region entre deux
++   marqueurs uniques, et la transmet comme donnee JSON. Le reste du helper
++   (bootstrap, fichiers, vcvars, Conan, CMake, CTest) n'est pas transmis au moteur
++   d'execution du harnais. Les arguments de workload sont des chaines factices,
++   pas des chemins executables ouverts.
++3. Le harnais parse la region **avant** ScriptBlock.Create : seules quatre
++   commandes nommees sont autorisees, toutes des fonctions factices definies
++   localement. Pas d'appel dynamique/dot-source, commande native, type/.NET,
++   acces membre general, fonction/classe, redirection, provider env, variable
++   scopee ni scriptblock imbrique ; la seule methode admise est le test actuel
++   PSBoundParameters.ContainsKey('VerificationPhase'). Bornes source/AST.
++4. Les fonctions factices enregistrent des donnees et retournent un code enfant
++   synthetique ou remplacent une **hashtable**, jamais le vrai environnement de
++   processus. Elles ne contiennent aucun fallback vers un outil reel. L'enfant
++   de code 17/23 est un evenement, pas un executable. Les commandes Conan/CMake
++   attendues sont uniquement des donnees dans le journal.
++5. Le seul suffixe ajoute a la region est un throw sentinelle de fallthrough,
++   pas le corps historique du helper. Les seuls fichiers ecrits par PowerShell
++   sont son resultat de fixture ; par Python : entrees/resultats/logs propres a
++   un dossier unique sous out/verification-synthetic/windows-dispatch-fixtures.
++6. Le test negatif du harnais transmet commandes/methodes interdites comme
++   donnees ; code attendu 96 avant evaluation, zero evenement, environnement
++   factice identique. Ce controle n'etablit PAS une sandbox PowerShell generale.
++   Le lead relit le programme versionne et la region extraite avant lancement.
++   Un autotest positif distinct utilise un mini-script synthetique, pas le
++   helper, pour verifier journal factice, finally et codes de processus 0/17.
++   S'il echoue, la panne du harnais doit etre corrigee avant de retenir le RED.
++
++Limite assumee : cette restriction AST est une frontiere etroite pour code relu,
++pas une garantie contre code arbitraire hostile. Si elle refuse une future
++implementation, c'est un probleme de harnais/interface a arbitrer, pas un RED
++fonctionnel ni une raison de retirer les gardes en silence.
++
++## Interface privee proposee pour le futur dispatch, pas schema core
++
++Variables injectees : VerificationPhase, AllowDependencyResolution,
++Configuration, VerificationTargets, VerificationExecutable, VerificationArguments,
++VerificationBuildDirectory, VisualStudioPath, Python, Jobs, root.
++Ce sont entrees de fixture/helper, pas une nouvelle Request ou un receipt.
++
++Frontieres d'effets proposees :
++
++- Get-VerificationProcessEnvironment -> copie d'une map pour snapshot ;
++- Get-VerificationMsvcEnvironment -> environnement enfant simule ;
++- Set-VerificationProcessEnvironment(Values) -> remplacement exact de la map ;
++- Invoke-VerificationChild(Program, Arguments) -> code entier, journal d'argv/env.
++
++Le dispatch doit posseder le try/finally de restauration et le court-circuit
++sur code enfant non nul ; les doubles ne le font pas a sa place. Il doit etre
++terminal (return/exit/refus), jamais tomber sur la campagne historique.
++Le raccordement des frontieres a MSVC reel sera une tranche ulterieure revue,
++pas une propriete demontree par cette fixture. Aucun corps operationnel nouveau
++ni wrapper reel n'est encore livre.
++
++## Commandes proposees au lead, pas executees par l'auteur
++
++Cwd :
++`C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-2dc31e0a-cwsmsw-windows-pipeline`
++
++RED cible, seulement apres revue/autorisation du harnais :
++
++```powershell
++C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_windows -p 'test_dispatch.py' -v
++```
++
++Sous-processus unique possible par cas :
++`<SystemRoot>/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File <worktree>/scripts/tests/verification_windows/dispatch_fixture.ps1 -InputFile <fixture>/input.json -OutputFile <fixture>/result.json`.
++Aucun vrai build-windows.ps1, outil de build ou workload n'est lance.
++
++Non-regression statique separable :
++
++```powershell
++C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_windows -p 'test_helper_contract.py' -v
++```
++
++## Oracles et attendu par lecture (NON_EXECUTE)
++
++- Sans consentement prepare : code non nul, aucun evenement ni mutation.
++- Prepare autorise : code 0, enfants Conan install -> CMake configuration
++  uniquement, host/build Release et repertoire distinct explicites. Le preset
++  Windows existant est conserve, avec -B et --toolchain explicites pour ne pas
++  reutiliser le cache/toolchain de l'arbre historique. Verification ON et
++  BUILD_TESTING OFF pour cette selection CPU (pas de suite ni discovery GL).
++- Build : un CMake --build du repertoire et de la cible CPU declares uniquement.
++- Run : executable et argv factices exacts, espaces/point-virgule jamais interpretes.
++- Echec premier enfant 17/23 : meme code de processus, pas d'enfant suivant.
++- Succes/echec : enfant voit env MSVC factice ; snapshot initial restaure exactement,
++  cles absentes et valeurs vides comprises. Aucun MSVC reel n'est sonde.
++- Tous les modes : absence d'atteinte de la sentinelle legacy.
++- Harnais : les constructions interdites sont refusees avant evaluation.
++
++Attendu sur cette base : 10 methodes, 6 methodes en echec fonctionnel
++(11 assertions failures avec leurs sous-cas), 4 succes, aucun error/skip sous Windows equipe
++de PowerShell. Cause attendue : le refus actuel "Verification phases are not
++implemented yet" renvoie code 1 au lieu de la preparation/build/run attendus,
++ou du code enfant 17/23. Le premier echec dans l'ordre unittest devrait etre
++`test_build_only_selected_target_without_bootstrap_or_configure`.
++
++Un interpreteur absent, erreur AST du harnais, sortie de fixture manquante,
++timeout ou zero test n'est PAS ce RED. Les resultat/logs bruts sont conserves
++par cas ; le lead doit distinguer panne du harnais et assertion de dispatch.
++
++Les comptages sont des attendus de lecture, pas une execution attribuee.
++Les 5 tests statiques precedents devraient rester verts ; ne pas modifier leurs
++assertions pour ce passage.
++
++## Matrice et dependances
++
++- Fixture Python/PowerShell synthetique : NON_EXECUTE par l'auteur.
++- Helper reel/MSVC, installation, CMake/Conan/CTest : NON_EXECUTE.
++- Workload CPU, GL logiciel/materiel, images/performance/cloud : NON_EXECUTE.
++- Core modele/baseProtocol non integre : adaptateur differe, aucun faux RED
++  d'import. Les tests ci-dessus n'en dependent pas.
++- Aucun Docker/cloud ni ressource reservee. Git/diff/lectures et analyses de
++  syntaxe statiques seulement : ast.parse du fichier Python (sans import du
++  module) et Parser.ParseFile du harnais PowerShell (sans evaluation). Aucune
++  invocation du programme factice ni de sa region de dispatch par l'auteur.
++
++Demande au lead : revue du confinement puis execution du RED cible si accepte.
++Ne pas autoriser GREEN operationnel sur une simple panne de harnais.
+diff --git a/scripts/tests/verification_windows/README.md b/scripts/tests/verification_windows/README.md
+index dc941be2f5b45f2c1df9d76fd1d1f732a5091f81..a115d414ad9c6c910eb2ded5dcd62a215e51dd27 100644
+--- a/scripts/tests/verification_windows/README.md
++++ b/scripts/tests/verification_windows/README.md
+@@ -1,5 +1,9 @@
+ # Remise Windows — premiere tranche GREEN_READY
+ 
++Suite : GREEN statique 5/5 observe par le lead sur `01e970b` ; la deuxieme
++tranche de tests confines est decrite dans `DISPATCH_RED.md`. Aucun GREEN
++operationnel ni qualification reelle n'est revendique.
++
+ ## Entrees et limites
+ 
+ - Base : `1fba1c98e3a9750f615deacf37a08eb99d4b4fa6` ; branche
+@@ -62,12 +66,14 @@ Repertoire de travail :
+ `C:/Users/djden/.local/share/opencode/worktree/3a086c/ensemble-2dc31e0a-cwsmsw-windows-pipeline`.
+ 
+ ```powershell
+-C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_windows -p 'test_*.py' -v
++C:/Python313/python.exe -B -m unittest discover -s scripts/tests/verification_windows -p 'test_helper_contract.py' -v
+ ```
+ 
+ Executer seulement via Context Mode apres relecture des tests et verification
+ de l'interpreteur. Conserver commande, interpreteur/version, HEAD/delta, logs et
+ comptages sous `out/` par le runner lead. Aucun helper n'est appele par ce test.
++Filtre desormais explicite pour ne pas inclure les nouveaux tests de dispatch
++avant leur revue de confinement. La commande de tranche 2 est dans DISPATCH_RED.md.
+ 
+ Attendu GREEN par lecture, **NON_EXECUTE par l'auteur** : cinq methodes
+ decouvertes, cinq succes statiques, zero failure/error/skip.
+diff --git a/scripts/tests/verification_windows/dispatch_fixture.ps1 b/scripts/tests/verification_windows/dispatch_fixture.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..6df39f7ca9a041ec6d33954fad16d45aa5c15ea2
+--- /dev/null
++++ b/scripts/tests/verification_windows/dispatch_fixture.ps1
+@@ -0,0 +1,158 @@
++# Test-owned program. Never dot-source or invoke build-windows.ps1 here.
++# All dispatch effect boundaries below are record-only functions with no fallback.
++param(
++    [Parameter(Mandatory = $true)][string]$InputFile,
++    [Parameter(Mandatory = $true)][string]$OutputFile
++)
++
++Set-StrictMode -Version 2.0
++$ErrorActionPreference = 'Stop'
++$payload = Get-Content -LiteralPath $InputFile -Raw | ConvertFrom-Json
++$dispatch = [string]$payload.dispatch
++$fixtureEvents = New-Object 'System.Collections.Generic.List[object]'
++$fixtureError = $null
++$fixtureHarnessError = $null
++$fixtureExit = 0
++$fixtureChildIndex = 0
++$fixtureEnvironment = @{}
++foreach ($property in $payload.environment.PSObject.Properties) {
++    $fixtureEnvironment[$property.Name] = [string]$property.Value
++}
++
++function Copy-FixtureMap($Values) {
++    $copy = @{}
++    foreach ($key in $Values.Keys) { $copy[$key] = $Values[$key] }
++    return $copy
++}
++
++function Get-VerificationProcessEnvironment {
++    $script:fixtureEvents.Add(@{ kind = 'snapshot' })
++    return (Copy-FixtureMap $script:fixtureEnvironment)
++}
++
++function Get-VerificationMsvcEnvironment {
++    $script:fixtureEvents.Add(@{ kind = 'msvc-fixture' })
++    $values = @{}
++    foreach ($property in $script:payload.msvc_environment.PSObject.Properties) {
++        $values[$property.Name] = [string]$property.Value
++    }
++    return $values
++}
++
++function Set-VerificationProcessEnvironment($Values) {
++    $script:fixtureEvents.Add(@{ kind = 'set-environment' })
++    $script:fixtureEnvironment = Copy-FixtureMap $Values
++}
++
++function Invoke-VerificationChild([string]$Program, [string[]]$Arguments) {
++    # Arguments are data: no &, Start-Process, cmd, shell or native executable.
++    $script:fixtureEvents.Add(@{
++        kind = 'child'
++        program = $Program
++        arguments = @($Arguments)
++        environment = Copy-FixtureMap $script:fixtureEnvironment
++    })
++    if ($script:fixtureChildIndex -ge @($script:payload.child_codes).Count) {
++        throw 'Fixture received an unexpected extra child request.'
++    }
++    $code = [int]$script:payload.child_codes[$script:fixtureChildIndex]
++    $script:fixtureChildIndex += 1
++    return $code
++}
++
++function Assert-FixtureDispatch($Source) {
++    # A narrow audit for this reviewed fixture, NOT a general PowerShell sandbox.
++    # Parse as data first; create an executable scriptblock only after approval.
++    if ($Source.Length -gt 32768 -or $Source -match '(?im)^\s*#requires\b') {
++        throw 'Dispatch exceeds fixture bounds or contains #requires.'
++    }
++    $tokens = $null
++    $parseErrors = $null
++    $ast = [System.Management.Automation.Language.Parser]::ParseInput(
++        $Source, [ref]$tokens, [ref]$parseErrors)
++    if (@($parseErrors).Count -ne 0) { throw 'Dispatch parse error in fixture input.' }
++    $nodes = @($ast.FindAll({ param($node) $true }, $true))
++    if ($nodes.Count -gt 2048) { throw 'Dispatch AST exceeds fixture bounds.' }
++    $commands = @('Get-VerificationProcessEnvironment', 'Get-VerificationMsvcEnvironment',
++        'Set-VerificationProcessEnvironment', 'Invoke-VerificationChild')
++    $variables = @('PSBoundParameters', 'VerificationPhase', 'AllowDependencyResolution',
++        'Configuration', 'VerificationTargets', 'VerificationExecutable',
++        'VerificationArguments', 'VerificationBuildDirectory', 'VisualStudioPath',
++        'Python', 'Jobs', 'root', 'originalEnvironment', 'msvcEnvironment',
++        'childCode', 'returnCode', 'preset', 'profile', 'buildDir', 'arguments',
++        'program', 'target', 'true', 'false', 'null')
++    foreach ($node in $nodes) {
++        if ($node -is [System.Management.Automation.Language.CommandAst]) {
++            if ($node.InvocationOperator -ne [System.Management.Automation.Language.TokenKind]::Unknown -or
++                $commands -notcontains $node.GetCommandName()) {
++                throw 'Dispatch command is outside the record-only fixture allowlist.'
++            }
++        }
++        if ($node -is [System.Management.Automation.Language.VariableExpressionAst]) {
++            if ($variables -notcontains $node.VariablePath.UserPath) {
++                throw 'Dispatch variable is outside the fixture allowlist.'
++            }
++        }
++        if ($node -is [System.Management.Automation.Language.MemberExpressionAst]) {
++            if ($node.Extent.Text -cne '$PSBoundParameters.ContainsKey(''VerificationPhase'')') {
++                throw 'Dispatch member access is outside the fixture allowlist.'
++            }
++        }
++        if ($node -is [System.Management.Automation.Language.TypeExpressionAst] -or
++            $node -is [System.Management.Automation.Language.TypeConstraintAst] -or
++            $node -is [System.Management.Automation.Language.ConvertExpressionAst] -or
++            $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -or
++            $node -is [System.Management.Automation.Language.TypeDefinitionAst] -or
++            $node -is [System.Management.Automation.Language.UsingStatementAst] -or
++            $node -is [System.Management.Automation.Language.DataStatementAst] -or
++            $node -is [System.Management.Automation.Language.TrapStatementAst] -or
++            $node -is [System.Management.Automation.Language.ScriptBlockExpressionAst] -or
++            $node -is [System.Management.Automation.Language.RedirectionAst]) {
++            throw 'Dispatch contains an unsupported executable construct.'
++        }
++    }
++}
++
++try {
++    try { Assert-FixtureDispatch $dispatch }
++    catch {
++        $fixtureHarnessError = $_.Exception.Message
++        $fixtureExit = 96
++    }
++    if (-not $fixtureHarnessError) {
++        # These are fixture variables, not a copy of model.py or a core receipt.
++        # No actual toolchain, device, filesystem workload or process env is read.
++        $AllowDependencyResolution = [bool]$payload.allow_dependency_resolution
++        $Configuration = [string]$payload.configuration
++        $VerificationTargets = @($payload.targets)
++        $VerificationExecutable = [string]$payload.executable
++        $VerificationArguments = @($payload.arguments)
++        $VerificationBuildDirectory = [string]$payload.build_directory
++        $VisualStudioPath = 'C:/fixture Visual Studio'
++        $Python = 'fixture-python-never-executed'
++        $Jobs = 1
++        $root = 'C:/fixture source with spaces'
++        # Appending a harmless sentinel detects accidental fallthrough. An early
++        # return in the dispatch exits this block, a throw/exit also skips it.
++        # Bind the local automatic PSBoundParameters in the invoked block itself,
++        # rather than assuming it inherits a parent script's bound parameters.
++        $withSentinel = [scriptblock]::Create(
++            'param([string]$VerificationPhase)' + [Environment]::NewLine +
++            $dispatch + [Environment]::NewLine + "throw 'FIXTURE_LEGACY_FALLTHROUGH'")
++        try { & $withSentinel -VerificationPhase ([string]$payload.phase) }
++        catch {
++            $fixtureError = $_.Exception.Message
++            $fixtureExit = 1
++        }
++    }
++} finally {
++    # Also runs for exit <child-code> from dispatch; preserve the raw process code.
++    @{
++        fixture_version = 1
++        harness_error = $fixtureHarnessError
++        phase_error = $fixtureError
++        events = @($fixtureEvents.ToArray())
++        environment_after = $fixtureEnvironment
++    } | ConvertTo-Json -Depth 16 | Set-Content -LiteralPath $OutputFile -Encoding UTF8
++}
++exit $fixtureExit
+diff --git a/scripts/tests/verification_windows/test_dispatch.py b/scripts/tests/verification_windows/test_dispatch.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..90f29a36f10e74115bf9323bb055632d58f113d2
+--- /dev/null
++++ b/scripts/tests/verification_windows/test_dispatch.py
+@@ -0,0 +1,237 @@
++"""S3/S4/S7: test-only PowerShell dispatch with record-only effect boundaries.
++
++Lead must approve this fixture before running. No real helper, toolchain, native
++workload or installer is invoked. Raw fixture inputs/results/logs are retained.
++The initial expected RED is the current explicit 'not implemented' rejection,
++not a missing core import or a missing PowerShell interpreter.
++"""
++
++from datetime import datetime, timezone
++import json
++import os
++from pathlib import Path
++import subprocess
++import unittest
++from uuid import uuid4
++
++
++ROOT = Path(__file__).resolve().parents[3]
++HELPER = ROOT / "scripts" / "build-windows.ps1"
++FIXTURE = Path(__file__).with_name("dispatch_fixture.ps1")
++BEGIN = "# BEGIN ARTIST_VERIFICATION_DISPATCH"
++END = "# END ARTIST_VERIFICATION_DISPATCH"
++PARENT_ENVIRONMENT = {"PATH": "parent path", "KEEP": "present"}
++MSVC_ENVIRONMENT = {
++    "PATH": "fixture msvc path;parent path",
++    "INCLUDE": "fixture include",
++    "LIB": "fixture lib",
++    "KEEP": "present",
++}
++
++
++@unittest.skipUnless(os.name == "nt", "Windows-only fixture; no Linux qualification")
++class WindowsDispatchTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.powershell = Path(os.environ.get("SystemRoot", "C:/Windows")) / (
++            "System32/WindowsPowerShell/v1.0/powershell.exe"
++        )
++        if not cls.powershell.is_file():
++            raise RuntimeError("PRECONDITION: PowerShell interpreter missing; not a causal RED")
++        source = HELPER.read_text(encoding="utf-8-sig")
++        if source.count(BEGIN) != 1 or source.count(END) != 1:
++            raise RuntimeError("HARNESS: dispatch extraction markers must be unique")
++        cls.dispatch = source.split(BEGIN, 1)[1].split(END, 1)[0]
++        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
++        cls.evidence_root = ROOT / "out/verification-synthetic/windows-dispatch-fixtures" / (
++            f"{stamp}-{uuid4().hex}"
++        )
++        cls.evidence_root.mkdir(parents=True, exist_ok=False)
++        print(f"Windows dispatch fixture evidence: {cls.evidence_root}", flush=True)
++
++    def run_fixture(self, phase, *, allow=False, codes=(), environment=None,
++                    configuration="Release", dispatch=None, expect_audit=True):
++        case = self.evidence_root / f"fixture with spaces {uuid4().hex}"
++        case.mkdir(exist_ok=False)
++        payload = {
++            "dispatch": self.dispatch if dispatch is None else dispatch,
++            "phase": phase,
++            "allow_dependency_resolution": allow,
++            "configuration": configuration,
++            "targets": ["ArtistUniformCpuWorkload"],
++            "executable": "C:/fixture binary with spaces/ArtistUniformCpuWorkload.exe",
++            "arguments": ["--scenario", "cpu.float-mirror", "--result",
++                          "C:/fixture result with spaces/raw.json", "literal;not a command"],
++            "build_directory": "C:/fixture build with spaces/windows-msvc-release-verification",
++            "environment": dict(PARENT_ENVIRONMENT if environment is None else environment),
++            "msvc_environment": dict(MSVC_ENVIRONMENT),
++            "child_codes": list(codes),
++        }
++        input_file = case / "input.json"
++        result_file = case / "result.json"
++        input_file.write_text(json.dumps(payload), encoding="utf-8")
++        argv = [str(self.powershell), "-NoProfile", "-NonInteractive", "-ExecutionPolicy",
++                "Bypass", "-File", str(FIXTURE), "-InputFile", str(input_file),
++                "-OutputFile", str(result_file)]
++        # This is the only process boundary: interpreter + test-owned fixture.
++        # No configurable runner, shell, tool lookup or real-helper fallback.
++        try:
++            result = subprocess.run(argv, cwd=case, shell=False, capture_output=True, timeout=15)
++        except subprocess.TimeoutExpired as error:
++            (case / "stdout.log").write_bytes(error.stdout or b"")
++            (case / "stderr.log").write_bytes(error.stderr or b"")
++            (case / "process.json").write_text(
++                json.dumps({"argv": argv, "returncode": None, "timed_out": True}),
++                encoding="utf-8",
++            )
++            self.fail(f"HARNESS timeout, not causal RED; partial logs retained: {case}")
++        (case / "stdout.log").write_bytes(result.stdout)
++        (case / "stderr.log").write_bytes(result.stderr)
++        (case / "process.json").write_text(
++            json.dumps({"argv": argv, "returncode": result.returncode}), encoding="utf-8"
++        )
++        self.assertTrue(result_file.is_file(), f"HARNESS produced no result: {case}")
++        report = json.loads(result_file.read_text(encoding="utf-8-sig"))
++        self.assertEqual(report["fixture_version"], 1)
++        if expect_audit:
++            self.assertIsNone(report["harness_error"], f"HARNESS rejected dispatch: {report}")
++        return result.returncode, report, payload
++
++    @staticmethod
++    def children(report):
++        return [event for event in report["events"] if event["kind"] == "child"]
++
++    def test_prepare_without_opt_in_refuses_before_effects(self):
++        code, report, _ = self.run_fixture("prepare")
++        self.assertNotEqual(code, 0)
++        self.assertEqual(report["events"], [])
++        self.assertEqual(report["environment_after"], PARENT_ENVIRONMENT)
++        self.assertNotEqual(report["phase_error"], "FIXTURE_LEGACY_FALLTHROUGH")
++
++    def test_prepare_authorized_runs_conan_then_cmake_only(self):
++        code, report, payload = self.run_fixture("prepare", allow=True, codes=(0, 0))
++        self.assertEqual(code, 0, f"Authorized preparation rejected: {report}")
++        children = self.children(report)
++        self.assertEqual([child["program"] for child in children], ["conan", "cmake"])
++        self.assertEqual(children[0]["arguments"][:2], ["install", "."])
++        for setting in ("-s:h", "-s:b"):
++            self.assertIn(setting, children[0]["arguments"])
++            index = children[0]["arguments"].index(setting)
++            self.assertEqual(children[0]["arguments"][index + 1], "build_type=Release")
++        self.assertIn("-of", children[0]["arguments"])
++        index = children[0]["arguments"].index("-of")
++        self.assertEqual(children[0]["arguments"][index + 1], payload["build_directory"])
++        configure = children[1]["arguments"]
++        self.assertEqual(configure[:3], ["--fresh", "--preset", "windows-msvc-release"])
++        self.assertIn("-B", configure)
++        self.assertEqual(configure[configure.index("-B") + 1], payload["build_directory"])
++        self.assertIn("--toolchain", configure)
++        self.assertEqual(
++            configure[configure.index("--toolchain") + 1],
++            payload["build_directory"] + "/conan_toolchain.cmake",
++        )
++        self.assertIn("-DARTIST_BUILD_VERIFICATION=ON", configure)
++        self.assertIn("-DBUILD_TESTING=OFF", configure)  # CPU-only fixture selection.
++        self.assertNotIn("--build", configure)
++        self.assertNotIn("--test-dir", configure)
++        self.assertIsNone(report["phase_error"])
++
++    def test_build_only_selected_target_without_bootstrap_or_configure(self):
++        code, report, payload = self.run_fixture("build", codes=(0,))
++        self.assertEqual(code, 0, f"Isolated build rejected: {report}")
++        children = self.children(report)
++        self.assertEqual(len(children), 1)
++        self.assertEqual(children[0]["program"], "cmake")
++        self.assertEqual(children[0]["arguments"], [
++            "--build", payload["build_directory"], "--target", "ArtistUniformCpuWorkload",
++            "--parallel", "1",
++        ])
++        self.assertIsNone(report["phase_error"])
++
++    def test_run_only_preserves_argument_boundaries(self):
++        code, report, payload = self.run_fixture("run", codes=(0,))
++        self.assertEqual(code, 0, f"Isolated execution rejected: {report}")
++        children = self.children(report)
++        self.assertEqual(len(children), 1)
++        self.assertEqual(children[0]["program"], payload["executable"])
++        self.assertEqual(children[0]["arguments"], payload["arguments"])
++        self.assertIsNone(report["phase_error"])
++
++    def test_child_failure_preserves_raw_code_and_stops_sequence(self):
++        for child_code in (17, 23):
++            with self.subTest(child_code=child_code):
++                code, report, _ = self.run_fixture("prepare", allow=True, codes=(child_code,))
++                self.assertEqual(code, child_code, f"Child code was lost: {report}")
++                self.assertEqual([child["program"] for child in self.children(report)], ["conan"])
++
++    def test_environment_present_and_absent_restored_after_success(self):
++        for environment in (PARENT_ENVIRONMENT, {}, {"PATH": "", "INCLUDE": "parent include"}):
++            with self.subTest(environment=environment):
++                code, report, _ = self.run_fixture("run", codes=(0,), environment=environment)
++                self.assertEqual(code, 0, f"Cannot observe successful child: {report}")
++                children = self.children(report)
++                self.assertEqual(len(children), 1)
++                self.assertEqual(children[0]["environment"], MSVC_ENVIRONMENT)
++                self.assertEqual(report["environment_after"], environment)
++
++    def test_environment_present_and_absent_restored_after_failure(self):
++        for environment in (PARENT_ENVIRONMENT, {}, {"PATH": "", "INCLUDE": "parent include"}):
++            with self.subTest(environment=environment):
++                code, report, _ = self.run_fixture("run", codes=(17,), environment=environment)
++                self.assertEqual(code, 17, f"Cannot observe failing child: {report}")
++                children = self.children(report)
++                self.assertEqual(len(children), 1)
++                self.assertEqual(children[0]["environment"], MSVC_ENVIRONMENT)
++                self.assertEqual(report["environment_after"], environment)
++
++    def test_selected_phases_never_fall_through_to_legacy_sentinel(self):
++        for phase in ("prepare", "build", "run"):
++            with self.subTest(phase=phase):
++                _, report, _ = self.run_fixture(phase, allow=True, codes=(0, 0))
++                self.assertNotEqual(report["phase_error"], "FIXTURE_LEGACY_FALLTHROUGH")
++
++    def test_fixture_refuses_unapproved_effects_before_evaluation(self):
++        # Parser rejects these as data; none of these commands/expressions run.
++        mutants = (
++            "conan install .", "& 'cmake' --build .", "Start-Process ctest",
++            "[System.IO.File]::WriteAllText('outside.txt', 'bad')",
++            "$env:PATH = 'changed'", "'bad' > outside.txt",
++            "function Invoke-VerificationChild { conan install . }",
++        )
++        for dispatch in mutants:
++            with self.subTest(dispatch=dispatch):
++                code, report, _ = self.run_fixture("run", dispatch=dispatch, expect_audit=False)
++                self.assertEqual(code, 96)
++                self.assertIsNotNone(report["harness_error"])
++                self.assertEqual(report["events"], [])
++                self.assertEqual(report["environment_after"], PARENT_ENVIRONMENT)
++
++    def test_fixture_can_record_fake_child_and_restore_map_on_exit(self):
++        # Positive fixture self-check, NOT helper implementation. Proves that a
++        # subsequent failure is not an inability to exercise the record-only API.
++        dispatch = """
++$originalEnvironment = Get-VerificationProcessEnvironment
++try {
++    $msvcEnvironment = Get-VerificationMsvcEnvironment
++    Set-VerificationProcessEnvironment $msvcEnvironment
++    $childCode = Invoke-VerificationChild 'fixture-only-never-executed' @('arg with spaces', 'literal;')
++    exit $childCode
++} finally {
++    Set-VerificationProcessEnvironment $originalEnvironment
++}
++"""
++        for child_code in (0, 17):
++            with self.subTest(child_code=child_code):
++                code, report, _ = self.run_fixture("run", codes=(child_code,), dispatch=dispatch)
++                self.assertEqual(code, child_code, f"HARNESS exit-code self-check failed: {report}")
++                self.assertIsNone(report["phase_error"])
++                children = self.children(report)
++                self.assertEqual(len(children), 1)
++                self.assertEqual(children[0]["program"], "fixture-only-never-executed")
++                self.assertEqual(children[0]["arguments"], ["arg with spaces", "literal;"])
++                self.assertEqual(children[0]["environment"], MSVC_ENVIRONMENT)
++                self.assertEqual(report["environment_after"], PARENT_ENVIRONMENT)
++
++
++if __name__ == "__main__":
++    unittest.main()
