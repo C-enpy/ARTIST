@@ -401,3 +401,49 @@ workflow » n'est PAS retenue : contract.md ligne28 prévoit explicitement
 Complément B workflow demandé au planner avec activation manuelle et machines
 opérateur préparées ; aucun auteur workflow admis avant ce complément commité.
 Cette attente n'empêche pas A, indépendant, de commencer ses tests après ce commit.
+
+### Complément B5/B6 ratifié — workflow manuel obligatoire
+
+Rectification QA `result_mvuo5wsb_0002_hma7aa`, réponse finale complète reçue.
+L'omission du workflow est retirée ; `.github/workflows/verification-pipeline.yml`
+reste un livrable explicite, pas un GAP différé accepté. Sections A/B précédentes
+conservées ; branche B admise seulement après commit de ce complément.
+
+B5 : workflow_dispatch exclusivement, aucun push/PR/schedule/workflow_call ou
+déclenchement automatique. Machines opérateur self-hosted Windows/Linux préparées,
+pas de hosted/cloud/installation/réparation implicite. Platform/profile/phase
+choisis dans ensembles fermés ; vendor/renderer matériels exacts non vides,
+aucun label/GPU comme qualification. DISPLAY Linux et MSVC Windows restent
+préconditions machine. Workflow jamais invoqué pendant la mission.
+
+B6 : entrées validées avant commande de phase ; chaînes de cible préservées sans
+normalisation destructive. Transport environnement/argv délimité, pas interpolation
+libre d'expressions d'inputs dans shell. List/plan strictement consultatifs ;
+chaque phase explicitement choisie, prédécesseur absent refuse sans cascade
+réparatrice prepare/build/run. Identités/journaux/bruts/codes conservés ; artefact
+absent, upload réussi ou enfant code0 ne fabriquent pas PASS. Checkout/artefacts
+actions à versions explicites selon pratiques locales, aucun budget automatique.
+
+Risques B5 et B6 chacun I5×P3=15. B5 déclencheur trigger automatique/hosted/fallback,
+portée lancements non demandés/attribution ; détection contrat/revue seulement,
+mitigation manuel+machines préparées, gap structure/chemins de refus. B6 déclencheur
+input injecté/cascade/preuves absentes masquées, portée commandes/conclusions ;
+détection séparation CLI existante, mitigation choix fermés/transport littéral/
+refus prédécesseur, gap composition workflow→argv et conservation après échec.
+
+T4a→B5 : dispatch seul et branches self-hosted bornées ; contre-exemples auto-trigger,
+ubuntu-latest/hosted ou choix libre de runner rejetés. T4b→B5/B6 : valeurs admises
+littérales et cibles exactes ; inconnues/vides/quotes/retours ligne/métacaractères
+refusées ou préservées littéralement, jamais commande supplémentaire. T4c→B6 :
+list/plan appellent leur seul mode, phase argv attendus sous doubles ; prédécesseur
+absent/installation/cascade refusés sans remplacement. T4d→B6 : codes/artefacts
+disponibles conservés succès/échec ; résultat absent/logs partiels/échec puis upload
+réussi ne donnent jamais favorable. T4e→B5/B6 : pins actions/préconditions documentés ;
+label comme preuve/fallback/install/cloud constituent écart bloquant.
+
+Registre bidirectionnel : workflow↔B5/B6↔T4a–e ; documentation préconditions↔B5/T4e,
+chaque nouveau test attribué, état GAP jusqu'aux preuves. Parseur YAML déjà présent
+sinon contrôle textuel structuré borné + revue, aucune installation. Doubles argv
+sans shell/outils/workflow réels ; vérification textuelle ne prouve pas GitHub Actions.
+Choix détaillés auteur proposés avant implémentation ; RED/GREEN lead et revue
+indépendante ciblée avant intégration. Aucune extension de droit, budget ou campagne.
