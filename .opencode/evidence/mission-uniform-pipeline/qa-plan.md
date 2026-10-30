@@ -705,3 +705,12 @@ Trois nouveaux fichiers réservés sous scripts/tests/verification_seams/, aucun
 changement production ou fixture partagée. Le report de réalisation G1 est levé
 pour l'écriture des tests seulement, pas pour leur exécution auteur ni leur réception.
 Baselines et contre-exemples précèdent la caractérisation sous runner lead.
+
+### Mapping B détaillé ratifié avant édition
+
+Proposition `result_mvuxtter_008j_btze0z` persistée dans
+`windows-test-migration-plan.md` : G2 effectif, G3 admission fine et G4 migration
+des dix anciennes méthodes plus composition wrapper obsolète. La dépendance
+AST vers Assert-FixtureDispatch est préservée verbatim, sans étendre son allowlist
+ou exécuter helper-run. Cinq fichiers autorisés, production et fixtures communes
+inchangées. Auteur non runner, programmes relus et exécutés uniquement par le lead.
