@@ -20,13 +20,17 @@ def jobs(value):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--configuration', choices=('debug', 'release'), default='debug')
     parser.add_argument('--jobs', type=jobs, default=1)
     parser.add_argument('--test-label', choices=('all', 'unit', 'opengl'), default='all')
     parser.add_argument('--configure-only', action='store_true')
     parser.add_argument('--address-sanitizer', action='store_true')
     args = parser.parse_args(argv)
+    if args.address_sanitizer and args.configuration != 'debug':
+        parser.error('--address-sanitizer requires --configuration debug')
     root = Path(__file__).resolve().parents[1]
-    preset = 'linux-debug' + ('-asan' if args.address_sanitizer else '')
+    preset = 'linux-' + args.configuration + ('-asan' if args.address_sanitizer else '')
+    build_type = args.configuration.capitalize()
     build = root / 'out' / 'build' / preset
     profile = str(root / 'conan' / 'profiles' / 'linux-gcc')
     env = os.environ.copy()
@@ -41,6 +45,7 @@ def main(argv=None):
 
     try:
         run(['conan', 'install', '.', '-pr:h', profile, '-pr:b', profile,
+             '-s:h', f'build_type={build_type}', '-s:b', f'build_type={build_type}',
              '-c:h', f'tools.build:jobs={args.jobs}', '-of', str(build), '--build=missing'])
         run(['cmake', '--fresh', '--preset', preset])
         if args.configure_only:
