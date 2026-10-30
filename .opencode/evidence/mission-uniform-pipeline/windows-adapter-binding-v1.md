@@ -74,3 +74,44 @@ Request, CommandSpec et schémas de receipts restent inchangés. Aucun backend,
 variante C++ ou promesse GPU ajoutée. Toutes commandes réelles MSVC/build/workload
 restent NON_EXECUTE ; seuls données synthétiques et programmes factices relus
 peuvent être exécutés par le coordinateur.
+
+## Précision ratifiée — localisation privée de CTest
+
+Consultation indépendante d'architecture `result_mvulud8x_0000_07pkef`, après
+proposition Windows `f14ea7115394c2a5e072ee402823b9063cfb3007`. Le lead retient
+le cache du même arbre admis, sans nouveau champ ou registre d'outils.
+
+Pour les seuls scénarios CTest, `describe_execution` exige le `CMakeCache.txt`
+de l'arbre du BuildReceipt et son entrée dans `details.identity.files`. Une seule
+lecture bytes, SHA256 comparé au reçu, puis décodage/parsing de ces mêmes bytes :
+aucune vérification et lecture indépendantes. Cache absent, non inventorié ou
+modifié : refus avant runner, sans recherche de remplacement.
+
+Exiger exactement une définition non vide de `CMAKE_COMMAND:INTERNAL` et de
+`CMAKE_CTEST_COMMAND:INTERNAL`. Refuser doublon même identique, mauvais type,
+définition malformée ; une définition d'autre type ne peut être ignorée. Les
+valeurs sont des chemins Windows absolus vers `cmake.exe` et `ctest.exe`, dans
+le même répertoire d'installation normalisé selon la sémantique Windows,
+indépendamment de l'hôte des tests. Aucune expansion d'environnement, shell,
+résolution via cwd/PATH ou hypothèse de venv. Le chemin CTest déclaré est employé
+inchangé pour découverte et exécution sur le même arbre/configuration.
+
+Cette lecture de données admises est sans écriture, processus ou sonde, mais
+n'est pas indépendante du filesystem. Un plan workloads-only ne lit pas ce cache.
+Le hash admet les octets déclarant le chemin, pas le binaire CTest lui-même.
+Même répertoire signifie cohérence, pas attestation d'installation. Remplacement
+du binaire à chemin constant non détecté par ce contrôle ; aucun test ne doit
+prétendre le contraire. Outil absent/inexécutable : panne explicite, pas fallback.
+Qualification native et identité du binaire outil restent non démontrées.
+
+Négatifs synthétiques supplémentaires avant GREEN : cache absent/non inventorié/
+modifié ; chacune des deux clés absente/doublée/mal typée/malformée/vide ; chemin
+relatif, mauvais exécutable, installations divergentes ; chemins à espaces,
+séparateurs/casse Windows ; une lecture unique, workloads-only sans cache et
+absence d'effets/fallback. Aucune exécution native n'est autorisée par ce contrat.
+
+Le RED des 28 premiers tests ne couvre que l'adaptateur et la déclaration des
+paramètres. Il n'autorise pas l'ouverture fonctionnelle du helper. L'ancien oracle
+de fermeture reste intact tant qu'un mapping détaillé et les tests de fragments
+entrée/dispatch/env/restore n'ont pas été relus et exécutés en RED par le lead.
+Régions WRAPPERS/NATIVE, pins et legacy restent inchangés dans cette sous-tranche.
