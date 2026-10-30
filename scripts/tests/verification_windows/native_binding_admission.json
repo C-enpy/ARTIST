@@ -1,0 +1,16 @@
+{
+  "reference_head": "cc47fb440e4f72008d5a4ecb99555851e9c0ba91",
+  "qa_commit": "6989261563d28502524d3d01c4ef2b2662739c78",
+  "normalization": "UTF-8 without BOM; universal newlines LF for source fragments",
+  "source_sha256": "833b1b596629252b5442f659404ed12c5b83dca37919ccc58da9b6784308c8c2",
+  "native_sha256": "8c9a56ffeb6f082e79bbe569ac519cbbf31cc3c2002e988aac9a82e61216e3de",
+  "fragments": {
+    "parameters": "8d1b63c0e5807d215c95a51f17ed2dfdb7895029979bb719a082c31b1abac539",
+    "wrappers": "470e8dfec02f65700766b312b54e8a4dad6e5d56ddad2160afbc7ae85d238371",
+    "data": "8b62b2ac8816a0a36a4a5627749dbfc1c6a9dd999b1c94cfbbeb8073b23afc6b",
+    "root": "be460e7a3996b10e90c2359b408f68499dd309a98c4b3b60284e1080cde46c4a",
+    "entry": "340390c41092a9b9fab80def7bcdfee1870a2580739ffb8aa89977a84dab1597",
+    "binding": "1362da7f4eb3e95cddf47da27d68d5bb01738d4d162dd2f712554a989e824876"
+  },
+  "exporter_sha256": "002648e6c0615049cece76cbef4cc52a47e26b6f6932c68098ad2f5b1a970046"
+}

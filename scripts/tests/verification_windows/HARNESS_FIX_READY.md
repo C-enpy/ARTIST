@@ -1,3 +1,7 @@
+> Archive historique en lecture seule : les commandes et prévisions de la section
+> suivante ne sont PAS une admission de run actuelle. La correction courante et
+> son unique commande proposée sont dans « allowlist native de l'entrée » plus bas.
+
 # HARNESS_FIX_READY — attentes bornees, admission hors reparse
 
 Base : `e2f7516ed89859328c5c832eac69452ac08952de`.
@@ -88,3 +92,75 @@ apres selfcheck : refus provisoire de Resolve-VerificationPhaseFlags.
 
 Le lead revoit ce diff avant le run selectionne. Cette remise corrige la surete
 du harnais, pas le produit ni les findings core/alignement de racine Windows.
+
+---
+
+# HARNESS_FIX_READY — allowlist native de l'entrée
+
+## Entrée et preuve existante
+
+HEAD d'entrée vérifié propre : `4ef3d3e13160d0bf502a88c97f93bcc3edba23b8`.
+Il contient les deux admissions JSON explicitement persistées par le lead après
+relecture source. L'auteur ne les modifie pas. Source helper stable `27dd1ed`,
+SHA256 normalisé `5f8a8e2b0860179b89f186e6a4225cce50aba0bc442615a9ee5d52d3e76832b6`.
+
+Résultat lead : six méthodes baseline / six failures, zéro error/skip, hashes
+stables. Ce résultat est une panne de harness, PAS un RED ni un échec du helper.
+Vingt SourceTests et dix-huit hauts niveaux NON_EXECUTE. Le précédent 6/6 reste
+une preuve historique attribuée à son ancien candidat, pas au candidat actuel.
+
+Logs lead :
+`out/verification-synthetic/windows-helper-binding-green-2026-10-30T10-48-15-858Z/manifest.json`.
+Cas bruts relus par l'auteur via Context Mode :
+`out/verification-synthetic/windows-native-binding/20261030T104815Z-c8e8afd5c69f498bb63073086404e6c6/`.
+Onze résultats JSON observés : même refus « direct external/evaluated command
+forbidden », observations/captures/factory/clock vides, OS inchangé et état retiré.
+
+## Première cause confirmée par lecture/analyse de données
+
+Assert-BindingSource(entry) est appelé AVANT le choix de branche baseline. Les
+quatre noms suivants sont présents dans l'entrée réelle, mais absents de sa liste
+statique : Get-VerificationAbsolutePath, Assert-VerificationRegularPath,
+Select-VerificationEnvironment et Write-VerificationToolchainWitness.
+L'entrée n'a aucune définition propre : l'ajout des noms de définitions AST ne
+peut pas admettre ces appels. Cette lecture concorde avec le refus précoce des
+onze rapports, sans rejouer de PowerShell, programme factice ou test.
+
+## Correction autorisée, bornée
+
+- Ajouter exactement ces quatre noms source déjà relus à la liste native statique.
+  Aucun wildcard, résolution libre ou exception au contrôle InvocationOperator.
+- Diagnostic de refus : uniquement nom de commande et type d'opérateur AST.
+  Un nom null/non identifiant est remplacé par une constante. Aucun Extent.Text,
+  argument, fragment de commande, valeur d'environnement ou dump d'exception.
+- Ne changer aucune assertion, méthode de test, production, primitive capture,
+  pin/admission JSON, ancien oracle ou autre harness.
+
+## Expérience discriminante prévue pour le lead
+
+Après revue de ce seul delta, depuis scripts/tests/verification_windows/ :
+
+```powershell
+C:/Python313/python.exe -B -m unittest -v test_native_binding.NativeBindingHarnessTests
+```
+
+Attendu : la source d'entrée relue n'est plus rejetée pour ces quatre appels ; les
+six baselines peuvent atteindre leurs propres fakes/audits. Un nouveau refus doit
+identifier un nom sûr et son opérateur, sans argument. Toute autre panne de fixture
+reste HARNESS/INCONCLUSIVE ; ne pas lancer les vingt SourceTests avant baselines
+valides. Après deux essais sans information nouvelle : nouvelle hypothèse et
+expérience ciblée, pas répétition coûteuse ou élargissement de permissions.
+
+## Limites et contrôles auteur
+
+Auteur non runner : aucun PS/unittest/import cible/faux processus/outil exécuté.
+Contrôles de données/diff seulement ; AST Python sans import autorisé pour les
+fichiers inchangés, aucune syntaxe/runtime PowerShell démontrée. Pins source et
+admissions conservés ; 26 méthodes natives et 18 hauts niveaux intacts. Aucun
+GREEN, qualification native, résultat moteur/GPU ou gain revendiqué.
+
+Contrôle final : exactement quatre noms ajoutés, aucun retiré ; garde
+InvocationOperator et reste de la fixture native comparés identiques. AST Python
+sans import : 26/18 méthodes, fichiers et assertions inchangés. Source helper et
+son SHA256 recoupés ; note historique conservée intégralement sous avertissement
+d'archive. Seuls cette note et native_binding_fixture.ps1 ont un delta.

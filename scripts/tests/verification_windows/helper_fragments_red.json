@@ -1,0 +1,12 @@
+{
+  "source_head": "cc47fb440e4f72008d5a4ecb99555851e9c0ba91",
+  "normalization": "UTF-8 without BOM; universal newlines (LF)",
+  "source_sha256": "833b1b596629252b5442f659404ed12c5b83dca37919ccc58da9b6784308c8c2",
+  "binding_sha256": "1362da7f4eb3e95cddf47da27d68d5bb01738d4d162dd2f712554a989e824876",
+  "fragments": {
+    "parameters": "8d1b63c0e5807d215c95a51f17ed2dfdb7895029979bb719a082c31b1abac539",
+    "definitions": "b3a52340eeb9b263fdddcb65412ecd4557c36de0917c7e6081133a1287679278",
+    "entry": "340390c41092a9b9fab80def7bcdfee1870a2580739ffb8aa89977a84dab1597",
+    "root_binding": "be460e7a3996b10e90c2359b408f68499dd309a98c4b3b60284e1080cde46c4a"
+  }
+}
