@@ -696,3 +696,12 @@ skips/causes, puis vérifie diff intégré. Les grants d'édition/exécution aut
 restent absents. Budget proportionné : après setup75% planifié/25% buffer, pas de
 campagne ou infrastructure nouvelle pour ces gaps. Encodage cmd non ASCII,
 Dispose/writers hérités, jonction06 et cinq skips connus restent non qualifiés.
+
+### Validation du plan de fixture G1 avant A1
+
+Plan A0 `result_mvuxoywe_008g_tq7mqk` reçu et ratifié dans
+`g1-seam-fixture-plan.md` de ce répertoire avant admission du worktree A1.
+Trois nouveaux fichiers réservés sous scripts/tests/verification_seams/, aucun
+changement production ou fixture partagée. Le report de réalisation G1 est levé
+pour l'écriture des tests seulement, pas pour leur exécution auteur ni leur réception.
+Baselines et contre-exemples précèdent la caractérisation sous runner lead.
