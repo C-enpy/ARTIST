@@ -27,3 +27,17 @@ réimplémentation d'adaptateur ou de garde supprimée sans RED.
 
 Aucun test, helper complet, outil natif, moteur, GPU, rendu, benchmark,
 installation ou cloud exécuté lors de cette réception.
+
+## Admission du seul helper après commit
+
+Plan commité `2b836e82e5827ffe3c8aa79f88fb4ad9080ba0cf` avant publication de
+`task_mvuo974b_0069_duptzs`, build-engineer fresh avec worktree, tests RED seulement.
+Les scores de cette nouvelle tranche sont ceux validés par le PM :78/68.
+L'ancien worktree propre pool-30 reste inactif ; il n'est finalement pas aligné
+ou réutilisé pour contourner l'évaluation de la nouvelle tranche. Le transfert
+d'ownership du helper au nouvel auteur unique est explicite. Les anciennes tâches
+restent des suivis, sans permission de reprendre une source concurrente.
+
+La branche CMake/workflow attend son complément QA manuel propre ; ce délai n'est
+pas une dépendance technique au helper. Les deux branches seront parallèles dès
+que cette entrée sera reçue et commise.
