@@ -32,3 +32,14 @@ continue dans sa tâche dédiée ; production et tests Windows ne changent pas.
 
 Aucun test supplémentaire, moteur, outil natif, GPU, rendu, benchmark, installation
 ou cloud exécuté. Qualification native et réception globale toujours non établies.
+
+## Autre réaffectation obsolète : couture déjà matérialisée
+
+Retour `result_mvuytfau_008u_zvakye`, pool-43 : HEAD0d83731 propre, les trois fichiers
+G1 déjà intégrés. Présence et Git seulement, aucune nouvelle édition ou exécution.
+Cette remise n'est pas attribuée comme nouvelle livraison ou validation de G1.
+
+Contrairement à la branche Windows verte, la tâche auteur G1 n'est pas close :
+les baselines3/6 en erreur de harnais du rapport150 restent non résolues. Sa
+réparation exclusive continue dans la tâche dédiée déjà publiée. Affectation
+obsolète conservée inactive, sans nouveau shutdown/réadmission ou autre auteur.
