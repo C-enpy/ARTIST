@@ -6,6 +6,8 @@ Decision locale du lead dans le mandat approuve, sans changement de modele, QA, 
 
 Request ajoute deux champs optionnels : expected_gl_vendor: str|None=None et expected_gl_renderer: str|None=None. Ils sont fournis ensemble, non vides, sans NUL/controle et de longueur <=4096 caracteres chacun ; admissibles uniquement pour le profil opengl-hardware. Pas de cible devinee ni de variable d'environnement cachee.
 
+Precision de coherence apres re-audit source : « non vide » ne signifie pas « non blanc ». Une chaine espace ou espace Unicode sans caractere de controle reste admissible et conservee exactement, sans strip. Si elle ne correspond pas au contexte observe, la qualification echoue par precondition (code20 avec observations), pas par erreur de syntaxe avant production du resultat. Chaine vide, controle, surrogate isole et depassement restent invalides. Les validateurs Request, argv Python et parseur natif doivent appliquer le meme contrat.
+
 Les anciens dictionnaires Request restent valides. to_dict omet les deux champs si tous deux absents afin de conserver les representations et hashes preexistants sans cible ; s'ils sont presents, les inclure tous deux dans le JSON canonique du plan et donc dans son hash. from_dict/construction directe appliquent la meme validation. Aucun test preexistant affaibli.
 
 CLI Python : --expected-gl-vendor TEXT et --expected-gl-renderer TEXT pour la selection materielle. plan/list restent sans effet ; plan materiel sans cible est imprimable mais porte la precondition unresolved. run materiel sans cible est bloque avant execution de scenario. Une paire partielle est une demande invalide, pas une observation ambigue.
