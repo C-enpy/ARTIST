@@ -57,6 +57,7 @@ protected:
     void SetUp() override
     {
         OpenGLComponentTest::SetUp();
+        if (IsSkipped() || HasFatalFailure()) return;
         while (glGetError() != GL_NO_ERROR) {} // only GLEW initialization
     }
 };
