@@ -8,7 +8,11 @@ param(
     [switch]$ConfigureOnly,
     [switch]$AsanPreflightOnly,
     [ValidateSet('prepare', 'build', 'run')][string]$VerificationPhase,
-    [switch]$AllowDependencyResolution
+    [switch]$AllowDependencyResolution,
+    [string]$VerificationInputFile,
+    [string]$VerificationBundleRoot,
+    [string]$VerificationLogDirectory,
+    [ValidateRange(1, 3600)][int]$VerificationTimeoutSeconds = 3600
 )
 
 $ErrorActionPreference = 'Stop'
