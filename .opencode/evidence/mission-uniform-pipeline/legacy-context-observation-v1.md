@@ -51,6 +51,8 @@ Une observation conforme n'annule ni failure/skip du cas ni code enfant incompat
 
 Avant intégration du producteur/collecteur équivalent, les sélections hardware non qualifiables doivent être refusées avant tout enfant CTest. Ne pas présenter un BLOCKED après exécution comme garde préalable.
 
+Raccordement ratifie apres integration des producteurs : la description pure des commandes peut etre appelee une fois pour verifier le transport explicite avant tout enfant et nouvelle sonde. Sans cible, refus avant factory/description ; variables reservees absentes ou partielles dans une invocation JUnit : BLOCKED/code3. Valeurs completes mais etrangeres/contradictoires ou request_id duplique entre invocations : protocole/code4. Aucune observation de device ou collecte denvironnement nest admise pour ce controle. Le mapping de la regression historique autorise seulement cet appel pur supplementaire, en conservant zero enfant/sonde/parser avant refus. Les constructeurs/descriptions des adaptateurs de production doivent respecter cette frontiere ; un preflight de transport nest pas preuve GPU.
+
 ## Ownership et validation
 
 Après QA : auteur GPU désigné uniquement pour `ARTIST/component-tests/include/OpenGLComponentTests.hpp`, support local nouveau sous ce dossier si utile, et l'arrêt préalable du seul `SetUp` dérivé concerné dans `PreparedFloatUniformComponentTests.cpp`. Corps des tests, assertions et API moteur hors édition. Pas de CMake nécessaire. Toute autre édition historique requiert un nouveau transfert explicite.
