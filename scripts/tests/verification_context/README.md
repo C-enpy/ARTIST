@@ -121,7 +121,8 @@ Ordre du candidat :
    d'exceptions activée, ce type est intercepté sans failure supplémentaire,
    le corps skipped est ignoré et TearDown est appelé. Ce mécanisme **n'a pas
    été compilé/exécuté ici**. Capture désactivée : pas de retour vers le corps,
-   mais arrêt exceptionnel possible ; ce n'est pas une preuve favorable.
+    mais arrêt exceptionnel possible ; TearDown et JUnit complet ne sont alors
+    pas garantis. Ce n'est pas un skip propre ni une preuve favorable.
 7. Le `SetUp` PreparedFloat possède aussi `if (IsSkipped() || HasFatalFailure())
    return;` avant sa boucle GL. Les corps/assertions, y compris le détachement
    volontaire ultérieur de contexte, sont inchangés. `window` reste possédé par
@@ -140,3 +141,16 @@ restitutions du lead. Non-régression finale réservée au runner lead.
 C++ **NON_COMPILE/NON_EXECUTE** ;
 GL/image/performance **NON_EXECUTE**, aucun gain revendiqué. Les preuves de
 runner et la revue indépendante restent à produire avant réception complète.
+
+## Réception du coordinateur — portée intégrée
+
+Le candidat source `057b8417933cdcbe10b9c16e3dffd4c56acd569a` a reçu une revue
+indépendante SOURCE_ONLY sans finding bloquant établi, puis a été intégré dans
+`91c5ac23bf17d4d88dd36699cb7d15a6d6835872`. Les six fichiers reçus ont été comparés
+au candidat revu sans divergence. Le coordinateur a exécuté les 28 tests Python
+dans l'arbre intégré : 28 satisfaits, aucun échec, erreur ou skip, empreintes
+stables. Preuves : `out/verification-synthetic/legacy-context-integrated-2026-10-30T03-07-08-478Z/`.
+
+La revue n'est pas exhaustive et ne prouve pas une exécution native. Le C++,
+Windows/Linux et OpenGL restent NON_COMPILE/NON_EXECUTE. Collecteur, adaptateurs
+et qualification du pipeline complet ne sont pas couverts par cette réception.
