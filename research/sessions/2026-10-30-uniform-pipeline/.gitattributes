@@ -1,0 +1,3 @@
+# Preserve the exact exported bytes referenced by index.json.
+# Historical message formatting, including trailing spaces, is intentional.
+* -text

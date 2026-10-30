@@ -1,0 +1,428 @@
+{
+  "version": 1,
+  "project": "ARTIST",
+  "ingested_at": "2026-10-30T14:59:50.366Z",
+  "mode": "append",
+  "root_session": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+  "cutoff_exclusive": {
+    "message_id": "msg_18d4bf738001ul36qIySQ4scQL",
+    "created": 1793371928673,
+    "iso": "2026-10-30T14:52:08.673Z"
+  },
+  "source_index": "research/sessions/2026-10-30-uniform-pipeline/index.json",
+  "sessions": 58,
+  "public_messages": 720,
+  "sources_added": 70,
+  "sources_modified": 0,
+  "sources_skipped": 0,
+  "pages_created": [
+    "references/session-2026-10-30-uniform-pipeline.md"
+  ],
+  "pages_updated": [
+    "development/verification-pipeline.md",
+    "index.md",
+    "log.md"
+  ],
+  "sources": [
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/index.json",
+      "bytes": 35769,
+      "content_hash": "sha256:1e3cc707cb9d6aa19cb4099de87ae0fa8794c39306d277848974eb13cf8c43a3"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/00-main.md",
+      "bytes": 173450,
+      "content_hash": "sha256:7995aee6c656ed761cb670fec7d8d8725aeb02424045d14d97b206442f7bd4c8"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/01-ses_e76a0be90fferxA2bfE6DB40Bj.md",
+      "bytes": 8983,
+      "content_hash": "sha256:2eb755db39bd8fc16d43ca5cac50a71d9b1c84d28ef3b002e0692b8a1a7c6de1"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/02-ses_e76b87acbffeInhopKrrSgIcd3.md",
+      "bytes": 23133,
+      "content_hash": "sha256:06dfa42c9d8876bb3e090f9b55ea3a605935d65eca4770368c0766fd4a344d0e"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/03-ses_e76ac4a39ffeS8miyL2q6zOdm9.md",
+      "bytes": 20014,
+      "content_hash": "sha256:c93d0efcd1c519087e3e8062d84f05af5c7792b1f93614682f8dd2a091012009"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/04-ses_e76b87ac7ffeI345nZ6Xot921p.md",
+      "bytes": 4215,
+      "content_hash": "sha256:d9b4e56b99b2f3b39f36c7e43615d5219946652446d967b4d3e4b516ddab2034"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/05-ses_e761e9a8dffeEukcmqeHzrK2il.md",
+      "bytes": 51686,
+      "content_hash": "sha256:9f2b35759e510ece6472de582955900344da79fde52d9156bd2faa0e91b2c074"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/06-ses_e743eeae9ffevTZLCaGDtPRXEu.md",
+      "bytes": 14349,
+      "content_hash": "sha256:db39e392c190ad60db63f625f5262219049fcc036b8a91e2fbecbe4d45d08ef9"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/07-ses_e734d125dffejyP9S8sAZXcEFw.md",
+      "bytes": 9556,
+      "content_hash": "sha256:7001d4614c2515434f1ea10307ffba89236bf987e90c61e44155d6b20f306b7c"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/08-ses_e7320b4beffeZ2lzxx044wc53N.md",
+      "bytes": 2154,
+      "content_hash": "sha256:d62ba71f884385d885fe180307d9fda4a169e17bbd96bea348123944095d3abc"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/09-ses_e72f30c3dffexhiU7aGHaIt45R.md",
+      "bytes": 12314,
+      "content_hash": "sha256:9baf1bc38973cf04124d472750c37429f240d407d64672ec92b2bb8617fa27e6"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/10-ses_e768af8bbffeR2O5yfeHTOWWXo.md",
+      "bytes": 40327,
+      "content_hash": "sha256:7ef783afd169942ed8843e3163a8509060348e34dcfe1f5f0be5d8248f755dbe"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/11-ses_e7626883effe2VyjXAO2qEvRRk.md",
+      "bytes": 17411,
+      "content_hash": "sha256:703a94820fa3293d7b8e29512e50041e93d30bc795b5f2ceb4cf9d0e7a5bd72f"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/12-ses_e761f157affe4EYIAn60q0PNZT.md",
+      "bytes": 43997,
+      "content_hash": "sha256:9dc9e7af1b37fcae6dee8a2cb87f4a87443400b15a269f72dc5a13e98ebfcd9e"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/13-ses_e761e664dffeqILsXdxl4CO37l.md",
+      "bytes": 5778,
+      "content_hash": "sha256:1cefada86badabaa04d1acfb6ee3f27387f74b4443c24e796eeca535fa2e6a7a"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/14-ses_e761e21fdffeSg3lPGWAJKfMKh.md",
+      "bytes": 20460,
+      "content_hash": "sha256:6a2b7eb9682509d534952e5e39b729883bad72d191b6e56ea30c209ff8a1f479"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/15-ses_e75e70ac7ffe1wjS3V4MJoqlyy.md",
+      "bytes": 9202,
+      "content_hash": "sha256:d57f6b2bb69aed6feb5074a0bc8b0c5d84368ed44758e72220e5106086008089"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/16-ses_e75e2dd84ffetxPXCpCP2IimKU.md",
+      "bytes": 5716,
+      "content_hash": "sha256:6c6918cdb55d49566a1f41dbe13753e1823aac65332b78b574074653aaba918b"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/17-ses_e75bf125fffeZHzBTbAHAi5Z87.md",
+      "bytes": 1462,
+      "content_hash": "sha256:ea89567863f2bf7945bce4a58396ecda4f94f19700dd6f8c174f4d9f0a745440"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/18-ses_e756cefb8ffet95nVDzgQyURQL.md",
+      "bytes": 10089,
+      "content_hash": "sha256:f5b3e45f0c7253df4fe9be07e916fb6c28c05b221a6231540609b76684036ec5"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/19-ses_e756c80f4ffepaJIo7YRI41V26.md",
+      "bytes": 25108,
+      "content_hash": "sha256:a573acceabc9314ff32f2a06542870f7508aa0bb1954108327e479ffd120ebe4"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/20-ses_e7563aa86ffeFGDLEe7xFvjFsO.md",
+      "bytes": 15033,
+      "content_hash": "sha256:c050686676f8cbcc52d3aa8e6baf87b4e00b5ec868b92a8b4df655fbb994b79a"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/21-ses_e755a0756ffeAVE8LhmN4Sgh74.md",
+      "bytes": 9774,
+      "content_hash": "sha256:8424dc05e7977d2e03762ab3df425b38b8cae0411a8b3d2da9eb4c446074f21d"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/22-ses_e75403399ffeCvgrDzYodebV3b.md",
+      "bytes": 4052,
+      "content_hash": "sha256:7bb698cd98da8c8df55f32a482edf0c325251d2b6c36426f5a342d36af8ad7ec"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/23-ses_e753ef37bffeGFSinsZKsuDaMi.md",
+      "bytes": 21346,
+      "content_hash": "sha256:778574f97676546ef34d2964702563a4fde427e5de9bcd938c0d556e89e5441e"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/24-ses_e7539a862ffeyqsFXs3fUnH0w4.md",
+      "bytes": 2652,
+      "content_hash": "sha256:7b2cc34f443888fca0f3dc56e6c2a419330dfcfd328e38cf6e3ef5cd24885eef"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/25-ses_e75062a38ffenOVSbSsQf2jVZV.md",
+      "bytes": 13095,
+      "content_hash": "sha256:296becfcb393498a918342de97f15c98dc6de28e7685ac518121349e1ab0b177"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/26-ses_e75059649fferJ5TJxrFcV1GDC.md",
+      "bytes": 3865,
+      "content_hash": "sha256:b5ae1f0046f09537966a482dc7b0dbd1d06c54bd63b1421ca8c4c45f7adea6dc"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/27-ses_e74f4e5a4ffeQ7njXL8npBS6VF.md",
+      "bytes": 29386,
+      "content_hash": "sha256:2e7b1b04acfce8f4704343f70a9e2dafbf216605e2726c8fc16a688edfda1ed2"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/28-ses_e74e7da65ffeUclVgr7J0qH30a.md",
+      "bytes": 4020,
+      "content_hash": "sha256:418d59161d4bef68cbb70b28c2203c718c1816f4c1c0a4a310f32a06d3415f41"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/29-ses_e74e48a98fferO0tfRrKoI35SX.md",
+      "bytes": 7660,
+      "content_hash": "sha256:9ada3057a1e1d15db1871a8e4c852580ead3401b28578ac49f0334511073add7"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/30-ses_e74df31e0ffeYtKAoyUs4SKRNN.md",
+      "bytes": 8231,
+      "content_hash": "sha256:adbe361f0b70066d917c4a53f451c4ef1a332a1f370cb8472552e5ed5677fc0f"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/31-ses_e74b5c43fffe03LuGL44U3YW17.md",
+      "bytes": 8262,
+      "content_hash": "sha256:ab83066e5dc925716883dd20cce63e1e2b75fca698a1b0d1a84abbb116bce322"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/32-ses_e74b2e63bffe2V2PnsBSflHrRv.md",
+      "bytes": 50918,
+      "content_hash": "sha256:796ba5fd43683d0123b3e3154079b27543bd528bca8f67af63fdb241d02845e2"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/33-ses_e7497423cffeWpEuFS5ZYA6fhk.md",
+      "bytes": 2576,
+      "content_hash": "sha256:093bae3246f6f42ec556c43ca7b75eae4dc548431218b0cce2afda791e7dad54"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/34-ses_e748a72afffe2aJdgfwHHbYhNf.md",
+      "bytes": 11564,
+      "content_hash": "sha256:1d4b264ac3b96e545652ddad72d00e9f69e6f441d01ac3f37c51339eb361cbf8"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/35-ses_e7489dce6ffecqnVBTybbLnb3K.md",
+      "bytes": 11691,
+      "content_hash": "sha256:1dce7e7f1722e4d1e26581b37e90f978d346a76dbfb9392764921500e410bb2b"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/36-ses_e746fd73effekTCAttU2gmyEv1.md",
+      "bytes": 5141,
+      "content_hash": "sha256:697b3263b40e7fa11f9ff4b97182e0439a2e86c83ab62fdbffe083a0d7462a58"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/37-ses_e7464095affec4Ofkq9dIZiEFy.md",
+      "bytes": 4422,
+      "content_hash": "sha256:095b73103fb9983fb1a4f339648238cbb0826cad330d5d38eb7f4977a490d39a"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/38-ses_e7454ffadffejdo09ObRx5W7SW.md",
+      "bytes": 2127,
+      "content_hash": "sha256:249bcc556baa5eeae9e2582974e87bf1fe031d2304a912d0914641c553db3b21"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/39-ses_e744d226effeonJC9601SQCNyS.md",
+      "bytes": 2509,
+      "content_hash": "sha256:c040f8cd24f737cfa26f40a5624ed141915057890d8e60c10a59f11f0023e939"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/40-ses_e74474e21ffejSa80khspDAka6.md",
+      "bytes": 3297,
+      "content_hash": "sha256:b2cd7caa61cc58c94fbeff9ea622881059df7c3d52fb9c29af966233ea65ade1"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/41-ses_e74409019ffeN2K8NTSax3cDyz.md",
+      "bytes": 2605,
+      "content_hash": "sha256:4b9e9c26633f354b5a6894dc2d8fe2987c7b41bfa95332a37442db4f0d529c05"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/42-ses_e7436a6cbffeF807BvdXFY5OsG.md",
+      "bytes": 28720,
+      "content_hash": "sha256:36d5fe8b4e71d44005bb8aad2a9297f8ea1434ac035679feb865fc91f1a811f5"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/43-ses_e7433ab17ffeaU22sAHcMAvQm0.md",
+      "bytes": 2610,
+      "content_hash": "sha256:d1820ffd1db41893f85ecf3f804d897f64ec9cfbff6128e0ae8b228efebbf5ad"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/44-ses_e74270fd7ffeKYuk2JvDBpMkjE.md",
+      "bytes": 2517,
+      "content_hash": "sha256:4ab85b21e004571eeb906a294c4ec0267bf788a9e4c9f8c7c4e00f9c494d3af1"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/45-ses_e7400183affepbRRS9tLVpLbUu.md",
+      "bytes": 7683,
+      "content_hash": "sha256:374aab9d9dd6da3884a4ff2508337abab6034f7d88c2fe1a2c9e5d3c5b2edf05"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/46-ses_e73e577f3ffeVuoUt7GXsbl6rK.md",
+      "bytes": 3651,
+      "content_hash": "sha256:c6c126a53928a5a4600e6ed5a4ade8189d46084d3dda49db6223ed3616d4079c"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/47-ses_e7386a3efffeP63aYOxovGrW4K.md",
+      "bytes": 9151,
+      "content_hash": "sha256:fe2c0be47164f41eaec014574fbf4b10014b9ea27228e0987ced016144a3ffdf"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/48-ses_e7357daf5ffem91aaH6SPAGKjb.md",
+      "bytes": 34190,
+      "content_hash": "sha256:c0625c9d6e8b2df41ad599cc01db81db9af6cf1d39a1fa1c167674bb37e4580b"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/49-ses_e7356a6ecffe6l4a6lyDEDPMxD.md",
+      "bytes": 1241,
+      "content_hash": "sha256:c6eb26886fb47a830b49084058259ccd189305a7d25c5417ef33c5246362023f"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/50-ses_e7348a159ffeZE7zW28K4haDjD.md",
+      "bytes": 11765,
+      "content_hash": "sha256:e88d58a44e6942f4cf6fc49c4ccfcf398565bf177aa16cbe2559bc3851904639"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/51-ses_e7347e5dfffeUx3aZMUwj1DYBO.md",
+      "bytes": 20839,
+      "content_hash": "sha256:dc44d68b5a2ebe38f3e2aaa872360430c47d6e10dd34743ed526477a85be8b78"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/52-ses_e73429ca8ffeC3KVaTn5yuMsDR.md",
+      "bytes": 4809,
+      "content_hash": "sha256:2fbe14dcf8c6ec975ac544f8fa5f25472eb27b8cab1a95dfc752c8727ccede2d"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/53-ses_e732e3bc7ffePV0udI2KpxrVvg.md",
+      "bytes": 7841,
+      "content_hash": "sha256:67a26124a621365674c3fcb47a1c5515b0adeb8960f78936c9c3fa042532d7f7"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/54-ses_e732b1d66ffeGbOP0Bhl2JFL8l.md",
+      "bytes": 2228,
+      "content_hash": "sha256:78b161cc31c0abe2f20563032b80f9e48e73ce5efcf008697c6a5f1d108faa76"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/55-ses_e7328e258ffeCDgB2A6X8G6MQA.md",
+      "bytes": 2652,
+      "content_hash": "sha256:0629d36ea53bb30cd05dd8bf28e364980fd2ce008a64d8c24ea058c38b5cbb0f"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/56-ses_e731b3680ffeZKvjEYIx0r0zSS.md",
+      "bytes": 8268,
+      "content_hash": "sha256:89ce85cceebe46908e5bd915e6fe39597051e306f613dd5888ebb0cf18acc48c"
+    },
+    {
+      "path": "research/sessions/2026-10-30-uniform-pipeline/57-ses_e72ed03a9ffeFCxAo8gczt5bh2.md",
+      "bytes": 15785,
+      "content_hash": "sha256:68b565203e84b3bbee734907bcc3dc74e119a63643dee46c2201bcf35f96d0b0"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/149-tests-windows-migres-integres-verts.md",
+      "bytes": 3424,
+      "content_hash": "sha256:b5c313761436b5bf347d1fa88ac3aa0932dbfda1ffd38563df0eaa1caf94f20d"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/150-couture-integree-precondition-harnais-en-erreur.md",
+      "bytes": 3918,
+      "content_hash": "sha256:2be6514a2765ef78cdc3f66d30c8bde9cb84b576e00d201aa0163969165985fb"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/152-couture-meme-bundle-verte-avant-audit.md",
+      "bytes": 2742,
+      "content_hash": "sha256:c40ebb8ca8dc12c948bf337facd40182bbb822e074a7fbeaf99347ce659922b3"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/156-livraison-pipeline-pour-qualification.md",
+      "bytes": 6774,
+      "content_hash": "sha256:da96793a3a09deb1a2e09c6c9474114480de867458c2f186ad22ee17d9814e2c"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/158-plan-fermeture-main-push-archives.md",
+      "bytes": 4923,
+      "content_hash": "sha256:da1b3dcd8668efc8e997b0df8198ab479065fc6f043ac94ce23bfca03ae7cd60"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/159-qa-fermeture-ratifiee-avant-sauvegardes.md",
+      "bytes": 2083,
+      "content_hash": "sha256:7440bf94e055a1283e073effccb58779ecc1278042a1b8721bf9a0ec9d21abba"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/160-archives-integrees-workers-arretes-avant-push.md",
+      "bytes": 2413,
+      "content_hash": "sha256:d55d2afa149fa3e8a5776b016e9804ebfb1cc8c06687a14aa8cafd74e2ef76d7"
+    },
+    {
+      "path": ".opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/161-fermeture-native-et-publication-verifiees.md",
+      "bytes": 2091,
+      "content_hash": "sha256:cda3eb22092eddd79fadbcb7cc4528f2fe897af8f0c93d8d8afcb204524d6447"
+    },
+    {
+      "path": ".opencode/evidence/mission-uniform-pipeline/final-test-audit-result.md",
+      "bytes": 4593,
+      "content_hash": "sha256:94dced2feabba521ff67fe1bb3ff34ad1e7f0e2c4350a6f91fc7fea4c855cedb"
+    },
+    {
+      "path": ".opencode/evidence/mission-uniform-pipeline/closure-qa-plan.md",
+      "bytes": 7130,
+      "content_hash": "sha256:4545a7457220380a323485656467afb26db553c3bb81a9d77a19a6fb2335e5c4"
+    },
+    {
+      "path": "research/mission-uniform-pipeline-closure/manifest.json",
+      "bytes": 8901,
+      "content_hash": "sha256:bc00b3f150860c4013bed7d4fd6b4eb0346320448f974d247eb7fa980d61e2e0"
+    }
+  ],
+  "method": "Native public messages and persisted reports, not private reasoning or tool bodies; SHA256 checked. No engine or source implementation changes. No new team.",
+  "evaluation": {
+    "method": "local PM/LLM",
+    "complexity_raw": 35,
+    "complexity_retained": 35,
+    "risk": 35,
+    "type": "documentary ingestion, no executable artifact"
+  },
+  "limitations": [
+    "No native pipeline execution added",
+    "No guarantee of secrets beyond recognized-token redaction",
+    "Prior global vault belongs to another project; local .wiki.json used",
+    "No commit or push performed for this ingestion"
+  ],
+  "validation": {
+    "export_hashes_and_order": "PASS 58 files, 720 messages",
+    "private_field_exclusion": "PASS native reasoning fields absent",
+    "metadata": "PASS 4 YAML frontmatters, canonical tags and provenance sums",
+    "source_hashes": "PASS 70 sources",
+    "wikilinks": "No new unresolved links; 2 historical nodiscard literals in journal unchanged",
+    "qmd": {
+      "update": {
+        "indexed": 2,
+        "updated": 2,
+        "unchanged": 60,
+        "total": 64
+      },
+      "embedding": "exit0; native launcher confirms all content hashes embedded",
+      "retrieval": "Scoped lex+vec MCP and get PASS",
+      "final_update": {
+        "indexed": 0,
+        "updated": 2,
+        "unchanged": 62,
+        "total": 64
+      },
+      "final_embed": {
+        "documents": 2,
+        "chunks": 29,
+        "seconds": 3,
+        "status": 0
+      }
+    },
+    "engine_tests": "NOT_RUN"
+  },
+  "diagnostics": [
+    "Initial OpenCode CLI --param probe did not honor the intended query; final export uses discovered URI query parameters and validated ordering/cutoff.",
+    "One export script syntax error corrected before any export.",
+    "Historical nodiscard link matches were compared to HEAD, not edited or treated as new broken links.",
+    "PowerShell QMD output blank despite exit0; direct native launcher returned embedding completeness."
+  ]
+}

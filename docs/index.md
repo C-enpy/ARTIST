@@ -4,13 +4,13 @@ category: index
 tags: [artist, documentation, index]
 aliases: [ARTIST, Accueil ARTIST]
 summary: Entrée du vault ARTIST, état actuel, cap technique, ADR de correction et procédures de développement.
-sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-27-prepared-float/index.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json]
+sources: [research/sessions/2026-10-15-loaded-owner-move/session-capture.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/21-audit-final-accepte.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/22-bilan-final-et-dette-board.md, .opencode/missions/team_mvnxps48_0000_dfde7a/reports/25-reconciliation-native-verifiee.md, research/sessions/2026-10-27-prepared-float/index.json, research/sessions/2026-10-29-linux-qa-session/index.json, .opencode/evidence/adr-audit-2026-10-29/inputs.json, .opencode/evidence/adr-audit-2026-10-29/public-deliveries.json, research/sessions/2026-10-30-uniform-pipeline/index.json]
 provenance:
   extracted: 1.0
   inferred: 0.0
   ambiguous: 0.0
 created: 2026-10-03
-updated: 2026-10-29
+updated: 2026-10-30
 qmd_collection: artist-wiki
 ---
 
@@ -90,13 +90,16 @@ moteur 3D bas niveau techniquement exigeant. Cette documentation distingue
 - [[agentic/gpu-qa-harness|Catalogue GPU et boucle QA]] — 19 responsabilités, runner séparé et limites des preuves statiques/natives.
 
 - [[development/build-and-test|Build et tests]] — toolchain actuelle, blocages connus et commandes conditionnelles.
-- [[development/verification-pipeline|Pipeline de vérification des uniforms]] — guide opérateur livré pour qualification ; natif NON_EXECUTE et QA finale en attente.
+- [[development/verification/README|Guide développeur des scénarios]] — utiliser le pipeline, choisir les preuves et [[development/verification/adding-scenarios|implémenter un scénario avec un brief de reprise]].
+- [[development/verification-pipeline|Référence opérateur du pipeline uniforms]] — livré pour qualification, QA synthétique et revue bornée reçues ; mission clôturée, natif NON_EXECUTE.
 - [[development/cpp-guidelines|Conventions C++]] — style observé, contrats, ownership et erreurs.
 - [[development/contributing|Contribuer]] — changement borné et vérification proportionnée.
 - [[development/known-incidents|Incidents et suivi]] — diagnostics rectifiés, expériences utiles et risques non couverts.
 - [[opencode-harness|Harness OpenCode]] — agents, skills, commandes et MCP.
 
 ## Maintenir la connaissance
+
+- [[references/session-2026-10-30-uniform-pipeline|Session pipeline et 57 sous-agents]] — 58 exports publics filtrés, preuves attribuées, archives des essais remplacés et fermeture native publiée.
 
 - [[references/session-2026-10-29-linux-qa|Session Linux QA et quatorze sous-agents]] — 15 transcriptions publiques filtrées, preuves et revues attribuées ; identité shader, publication et ADR actualisés sans nouvelle campagne.
 

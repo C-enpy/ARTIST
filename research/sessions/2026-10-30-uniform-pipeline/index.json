@@ -1,0 +1,1121 @@
+{
+  "version": 1,
+  "project": "ARTIST",
+  "root_session": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+  "exported_at": "2026-10-30T14:56:06.241Z",
+  "cutoff_exclusive": {
+    "message_id": "msg_18d4bf738001ul36qIySQ4scQL",
+    "created": 1793371928673,
+    "iso": "2026-10-30T14:52:08.673Z"
+  },
+  "method": "Native OpenCode CLI 2.2.1 API GET; discovered OpenAPI schema; URI query parameters, cursor.next pagination and recursive child inventory.",
+  "filter": "Human root user.text with displayText; assistant.content type=text only. Worker briefs, tools, private reasoning, internal envelopes and this ingestion excluded. Recognizable tokens and home paths redacted.",
+  "limitations": "Public filtered messages, not verbatim internals or execution proof. Missing public delivery does not prove worker inactivity; persisted reports supplement exports.",
+  "redactions": 62,
+  "child_listings": [
+    {
+      "session_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "pages": 2,
+      "children": 57,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e76a0be90fferxA2bfE6DB40Bj",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e76b87acbffeInhopKrrSgIcd3",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e76ac4a39ffeS8miyL2q6zOdm9",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e76b87ac7ffeI345nZ6Xot921p",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e761e9a8dffeEukcmqeHzrK2il",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e743eeae9ffevTZLCaGDtPRXEu",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e734d125dffejyP9S8sAZXcEFw",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7320b4beffeZ2lzxx044wc53N",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e72f30c3dffexhiU7aGHaIt45R",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7626883effe2VyjXAO2qEvRRk",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e768af8bbffeR2O5yfeHTOWWXo",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e761f157affe4EYIAn60q0PNZT",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e761e21fdffeSg3lPGWAJKfMKh",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e75e70ac7ffe1wjS3V4MJoqlyy",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e761e664dffeqILsXdxl4CO37l",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e75e2dd84ffetxPXCpCP2IimKU",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e75bf125fffeZHzBTbAHAi5Z87",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e756c80f4ffepaJIo7YRI41V26",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e756cefb8ffet95nVDzgQyURQL",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7563aa86ffeFGDLEe7xFvjFsO",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e753ef37bffeGFSinsZKsuDaMi",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e755a0756ffeAVE8LhmN4Sgh74",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e75403399ffeCvgrDzYodebV3b",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7539a862ffeyqsFXs3fUnH0w4",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e75062a38ffenOVSbSsQf2jVZV",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e75059649fferJ5TJxrFcV1GDC",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74f4e5a4ffeQ7njXL8npBS6VF",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74e7da65ffeUclVgr7J0qH30a",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74e48a98fferO0tfRrKoI35SX",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74df31e0ffeYtKAoyUs4SKRNN",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74b5c43fffe03LuGL44U3YW17",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74b2e63bffe2V2PnsBSflHrRv",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7497423cffeWpEuFS5ZYA6fhk",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e748a72afffe2aJdgfwHHbYhNf",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7489dce6ffecqnVBTybbLnb3K",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e746fd73effekTCAttU2gmyEv1",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7454ffadffejdo09ObRx5W7SW",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e744d226effeonJC9601SQCNyS",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7464095affec4Ofkq9dIZiEFy",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74474e21ffejSa80khspDAka6",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7433ab17ffeaU22sAHcMAvQm0",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7436a6cbffeF807BvdXFY5OsG",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74409019ffeN2K8NTSax3cDyz",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e74270fd7ffeKYuk2JvDBpMkjE",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e73e577f3ffeVuoUt7GXsbl6rK",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7400183affepbRRS9tLVpLbUu",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7386a3efffeP63aYOxovGrW4K",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7357daf5ffem91aaH6SPAGKjb",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7348a159ffeZE7zW28K4haDjD",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7356a6ecffe6l4a6lyDEDPMxD",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7347e5dfffeUx3aZMUwj1DYBO",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e73429ca8ffeC3KVaTn5yuMsDR",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e732e3bc7ffePV0udI2KpxrVvg",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e732b1d66ffeGbOP0Bhl2JFL8l",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e7328e258ffeCDgB2A6X8G6MQA",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e731b3680ffeZKvjEYIx0r0zSS",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    },
+    {
+      "session_id": "ses_e72ed03a9ffeFCxAo8gczt5bh2",
+      "pages": 1,
+      "children": 0,
+      "exhausted": true
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "parent_id": null,
+      "title": "Nouvelle mission fonctionnelle expliquée simplement",
+      "file": "00-main.md",
+      "public_messages": 356,
+      "omitted_internal_users": 6,
+      "assistant_pages": 19,
+      "user_pages": 2,
+      "exhausted": true,
+      "bytes": 173450,
+      "sha256": "7995aee6c656ed761cb670fec7d8d8725aeb02424045d14d97b206442f7bd4c8"
+    },
+    {
+      "session_id": "ses_e76a0be90fferxA2bfE6DB40Bj",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Planifier pipeline Windows Linux",
+      "file": "01-ses_e76a0be90fferxA2bfE6DB40Bj.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 8983,
+      "sha256": "2eb755db39bd8fc16d43ca5cac50a71d9b1c84d28ef3b002e0692b8a1a7c6de1"
+    },
+    {
+      "session_id": "ses_e76b87acbffeInhopKrrSgIcd3",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Évaluer prochaine mission fonctionnelle",
+      "file": "02-ses_e76b87acbffeInhopKrrSgIcd3.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 23133,
+      "sha256": "06dfa42c9d8876bb3e090f9b55ea3a605935d65eca4770368c0766fd4a344d0e"
+    },
+    {
+      "session_id": "ses_e76ac4a39ffeS8miyL2q6zOdm9",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Concevoir scénarios QA discriminants",
+      "file": "03-ses_e76ac4a39ffeS8miyL2q6zOdm9.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 20014,
+      "sha256": "c93d0efcd1c519087e3e8062d84f05af5c7792b1f93614682f8dd2a091012009"
+    },
+    {
+      "session_id": "ses_e76b87ac7ffeI345nZ6Xot921p",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Borner mission de comparaison",
+      "file": "04-ses_e76b87ac7ffeI345nZ6Xot921p.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 4215,
+      "sha256": "d9b4e56b99b2f3b39f36c7e43615d5219946652446d967b4d3e4b516ddab2034"
+    },
+    {
+      "session_id": "ses_e761e9a8dffeEukcmqeHzrK2il",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "windows-pipeline (@build-engineer teammate)",
+      "file": "05-ses_e761e9a8dffeEukcmqeHzrK2il.md",
+      "public_messages": 61,
+      "omitted_internal_users": 0,
+      "assistant_pages": 4,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 51686,
+      "sha256": "9f2b35759e510ece6472de582955900344da79fde52d9156bd2faa0e91b2c074"
+    },
+    {
+      "session_id": "ses_e743eeae9ffevTZLCaGDtPRXEu",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Planifier les raccordements restants",
+      "file": "06-ses_e743eeae9ffevTZLCaGDtPRXEu.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 14349,
+      "sha256": "db39e392c190ad60db63f625f5262219049fcc036b8a91e2fbecbe4d45d08ef9"
+    },
+    {
+      "session_id": "ses_e734d125dffejyP9S8sAZXcEFw",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Planifier les compléments QA",
+      "file": "07-ses_e734d125dffejyP9S8sAZXcEFw.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 9556,
+      "sha256": "7001d4614c2515434f1ea10307ffba89236bf987e90c61e44155d6b20f306b7c"
+    },
+    {
+      "session_id": "ses_e7320b4beffeZ2lzxx044wc53N",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Vérifier admission audit fresh",
+      "file": "08-ses_e7320b4beffeZ2lzxx044wc53N.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2154,
+      "sha256": "d62ba71f884385d885fe180307d9fda4a169e17bbd96bea348123944095d3abc"
+    },
+    {
+      "session_id": "ses_e72f30c3dffexhiU7aGHaIt45R",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "Planifier clôture Git sûre",
+      "file": "09-ses_e72f30c3dffexhiU7aGHaIt45R.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 12314,
+      "sha256": "9baf1bc38973cf04124d472750c37429f240d407d64672ec92b2bb8617fa27e6"
+    },
+    {
+      "session_id": "ses_e768af8bbffeR2O5yfeHTOWWXo",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-1 (@engine-architect teammate)",
+      "file": "10-ses_e768af8bbffeR2O5yfeHTOWWXo.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 40327,
+      "sha256": "7ef783afd169942ed8843e3163a8509060348e34dcfe1f5f0be5d8248f755dbe"
+    },
+    {
+      "session_id": "ses_e7626883effe2VyjXAO2qEvRRk",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-2 (@qa-planner teammate)",
+      "file": "11-ses_e7626883effe2VyjXAO2qEvRRk.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 17411,
+      "sha256": "703a94820fa3293d7b8e29512e50041e93d30bc795b5f2ceb4cf9d0e7a5bd72f"
+    },
+    {
+      "session_id": "ses_e761f157affe4EYIAn60q0PNZT",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-3 (@cpp-engineer teammate)",
+      "file": "12-ses_e761f157affe4EYIAn60q0PNZT.md",
+      "public_messages": 47,
+      "omitted_internal_users": 0,
+      "assistant_pages": 4,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 43997,
+      "sha256": "9dc9e7af1b37fcae6dee8a2cb87f4a87443400b15a269f72dc5a13e98ebfcd9e"
+    },
+    {
+      "session_id": "ses_e761e664dffeqILsXdxl4CO37l",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "linux-pipeline (@build-engineer teammate)",
+      "file": "13-ses_e761e664dffeqILsXdxl4CO37l.md",
+      "public_messages": 5,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 5778,
+      "sha256": "1cefada86badabaa04d1acfb6ee3f27387f74b4443c24e796eeca535fa2e6a7a"
+    },
+    {
+      "session_id": "ses_e761e21fdffeSg3lPGWAJKfMKh",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "uniform-scenarios (@gpu-engineer teammate)",
+      "file": "14-ses_e761e21fdffeSg3lPGWAJKfMKh.md",
+      "public_messages": 26,
+      "omitted_internal_users": 0,
+      "assistant_pages": 3,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 20460,
+      "sha256": "6a2b7eb9682509d534952e5e39b729883bad72d191b6e56ea30c209ff8a1f479"
+    },
+    {
+      "session_id": "ses_e75e70ac7ffe1wjS3V4MJoqlyy",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-4 (@correctness-reviewer teammate)",
+      "file": "15-ses_e75e70ac7ffe1wjS3V4MJoqlyy.md",
+      "public_messages": 5,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 9202,
+      "sha256": "d57f6b2bb69aed6feb5074a0bc8b0c5d84368ed44758e72220e5106086008089"
+    },
+    {
+      "session_id": "ses_e75e2dd84ffetxPXCpCP2IimKU",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-5 (@shader-reviewer teammate)",
+      "file": "16-ses_e75e2dd84ffetxPXCpCP2IimKU.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 5716,
+      "sha256": "6c6918cdb55d49566a1f41dbe13753e1823aac65332b78b574074653aaba918b"
+    },
+    {
+      "session_id": "ses_e75bf125fffeZHzBTbAHAi5Z87",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-6 (@gpu-engineer teammate)",
+      "file": "17-ses_e75bf125fffeZHzBTbAHAi5Z87.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 1462,
+      "sha256": "ea89567863f2bf7945bce4a58396ecda4f94f19700dd6f8c174f4d9f0a745440"
+    },
+    {
+      "session_id": "ses_e756cefb8ffet95nVDzgQyURQL",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-7 (@engine-architect teammate)",
+      "file": "18-ses_e756cefb8ffet95nVDzgQyURQL.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 10089,
+      "sha256": "f5b3e45f0c7253df4fe9be07e916fb6c28c05b221a6231540609b76684036ec5"
+    },
+    {
+      "session_id": "ses_e756c80f4ffepaJIo7YRI41V26",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-8 (@correctness-reviewer teammate)",
+      "file": "19-ses_e756c80f4ffepaJIo7YRI41V26.md",
+      "public_messages": 7,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 25108,
+      "sha256": "a573acceabc9314ff32f2a06542870f7508aa0bb1954108327e479ffd120ebe4"
+    },
+    {
+      "session_id": "ses_e7563aa86ffeFGDLEe7xFvjFsO",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-9 (@qa-planner teammate)",
+      "file": "20-ses_e7563aa86ffeFGDLEe7xFvjFsO.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 15033,
+      "sha256": "c050686676f8cbcc52d3aa8e6baf87b4e00b5ec868b92a8b4df655fbb994b79a"
+    },
+    {
+      "session_id": "ses_e755a0756ffeAVE8LhmN4Sgh74",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-10 (@gpu-engineer teammate)",
+      "file": "21-ses_e755a0756ffeAVE8LhmN4Sgh74.md",
+      "public_messages": 9,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 9774,
+      "sha256": "8424dc05e7977d2e03762ab3df425b38b8cae0411a8b3d2da9eb4c446074f21d"
+    },
+    {
+      "session_id": "ses_e75403399ffeCvgrDzYodebV3b",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-11 (@correctness-reviewer teammate)",
+      "file": "22-ses_e75403399ffeCvgrDzYodebV3b.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 4052,
+      "sha256": "7bb698cd98da8c8df55f32a482edf0c325251d2b6c36426f5a342d36af8ad7ec"
+    },
+    {
+      "session_id": "ses_e753ef37bffeGFSinsZKsuDaMi",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-12 (@engine-architect teammate)",
+      "file": "23-ses_e753ef37bffeGFSinsZKsuDaMi.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 21346,
+      "sha256": "778574f97676546ef34d2964702563a4fde427e5de9bcd938c0d556e89e5441e"
+    },
+    {
+      "session_id": "ses_e7539a862ffeyqsFXs3fUnH0w4",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-13 (@gpu-engineer teammate)",
+      "file": "24-ses_e7539a862ffeyqsFXs3fUnH0w4.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2652,
+      "sha256": "7b2cc34f443888fca0f3dc56e6c2a419330dfcfd328e38cf6e3ef5cd24885eef"
+    },
+    {
+      "session_id": "ses_e75062a38ffenOVSbSsQf2jVZV",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-14 (@cpp-engineer teammate)",
+      "file": "25-ses_e75062a38ffenOVSbSsQf2jVZV.md",
+      "public_messages": 17,
+      "omitted_internal_users": 0,
+      "assistant_pages": 3,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 13095,
+      "sha256": "296becfcb393498a918342de97f15c98dc6de28e7685ac518121349e1ab0b177"
+    },
+    {
+      "session_id": "ses_e75059649fferJ5TJxrFcV1GDC",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-15 (@build-engineer teammate)",
+      "file": "26-ses_e75059649fferJ5TJxrFcV1GDC.md",
+      "public_messages": 5,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 3865,
+      "sha256": "b5ae1f0046f09537966a482dc7b0dbd1d06c54bd63b1421ca8c4c45f7adea6dc"
+    },
+    {
+      "session_id": "ses_e74f4e5a4ffeQ7njXL8npBS6VF",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-16 (@engine-architect teammate)",
+      "file": "27-ses_e74f4e5a4ffeQ7njXL8npBS6VF.md",
+      "public_messages": 4,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 29386,
+      "sha256": "2e7b1b04acfce8f4704343f70a9e2dafbf216605e2726c8fc16a688edfda1ed2"
+    },
+    {
+      "session_id": "ses_e74e7da65ffeUclVgr7J0qH30a",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-17 (@correctness-reviewer teammate)",
+      "file": "28-ses_e74e7da65ffeUclVgr7J0qH30a.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 4020,
+      "sha256": "418d59161d4bef68cbb70b28c2203c718c1816f4c1c0a4a310f32a06d3415f41"
+    },
+    {
+      "session_id": "ses_e74e48a98fferO0tfRrKoI35SX",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-18 (@correctness-reviewer teammate)",
+      "file": "29-ses_e74e48a98fferO0tfRrKoI35SX.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 7660,
+      "sha256": "9ada3057a1e1d15db1871a8e4c852580ead3401b28578ac49f0334511073add7"
+    },
+    {
+      "session_id": "ses_e74df31e0ffeYtKAoyUs4SKRNN",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-19 (@build-engineer teammate)",
+      "file": "30-ses_e74df31e0ffeYtKAoyUs4SKRNN.md",
+      "public_messages": 7,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 8231,
+      "sha256": "adbe361f0b70066d917c4a53f451c4ef1a332a1f370cb8472552e5ed5677fc0f"
+    },
+    {
+      "session_id": "ses_e74b5c43fffe03LuGL44U3YW17",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-20 (@cpp-engineer teammate)",
+      "file": "31-ses_e74b5c43fffe03LuGL44U3YW17.md",
+      "public_messages": 7,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 8262,
+      "sha256": "ab83066e5dc925716883dd20cce63e1e2b75fca698a1b0d1a84abbb116bce322"
+    },
+    {
+      "session_id": "ses_e74b2e63bffe2V2PnsBSflHrRv",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-21 (@qa-planner teammate)",
+      "file": "32-ses_e74b2e63bffe2V2PnsBSflHrRv.md",
+      "public_messages": 6,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 50918,
+      "sha256": "796ba5fd43683d0123b3e3154079b27543bd528bca8f67af63fdb241d02845e2"
+    },
+    {
+      "session_id": "ses_e7497423cffeWpEuFS5ZYA6fhk",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-22 (@correctness-reviewer teammate)",
+      "file": "33-ses_e7497423cffeWpEuFS5ZYA6fhk.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2576,
+      "sha256": "093bae3246f6f42ec556c43ca7b75eae4dc548431218b0cce2afda791e7dad54"
+    },
+    {
+      "session_id": "ses_e748a72afffe2aJdgfwHHbYhNf",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-23 (@build-engineer teammate)",
+      "file": "34-ses_e748a72afffe2aJdgfwHHbYhNf.md",
+      "public_messages": 16,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 11564,
+      "sha256": "1d4b264ac3b96e545652ddad72d00e9f69e6f441d01ac3f37c51339eb361cbf8"
+    },
+    {
+      "session_id": "ses_e7489dce6ffecqnVBTybbLnb3K",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-24 (@build-engineer teammate)",
+      "file": "35-ses_e7489dce6ffecqnVBTybbLnb3K.md",
+      "public_messages": 12,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 11691,
+      "sha256": "1dce7e7f1722e4d1e26581b37e90f978d346a76dbfb9392764921500e410bb2b"
+    },
+    {
+      "session_id": "ses_e746fd73effekTCAttU2gmyEv1",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-25 (@correctness-reviewer teammate)",
+      "file": "36-ses_e746fd73effekTCAttU2gmyEv1.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 5141,
+      "sha256": "697b3263b40e7fa11f9ff4b97182e0439a2e86c83ab62fdbffe083a0d7462a58"
+    },
+    {
+      "session_id": "ses_e7464095affec4Ofkq9dIZiEFy",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-26 (@build-engineer teammate)",
+      "file": "37-ses_e7464095affec4Ofkq9dIZiEFy.md",
+      "public_messages": 7,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 4422,
+      "sha256": "095b73103fb9983fb1a4f339648238cbb0826cad330d5d38eb7f4977a490d39a"
+    },
+    {
+      "session_id": "ses_e7454ffadffejdo09ObRx5W7SW",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-27 (@correctness-reviewer teammate)",
+      "file": "38-ses_e7454ffadffejdo09ObRx5W7SW.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2127,
+      "sha256": "249bcc556baa5eeae9e2582974e87bf1fe031d2304a912d0914641c553db3b21"
+    },
+    {
+      "session_id": "ses_e744d226effeonJC9601SQCNyS",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-28 (@correctness-reviewer teammate)",
+      "file": "39-ses_e744d226effeonJC9601SQCNyS.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2509,
+      "sha256": "c040f8cd24f737cfa26f40a5624ed141915057890d8e60c10a59f11f0023e939"
+    },
+    {
+      "session_id": "ses_e74474e21ffejSa80khspDAka6",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-29 (@build-engineer teammate)",
+      "file": "40-ses_e74474e21ffejSa80khspDAka6.md",
+      "public_messages": 5,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 3297,
+      "sha256": "b2cd7caa61cc58c94fbeff9ea622881059df7c3d52fb9c29af966233ea65ade1"
+    },
+    {
+      "session_id": "ses_e74409019ffeN2K8NTSax3cDyz",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-30 (@build-engineer teammate)",
+      "file": "41-ses_e74409019ffeN2K8NTSax3cDyz.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2605,
+      "sha256": "4b9e9c26633f354b5a6894dc2d8fe2987c7b41bfa95332a37442db4f0d529c05"
+    },
+    {
+      "session_id": "ses_e7436a6cbffeF807BvdXFY5OsG",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-31 (@build-engineer teammate)",
+      "file": "42-ses_e7436a6cbffeF807BvdXFY5OsG.md",
+      "public_messages": 34,
+      "omitted_internal_users": 0,
+      "assistant_pages": 4,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 28720,
+      "sha256": "36d5fe8b4e71d44005bb8aad2a9297f8ea1434ac035679feb865fc91f1a811f5"
+    },
+    {
+      "session_id": "ses_e7433ab17ffeaU22sAHcMAvQm0",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-32 (@build-engineer teammate)",
+      "file": "43-ses_e7433ab17ffeaU22sAHcMAvQm0.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2610,
+      "sha256": "d1820ffd1db41893f85ecf3f804d897f64ec9cfbff6128e0ae8b228efebbf5ad"
+    },
+    {
+      "session_id": "ses_e74270fd7ffeKYuk2JvDBpMkjE",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-33 (@correctness-reviewer teammate)",
+      "file": "44-ses_e74270fd7ffeKYuk2JvDBpMkjE.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2517,
+      "sha256": "4ab85b21e004571eeb906a294c4ec0267bf788a9e4c9f8c7c4e00f9c494d3af1"
+    },
+    {
+      "session_id": "ses_e7400183affepbRRS9tLVpLbUu",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-34 (@build-engineer teammate)",
+      "file": "45-ses_e7400183affepbRRS9tLVpLbUu.md",
+      "public_messages": 8,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 7683,
+      "sha256": "374aab9d9dd6da3884a4ff2508337abab6034f7d88c2fe1a2c9e5d3c5b2edf05"
+    },
+    {
+      "session_id": "ses_e73e577f3ffeVuoUt7GXsbl6rK",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-35 (@correctness-reviewer teammate)",
+      "file": "46-ses_e73e577f3ffeVuoUt7GXsbl6rK.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 3651,
+      "sha256": "c6c126a53928a5a4600e6ed5a4ade8189d46084d3dda49db6223ed3616d4079c"
+    },
+    {
+      "session_id": "ses_e7386a3efffeP63aYOxovGrW4K",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-36 (@correctness-reviewer teammate)",
+      "file": "47-ses_e7386a3efffeP63aYOxovGrW4K.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 9151,
+      "sha256": "fe2c0be47164f41eaec014574fbf4b10014b9ea27228e0987ced016144a3ffdf"
+    },
+    {
+      "session_id": "ses_e7357daf5ffem91aaH6SPAGKjb",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-37 (@test-engineer teammate)",
+      "file": "48-ses_e7357daf5ffem91aaH6SPAGKjb.md",
+      "public_messages": 4,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 34190,
+      "sha256": "c0625c9d6e8b2df41ad599cc01db81db9af6cf1d39a1fa1c167674bb37e4580b"
+    },
+    {
+      "session_id": "ses_e7356a6ecffe6l4a6lyDEDPMxD",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-38 (@build-engineer teammate)",
+      "file": "49-ses_e7356a6ecffe6l4a6lyDEDPMxD.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 1241,
+      "sha256": "c6eb26886fb47a830b49084058259ccd189305a7d25c5417ef33c5246362023f"
+    },
+    {
+      "session_id": "ses_e7348a159ffeZE7zW28K4haDjD",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-39 (@build-engineer teammate)",
+      "file": "50-ses_e7348a159ffeZE7zW28K4haDjD.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 11765,
+      "sha256": "e88d58a44e6942f4cf6fc49c4ccfcf398565bf177aa16cbe2559bc3851904639"
+    },
+    {
+      "session_id": "ses_e7347e5dfffeUx3aZMUwj1DYBO",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-40 (@build-engineer teammate)",
+      "file": "51-ses_e7347e5dfffeUx3aZMUwj1DYBO.md",
+      "public_messages": 7,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 20839,
+      "sha256": "dc44d68b5a2ebe38f3e2aaa872360430c47d6e10dd34743ed526477a85be8b78"
+    },
+    {
+      "session_id": "ses_e73429ca8ffeC3KVaTn5yuMsDR",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-41 (@build-engineer teammate)",
+      "file": "52-ses_e73429ca8ffeC3KVaTn5yuMsDR.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 4809,
+      "sha256": "2fbe14dcf8c6ec975ac544f8fa5f25472eb27b8cab1a95dfc752c8727ccede2d"
+    },
+    {
+      "session_id": "ses_e732e3bc7ffePV0udI2KpxrVvg",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-42 (@build-engineer teammate)",
+      "file": "53-ses_e732e3bc7ffePV0udI2KpxrVvg.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 7841,
+      "sha256": "67a26124a621365674c3fcb47a1c5515b0adeb8960f78936c9c3fa042532d7f7"
+    },
+    {
+      "session_id": "ses_e732b1d66ffeGbOP0Bhl2JFL8l",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-43 (@build-engineer teammate)",
+      "file": "54-ses_e732b1d66ffeGbOP0Bhl2JFL8l.md",
+      "public_messages": 1,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2228,
+      "sha256": "78b161cc31c0abe2f20563032b80f9e48e73ce5efcf008697c6a5f1d108faa76"
+    },
+    {
+      "session_id": "ses_e7328e258ffeCDgB2A6X8G6MQA",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-44 (@build-engineer teammate)",
+      "file": "55-ses_e7328e258ffeCDgB2A6X8G6MQA.md",
+      "public_messages": 3,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 2652,
+      "sha256": "0629d36ea53bb30cd05dd8bf28e364980fd2ce008a64d8c24ea058c38b5cbb0f"
+    },
+    {
+      "session_id": "ses_e731b3680ffeZKvjEYIx0r0zSS",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-45 (@test-reviewer teammate)",
+      "file": "56-ses_e731b3680ffeZKvjEYIx0r0zSS.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 8268,
+      "sha256": "89ce85cceebe46908e5bd915e6fe39597051e306f613dd5888ebb0cf18acc48c"
+    },
+    {
+      "session_id": "ses_e72ed03a9ffeFCxAo8gczt5bh2",
+      "parent_id": "ses_e76ba2716ffdW1hBGnJ0AgYfKC",
+      "title": "pool-46 (@qa-planner teammate)",
+      "file": "57-ses_e72ed03a9ffeFCxAo8gczt5bh2.md",
+      "public_messages": 2,
+      "omitted_internal_users": 0,
+      "assistant_pages": 2,
+      "user_pages": 0,
+      "exhausted": true,
+      "bytes": 15785,
+      "sha256": "68b565203e84b3bbee734907bcc3dc74e119a63643dee46c2201bcf35f96d0b0"
+    }
+  ]
+}

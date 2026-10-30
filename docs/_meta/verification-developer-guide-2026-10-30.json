@@ -1,0 +1,173 @@
+{
+  "date": "2026-10-30",
+  "head": "fae632791494a444a6c012bdb21d41381e1859aa",
+  "purpose": "Developer guides for operating and authoring verification scenarios",
+  "pages_created": [
+    "docs/development/verification/README.md",
+    "docs/development/verification/adding-scenarios.md"
+  ],
+  "pages_updated": [
+    "docs/development/verification-pipeline.md",
+    "docs/index.md",
+    "docs/log.md"
+  ],
+  "evaluation": {
+    "method": "local PM/LLM",
+    "complexity_raw": 35,
+    "complexity_retained": 35,
+    "risk": 38,
+    "scope": "Documentation only, no executable code artifact"
+  },
+  "navigation": "Serena ARTIST canonical cpp: WorkloadProtocol Result/parse retrieved; Python contracts read by targeted files, no Python LSP coverage claimed",
+  "commands": [
+    {
+      "name": "list",
+      "command": [
+        "C:/Python313/python.exe",
+        "-B",
+        "scripts/verify.py",
+        "list",
+        "--json"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "status": 0,
+      "schema_version": 1,
+      "scenarios": 5
+    },
+    {
+      "name": "cpu-plan",
+      "command": [
+        "C:/Python313/python.exe",
+        "-B",
+        "scripts/verify.py",
+        "plan",
+        "--platform",
+        "windows",
+        "--profile",
+        "cpu-only",
+        "--configuration",
+        "debug",
+        "--scenario",
+        "cpu.float-mirror"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "status": 0,
+      "schema_version": 1,
+      "scenarios": 1,
+      "unresolved": [
+        "source_identity",
+        "toolchain",
+        "executables"
+      ]
+    },
+    {
+      "name": "comparison-plan",
+      "command": [
+        "C:/Python313/python.exe",
+        "-B",
+        "scripts/verify.py",
+        "plan",
+        "--platform",
+        "windows",
+        "--profile",
+        "opengl-hardware",
+        "--configuration",
+        "release",
+        "--scenario",
+        "gl.float-submission-cpu",
+        "--route",
+        "pass-name",
+        "--route",
+        "prepared-float",
+        "--iterations",
+        "1000",
+        "--repetitions",
+        "5",
+        "--batch-size",
+        "16",
+        "--measurement-requested",
+        "--expected-gl-vendor",
+        "VENDOR_OBSERVE",
+        "--expected-gl-renderer",
+        "RENDERER_OBSERVE"
+      ],
+      "cwd": "C:/Users/djden/source/repos/ARTIST",
+      "status": 0,
+      "schema_version": 1,
+      "scenarios": 1,
+      "unresolved": [
+        "source_identity",
+        "toolchain",
+        "executables",
+        "gl_context",
+        "renderer_identity"
+      ]
+    }
+  ],
+  "source_changed": [],
+  "tracked_source_diff": "",
+  "foreign_profiles_unchanged": true,
+  "validation": {
+    "metadata_status": 0,
+    "metadata_stdout": "YAML/frontmatter passed in first validation; {\"example\": \"PASS: ScenarioSpec call in catalogue tuple, trailing comma intentional\", \"field_count\": 12}\r\n",
+    "metadata_stderr": "",
+    "wikilinks_checked": 65,
+    "broken_links": [],
+    "diff_check": 0,
+    "docs_hashes": {
+      "docs/development/verification/README.md": "d6f13e124a4b2f213ce1dabc337ec0585614d8eb8733b989defb686ec990c564",
+      "docs/development/verification/adding-scenarios.md": "9dd9d22d86a9e8a39ed104b2fcd1b1dce39d6e3d5f2ad3748236c4b9e2b9b7ac",
+      "docs/development/verification-pipeline.md": "69191e1f0e71a97d8fa60c1a700037aabed4fd02da8c8102cef85fe264c63b6d",
+      "docs/index.md": "41a5140dc245cdd920d24a39525efb10e2547492a5b051aca99b0e14d1e5579c"
+    },
+    "scope": "Documentation only; Python AST without executing the new ScenarioSpec; consultative examples logged separately",
+    "diagnostic": "Initial AST checker expected a bare call, but the documented catalogue entry is a one-item tuple because of its trailing comma. Corrected checker locates the single call; example unchanged."
+  },
+  "limits": [
+    "No new scenario registered",
+    "No build/engine/GL/performance/install/workflow/cloud execution",
+    "No independent reviewer or native-platform qualification claimed",
+    "Prior ingestion changes and unrelated user changes left intact",
+    "No commit/push performed"
+  ],
+  "qmd": {
+    "steps": [
+      {
+        "name": "qmd-update",
+        "command": [
+          "node",
+          ".opencode/scripts/update-wiki.mjs"
+        ],
+        "status": 0,
+        "stdout": "{\n  \"collection\": \"artist-wiki\",\n  \"collections\": 1,\n  \"indexed\": 2,\n  \"updated\": 3,\n  \"unchanged\": 61,\n  \"removed\": 0,\n  \"skipped\": 0,\n  \"needsEmbeddingGlobal\": 5\n}\n",
+        "stderr": ""
+      },
+      {
+        "name": "qmd-embed",
+        "command": [
+          "node",
+          "C:/Users/djden/AppData/Roaming/npm/node_modules/@tobilu/qmd/bin/qmd",
+          "embed",
+          "-c",
+          "artist-wiki"
+        ],
+        "status": 0,
+        "stdout": "Model: embeddinggemma-300M-Q8_0.gguf\n\n\r██████████████████████████████ 100%                                    \n\n✓ Done! Embedded 47 chunks from 5 documents in 5s\n",
+        "stderr": "\u001b[?25l\u001b[?25h"
+      }
+    ],
+    "discovery": "PASS scoped lex+vec then get retrieved developer guide and agent brief",
+    "final_refresh": [
+      {
+        "name": "qmd-final-update",
+        "status": 0,
+        "stdout": "{\n  \"collection\": \"artist-wiki\",\n  \"collections\": 1,\n  \"indexed\": 0,\n  \"updated\": 1,\n  \"unchanged\": 65,\n  \"removed\": 0,\n  \"skipped\": 0,\n  \"needsEmbeddingGlobal\": 1\n}\n"
+      },
+      {
+        "name": "qmd-final-embed",
+        "status": 0,
+        "stdout": "Model: embeddinggemma-300M-Q8_0.gguf\n\n\r██████████████████████████████ 100%                                    \n\n✓ Done! Embedded 7 chunks from 1 documents in 3s\n"
+      }
+    ]
+  }
+}

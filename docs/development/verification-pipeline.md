@@ -21,9 +21,22 @@ sources:
   - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/152-couture-meme-bundle-verte-avant-audit.md
   - .opencode/evidence/mission-uniform-pipeline/final-test-audit-result.md
   - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/156-livraison-pipeline-pour-qualification.md
+  - .opencode/missions/team_mvu0gbxm_0000_cwsmsw/reports/161-fermeture-native-et-publication-verifiees.md
+  - research/sessions/2026-10-30-uniform-pipeline/index.json
+provenance:
+  extracted: 1.0
+  inferred: 0.0
+  ambiguous: 0.0
 ---
 
 # Pipeline de vérification des uniforms
+
+Entrée développeur : [[development/verification/README|utiliser et étendre le pipeline]].
+Pour une nouvelle session : [[development/verification/adding-scenarios|ajouter un scénario, exemple CTest et brief d'agent]].
+
+Mission clôturée nativement et publiée sur main (`fae6327`) ; essais remplacés
+archivés sans réactivation. [[references/session-2026-10-30-uniform-pipeline|Session et 57 sous-agents]] : décisions, attributions et limites ; rapport161 pour les
+contrôles après cleanup. Cette fermeture ne qualifie pas l'exécution native.
 
 > [!warning] Livré pour qualification — NON_EXECUTE natif
 > QA synthétique et revue indépendante bornée reçues. Aucun C++/moteur, même CPU seul,
